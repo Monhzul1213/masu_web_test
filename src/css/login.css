@@ -1,0 +1,55 @@
+@import './color.css';
+
+:root {
+  --logo-height: 40px;
+  --radius: 3px;
+  --padding: 25px;
+  --title-font: 16px;
+  --back-width: 400px;
+}
+
+input::-webkit-credentials-auto-fill-button {
+  background-color: var(--root-color);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--root-color);
+  -moz-text-fill-color: var(--root-color);
+}
+
+.l_container {
+  background-color: var(--back-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.l_back {
+  background-color: var(--root-color);
+  display: flex;
+  flex-flow: column;
+  padding: var(--padding);
+  border-radius: var(--radius);
+  max-width: var(--back-width);
+  width: var(--back-width);
+}
+
+.l_logo {
+  height: var(--logo-height);
+  width: calc(var(--logo-height) * 4.1);
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.l_text {
+  font-size: var(--title-font);
+  color: var(--text2-color);
+  margin: 0 0 40px 0;
+}
