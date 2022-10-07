@@ -1,11 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import { createRoot } from 'react-dom/client';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
+import 'antd/dist/antd.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+import './i18n';
+import './index.css';
+import { App as Screen } from './App';
+import { Loading } from './pages';
+import { store, persistor } from './helpers/store';
+
+const root = createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <PersistGate loading={<Loading />} persistor={persistor}>
+        <Screen />
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );

@@ -1,11 +1,59 @@
-import './App.css';
+import React, { Suspense, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Layout } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 
-function App() {
-  return (
-    <div>
-      App
-    </div>
+import { Loading, Login, SignUp, Home } from './pages';
+import { setIsLoggedIn } from './services';
+
+export function App(){
+  const loggedIn = useSelector(state => state.temp.loggedIn);
+  const user = useSelector(state => state.login.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(!window.sessionStorage.length){
+      window.localStorage.setItem('getSessionStorage', Date.now());
+    } else {
+      dispatch(setIsLoggedIn(true));
+    }
+    window.addEventListener('storage', function(event){
+      if(event.key == 'getSessionStorage') {
+        window.localStorage.setItem('sessionStorage', Date.now());
+        window.localStorage.removeItem('sessionStorage');
+      } else if(event.key == 'sessionStorage' && !window.sessionStorage.length){
+        window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
+        dispatch(setIsLoggedIn(true));
+      } else if(event.key == 'CREDENTIALS_FLUSH'){
+        dispatch(setIsLoggedIn(false));
+        window.sessionStorage.removeItem('CREDENTIALS_TOKEN');
+      }
+    });
+  }, []);
+
+  if(!loggedIn || !user) return (
+    <BrowserRouter>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path='*' element={<Login />} />
+          <Route path='/sign_up' element={<SignUp />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
+  
+  return (
+    <BrowserRouter>
+      <Suspense fallback={<Loading />}>
+        <Layout>
+          <Layout>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='*' element={<Navigate to='/' replace />} />
+            </Routes>
+          </Layout>
+        </Layout>
+      </Suspense>
+    </BrowserRouter>
+  )
 }
-
-export default App;
