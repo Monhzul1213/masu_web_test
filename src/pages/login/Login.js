@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import '../../css/login.css';
 import { login_image } from '../../assets';
-import { FloatingInput } from '../../components/all';
+import { FloatingInput, FloatingPassword } from '../../components/all';
 
 export function Login(){
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ export function Login(){
         <p className='l_text'>{t('login.login_text')}</p>
         <form>
           <FloatingInput text={t('login.email')} value={email} setValue={setEmail} setError={setError} />
-          <FloatingInput text={t('login.password')} value={password} setValue={setPassword} setError={setError} type='password' />
+          <FloatingPassword text={t('login.password')} value={password} setValue={setPassword} setError={setError} />
         </form>
       </div>
     </div>
