@@ -18,17 +18,18 @@ export function App(){
       dispatch(setIsLoggedIn(true));
     }
     window.addEventListener('storage', function(event){
-      if(event.key == 'getSessionStorage') {
+      if(event.key === 'getSessionStorage') {
         window.localStorage.setItem('sessionStorage', Date.now());
         window.localStorage.removeItem('sessionStorage');
-      } else if(event.key == 'sessionStorage' && !window.sessionStorage.length){
+      } else if(event.key === 'sessionStorage' && !window.sessionStorage.length){
         window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
         dispatch(setIsLoggedIn(true));
-      } else if(event.key == 'CREDENTIALS_FLUSH'){
+      } else if(event.key === 'CREDENTIALS_FLUSH'){
         dispatch(setIsLoggedIn(false));
         window.sessionStorage.removeItem('CREDENTIALS_TOKEN');
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if(!loggedIn || !user) return (

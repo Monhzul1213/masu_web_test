@@ -14,7 +14,7 @@ i18n
     },
     fallbackLng: 'mn',
     lng: 'mn',
-    debug: true,
+    debug: false,
     ns: ['translations'],
     defaultNS: 'translations',
     returnObjects: true,

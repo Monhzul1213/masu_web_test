@@ -2,7 +2,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-import { loginReducer, constantsReducer, tempReducer } from '../services';
+import { loginReducer, tempReducer } from '../services';
 
 const reducers = combineReducers({
   login: loginReducer,

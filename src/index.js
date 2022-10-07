@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.min.css';
 
 import './i18n';
 import './index.css';
