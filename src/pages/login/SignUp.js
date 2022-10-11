@@ -13,15 +13,30 @@ export function SignUp(){
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const handleEnter = e => {
+    if (e?.key?.toLowerCase() === "enter") {
+      const form = e.target.form;
+      const index = [...form].indexOf(e.target);
+      form.elements[index + 1].focus();
+      e.preventDefault();
+    }
+  }
+
   const handleSubmit = async e => {
     e?.preventDefault();
     setLoading(true);
+    // if(email?.value?.trim() && password?.value?.trim()){
+    //   console.log('call login service');
+    // } else {
+    //   if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
+    //   if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
+    // }
     setTimeout(() => setLoading(false), 1200);
   }
-  
-  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
-  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
-  const businessProps = { text: t('login.password'), value: business, setValue: setBusiness, setError };
+
+  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, handleEnter };
+  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, handleEnter };
+  const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError };
   
   return (
     <div className='l_container'>
@@ -31,7 +46,7 @@ export function SignUp(){
         <form onSubmit={handleSubmit}>
           <FloatingInput {...emailProps} />
           <FloatingPassword {...passProps} />
-
+          <FloatingInput {...businessProps} />
         </form>
       </div>
     </div>
