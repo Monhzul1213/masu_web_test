@@ -12,6 +12,7 @@
   --input-height: 36px;
   --btn-height: 36px;
   --btn-width: 120px;
+  --link-font: 13px;
 }
 
 input::-webkit-credentials-auto-fill-button {
@@ -166,4 +167,15 @@ input:-webkit-autofill:active{
 .l_loader {
   display: flex;
   align-items: center;
+}
+
+.l_link {
+  color: var(--link-color);
+  font-size: var(--link-font);
+  margin-top: 10px;
+}
+
+.l_link:hover {
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
 }

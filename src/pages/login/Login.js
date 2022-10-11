@@ -15,14 +15,15 @@ export function Login(){
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
-  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
-
   const handleSubmit = async e => {
     e?.preventDefault();
     setLoading(true);
     setTimeout(() => setLoading(false), 1200);
   }
+
+  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
+  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
+  const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   
   return (
     <div className='l_container'>
@@ -34,7 +35,7 @@ export function Login(){
           <FloatingPassword {...passProps} />
           {error && <Error error={error} />}
           <div className='l_btn_row'>
-            <Checkbox className='l_check' checked={checked} onChange={e => setChecked(e?.target?.checked)}>{t('login.remember')}</Checkbox>
+            <Checkbox {...checkProps}>{t('login.remember')}</Checkbox>
             <button type='submit' className='l_btn' disabled={loading}>
               {loading ? <Loader className='l_loader' color='#fff' /> : t('login.login')}
             </button>
