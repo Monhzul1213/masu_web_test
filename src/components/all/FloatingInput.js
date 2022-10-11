@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
 
 import { DynamicAIIcon } from './DynamicIcon';
+import { Error } from './Error';
 
 export function FloatingInput(props){
-  const { text, value, setValue, setError } = props;
+  const { text, value, setValue, setError, handleEnter } = props;
 
-  const handleChange = e => {
-    setValue(e.target.value);
+  const onChange = e => {
+    setValue({ value: e.target.value });
     setError && setError(null);
   }
 
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const inputProps = { className: 'f_input_back', value: value?.value, onChange, onKeyDown: handleEnter, style };
+
   return (
     <div className='f_input_container'>
-      <input className='f_input_back' onChange={handleChange} />
-      <label className={value && 'f_input_label'}>{text}</label>
+      <input {...inputProps} />
+      <label className={value?.value && 'f_input_label'} style={style}>{text}</label>
+      {value?.error && <p className='f_input_error'>{text} {value?.error}</p>}
     </div>
   )
 }
 
 export function FloatingPassword(props){
-  const { text, value, setValue, setError } = props;
+  const { text, value, setValue, setError, handleEnter } = props;
   const [visible, setVisible] = useState(false);
 
-  const handleChange = e => {
-    setValue(e.target.value);
+  const onChange = e => {
+    setValue({ value: e.target.value });
     setError && setError(null);
   }
 
@@ -32,11 +37,15 @@ export function FloatingPassword(props){
     setVisible(!visible);
   }
 
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const inputProps = { className: 'f_input_back', value: value?.value, type: visible ? 'text' : 'password', onChange, onKeyDown: handleEnter, style };
+
   return (
     <div className='f_input_container'>
-      <input autoFocus className='f_input_back' type={visible ? 'text' : 'password'} onChange={handleChange} />
-      <label className={value && 'f_input_label'}>{text}</label>
+      <input {...inputProps} />
+      <label className={value?.value && 'f_input_label'} style={style}>{text}</label>
       <DynamicAIIcon className='f_input_show' name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
+      {value?.error && <p className='f_input_error'>{text} {value?.error}</p>}
     </div>
   )
 }

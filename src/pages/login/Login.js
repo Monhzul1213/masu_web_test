@@ -9,19 +9,34 @@ import { Error, FloatingInput, FloatingPassword, Loader } from '../../components
 
 export function Login(){
   const { t } = useTranslation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState({ value: '', error: null });
+  const [password, setPassword] = useState({ value: '', error: null });
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const handleEnter = e => {
+    if (e?.key?.toLowerCase() === "enter") {
+      const form = e.target.form;
+      const index = [...form].indexOf(e.target);
+      form.elements[index + 1].focus();
+      e.preventDefault();
+    }
+  }
+
   const handleSubmit = async e => {
     e?.preventDefault();
     setLoading(true);
+    if(email?.value?.trim() && password?.value?.trim()){
+      console.log('call login service');
+    } else {
+      if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
+      if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
+    }
     setTimeout(() => setLoading(false), 1200);
   }
 
-  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
+  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, handleEnter };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   
