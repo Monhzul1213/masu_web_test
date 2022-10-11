@@ -10,6 +10,8 @@
   --input-font: 14px;
   --label-font: 13px;
   --input-height: 36px;
+  --btn-height: 36px;
+  --btn-width: 120px;
 }
 
 input::-webkit-credentials-auto-fill-button {
@@ -111,5 +113,57 @@ input:-webkit-autofill:active{
 
 .f_input_show:hover {
   cursor: pointer;
-  color: var(--link-color);
+  color: var(--btn-color);
+}
+
+.l_btn_row {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.l_check .ant-checkbox .ant-checkbox-inner {
+  background-color: var(--root-color);
+  border-color: var(--text2-color);
+  height: 16px;
+  width: 16px;
+  border-width: 1px;
+}
+
+.l_check .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--btn-color);
+  border-color: var(--btn-color);
+}
+
+.l_check > span {
+  color: var(--text2-color);
+  font-size: 13px;
+  font-weight: 450;
+}
+
+.l_btn {
+  border: none;
+  box-shadow: none;
+  background-color: var(--btn-color);
+  min-height: var(--btn-height);
+  min-width: var(--btn-width);
+  padding: 0 20px;
+  color: var(--root-color);
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.l_btn:hover {
+  cursor: pointer;
+  background-color: var(--btn-h-color);
+}
+
+.l_loader {
+  display: flex;
+  align-items: center;
 }
