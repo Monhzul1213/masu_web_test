@@ -1,3 +1,3 @@
-import login_image from './login_image.png';
+import login_image from './2.png';
 
 export { login_image };

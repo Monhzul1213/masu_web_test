@@ -1,7 +1,8 @@
 @import './color.css';
 
 :root {
-  --logo-height: 40px;
+  --logo-height: 45px;
+  --b-radius: 5px;
   --radius: 3px;
   --padding: 25px;
   --title-font: 16px;
@@ -31,11 +32,12 @@ input:-webkit-autofill:active{
 }
 
 .l_container {
-  background-color: var(--back-color);
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
+  background: rgb(160,32,240);
+  background: linear-gradient(180deg, rgba(160,32,240,1) 0%, rgba(101,6,205,1) 100%);
 }
 
 .l_back {
@@ -43,14 +45,14 @@ input:-webkit-autofill:active{
   display: flex;
   flex-flow: column;
   padding: var(--padding);
-  border-radius: var(--radius);
+  border-radius: var(--b-radius);
   max-width: var(--back-width);
   width: var(--back-width);
 }
 
 .l_logo {
   height: var(--logo-height);
-  width: calc(var(--logo-height) * 4.1);
+  width: calc(var(--logo-height) * 3.2);
   object-fit: cover;
   margin-bottom: 10px;
 }
@@ -121,7 +123,7 @@ input:-webkit-autofill:active{
 
 .f_input_show:hover {
   cursor: pointer;
-  color: var(--btn-color);
+  color: var(--logo1-color);
 }
 
 .l_btn_row {
@@ -140,8 +142,8 @@ input:-webkit-autofill:active{
 }
 
 .l_check .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: var(--btn-color);
-  border-color: var(--btn-color);
+  background-color: var(--logo1-color);
+  border-color: var(--logo1-color);
 }
 
 .l_check > span {
@@ -153,7 +155,7 @@ input:-webkit-autofill:active{
 .l_btn {
   border: none;
   box-shadow: none;
-  background-color: var(--btn-color);
+  background-color: var(--logo1-color);
   min-height: var(--btn-height);
   min-width: var(--btn-width);
   padding: 0 20px;
@@ -168,7 +170,7 @@ input:-webkit-autofill:active{
 
 .l_btn:hover {
   cursor: pointer;
-  background-color: var(--btn-h-color);
+  background-color: var(--main-color);
 }
 
 .l_loader {
