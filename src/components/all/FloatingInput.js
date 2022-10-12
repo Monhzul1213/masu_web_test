@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import { DynamicAIIcon } from './DynamicIcon';
-import { Error } from './Error';
 
 export function FloatingInput(props){
   const { text, value, setValue, setError, handleEnter } = props;
