@@ -50,6 +50,7 @@ export function AddressRow(props){
         <AddressSelect {...addr2Props} />
         <AddressSelect {...addr3Props} />
       </div>
+      {addr1?.error && <p className='f_input_error'>{text} {addr1?.error}</p>}
     </div>
   );
 }

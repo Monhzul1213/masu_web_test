@@ -27,14 +27,14 @@ export function Login(){
 
   const handleSubmit = async e => {
     e?.preventDefault();
-    setLoading(true);
     if(email?.value?.trim() && password?.value?.trim()){
+      setLoading(true);
       console.log('call login service');
+      setTimeout(() => setLoading(false), 1200);
     } else {
       if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
       if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
     }
-    setTimeout(() => setLoading(false), 1200);
   }
 
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, handleEnter };

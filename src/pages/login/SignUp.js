@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import '../../css/login.css';
 import { login_image } from '../../assets';
 import { addr1List, addr2List, addr3List } from '../../helpers';
-import { Button, FloatingInput, FloatingPassword } from '../../components/all';
+import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
 import { AddressRow, Copyright } from '../../components/login';
 
 export function SignUp(){
@@ -32,14 +32,21 @@ export function SignUp(){
 
   const handleSubmit = async e => {
     e?.preventDefault();
-    setLoading(true);
-    // if(email?.value?.trim() && password?.value?.trim()){
-    //   console.log('call login service');
-    // } else {
-    //   if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
-    //   if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
-    // }
-    setTimeout(() => setLoading(false), 1200);
+    let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && addr1?.value?.trim() && addr2?.value?.trim()
+      && addr3?.value?.trim();
+    if(isValid){
+      setAddr1({ value: addr1?.value });
+      setLoading(true);
+      console.log('call signup service');
+      setTimeout(() => setLoading(false), 1200);
+    } else {
+      if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
+      if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
+      if(!business?.value?.trim()) setBusiness({ value: '', error: t('error.not_empty') });
+      if(!addr1?.value?.trim() || !addr2?.value?.trim() || !addr3?.value?.trim())
+        setAddr1({ value: addr1?.value, error: t('error.not_empty')  });
+      else setAddr1({ value: addr1?.value });
+    }
   }
 
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, handleEnter };
@@ -69,6 +76,7 @@ export function SignUp(){
               {t('login.sign_accept5')}
             </p>
           </div>
+          {error && <Error error={error} />}
           <Button {...btnProps} />
         </form>
         <div className='l_center_row'>
