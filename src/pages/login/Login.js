@@ -57,7 +57,7 @@ export function Login(){
         // dispatch(setLogin({ toRemember: checked }));
         // dispatch(setIsLoggedIn(true));
         window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
-        navigate({ pathname: '/' });
+        // navigate({ pathname: '/' });
       }
       setLoading(false);
     } else {
