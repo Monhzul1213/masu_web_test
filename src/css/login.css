@@ -11,7 +11,7 @@
   --input-font: 14px;
   --label-font: 14px;
   --input-height: 36px;
-  --btn-height: 36px;
+  --btn-height: 40px;
   --btn-width: 120px;
   --link-font: 13px;
 }
@@ -37,7 +37,7 @@ input:-webkit-autofill:active{
   justify-content: center;
   height: 100vh;
   background: rgb(160,32,240);
-  background: linear-gradient(180deg, rgba(160,32,240,1) 0%, rgba(101,6,205,1) 100%);
+  background: linear-gradient(180deg, rgba(160,32,240,1) 0%, rgba(129,18,222,1) 100%);
 }
 
 .l_back {
@@ -67,7 +67,7 @@ input:-webkit-autofill:active{
   position: relative;
   display: flex;
   flex-direction: column;
-  margin: 35px 0 20px 0;
+  margin: 25px 0 20px 0;
 }
 
 .f_input_back {
@@ -148,7 +148,7 @@ input:-webkit-autofill:active{
 
 .l_check > span {
   color: var(--text2-color);
-  font-size: 13px;
+  font-size: var(--link-font);
   font-weight: 450;
 }
 
@@ -158,6 +158,7 @@ input:-webkit-autofill:active{
   background-color: var(--logo1-color);
   min-height: var(--btn-height);
   min-width: var(--btn-width);
+  width: 100%;
   padding: 0 20px;
   color: var(--root-color);
   border-radius: var(--radius);
@@ -166,6 +167,7 @@ input:-webkit-autofill:active{
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 30px 0 10px 0;
 }
 
 .l_btn:hover {
@@ -181,7 +183,6 @@ input:-webkit-autofill:active{
 .l_link {
   color: var(--link-color);
   font-size: var(--link-font);
-  margin-top: 10px;
 }
 
 .l_link:hover {
@@ -216,4 +217,25 @@ input:-webkit-autofill:active{
   box-shadow: none;
   border: none;
   padding: 0;
+}
+
+.social_header {
+  display: flex;
+  flex-flow: row;
+  margin: 40px 0 5px 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.social_line {
+  height: 2px;
+  width: 40px;
+  background-color: var(--text2-color);
+}
+
+.social_label {
+  color: var(--text2-color);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0 10px;
 }

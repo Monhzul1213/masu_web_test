@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import '../../css/login.css';
 import { login_image } from '../../assets';
 import { Error, FloatingInput, FloatingPassword, Loader } from '../../components/all';
+import { Social } from '../../components/login';
 
 export function Login(){
   const { t } = useTranslation();
@@ -49,14 +50,15 @@ export function Login(){
           <FloatingInput {...emailProps} />
           <FloatingPassword {...passProps} />
           {error && <Error error={error} />}
+          <button type='submit' className='l_btn' disabled={loading}>
+            {loading ? <Loader className='l_loader' color='#fff' /> : t('login.login')}
+          </button>
           <div className='l_btn_row'>
             <Checkbox {...checkProps}>{t('login.remember')}</Checkbox>
-            <button type='submit' className='l_btn' disabled={loading}>
-              {loading ? <Loader className='l_loader' color='#fff' /> : t('login.login')}
-            </button>
+            <Link className='l_link' to='/forgot_password'>{t('login.forgot')}</Link>
           </div>
         </form>
-        <Link className='l_link' to='/forgot_password'>{t('login.forgot')}</Link>
+        <Social />
         <Link className='l_link' to='/sign_up'>{t('login.new_sign')}</Link>
       </div>
     </div>
