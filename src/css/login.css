@@ -203,17 +203,22 @@ input:-webkit-autofill:active{
 .input_container {
   display: flex;
   flex-flow: column;
-  margin: 35px 0 20px 0;
+  margin: 0 0 20px 0;
 }
 
 .addr_row {
   display: flex;
   flex-flow: row;
   margin-top: 5px;
+  border-style: solid;
+  border-width: 0 0 2px 0;
+  border-color: var(--border-color);
+  padding: 0 2px;
 }
 
 .addr_select {
   flex: 1;
+  max-width: calc(100% / 3);
 }
 
 .addr_select.ant-select .ant-select-selector {
@@ -298,4 +303,13 @@ input:-webkit-autofill:active{
 
 #l_copy:hover {
   color: var(--root-color);
+}
+
+.addr_select .ant-select-selector {
+  box-shadow: none !important;
+}
+
+.addr_select .ant-select-selection-search {
+  left: 0 !important;
+  right: 0 !important;
 }
