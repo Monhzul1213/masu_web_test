@@ -178,6 +178,11 @@ input:-webkit-autofill:active{
   background-color: var(--main-color);
 }
 
+.l_btn:disabled {
+  background-color: var(--logo1-color_dis);
+  cursor: not-allowed;
+}
+
 .l_loader {
   display: flex;
   align-items: center;

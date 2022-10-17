@@ -44,10 +44,10 @@ export function SignUp(){
 
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, handleEnter };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, handleEnter };
-  const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError };
+  const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError, handleEnter };
   const addressProps = { text: t('login.address'), addr1, addr2, addr3, setAddr1, setAddr2, setAddr3, addr1List, addr2List, addr3List };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
-  const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup') };
+  const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
   
   return (
     <div className='l_container'>
