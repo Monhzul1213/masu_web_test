@@ -6,8 +6,8 @@ import { useTranslation } from 'react-i18next';
 import '../../css/login.css';
 import { login_image } from '../../assets';
 import { addr1List, addr2List, addr3List } from '../../helpers';
-import { FloatingInput, FloatingPassword, Loader } from '../../components/all';
-import { AddressRow } from '../../components/login';
+import { Button, FloatingInput, FloatingPassword } from '../../components/all';
+import { AddressRow, Copyright } from '../../components/login';
 
 export function SignUp(){
   const { t } = useTranslation();
@@ -47,6 +47,7 @@ export function SignUp(){
   const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError };
   const addressProps = { text: t('login.address'), addr1, addr2, addr3, setAddr1, setAddr2, setAddr3, addr1List, addr2List, addr3List };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
+  const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup') };
   
   return (
     <div className='l_container'>
@@ -68,19 +69,14 @@ export function SignUp(){
               {t('login.sign_accept5')}
             </p>
           </div>
-          <button type='submit' className='l_btn' disabled={loading} id='btn_signup'>
-            {loading ? <Loader className='l_loader' color='#fff' /> : t('login.signup')}
-          </button>
+          <Button {...btnProps} />
         </form>
         <div className='l_center_row'>
           <p className='l_link_text'>{t('login.go_login')}</p>
           <Link className='l_link' to='/'>{t('login.login')}</Link>
         </div>
       </div>
-      <div className='l_link_back'>
-        <a className='l_copyright' target="_blank" href={'https://' + t('login.link')} id='l_copy'>{t('login.link')}</a>
-        <span className='l_copyright'>{t('login.year')}</span>
-      </div>
+      <Copyright />
     </div>
   )
 }
