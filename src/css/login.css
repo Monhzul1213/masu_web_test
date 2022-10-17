@@ -1,11 +1,12 @@
 @import './color.css';
 
 :root {
-  --logo-height: 45px;
+  --logo-height: 48px;
   --b-radius: 5px;
   --radius: 3px;
-  --padding: 25px;
-  --title-font: 16px;
+  --padding1: 20px;
+  --padding2: 15px;
+  --title-font: 15px;
   --back-width: 400px;
   --border-color: #949494;
   --input-font: 14px;
@@ -35,19 +36,21 @@ input:-webkit-autofill:active{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   background: rgb(160,32,240);
   background: linear-gradient(180deg, rgba(160,32,240,1) 0%, rgba(129,18,222,1) 100%);
+  position: relative;
 }
 
 .l_back {
   background-color: var(--root-color);
   display: flex;
   flex-flow: column;
-  padding: var(--padding);
+  padding: var(--padding2) var(--padding1);
   border-radius: var(--b-radius);
   max-width: var(--back-width);
   width: var(--back-width);
+  margin: 10px 10px 60px 10px;
 }
 
 .l_logo {
@@ -222,15 +225,16 @@ input:-webkit-autofill:active{
 .social_header {
   display: flex;
   flex-flow: row;
-  margin: 40px 0 5px 0;
+  margin: 50px 0 5px 0;
   align-items: center;
   justify-content: center;
 }
 
 .social_line {
-  height: 2px;
+  height: 1px;
   width: 40px;
   background-color: var(--text2-color);
+  margin-top: 1px;
 }
 
 .social_label {
@@ -238,4 +242,60 @@ input:-webkit-autofill:active{
   font-size: 13px;
   font-weight: 500;
   padding: 0 10px;
+  margin: 0;
+}
+
+.social_row {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-flow: row;
+  margin-bottom: 50px;
+}
+
+.social_link {
+  background-color: var(--back-color);
+  margin: 0 5px;
+  width: 40px;
+  height: 30px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social_link:hover {
+  background-color: var(--tag1-color);
+}
+
+.social {
+  color: var(--link-color);
+  font-size: 24px;
+}
+
+.l_center_row {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
+
+.l_link_back {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-top: auto;
+  position: absolute;
+  bottom: 10px;
+}
+
+.l_copyright {
+  margin: 0;
+  color: #fffa;
+  font-size: 14px;
+  font-weight: 450;
+  line-height: 22px;
+}
+
+#l_copy:hover {
+  color: var(--root-color);
 }
