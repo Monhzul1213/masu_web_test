@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Loading, Login, SignUp, Home } from './pages';
+import { Loading, Login, SignUp, Home, Config } from './pages';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -51,6 +51,7 @@ export function App(){
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='*' element={<Navigate to='/' replace />} />
+              <Route path='/config' element={<Config />} />
             </Routes>
           </Layout>
         </Layout>

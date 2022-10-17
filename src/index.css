@@ -24,8 +24,13 @@ code {
 
 .loading {
   position: absolute;
-  top: 50%;
-  right: 50%;
+  top: calc(50% - 50px);
+  right: calc(50% - 50px);
+  min-height: 100px;
+  min-width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .error_back {
