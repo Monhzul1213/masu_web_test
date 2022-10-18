@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,6 +8,7 @@ import { Loading, Login, SignUp, Home, Config } from './pages';
 import { setIsLoggedIn } from './services';
 
 export function App(){
+  const [open, setOpen] = useState(false);
   const loggedIn = useSelector(state => state.temp.loggedIn);
   const user = useSelector(state => state.login.user);
   const dispatch = useDispatch();
@@ -43,12 +44,14 @@ export function App(){
       </Suspense>
     </BrowserRouter>
   );
+
+  const menuProps = { open, setOpen };
   
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Layout>
-          <Header />
+          <Header {...menuProps} />
           <Layout>
             <Routes>
               <Route path='/' element={<Home />} />

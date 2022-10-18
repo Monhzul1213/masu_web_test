@@ -1,0 +1,55 @@
+@import './color.css';
+
+:root {
+  --header-height: 50px;
+  --header-color: #b44af7;
+  --header-padding: 5px 10px;
+  --icon-size: 28px;
+  --title-size: 18px;
+}
+
+.h_container {
+  min-height: var(--header-height);
+  background-color: var(--header-color);
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: var(--header-padding);
+  -webkit-box-shadow: 0 1px 5px rgba(0,0,0,.4);
+  -moz-box-shadow: 0 1px 5px rgba(0,0,0,.4);
+  box-shadow: 0 1px 5px rgba(0,0,0,.4);
+}
+
+.h_icon_btn {
+  height: 36px;
+  width: 36px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.h_icon {
+  color: var(--root-color);
+  font-size: var(--icon-size);
+}
+
+.h_icon_btn:hover {
+  cursor: pointer;
+  background-color: rgba(255,255,255,0.15);
+  border-radius: 5px;
+}
+
+.h_title {
+  margin: 0 10px;
+  color: var(--root-color);
+  font-size: var(--title-size);
+  font-weight: 650;
+  flex: 1;
+}
+
+.h_logo {
+  height: 32px;
+}
