@@ -31,6 +31,27 @@ export const loginSlice = createSlice({
   }
 });
 
+export const apiRegister = data => async dispatch => {
+  try {
+    const config = {
+      method: 'POST',
+      url: loginConfig?.url + 'Merchant/register',
+      headers: { 'Content-Type': 'application/json', 'Accept': '*/*' }, 
+      data
+    };
+    const response = await fetchRetryLogin(config);
+    console.log('++++++++++++++++++++++=', response, response?.rettype);
+    if(!response || response?.rettype || response?.rettype === undefined){
+      return Promise.resolve({ error: response?.retdesc ?? (response?.rettype === undefined ? response?.toString() : 'Алдаа гарлаа.') });
+    } else {
+      return Promise.resolve({ error: null });
+    }
+  } catch (err) {
+    console.log(err);
+    return Promise.resolve({ error: err?.toString() });
+  }
+}
+
 export const apiLogin = (mail, password) => async dispatch => {
   try {
     const config = {

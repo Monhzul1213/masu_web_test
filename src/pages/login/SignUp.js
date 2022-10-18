@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Checkbox } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import '../../css/login.css';
 import { login_image } from '../../assets';
 import { addr1List, addr2List, addr3List } from '../../helpers';
+import { apiLogin, apiRegister, setIsLoggedIn, setLogin } from '../../services';
 import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
 import { AddressRow, Copyright } from '../../components/login';
 
@@ -20,6 +22,8 @@ export function SignUp(){
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEnter = e => {
     if (e?.key?.toLowerCase() === "enter") {
@@ -32,13 +36,27 @@ export function SignUp(){
 
   const handleSubmit = async e => {
     e?.preventDefault();
+    setError(null);
     let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && addr1?.value?.trim() && addr2?.value?.trim()
       && addr3?.value?.trim();
     if(isValid){
       setAddr1({ value: addr1?.value });
       setLoading(true);
-      console.log('call signup service');
-      setTimeout(() => setLoading(false), 1200);
+      let data = { mail: email?.value?.trim(), password: password?.value?.trim(), descr: business?.value?.trim() };
+      const response = await dispatch(apiRegister(data));
+      console.log(response);
+      if(response?.error) setError(response?.error);
+      else {
+        const response2 = await dispatch(apiLogin(data?.mail, data?.password));
+        if(response2?.error) setError(response2?.error);
+        else {
+          dispatch(setLogin({ toRemember: true }));
+          dispatch(setIsLoggedIn(true));
+          window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
+          navigate({ pathname: '/config' });
+        }
+      }
+      setLoading(false);
     } else {
       if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
       if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });

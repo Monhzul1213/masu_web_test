@@ -40,6 +40,7 @@ export function Login(){
 
   const handleSubmit = async e => {
     e?.preventDefault();
+    setError(null);
     if(email?.value?.trim() && password?.value?.trim()){
       setLoading(true);
       const response = await dispatch(apiLogin(email?.value?.trim(), password?.value?.trim()));
