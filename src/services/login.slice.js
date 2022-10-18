@@ -6,6 +6,7 @@ import { config as loginConfig } from '../helpers';
 const initialState = {
   token: '',
   user: null,
+  webUser: null,
   toRemember: false,
 };
 
@@ -18,6 +19,7 @@ export const loginSlice = createSlice({
     },
     setUser: (state, action) => {
       state.user = action.payload;
+      state.webUser = action.payload;
     },
     logout: state => {
       state.user = null;
@@ -43,7 +45,7 @@ export const apiLogin = (mail, password) => async dispatch => {
       return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
     } else {
       dispatch(setToken(response?.token));
-      dispatch(setUser({ mail, password }));
+      dispatch(setUser({ mail, password, merchantId: response?.merchantId }));
       return Promise.resolve({ error: null, token: response?.token });
     }
   } catch (err) {

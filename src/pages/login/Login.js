@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Checkbox } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import '../../css/login.css';
 import { apiLogin, setIsLoggedIn, setLogin } from '../../services';
@@ -17,8 +17,17 @@ export function Login(){
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { webUser, toRemember }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(webUser?.mail) setEmail({ value: webUser?.mail });
+    if(toRemember && webUser?.password) setPassword({ value: webUser?.password });
+    if(toRemember) setChecked(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleEnter = e => {
     if (e?.key?.toLowerCase() === "enter") {
