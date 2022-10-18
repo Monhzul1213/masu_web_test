@@ -6,7 +6,7 @@ export function Copyright(){
   
   return (
     <div className='l_link_back'>
-      <a className='l_copyright' target="_blank" href={'https://' + t('login.link')} id='l_copy'>{t('login.link')}</a>
+      <a className='l_copyright' target='_blank' rel='noreferrer' href={'https://' + t('login.link')} id='l_copy'>{t('login.link')}</a>
       <span className='l_copyright'>{t('login.year')}</span>
     </div>
   );
