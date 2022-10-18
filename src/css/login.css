@@ -37,8 +37,12 @@ input:-webkit-autofill:active{
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: rgb(160,32,240);
-  background: linear-gradient(180deg, rgba(160,32,240,1) 0%, rgba(129,18,222,1) 100%);
+  background-image: url('../assets/bg.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: right;
+  /* background: rgb(160,32,240); */
+  /* background: linear-gradient(180deg, rgba(160,32,240,1) 0%, rgba(129,18,222,1) 100%); */
   position: relative;
 }
 
