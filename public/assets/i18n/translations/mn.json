@@ -30,5 +30,16 @@
   "header": {
     "/": "Home",
     "/config": "ТОХИРГОО"
+  },
+  "menu": {
+    "profile": "Хэрэглэгч",
+    "report": "Тайлан",
+    "inventory": "Бараа",
+    "management": "Барааны менежмент",
+    "employee": "Ажилтан",
+    "customer": "Харилцагч",
+    "integration": "Интеграци",
+    "config": "Тохиргоо",
+    "help": "Тусламж"
   }
 }

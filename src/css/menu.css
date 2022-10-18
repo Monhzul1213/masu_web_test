@@ -6,6 +6,7 @@
   --icon-size: 28px;
   --title-size: 18px;
   --side-color: #ffffff;
+  --menu-height: 56px;
 }
 
 .h_container {
@@ -52,4 +53,47 @@
 
 .h_logo {
   height: 32px;
+}
+
+.ant-menu-item {
+  padding: 0 !important;
+  height: var(--menu-height) !important;
+  line-height: var(--menu-height) !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  border-style: solid;
+  border-width: 0 4px 0 4px;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.ant-menu-item-active {
+  background-color: #F2F2F2 !important;
+}
+/*::selection*/
+
+.ant-menu-item-selected {
+  background-color: #F2F2F2 !important;
+  border-left-color: var(--text2-color);
+}
+
+.ant-menu-item-selected .ant-menu-title-content, .ant-menu-item-selected .ant-menu-item-icon {
+  color: var(--text-color);
+}
+
+.ant-menu-item-icon {
+  width: calc(var(--side-width) - 8px) !important;
+  height: var(--menu-height) !important;
+  padding: 16px;
+  color: var(--text2-color);
+}
+
+.ant-menu-title-content {
+  position: absolute;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text2-color);
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: var(--menu-height) !important;
 }
