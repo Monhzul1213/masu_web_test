@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { Header } from './components/menu';
 import { Loading, Login, SignUp, Home, Config } from './pages';
 import { setIsLoggedIn } from './services';
 
@@ -47,6 +48,7 @@ export function App(){
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Layout>
+          <Header />
           <Layout>
             <Routes>
               <Route path='/' element={<Home />} />
