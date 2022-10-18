@@ -15,7 +15,7 @@ export function Home(){
   }
 
   return (
-    <div>
+    <div style={{padding:15}}>
       <p>Home</p>
       <button onClick={onClickLogout}>Logout</button>
     </div>

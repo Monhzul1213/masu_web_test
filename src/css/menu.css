@@ -1,11 +1,11 @@
 @import './color.css';
 
 :root {
-  --header-height: 50px;
   --header-color: #b44af7;
   --header-padding: 5px 10px;
   --icon-size: 28px;
   --title-size: 18px;
+  --side-color: #ffffff;
 }
 
 .h_container {

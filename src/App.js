@@ -8,7 +8,7 @@ import { Loading, Login, SignUp, Home, Config } from './pages';
 import { setIsLoggedIn } from './services';
 
 export function App(){
-  const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const loggedIn = useSelector(state => state.temp.loggedIn);
   const user = useSelector(state => state.login.user);
   const dispatch = useDispatch();
@@ -45,14 +45,14 @@ export function App(){
     </BrowserRouter>
   );
 
-  const menuProps = { open, setOpen };
+  const menuProps = { collapsed, setCollapsed };
   
   return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
-        <Layout>
+        <Layout style={{minHeight: '100vh'}}>
           <Header {...menuProps} />
-          <Layout>
+          <Layout style={{marginLeft: 'var(--side-width)'}}>
             <Menu {...menuProps} />
             <Routes>
               <Route path='/' element={<Home />} />

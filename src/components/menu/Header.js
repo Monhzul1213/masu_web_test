@@ -7,7 +7,7 @@ import { header_image } from '../../assets';
 import { DynamicMDIcon } from '../all';
 
 export function Header(props){
-  const { open, setOpen } = props;
+  const { collapsed, setCollapsed } = props;
   const { pathname } = useLocation();
   const { i18n, t } = useTranslation();
   const [title, setTitle] = useState('Home');
@@ -18,7 +18,7 @@ export function Header(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
-  const onClick = () => setOpen(!open);
+  const onClick = () => setCollapsed(!collapsed);
 
   return (
     <div className='h_container'>

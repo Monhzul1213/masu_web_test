@@ -15,5 +15,8 @@
 
   --danger-color: #e41051;
 	--warning-color: #fcd12a;
-	--success-color: #0cceb5;
+  --success-color: #0cceb5;
+
+  --header-height: 50px;
+  --side-width: 72px;
 }
