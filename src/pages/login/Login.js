@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Checkbox } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 
 import '../../css/login.css';
-import { apiLogin } from '../../services';
+import { apiLogin, setIsLoggedIn, setLogin } from '../../services';
 import { login_image } from '../../assets';
 import { Button, Error, FloatingInput, FloatingPassword } from '../../components/all';
 import { Social, Copyright } from '../../components/login';
@@ -19,6 +18,7 @@ export function Login(){
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEnter = e => {
     if (e?.key?.toLowerCase() === "enter") {
@@ -31,33 +31,15 @@ export function Login(){
 
   const handleSubmit = async e => {
     e?.preventDefault();
-    console.log('5-------------------')
-    
-    const config = {
-      method: 'POST',
-      url: 'http://192.168.1.104:8282/Merchant/login',
-      headers: {
-        'Accept': '*/*',
-        'Content-Type': 'application/json',
-      }, 
-      data: {
-        mail: 'hashaasuna@gmail.com', password: '123'
-      }
-    };
-    axios(config)
-      .then(res => console.log('1----', res))
-      .catch(err => console.log('2----', err?.message));
-
-    return;
     if(email?.value?.trim() && password?.value?.trim()){
       setLoading(true);
       const response = await dispatch(apiLogin(email?.value?.trim(), password?.value?.trim()));
       if(response?.error) setError(response?.error);
       else {
-        // dispatch(setLogin({ toRemember: checked }));
-        // dispatch(setIsLoggedIn(true));
+        dispatch(setLogin({ toRemember: checked }));
+        dispatch(setIsLoggedIn(true));
         window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
-        // navigate({ pathname: '/' });
+        navigate({ pathname: '/' });
       }
       setLoading(false);
     } else {
