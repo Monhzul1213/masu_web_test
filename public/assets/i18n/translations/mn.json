@@ -29,7 +29,14 @@
   },
   "header": {
     "/": "Home",
-    "/config": "ТОХИРГОО"
+    "/config": "Тохиргоо",
+    "/report": "Тайлан",
+    "/inventory": "Бараа",
+    "/management": "Барааны менежмент",
+    "/employee": "Ажилтан",
+    "/customer": "Харилцагч",
+    "/integration": "Интеграци",
+    "/help": "Тусламж"
   },
   "menu": {
     "profile": "Хэрэглэгч",

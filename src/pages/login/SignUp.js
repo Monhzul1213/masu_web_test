@@ -37,10 +37,10 @@ export function SignUp(){
   const handleSubmit = async e => {
     e?.preventDefault();
     setError(null);
-    let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && addr1?.value?.trim() && addr2?.value?.trim()
-      && addr3?.value?.trim();
+    let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim()
+      // && addr1?.value?.trim() && addr2?.value?.trim() && addr3?.value?.trim();
     if(isValid){
-      setAddr1({ value: addr1?.value });
+      // setAddr1({ value: addr1?.value });
       setLoading(true);
       let data = { mail: email?.value?.trim(), password: password?.value?.trim(), descr: business?.value?.trim() };
       const response = await dispatch(apiRegister(data));
@@ -61,9 +61,9 @@ export function SignUp(){
       if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
       if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
       if(!business?.value?.trim()) setBusiness({ value: '', error: t('error.not_empty') });
-      if(!addr1?.value?.trim() || !addr2?.value?.trim() || !addr3?.value?.trim())
-        setAddr1({ value: addr1?.value, error: t('error.not_empty')  });
-      else setAddr1({ value: addr1?.value });
+      // if(!addr1?.value?.trim() || !addr2?.value?.trim() || !addr3?.value?.trim())
+      //   setAddr1({ value: addr1?.value, error: t('error.not_empty')  });
+      // else setAddr1({ value: addr1?.value });
     }
   }
 
@@ -83,7 +83,7 @@ export function SignUp(){
           <FloatingInput {...emailProps} />
           <FloatingPassword {...passProps} />
           <FloatingInput {...businessProps} />
-          <AddressRow {...addressProps} />
+          {/* <AddressRow {...addressProps} /> */}
           <div className='l_check_row'>
             <Checkbox {...checkProps} />
             <p className='l_term'>
