@@ -101,3 +101,14 @@
   padding: 0 !important;
   line-height: var(--menu-height) !important;
 }
+
+.ant-tooltip-arrow-content {
+  display: none;
+}
+
+.ant-tooltip-inner {
+  margin-left: -10px;
+  color: var(--text-color);
+  background-color: var(--menu-active-bgcolor);
+  font-weight: 400;
+}
