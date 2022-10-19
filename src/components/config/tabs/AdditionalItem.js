@@ -2,12 +2,9 @@ import React from 'react';
 import { Switch } from 'antd';
 
 export function AdditionalItem(props){
-  const { item, more, setChecked } = props;
+  const { item, more, onCheck } = props;
 
-  const onChange = e => {
-    console.log('setchecked', e);
-    // setChecked();
-  }
+  const onChange = e => onCheck(item?.label, e);
 
   return (
     <div className='a_item'>
