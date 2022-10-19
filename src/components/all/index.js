@@ -3,3 +3,4 @@ export * from './DynamicIcon';
 export * from './Error';
 export * from './Loader';
 export * from './Button';
+export * from './Overlay';

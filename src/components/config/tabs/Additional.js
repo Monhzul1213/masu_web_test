@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { Overlay } from '../../all';
 import { AdditionalItem as Item } from './AdditionalItem';
 import { ButtonRow } from './ButtonRow';
 
 export function Additional(){
   const { t } = useTranslation();
   const [checked, setChecked] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const items = [
     { title: t('add_menu.cashier1'), sub_title: t('add_menu.cashier2'), checked: checked['cashier'], label: 'cashier' },
@@ -33,19 +35,21 @@ export function Additional(){
     setChecked({});
   }
 
-  const onClickSave = e => {
+  const onClickSave = () => {
+    setLoading(true);
     console.log(checked);
+    setTimeout(() => setLoading(false), 1200);
   }
 
   const btnProps = { onClickCancel, onClickSave };
 
   return (
-    <div className='c_tab_cont'>
+    <Overlay className='c_tab_cont' loading={loading}>
       <p className='c_tab_title'>{t('system_menu.additional')}</p>
       <div className='c_tab_back'>
         {items?.map(renderItem)}
       </div>
       <ButtonRow {...btnProps} />
-    </div>
+    </Overlay>
   );
 }
