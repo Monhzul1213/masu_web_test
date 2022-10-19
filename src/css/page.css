@@ -3,13 +3,14 @@
 :root {
   --config-card-width: 450px;
   --config-card-icon: 36px;
-  --title-font: 24px;
+  --title-font: 22px;
   --sub-font: 14px;
   --s-menu-height: 50px;
 }
 
 .s_container {
   padding: var(--page-padding);
+  max-height: calc(100vh - var(--header-height));
   overflow: scroll;
 }
 
@@ -18,6 +19,8 @@
   border-radius: var(--radius);
   width: var(--config-card-width);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
+  overflow: scroll;
 }
 
 .c_card_title_back {

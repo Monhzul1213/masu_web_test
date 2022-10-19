@@ -20,15 +20,24 @@ export function Card(){
     getItem(t('system_menu.order'), 'order'),
   ];
 
+  const items1 = [
+    getItem(t('system_menu.store'), 'store'),
+    getItem(t('system_menu.pos'), 'pos'),
+  ];
+
   const onClick = e => console.log(e?.key);
 
-  const sTitleProps = { title: t('config.config'), sub_title: t('config.system_config'), icon: 'BsGear' };//BsShop
+  const sTitleProps = { title: t('config.config'), sub_title: t('config.system_config'), icon: 'BsGear' };
   const sMenuProps = { items, onClick, className: 'system_menu' };
+  const pTitleProps = { title: t('config.store'), sub_title: t('config.store_config'), icon: 'BsShop', color: '#a020f0cc' };
+  const pMenuProps = { items: items1, onClick, className: 'system_menu' };
 
   return (
     <div className='c_card_back'>
       <Title {...sTitleProps} />
       <Menu {...sMenuProps} />
+      <Title {...pTitleProps} />
+      <Menu {...pMenuProps} />
     </div>
   );
 }
