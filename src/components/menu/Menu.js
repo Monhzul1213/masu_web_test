@@ -41,7 +41,7 @@ export function Menu(props){
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style };
   const profileProps = { collapsed };
-  const menuProps = { items, onClick };
+  const menuProps = { items, onClick, className: 'side_menu' };
 
   return (
     <Sider {...siderProps} width={300}>
