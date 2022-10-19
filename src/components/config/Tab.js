@@ -5,9 +5,10 @@ import { Additional } from './tabs';
 
 export function Tab(props){
   const { selectedKeys } = props;
+
   const items = [
     { key: 'additional', children: <Additional /> },
   ];
 
-  return <Tabs activeKey={selectedKeys && selectedKeys[0]} items={items} />;
+  return <Tabs activeKey={selectedKeys && selectedKeys[0]} defaultActiveKey='additional' items={items} />;
 }
