@@ -1,8 +1,10 @@
 import React from 'react';
 import { Layout, Menu as AntMenu } from 'antd';
-import { RiUserSettingsLine } from 'react-icons/ri';
-import { BsClipboardData, BsInboxes } from 'react-icons/bs';
+import { RiUserSettingsLine, RiContactsLine, RiTeamLine } from 'react-icons/ri';
+import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
+import { TbBuildingWarehouse } from 'react-icons/tb';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import '../../css/menu.css';
 const { Sider } = Layout;
@@ -14,6 +16,7 @@ function getItem(label, key, icon, children, type) {
 export function Menu(props){
   const { collapsed } = props;
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const style = {
     overflow: 'auto',
@@ -24,26 +27,19 @@ export function Menu(props){
     backgroundColor: 'var(--side-color)',
     boxShadow: '0px 2px 5px rgba(0,0,0,.15)'
   };
-    // getItem(t('menu.profile'), '/profile', <RiUserSettingsLine />),
 
   const items = [
     getItem(t('menu.report'), '/report', <BsClipboardData />),
     getItem(t('menu.inventory'), '/inventory', <BsInboxes />),
-    getItem(t('menu.management'), '/management', <BsInboxes />),
+    getItem(t('menu.management'), '/management', <TbBuildingWarehouse />),
+    getItem(t('menu.employee'), '/employee', <RiContactsLine />),
+    getItem(t('menu.customer'), '/customer', <RiTeamLine />),
+    getItem(t('menu.integration'), '/integration', <BsPuzzle />),
+    getItem(t('menu.config'), '/config', <BsGear />),
+    getItem(t('menu.help'), '/help', <BsQuestionCircle />),
   ];
 
-  /**
-    "management": "Барааны менежмент",
-    "employee": "Ажилтан",
-    "customer": "Харилцагч",
-    "integration": "Интеграци",
-    "config": "Тохиргоо",
-    "help": "Тусламж"
-   */
-
-  const onClick = e => {
-    console.log(e);
-  }
+  const onClick = e => navigate(e?.key);
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style };
 

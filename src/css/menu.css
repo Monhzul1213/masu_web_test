@@ -7,6 +7,7 @@
   --title-size: 18px;
   --side-color: #ffffff;
   --menu-height: 56px;
+  --menu-active-bgcolor: #f8eefe;
 }
 
 .h_container {
@@ -68,17 +69,20 @@
 }
 
 .ant-menu-item-active {
-  background-color: #F2F2F2 !important;
+  background-color: var(--menu-active-bgcolor) !important;
 }
-/*::selection*/
 
 .ant-menu-item-selected {
-  background-color: #F2F2F2 !important;
-  border-left-color: var(--text2-color);
+  background-color: var(--menu-active-bgcolor) !important;
+  border-left-color: var(--logo1-color);
 }
 
-.ant-menu-item-selected .ant-menu-title-content, .ant-menu-item-selected .ant-menu-item-icon {
+.ant-menu-item-selected .ant-menu-title-content {
   color: var(--text-color);
+}
+
+.ant-menu-item-selected .ant-menu-item-icon {
+  color: var(--logo1-color);
 }
 
 .ant-menu-item-icon {

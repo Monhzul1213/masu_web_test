@@ -45,6 +45,11 @@ export function App(){
     </BrowserRouter>
   );
 
+  const onClickLayout = e => {
+    e?.preventDefault();
+    if(!collapsed) setCollapsed(true);
+  }
+
   const menuProps = { collapsed, setCollapsed };
   
   return (
@@ -52,13 +57,15 @@ export function App(){
       <Suspense fallback={<Loading />}>
         <Layout style={{minHeight: '100vh'}}>
           <Header {...menuProps} />
-          <Layout style={{marginLeft: 'var(--side-width)'}}>
+          <Layout>
             <Menu {...menuProps} />
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route path='*' element={<Home />} />
-              <Route path='/config' element={<Config />} />
-            </Routes>
+            <Layout style={{marginLeft: 'var(--side-width)'}} onClick={onClickLayout}>
+              <Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='*' element={<Home />} />
+                <Route path='/config' element={<Config />} />
+              </Routes>
+            </Layout>
           </Layout>
         </Layout>
       </Suspense>
