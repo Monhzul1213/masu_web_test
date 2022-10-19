@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import '../css/page.css';
+import '../css/config.css';
 import { Card, Tab } from '../components/config';
 
 export function Config(){

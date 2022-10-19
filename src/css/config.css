@@ -104,3 +104,7 @@
   height: var(--page-padding);
   width: var(--page-padding);
 }
+
+.ant-tabs > .ant-tabs-nav, .ant-tabs > div > .ant-tabs-nav {
+  display: none;
+}
