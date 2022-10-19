@@ -6,19 +6,16 @@ import { useDispatch } from 'react-redux';
 
 import '../../css/login.css';
 import { login_image } from '../../assets';
-import { addr1List, addr2List, addr3List } from '../../helpers';
 import { apiLogin, apiRegister, setIsLoggedIn, setLogin } from '../../services';
 import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
-import { AddressRow, Copyright } from '../../components/login';
+import { Copyright } from '../../components/login';
 
 export function SignUp(){
   const { t } = useTranslation();
   const [email, setEmail] = useState({ value: '', error: null });
   const [password, setPassword] = useState({ value: '', error: null });
   const [business, setBusiness] = useState({ value: '', error: null });
-  const [addr1, setAddr1] = useState({ value: null, error: null });
-  const [addr2, setAddr2] = useState({ value: null, error: null });
-  const [addr3, setAddr3] = useState({ value: null, error: null });
+  const [address, setAddress] = useState({ value: null, error: null });
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -37,10 +34,8 @@ export function SignUp(){
   const handleSubmit = async e => {
     e?.preventDefault();
     setError(null);
-    let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim()
-      // && addr1?.value?.trim() && addr2?.value?.trim() && addr3?.value?.trim();
+    let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && address?.value?.trim();
     if(isValid){
-      // setAddr1({ value: addr1?.value });
       setLoading(true);
       let data = { mail: email?.value?.trim(), password: password?.value?.trim(), descr: business?.value?.trim() };
       const response = await dispatch(apiRegister(data));
@@ -61,16 +56,14 @@ export function SignUp(){
       if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
       if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
       if(!business?.value?.trim()) setBusiness({ value: '', error: t('error.not_empty') });
-      // if(!addr1?.value?.trim() || !addr2?.value?.trim() || !addr3?.value?.trim())
-      //   setAddr1({ value: addr1?.value, error: t('error.not_empty')  });
-      // else setAddr1({ value: addr1?.value });
+      if(!address?.value?.trim()) setAddress({ value: '', error: t('error.not_empty') });
     }
   }
 
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, handleEnter };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, handleEnter };
   const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError, handleEnter };
-  const addressProps = { text: t('login.address'), addr1, addr2, addr3, setAddr1, setAddr2, setAddr3, addr1List, addr2List, addr3List };
+  const addressProps = { text: t('login.address'), value: address, setValue: setAddress, setError, handleEnter };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
   
@@ -83,7 +76,7 @@ export function SignUp(){
           <FloatingInput {...emailProps} />
           <FloatingPassword {...passProps} />
           <FloatingInput {...businessProps} />
-          {/* <AddressRow {...addressProps} /> */}
+          <FloatingInput {...addressProps} />
           <div className='l_check_row'>
             <Checkbox {...checkProps} />
             <p className='l_term'>

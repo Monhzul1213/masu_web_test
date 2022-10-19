@@ -22,6 +22,10 @@ code {
   display: none;
 }
 
+.ant-layout {
+  background-color: var(--back-color); 
+}
+
 .loading {
   position: absolute;
   top: calc(50% - 50px);

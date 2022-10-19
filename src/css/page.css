@@ -1,0 +1,16 @@
+@import './color.css';
+
+:root {
+  --config-card-width: 450px;
+}
+
+.s_container {
+  padding: var(--page-padding);
+  overflow: scroll;
+}
+
+.c_card_back {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  width: var(--config-card-width);
+}
