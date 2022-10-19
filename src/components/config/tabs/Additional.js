@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AdditionalItem as Item } from './AdditionalItem';
+import { ButtonRow } from './ButtonRow';
 
 export function Additional(){
   const { t } = useTranslation();
@@ -30,6 +31,7 @@ export function Additional(){
       <div className='c_tab_back'>
         {items?.map(renderItem)}
       </div>
+      <ButtonRow />
     </div>
   );
 }
