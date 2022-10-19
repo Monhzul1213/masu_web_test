@@ -52,5 +52,9 @@
   "profile": {
     "account": "Хэрэглэгч",
     "signout": "Гарах"
+  },
+  "config": {
+    "config": "Тохиргоо",
+    "system_config": "Системийн тохиргоо"
   }
 }

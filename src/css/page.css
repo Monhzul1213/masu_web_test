@@ -2,6 +2,9 @@
 
 :root {
   --config-card-width: 450px;
+  --config-card-icon: 36px;
+  --title-font: 24px;
+  --sub-font: 14px;
 }
 
 .s_container {
@@ -13,4 +16,47 @@
   background-color: var(--root-color);
   border-radius: var(--radius);
   width: var(--config-card-width);
+}
+
+.c_card_title_back {
+  display: flex;
+  flex-flow: row;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: var(--text4-color);
+  padding: var(--page-padding);
+  align-items: center;
+}
+
+.c_card_title_ic {
+  width: var(--config-card-icon);
+  height: var(--config-card-icon);
+  border-radius: 50%;
+  background-color: var(--text4-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c_card_title_icon {
+  color: var(--root-color);
+  font-size: 22px;
+}
+
+.c_card_title_side {
+  margin-left: var(--page-padding);
+}
+
+.c_card_title {
+  color: var(--text-color);
+  font-size: var(--title-font);
+  line-height: calc(var(--title-font) + 5px);
+  margin: 0;
+}
+
+.c_card_title_sub {
+  color: var(--text2-color);
+  font-size: var(--sub-font);
+  line-height: calc(var(--sub-font) + 5px);
+  margin: 0;
 }
