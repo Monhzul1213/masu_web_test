@@ -23,7 +23,8 @@ export function Menu(props){
     top: 'var(--header-height)',
     bottom: 0,
     backgroundColor: 'var(--side-color)',
-    boxShadow: '0px 2px 5px rgba(0,0,0,.15)'
+    boxShadow: '0px 2px 5px rgba(0,0,0,.15)',
+    zIndex: 1000
   };
 
   const items = [

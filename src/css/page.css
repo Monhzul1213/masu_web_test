@@ -5,6 +5,7 @@
   --config-card-icon: 36px;
   --title-font: 24px;
   --sub-font: 14px;
+  --s-menu-height: 50px;
 }
 
 .s_container {
@@ -16,14 +17,13 @@
   background-color: var(--root-color);
   border-radius: var(--radius);
   width: var(--config-card-width);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
 }
 
 .c_card_title_back {
   display: flex;
   flex-flow: row;
-  border-style: solid;
-  border-width: 0 0 1px 0;
-  border-color: var(--text4-color);
+  border-bottom: 1px solid #eaeaea;
   padding: var(--page-padding);
   align-items: center;
 }
@@ -59,4 +59,38 @@
   font-size: var(--sub-font);
   line-height: calc(var(--sub-font) + 5px);
   margin: 0;
+}
+
+.system_menu {
+  margin-left: calc(var(--page-padding) * 2 + var(--config-card-icon) - 10px);
+}
+
+.system_menu .ant-menu-item {
+  padding: 0 0 0 10px !important;
+  height: var(--s-menu-height) !important;
+  line-height: var(--s-menu-height) !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.system_menu .ant-menu-item:last-child {
+  border-bottom: none;
+}
+
+.system_menu .ant-menu-item-active {
+  background-color: var(--back-color) !important;
+}
+
+.system_menu .ant-menu-item-selected {
+  background-color: var(--back-color) !important;
+}
+
+.system_menu .ant-menu-item-selected .ant-menu-title-content {
+  color: var(--text-color);
+}
+
+.system_menu .ant-menu-title-content {
+  color: var(--text-color);
+  font-size: 14px;
 }
