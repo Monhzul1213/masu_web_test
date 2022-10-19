@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Menu } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { getItem } from '../../../helpers';
 import { Title } from './Title';
 
-export function Card(){
+export function Card(props){
+  const { selectedKeys, setSelectedKeys } = props;
   const { t } = useTranslation();
-  const [selectedKeys, setSelectedKeys] = useState('additional');
 
   const items = [
     getItem(t('system_menu.additional'), 'additional'),

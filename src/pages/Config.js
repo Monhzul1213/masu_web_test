@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import '../css/page.css';
-import { Card } from '../components/config';
+import { Card, Tab } from '../components/config';
 
 export function Config(){
+  const [selectedKeys, setSelectedKeys] = useState('additional');
+
+  const cardProps = { selectedKeys, setSelectedKeys };
+  
   return (
     <div className='s_container'>
-      <Card />
+      <Card {...cardProps} />
+      <div className='c_gap' />
+      <Tab {...cardProps} />
     </div>
   )
 }
