@@ -48,5 +48,9 @@
     "integration": "Интеграци",
     "config": "Тохиргоо",
     "help": "Тусламж"
+  },
+  "profile": {
+    "account": "Хэрэглэгч",
+    "signout": "Гарах"
   }
 }
