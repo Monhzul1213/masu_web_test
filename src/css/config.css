@@ -246,3 +246,44 @@
 #t_title {
   margin: var(--title-padding) 0;
 }
+
+.t_item_icon {
+  color: var(--text3-color);
+  width: 24px;
+  height: 24px;
+  margin-right: var(--page-padding);
+}
+
+.t_free {
+  flex: 0.5;
+  margin-left: var(--page-padding);
+}
+
+.t_btn_back {
+  flex: 0.5;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.t_item_subscribe {
+  border: none;
+  box-shadow: none;
+  background-color: var(--root-color);
+  color: var(--config-color);
+  height: var(--t-btn-height);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 550;
+  padding: 0 8px;
+}
+
+.t_item_subscribe:hover {
+  cursor: pointer;
+  background-color: var(--config-t-color);
+}
+
+.t_line {
+  background-color: var(--text3-color);
+  height: 1px;
+  margin: 20px 0;
+}

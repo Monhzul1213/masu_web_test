@@ -12,8 +12,12 @@ export function TypeItem(props){
         <p className='a_item_title'>{item?.title}</p>
         <p className='a_item_sub_title'>{item?.sub_title}</p>
       </div>
-      <p className='a_item_sub_title'>{item?.day} {free}</p>
-      <button className='t_item_subscribe'>{subscribe}</button>
+      <div className='t_free'>
+        <p className='a_item_sub_title'>{item?.day} {free}</p>
+      </div>
+      <div className='t_btn_back'>
+        <button className='t_item_subscribe'>{subscribe}</button>
+      </div>
     </div>
   );
 }

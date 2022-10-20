@@ -22,6 +22,8 @@ export function Type(){
       <div className='c_tab_back'>
         <p className='c_tab_title' id='t_title'>{t('type.order')}</p>
         {items?.map(renderItem)}
+        <div className='t_line' />
+        <p className='c_tab_title' id='t_title'>{t('type.payment')}</p>
       </div>
     </div>
   );
