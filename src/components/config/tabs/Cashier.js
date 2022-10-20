@@ -15,7 +15,7 @@ export function Cashier(){
     setData([
       { label: 'Бэлэн мөнгө', value: 'Бэлэн мөнгө' },
       { label: 'Банкны карт', value: 'Банкны карт' },
-      { label: 'Онлайн гүйлгээ', value: 'Онлайн гүйлгээ', disabled: false },
+      { label: 'Онлайн гүйлгээ', value: 'Онлайн гүйлгээ', disabled: true },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
