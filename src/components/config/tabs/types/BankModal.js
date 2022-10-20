@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { DynamicTBIcon, Error, Overlay, ButtonRow } from '../../../all';
+import { Error, Overlay, ButtonRow, ModalTitle } from '../../../all';
 import { MaskedInput } from './MaskedInput';
 
 export function BankModal(props){
@@ -49,10 +49,7 @@ export function BankModal(props){
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
       <Overlay loading={loading}>
         <div className='m_back'>
-          <div className='m_title_row'>
-            <DynamicTBIcon className='m_title_icon' name='TbCreditCard' />
-            <p className='m_title'>{t('type.bank_m')}</p>
-          </div>
+          <ModalTitle icon='TbCreditCard' title={t('type.bank_m')} />
           <form onSubmit={onClickSave}>
             <MaskedInput {...cardProps} />
             <MaskedInput {...nameProps} />
