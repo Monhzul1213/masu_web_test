@@ -244,6 +244,10 @@
 }
 
 #t_title {
+  margin: 0 0 var(--title-padding) 0;
+}
+
+#t_title1 {
   margin: var(--title-padding) 0;
 }
 
@@ -286,4 +290,18 @@
   background-color: var(--text3-color);
   height: 1px;
   margin: 20px 0;
+}
+
+#t_sub {
+  color: var(--config-color);
+}
+
+#t_tab_cont {
+  padding: var(--page-padding);
+}
+
+.t_tab_back {
+  padding: 0 var(--page-padding);
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 4);
+  overflow: scroll; 
 }
