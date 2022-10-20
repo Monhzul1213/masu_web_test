@@ -24,6 +24,8 @@ export function Type(){
     { title: t('type.loan1'), sub_title: t('type.loan3'), btn: t('type.loan2'), icon: 'TbCurrencyTugrik', type: 'loan' },
   ];
 
+  const closeModal = () => setVisible(null);
+
   const renderItem = (item, index) => {
     const itemProps = { key: index, item, subscribe: t('type.subscribe'), free: t('type.free') };
     return (<TypeItem {...itemProps} />);
@@ -34,7 +36,7 @@ export function Type(){
     return (<TypeItem2 {...itemProps} />);
   }
 
-  const bankProps = { visible: visible === 'bank' };
+  const bankProps = { visible: visible === 'bank', closeModal };
 
   return (
     <div className='c_tab_cont' id='t_tab_cont'>

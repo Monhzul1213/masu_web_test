@@ -400,7 +400,11 @@
 }
 
 .ant-modal-body {
-  padding: var(--title-padding);
+  padding: 0;
+}
+
+.m_back {
+  padding: var(--title-padding) var(--title-padding) 5px var(--title-padding);
 }
 
 .m_title_row {
@@ -460,4 +464,9 @@
 .mask_input::placeholder {
   color: var(--text4-color);
   font-size: 14px;
+}
+
+#m_error {
+  margin-bottom: 0;
+  margin-top: 10px;
 }
