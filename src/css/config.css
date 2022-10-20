@@ -305,3 +305,56 @@
   max-height: calc(100vh - var(--header-height) - var(--page-padding) * 4);
   overflow: scroll; 
 }
+
+.ca_row {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--page-padding);
+}
+
+.ca_btn {
+  box-shadow: none;
+  border: none;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  min-height: var(--t-btn-height);
+  padding: 0 var(--page-padding);
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#ca_btn_add {
+  background-color: var(--config-b-color);
+  color: var(--root-color);
+}
+
+#ca_btn_add:hover {
+  cursor: pointer;
+  background-color: var(--config-color);
+}
+
+#ca_btn_delete {
+  color: var(--danger-color);
+}
+
+#ca_btn_delete:hover {
+  cursor: pointer;
+  background-color: var(--danger-t-color);
+}
+
+.ca_icon {
+  color: var(--root-color);
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.ca_icon_del {
+  color: var(--danger-color);
+  font-size: 16px;
+  margin-right: 6px;
+}

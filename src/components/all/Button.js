@@ -11,3 +11,14 @@ export function Button(props){
     </button>
   );
 }
+
+export function IconButton(props){
+  const { loading, type, className, id, text, icon, disabled, onClick } = props;
+
+  return (
+    <button type={type} className={className} id={id} disabled={loading || disabled} onClick={onClick}>
+      {loading ? <Loader className='l_loader' color='#fff' /> : icon}
+      {text}
+    </button>
+  );
+}

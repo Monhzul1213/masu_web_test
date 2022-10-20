@@ -20,9 +20,11 @@
   --success-color: #0cceb5;
 
   --success-t-color: #0cceb519;
+  --danger-t-color: #e4105119;
 
   --config-color: #4BAF4F;
   --config-t-color: #4BAF4F20;
+  --config-b-color: #8cc748;
 
   --header-height: 50px;
   --side-width: 72px;
