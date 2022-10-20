@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Overlay } from '../../all';
+import { Overlay, ButtonRow } from '../../all';
 import { AdditionalItem as Item } from './AdditionalItem';
-import { ButtonRow } from './ButtonRow';
 
 export function Additional(){
   const { t } = useTranslation();

@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { DynamicTBIcon, Error, Overlay } from '../../../all';
+import { DynamicTBIcon, Error, Overlay, ButtonRow } from '../../../all';
 import { MaskedInput } from './MaskedInput';
-import { ButtonRow } from '../ButtonRow';
 
 export function BankModal(props){
   const { visible, closeModal } = props;
