@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { TypeItem as Item, TypeItem2 as Item2 } from './TypeItem';
+import { TypeItem, TypeItem2 } from './types';
 
 export function Type(){
   const { t } = useTranslation();
@@ -20,12 +20,12 @@ export function Type(){
 
   const renderItem = (item, index) => {
     const itemProps = { key: index, item, subscribe: t('type.subscribe'), free: t('type.free') };
-    return (<Item {...itemProps} />);
+    return (<TypeItem {...itemProps} />);
   }
 
   const renderItem2 = (item, index) => {
     const itemProps = { key: index, item };
-    return (<Item2 {...itemProps} />);
+    return (<TypeItem2 {...itemProps} />);
   }
 
   return (

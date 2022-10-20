@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DynamicTBIcon } from '../../all';
+import { DynamicTBIcon } from '../../../all';
 
 export function TypeItem(props){
   const { item, free, subscribe } = props;
