@@ -398,3 +398,27 @@
   overflow: scroll; 
   margin-bottom: 10px;
 }
+
+.ant-modal-body {
+  padding: var(--title-padding);
+}
+
+.m_title_row {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.m_title_icon {
+  color: var(--text3-color);
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+}
+
+.m_title {
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 450;
+  margin: 0;
+}

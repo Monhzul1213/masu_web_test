@@ -23,7 +23,7 @@ export function TypeItem(props){
 }
 
 export function TypeItem2(props){
-  const { item } = props;
+  const { item, onClick } = props;
 
   return (
     <div className='a_item'>
@@ -32,7 +32,7 @@ export function TypeItem2(props){
         <p className='a_item_title'>{item?.title}</p>
         <p className='a_item_sub_title' id='t_sub'>{item?.sub_title}</p>
       </div>
-      <button className='t_item_subscribe'>{item?.btn}</button>
+      <button className='t_item_subscribe' onClick={e => onClick(e, item?.type)}>{item?.btn}</button>
     </div>
   );
 }

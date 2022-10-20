@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { TypeItem, TypeItem2 } from './types';
+import { TypeItem, TypeItem2, BankModal } from './types';
 
 export function Type(){
   const { t } = useTranslation();
+  const [visible, setVisible] = useState(null);
+
+  const onClick2 = (e, type) => {
+    e?.preventDefault();
+    setVisible(type);
+  }
 
   const items = [
     { title: t('type.emp1'), sub_title: t('type.emp2'), day: 14, icon: 'TbUser' },
@@ -13,9 +19,9 @@ export function Type(){
   ];
 
   const items2 = [
-    { title: t('type.bank1'), sub_title: t('type.bank3'), btn: t('type.bank2'), icon: 'TbCreditCard' },
-    { title: t('type.account1'), sub_title: t('type.account3'), btn: t('type.account2'), icon: 'TbWallet' },
-    { title: t('type.loan1'), sub_title: t('type.loan3'), btn: t('type.loan2'), icon: 'TbCurrencyTugrik' },
+    { title: t('type.bank1'), sub_title: t('type.bank3'), btn: t('type.bank2'), icon: 'TbCreditCard', type: 'bank' },
+    { title: t('type.account1'), sub_title: t('type.account3'), btn: t('type.account2'), icon: 'TbWallet', type: 'account' },
+    { title: t('type.loan1'), sub_title: t('type.loan3'), btn: t('type.loan2'), icon: 'TbCurrencyTugrik', type: 'loan' },
   ];
 
   const renderItem = (item, index) => {
@@ -24,12 +30,15 @@ export function Type(){
   }
 
   const renderItem2 = (item, index) => {
-    const itemProps = { key: index, item };
+    const itemProps = { key: index, item, onClick: onClick2 };
     return (<TypeItem2 {...itemProps} />);
   }
 
+  const bankProps = { visible: visible === 'bank' };
+
   return (
     <div className='c_tab_cont' id='t_tab_cont'>
+      {visible === 'bank' && <BankModal {...bankProps} />}
       <div className='t_tab_back'>
         <p className='c_tab_title' id='t_title'>{t('type.order')}</p>
         {items?.map(renderItem)}
