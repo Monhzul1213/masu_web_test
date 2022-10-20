@@ -358,3 +358,43 @@
   font-size: 16px;
   margin-right: 6px;
 }
+
+.ca_check.ant-checkbox-group {
+  display: flex;
+  flex-flow: column;
+}
+
+.ca_check .ant-checkbox-wrapper {
+  padding: var(--page-padding) 0;
+  border-bottom: 1px solid var(--line-color);
+}
+
+.ca_check .ant-checkbox-wrapper:last-child {
+  border: none;
+}
+
+.ca_check .ant-checkbox .ant-checkbox-inner {
+  background-color: var(--root-color);
+  border-color: var(--text2-color);
+  height: 18px;
+  width: 18px;
+  border-width: 1px;
+}
+
+.ca_check .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--config-b-color);
+  border-color: var(--config-b-color);
+}
+
+.ca_check > span {
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.ca_tab_back {
+  padding: 0 var(--page-padding);
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 4 - var(--t-btn-height) - 10px);
+  overflow: scroll; 
+  margin-bottom: 10px;
+}
