@@ -23,11 +23,15 @@ export function Cashier(){
 
   const onClickAdd = () => {};
   
-  const onClickDelete = () => {};
+  const onClickDelete = () => {
+    setLoading(true);
+    console.log('onClickDelete');
+    setTimeout(() => setLoading(false), 1200);
+  };
 
   const onChange = values => {
     setChecked(values);
-    console.log('checked = ', values);
+    setShow(values?.length ? true : false);
   };
 
   return (
