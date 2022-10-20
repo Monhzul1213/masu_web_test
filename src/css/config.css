@@ -168,7 +168,7 @@
   box-shadow: none;
   border: none;
   background-color: transparent;
-  color: var(--link-color);
+  color: var(--config-color);
   font-size: 13px;
   font-weight: 500;
 }
@@ -234,9 +234,9 @@
 }
 
 #a_btn_save {
-  color: var(--success-color);
+  color: var(--config-color);
 }
 
 #a_btn_save:hover {
-  background-color: var(--success-t-color);
+  background-color: var(--config-t-color);
 }
