@@ -1,7 +1,8 @@
 import React from 'react';
+import InputMask from 'react-input-mask';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, handleEnter } = props;
+  const { value, setValue, label, placeholder, disabled, setError, handleEnter, mask } = props;
 
   const onChange = e => {
     setValue({ value: e.target.value });
@@ -18,13 +19,15 @@ export function Input(props){
     <div>
       <div className='select_back' style={style}>
         <p className='select_lbl' style={style}>{label}</p>
-        <input
+        <InputMask
           className='m_input'
+          mask={mask}
           disabled={disabled}
-          value={value?.value}
+          maskChar='-'
+          onKeyDown={onKeyDown}
           placeholder={placeholder}
-          onChange={onChange}
-          onKeyDown={onKeyDown} />
+          value={value?.value}
+          onChange={onChange} />
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
     </div>
