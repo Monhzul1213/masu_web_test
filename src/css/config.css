@@ -526,3 +526,20 @@
 .m_input:focus {
   outline: none;
 }
+
+.select_m .ant-select-selection-placeholder {
+  left: 0;
+}
+
+.ant-select-multiple .ant-select-selection-search {
+  -webkit-margin-start: 0;
+  margin-inline-start: 0;
+}
+
+.select_m .ant-select-selection-item {
+  background-color: var(--root-color);
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  color: var(--text-color);
+}

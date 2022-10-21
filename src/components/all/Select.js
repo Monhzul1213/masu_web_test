@@ -1,11 +1,15 @@
 import React from 'react';
 import { Select as AntSelect } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import { DynamicAIIcon } from './DynamicIcon';
 const { Option } = AntSelect;
 
 export function Select(props){
-  const { value, setValue, label, placeholder, data, setError, s_value, s_descr } = props;
+  const { value, setValue, label, placeholder, data, setError, s_value, s_descr, mode } = props;
+  const { t } = useTranslation();
+  
+  let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
 
   const handleChange = e => {
     setValue({ value: e });
@@ -23,11 +27,14 @@ export function Select(props){
       <div className='select_back' style={style}>
         <p className='select_lbl' style={style}>{label}</p>
         <AntSelect
+          mode={mode}
           className='select_m'
           showSearch
           filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
           onChange={handleChange}
           value={value?.value}
+          maxTagCount={0}
+          maxTagPlaceholder={maxTagPlaceholder}
           placeholder={placeholder}
           suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' style={style} />}>
           {data?.map(renderItem)}
