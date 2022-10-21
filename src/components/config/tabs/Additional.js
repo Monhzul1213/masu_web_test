@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Overlay, ButtonRow } from '../../all';
-import { AdditionalItem as Item } from './AdditionalItem';
+import { AdditionalItem as Item } from './add';
 
 export function Additional(){
   const { t } = useTranslation();
