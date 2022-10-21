@@ -44,3 +44,24 @@ export function Select(props){
     </div>
   );
 }
+
+export function PlainSelect(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className } = props;
+  
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  return (
+    <AntSelect
+      className={className}
+      showSearch
+      filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+      onChange={setValue}
+      value={value}
+      placeholder={placeholder}
+      suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' />}>
+      {data?.map(renderItem)}
+    </AntSelect>
+  );
+}

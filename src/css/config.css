@@ -547,3 +547,32 @@
 #p_tab_cont {
   max-width: var(--config-card-width);
 }
+
+.r_title_row {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: var(--page-padding);
+  max-height: calc(var(--title-font) + var(--title-padding) * 2);
+}
+
+.r_select.ant-select .ant-select-selector {
+  box-shadow: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 14px;
+  background-color: var(--back-color);
+  border-radius: var(--radius);
+  width: 240px;
+  margin-left: var(--title-padding);
+}
+
+.r_select .ant-select-selector {
+  box-shadow: none !important;
+}
+
+.r_select .ant-select-arrow {
+  color: var(--text4-color);
+  font-size: 16px;
+}

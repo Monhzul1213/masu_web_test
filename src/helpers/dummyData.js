@@ -8,6 +8,6 @@ export const payTypes = [
 
 export const payShops = [
   { label: 'Shop1', value: 'Shop1' },
-  { label: 'Shop2', value: 'Shop2' },
-  { label: 'Shop3', value: 'Shop3' },
+  { label: 'Shop name 2', value: 'Shop2' },
+  { label: 'Shop name sub shop 3', value: 'Shop3' },
 ];
