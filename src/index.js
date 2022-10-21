@@ -12,11 +12,9 @@ import { store, persistor } from './helpers/store';
 
 const root = createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={<Loading />} persistor={persistor}>
-        <Screen />
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={<Loading />} persistor={persistor}>
+      <Screen />
+    </PersistGate>
+  </Provider>
 );

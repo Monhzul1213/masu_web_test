@@ -3,6 +3,7 @@ import { Checkbox } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Overlay, IconButton, DynamicBSIcon } from '../../all';
+import { PayModal } from './cashiers';
 
 export function Cashier(){
   const { t } = useTranslation();
@@ -10,6 +11,7 @@ export function Cashier(){
   const [show, setShow] = useState(false);
   const [data, setData] = useState([]);
   const [checked, setChecked] = useState([]);
+  const [visible, setVisible] = useState(null);
 
   useEffect(() => {
     setData([
@@ -21,7 +23,7 @@ export function Cashier(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onClickAdd = () => {};
+  const onClickAdd = () => setVisible('pay');
   
   const onClickDelete = () => {
     setLoading(true);
@@ -34,8 +36,13 @@ export function Cashier(){
     setShow(values?.length ? true : false);
   };
 
+  const closeModal = () => setVisible(null);
+
+  const payProps = { visible: visible === 'pay', closeModal };
+
   return (
     <Overlay className='c_tab_cont' loading={loading}>
+      {visible === 'pay' && <PayModal {...payProps} />}
       <div className='ca_row'>
         <IconButton className='ca_btn' text={t('cashier.add')} id='ca_btn_add'
           icon={<DynamicBSIcon name='BsPlusLg' className='ca_icon' />} onClick={onClickAdd} />
