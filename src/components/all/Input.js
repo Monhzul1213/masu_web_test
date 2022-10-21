@@ -1,7 +1,7 @@
 import React from 'react';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, setError, handleEnter } = props;
+  const { value, setValue, label, placeholder, disabled, setError, handleEnter } = props;
 
   const onChange = e => {
     setValue({ value: e.target.value });
@@ -20,6 +20,7 @@ export function Input(props){
         <p className='select_lbl' style={style}>{label}</p>
         <input
           className='m_input'
+          disabled={disabled}
           value={value?.value}
           placeholder={placeholder}
           onChange={onChange}
