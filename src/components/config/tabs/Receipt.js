@@ -20,7 +20,10 @@ export function Receipt(){
 
   const onClickCancel = () => {}
 
-  const handleSubmit = e => {}
+  const handleSubmit = e => {
+    setLoading(false);
+    setError(null);
+  }
 
   const shopProps = { value: shop, setValue: setShop, data, className: 'r_select' };
 
