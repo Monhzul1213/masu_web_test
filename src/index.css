@@ -56,3 +56,8 @@ code {
   margin-left: 5px;
   line-height: 17px;
 }
+
+.home_logo {
+  width: 200px;
+  opacity: 60%;
+}
