@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DynamicBSIcon, IconButton } from '../../all';
+import { DynamicBSIcon, IconButton, Table } from '../../all';
 
 export function Shop(){
   const { t } = useTranslation();
@@ -14,6 +14,9 @@ export function Shop(){
       <div className='ca_row'>
         <IconButton className='ca_btn' text={t('shop.add')} id='ca_btn_add'
           icon={<DynamicBSIcon name='BsPlusLg' className='ca_icon' />} onClick={onClickAdd} />
+      </div>
+      <div className='ca_tab_back'>
+        <Table />
       </div>
     </div>
   );

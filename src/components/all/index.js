@@ -9,3 +9,4 @@ export * from './ModalTitle';
 export * from './Select';
 export * from './Input';
 export * from './MaskedInput';
+export * from './Table';
