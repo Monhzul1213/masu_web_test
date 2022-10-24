@@ -8,17 +8,19 @@ import { logout, setIsLoggedIn } from '../../services';
 import { Button } from '../all/Button';
 
 export function Profile(props){
-  const { collapsed } = props;
+  const { collapsed, setCollapsed } = props;
   const { t } = useTranslation();
   const { user } = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   const onClickAccount = e => {
     e?.preventDefault();
+    setCollapsed(true);
   }
 
   const onClickSignout = e => {
     e?.preventDefault();
+    setCollapsed(true);
     dispatch(logout());
     dispatch(setIsLoggedIn(false));
     window.sessionStorage.removeItem('CREDENTIALS_TOKEN');

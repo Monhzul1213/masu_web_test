@@ -4,7 +4,7 @@ import { RiContactsLine, RiTeamLine } from 'react-icons/ri';
 import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
 import { TbBuildingWarehouse } from 'react-icons/tb';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import '../../css/menu.css';
 import { getItem } from '../../helpers';
@@ -12,9 +12,11 @@ import { Profile } from './Profile';
 const { Sider } = Layout;
 
 export function Menu(props){
-  const { collapsed } = props;
+  const { collapsed, setCollapsed } = props;
   const { t } = useTranslation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
+  const path = pathname?.split('/') && pathname?.split('/')[1];
 
   const style = {
     overflow: 'auto',
@@ -38,11 +40,14 @@ export function Menu(props){
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
   ];
 
-  const onClick = e => navigate(e?.key);
+  const onClick = e => {
+    navigate(e?.key);
+    setCollapsed(true);
+  }
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style };
-  const profileProps = { collapsed };
-  const menuProps = { items, onClick, className: 'side_menu' };
+  const profileProps = { collapsed, setCollapsed };
+  const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path] };
 
   return (
     <Sider {...siderProps} width={300}>
