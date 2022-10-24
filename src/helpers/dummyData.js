@@ -7,7 +7,13 @@ export const payTypes = [
 ];
 
 export const payShops = [
-  { label: 'Shop1', value: 'Shop1' },
-  { label: 'Shop name 2', value: 'Shop2' },
-  { label: 'Shop name sub shop 3', value: 'Shop3' },
+  { label: 'Shop1', value: 'Shop1', address: '15th street', qty: 2 },
+  { label: 'Shop name 2', value: 'Shop2', address: '17th street', qty: 1 },
+  { label: 'Shop name sub shop 3', value: 'Shop3', address: '25th street', qty: 1 },
+  { label: 'Shop4', value: 'Shop4', address: '25th street', qty: 1 },
+  { label: 'Shop5', value: 'Shop5', address: '25th street', qty: 1 },
+  { label: 'Shop6', value: 'Shop6', address: '25th street', qty: 1 },
+  { label: 'Shop7', value: 'Shop7', address: '25th street', qty: 1 },
+  { label: 'Shop8', value: 'Shop8', address: '25th street', qty: 1 },
+  { label: 'Shop9', value: 'Shop9', address: '25th street', qty: 1 },
 ];
