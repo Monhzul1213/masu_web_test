@@ -26,7 +26,7 @@ export function Cashier(){
   const onClickAdd = () => setVisible('pay');
   
   const onClickDelete = () => {
-    setLoading(true);
+    // setLoading(true);
     console.log('onClickDelete');
     setTimeout(() => setLoading(false), 1200);
   };

@@ -23,7 +23,7 @@ export function SignUp(){
   const navigate = useNavigate();
 
   const handleEnter = e => {
-    if (e?.key?.toLowerCase() === "enter") {
+    if(e?.key?.toLowerCase() === "enter") {
       const form = e.target.form;
       const index = [...form].indexOf(e.target);
       form.elements[index + 1].focus();
@@ -37,7 +37,7 @@ export function SignUp(){
     let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && address?.value?.trim();
     if(isValid){
       setLoading(true);
-      let data = { mail: email?.value?.trim(), password: password?.value?.trim(), descr: business?.value?.trim() };
+      let data = { mail: email?.value?.trim(), password: password?.value?.trim(), descr: business?.value?.trim(), address: address?.value?.trim() };
       const response = await dispatch(apiRegister(data));
       console.log(response);
       if(response?.error) setError(response?.error);

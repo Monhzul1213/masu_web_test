@@ -30,7 +30,7 @@ export function Login(){
   }, []);
 
   const handleEnter = e => {
-    if (e?.key?.toLowerCase() === "enter") {
+    if(e?.key?.toLowerCase() === "enter") {
       const form = e.target.form;
       const index = [...form].indexOf(e.target);
       form.elements[index + 1].focus();

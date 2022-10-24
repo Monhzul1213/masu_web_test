@@ -14,7 +14,7 @@ export function Promo(){
     e?.preventDefault();
     let percent = parseFloat(perc?.value);
     if(type?.value?.trim() && !isNaN(percent)){
-      setLoading(true);
+      // setLoading(true);
       setTimeout(() => setLoading(false), 1200);
     } else {
       if(!type?.value?.trim()) setType({ value: '', error: t('error.not_empty') });

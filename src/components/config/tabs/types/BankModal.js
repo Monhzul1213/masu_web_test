@@ -18,7 +18,7 @@ export function BankModal(props){
     e?.preventDefault();
     setError(null);
     if(card?.value?.trim() && name?.value?.trim() && date?.value?.trim() && code?.value?.trim()){
-      setLoading(true);
+      // setLoading(true);
       setTimeout(() => setLoading(false), 1200);
     } else {
       if(!card?.value?.trim()) setCard({ value: '', error: t('error.not_empty') });

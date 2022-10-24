@@ -35,7 +35,7 @@ export function Additional(){
   }
 
   const onClickSave = () => {
-    setLoading(true);
+    // setLoading(true);
     console.log(checked);
     setTimeout(() => setLoading(false), 1200);
   }
