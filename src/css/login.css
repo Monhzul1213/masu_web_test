@@ -356,3 +356,23 @@ input:-webkit-autofill:active{
   color: var(--text2-color);
   margin: 0 5px 0 0;
 }
+
+.co_title {
+  color: var(--config-color );
+  font-weight: 500;
+  font-size: 24px;
+  margin: 15px auto 0 auto;
+}
+
+.co_sub {
+  color: var(--text-color);
+  font-weight: 550;
+  font-size: 16px;
+  margin: 0 auto 10px auto;
+}
+
+.co_text {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0 auto 5px auto;
+}

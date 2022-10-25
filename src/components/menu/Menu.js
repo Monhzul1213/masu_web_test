@@ -17,6 +17,7 @@ export function Menu(props){
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const path = pathname?.split('/') && pathname?.split('/')[1];
+  const hideMenu = pathname?.includes('confirm');
 
   const style = {
     overflow: 'auto',
@@ -49,7 +50,7 @@ export function Menu(props){
   const profileProps = { collapsed, setCollapsed };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path] };
 
-  return (
+  return hideMenu ? null : (
     <Sider {...siderProps} width={300}>
       <Profile {...profileProps} />
       <AntMenu {...menuProps} />

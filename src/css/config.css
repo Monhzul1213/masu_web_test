@@ -12,6 +12,7 @@
 }
 
 .s_container {
+  margin-left: var(--side-width);
   padding: var(--page-padding);
   max-height: calc(100vh - var(--header-height));
   overflow: scroll;

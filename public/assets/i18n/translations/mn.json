@@ -22,7 +22,11 @@
     "sign_accept4": "нууцлалын бодлогыг",
     "sign_accept5": " бүрэн уншиж хүлээн зөвшөөрч байна.",
     "signup": "БҮРТГҮҮЛЭХ",
-    "go_login": "Та өмнө нэвтэрч байсан бол: "
+    "go_login": "Та өмнө нэвтэрч байсан бол: ",
+    "congrats": "Congratulations!",
+    "confirmed": "Your registration has been confirmed!",
+    "go_back": "Now you can continue your work in your backoffice.",
+    "go_back_btn": "Enter the backoffice"
   },
   "error": {
     "not_empty": " хоосон байж болохгүй",

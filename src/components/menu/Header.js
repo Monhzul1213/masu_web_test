@@ -11,6 +11,7 @@ export function Header(props){
   const { pathname } = useLocation();
   const { i18n, t } = useTranslation();
   const [title, setTitle] = useState('Home');
+  const hideMenu = pathname?.includes('confirm');
 
   useEffect(() => {
     i18n.exists('header.' + pathname) ? setTitle('header.' + pathname) : setTitle('header./');
@@ -20,7 +21,7 @@ export function Header(props){
 
   const onClick = () => setCollapsed(!collapsed);
 
-  return (
+  return hideMenu ? null : (
     <div className='h_container'>
       <button className='h_icon_btn' onClick={onClick}>
         <DynamicMDIcon name='MdOutlineMenu' className='h_icon' />

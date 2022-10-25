@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Header, Menu } from './components/menu';
-import { Loading, Login, SignUp, Home, Config } from './pages';
+import { Loading, Login, SignUp, Confirm, Home, Config } from './pages';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -40,6 +40,7 @@ export function App(){
         <Routes>
           <Route path='*' element={<Login />} />
           <Route path='/sign_up' element={<SignUp />} />
+          <Route path='/confirm' element={<Confirm />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
@@ -59,10 +60,11 @@ export function App(){
           <Header {...menuProps} />
           <Layout>
             <Menu {...menuProps} />
-            <Layout style={{marginLeft: 'var(--side-width)'}} onClick={onClickLayout}>
+            <Layout onClick={onClickLayout}>
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='*' element={<Home />} />
+                <Route path='/confirm' element={<Confirm />} />
                 <Route path='/config' element={<Config />} />
               </Routes>
             </Layout>
