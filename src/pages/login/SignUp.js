@@ -9,13 +9,14 @@ import { login_image } from '../../assets';
 import { apiLogin, apiRegister, setIsLoggedIn, setLogin } from '../../services';
 import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
 import { Copyright } from '../../components/login';
+import { validateEmail } from '../../helpers';
 
 export function SignUp(){
   const { t } = useTranslation();
   const [email, setEmail] = useState({ value: '', error: null });
   const [password, setPassword] = useState({ value: '', error: null });
   const [business, setBusiness] = useState({ value: '', error: null });
-  const [address, setAddress] = useState({ value: null, error: null });
+  const [address, setAddress] = useState({ value: '', error: null });
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,11 +32,32 @@ export function SignUp(){
     }
   }
 
+  const checkValid = () => {
+    let passwordLength = 7, businessLength = 5, addressLength = 29;
+    let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && address?.value?.trim();
+    let isEmailValid = validateEmail(email?.value?.trim());
+    let isPasswordValid = password?.value?.trim()?.length > passwordLength;
+    let isBusinessValid = business?.value?.trim()?.length > businessLength;
+    let isAddressValid = address?.value?.trim()?.length > addressLength;
+    if(isValid && isEmailValid && isPasswordValid && isBusinessValid && isAddressValid){
+      return true;
+    } else {
+      if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
+      else if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
+      if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
+      else if(!isPasswordValid) setPassword({ value: password?.value?.trim(), error: ' ' + passwordLength + t('error.longer_than') });
+      if(!business?.value?.trim()) setBusiness({ value: '', error: t('error.not_empty') });
+      else if(!isBusinessValid) setBusiness({ value: business?.value?.trim(), error: ' ' + businessLength + t('error.longer_than') });
+      if(!address?.value?.trim()) setAddress({ value: '', error: t('error.not_empty') });
+      else if(!isAddressValid) setAddress({ value: address?.value?.trim(), error: ' ' + addressLength + t('error.longer_than') });
+      return false;
+    }
+  }
+
   const handleSubmit = async e => {
     e?.preventDefault();
     setError(null);
-    let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && address?.value?.trim();
-    if(isValid){
+    if(checkValid()){
       setLoading(true);
       let data = { mail: email?.value?.trim(), password: password?.value?.trim(), descr: business?.value?.trim(), address: address?.value?.trim() };
       const response = await dispatch(apiRegister(data));
@@ -52,11 +74,6 @@ export function SignUp(){
         }
       }
       setLoading(false);
-    } else {
-      if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
-      if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
-      if(!business?.value?.trim()) setBusiness({ value: '', error: t('error.not_empty') });
-      if(!address?.value?.trim()) setAddress({ value: '', error: t('error.not_empty') });
     }
   }
 
