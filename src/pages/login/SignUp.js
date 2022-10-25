@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Checkbox } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, createSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import emailjs from '@emailjs/browser';
 
 import '../../css/login.css';
 import { login_image } from '../../assets';
+import { config, validateEmail } from '../../helpers';
 import { apiLogin, apiRegister, setIsLoggedIn, setLogin } from '../../services';
 import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
 import { Copyright } from '../../components/login';
-import { validateEmail } from '../../helpers';
 
 export function SignUp(){
   const { t } = useTranslation();
@@ -54,6 +55,20 @@ export function SignUp(){
     }
   }
 
+  const sendEmail = async to => {
+    const link = config?.domain + '/confirm?mail=' + to;
+    const templateParams = { to, link };
+    return emailjs.send('service_k7osau8','template_3dlaawl', templateParams, 'q2YX3XN0cT2C8g_Ni')
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        return Promise.resolve(true);
+      }, (err) => {
+        console.log(err);
+        return Promise.resolve(true);
+      }
+    );
+  }
+
   const handleSubmit = async e => {
     e?.preventDefault();
     setError(null);
@@ -64,13 +79,14 @@ export function SignUp(){
       console.log(response);
       if(response?.error) setError(response?.error);
       else {
+        await sendEmail(data?.mail);
         const response2 = await dispatch(apiLogin(data?.mail, data?.password));
         if(response2?.error) setError(response2?.error);
         else {
           dispatch(setLogin({ toRemember: true }));
           dispatch(setIsLoggedIn(true));
           window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
-          navigate({ pathname: '/config' });
+          navigate({ pathname: '/config', search: createSearchParams({ isFirst: true }).toString() });
         }
       }
       setLoading(false);
