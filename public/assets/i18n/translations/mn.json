@@ -72,7 +72,14 @@
     "config": "Тохиргоо",
     "system_config": "Системийн тохиргоо",
     "store": "Дэлгүүрүүд",
-    "store_config": "Дэлгүүр бас POS тохиргоо"
+    "store_config": "Дэлгүүр бас POS тохиргоо",
+    "thanks": "Thank you for registering!",
+    "download": "Download the MASU POS app on Google Play or App Store and start selling today.",
+    "down_window": "Download from",
+    "down_ios": "Download on the",
+    "down_android": "Get it on",
+    "go_to": "Go to the back office to set up your business profile and add items, categories and employees.",
+    "go_btn": "Go to back office"
   },
   "system_menu": {
     "additional": "Нэмэлт тохиргоо",
