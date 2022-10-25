@@ -86,7 +86,7 @@ export function SignUp(){
           dispatch(setLogin({ toRemember: true }));
           dispatch(setIsLoggedIn(true));
           window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
-          navigate({ pathname: '/config', search: createSearchParams({ isFirst: true }).toString() });
+          navigate({ pathname: '/config', search: createSearchParams({ mode: 'is_first' }).toString() });
         }
       }
       setLoading(false);
