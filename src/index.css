@@ -70,3 +70,53 @@ code {
   display: flex;
   flex-flow: row;
 }
+
+.add_row_back {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add_row_btn {
+  box-shadow: none;
+  border: none;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 var(--page-padding);
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 550;
+}
+
+#add_row_add {
+  background-color: var(--config-b-color);
+  color: var(--root-color);
+}
+
+#add_row_add:hover {
+  cursor: pointer;
+  background-color: var(--config-color);
+}
+
+#add_row_delete {
+  color: var(--danger-color);
+}
+
+#add_row_delete:hover {
+  cursor: pointer;
+  background-color: var(--danger-t-color);
+}
+
+.add_row_icon {
+  font-size: 12px;
+  margin-right: 10px;
+}
+
+.add_row_delete_icon {
+  font-size: 16px;
+  margin-right: 6px;
+}

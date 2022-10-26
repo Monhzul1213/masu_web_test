@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
 
-import { colors } from '../../../helpers';
+import { getConstants } from '../../../services';
 import { ButtonRow, DynamicAIIcon, Error, Input, ModalTitle, Overlay } from '../../all';
 
 export function Add(props){
@@ -14,22 +15,53 @@ export function Add(props){
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user }  = useSelector(state => state.login);
+  const colors = useSelector(state => state.temp.categoryColors);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setColor(colors && colors[0]);
+    console.log(colors);
+    getData();
+    // setColor(colors && colors[0]);
     return () => {};
   }, []);
+
+  const getData = async () => {
+    const config = {
+      method: 'GET',
+      url: 'http://192.168.1.224:8989/System/GetConstants',
+      headers: {
+        // 'Content-Type': 'application/json',
+        'authorization': 'cdbb56337f40ff4ea1627cdb6bc4541d',
+        'Accept': '*/*',
+        'ConstType': 'msCategory_Color'
+      }, 
+    };
+    axios(config).then(res => {
+      console.log(res);
+    }).catch(error => {
+      console.log(error);
+    });
+    return;
+    if(!colors?.length){
+      setLoading(true);
+      dispatch(getConstants());
+      console.log('getcolor')
+      setLoading(false);
+    }
+  }
 
   const onClickSave = e => {
     e?.preventDefault();
     setError(null);
-    if(name?.value?.trim()){
+    if(name?.value?.trim() && color !== null){
       let data = { merchantID: user?.merchantId, categoryName: name?.value?.trim(), color };
       console.log(data);
       setLoading(true);
       setLoading(false);
-    } else
-      setName({ value: '', error: t('error.not_empty') });
+    } else {
+      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(color === null) setError(t('category.color') + '' + t('error.not_empty'))
+    }
   }
 
   const renderItem = (item, index) => {

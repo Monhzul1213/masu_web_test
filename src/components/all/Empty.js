@@ -15,7 +15,8 @@ export function Empty(props){
       </div>
       <p className='empty_title'>{t(type + '.title')}</p>
       <p className='empty_descr'>{t(type + '.descr')}</p>
-      <IconButton className='empty_btn' text={t(type + '.add')} icon={<DynamicBSIcon name='BsPlusLg' className='em_icon' />} onClick={onClickAdd} />
+      <IconButton className='empty_btn' text={t(type + '.add')} icon={<DynamicBSIcon name='BsPlusLg' className='em_icon' />}
+        onClick={() => onClickAdd()} />
     </div>
   )
 }

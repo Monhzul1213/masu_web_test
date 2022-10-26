@@ -11,3 +11,4 @@ export * from './Input';
 export * from './MaskedInput';
 export * from './Table';
 export * from './Empty';
+export * from './CheckAll';

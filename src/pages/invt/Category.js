@@ -1,24 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import '../../css/invt.css';
-import { Empty } from '../../components/all';
+import { categories } from '../../helpers';
+import { Empty, Overlay } from '../../components/all';
 import { Add, List } from '../../components/invt/category';
 
 export function Category(){
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const onClickAdd = () => setVisible(true);
+  useEffect(() => {
+    setData(categories);
+    return () => {};
+  }, []);
 
-  const closeModal = () => setVisible(false);
+  const onClickAdd = item => {
+    setVisible(true);
+    setSelected(item);
+  }
 
-  const addProps = { visible, closeModal };
-  const emptyProps = { icon: 'MdOutlineCategory', type: 'category' , onClickAdd };
+  const closeModal = () => {
+    setVisible(false);
+    setSelected(null);
+  }
+
+  const addProps = { visible, closeModal, selected };
+  const emptyProps = { icon: 'MdOutlineCategory', type: 'category', onClickAdd };
+  const listProps = { data, onClickAdd };
 
   return (
     <div className='s_container'>
       {visible && <Add {...addProps} />}
-      {data?.length ? <List /> : <Empty {...emptyProps} />}
+      <Overlay loading={loading}>
+        {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />}
+      </Overlay>
     </div>
   );
 }
