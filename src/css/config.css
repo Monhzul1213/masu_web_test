@@ -11,15 +11,6 @@
   --title-padding: 20px;
 }
 
-.s_container {
-  margin-left: var(--side-width);
-  padding: var(--page-padding);
-  max-height: calc(100vh - var(--header-height));
-  overflow: scroll;
-  display: flex;
-  flex-flow: row;
-}
-
 .c_card_back {
   background-color: var(--root-color);
   border-radius: var(--radius);
