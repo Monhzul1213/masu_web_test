@@ -18,6 +18,7 @@ export function Category(){
   useEffect(() => {
     getData();
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getData = async () => {
