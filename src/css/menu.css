@@ -163,8 +163,14 @@
   line-height: 48px !important;
 }
 
-.side_menu .ant-menu-submenu .ant-menu-submenu-popup .ant-menu-sub {
-  /* background-color: red !important; */
+.ant-menu-submenu-popup .ant-menu .ant-menu-item-active {
+  background-color: var(--menu-active-bgcolor) !important;
+  color: var(--text-color) !important;
+}
+
+.ant-menu-submenu-popup .ant-menu .ant-menu-item-selected {
+  background-color: transparent!important;
+  color: var(--logo1-color) !important;
 }
 
 .side_menu .ant-menu-sub.ant-menu-inline>.ant-menu-item>.ant-menu-title-content {
