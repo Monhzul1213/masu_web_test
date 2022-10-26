@@ -1,4 +1,74 @@
 @import './color.css';
 
 :root {
+  --empty-width: 560px;
+  --empty-padding: 45px 20px;
+  --empty-icon: 120px;
+}
+
+.empty_back {
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  width: var(--empty-width);
+  padding: var(--empty-padding);
+  border-radius: var(--radius);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.empty_icon_back {
+  width: var(--empty-icon);
+  height: var(--empty-icon);
+  border-radius: 50%;
+  background-color: var(--back-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.empty_icon {
+  color: var(--text4-color);
+  font-size: 64px;
+}
+
+.empty_title {
+  margin: 0 0 2px 0;
+  font-size: 24px;
+  font-weight: 450;
+  color: var(--text2-color);
+}
+
+.empty_descr {
+  margin: 0 0 20px 0;
+  font-size: 16px;
+  color: var(--text2-color);
+}
+
+.empty_btn {
+  border: none;
+  box-shadow: none;
+  background-color: var(--config-b-color);
+  min-height: var(--btn-height);
+  min-width: var(--btn-width);
+  padding: 0 30px;
+  color: var(--root-color);
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty_btn:hover {
+  cursor: pointer;
+  background-color: var(--config-color);
+}
+
+.em_icon {
+  font-size: 14px;
+  margin-right: 10px;
+  color: var(--root-color);
 }
