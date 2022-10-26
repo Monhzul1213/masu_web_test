@@ -25,6 +25,7 @@ export function Add(props){
     setError(null);
     if(name?.value?.trim()){
       let data = { merchantID: user?.merchantId, categoryName: name?.value?.trim(), color };
+      console.log(data);
       setLoading(true);
       setLoading(false);
     } else
