@@ -9,13 +9,18 @@ export function List(props){
   const [show, setShow] = useState(false);
 
   const onClickDelete = () => {};
+  
+  const onCheckAll = checked => {
+  }
 
   const addProps = { type: 'category', onClickAdd, show, onClickDelete };
+  const checkProps = { type: 'category', onCheckAll };
 
   return (
     <div className='card_container'>
       <ButtonRowAdd {...addProps} />
-      <CheckAll />
+      <div style={{height: 20}} />
+      <CheckAll {...checkProps} />
     </div>
   )
 }

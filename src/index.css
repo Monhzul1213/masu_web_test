@@ -120,3 +120,36 @@ code {
   font-size: 16px;
   margin-right: 6px;
 }
+
+.check_all {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: solid 1px var(--text4-color);
+}
+
+.check_all_btn {
+  height: 18px;
+  width: 18px;
+  color: var(--text4-color);
+}
+
+.check_all_btn:hover {
+  color: var(--text3-color);
+}
+
+#check_all_selected {
+  color: var(--config-b-color);
+}
+
+#check_all_selected:hover {
+  color: var(--config-color);
+}
+
+.check_all_lbl {
+  margin: 0 0 0 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2-color);
+}

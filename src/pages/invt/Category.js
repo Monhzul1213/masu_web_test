@@ -33,9 +33,10 @@ export function Category(){
     setSelected(item);
   }
 
-  const closeModal = () => {
+  const closeModal = toGet => {
     setVisible(false);
     setSelected(null);
+    if(toGet) getData();
   }
 
   const addProps = { visible, closeModal, selected };

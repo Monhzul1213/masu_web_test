@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -43,9 +43,8 @@ export function Add(props){
       console.log(response);
       if(response?.error) setError(response?.error);
       else {
-        //close modal
-        //get list again
-        //show toast
+        closeModal(true);
+        message.success(t('category.success'));
       }
       setLoading(false);
     } else {
@@ -76,7 +75,7 @@ export function Add(props){
           </div>
           {error && <Error error={error} id='m_error' />}
         </div>
-        <ButtonRow onClickCancel={closeModal} onClickSave={onClickSave} type='submit' />
+        <ButtonRow onClickCancel={() => closeModal()} onClickSave={onClickSave} type='submit' />
       </Overlay>
     </Modal>
   )
