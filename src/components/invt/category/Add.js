@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { colors } from '../../../helpers';
-import { ButtonRow, DynamicAIIcon, Input, ModalTitle, Overlay } from '../../all';
+import { ButtonRow, DynamicAIIcon, Error, Input, ModalTitle, Overlay } from '../../all';
 
 export function Add(props){
   const { visible, closeModal } = props;
@@ -12,6 +13,7 @@ export function Add(props){
   const [color, setColor] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { user }  = useSelector(state => state.login);
 
   useEffect(() => {
     setColor(colors && colors[0]);
@@ -20,8 +22,13 @@ export function Add(props){
 
   const onClickSave = e => {
     e?.preventDefault();
-    setLoading(true);
-    setTimeout(() => setLoading(false), 1200);
+    setError(null);
+    if(name?.value?.trim()){
+      let data = { merchantID: user?.merchantId, categoryName: name?.value?.trim(), color };
+      setLoading(true);
+      setLoading(false);
+    } else
+      setName({ value: '', error: t('error.not_empty') });
   }
 
   const renderItem = (item, index) => {
@@ -44,6 +51,7 @@ export function Add(props){
           <div className='color_back'>
             {colors?.map(renderItem)}
           </div>
+          {error && <Error error={error} id='m_error' />}
         </div>
         <ButtonRow onClickCancel={closeModal} onClickSave={onClickSave} type='submit' />
       </Overlay>
