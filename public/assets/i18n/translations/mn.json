@@ -54,7 +54,11 @@
     "customer": "Харилцагч",
     "integration": "Интеграци",
     "config": "Тохиргоо",
-    "help": "Тусламж"
+    "help": "Тусламж",
+    "invt_list": "Барааны жагсаалт",
+    "invt_category": "Категор",
+    "invt_pack": "Багцлагч",
+    "invt_discount": "Хөнгөлөлт"
   },
   "page": {
     "more": "Дэлгэрэнгүй",

@@ -32,7 +32,12 @@ export function Menu(props){
 
   const items = [
     getItem(t('menu.report'), '/report', <BsClipboardData />),
-    getItem(t('menu.inventory'), '/inventory', <BsInboxes />),
+    getItem(t('menu.inventory'), '/inventory', <BsInboxes />, [
+      getItem(t('menu.invt_list'), '/inventory/invt_list'),
+      getItem(t('menu.invt_category'), '/inventory/invt_category'),
+      getItem(t('menu.invt_pack'), '/inventory/invt_pack'),
+      getItem(t('menu.invt_discount'), '/inventory/invt_discount')
+    ]),
     getItem(t('menu.management'), '/management', <TbBuildingWarehouse />),
     getItem(t('menu.employee'), '/employee', <RiContactsLine />),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />),
@@ -48,7 +53,8 @@ export function Menu(props){
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style };
   const profileProps = { collapsed, setCollapsed };
-  const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path] };
+  // const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path], mode: 'inline' };
+  const menuProps = { items, onClick, className: 'side_menu', defaultSelectedKeys: ['/' + path], mode: 'inline' };
 
   return hideMenu ? null : (
     <Sider {...siderProps} width={300}>
