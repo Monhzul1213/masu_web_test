@@ -17,56 +17,54 @@ export const tempSlice = createSlice({
       state.loggedIn = action.payload;
     },
     setCategoryColors: (state, action) => {
-      state.categoryColors = action.payload;
+      state.categoryColors = action.payload?.sort((a, b) => a.valueNum - b.valueNum);
     },
   }
 });
 
 export const getConstants = (user, token, type, setFunction) => async dispatch => {
   try {
-    /*
-    const response = await fetchRetry(loginConfig?.url + 'System/GetConstants?ConstType=' + type, token);
-    console.log('----------', response);
-    if(response?.error_code === 401){
-      return dispatch(apiLogin(user?.mail, user?.password)).then(async response1 => {
-        console.log('===========', response1);
-        if(response1?.error)
-          return response1;
-        else {
-          console.log(url, response1?.token ?? token);
-          const response2 = await fetchRetry(url + 'GetConstants?ConstType=' + type, response1?.token ?? token);
-          console.log('++++++++++++', response2);
-          if(response2?.error_code && response2?.error_code !== 200){
-            return Promise.resolve({ error: response2?.description, error_code: response2?.error_code });
-          } else {
-            setFunction && dispatch(setFunction(response2?.data));
-            return Promise.resolve({ error: null, data: response2?.data });
-          }
-        }
-      });
-    } else if(response?.error_code && response?.error_code !== 200){
-      return Promise.resolve({ error: response?.description, error_code: response?.error_code });
-    } else  {
-      setFunction && dispatch(setFunction(response?.data));
-      return Promise.resolve({ error: null, data: response?.data });
+    const config = {
+      method: 'GET', url: loginConfig?.url + 'System/GetConstants',
+      headers: { 'authorization': token, 'Accept': '*/*', 'ConstType': type }
+    };
+    const response = await fetchRetry(config);
+    console.log('++++++++++++++++++++++=', response);
+    if(response?.result === 2){
+      const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
+      if(responseLogin?.error) return responseLogin;
+      else {
+        const configNew = {
+          method: 'GET', url: loginConfig?.url + 'System/GetConstants',
+          headers: { 'authorization': responseLogin?.token ?? token, 'Accept': '*/*', 'ConstType': type }
+        };
+        const responseNew = await fetchRetry(configNew);
+        console.log('=====================', responseNew)
+        if(responseNew?.rettype === 0){
+          setFunction && dispatch(setFunction(responseNew?.retdata));
+          return Promise.resolve({ error: null, data: responseNew?.retdata });
+        } else
+          return Promise.resolve({ error: responseNew?.retdesc ?? responseNew?.message ?? 'Алдаа гарлаа.' });
+      }
+    } else if(response?.rettype === 0){
+      setFunction && dispatch(setFunction(response?.retdata));
+      return Promise.resolve({ error: null, data: response?.retdata });
     }
-    */
+    return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });
   } catch (err) {
+    console.log(err);
     return Promise.resolve({ error: err?.toString() });
   }
 };
 
-function fetchRetry(url, token, retries = 5) {
-  const headers = { 'Authorization': 'Bearer ' + token };
-  return axios.get(url, { headers })
+function fetchRetry(config, retries = 5) {
+  return axios(config)
     .then(res => {
       return res?.data;
     }).catch(error => {
       if(error?.message === 'Network Error' && retries > 0){
         console.log('retrying network', retries);
-        return fetchRetry(url, token, retries - 1)
-      } else {
-        return Promise.resolve({ description: error?.message, error_code: 100 });
+        return fetchRetry(config, retries - 1)
       }
     });
 }
