@@ -28,3 +28,7 @@ export const colors = [
   '#2196f3',
   '#9c27b0'
 ];
+
+export const categories = [
+  { color: '#e91e63', name: 'Sweets', count: 0 }
+]

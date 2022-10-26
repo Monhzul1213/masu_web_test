@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 
 import '../../css/invt.css';
 import { Empty } from '../../components/all';
-import { Add } from '../../components/invt/category';
+import { Add, List } from '../../components/invt/category';
 
 export function Category(){
   const [visible, setVisible] = useState(false);
+  const [data, setData] = useState([]);
 
   const onClickAdd = () => setVisible(true);
 
@@ -17,7 +18,7 @@ export function Category(){
   return (
     <div className='s_container'>
       {visible && <Add {...addProps} />}
-      <Empty {...emptyProps} />
+      {data?.length ? <List /> : <Empty {...emptyProps} />}
     </div>
   );
 }
