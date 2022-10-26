@@ -4,6 +4,7 @@
   --empty-width: 560px;
   --empty-padding: 45px 20px;
   --empty-icon: 120px;
+  --color-width: 60px;
 }
 
 .empty_back {
@@ -71,4 +72,31 @@
   font-size: 14px;
   margin-right: 10px;
   color: var(--root-color);
+}
+
+.color_back {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.color_btn {
+  height: var(--color-width);
+  width: var(--color-width);
+  border-radius: var(--radius);
+  margin-top: 10px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color_btn:hover {
+  cursor: pointer;
+}
+
+.color_icon {
+  color: var(--root-color);
+  font-size: 22px;
 }

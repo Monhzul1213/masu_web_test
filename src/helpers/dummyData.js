@@ -17,3 +17,14 @@ export const payShops = [
   { label: 'Shop8', value: 'Shop8', address: '25th street', qty: 1 },
   { label: 'Shop9', value: 'Shop9', address: '25th street', qty: 1 },
 ];
+
+export const colors = [
+  '#e0e0e0',
+  '#f44336',
+  '#e91e63',
+  '#ff9800',
+  '#cddc39',
+  '#4caf50',
+  '#2196f3',
+  '#9c27b0'
+];
