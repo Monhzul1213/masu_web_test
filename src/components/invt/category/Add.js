@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getConstants, setCategoryColors } from '../../../services';
+import { getConstants, sendRequest, setCategoryColors } from '../../../services';
 import { ButtonRow, DynamicAIIcon, Error, Input, ModalTitle, Overlay } from '../../all';
 
 export function Add(props){
@@ -33,13 +33,20 @@ export function Add(props){
       setColor(colors[0].valueNum);
   }
 
-  const onClickSave = e => {
+  const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
     if(name?.value?.trim() && color !== null){
       let data = { merchantID: user?.merchantId, categoryName: name?.value?.trim(), color };
-      console.log(data);
       setLoading(true);
+      const response = await dispatch(sendRequest(user, token, 'Inventory/AddCategory', data));
+      console.log(response);
+      if(response?.error) setError(response?.error);
+      else {
+        //close modal
+        //get list again
+        //show toast
+      }
       setLoading(false);
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });

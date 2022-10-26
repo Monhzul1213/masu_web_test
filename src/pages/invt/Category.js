@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import '../../css/invt.css';
-import { categories } from '../../helpers';
 import { Empty, Overlay } from '../../components/all';
 import { Add, List } from '../../components/invt/category';
 
@@ -12,7 +11,6 @@ export function Category(){
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setData(categories);
     return () => {};
   }, []);
 
