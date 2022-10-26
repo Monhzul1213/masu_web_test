@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
-import { Empty, Overlay } from '../../components/all';
+import { getList } from '../../services';
+import { Empty, Error, Overlay } from '../../components/all';
 import { Add, List } from '../../components/invt/category';
 
 export function Category(){
@@ -9,10 +11,22 @@ export function Category(){
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    getData();
     return () => {};
   }, []);
+
+  const getData = async () => {
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
+    if(response?.error) setError(response?.error);
+    else setData(response?.data);
+    setLoading(false);
+  }
 
   const onClickAdd = item => {
     setVisible(true);
@@ -32,6 +46,7 @@ export function Category(){
     <div className='s_container'>
       {visible && <Add {...addProps} />}
       <Overlay loading={loading}>
+        {error && <Error error={error} />}
         {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />}
       </Overlay>
     </div>
