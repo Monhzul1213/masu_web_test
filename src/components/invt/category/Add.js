@@ -44,7 +44,7 @@ export function Add(props){
       let data = selected
         ? { categoryId: selected?.categoryId, categoryName: name?.value?.trim(), color }
         : { merchantID: user?.merchantId, categoryName: name?.value?.trim(), color };
-      let api = selected ? ('Inventory/UpdateCategory/' + selected?.categoryId) : 'Inventory/AddCategory';
+      let api = selected ? 'Inventory/UpdateCategory' : 'Inventory/AddCategory';
       const response = await dispatch(sendRequest(user, token, api, data));
       console.log(response);
       if(response?.error) setError(response?.error);

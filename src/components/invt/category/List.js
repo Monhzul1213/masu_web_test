@@ -11,7 +11,9 @@ export function List(props){
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState({});
 
-  const onClickDelete = () => {};
+  const onClickDelete = () => {
+    console.log(selected);
+  };
   
   const onCheckAll = checked => {
     setShow(checked);
