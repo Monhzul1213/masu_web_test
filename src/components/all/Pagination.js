@@ -7,7 +7,7 @@ const { Option } = Select;
 export function Pagination(props){
   const { total, setStart, setEnd } = props;
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(10);
   const [count, setCount] = useState(1);
   const pageRange = [10, 25, 50, 100];
 
