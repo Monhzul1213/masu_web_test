@@ -15,6 +15,8 @@
   --main-color: #6f0ad2;
   --tag1-color: #f1defd;
   --line-color: #eaeaea;
+  --input-color: #f1f1f1;
+  --input1-color: #e0e0e0;
 
   --danger-color: #e41051;
 	--warning-color: #fcd12a;
@@ -32,4 +34,5 @@
   --page-padding: 15px;
   --radius: 5px;
   --list-h-height: 56px;
+  --pg-height: 32px;
 }

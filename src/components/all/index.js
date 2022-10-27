@@ -13,3 +13,4 @@ export * from './Table';
 export * from './Empty';
 export * from './CheckAll';
 export * from './Confirm';
+export * from './Pagination';

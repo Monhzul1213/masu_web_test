@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CheckAll, ButtonRowAdd, Confirm } from '../../all';
+import { CheckAll, ButtonRowAdd, Confirm, Pagination } from '../../all';
 import { Item } from './Item';
 
 export function List(props){
   const { onClickAdd, onDelete, data, show, setShow, checked, setChecked, selected, setSelected } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(10);
 
   const onClickDelete = () => setOpen(true);
 
@@ -53,6 +55,7 @@ export function List(props){
   const addProps = { type: 'category', onClickAdd, show, onClickDelete };
   const checkProps = { type: 'category', checked, onCheckAll };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
+  const pageProps = { total: data?.length, setStart, setEnd };
 
   return (
     <div className='card_container'>
@@ -61,8 +64,9 @@ export function List(props){
       <div style={{height: 20}} />
       <CheckAll {...checkProps} />
       <div className='list_back'>
-        {data?.map(renderItem)}
+        {data?.slice(start, end)?.map(renderItem)}
       </div>
+      <Pagination {...pageProps} />
     </div>
   )
 }
