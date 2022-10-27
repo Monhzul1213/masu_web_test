@@ -9,9 +9,12 @@ import { Add, List } from '../../components/invt/category';
 export function Category(){
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
-  const [selected, setSelected] = useState(null);
+  const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [show, setShow] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [selected, setSelected] = useState({});
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -28,6 +31,9 @@ export function Category(){
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoading(false);
+    setShow(false);
+    setChecked(false);
+    setSelected({});
   }
 
   const onDelete = async toDelete => {
@@ -43,18 +49,18 @@ export function Category(){
 
   const onClickAdd = item => {
     setVisible(true);
-    setSelected(item);
+    setItem(item);
   }
 
   const closeModal = toGet => {
     setVisible(false);
-    setSelected(null);
+    setItem(null);
     if(toGet) getData();
   }
 
-  const addProps = { visible, closeModal, selected };
+  const addProps = { visible, closeModal, selected: item };
   const emptyProps = { icon: 'MdOutlineCategory', type: 'category', onClickAdd };
-  const listProps = { data, onClickAdd, onDelete, setLoading, setError };
+  const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
 
   return (
     <div className='s_container'>

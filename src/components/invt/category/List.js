@@ -5,11 +5,8 @@ import { CheckAll, ButtonRowAdd, Confirm } from '../../all';
 import { Item } from './Item';
 
 export function List(props){
-  const { onClickAdd, onDelete, data } = props;
+  const { onClickAdd, onDelete, data, show, setShow, checked, setChecked, selected, setSelected } = props;
   const { t } = useTranslation();
-  const [show, setShow] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [selected, setSelected] = useState({});
   const [open, setOpen] = useState(false);
 
   const onClickDelete = () => setOpen(true);
