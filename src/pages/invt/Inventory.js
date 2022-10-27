@@ -11,7 +11,7 @@ export function Inventory(){
   const navigate = useNavigate();
 
   const onClickAdd = () => {
-    navigate('invt_add');
+    // navigate('invt_add');
   }
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
