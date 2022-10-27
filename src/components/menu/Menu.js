@@ -15,6 +15,7 @@ export function Menu(props){
   const { collapsed, setCollapsed } = props;
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const path = pathname?.split('/') && pathname?.split('/')[1];
   const navigate = useNavigate();
   const hideMenu = pathname?.includes('confirm');
 
@@ -52,7 +53,7 @@ export function Menu(props){
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style };
   const profileProps = { collapsed, setCollapsed };
-  const menuProps = { items, onClick, className: 'side_menu', selectedKeys: [pathname], mode: 'inline' };
+  const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
 
   return hideMenu ? null : (
     <Sider {...siderProps} width={300}>
