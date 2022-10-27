@@ -28,8 +28,8 @@ input:-webkit-autofill:active{
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: var(--root-color);
-  -moz-text-fill-color: var(--root-color);
+  -webkit-text-fill-color: var(--text-color);
+  -moz-text-fill-color: var(--text-color);
 }
 
 .l_container {
