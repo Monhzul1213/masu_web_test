@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
-import { getList } from '../../services';
+import { deleteMultiRequest, getList } from '../../services';
 import { Empty, Error, Overlay } from '../../components/all';
 import { Add, List } from '../../components/invt/category';
 
@@ -22,11 +22,23 @@ export function Category(){
   }, []);
 
   const getData = async () => {
+    setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoading(false);
+  }
+
+  const onDelete = async toDelete => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(deleteMultiRequest(user, token, 'Inventory/DcCategory', toDelete));
+    if(response?.error) {
+      setError(response?.error);
+      setLoading(false);
+    }
+    else getData();
   }
 
   const onClickAdd = item => {
@@ -42,7 +54,7 @@ export function Category(){
 
   const addProps = { visible, closeModal, selected };
   const emptyProps = { icon: 'MdOutlineCategory', type: 'category', onClickAdd };
-  const listProps = { data, onClickAdd };
+  const listProps = { data, onClickAdd, onDelete, setLoading, setError };
 
   return (
     <div className='s_container'>

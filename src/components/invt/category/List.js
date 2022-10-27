@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { CheckAll, ButtonRowAdd } from '../../all';
+import { CheckAll, ButtonRowAdd, Confirm } from '../../all';
 import { Item } from './Item';
 
 export function List(props){
-  const { onClickAdd, data } = props;
+  const { onClickAdd, onDelete, data } = props;
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState({});
+  const [open, setOpen] = useState(false);
 
-  const onClickDelete = () => {
-    console.log(selected);
+  const onClickDelete = () => setOpen(true);
+
+  const confirm = sure => {
+    setOpen(false);
+    if(sure){
+      let toDelete = [];
+      (Object.keys(selected))?.map(item => toDelete?.push({ categoryID: parseInt(item) }));
+      onDelete(toDelete);
+    }
   };
   
   const onCheckAll = checked => {
@@ -47,9 +55,11 @@ export function List(props){
 
   const addProps = { type: 'category', onClickAdd, show, onClickDelete };
   const checkProps = { type: 'category', checked, onCheckAll };
+  const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
     <div className='card_container'>
+      {open && <Confirm {...confirmProps} />}
       <ButtonRowAdd {...addProps} />
       <div style={{height: 20}} />
       <CheckAll {...checkProps} />
