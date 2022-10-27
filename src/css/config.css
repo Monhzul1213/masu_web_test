@@ -426,13 +426,13 @@
   flex-flow: row;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid var(--text4-color);
+  border-bottom: 1px solid var(--text4-color);
   margin: 20px 0 0 0;
   padding: 3px 0;
 }
 
 .mask_row:focus-within {
-  border-bottom: 2px solid var(--success-color);
+  border-bottom: 1px solid var(--success-color);
 }
 
 .mask_lbl {
@@ -467,13 +467,13 @@
 .select_back {
   display: flex;
   flex-flow: column;
-  border-bottom: 2px solid var(--text4-color);
+  border-bottom: 1px solid var(--text4-color);
   margin: 20px 0 0 0;
   padding: 3px 0;
 }
 
 .select_back:focus-within {
-  border-bottom: 2px solid var(--success-color);
+  border-bottom: 1px solid var(--success-color);
 }
 
 .select_back:focus-within .select_lbl {
