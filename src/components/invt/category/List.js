@@ -63,7 +63,7 @@ export function List(props){
       <ButtonRowAdd {...addProps} />
       <div style={{height: 20}} />
       <CheckAll {...checkProps} />
-      <div className='list_back'>
+      <div className='list_back' id='paging'>
         {data?.slice(start, end)?.map(renderItem)}
       </div>
       <Pagination {...pageProps} />

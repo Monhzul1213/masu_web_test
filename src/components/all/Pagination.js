@@ -21,6 +21,8 @@ export function Pagination(props){
     setPage(newPage);
     setStart((newPage - 1) * pageSize);
     setEnd(newPage * pageSize);
+    const scroll = document.getElementById('paging');
+    if(scroll) scroll.scrollTop = 0;
   }
 
   const onSizeChange = (size, total1) => {
@@ -35,6 +37,8 @@ export function Pagination(props){
       setStart(start);
       setEnd(page * size);
     }
+    const scroll = document.getElementById('paging');
+    if(scroll) scroll.scrollTop = 0;
   }
 
   const onChange = e => {
@@ -70,7 +74,7 @@ export function Pagination(props){
         <Select
           className='pg_select'
           value={pageSize}
-          onSelect={e => onSizeChange(Number(e))}>
+          onSelect={e => onSizeChange(Number(e), total)}>
           {pageRange?.map(item => {
             return (<Option key={item} value={item}>{item}</Option>)
           })}
