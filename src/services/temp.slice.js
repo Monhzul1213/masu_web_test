@@ -57,6 +57,39 @@ export const sendRequest = (user, token, api, data) => async dispatch => {
   }
 }
 
+export const deleteRequest = (user, token, api) => async dispatch => {
+  try {
+    const config = {
+      method: 'DELETE', url: loginConfig?.url + api,
+      headers: { 'authorization': token, 'Accept': '*/*' },
+    }
+    const response = await fetchRetry(config);
+    console.log('++++++++++++++++++++++=', response);
+    if(response?.result === 2){
+      const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
+      if(responseLogin?.error) return responseLogin;
+      else {
+        const configNew = {
+          method: 'DELETE', url: loginConfig?.url + api,
+          headers: { 'authorization': responseLogin?.token ?? token, 'Accept': '*/*' },
+        }
+        const responseNew = await fetchRetry(configNew);
+        console.log('=====================', responseNew)
+        if(responseNew?.rettype === 0){
+          return Promise.resolve({ error: null, data: responseNew?.retdata });
+        } else
+          return Promise.resolve({ error: responseNew?.retdesc ?? responseNew?.message ?? 'Алдаа гарлаа.' });
+      }
+    } else if(response?.rettype === 0){
+      return Promise.resolve({ error: null, data: response?.retdata });
+    }
+    return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });
+  } catch (err) {
+    console.log(err);
+    return Promise.resolve({ error: err?.toString() });
+  }
+}
+
 export const getConstants = (user, token, type, setFunction) => async dispatch => {
   try {
     const config = {

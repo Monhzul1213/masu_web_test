@@ -3,7 +3,7 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getConstants, sendRequest, setCategoryColors } from '../../../services';
+import { getConstants, sendRequest, deleteRequest, setCategoryColors } from '../../../services';
 import { ButtonRow, DynamicAIIcon, Error, Input, ModalTitle, Overlay } from '../../all';
 
 export function Add(props){
@@ -46,12 +46,24 @@ export function Add(props){
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);
-        message.success(t('category.success'));
+        message.success(t('category.add_success'));
       }
       setLoading(false);
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       if(color === null) setError(t('category.color') + '' + t('error.not_empty'))
+    }
+  }
+
+  const onClickDelete = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteCategory/' + selected?.categoryId));
+    console.log(response);
+    if(response?.error) setError(response?.error);
+    else {
+      closeModal(true);
+      message.success(t('category.delete_success'));
     }
   }
 
@@ -65,6 +77,7 @@ export function Add(props){
   }
   
   const nameProps = { value: name, setValue: setName, label: t('category.name'), placeholder: t('category.name'), setError };
+  const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
@@ -77,7 +90,7 @@ export function Add(props){
           </div>
           {error && <Error error={error} id='m_error' />}
         </div>
-        <ButtonRow onClickCancel={() => closeModal()} onClickSave={onClickSave} type='submit' />
+        <ButtonRow {...btnProps} />
       </Overlay>
     </Modal>
   )

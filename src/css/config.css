@@ -206,6 +206,7 @@
   border-top: 1px solid var(--line-color);
   padding: var(--btn-margin) 7px;
   margin-top: var(--page-padding);
+  align-items: center;
 }
 
 .a_btn {

@@ -153,3 +153,17 @@ code {
   font-weight: 500;
   color: var(--text2-color);
 }
+
+.a_btn_delete {
+  position: absolute;
+  left: calc(var(--title-padding) - 6px);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--danger-color);
+  padding: 6px;
+}
+
+.a_btn_delete:hover {
+  background-color: var(--danger-t-color);
+}
