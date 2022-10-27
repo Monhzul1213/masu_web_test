@@ -117,7 +117,6 @@
   flex-flow: row;
   align-items: center;
   border-bottom: 1px solid var(--line-color);
-  padding: 15px 0;
 }
 
 .cat_item:last-child {
@@ -127,6 +126,13 @@
 .cat_item:hover {
   cursor: pointer;
   background-color: var(--back1-color);
+}
+
+.cat_btn {
+  display: flex;
+  flex-flow: row;
+  flex: 1;
+  padding: 15px 0;
 }
 
 .cat_color {
