@@ -16,7 +16,6 @@ export function Menu(props){
   const { t } = useTranslation();
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const path = pathname?.split('/') && pathname?.split('/')[1];
   const hideMenu = pathname?.includes('confirm');
 
   const style = {
