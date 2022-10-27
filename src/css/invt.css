@@ -161,5 +161,5 @@
 
 .list_back {
   overflow-y: scroll;
-  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 20px - 41px);
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 20px - 41px - var(--pg-height) - 10px);
 }

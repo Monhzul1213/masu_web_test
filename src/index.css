@@ -205,6 +205,11 @@ code {
   color: var(--config-color);
 }
 
+.pg_btn:disabled {
+  cursor: not-allowed;
+  color: var(--text4-color);
+}
+
 .pg_input_back {
   display: flex;
   flex-flow: row;
