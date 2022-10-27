@@ -167,3 +167,13 @@ code {
 .a_btn_delete:hover {
   background-color: var(--danger-t-color);
 }
+
+#m_confirm {
+  font-size: 18px;
+}
+
+.m_descr {
+  color: var(--text-color);
+  font-size: 15px;
+  margin: 10px 0 0 0;
+}

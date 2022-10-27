@@ -12,3 +12,4 @@ export * from './MaskedInput';
 export * from './Table';
 export * from './Empty';
 export * from './CheckAll';
+export * from './Confirm';

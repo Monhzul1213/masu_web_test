@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getConstants, sendRequest, deleteRequest, setCategoryColors } from '../../../services';
-import { ButtonRow, DynamicAIIcon, Error, Input, ModalTitle, Overlay } from '../../all';
+import { ButtonRow, DynamicAIIcon, Error, Input, ModalTitle, Overlay, Confirm } from '../../all';
 
 export function Add(props){
   const { visible, closeModal, selected } = props;
@@ -13,6 +13,7 @@ export function Add(props){
   const [color, setColor] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const colors = useSelector(state => state.temp.categoryColors);
   const dispatch = useDispatch();
@@ -55,15 +56,20 @@ export function Add(props){
     }
   }
 
-  const onClickDelete = async () => {
+  const onClickDelete = () => setOpen(true);
+
+  const onDelete = async sure => {
     setError(null);
-    setLoading(true);
-    const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteCategory/' + selected?.categoryId));
-    console.log(response);
-    if(response?.error) setError(response?.error);
-    else {
-      closeModal(true);
-      message.success(t('category.delete_success'));
+    setOpen(false);
+    if(sure){
+      setLoading(true);
+      const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteCategory/' + selected?.categoryId));
+      console.log(response);
+      if(response?.error) setError(response?.error);
+      else {
+        closeModal(true);
+        message.success(t('category.delete_success'));
+      }
     }
   }
 
@@ -76,11 +82,13 @@ export function Add(props){
     )
   }
   
+  const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
   const nameProps = { value: name, setValue: setName, label: t('category.name'), placeholder: t('category.name'), setError };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
+      {open && <Confirm {...confirmProps} />}
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdOutlineCategory' title={t('category.add')} isMD={true} />
