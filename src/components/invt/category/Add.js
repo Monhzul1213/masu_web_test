@@ -7,7 +7,7 @@ import { getConstants, sendRequest, setCategoryColors } from '../../../services'
 import { ButtonRow, DynamicAIIcon, Error, Input, ModalTitle, Overlay } from '../../all';
 
 export function Add(props){
-  const { visible, closeModal } = props;
+  const { visible, closeModal, selected } = props;
   const { t } = useTranslation();
   const [name, setName] = useState({ value: '' });
   const [color, setColor] = useState(null);
@@ -28,10 +28,11 @@ export function Add(props){
       setLoading(true);
       const response = await dispatch(getConstants(user, token, 'msCategory_Color', setCategoryColors));
       if(response?.error) setError(response?.error);
-      else setColor(response?.data && response?.data[0] && response?.data[0].valueNum);
+      else setColor(selected?.color ?? (response?.data && response?.data[0] && response?.data[0].valueNum));
       setLoading(false);
     } else
-      setColor(colors[0].valueNum);
+      setColor(selected?.color ?? colors[0].valueNum);
+    setName({ value: selected?.categoryName ?? '' });
   }
 
   const onClickSave = async e => {
