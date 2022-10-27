@@ -40,9 +40,12 @@ export function Add(props){
     e?.preventDefault();
     setError(null);
     if(name?.value?.trim() && color !== null){
-      let data = { merchantID: user?.merchantId, categoryName: name?.value?.trim(), color };
       setLoading(true);
-      const response = await dispatch(sendRequest(user, token, 'Inventory/AddCategory', data));
+      let data = selected
+        ? { categoryId: selected?.categoryId, categoryName: name?.value?.trim(), color }
+        : { merchantID: user?.merchantId, categoryName: name?.value?.trim(), color };
+      let api = selected ? ('Inventory/UpdateCategory/' + selected?.categoryId) : 'Inventory/AddCategory';
+      const response = await dispatch(sendRequest(user, token, api, data));
       console.log(response);
       if(response?.error) setError(response?.error);
       else {
@@ -91,7 +94,7 @@ export function Add(props){
       {open && <Confirm {...confirmProps} />}
       <Overlay loading={loading}>
         <div className='m_back'>
-          <ModalTitle icon='MdOutlineCategory' title={t('category.add')} isMD={true} />
+          <ModalTitle icon='MdOutlineCategory' title={t(selected ? 'category.edit' : 'category.add')} isMD={true} />
           <Input {...nameProps} />
           <div className='color_back'>
             {colors?.map(renderItem)}
