@@ -53,8 +53,7 @@ export function Menu(props){
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style };
   const profileProps = { collapsed, setCollapsed };
-  // const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path], mode: 'inline' };
-  const menuProps = { items, onClick, className: 'side_menu', defaultSelectedKeys: ['/' + path], mode: 'inline' };
+  const menuProps = { items, onClick, className: 'side_menu', selectedKeys: [pathname], mode: 'inline' };
 
   return hideMenu ? null : (
     <Sider {...siderProps} width={300}>
