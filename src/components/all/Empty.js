@@ -5,7 +5,7 @@ import { IconButton } from './Button';
 import { DynamicBSIcon, DynamicMDIcon } from './DynamicIcon';
 
 export function Empty(props){
-  const { icon, type, onClickAdd } = props;
+  const { icon, type, onClickAdd, noDescr } = props;
   const { t } = useTranslation();
 
   return (
@@ -14,7 +14,7 @@ export function Empty(props){
         <DynamicMDIcon className='empty_icon' name={icon} />
       </div>
       <p className='empty_title'>{t(type + '.title')}</p>
-      <p className='empty_descr'>{t(type + '.descr')}</p>
+      <p className='empty_descr'>{noDescr ? '' : t(type + '.descr')}</p>
       <IconButton className='empty_btn' text={t(type + '.add')} icon={<DynamicBSIcon name='BsPlusLg' className='em_icon' />}
         onClick={() => onClickAdd()} />
     </div>

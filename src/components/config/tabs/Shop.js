@@ -1,24 +1,36 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DynamicBSIcon, IconButton, Table } from '../../all';
+import { Empty } from '../../all';
+import { Add } from './store';
 
 export function Shop(){
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
+  const [data, setData] = useState([]);
+
+  /**
+   *  "merchantID": 0,
+  "name": "string",
+  "address": "string",
+  "phone": "string",
+  "descr": "string"
+   */
   
   const onClickAdd = () => setVisible(true);
+  const closeModal = () => setVisible(false);
+
+  const emptyProps = { icon: 'MdStorefront', type: 'shop', noDescr: true, onClickAdd };
+  const addProps = { visible, closeModal };
 
   return (
-    <div className='c_tab_cont'>
-      {visible && <p>Show modal</p>}
-      <div className='ca_row'>
-        <IconButton className='ca_btn' text={t('shop.add')} id='ca_btn_add'
-          icon={<DynamicBSIcon name='BsPlusLg' className='ca_icon' />} onClick={onClickAdd} />
-      </div>
-      <div className='ca_tab_back'>
-        <Table />
-      </div>
+    <div>
+      {visible && <Add {...addProps} />}
+      {!data?.lenght ? <Empty {...emptyProps} /> :
+        <div>
+          List
+        </div>
+      }
     </div>
   );
 }
