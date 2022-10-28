@@ -83,3 +83,61 @@ export function Pagination(props){
     </div>
   );
 }
+
+export function PaginationTable(props){
+  const { tableInstance } = props;
+  const [page, setPage] = useState(1);
+  const pageRange = [10, 25, 50, 100];
+  const { canPreviousPage, canNextPage, pageCount, gotoPage, nextPage, previousPage, setPageSize,
+    state: { pageIndex, pageSize }} = tableInstance;
+
+  useEffect(() => {
+    setPage(pageIndex + 1);
+    const scroll = document.getElementById('paging');
+    if(scroll) scroll.scrollTop = 0;
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageIndex]);
+
+  const onChange = e => {
+    let value = parseInt(e.target.value);
+    if(isNaN(value)){
+      setPage('');
+    } else if(value <= pageCount){
+      setPage(value);
+    }
+  }
+
+  const onBlur = () => {
+    gotoPage(page ? page - 1 : 0);
+  }
+
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter") gotoPage(page ? page - 1 : 0);
+  }
+
+  return (
+    <div className='pg_back'>
+      <button className='pg_btn' disabled={!canPreviousPage} onClick={() => previousPage()}>
+        <FiChevronLeft className='pg_icon' />
+      </button>
+      <div className='pg_input_back'>
+        <input className='pg_input' value={page} onChange={onChange} onBlur={onBlur} onKeyDown={onKeyDown} />
+        <p className='pg_text'>/ {pageCount}</p>
+      </div>
+      <button className='pg_btn' disabled={!canNextPage} onClick={() => nextPage()}>
+        <FiChevronRight className='pg_icon' />
+      </button>
+      <div className='pg_select_back'>
+        <Select
+          className='pg_select'
+          value={pageSize}
+          onSelect={e => setPageSize(Number(e))}>
+          {pageRange?.map(item => {
+            return (<Option key={item} value={item}>{item}</Option>)
+          })}
+        </Select>
+      </div>
+    </div>
+  );
+}

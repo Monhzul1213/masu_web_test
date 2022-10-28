@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Empty, ButtonRowAdd, Table, Overlay, Error1 } from '../../all';
+import { Empty, ButtonRowAdd, Table, Overlay, Error1, PaginationTable } from '../../all';
 import { Add } from './store';
 import { getList } from '../../../services';
 
@@ -59,7 +59,7 @@ export function Shop(props){
     if(toGet) getData();
   }
 
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px)';
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   const tableInstance = useTable( { columns, data, initialState: { pageIndex: 0, pageSize: 25 }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd };
   const emptyProps = { icon: 'MdStorefront', type: 'shop', noDescr: true, onClickAdd };
@@ -74,9 +74,10 @@ export function Shop(props){
         {!data?.length ? <Empty {...emptyProps} /> :
           <div className='card_container'>
             <ButtonRowAdd {...addProps} />
-            <div style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>
+            <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>
               <Table {...tableProps} />
             </div>
+            <PaginationTable {...tableProps} />
           </div>
         }
       </Overlay>
