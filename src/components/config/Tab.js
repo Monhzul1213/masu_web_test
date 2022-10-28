@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
 
-import { Additional, Type, Cashier, Promo, Shop } from './tabs';
+import { Additional, Type, Cashier, Promo, Shop, Pos } from './tabs';
 
 export function Tab(props){
   const { selectedKeys } = props;
@@ -12,6 +12,7 @@ export function Tab(props){
     { key: 'cashier', children: <Cashier /> },
     { key: 'promo', children: <Promo /> },
     { key: 'store', children: <Shop active={selectedKeys && selectedKeys[0]} /> },
+    { key: 'pos', children: <Pos active={selectedKeys && selectedKeys[0]} /> },
   ];
 
   return <Tabs activeKey={selectedKeys && selectedKeys[0]} defaultActiveKey='additional' items={items} />;
