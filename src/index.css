@@ -94,6 +94,7 @@ code {
 
 #add_row_add {
   background-color: var(--config-b-color);
+  /* background-color: rgb(62,50,120); */
   color: var(--root-color);
 }
 

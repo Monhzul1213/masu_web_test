@@ -412,7 +412,7 @@
 }
 
 .m_title_icon {
-  color: var(--config-color);
+  color: var(--icon-color);
   width: 26px;
   height: 26px;
   margin-right: 10px;
