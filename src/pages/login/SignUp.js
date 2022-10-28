@@ -25,12 +25,12 @@ export function SignUp(){
   const navigate = useNavigate();
 
   const checkValid = () => {
-    let passwordLength = 7, businessLength = 5, addressLength = 29;
+    let passwordLength = 8, businessLength = 6, addressLength = 30;
     let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && address?.value?.trim();
     let isEmailValid = validateEmail(email?.value?.trim());
-    let isPasswordValid = password?.value?.trim()?.length > passwordLength;
-    let isBusinessValid = business?.value?.trim()?.length > businessLength;
-    let isAddressValid = address?.value?.trim()?.length > addressLength;
+    let isPasswordValid = password?.value?.trim()?.length >= passwordLength;
+    let isBusinessValid = business?.value?.trim()?.length >= businessLength;
+    let isAddressValid = address?.value?.trim()?.length >= addressLength;
     if(isValid && isEmailValid && isPasswordValid && isBusinessValid && isAddressValid){
       return true;
     } else {
