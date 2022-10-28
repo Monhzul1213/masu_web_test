@@ -98,8 +98,7 @@
 }
 
 .c_gap {
-  height: 20px;
-  width: 20px;
+  padding: 10px;
 }
 
 .ant-tabs > .ant-tabs-nav, .ant-tabs > div > .ant-tabs-nav {

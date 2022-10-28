@@ -14,3 +14,15 @@ export function Error(props){
     </div>
   )
 }
+
+export function Error1(props){
+  const { t } = useTranslation();
+  const { error, label } = props;
+
+  return (
+    <div className='a_error_back'>
+      <DynamicAIIcon name='AiOutlineInfoCircle' className='error_icon' />
+      <span className='error_text' id='a_error_text'>{error ?? t(label)}</span>
+    </div>
+  )
+}

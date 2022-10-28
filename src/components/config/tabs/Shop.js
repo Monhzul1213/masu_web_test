@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Empty, ButtonRowAdd, Table, Overlay } from '../../all';
+import { Empty, ButtonRowAdd, Table, Overlay, Error1 } from '../../all';
 import { Add } from './store';
 import { getList } from '../../../services';
 
@@ -21,7 +21,7 @@ export function Shop(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('shop.t_name'), accessor: 'label' },
+      { Header: t('shop.t_name'), accessor: 'name' },
       { Header: t('shop.t_addr'), accessor: 'address' },
       {
         Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'qty',
@@ -70,6 +70,7 @@ export function Shop(props){
     <div>
       {visible && <Add {...modalProps} />}
       <Overlay loading={loading}>
+        {error && <Error1 error={error} />}
         {!data?.length ? <Empty {...emptyProps} /> :
           <div className='card_container'>
             <ButtonRowAdd {...addProps} />
