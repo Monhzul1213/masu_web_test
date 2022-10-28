@@ -10,9 +10,21 @@ export function FloatingInput(props){
     setError && setError(null);
   }
 
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter"){
+      if(handleEnter) handleEnter(e);
+      else {
+        const form = e.target.form;
+        const index = [...form].indexOf(e.target);
+        form.elements[index + 1].focus();
+        e.preventDefault();
+      }
+    }
+  }
+
   const style = value?.error ? { borderColor: '#e41051' } : {};
   const style1 = value?.error ? { color: '#e41051' } : {};
-  const inputProps = { className: 'f_input_back', value: value?.value, onChange, onKeyDown: handleEnter, style };
+  const inputProps = { className: 'f_input_back', value: value?.value, onChange, onKeyDown, style };
 
   return (
     <div className='f_input_container'>
@@ -37,9 +49,21 @@ export function FloatingPassword(props){
     setVisible(!visible);
   }
 
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter"){
+      if(handleEnter) handleEnter(e);
+      else {
+        const form = e.target.form;
+        const index = [...form].indexOf(e.target);
+        form.elements[index + 1].focus();
+        e.preventDefault();
+      }
+    }
+  }
+
   const style = value?.error ? { borderColor: '#e41051' } : {};
   const style1 = value?.error ? { color: '#e41051' } : {};
-  const inputProps = { className: 'f_input_back', value: value?.value, type: visible ? 'text' : 'password', onChange, onKeyDown: handleEnter, style };
+  const inputProps = { className: 'f_input_back', value: value?.value, type: visible ? 'text' : 'password', onChange, onKeyDown, style };
 
   return (
     <div className='f_input_container'>

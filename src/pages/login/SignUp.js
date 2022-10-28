@@ -24,15 +24,6 @@ export function SignUp(){
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleEnter = e => {
-    if(e?.key?.toLowerCase() === "enter") {
-      const form = e.target.form;
-      const index = [...form].indexOf(e.target);
-      form.elements[index + 1].focus();
-      e.preventDefault();
-    }
-  }
-
   const checkValid = () => {
     let passwordLength = 7, businessLength = 5, addressLength = 29;
     let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && address?.value?.trim();
@@ -93,10 +84,10 @@ export function SignUp(){
     }
   }
 
-  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, handleEnter };
-  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, handleEnter };
-  const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError, handleEnter };
-  const addressProps = { text: t('login.address'), value: address, setValue: setAddress, setError, handleEnter };
+  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
+  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
+  const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError };
+  const addressProps = { text: t('login.address'), value: address, setValue: setAddress, setError, handleEnter: checked && handleSubmit };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
   

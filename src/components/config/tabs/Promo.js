@@ -14,7 +14,6 @@ export function Promo(){
     e?.preventDefault();
     let percent = parseFloat(perc?.value);
     if(type?.value?.trim() && !isNaN(percent)){
-      // setLoading(true);
       setTimeout(() => setLoading(false), 1200);
     } else {
       if(!type?.value?.trim()) setType({ value: '', error: t('error.not_empty') });
@@ -26,14 +25,7 @@ export function Promo(){
     console.log('reset percent, name');
   }
 
-  const handleEnter = e => {
-    const form = e.target.form;
-    const index = [...form].indexOf(e.target);
-    form.elements[index + 1].focus();
-    e.preventDefault();
-  }
-  
-  const typeProps = { value: type, setValue: setType, label: t('promo.type'), setError, handleEnter };
+  const typeProps = { value: type, setValue: setType, label: t('promo.type'), setError };
   const percProps = { value: perc, setValue: setPerc, label: t('promo.percent'), setError, handleEnter: handleSubmit, mask: '99.99' };
 
   return (

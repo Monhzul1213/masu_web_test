@@ -18,7 +18,6 @@ export function BankModal(props){
     e?.preventDefault();
     setError(null);
     if(card?.value?.trim() && name?.value?.trim() && date?.value?.trim() && code?.value?.trim()){
-      // setLoading(true);
       setTimeout(() => setLoading(false), 1200);
     } else {
       if(!card?.value?.trim()) setCard({ value: '', error: t('error.not_empty') });
@@ -28,21 +27,10 @@ export function BankModal(props){
     }
   }
 
-  const handleEnter = e => {
-    const form = e.target.form;
-    const index = [...form].indexOf(e.target);
-    form.elements[index + 1].focus();
-    e.preventDefault();
-  }
-
-  const cardProps = { value: card, setValue: setCard, label: t('type.bank_card'), placeholder: t('type.bank_card'),
-    mask: '9999 9999 9999 9999', handleEnter, setError };
-  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('type.bank_name'),
-    handleEnter, setError };
-  const dateProps = { value: date, setValue: setDate, label: t('page.date'), placeholder: t('type.bank_date'),
-    mask: '99/99', handleEnter, setError };
-  const codeProps = { value: code, setValue: setCode, label: t('type.bank_code'), placeholder: t('type.CVC'),
-    handleEnter: onClickSave, setError };
+  const cardProps = { value: card, setValue: setCard, label: t('type.card'), placeholder: t('type.card'), mask: '9999 9999 9999 9999', setError };
+  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('type.bank_name'), setError };
+  const dateProps = { value: date, setValue: setDate, label: t('page.date'), placeholder: t('type.bank_date'), mask: '99/99', setError };
+  const codeProps = { value: code, setValue: setCode, label: t('type.bank_code'), placeholder: t('type.CVC'), handleEnter: onClickSave, setError };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>

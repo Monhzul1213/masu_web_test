@@ -29,14 +29,6 @@ export function Login(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleEnter = e => {
-    if(e?.key?.toLowerCase() === "enter") {
-      const form = e.target.form;
-      const index = [...form].indexOf(e.target);
-      form.elements[index + 1].focus();
-      e.preventDefault();
-    }
-  }
 
   const handleSubmit = async e => {
     e?.preventDefault();
@@ -58,8 +50,8 @@ export function Login(){
     }
   }
 
-  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, handleEnter };
-  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
+  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
+  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, handleEnter: handleSubmit };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.login') };
   
