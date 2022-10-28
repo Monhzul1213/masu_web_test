@@ -9,14 +9,6 @@ export function Shop(){
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
 
-  /**
-   *  "merchantID": 0,
-  "name": "string",
-  "address": "string",
-  "phone": "string",
-  "descr": "string"
-   */
-  
   const onClickAdd = () => setVisible(true);
   const closeModal = () => setVisible(false);
 

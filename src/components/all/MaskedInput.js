@@ -14,9 +14,11 @@ export function MaskedInput(props){
       if(handleEnter) handleEnter(e);
       else {
         const form = e.target.form;
-        const index = [...form].indexOf(e.target);
-        form.elements[index + 1].focus();
-        e.preventDefault();
+        if(form){
+          const index = [...form].indexOf(e.target);
+          form.elements[index + 1].focus();
+          e.preventDefault();
+        }
       }
     }
   }
