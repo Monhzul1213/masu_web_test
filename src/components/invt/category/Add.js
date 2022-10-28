@@ -95,11 +95,13 @@ export function Add(props){
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdOutlineCategory' title={t(selected ? 'category.edit' : 'category.add')} isMD={true} />
-          <Input {...nameProps} />
-          <div className='color_back'>
-            {colors?.map(renderItem)}
+          <div className='m_scroll'>
+            <Input {...nameProps} />
+            <div className='color_back'>
+              {colors?.map(renderItem)}
+            </div>
+            {error && <Error error={error} id='m_error' />}
           </div>
-          {error && <Error error={error} id='m_error' />}
         </div>
         <ButtonRow {...btnProps} />
       </Overlay>
