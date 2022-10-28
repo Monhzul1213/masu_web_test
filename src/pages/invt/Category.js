@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
 import { deleteMultiRequest, getList } from '../../services';
-import { Empty, Error, Overlay } from '../../components/all';
+import { Empty, Error1, Overlay } from '../../components/all';
 import { Add, List } from '../../components/invt/category';
 
 export function Category(){
@@ -66,7 +66,7 @@ export function Category(){
     <div className='s_container'>
       {visible && <Add {...addProps} />}
       <Overlay loading={loading}>
-        {error && <Error error={error} />}
+        {error && <Error1 error={error} />}
         {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />}
       </Overlay>
     </div>
