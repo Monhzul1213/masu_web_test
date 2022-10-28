@@ -60,7 +60,8 @@ export function Shop(props){
   }
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
-  const tableInstance = useTable( { columns, data, initialState: { pageIndex: 0, pageSize: 25 }}, useSortBy, usePagination, useRowSelect);
+  const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }},
+    useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd };
   const emptyProps = { icon: 'MdStorefront', type: 'shop', noDescr: true, onClickAdd };
   const modalProps = { visible, closeModal, selected: item };
