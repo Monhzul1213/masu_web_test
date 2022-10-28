@@ -3,6 +3,7 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
+import { sendRequest } from '../../../../services';
 import { ButtonRow, ModalTitle, Overlay, Input, Error } from '../../../all';
 
 export function Add(props){
@@ -15,14 +16,24 @@ export function Add(props){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
-  const onClickSave = e => {
+  const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
     if(name?.value?.trim()){
+      setLoading(true);
       let data = { merchantID: user?.merchantId, name: name?.value?.trim(), address: address?.value?.trim(), phone: phone?.value?.trim(),
         descr: descr?.value?.trim() };
-      console.log(data);
+      let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
+      const response = await dispatch(sendRequest(user, token, api, data));
+      console.log(response);
+      if(response?.error) setError(response?.error);
+      else {
+        closeModal(true);
+        message.success(t('shop.add_success'));
+      }
+      setLoading(false);
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
     }
