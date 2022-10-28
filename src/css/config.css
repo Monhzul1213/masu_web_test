@@ -592,7 +592,6 @@
 .ap_row {
   display: flex;
   flex-flow: row;
-  flex-wrap: wrap;
   align-items: center;
   padding: 10px 0 0 0;
   justify-content: space-between;
@@ -607,7 +606,6 @@
   width: calc((100% - 10px) / 2);
   border-radius: 5px;
   padding: 5px 10px;
-  margin-bottom: 10px;
   align-items: center;
 }
 
@@ -624,19 +622,20 @@
 .ap_side {
   display: flex;
   flex-flow: column;
-  margin-left: 5px;
+  margin-left: 10px;
+  align-items: flex-start;
 }
 
 .ap_btn_text {
   color: var(--root-color);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
   margin: 0;
 }
 
 .ap_btn_text2 {
   color: var(--root-color);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 650;
   margin: 0;
 }

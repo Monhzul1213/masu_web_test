@@ -34,8 +34,11 @@ export function AppModal(props){
         <div className='ap_row'>
           <Download icon='FaWindows' text1={t('config.down_window')} text2='Windows Store' onClick={onClick} />
           <Download icon='FaGooglePlay' text1={t('config.down_ios')} text2='App Store' onClick={onClick} />
+        </div>
+        <div className='ap_row'>
           <Download icon='FaApple' text1={t('config.down_android')} text2='Google Play' onClick={onClick} />
         </div>
+        <div style={{padding: 5}} />
         <p className='ap_text'>{t('config.go_to')}</p>
         <Button className='l_btn' text={t('config.go_btn')} onClick={closeModal} />
       </div>
