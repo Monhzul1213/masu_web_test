@@ -399,6 +399,11 @@
   padding: var(--title-padding) var(--title-padding) 5px var(--title-padding);
 }
 
+.m_scroll {
+  max-height: calc(90vh - 105px);
+  overflow-y: scroll;
+}
+
 .m_title_row {
   display: flex;
   flex-flow: row;

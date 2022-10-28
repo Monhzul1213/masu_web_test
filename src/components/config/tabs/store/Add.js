@@ -81,13 +81,15 @@ export function Add(props){
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdStorefront' title={t(selected ? 'shop.edit' : 'shop.new')} isMD={true} />
-          <form onSubmit={onClickSave}>
-            <Input {...nameProps} />
-            <Input {...addrProps} />
-            <Input {...phoneProps} />
-            <Input {...descrProps} />
-          </form>
-          {error && <Error error={error} id='m_error' />}
+          <div className='m_scroll'>
+            <form onSubmit={onClickSave}>
+              <Input {...nameProps} />
+              <Input {...addrProps} />
+              <Input {...phoneProps} />
+              <Input {...descrProps} />
+            </form>
+            {error && <Error error={error} id='m_error' />}
+          </div>
         </div>
         <ButtonRow {...btnProps} />
       </Overlay>
