@@ -3,6 +3,7 @@ import { Dropdown } from 'antd';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { logout, setIsLoggedIn } from '../../services';
 import { Button } from '../all/Button';
@@ -12,6 +13,7 @@ export function Profile(props){
   const { t } = useTranslation();
   const { user } = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onClickAccount = e => {
     e?.preventDefault();
@@ -26,6 +28,7 @@ export function Profile(props){
     window.sessionStorage.removeItem('CREDENTIALS_TOKEN');
     window.localStorage.setItem('CREDENTIALS_FLUSH', Date.now().toString());
     window.localStorage.removeItem('CREDENTIALS_FLUSH');
+    navigate('/');
   }
 
   const menu = () => {
