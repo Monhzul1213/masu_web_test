@@ -11,7 +11,7 @@ export function Tab(props){
     { key: 'type', children: <Type /> },
     { key: 'cashier', children: <Cashier /> },
     { key: 'promo', children: <Promo /> },
-    { key: 'store', children: <Shop /> },
+    { key: 'store', children: <Shop active={selectedKeys && selectedKeys[0]} /> },
   ];
 
   return <Tabs activeKey={selectedKeys && selectedKeys[0]} defaultActiveKey='additional' items={items} />;

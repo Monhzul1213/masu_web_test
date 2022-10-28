@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Empty, ButtonRowAdd, Table } from '../../all';
+import { Empty, ButtonRowAdd, Table, Overlay } from '../../all';
 import { Add } from './store';
+import { getList } from '../../../services';
 
-export function Shop(){
+export function Shop(props){
+  const { active } = props;
   const { t, i18n } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState([]);
   const [item, setItem] = useState(null);
-
-  useEffect(() => {
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setColumns([
@@ -27,7 +29,24 @@ export function Shop(){
       },
     ]);
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
+
+  useEffect(() => {
+    if(active === 'store') getData();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
+  const getData = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Site/GetSite'));
+    console.log(response);
+    if(response?.error) setError(response?.error);
+    else setData(response?.data);
+    setLoading(false);
+  }
 
   const onClickAdd = row => {
     setVisible(true);
@@ -37,7 +56,7 @@ export function Shop(){
   const closeModal = toGet => {
     setVisible(false);
     setItem(null);
-    //if(toGet) getdata
+    if(toGet) getData();
   }
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px)';
@@ -50,14 +69,16 @@ export function Shop(){
   return (
     <div>
       {visible && <Add {...modalProps} />}
-      {!data?.length ? <Empty {...emptyProps} /> :
-        <div className='card_container'>
-          <ButtonRowAdd {...addProps} />
-          <div style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>
-            <Table {...tableProps} />
+      <Overlay loading={loading}>
+        {!data?.length ? <Empty {...emptyProps} /> :
+          <div className='card_container'>
+            <ButtonRowAdd {...addProps} />
+            <div style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>
+              <Table {...tableProps} />
+            </div>
           </div>
-        </div>
-      }
+        }
+      </Overlay>
     </div>
   );
 }
