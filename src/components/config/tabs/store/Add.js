@@ -65,6 +65,7 @@ export function Add(props){
         closeModal(true);
         message.success(t('shop.delete_success'));
       }
+      setLoading(false);
     }
   }
 
