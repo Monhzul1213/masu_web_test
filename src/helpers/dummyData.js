@@ -31,4 +31,4 @@ export const colors = [
 
 export const categories = [
   { color: '#e91e63', name: 'Sweets', count: 0 }
-]
+];

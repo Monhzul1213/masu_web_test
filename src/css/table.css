@@ -1,0 +1,88 @@
+@import './color.css';
+
+.table_back {
+  width: 100%;
+}
+
+.table_header_text {
+  color: var(--text2-color);
+  text-align: left;
+  padding: var(--page-padding) 0;
+  font-size: 13px;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  background-color: var(--root-color);
+}
+
+.table_header_cell {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.table_back th {
+  border-bottom: solid 1px var(--text4-color);
+}
+
+.table_row {
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  border-color: var(--line-color);
+  cursor: pointer;
+}
+
+.table_row_selected {
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  border-color: var(--line-color);
+  cursor: pointer;
+  background-color: var(--config-t-color);
+}
+
+.table_cell_text {
+  color: var(--text-color);
+  font-size: 15px;
+  padding: var(--page-padding) 0;
+}
+
+.table_back {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table_back tbody > tr:not(:first-child) > td {
+  border-top: 1px solid var(--line-color);
+}
+
+.table_back th:not(:last-child) {
+  padding-right: 5px;
+}
+
+.table_sort {
+  display: flex;
+  flex-flow: column;
+  margin-left: 5px;
+}
+
+.table_sort_icon {
+  color: var(--input1-color);
+}
+
+.table_sort_icon_selected {
+  color: var(--config-b-color);
+}
+
+/*
+.table_back tfoot > tr > td {
+  border-top: 1px solid var(--border-color);
+}
+
+.table_back th:not(:last-child), .table_back td:not(:last-child) {
+  border-right: 1px solid var(--border-color);
+}
+
+tr > th:last-child {
+  text-align: center;
+}
+*/
