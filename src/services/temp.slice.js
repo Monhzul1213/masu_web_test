@@ -7,6 +7,7 @@ import { apiLogin } from './login.slice';
 const initialState = {
   loggedIn: false,
   categoryColors: [],
+  systemTypes: [],
 };
 
 export const tempSlice = createSlice({
@@ -18,6 +19,9 @@ export const tempSlice = createSlice({
     },
     setCategoryColors: (state, action) => {
       state.categoryColors = action.payload?.sort((a, b) => a.valueNum - b.valueNum);
+    },
+    setSystemTypes: (state, action) => {
+      state.systemTypes = action.payload?.sort((a, b) => a.valueNum - b.valueNum);
     },
   }
 });
@@ -207,6 +211,6 @@ function fetchRetry(config, retries = 5) {
     });
 }
 
-export const { setIsLoggedIn, setCategoryColors } = tempSlice.actions;
+export const { setIsLoggedIn, setCategoryColors, setSystemTypes } = tempSlice.actions;
 
 export const tempReducer = tempSlice.reducer;

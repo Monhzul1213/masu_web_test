@@ -34,14 +34,14 @@ export const categories = [
 ];
 
 export const posList = [
-  { name: 'POS1', site: "5 Mart", status: "Идэвхтэй", system: "Windows", noat: "тийм" },
-  { name: 'POS2', site: "15 Mart", status: "Идэвхтэй", system: "Android", noat: "тийм" },
-  { name: 'POS3', site: "25 Marts", status: "Идэвхтэй", system: "Windows", noat: "тийм" },
-  { name: 'POS4', site: "51 Mart", status: "Идэвхтэй", system: "Windows", noat: "тийм" },
-  { name: 'POS5', site: "52 Mart", status: "Идэвхтэй", system: "iOS", noat: "тийм" },
-  { name: 'POS6', site: "53 Mart", status: "Идэвхтэй", system: "Windows", noat: "тийм" },
-  { name: 'POS7', site: "54 Mart", status: "Идэвхтэй", system: "Android", noat: "тийм" },
-  { name: 'POS8', site: "55 Mart", status: "Идэвхтэй", system: "iOS", noat: "тийм" }
+  { name: 'POS1', site: "5 Mart", status: "Идэвхтэй", type: "Windows", noat: "тийм" },
+  { name: 'POS2', site: "15 Mart", status: "Идэвхтэй", type: "Android", noat: "тийм" },
+  { name: 'POS3', site: "25 Marts", status: "Идэвхтэй", type: "Windows", noat: "тийм" },
+  { name: 'POS4', site: "51 Mart", status: "Идэвхтэй", type: "Windows", noat: "тийм" },
+  { name: 'POS5', site: "52 Mart", status: "Идэвхтэй", type: "iOS", noat: "тийм" },
+  { name: 'POS6', site: "53 Mart", status: "Идэвхтэй", type: "Windows", noat: "тийм" },
+  { name: 'POS7', site: "54 Mart", status: "Идэвхтэй", type: "Android", noat: "тийм" },
+  { name: 'POS8', site: "55 Mart", status: "Идэвхтэй", type: "iOS", noat: "тийм" }
 ];
 
 export const posTypes = [
