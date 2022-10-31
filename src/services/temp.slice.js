@@ -166,11 +166,11 @@ export const getConstants = (user, token, type, setFunction) => async dispatch =
   }
 };
 
-export const getList = (user, token, api, setFunction) => async dispatch => {
+export const getList = (user, token, api, setFunction, headers) => async dispatch => {
   try {
     const config = {
       method: 'GET', url: loginConfig?.url + api,
-      headers: { 'authorization': token, 'Accept': '*/*' }
+      headers: {...{ 'authorization': token, 'Accept': '*/*' }, ...headers}
     };
     const response = await fetchRetry(config);
     console.log('++++++++++++++++++++++=', response);
@@ -180,7 +180,7 @@ export const getList = (user, token, api, setFunction) => async dispatch => {
       else {
         const configNew = {
           method: 'GET', url: loginConfig?.url + api,
-          headers: { 'authorization': responseLogin?.token ?? token, 'Accept': '*/*' }
+          headers: {...{ 'authorization': responseLogin?.token ?? token, 'Accept': '*/*' }, ...headers}
         };
         const responseNew = await fetchRetry(configNew);
         console.log('=====================', responseNew)

@@ -18,7 +18,7 @@ export function Pos(props){
   const [item, setItem] = useState(null);
   const [showPos, setShowPos] = useState(true);
   const [columns, setColumns] = useState([]);
-  const [site, setSite] = useState(null);
+  const [site, setSite] = useState(-1);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -31,9 +31,9 @@ export function Pos(props){
   useEffect(() => {
     setColumns([
       { Header: t('pos.t_name'), accessor: 'descr' },
-      { Header: t('pos.t_site'), accessor: 'site' },
+      { Header: t('pos.t_site'), accessor: 'name' },
       { Header: t('pos.t_status'), accessor: 'status' },
-      { Header: t('pos.t_system'), accessor: 'type' },
+      { Header: t('pos.t_system'), accessor: 'systemTypeDescr.valueStr1' },
       { Header: t('pos.t_noat'), accessor: 'noat' },
     ]);
     return () => {};
@@ -67,7 +67,8 @@ export function Pos(props){
   const getPos = async () => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Site/GetPos')); //////
+    let headers = { SiteID: site };
+    const response = await dispatch(getList(user, token, 'Site/GetPos', null, headers));
     setLoading(false);
     if(response?.error) {
       setError(response?.error);
