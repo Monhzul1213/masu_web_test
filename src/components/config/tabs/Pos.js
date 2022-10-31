@@ -1,19 +1,70 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { ButtonRowAdd, Empty, Error1, Overlay, Table } from '../../all';
+import { getList } from '../../../services';
+import { ButtonRowAdd, Empty, Error1, Overlay } from '../../all';
 
 export function Pos(props){
-  const { active } = props;
+  const { active, setActive } = props;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [shops, setShops] = useState([]);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(active === 'pos') getData();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
+
+  const getData = async () => {
+    let pos = await getPos();
+    if(pos && !pos?.length) await getSites();
+  }
+
+  const getSites = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Site/GetSite'));
+    console.log(response);
+    setLoading(false);
+    if(response?.error) {
+      setError(response?.error);
+      return false;
+    }
+    else {
+      setShops(response?.data);
+      return response?.data;
+    }
+  }
+
+  const getPos = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Site/GetPos'));
+    console.log(response);
+    setLoading(false);
+    if(response?.error) {
+      setError(response?.error);
+      return false;
+    }
+    else {
+      setData(response?.data);
+      return response?.data;
+    }
+  }
 
   const onClickAdd = row => {
     // setVisible(true);
     // setItem(row?.original);
   }
 
+  const onClickShop = () => setActive(['store']);
+
   const emptyProps = { icon: 'MdStayCurrentPortrait', type: 'pos', onClickAdd };
+  const empty1Props = { icon: 'MdStayCurrentPortrait', type: 'pos1', onClickAdd: onClickShop };
   const addProps = { type: 'pos', onClickAdd };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
 
@@ -22,7 +73,7 @@ export function Pos(props){
       {/* {visible && <Add {...modalProps} />} */}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        {!data?.length ? <Empty {...emptyProps} /> :
+        {!data?.length ? !shops?.length ? <Empty {...empty1Props} /> : <Empty {...emptyProps} /> :
           <div className='card_container'>
             <ButtonRowAdd {...addProps} />
             <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>

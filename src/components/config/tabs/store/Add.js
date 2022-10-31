@@ -35,8 +35,10 @@ export function Add(props){
     setError(null);
     if(name?.value?.trim()){
       setLoading(true);
-      let data = { merchantID: user?.merchantId, name: name?.value?.trim(), address: address?.value?.trim(), phone: phone?.value?.trim(),
-        descr: descr?.value?.trim() };
+      let data = { name: name?.value?.trim(), address: address?.value?.trim(), phone: phone?.value?.trim(), descr: descr?.value?.trim() };
+      if(selected) data.siteID = selected.siteId;
+      else data.merchantID = user?.merchantId;
+      console.log(data);
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
       const response = await dispatch(sendRequest(user, token, api, data));
       console.log(response);
