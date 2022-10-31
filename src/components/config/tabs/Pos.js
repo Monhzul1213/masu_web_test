@@ -37,13 +37,11 @@ export function Pos(props){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    console.log(response);
     setLoading(false);
     if(response?.error) {
       setError(response?.error);
       return false;
-    }
-    else {
+    } else {
       setSites(response?.data);
       return response?.data;
     }
@@ -53,13 +51,11 @@ export function Pos(props){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Site/GetPos'));
-    console.log(response);
     setLoading(false);
     if(response?.error) {
       setError(response?.error);
       return false;
-    }
-    else {
+    } else {
       setData(response?.data);
       return response?.data;
     }
