@@ -75,7 +75,8 @@ export function Add(props){
     setOpen(false);
     if(sure){
       setLoading(true);
-      const response = await dispatch(deleteRequest(user, token, 'Site/DeletePos/' + selected?.posId));
+      let data = [{ siteId: selected?.siteId, terminalId: selected?.terminalId }];
+      const response = await dispatch(deleteRequest(user, token, 'Site/DeletePos', data));
       console.log(response);
       if(response?.error) setError(response?.error);
       else {

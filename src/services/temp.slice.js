@@ -61,22 +61,24 @@ export const sendRequest = (user, token, api, data) => async dispatch => {
   }
 }
 
-export const deleteRequest = (user, token, api) => async dispatch => {
+export const deleteRequest = (user, token, api, data) => async dispatch => {
   try {
-    const config = {
+    let config = {
       method: 'DELETE', url: loginConfig?.url + api,
       headers: { 'authorization': token, 'Accept': '*/*' },
     }
+    if(data) config.data = data;
     const response = await fetchRetry(config);
     console.log('++++++++++++++++++++++=', response);
     if(response?.result === 2){
       const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
       if(responseLogin?.error) return responseLogin;
       else {
-        const configNew = {
+        let configNew = {
           method: 'DELETE', url: loginConfig?.url + api,
           headers: { 'authorization': responseLogin?.token ?? token, 'Accept': '*/*' },
         }
+        if(data) configNew.data = data;
         const responseNew = await fetchRetry(configNew);
         console.log('=====================', responseNew)
         if(responseNew?.rettype === 0){
