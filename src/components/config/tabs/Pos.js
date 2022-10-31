@@ -10,9 +10,10 @@ export function Pos(props){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
-  const [shops, setShops] = useState([]);
+  const [sites, setSites] = useState([]);
   const [visible, setVisible] = useState(false);
   const [item, setItem] = useState(null);
+  const [showPos, setShowPos] = useState(true);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -23,9 +24,13 @@ export function Pos(props){
   }, [active]);
 
   const getData = async () => {
+    setSites([]);
     let pos = await getPos();
-    // if(pos && !pos?.length) await getSites();
-    if(!pos?.length) await getSites();
+    if(!pos) setShowPos(true);
+    else if(!pos?.length){
+      const sites = await getSites();
+      setShowPos(sites?.length ? true : false);
+    }
   }
 
   const getSites = async () => {
@@ -39,7 +44,7 @@ export function Pos(props){
       return false;
     }
     else {
-      setShops(response?.data);
+      setSites(response?.data);
       return response?.data;
     }
   }
@@ -73,18 +78,17 @@ export function Pos(props){
     if(toGet) getPos();
   }
 
-  const emptyProps = { icon: 'MdStayCurrentPortrait', type: 'pos', onClickAdd };
-  const empty1Props = { icon: 'MdStayCurrentPortrait', type: 'pos1', onClickAdd: onClickShop };
+  const emptyProps = { icon: 'MdStayCurrentPortrait', type: showPos ? 'pos' : 'pos1', onClickAdd: showPos ? onClickAdd : onClickShop };
   const addProps = { type: 'pos', onClickAdd };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
-  const modalProps = { visible, closeModal, selected: item };
+  const modalProps = { visible, closeModal, selected: item, sites, getSites };
 
   return (
     <div>
       {visible && <Add {...modalProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        {!data?.length ? !shops?.length ? <Empty {...empty1Props} /> : <Empty {...emptyProps} /> :
+        {!data?.length ? <Empty {...emptyProps} /> :
           <div className='card_container'>
             <ButtonRowAdd {...addProps} />
             <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>

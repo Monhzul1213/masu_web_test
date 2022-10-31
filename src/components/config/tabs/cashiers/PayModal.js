@@ -21,7 +21,7 @@ export function PayModal(props){
       // setLoading(true);
       setTimeout(() => setLoading(false), 1200);
     } else {
-      if(!type?.value) setType({ value: '', error: t('error.not_empty') });
+      if(!type?.value) setType({ value: null, error: t('error.not_empty') });
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       if(!shop?.value?.length) setShop({ value: [], error: t('error.not_empty') });
     }
