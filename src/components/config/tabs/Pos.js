@@ -4,7 +4,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
 import { getList } from '../../../services';
-import { ButtonRowAdd, Empty, Error1, Overlay, PaginationTable, Table } from '../../all';
+import { ButtonRowAdd, Empty, Error1, Overlay, PaginationTable, PlainSelect, Table } from '../../all';
 import { Add } from './pos1';
 
 export function Pos(props){
@@ -14,6 +14,7 @@ export function Pos(props){
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [sites, setSites] = useState([]);
+  const [sites1, setSites1] = useState([]);
   const [visible, setVisible] = useState(false);
   const [item, setItem] = useState(null);
   const [showPos, setShowPos] = useState(true);
@@ -32,7 +33,7 @@ export function Pos(props){
     setColumns([
       { Header: t('pos.t_name'), accessor: 'descr' },
       { Header: t('pos.t_site'), accessor: 'name' },
-      { Header: t('pos.t_status'), accessor: 'status' },
+      { Header: t('pos.t_status'), accessor: 'statusDescr.valueStr1' },
       { Header: t('pos.t_system'), accessor: 'systemTypeDescr.valueStr1' },
       { Header: t('pos.t_noat'), accessor: 'noat' },
     ]);
@@ -41,10 +42,9 @@ export function Pos(props){
   }, [i18n?.language]);
 
   const getData = async () => {
-    setSites([]);
-    let pos = await getPos();
+    let pos = await getPos(site);
     if(!pos) setShowPos(true);
-    else if(!pos?.length){
+    else {
       const sites = await getSites();
       setShowPos(sites?.length ? true : false);
     }
@@ -60,14 +60,16 @@ export function Pos(props){
       return false;
     } else {
       setSites(response?.data);
+      let sites1 = [...[{siteId: -1, name: t('pos.all')}], ...response?.data];
+      setSites1(sites1);
       return response?.data;
     }
   }
 
-  const getPos = async () => {
+  const getPos = async SiteID => {
     setError(null);
     setLoading(true);
-    let headers = { SiteID: site };
+    let headers = { SiteID };
     const response = await dispatch(getList(user, token, 'Site/GetPos', null, headers));
     setLoading(false);
     if(response?.error) {
@@ -89,7 +91,12 @@ export function Pos(props){
   const closeModal = toGet => {
     setVisible(false);
     setItem(null);
-    if(toGet) getPos();
+    if(toGet) getPos(site);
+  }
+
+  const onSelectSite = value => {
+    setSite(value);
+    getPos(value);
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }},
@@ -99,6 +106,7 @@ export function Pos(props){
   const addProps = { type: 'pos', onClickAdd };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   const modalProps = { visible, closeModal, selected: item, sites, getSites };
+  const siteProps = { value: site, setValue: onSelectSite, data: sites1, s_value: 'siteId', s_descr: 'name', className: 'r_select' };
 
   return (
     <div>
@@ -107,7 +115,10 @@ export function Pos(props){
         {error && <Error1 error={error} />}
         {!data?.length ? <Empty {...emptyProps} /> :
           <div className='card_container'>
-            <ButtonRowAdd {...addProps} />
+            <div className='pos_row'>
+              <ButtonRowAdd {...addProps} />
+              <PlainSelect {...siteProps} />
+            </div>
             <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>
               <Table {...tableProps} />
             </div>

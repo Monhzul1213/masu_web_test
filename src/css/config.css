@@ -561,7 +561,7 @@
   font-size: 14px;
   background-color: var(--back-color);
   border-radius: var(--radius);
-  width: 240px;
+  width: 180px;
   margin-left: var(--title-padding);
 }
 
@@ -638,4 +638,11 @@
   font-size: 14px;
   font-weight: 650;
   margin: 0;
+}
+
+.pos_row {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
 }
