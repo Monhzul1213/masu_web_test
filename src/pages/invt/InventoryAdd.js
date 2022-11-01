@@ -40,7 +40,7 @@ export function InventoryAdd(){
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, inRow: true,
     data: categories, s_value: 'categoryId', s_descr: 'categoryName' };
   const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setError };
-  const unitProps = {};
+  const unitProps = { value: unit, setValue: setUnit, label: t('inventory.unit'), data: t('inventory.units'), setError };
 
   return (
     <Overlay className='s_container1' loading={loading}>
