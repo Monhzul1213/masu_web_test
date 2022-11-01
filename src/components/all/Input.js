@@ -17,7 +17,7 @@ export function Input(props){
         const form = e.target.form;
         if(form){
           const index = [...form].indexOf(e.target);
-          form.elements[index + 1].focus();
+          form.elements[index + 1]?.focus();
           e.preventDefault();
         }
       }
@@ -88,7 +88,7 @@ export function MoneyInput(props){
         const form = e.target.form;
         if(form){
           const index = [...form].indexOf(e.target);
-          form.elements[index + 1].focus();
+          form.elements[index + 1]?.focus();
           e.preventDefault();
         }
       }
@@ -104,10 +104,13 @@ export function MoneyInput(props){
         <p className='select_lbl' style={style}>{label}</p>
         <CurrencyInput
           className='m_input'
+          prefix='₮'
+          allowNegativeValue={false}
           disabled={disabled}
           placeholder={placeholder}
           decimalsLimit={4}
           value={value?.value}
+          maxLength={15}
           onKeyDown={onKeyDown}
           onValueChange={onChange} />
       </div>
