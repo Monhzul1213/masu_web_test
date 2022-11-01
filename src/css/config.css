@@ -666,11 +666,11 @@
 }
 
 .ant-radio-checked .ant-radio-inner, .ant-radio:hover .ant-radio-inner {
-  border-color: var(--header-color);
+  border-color: var(--config-color);
 }
 
 .ant-radio-inner:after {
-  background-color: var(--header-color);
+  background-color: var(--config-color);
 }
 
 .ant-radio-inner {

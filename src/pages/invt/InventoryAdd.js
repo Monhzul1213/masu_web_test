@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { Error1, Input, Overlay, Select, DescrInput, Radio } from '../../components/all';
+import { Error1, Input, Overlay, Select, DescrInput, Radio, UploadImage } from '../../components/all';
 
 export function InventoryAdd(){
   const { t } = useTranslation();
@@ -17,6 +17,7 @@ export function InventoryAdd(){
   const [cost, setCost] = useState({ value: '' });
   const [invtID, setInvtID] = useState({ value: '' });
   const [barcode, setBarcode] = useState({ value: '' });
+  const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -41,7 +42,7 @@ export function InventoryAdd(){
   }
 
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, inRow: true };
-  const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, inRow: true,
+  const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, inRow: false,
     data: categories, s_value: 'categoryId', s_descr: 'categoryName' };
   const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setError };
   const unitProps = { value: unit, setValue: setUnit, label: t('inventory.unit'), data: t('inventory.units'), setError };
@@ -49,6 +50,7 @@ export function InventoryAdd(){
   const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setError, inRow: true };
   const skuProps = { value: invtID, setValue: setInvtID, label: t('inventory.sku'), placeholder: t('inventory.sku'), setError, inRow: true };
   const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setError, inRow: true };
+  const imageProps = { image, setImage };
 
   return (
     <Overlay className='s_container1' loading={loading}>
@@ -56,9 +58,12 @@ export function InventoryAdd(){
       <form>
         <div className='ac_back'>
           <div className='ac_row'>
-            <Input {...nameProps} />
+            <div style={{flex: 1}}>
+              <Input {...nameProps} />
+              <Select {...categoryProps} />
+            </div>
             <div className='gap' />
-            <Select {...categoryProps} />
+            <UploadImage {...imageProps} />
           </div>
           <DescrInput {...descrProps} />
           <Radio {...unitProps} />
