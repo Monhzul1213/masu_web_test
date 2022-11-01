@@ -245,6 +245,10 @@
     "units": [
       { "label": "Ширхэг", "value": "N" },
       { "label": "Бутархай", "value": "Y" }
-    ]
+    ],
+    "price": "Үнэ",
+    "cost": "Өртөг",
+    "sku": "SKU",
+    "barcode": "Баркод"
   }
 }
