@@ -15,3 +15,4 @@ export * from './CheckAll';
 export * from './Confirm';
 export * from './Pagination';
 export * from './Sort';
+export * from './Radio';

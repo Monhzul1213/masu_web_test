@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { Error1, Input, Overlay, Select, DescrInput } from '../../components/all';
+import { Error1, Input, Overlay, Select, DescrInput, Radio } from '../../components/all';
 
 export function InventoryAdd(){
   const { t } = useTranslation();
@@ -12,6 +12,7 @@ export function InventoryAdd(){
   const [category, setCategory] = useState({ value: -1 });
   const [categories, setCategories] = useState([]);
   const [descr, setDescr] = useState({ value: '' });
+  const [unit, setUnit] = useState({ value: null });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -39,6 +40,7 @@ export function InventoryAdd(){
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, inRow: true,
     data: categories, s_value: 'categoryId', s_descr: 'categoryName' };
   const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setError };
+  const unitProps = {};
 
   return (
     <Overlay className='s_container1' loading={loading}>
@@ -50,6 +52,7 @@ export function InventoryAdd(){
           <Select {...categoryProps} />
         </div>
         <DescrInput {...descrProps} />
+        <Radio {...unitProps} />
       </div>
     </Overlay>
   )
