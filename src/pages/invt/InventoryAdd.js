@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { Error1, Input, Overlay, Select, DescrInput, Radio, UploadImage } from '../../components/all';
+import { Error1, Input, MoneyInput, Overlay, Select, DescrInput, Radio, UploadImage } from '../../components/all';
 
 export function InventoryAdd(){
   const { t } = useTranslation();
@@ -68,9 +68,9 @@ export function InventoryAdd(){
           <DescrInput {...descrProps} />
           <Radio {...unitProps} />
           <div className='ac_row' style={{marginTop: 10}}>
-            <Input {...priceProps} />
+            <MoneyInput {...priceProps} />
             <div className='gap' />
-            <Input {...costProps} />
+            <MoneyInput {...costProps} />
           </div>
           <div className='ac_row' style={{marginTop: 10}}>
             <Input {...skuProps} />
