@@ -6,7 +6,7 @@ import { DynamicAIIcon } from './DynamicIcon';
 const { Option } = AntSelect;
 
 export function Select(props){
-  const { value, setValue, label, placeholder, data, setError, s_value, s_descr, mode } = props;
+  const { value, setValue, label, placeholder, data, setError, s_value, s_descr, mode, inRow } = props;
   const { t } = useTranslation();
   
   let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
@@ -21,10 +21,11 @@ export function Select(props){
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
   return (
-    <div>
-      <div className='select_back' style={style}>
+    <div style={inRow ? { flex: 1 } : {}}>
+      <div className='select_back' style={backStyle}>
         <p className='select_lbl' style={style}>{label}</p>
         <AntSelect
           mode={mode}

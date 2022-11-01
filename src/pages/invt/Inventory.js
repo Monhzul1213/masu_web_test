@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import '../../css/invt.css';
@@ -10,8 +10,14 @@ export function Inventory(){
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setLoading(false);
+    setData([]);
+    return () => {};
+  }, []);
+
   const onClickAdd = () => {
-    // navigate('invt_add');
+    navigate('invt_add');
   }
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
@@ -22,7 +28,6 @@ export function Inventory(){
     <div className='s_container'>
       <Overlay loading={loading}>
         {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />}
-
       </Overlay>
     </div>
   )

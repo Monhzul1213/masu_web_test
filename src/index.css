@@ -71,6 +71,15 @@ code {
   flex-flow: row;
 }
 
+.s_container1 {
+  margin-left: var(--side-width);
+  padding: var(--page-padding);
+  max-height: calc(100vh - var(--header-height));
+  overflow: scroll;
+  display: flex;
+  flex-flow: column;
+}
+
 .add_row_back {
   display: flex;
   flex-flow: row;

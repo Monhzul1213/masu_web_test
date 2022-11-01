@@ -521,7 +521,13 @@
   height: 32px;
 }
 
-.m_input:focus {
+.m_input_descr {
+  border: none;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.m_input:focus, .m_input_descr:focus {
   outline: none;
 }
 
