@@ -402,6 +402,7 @@
 .m_scroll {
   max-height: calc(90vh - 105px);
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .m_title_row {
