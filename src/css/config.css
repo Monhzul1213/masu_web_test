@@ -646,3 +646,9 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.pos_select {
+  position: absolute;
+  top: var(--page-padding);
+  right: var(--page-padding);
+}

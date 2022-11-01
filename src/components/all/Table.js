@@ -17,7 +17,7 @@ export function Table(props){
               <th className='table_header_text' {...column.getHeaderProps(column.getSortByToggleProps())}>
                 <div className='table_header_cell'>
                   <span style={{flex: 1}}>{column.render('Header')}</span>
-                  <Sort data={column} />
+                  {!column?.noSort && <Sort data={column} />}
                 </div>
               </th>
             ))}
@@ -28,9 +28,13 @@ export function Table(props){
         {page.map((row, i) => {
           prepareRow(row);
           return (
-            <tr className={row?.isSelected ? 'table_row_selected' : 'table_row'}  {...row.getRowProps()} onClick={() => onRowClick && onRowClick(row)}>
+            <tr className={row?.isSelected ? 'table_row_selected' : 'table_row'}  {...row.getRowProps()}>
               {row.cells.map(cell => {
-                return <td className='table_cell_text' {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                return (
+                  <td className='table_cell_text' {...cell.getCellProps()} onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
+                    {cell.render('Cell')}
+                  </td>
+                );
               })}
             </tr>
           );

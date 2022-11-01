@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { getList } from '../../../services';
-import { ButtonRowAdd, Empty, Error1, Overlay, PaginationTable, PlainSelect, Table } from '../../all';
+import { deleteRequest, getList } from '../../../services';
+import { ButtonRowAdd, Check, Confirm, Empty, Error1, Overlay, PaginationTable, PlainSelect, Table } from '../../all';
 import { Add } from './pos1';
 
 export function Pos(props){
@@ -20,6 +20,10 @@ export function Pos(props){
   const [showPos, setShowPos] = useState(true);
   const [columns, setColumns] = useState([]);
   const [site, setSite] = useState(-1);
+  const [checked, setChecked] = useState(false);
+  const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [loaded, setLoaded] = useState(0);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -29,8 +33,15 @@ export function Pos(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
+
   useEffect(() => {
+    const style = { display: 'flex', alignItems: 'center' };
     setColumns([
+      {
+        id: 'check', noSort: true, isBtn: true,
+        Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
+        Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
+      },
       { Header: t('pos.t_name'), accessor: 'descr' },
       { Header: t('pos.t_site'), accessor: 'name' },
       { Header: t('pos.t_status'), accessor: 'statusDescr.valueStr1' },
@@ -39,7 +50,7 @@ export function Pos(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, loaded, checked]);
 
   const getData = async () => {
     let pos = await getPos(site);
@@ -77,6 +88,9 @@ export function Pos(props){
       return false;
     } else {
       setData(response?.data);
+      setLoaded(loaded + 1);
+      setChecked(false);
+      setShow(false);
       return response?.data;
     }
   }
@@ -99,25 +113,73 @@ export function Pos(props){
     getPos(value);
   }
 
+  const onClickCheckAll = () => {
+    setShow(!checked);
+    setChecked(!checked);
+    data?.map(item => item.checked = !checked);
+  }
+
+  const onClickCheck = (e, row) => {
+    e?.preventDefault();
+    if(row && row?.original){
+      setChecked(false);
+      let list = data?.map(item => {
+        if(item.terminalId === row?.original?.terminalId)
+          item.checked = !item.checked;
+        return item;
+      });
+      setData(list);
+      let count = list?.filter(item => item.checked)?.length;
+      setShow(count ? true : false);
+    }
+  }
+
+  const onClickDelete = () => setOpen(true);
+
+  const onDelete = async toDelete => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(deleteRequest(user, token, 'Site/DeletePos', toDelete));
+    if(response?.error) {
+      setError(response?.error);
+      setLoading(false);
+    }
+    else getPos(site);
+  }
+
+  const confirm = sure => {
+    setOpen(false);
+    if(sure){
+      let toDelete = [];
+      data?.forEach(item => {
+        if(item?.checked) toDelete?.push({ siteId: item?.siteId, terminalId: item?.terminalId })
+      });
+      onDelete(toDelete);
+    }
+  };
+
+
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }},
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd };
   const emptyProps = { icon: 'MdStayCurrentPortrait', type: showPos ? 'pos' : 'pos1', onClickAdd: showPos ? onClickAdd : onClickShop };
-  const addProps = { type: 'pos', onClickAdd };
+  const addProps = { type: 'pos', onClickAdd, show, onClickDelete };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   const modalProps = { visible, closeModal, selected: item, sites, getSites };
   const siteProps = { value: site, setValue: onSelectSite, data: sites1, s_value: 'siteId', s_descr: 'name', className: 'r_select' };
+  const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
     <div>
       {visible && <Add {...modalProps} />}
+      {open && <Confirm {...confirmProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
+        <div className='pos_select'><PlainSelect {...siteProps} /></div>
         {!data?.length ? <Empty {...emptyProps} /> :
           <div className='card_container'>
             <div className='pos_row'>
               <ButtonRowAdd {...addProps} />
-              <PlainSelect {...siteProps} />
             </div>
             <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>
               <Table {...tableProps} />
