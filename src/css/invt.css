@@ -318,7 +318,7 @@
 .i_list_header1 {
   display: flex;
   flex-flow: row;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .p_select_lbl {
@@ -346,4 +346,11 @@
 .ih_select .ant-select-arrow {
   color: var(--text4-color);
   font-size: 16px;
+}
+
+.ih_search {
+  height: 32px;
+  width: 32px;
+  color: var(--text2-color);
+  padding: 5px;
 }

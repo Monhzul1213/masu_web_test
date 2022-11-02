@@ -3,14 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getList } from '../../../../services';
-import { ButtonRowAdd, PlainSelect } from '../../../all';
+import { ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
 
 export function Header(props){
   const { onClickAdd, onClickDelete, show, setError, onSearch } = props;
   const { t } = useTranslation();
   const [sites, setSites] = useState([{siteId: -1, name: t('pos.all')}]);
   const [site, setSite] = useState(-1);
+  const [categories, setCategories] =
+    useState([{categoryId: -2, categoryName: t('inventory.all_category')},{categoryId: -1, categoryName: t('inventory.no_category')}]);
+  const [category, setCategory] = useState(-2);
   const [loading, setLoading] = useState(null);
+  const [search, setSearch] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -28,20 +32,47 @@ export function Header(props){
     }
   }
 
+  const onFocusCategory = async () => {
+    if(!categories?.length || categories?.length === 2){
+      setError && setError(null);
+      setLoading('category');
+      const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        let data = [...[{categoryId: -2, categoryName: t('inventory.all_category')},{categoryId: -1, categoryName: t('inventory.no_category')}],
+          ...response?.data];
+        setCategories(data);
+      }
+      setLoading(null);
+    }
+  }
+
   const onChangeSite = value => {
     setSite(value);
-    onSearch(value);
+    onSearch(value, category);
   }
+
+  const onChangeCategory = value => {
+    setCategory(value);
+    onSearch(site, value);
+  }
+
+  const onClickSearch = () => setSearch(true);
 
   const addProps = { type: 'inventory', onClickAdd, show, onClickDelete };
   const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name', className: 'ih_select',
     label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'site' };
+  const categoryProps = { value: category, setValue: onChangeCategory, data: categories, s_value: 'categoryId', s_descr: 'categoryName',
+    className: 'ih_select', label: t('inventory.category'), onFocus: onFocusCategory, loading: loading === 'category' };
+  const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
 
   return (
     <div className='i_list_header'>
       <ButtonRowAdd {...addProps} />
       <div className='i_list_header1'>
         <PlainSelect {...siteProps} />
+        <PlainSelect {...categoryProps} />
+        <DynamicAIIcon {...searchProps} />
       </div>
     </div>
   );
