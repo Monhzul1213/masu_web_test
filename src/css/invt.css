@@ -311,8 +311,8 @@
 .i_list_header {
   display: flex;
   flex-flow: row;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
 .i_list_header1 {

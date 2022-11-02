@@ -1,8 +1,6 @@
 import React from 'react';
 import { Select as AntSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
-
-import { DynamicAIIcon } from './DynamicIcon';
 const { Option } = AntSelect;
 
 export function Select(props){
