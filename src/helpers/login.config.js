@@ -5,5 +5,5 @@ export const config = {
 
 export const config1 = {
   url: 'http://202.131.232.101:8082/',
-  domain: 'http://202.131.232.101:8081/',
+  domain: 'http://202.131.232.101:8081',
 }

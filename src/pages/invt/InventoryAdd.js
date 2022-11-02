@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { Error1, Input, MoneyInput, Overlay, Select, DescrInput, Radio, UploadImage } from '../../components/all';
+import { Error1, Input, MoneyInput, Overlay, Select, DescrInput, Radio, UploadImage, CheckAll } from '../../components/all';
 import { SwitchLabel } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
@@ -92,6 +92,7 @@ export function InventoryAdd(){
         <div className='gap' />
         <div className='ac_back'>
           <p className='ac_title'>{t('inventory.sites')}</p>
+          <CheckAll type='' checked={true} onCheckAll={() => {}} />
         </div>
       </form>
     </Overlay>

@@ -72,8 +72,8 @@ export function Login(){
         </form>
         <Social />
         <div className='l_center_row'>
-          <Link className='l_link' to='/sign_up'>{t('login.new_sign')}</Link>
-          {/* <a className='l_link' target='_blank' rel='noreferrer' href={'https://' + t('login.link')}>{t('login.new_sign')}</a> */}
+          {/* <Link className='l_link' to='/sign_up'>{t('login.new_sign')}</Link> */}
+          <a className='l_link' target='_blank' rel='noreferrer' href={'https://' + t('login.link')}>{t('login.new_sign')}</a>
         </div>
       </div>
       <Copyright />
