@@ -89,6 +89,10 @@ export function InventoryAdd(){
           <SwitchLabel {...isPackProps} />
           {!isPack && <SwitchLabel {...isTrackProps} />}
         </div>
+        <div className='gap' />
+        <div className='ac_back'>
+          <p className='ac_title'>{t('inventory.sites')}</p>
+        </div>
       </form>
     </Overlay>
   )
