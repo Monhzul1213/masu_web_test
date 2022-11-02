@@ -7,7 +7,7 @@ import { DescrInput, Input, MoneyInput, Radio, Select, UploadImage } from '../..
 
 export function CardMain(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, unit, setUnit, price, setPrice, cost, setCost, invtID, setInvtID,
-    barcode, setBarcode, image, setImage, onPriceChange } = props;
+    barcode, setBarcode, image, setImage, onPriceChange, setEdited } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [loading, setLoading] = useState(false);
@@ -28,17 +28,18 @@ export function CardMain(props){
     }
   }
 
-  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, inRow: true };
-  const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, inRow: false,
+  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true };
+  const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false,
     data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus, loading };
-  const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setError };
-  const unitProps = { value: unit, setValue: setUnit, label: t('inventory.unit'), data: t('inventory.units'), setError };
-  const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setError, inRow: true,
-    onBlur: onPriceChange };
-  const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setError, inRow: true };
-  const skuProps = { value: invtID, setValue: setInvtID, label: t('inventory.sku'), placeholder: t('inventory.sku'), setError, inRow: true };
-  const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setError, inRow: true };
-  const imageProps = { image, setImage };
+  const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setEdited, setError };
+  const unitProps = { value: unit, setValue: setUnit, label: t('inventory.unit'), data: t('inventory.units'), setEdited, setError };
+  const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setEdited, setError,
+    inRow: true, onBlur: onPriceChange };
+  const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setEdited, setError, inRow: true };
+  const skuProps = { value: invtID, setValue: setInvtID, label: t('inventory.sku'), placeholder: t('inventory.sku'), setEdited, setError, inRow: true };
+  const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setEdited, setError,
+    inRow: true };
+  const imageProps = { image, setImage, setEdited, setError };
   
   return (
     <div className='ac_back'>

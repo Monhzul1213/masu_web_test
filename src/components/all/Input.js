@@ -3,11 +3,12 @@ import InputMask from 'react-input-mask';
 import CurrencyInput from 'react-currency-input-field';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, handleEnter, mask, inRow } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow } = props;
 
   const onChange = e => {
     setValue({ value: e.target.value });
     setError && setError(null);
+    setEdited && setEdited(true);
   }
 
   const onKeyDown = e => {
@@ -47,11 +48,12 @@ export function Input(props){
 }
 
 export function DescrInput(props){
-  const { value, setValue, label, placeholder, disabled, setError, inRow } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, inRow } = props;
 
   const onChange = e => {
     setValue({ value: e.target.value });
     setError && setError(null);
+    setEdited && setEdited(true);
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
@@ -74,11 +76,12 @@ export function DescrInput(props){
 }
 
 export function MoneyInput(props){
-  const { value, setValue, label, placeholder, disabled, setError, handleEnter, inRow, onBlur } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, onBlur } = props;
 
   const onChange = value => {
     setValue({ value });
     setError && setError(null);
+    setEdited && setEdited(true);
   }
 
   const onKeyDown = e => {

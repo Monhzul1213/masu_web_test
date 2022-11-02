@@ -6,7 +6,7 @@ import { Check, CheckAll, PaginationTable, Table } from '../../../all';
 import { EditableCell } from './EditableCell';
 
 export function CardSite(props){
-  const { isTrack, data, setData } = props;
+  const { isTrack, data, setData, setEdited } = props;
   const { t, i18n } = useTranslation();
   const [checked, setChecked] = useState(true);
   const [columns, setColumns] = useState([]);
@@ -33,6 +33,7 @@ export function CardSite(props){
 
   const onCheckAll = checked => {
     setChecked(checked);
+    setEdited && setEdited(true);
     setData(old => old.map((row, index) => {
       return { ...old[index], checked };
     }));
@@ -41,6 +42,7 @@ export function CardSite(props){
   const onClickCheck = (e, item) => {
     e?.preventDefault();
     setChecked(false);
+    setEdited && setEdited(true);
     setData(old => old.map((row, index) => {
       if (index === item?.index) return { ...old[item?.index], checked: !row?.checked };
       return row
@@ -55,6 +57,7 @@ export function CardSite(props){
       }
       return row
     }));
+    setEdited && setEdited(true);
   }
  
   const defaultColumn = { Cell: EditableCell };
