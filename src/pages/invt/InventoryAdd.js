@@ -12,7 +12,7 @@ export function InventoryAdd(){
   const [name, setName] = useState({ value: '' });
   const [category, setCategory] = useState({ value: -1 });
   const [descr, setDescr] = useState({ value: '' });
-  const [unit, setUnit] = useState({ value: null });
+  const [unit, setUnit] = useState({ value: 'N' });
   const [price, setPrice] = useState({ value: '' });
   const [cost, setCost] = useState({ value: '' });
   const [invtID, setInvtID] = useState({ value: '' });
@@ -68,7 +68,28 @@ export function InventoryAdd(){
   }
 
   const onClickSave = async () => {
-    
+    if(name?.value?.trim()){
+      let newSites = [];
+      sites?.forEach(s => {
+        if(s?.checked){
+          newSites.push({
+            siteId: s.siteId,
+            price: parseFloat(s.price ? s.price : 0),
+            stock: parseFloat(s.stock ? s.stock : 0),
+            track: parseFloat(s.track ? s.track : 0),
+          });
+        }
+      });
+      let data = {
+        name: name?.value?.trim(), category: category?.value, descr: descr?.value?.trim(), unit: unit?.value,
+        price: parseFloat(price?.value ? price?.value : 0), cost: parseFloat(cost?.value ? cost?.value : 0),
+        invtID: invtID?.value?.trim(), barcode: barcode?.value?.trim(), isPack, isTrack,
+        image, sites: newSites
+      };
+      console.log(data);
+    } else {
+      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+    }
   }
 
   const onClickDelete = async () => {
