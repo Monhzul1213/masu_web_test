@@ -13,13 +13,13 @@ export function InventoryAdd(){
   const [name, setName] = useState({ value: '' });
   const [category, setCategory] = useState({ value: -1 });
   const [descr, setDescr] = useState({ value: '' });
-  const [unit, setUnit] = useState({ value: 'N' });
+  const [isEach, setIsEach] = useState({ value: 'Y' });
   const [price, setPrice] = useState({ value: '' });
   const [cost, setCost] = useState({ value: '' });
-  const [invtID, setInvtID] = useState({ value: '' });
+  const [sku, setSku] = useState({ value: '' });
   const [barcode, setBarcode] = useState({ value: '' });
   const [image, setImage] = useState(null);
-  const [isPack, setIsPack] = useState(false);
+  const [isKit, setIsKit] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
   const [invt, setInvt] = useState(null);
@@ -82,9 +82,9 @@ export function InventoryAdd(){
         }
       });
       let data = {
-        name: name?.value?.trim(), category: category?.value, descr: descr?.value?.trim(), unit: unit?.value,
+        name: name?.value?.trim(), category: category?.value, descr: descr?.value?.trim(), isEach: isEach?.value,
         price: parseFloat(price?.value ? price?.value : 0), cost: parseFloat(cost?.value ? cost?.value : 0),
-        invtID: invtID?.value?.trim(), barcode: barcode?.value?.trim(), isPack, isTrack,
+        sku: sku?.value?.trim(), barcode: barcode?.value?.trim(), isKit, isTrack,
         image, sites: newSites
       };
       console.log(data);
@@ -109,9 +109,9 @@ export function InventoryAdd(){
   }
 
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
-  const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, unit, setUnit, price, setPrice, cost, setCost, invtID, setInvtID,
+  const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, onPriceChange, setEdited };
-  const invtProps = { isPack, setIsPack, isTrack, setIsTrack };
+  const invtProps = { isKit, setIsKit, isTrack, setIsTrack };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 
