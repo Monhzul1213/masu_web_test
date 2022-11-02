@@ -5,12 +5,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import '../../css/invt.css';
 import { getList } from '../../services';
 import { Empty, Overlay } from '../../components/all';
-import { List } from '../../components/invt/inventory';
+import { Header } from '../../components/invt/inventory/list';
 
 export function Inventory(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [show, setShow] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -32,15 +33,29 @@ export function Inventory(){
   const onClickAdd = () => {
     navigate('invt_add');
   }
+
+  const onClickDelete = () => {
+    console.log('onClickDelete');
+  }
+
+  const onSearch = (site, category, name) => {
+    console.log(site, category, name);
+    //getData(site, category, name)
+  }
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   // const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
-  const listProps = { };
+  // const listProps = { setError };//onClickAdd, onClickDelete, 
+  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };
 
   return (
     <div className='s_container'>
       <Overlay loading={loading}>
-        {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />}
+        {data?.length ?
+          <div className='i_list_cont'>
+            <Header {...headerProps} />
+          </div>
+        : <Empty {...emptyProps} />}
       </Overlay>
     </div>
   )

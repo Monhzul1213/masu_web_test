@@ -115,6 +115,7 @@ code {
 
 #add_row_delete {
   color: var(--danger-color);
+  margin-left: 10px;
 }
 
 #add_row_delete:hover {
