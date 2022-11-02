@@ -19,6 +19,7 @@ export function InventoryAdd(){
   const [isPack, setIsPack] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
+  const [item, setItem] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -26,6 +27,7 @@ export function InventoryAdd(){
 
   useEffect(() => {
     getSites();
+    setItem(null); //if edit inventory
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -49,10 +51,23 @@ export function InventoryAdd(){
     }));
   }
 
+  const onClickCancel = () => {
+
+  }
+
+  const onClickSave = async () => {
+    
+  }
+
+  const onClickDelete = async () => {
+
+  }
+
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, unit, setUnit, price, setPrice, cost, setCost, invtID, setInvtID,
     barcode, setBarcode, image, setImage, onPriceChange };
   const invtProps = { isPack, setIsPack, isTrack, setIsTrack };
   const siteProps = { isTrack, data: sites, setData: setSites };
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true : false };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -66,7 +81,7 @@ export function InventoryAdd(){
           <CardSite {...siteProps} />
         </form>
       </div>
-      <ButtonRow1 />
+      <ButtonRow1 {...btnProps} />
     </Overlay>
   )
 }
