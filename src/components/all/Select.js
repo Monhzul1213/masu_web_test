@@ -38,8 +38,8 @@ export function Select(props){
           onFocus={onFocus}
           maxTagCount={0}
           maxTagPlaceholder={maxTagPlaceholder}
-          placeholder={placeholder}
-          suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' style={style} />}>
+          // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' style={style} />}
+          placeholder={placeholder}>
           {data?.map(renderItem)}
         </AntSelect>
       </div>
