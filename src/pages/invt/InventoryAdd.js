@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
 import { Error1, Overlay, CheckAll } from '../../components/all';
-import { SwitchLabel, CardMain } from '../../components/invt/inventory/add';
+import { CardMain, CardInvt } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
   const { t } = useTranslation();
@@ -36,8 +36,7 @@ export function InventoryAdd(){
 
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, unit, setUnit, price, setPrice, cost, setCost, invtID, setInvtID,
     barcode, setBarcode, image, setImage };
-  const isPackProps = { value: isPack, setValue: setIsPack, label: t('inventory.is_pack') };
-  const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
+  const invtProps = { isPack, setIsPack, isTrack, setIsTrack };
   const checkProps = { type: 'inventory', checked: checkedAll, onCheckAll, style: {border: 'none'} };
 
   return (
@@ -46,11 +45,7 @@ export function InventoryAdd(){
       <form>
         <CardMain {...mainProps} />
         <div className='gap' />
-        <div className='ac_back'>
-          <p className='ac_title'>{t('inventory.title')}</p>
-          <SwitchLabel {...isPackProps} />
-          {!isPack && <SwitchLabel {...isTrackProps} />}
-        </div>
+        <CardInvt {...invtProps} />
         <div className='gap' />
         <div className='ac_back'>
           <p className='ac_title'>{t('inventory.sites')}</p>

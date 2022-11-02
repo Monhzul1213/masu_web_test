@@ -1,2 +1,2 @@
-export * from './SwitchLabel';
 export * from './CardMain';
+export * from './CardInvt';
