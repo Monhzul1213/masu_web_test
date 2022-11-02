@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
+import { getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
 import { CardMain, CardInvt, CardSite } from '../../components/invt/inventory/add';
-import { getList } from '../../services';
 
 export function InventoryAdd(){
   const [name, setName] = useState({ value: '' });
@@ -21,7 +22,7 @@ export function InventoryAdd(){
   const [isPack, setIsPack] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
-  const [item, setItem] = useState(null);
+  const [invt, setInvt] = useState(null);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,7 @@ export function InventoryAdd(){
 
   useEffect(() => {
     getSites();
-    setItem(null); //if edit inventory
+    setInvt(null); //if edit inventory
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -87,6 +88,17 @@ export function InventoryAdd(){
         image, sites: newSites
       };
       console.log(data);
+      setLoading(true);
+      setError(null);
+      let api = invt ? 'Inventory/UpdateInventory' : 'Inventory/AddInventory';
+      const response = await dispatch(sendRequest(user, token, api, data));
+      console.log(response);
+      if(response?.error) setError(response?.error);
+      else {
+        message.success(t('inventory.add_success'));
+        navigate('/inventory/invt_list');
+      }
+      setLoading(false);
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
     }
@@ -101,7 +113,7 @@ export function InventoryAdd(){
     barcode, setBarcode, image, setImage, onPriceChange, setEdited };
   const invtProps = { isPack, setIsPack, isTrack, setIsTrack };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited };
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true : false };
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 
   return (
     <Overlay className='i_container' loading={loading}>
