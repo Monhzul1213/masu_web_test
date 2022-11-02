@@ -19,7 +19,12 @@ export function CardInvt(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('inventory.t_comp'), accessor: 'name' },
+      {
+        Header: t('inventory.t_comp'), accessor: 'name',
+        Cell: ({ row, value }) => (
+          <div>{value}SKU{row?.original?.sku}</div>
+        )
+      },
       { Header: t('inventory.t_qty'), accessor: 'qty' },
       { Header: t('inventory.cost'), accessor: 'cost' },
     ]);
