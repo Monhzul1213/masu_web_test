@@ -35,12 +35,22 @@ export function InventoryAdd(){
     setLoading(false);
     const response = await dispatch(getList(user, token, 'Site/GetSite'));
     if(response?.error) setError(response?.error);
-    else setSites(response?.data);
+    else {
+      response?.data?.map(item => item.checked = true);
+      setSites(response?.data);
+    }
     setLoading(false);
   }
 
+  const onPriceChange = () => {
+    setSites(old => old.map((row, index) => {
+      if(!row.changed) return { ...old[index], price: price?.value };//parseFloat
+      return row
+    }));
+  }
+
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, unit, setUnit, price, setPrice, cost, setCost, invtID, setInvtID,
-    barcode, setBarcode, image, setImage };
+    barcode, setBarcode, image, setImage, onPriceChange };
   const invtProps = { isPack, setIsPack, isTrack, setIsTrack };
   const siteProps = { isTrack, data: sites, setData: setSites };
 

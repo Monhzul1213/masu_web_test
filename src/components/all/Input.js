@@ -74,7 +74,7 @@ export function DescrInput(props){
 }
 
 export function MoneyInput(props){
-  const { value, setValue, label, placeholder, disabled, setError, handleEnter, inRow } = props;
+  const { value, setValue, label, placeholder, disabled, setError, handleEnter, inRow, onBlur } = props;
 
   const onChange = value => {
     setValue({ value });
@@ -111,6 +111,7 @@ export function MoneyInput(props){
           decimalsLimit={4}
           value={value?.value}
           maxLength={15}
+          onBlur={onBlur}
           onKeyDown={onKeyDown}
           onValueChange={onChange} />
       </div>
