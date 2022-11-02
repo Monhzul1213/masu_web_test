@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, CheckAll, Table } from '../../../all';
+import { Check, CheckAll, PaginationTable, Table } from '../../../all';
 import { EditableCell } from './EditableCell';
 
 export function CardSite(props){
@@ -30,19 +30,29 @@ export function CardSite(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language, isTrack]);
-  // }, [i18n?.language, loaded, checked]);
 
   const onCheckAll = checked => {
     setChecked(checked);
+    setData(old => old.map((row, index) => {
+      return { ...old[index], checked };
+    }));
   }
 
-  const onClickCheck = (e, row) => {
-
+  const onClickCheck = (e, item) => {
+    e?.preventDefault();
+    setChecked(false);
+    setData(old => old.map((row, index) => {
+      if (index === item?.index) return { ...old[item?.index], checked: !row?.checked };
+      return row
+    }));
   }
 
   const updateMyData = (rowIndex, columnId, value) => {
     setData(old => old.map((row, index) => {
-      if (index === rowIndex) return { ...old[rowIndex], [columnId]: value };
+      if(index === rowIndex){
+        if(columnId === 'price') return { ...old[rowIndex], [columnId]: value, changed: true };
+        return { ...old[rowIndex], [columnId]: value };
+      }
       return row
     }));
   }
@@ -52,13 +62,17 @@ export function CardSite(props){
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
 
   return (
     <div className='ac_back'>
       <p className='ac_title'>{t('inventory.sites')}</p>
       <div style={{padding: 5}} />
       <CheckAll {...checkProps} />
-      <Table {...tableProps} />
+      <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+        <Table {...tableProps} />
+      </div>
+      <PaginationTable {...tableProps} />
     </div>
   );
 }
