@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
-import { Error1, Overlay } from '../../components/all';
+import { ButtonRow1, Error1, Overlay } from '../../components/all';
 import { CardMain, CardInvt, CardSite } from '../../components/invt/inventory/add';
 import { getList } from '../../services';
 
@@ -55,15 +55,18 @@ export function InventoryAdd(){
   const siteProps = { isTrack, data: sites, setData: setSites };
 
   return (
-    <Overlay className='s_container1' loading={loading}>
-      {error && <Error1 error={error} />}
-      <form>
-        <CardMain {...mainProps} />
-        <div className='gap' />
-        <CardInvt {...invtProps} />
-        <div className='gap' />
-        <CardSite {...siteProps} />
-      </form>
+    <Overlay className='i_container' loading={loading}>
+      <div className='i_scroll'>
+        {error && <Error1 error={error} />}
+        <form>
+          <CardMain {...mainProps} />
+          <div className='gap' />
+          <CardInvt {...invtProps} />
+          <div className='gap' />
+          <CardSite {...siteProps} />
+        </form>
+      </div>
+      <ButtonRow1 />
     </Overlay>
   )
 }

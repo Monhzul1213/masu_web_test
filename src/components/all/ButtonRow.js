@@ -17,6 +17,19 @@ export function ButtonRow(props){
   )
 }
 
+export function ButtonRow1(props){
+  const { t } = useTranslation();
+  const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2, id } = props;
+
+  return (
+    <div className='invt_btn_row' id={id}>
+      {show && <DynamicBSIcon className='a_btn_delete' name='BsTrash' onClick={onClickDelete} />}
+      <Button className='invt_btn' text={t(text1 ?? 'page.cancel')} onClick={onClickCancel} />
+      <Button className='invt_btn' id='invt_btn_save' text={t(text2 ?? 'page.save')} type={type} onClick={onClickSave} />
+    </div>
+  )
+}
+
 export function ButtonRowAdd(props){
   const { t } = useTranslation();
   const { type, onClickAdd, show, onClickDelete } = props;
