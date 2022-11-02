@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import '../../css/invt.css';
 import { getList } from '../../services';
 import { Error1, Input, MoneyInput, Overlay, Select, DescrInput, Radio, UploadImage } from '../../components/all';
+import { SwitchLabel } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
   const { t } = useTranslation();
@@ -18,6 +19,8 @@ export function InventoryAdd(){
   const [invtID, setInvtID] = useState({ value: '' });
   const [barcode, setBarcode] = useState({ value: '' });
   const [image, setImage] = useState(null);
+  const [isPack, setIsPack] = useState(false);
+  const [isTrack, setIsTrack] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -51,6 +54,8 @@ export function InventoryAdd(){
   const skuProps = { value: invtID, setValue: setInvtID, label: t('inventory.sku'), placeholder: t('inventory.sku'), setError, inRow: true };
   const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setError, inRow: true };
   const imageProps = { image, setImage };
+  const isPackProps = { value: isPack, setValue: setIsPack, label: t('inventory.is_pack') };
+  const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
 
   return (
     <Overlay className='s_container1' loading={loading}>
@@ -77,6 +82,12 @@ export function InventoryAdd(){
             <div className='gap' />
             <Input {...barcodeProps} />
           </div>
+        </div>
+        <div className='gap' />
+        <div className='ac_back'>
+          <p className='ac_title'>{t('inventory.title')}</p>
+          <SwitchLabel {...isPackProps} />
+          {!isPack && <SwitchLabel {...isTrackProps} />}
         </div>
       </form>
     </Overlay>
