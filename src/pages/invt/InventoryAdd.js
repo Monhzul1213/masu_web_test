@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
-import { Error1, Overlay, CheckAll } from '../../components/all';
-import { CardMain, CardInvt } from '../../components/invt/inventory/add';
+import { Error1, Overlay } from '../../components/all';
+import { CardMain, CardInvt, CardSite } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
-  const { t } = useTranslation();
   const [name, setName] = useState({ value: '' });
   const [category, setCategory] = useState({ value: -1 });
   const [descr, setDescr] = useState({ value: '' });
@@ -19,7 +17,6 @@ export function InventoryAdd(){
   const [image, setImage] = useState(null);
   const [isPack, setIsPack] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
-  const [checkedAll, setCheckedAll] = useState(true);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -30,14 +27,10 @@ export function InventoryAdd(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onCheckAll = checked => {
-    setCheckedAll(checked);
-  }
-
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, unit, setUnit, price, setPrice, cost, setCost, invtID, setInvtID,
     barcode, setBarcode, image, setImage };
   const invtProps = { isPack, setIsPack, isTrack, setIsTrack };
-  const checkProps = { type: 'inventory', checked: checkedAll, onCheckAll, style: {border: 'none'} };
+  const siteProps = { isTrack };
 
   return (
     <Overlay className='s_container1' loading={loading}>
@@ -47,11 +40,7 @@ export function InventoryAdd(){
         <div className='gap' />
         <CardInvt {...invtProps} />
         <div className='gap' />
-        <div className='ac_back'>
-          <p className='ac_title'>{t('inventory.sites')}</p>
-          <div style={{padding: 5}} />
-          <CheckAll {...checkProps} />
-        </div>
+        <CardSite {...siteProps} />
       </form>
     </Overlay>
   )
