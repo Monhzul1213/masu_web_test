@@ -24,6 +24,7 @@ export function InventoryAdd(){
   const [sites, setSites] = useState([]);
   const [invt, setInvt] = useState(null);
   const [edited, setEdited] = useState(false);
+  const [kits, setKits] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -111,7 +112,7 @@ export function InventoryAdd(){
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, onPriceChange, setEdited };
-  const invtProps = { isKit, setIsKit, isTrack, setIsTrack };
+  const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 

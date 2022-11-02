@@ -48,14 +48,14 @@ export function Select(props){
 }
 
 export function PlainSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, label, onFocus, loading } = props;
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex } = props;
   
   const renderItem = (item, index) => {
-    return (<Option key={index} value={item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+    return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
   }
 
   return (
-    <div>
+    <div className={classBack}>
       {label && <p className='p_select_lbl'>{label}</p>}
       <AntSelect
         className={className}
