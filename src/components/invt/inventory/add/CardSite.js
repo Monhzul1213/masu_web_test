@@ -1,24 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { CheckAll } from '../../../all';
+import { Check, CheckAll, Table } from '../../../all';
+import { EditableCell } from './EditableCell';
 
 export function CardSite(props){
-  const { isTrack } = props;
-  const { t } = useTranslation();
+  const { isTrack, data, setData } = props;
+  const { t, i18n } = useTranslation();
   const [checked, setChecked] = useState(true);
+  const [columns, setColumns] = useState([]);
+
+  useEffect(() => {
+    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 72 };
+    let columns = [
+      {
+        id: 'check', noSort: true, isBtn: true,
+        Header: <div style={style}>{t('inventory.t_choose')}</div>,
+        Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
+      },
+      { Header: <div style={{flex: 1}}>{t('inventory.t_site')}</div>, accessor: 'name', disabled: true },
+      { Header: t('inventory.t_price'), accessor: 'price', noSort: true, isMoney: true, width: 110 },
+    ];
+    if(isTrack){
+      columns.push({ Header: t('inventory.t_stock'), accessor: 'stock', noSort: true, isQty: true, width: 90 });
+      columns.push({ Header: t('inventory.t_track'), accessor: 'track', noSort: true, isQty: true, width: 90 });
+    }
+    setColumns(columns);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n?.language, isTrack]);
+  // }, [i18n?.language, loaded, checked]);
 
   const onCheckAll = checked => {
     setChecked(checked);
   }
+
+  const onClickCheck = (e, row) => {
+
+  }
+
+  const updateMyData = (rowIndex, columnId, value) => {
+    setData(old => old.map((row, index) => {
+      if (index === rowIndex) return { ...old[rowIndex], [columnId]: value };
+      return row
+    }));
+  }
  
+  const defaultColumn = { Cell: EditableCell };
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData },
+    useSortBy, usePagination, useRowSelect);
+  const tableProps = { tableInstance };
 
   return (
     <div className='ac_back'>
       <p className='ac_title'>{t('inventory.sites')}</p>
       <div style={{padding: 5}} />
       <CheckAll {...checkProps} />
+      <Table {...tableProps} />
     </div>
   );
 }

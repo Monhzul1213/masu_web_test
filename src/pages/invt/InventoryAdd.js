@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import '../../css/invt.css';
 import { Error1, Overlay } from '../../components/all';
 import { CardMain, CardInvt, CardSite } from '../../components/invt/inventory/add';
+import { getList } from '../../services';
 
 export function InventoryAdd(){
   const [name, setName] = useState({ value: '' });
@@ -17,20 +18,31 @@ export function InventoryAdd(){
   const [image, setImage] = useState(null);
   const [isPack, setIsPack] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
+  const [sites, setSites] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    getSites();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getSites = async () => {
+    setError(null);
+    setLoading(false);
+    const response = await dispatch(getList(user, token, 'Site/GetSite'));
+    if(response?.error) setError(response?.error);
+    else setSites(response?.data);
+    setLoading(false);
+  }
+
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, unit, setUnit, price, setPrice, cost, setCost, invtID, setInvtID,
     barcode, setBarcode, image, setImage };
   const invtProps = { isPack, setIsPack, isTrack, setIsTrack };
-  const siteProps = { isTrack };
+  const siteProps = { isTrack, data: sites, setData: setSites };
 
   return (
     <Overlay className='s_container1' loading={loading}>
