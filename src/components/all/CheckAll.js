@@ -13,7 +13,7 @@ export function Check(props){
 }
 
 export function CheckAll(props){
-  const { type, checked, onCheckAll } = props;
+  const { type, checked, onCheckAll, style } = props;
   const { t } = useTranslation();
 
   const onClick = () => {
@@ -21,7 +21,7 @@ export function CheckAll(props){
   }
 
   return (
-    <div className='check_all'>
+    <div className='check_all' style={style}>
       <Check checked={checked} onClick={onClick} />
       <p className='check_all_lbl'>{t(type + '.check_lbl')}</p>
     </div>

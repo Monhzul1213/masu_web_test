@@ -185,14 +185,14 @@
 }
 
 .u_image {
-  width: 144px;
-  height: 144px;
+  width: 227px;
+  height: 227px;
   margin-left: 10px;
 }
 
 .u_image .ant-upload.ant-upload-select-picture-card {
-  width: 144px;
-  height: 144px;
+  width: 227px;
+  height: 227px;
   overflow: hidden;
   border-color: var(--line-color);
   background-color: var(--back-color);

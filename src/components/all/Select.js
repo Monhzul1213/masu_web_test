@@ -6,7 +6,7 @@ import { DynamicAIIcon } from './DynamicIcon';
 const { Option } = AntSelect;
 
 export function Select(props){
-  const { value, setValue, label, placeholder, data, setError, s_value, s_descr, mode, inRow } = props;
+  const { value, setValue, label, placeholder, data, setError, s_value, s_descr, mode, inRow, onFocus, loading } = props;
   const { t } = useTranslation();
   
   let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
@@ -29,11 +29,13 @@ export function Select(props){
         <p className='select_lbl' style={style}>{label}</p>
         <AntSelect
           mode={mode}
+          loading={loading}
           className='select_m'
           showSearch
           filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
           onChange={handleChange}
           value={value?.value}
+          onFocus={onFocus}
           maxTagCount={0}
           maxTagPlaceholder={maxTagPlaceholder}
           placeholder={placeholder}
