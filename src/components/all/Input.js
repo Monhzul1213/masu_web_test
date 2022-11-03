@@ -31,7 +31,7 @@ export function Input(props){
   return (
     <div style={inRow ? { flex: 1 } : {}}>
       <div className='select_back' style={backStyle}>
-        <p className='select_lbl' style={style}>{label}</p>
+        {label && <p className='select_lbl' style={style}>{label}</p>}
         <InputMask
           className='m_input'
           mask={mask}

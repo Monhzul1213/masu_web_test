@@ -15,13 +15,13 @@ export function Social(){
         <div className='social_line' />
       </div>
       <div className='social_row'>
-        <a className='social_link' target='_blank' rel='noreferrer' href='https://bit.ly/3fqmY3F'>
+        <a className='social_link' target='_blank' rel='noreferrer' href='https://www.facebook.com/masupos'>
           <GrFacebookOption className='social' style={{fontSize: 22, color: '#4267B2'}} />
         </a>
-        <a className='social_link' target='_blank' rel='noreferrer' href='https://twitter.com/ultimateerp'>
+        <a className='social_link' target='_blank' rel='noreferrer' href='https://twitter.com/masupos'>
           <DynamicAIIcon name='AiOutlineTwitter' className='social' style={{color: '#1DA1F2'}} />
         </a>
-        <a className='social_link' target='_blank' rel='noreferrer' href='https://bit.ly/3SQ2Mqt'>
+        <a className='social_link' target='_blank' rel='noreferrer' href='https://www.youtube.com/channel/UCYbdLbekzT4LpM37KLRO0yg'>
           <DynamicAIIcon name='AiFillYoutube' className='social' style={{color: '#FF0000'}} />
         </a>
       </div>

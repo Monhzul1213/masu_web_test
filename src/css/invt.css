@@ -293,6 +293,7 @@
 #invt_btn_save {
   background-color: var(--config-b-color);
   color: var(--root-color);
+  font-weight: 550;
 }
 
 #invt_btn_save:hover {
@@ -433,4 +434,10 @@
 
 .ac_delete:hover {
   color: var(--danger-color);
+}
+
+.ac_descr {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 20px 0;
 }

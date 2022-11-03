@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import '../../css/invt.css';
 import { getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
-import { CardMain, CardInvt, CardSite } from '../../components/invt/inventory/add';
+import { CardMain, CardInvt, CardSite, CardVariant } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
   const [name, setName] = useState({ value: '' });
@@ -25,6 +25,7 @@ export function InventoryAdd(){
   const [invt, setInvt] = useState(null);
   const [edited, setEdited] = useState(false);
   const [kits, setKits] = useState([]);
+  const [variants, setVariants] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -113,6 +114,7 @@ export function InventoryAdd(){
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost };
+  const variantProps = { data: variants, setData: setVariants, setEdited, price, cost };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 
@@ -126,6 +128,8 @@ export function InventoryAdd(){
           <div className='gap' />
           <CardInvt {...invtProps} />
           <div className='gap' />
+          {!isKit && <CardVariant {...variantProps} />}
+          {!isKit && <div className='gap' />}
           <CardSite {...siteProps} />
         </form>
       </div>
