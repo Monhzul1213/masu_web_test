@@ -74,7 +74,7 @@ export function PlainSelect(props){
 }
 
 export function CustomSelect(props){
-  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem } = props;
+  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem, filterOption } = props;
   
   return (
     <div className={classBack}>
@@ -82,7 +82,7 @@ export function CustomSelect(props){
       <AntSelect
         className={className}
         showSearch
-        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        filterOption={filterOption}
         onChange={setValue}
         value={value}
         loading={loading}

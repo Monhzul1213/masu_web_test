@@ -9,10 +9,11 @@ import { formatNumber } from '../../../../helpers';
 import { PaginationTable, Table, CustomSelect, Warning, DynamicBSIcon } from '../../../all';
 import { SwitchLabel } from './SwitchLabel';
 import { SelectItem } from './SelectItem';
+import { EditableCell } from './EditableCell';
 const { Option } = Select;
 
 export function CardInvt(props){
-  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError } = props;
+  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [search, setSearch] = useState(null);
@@ -26,12 +27,14 @@ export function CardInvt(props){
     setColumns([
       {
         Header: t('inventory.t_comp'), accessor: 'name',
-        Cell: ({ row, value }) => (<SelectItem item={row?.original} />)
+        Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
-      { Header: t('inventory.t_qty'), accessor: 'qty' },
-      { Header: t('inventory.cost'), accessor: 'cost' },
+      { Header: t('inventory.t_qty'), accessor: 'qty', isQty: true, width: 90 },
+      { Header: t('inventory.cost'), accessor: 'cost', disabled: true, Cell: ({ value }) => <div>{formatNumber(value)}</div>
+      },
       { id: 'delete', noSort: true, Header: '',
-        Cell: ({ row }) => (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div> )
+        Cell: ({ row, onClickDelete }) =>
+          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
       },
     ]);
     return () => {};
@@ -39,6 +42,7 @@ export function CardInvt(props){
   }, [i18n?.language]);
 
   const onClickDelete = row => {
+    setTotal(total - (row?.original?.cost ?? 0));
     setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
   }
 
@@ -55,25 +59,49 @@ export function CardInvt(props){
     let invt = items[value];
     let exists = data?.findIndex(d => d.invtId === invt?.invtId);
     if(exists === -1){
-      let item = { invtId: invt.invtId, name: invt.descr, qty: 0, cost: 0 };
+      let item = { invtId: invt.invtId, name: invt.descr, qty: 0, cost: 0, unitCost: invt.cost };
       setData(old => [...old, item]);
     } else setOpen(true);
     setSearch(null);
   }
 
   const renderItem = (item, index) => {
-    return (<Option key={index} value={index}><SelectItem item={item} /></Option>);
+    return (
+      <Option key={index} value={index} name={item?.name ?? item?.descr} sku={(item?.sku ?? item?.invtId) + ''}>
+        <SelectItem item={item} />
+      </Option>
+    );
+  }
+
+  const updateMyData = (rowIndex, columnId, value) => {
+    let total = 0;
+    setData(old => old.map((row, index) => {
+      if(index === rowIndex){
+        let cost = old[rowIndex]?.unitCost * parseFloat(value ? value : 0);
+        total += cost;
+        return { ...old[rowIndex], [columnId]: value, cost };
+      } else {
+        total += row.cost;
+        return row;
+      }
+    }));
+    setTotal(total);
+    setEdited && setEdited(true);
+  }
+
+  const filterOption = (input, option) => {
+    return option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option?.sku?.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
 
   const isPackProps = { value: isKit, setValue: setIsKit, label: t('inventory.is_pack') };
   const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  // const tableInstance = useTable({ columns, data: kits, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData },
-  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 } },
+  const defaultColumn = { Cell: EditableCell };
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData, onClickDelete },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
-    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem };
+    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption};
   const warningProps = { open, close: () => setOpen(false), text: 'inventory.already_added' };
  
   return (
