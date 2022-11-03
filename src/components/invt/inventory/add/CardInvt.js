@@ -128,7 +128,7 @@ export function CardInvt(props){
         <CustomSelect {...selectProps} />
         <div className='ac_paging'>
           <PaginationTable {...tableProps} />
-          <p className='ac_page_total'>{t('inventory.total_cost')}: ₮{formatNumber(total)}</p>
+          <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total)}</p>
         </div>
       </>}
     </div>

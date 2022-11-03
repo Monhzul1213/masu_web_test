@@ -15,12 +15,13 @@ export function CardSite(props){
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 72 };
     let columns = [
       {
-        id: 'check', noSort: true, isBtn: true,
+        id: 'check', noSort: true, isBtn: true, customStyle: { width: 75 },
         Header: <div style={style}>{t('inventory.t_choose')}</div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       { Header: <div style={{flex: 1}}>{t('inventory.t_site')}</div>, accessor: 'name', disabled: true },
-      { Header: t('inventory.t_price'), accessor: 'price', noSort: true, isMoney: true, width: 110 },
+      { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_price')}</div>, accessor: 'price', noSort: true, isMoney: true,
+        customStyle: { width: 100 }, width: 100 },
     ];
     if(isTrack){
       columns.push({ Header: t('inventory.t_stock'), accessor: 'stock', noSort: true, isQty: true, width: 90 });
