@@ -29,10 +29,13 @@ export function CardInvt(props){
         Header: t('inventory.t_comp'), accessor: 'name',
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
-      { Header: t('inventory.t_qty'), accessor: 'qty', isQty: true, width: 90 },
-      { Header: t('inventory.cost'), accessor: 'cost', disabled: true, Cell: ({ value }) => <div>{formatNumber(value)}</div>
+      { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', isQty: true,
+        customStyle: { width: 100, paddingRight: 18 }, width: 80 },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', disabled: true, customStyle: { width: 100 },
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>{formatNumber(value)}</div>,
       },
-      { id: 'delete', noSort: true, Header: '',
+      { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>
           (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
       },

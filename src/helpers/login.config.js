@@ -1,5 +1,5 @@
 export const config = { //local
-  url: 'http://192.168.1.224:8082/',
+  url: 'http://192.168.1.224:89/',
   domain: 'http://192.168.1.107:8020',
 }
 

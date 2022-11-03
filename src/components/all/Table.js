@@ -30,8 +30,10 @@ export function Table(props){
           return (
             <tr className={row?.isSelected ? 'table_row_selected' : 'table_row'}  {...row.getRowProps()}>
               {row.cells.map(cell => {
+                let style = cell?.column?.customStyle ?? { };
                 return (
-                  <td className='table_cell_text' {...cell.getCellProps()} onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
+                  <td className='table_cell_text' {...cell.getCellProps()} style={style}
+                    onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
                     {cell.render('Cell')}
                   </td>
                 );

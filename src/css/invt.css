@@ -420,14 +420,15 @@
 }
 
 .ac_delete_back {
-  text-align: center;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
 }
 
 .ac_delete {
   color: var(--text2-color);
-  align-self: center;
-  margin-right: auto;
   font-size: 18px;
+  text-align: center;
 }
 
 .ac_delete:hover {
