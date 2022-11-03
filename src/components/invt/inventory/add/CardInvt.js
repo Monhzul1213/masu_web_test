@@ -30,7 +30,7 @@ export function CardInvt(props){
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', isQty: true,
-        customStyle: { width: 100, paddingRight: 18 }, width: 80, autoFocus: true },
+        customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', disabled: true, customStyle: { width: 100 },
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>{formatNumber(value)}</div>,

@@ -71,6 +71,8 @@ export function InventoryAdd(){
   }
 
   const onClickSave = async () => {
+    console.log(variants);
+    return;
     if(name?.value?.trim()){
       let newSites = [];
       sites?.forEach(s => {

@@ -28,7 +28,7 @@ export const EditableCell = ({ value: initialValue, row: { index }, column: { id
   const style = { textAlign: 'right', width };
   const moneyProps = { className: 'ed_input', prefix: '₮', allowNegativeValue: false, decimalsLimit: 4, value, maxLength: 15, onValueChange, onBlur, style,
     onKeyDown, autoFocus };
-  const textProps = { className: 'ed_input', value, onChange, onBlur, onKeyDown, autoFocus };
+  const textProps = { className: 'ed_input', value, onChange, onBlur, onKeyDown, autoFocus, style: width ? { width } : {} };
   const qtyProps = { className: 'ed_input', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,
     disableGroupSeparators: true, style, onKeyDown, autoFocus };
 
