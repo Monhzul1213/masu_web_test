@@ -418,3 +418,18 @@
   font-size: 13px;
   line-height: 16px;
 }
+
+.ac_delete_back {
+  text-align: center;
+}
+
+.ac_delete {
+  color: var(--text2-color);
+  align-self: center;
+  margin-right: auto;
+  font-size: 18px;
+}
+
+.ac_delete:hover {
+  color: var(--danger-color);
+}

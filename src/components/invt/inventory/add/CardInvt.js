@@ -6,7 +6,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
 import { getList } from '../../../../services';
 import { formatNumber } from '../../../../helpers';
-import { PaginationTable, Table, CustomSelect, Warning } from '../../../all';
+import { PaginationTable, Table, CustomSelect, Warning, DynamicBSIcon } from '../../../all';
 import { SwitchLabel } from './SwitchLabel';
 import { SelectItem } from './SelectItem';
 const { Option } = Select;
@@ -30,10 +30,17 @@ export function CardInvt(props){
       },
       { Header: t('inventory.t_qty'), accessor: 'qty' },
       { Header: t('inventory.cost'), accessor: 'cost' },
+      { id: 'delete', noSort: true, Header: '',
+        Cell: ({ row }) => (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div> )
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
+
+  const onClickDelete = row => {
+    setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
+  }
 
   const onFocus = async () => {
     if(!items?.length){
