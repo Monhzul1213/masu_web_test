@@ -128,6 +128,7 @@ export function PaginationTable(props){
       <button className='pg_btn' disabled={!canNextPage} onClick={() => nextPage()}>
         <FiChevronRight className='pg_icon' />
       </button>
+      <div style={{padding: 5}} />
       <div className='pg_select_back'>
         <Select
           className='pg_select'

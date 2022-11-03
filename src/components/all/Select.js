@@ -72,3 +72,24 @@ export function PlainSelect(props){
     </div>
   );
 }
+
+export function CustomSelect(props){
+  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem } = props;
+  
+  return (
+    <div className={classBack}>
+      {label && <p className='p_select_lbl'>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={setValue}
+        value={value}
+        loading={loading}
+        onFocus={onFocus}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+    </div>
+  );
+}

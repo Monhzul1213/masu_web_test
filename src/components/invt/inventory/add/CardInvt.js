@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
 import { getList } from '../../../../services';
-import { PaginationTable, Table, PlainSelect, Warning } from '../../../all';
+import { formatNumber } from '../../../../helpers';
+import { PaginationTable, Table, CustomSelect, Warning } from '../../../all';
 import { SwitchLabel } from './SwitchLabel';
+import { SelectItem } from './SelectItem';
+const { Option } = Select;
 
 export function CardInvt(props){
   const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError } = props;
@@ -14,6 +18,7 @@ export function CardInvt(props){
   const [search, setSearch] = useState(null);
   const [items, setItems] = useState([]);
   const [open, setOpen] = useState(false);
+  const [total, setTotal] = useState(0);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -21,9 +26,7 @@ export function CardInvt(props){
     setColumns([
       {
         Header: t('inventory.t_comp'), accessor: 'name',
-        Cell: ({ row, value }) => (
-          <div>{value}SKU{row?.original?.sku}</div>
-        )
+        Cell: ({ row, value }) => (<SelectItem item={row?.original} />)
       },
       { Header: t('inventory.t_qty'), accessor: 'qty' },
       { Header: t('inventory.cost'), accessor: 'cost' },
@@ -51,6 +54,10 @@ export function CardInvt(props){
     setSearch(null);
   }
 
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={index}><SelectItem item={item} /></Option>);
+  }
+
   const isPackProps = { value: isKit, setValue: setIsKit, label: t('inventory.is_pack') };
   const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
@@ -58,8 +65,8 @@ export function CardInvt(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 } },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items, s_value: 'invtId', s_descr: 'descr', 
-    className: 'kit_select', classBack: 'kit_search', onFocus, isIndex: true };
+  const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
+    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem };
   const warningProps = { open, close: () => setOpen(false), text: 'inventory.already_added' };
  
   return (
@@ -72,8 +79,11 @@ export function CardInvt(props){
         <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
           <Table {...tableProps} />
         </div>
-        <PlainSelect {...selectProps} />
-        <PaginationTable {...tableProps} />
+        <CustomSelect {...selectProps} />
+        <div className='ac_paging'>
+          <PaginationTable {...tableProps} />
+          <p className='ac_page_total'>{t('inventory.total_cost')}: ₮{formatNumber(total)}</p>
+        </div>
       </>}
     </div>
   );

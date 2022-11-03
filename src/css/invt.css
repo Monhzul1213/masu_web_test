@@ -390,3 +390,31 @@
 .kit_select .ant-select-selection-search {
   left: 2px !important;
 }
+
+.ac_paging {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ac_page_total {
+  color: var(--text-color);
+  margin: 0;
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.cs_name {
+  color: var(--text-color);
+  margin: 0;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.cs_sku {
+  color: var(--text2-color);
+  margin: 0;
+  font-size: 13px;
+  line-height: 16px;
+}
