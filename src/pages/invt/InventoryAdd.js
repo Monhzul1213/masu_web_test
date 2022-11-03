@@ -111,8 +111,8 @@ export function InventoryAdd(){
 
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, onPriceChange, setEdited };
-  const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited };
+    barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit };
+  const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 

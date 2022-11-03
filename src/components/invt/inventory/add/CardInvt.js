@@ -13,7 +13,7 @@ import { EditableCell } from './EditableCell';
 const { Option } = Select;
 
 export function CardInvt(props){
-  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited } = props;
+  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [search, setSearch] = useState(null);
@@ -45,7 +45,9 @@ export function CardInvt(props){
   }, [i18n?.language]);
 
   const onClickDelete = row => {
-    setTotal(total - (row?.original?.cost ?? 0));
+    let newTotal = total - (row?.original?.cost ?? 0);
+    setTotal(newTotal);
+    setCost({ value: newTotal });
     setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
   }
 
@@ -89,6 +91,7 @@ export function CardInvt(props){
       }
     }));
     setTotal(total);
+    setCost({ value: total });
     setEdited && setEdited(true);
   }
 
@@ -96,7 +99,12 @@ export function CardInvt(props){
     return option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option?.sku?.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
 
-  const isPackProps = { value: isKit, setValue: setIsKit, label: t('inventory.is_pack') };
+  const onChangeKit = value => {
+    setIsKit(value);
+    setCost({ value: value ? total : 0 });
+  }
+
+  const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack') };
   const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };

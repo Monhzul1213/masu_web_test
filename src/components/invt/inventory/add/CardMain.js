@@ -7,7 +7,7 @@ import { DescrInput, Input, MoneyInput, Radio, Select, UploadImage } from '../..
 
 export function CardMain(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, onPriceChange, setEdited } = props;
+    barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,8 @@ export function CardMain(props){
   const unitProps = { value: isEach, setValue: setIsEach, label: t('inventory.unit'), data: t('inventory.units'), setEdited, setError };
   const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setEdited, setError,
     inRow: true, onBlur: onPriceChange };
-  const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setEdited, setError, inRow: true };
+  const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setEdited, setError, inRow: true,
+    disabled: isKit };
   const skuProps = { value: sku, setValue: setSku, label: t('inventory.sku'), placeholder: t('inventory.sku'), setEdited, setError, inRow: true };
   const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setEdited, setError,
     inRow: true };

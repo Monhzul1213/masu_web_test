@@ -531,6 +531,10 @@
   outline: none;
 }
 
+.m_input:disabled {
+  cursor: not-allowed;
+}
+
 .select_m .ant-select-selection-placeholder {
   left: 0;
 }
