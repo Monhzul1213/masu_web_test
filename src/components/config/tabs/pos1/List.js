@@ -54,7 +54,6 @@ export function List(props){
       setData(list);
       let count = list?.filter(item => item.checked)?.length;
       setShow(count ? true : false);
-      console.log(count, 'count', count ? true : false)
     }
   }
 
