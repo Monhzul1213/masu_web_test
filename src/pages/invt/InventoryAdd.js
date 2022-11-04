@@ -8,7 +8,7 @@ import '../../css/invt.css';
 import { getList } from '../../services';
 // import { getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
-import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty } from '../../components/invt/inventory/add';
+import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty, CardModifier } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
   const [name, setName] = useState({ value: '' });
@@ -27,6 +27,7 @@ export function InventoryAdd(){
   const [edited, setEdited] = useState(false);
   const [kits, setKits] = useState([]);
   const [variants, setVariants] = useState([]);
+  const [modifiers, setModifiers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -120,6 +121,8 @@ export function InventoryAdd(){
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add' };
+  const modiProps = { data: modifiers, setData: setModifiers, setEdited };
+  const modiEmptyProps = { title: 'modifier.title', icon: 'MdStorefront', route: '/inventory/invt_modi', btn: 'modifier.add' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 
   return (
@@ -135,6 +138,8 @@ export function InventoryAdd(){
           {!isKit && <CardVariant {...variantProps} />}
           {!isKit && <div className='gap' />}
           {sites?.length ? <CardSite {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}
+          <div className='gap' />
+          {modifiers?.length ? <CardModifier {...modiProps} /> : <CardEmpty {...modiEmptyProps} />}
         </form>
       </div>
       <ButtonRow1 {...btnProps} />

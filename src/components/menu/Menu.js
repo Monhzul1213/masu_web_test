@@ -35,7 +35,7 @@ export function Menu(props){
     getItem(t('menu.inventory'), '/inventory', <BsInboxes />, [
       getItem(t('menu.invt_list'), '/inventory/invt_list'),
       getItem(t('menu.invt_category'), '/inventory/invt_category'),
-      getItem(t('menu.invt_pack'), '/inventory/invt_pack'),
+      getItem(t('menu.invt_modi'), '/inventory/invt_modi'),
       getItem(t('menu.invt_discount'), '/inventory/invt_discount')
     ]),
     getItem(t('menu.management'), '/management', <TbBuildingWarehouse />),

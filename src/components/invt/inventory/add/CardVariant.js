@@ -73,7 +73,8 @@ export function CardVariant(props){
     setSearch({ value: search?.value });
   }
 
-  const handleEnter = () => {
+  const handleEnter = e => {
+    e?.preventDefault();
     let VariantName = search?.value?.trim();
     if(VariantName){
       let exists = data?.findIndex(d => d.VariantName?.toLowerCase() === VariantName?.toLowerCase());

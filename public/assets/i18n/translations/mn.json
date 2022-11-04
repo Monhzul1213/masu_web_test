@@ -46,7 +46,8 @@
     "/help": "Тусламж",
     "/inventory/invt_category": "Категор",
     "/inventory/invt_list": "Барааны жагсаалт",
-    "/inventory/invt_list/invt_add": "Бараа нэмэх"
+    "/inventory/invt_list/invt_add": "Бараа нэмэх",
+    "/inventory/invt_modi": "Нэмэлт төлбөр"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -60,7 +61,7 @@
     "help": "Тусламж",
     "invt_list": "Барааны жагсаалт",
     "invt_category": "Категор",
-    "invt_pack": "Багцлагч",
+    "invt_modi": "Нэмэлт төлбөр",
     "invt_discount": "Хөнгөлөлт"
   },
   "page": {
@@ -273,5 +274,9 @@
     "t_variant": "Хувилбар",
     "add_variant": "Хувилбар нэмэх",
     "variant_error": "Энэ нэртэй хувилбар үүссэн байна."
+  },
+  "modifier": {
+    "title": "Нэмэлт төлбөр",
+    "add": "Нэмэлт төлбөр"
   }
 }
