@@ -246,12 +246,11 @@
 
 .i_container {
   margin-left: var(--side-width);
-  padding: 2px var(--page-padding);
+  padding: 0 var(--page-padding);
   margin-top: var(--page-padding);
   display: flex;
   flex-flow: column;
   overflow: scroll;
-  max-width: calc(var(--invt-width) + var(--page-padding) * 2);
 }
 
 .i_scroll {
@@ -269,6 +268,7 @@
   flex-flow: row;
   justify-content: flex-end;
   align-items: center;
+  max-width: calc(var(--invt-width));
 }
 
 .invt_btn {
