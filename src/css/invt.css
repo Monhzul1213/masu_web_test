@@ -358,11 +358,14 @@
 
 .kit_search {
   margin: 5px 0 10px 0;
-  border-bottom: 1px solid var(--line-color);
 }
 
-.kit_search:focus-within {
+.input_border:focus-within {
   border-bottom: 1px solid var(--success-color);
+}
+
+.input_border {
+  border-bottom: 1px solid var(--line-color);
 }
 
 .kit_select {

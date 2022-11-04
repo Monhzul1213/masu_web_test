@@ -6,7 +6,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
 import { getList } from '../../../../services';
 import { formatNumber } from '../../../../helpers';
-import { PaginationTable, Table, CustomSelect, Warning, DynamicBSIcon } from '../../../all';
+import { PaginationTable, Table, CustomSelect, DynamicBSIcon } from '../../../all';
 import { SwitchLabel } from './SwitchLabel';
 import { SelectItem } from './SelectItem';
 import { EditableCell } from './EditableCell';
@@ -16,9 +16,8 @@ export function CardInvt(props){
   const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState({ value: null });
   const [items, setItems] = useState([]);
-  const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -61,13 +60,15 @@ export function CardInvt(props){
   }
 
   const onSelect = value => {
-    let invt = items[value];
+    let invt = items[value?.value];
     let exists = data?.findIndex(d => d.invtId === invt?.invtId);
     if(exists === -1){
       let item = { invtId: invt.invtId, name: invt.descr, qty: 0, cost: 0, unitCost: invt.cost };
       setData(old => [...old, item]);
-    } else setOpen(true);
-    setSearch(null);
+      setSearch({ value: null });
+    } else {
+      setSearch({ value: null, error: t('inventory.already_added') });
+    }
   }
 
   const renderItem = (item, index) => {
@@ -113,11 +114,9 @@ export function CardInvt(props){
   const tableProps = { tableInstance };
   const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
     className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption};
-  const warningProps = { open, close: () => setOpen(false), text: 'inventory.already_added' };
  
   return (
     <div className='ac_back'>
-      <Warning {...warningProps} />
       <p className='ac_title'>{t('inventory.title')}</p>
       <SwitchLabel {...isPackProps} />
       {!isKit && false && <SwitchLabel {...isTrackProps} />}

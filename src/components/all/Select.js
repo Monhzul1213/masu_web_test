@@ -74,22 +74,33 @@ export function PlainSelect(props){
 }
 
 export function CustomSelect(props){
-  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem, filterOption } = props;
+  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem, filterOption, setError, setEdited } = props;
+
+  const handleChange = e => {
+    setValue({ value: e });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   
   return (
     <div className={classBack}>
-      {label && <p className='p_select_lbl'>{label}</p>}
-      <AntSelect
-        className={className}
-        showSearch
-        filterOption={filterOption}
-        onChange={setValue}
-        value={value}
-        loading={loading}
-        onFocus={onFocus}
-        placeholder={placeholder}>
-        {data?.map(renderItem)}
-      </AntSelect>
+      <div className='input_border' style={style}>
+        {label && <p className='p_select_lbl' style={style}>{label}</p>}
+        <AntSelect
+          className={className}
+          showSearch
+          filterOption={filterOption}
+          onChange={handleChange}
+          value={value?.value}
+          loading={loading}
+          onFocus={onFocus}
+          placeholder={placeholder}>
+          {data?.map(renderItem)}
+        </AntSelect>
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
     </div>
   );
 }
