@@ -19,7 +19,7 @@ export function CardSite(props){
         Header: <div style={style}>{t('inventory.t_choose')}</div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: <div style={{flex: 1}}>{t('inventory.t_site')}</div>, accessor: 'name', disabled: true },
+      { Header: <div style={{flex: 1}}>{t('inventory.t_site')}</div>, accessor: 'name', isText: true },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_price')}</div>, accessor: 'price', noSort: true, isMoney: true,
         customStyle: { width: 100 }, width: 100 },
     ];

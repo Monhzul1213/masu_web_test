@@ -10,7 +10,7 @@ export function CardVariant(props){
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [search, setSearch] = useState({ value: '' });
-  const [editable, setEditable] = useState(true);
+  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     setColumns([
@@ -39,11 +39,12 @@ export function CardVariant(props){
   const updateMyData = (rowIndex, columnId, value) => {
     let hasError = false, errorIndex = -1;
     if(columnId === 'VariantName' || columnId === 'Sku'){
-      errorIndex = data?.findIndex((item, index) => index !== rowIndex && item[columnId]?.trim()?.toLowerCase() === value?.trim()?.toLowerCase());
+      errorIndex = data?.findIndex((item, index) =>
+        value && index !== rowIndex && item[columnId]?.trim()?.toLowerCase() === value?.trim()?.toLowerCase());
       hasError = errorIndex !== -1;
-      if(!value) hasError = true;
+      if(!value && columnId === 'VariantName') hasError = true;
     }
-    setEditable(!hasError);
+    setDisabled(hasError);
     setData(old => old.map((row, index) => {
       if(index === rowIndex){
         return { ...old[rowIndex], [columnId]: value, error: hasError ? columnId : null };
@@ -58,7 +59,7 @@ export function CardVariant(props){
 
   const onClickDelete = row => {
     if(row?.original?.error){
-      setEditable(true);
+      setDisabled(false);
       setData(old => old?.reduce(function(list, item, index) {
         if(index !== row?.index){
           item.error = null;
@@ -88,7 +89,7 @@ export function CardVariant(props){
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    updateMyData, onClickDelete, editable }, useSortBy, usePagination, useRowSelect);
+    updateMyData, onClickDelete, disabled }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const addProps = { value: search, setValue: setSearch, placeholder: t('inventory.add_variant'), handleEnter, inRow: true };
 
