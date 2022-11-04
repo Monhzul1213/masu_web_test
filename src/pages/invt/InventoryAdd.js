@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { message } from 'antd';
+// import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
-import { getList, sendRequest } from '../../services';
+import { getList } from '../../services';
+// import { getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
-import { CardMain, CardInvt, CardSite, CardVariant } from '../../components/invt/inventory/add';
+import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
   const [name, setName] = useState({ value: '' });
@@ -71,8 +72,7 @@ export function InventoryAdd(){
   }
 
   const onClickSave = async () => {
-    console.log(variants);
-    return;
+    /*
     if(name?.value?.trim()){
       let newSites = [];
       sites?.forEach(s => {
@@ -106,6 +106,7 @@ export function InventoryAdd(){
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
     }
+    */
   }
 
   const onClickDelete = async () => {
@@ -118,6 +119,7 @@ export function InventoryAdd(){
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited };
+  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 
   return (
@@ -132,7 +134,7 @@ export function InventoryAdd(){
           <div className='gap' />
           {!isKit && <CardVariant {...variantProps} />}
           {!isKit && <div className='gap' />}
-          <CardSite {...siteProps} />
+          {sites?.length ? <CardSite {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}
         </form>
       </div>
       <ButtonRow1 {...btnProps} />

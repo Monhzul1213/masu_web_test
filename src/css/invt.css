@@ -444,3 +444,17 @@
   font-size: 14px;
   margin: 20px 0;
 }
+
+.ac_empty_back {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  padding: 10px 0;
+}
+
+.ac_empty_icon {
+  color: var(--line-color);
+  height: 120px;
+  width: 120px;
+  margin: 20px 0 15px 0;
+}

@@ -12,6 +12,10 @@ export function Config(){
   useEffect(() => {
     let mode = searchParams?.get('mode');
     if(mode === 'is_first') setVisible(true);
+    else {
+      let tab = searchParams?.get('tab');
+      if(tab) setSelectedKeys([tab]);
+    }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
