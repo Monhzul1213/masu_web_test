@@ -49,7 +49,7 @@ export function Inventory(){
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };
 
   return (
-    <div className='s_container'>
+    <div className='s_container_i'>
       <Overlay loading={loading}>
         {data?.length ?
           <div className='i_list_cont'>

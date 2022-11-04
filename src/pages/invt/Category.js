@@ -63,7 +63,7 @@ export function Category(){
   const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
 
   return (
-    <div className='s_container'>
+    <div className='s_container_i'>
       {visible && <Add {...addProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
