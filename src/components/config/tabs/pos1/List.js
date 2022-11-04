@@ -23,8 +23,8 @@ export function List(props){
     setColumns([
       {
         id: 'check', noSort: true, isBtn: true,
-        Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
-        Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
+        Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
+        Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       { Header: t('pos.t_name'), accessor: 'descr' },
       { Header: t('pos.t_site'), accessor: 'name' },
@@ -34,7 +34,7 @@ export function List(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language, loaded, checked]);
+  }, [i18n?.language]);
 
   const onClickCheckAll = () => {
     setShow(!checked);
@@ -73,8 +73,8 @@ export function List(props){
 
   const addProps = { type: 'pos', onClickAdd, show, onClickDelete };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
-  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }},
-    useSortBy, usePagination, useRowSelect);
+  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+    onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
