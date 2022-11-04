@@ -39,11 +39,11 @@ export function Add(props){
   const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
-    if(name?.value?.trim() && color !== null){
+    if(name?.value && color !== null){
       setLoading(true);
       let data = selected
-        ? { categoryId: selected?.categoryId, categoryName: name?.value?.trim(), color }
-        : { merchantID: user?.merchantId, categoryName: name?.value?.trim(), color };
+        ? { categoryId: selected?.categoryId, categoryName: name?.value, color }
+        : { merchantID: user?.merchantId, categoryName: name?.value, color };
       let api = selected ? 'Inventory/UpdateCategory' : 'Inventory/AddCategory';
       const response = await dispatch(sendRequest(user, token, api, data));
       console.log(response);
@@ -54,7 +54,7 @@ export function Add(props){
       }
       setLoading(false);
     } else {
-      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       if(color === null) setError(t('category.color') + '' + t('error.not_empty'))
     }
   }

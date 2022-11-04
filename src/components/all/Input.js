@@ -25,6 +25,10 @@ export function Input(props){
     }
   }
 
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error });
+  }
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
@@ -38,6 +42,7 @@ export function Input(props){
           disabled={disabled}
           maskChar='-'
           onKeyDown={onKeyDown}
+          onBlur={onBlur}
           placeholder={placeholder}
           value={value?.value}
           onChange={onChange} />
@@ -56,6 +61,10 @@ export function DescrInput(props){
     setEdited && setEdited(true);
   }
 
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error });
+  }
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
@@ -68,6 +77,7 @@ export function DescrInput(props){
           disabled={disabled}
           placeholder={placeholder}
           value={value?.value}
+          onBlur={onBlur}
           onChange={onChange} />
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}

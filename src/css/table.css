@@ -55,8 +55,8 @@
   border-top: 1px solid var(--line-color);
 }
 
-.table_back th:not(:last-child) {
-  padding-right: 5px;
+.table_back th:not(:last-child), .table_back tr > td:not(:last-child) {
+  padding-right: 10px;
 }
 
 .table_sort {

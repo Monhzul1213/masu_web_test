@@ -109,7 +109,7 @@
 .card_container {
   box-shadow: 0 2px 5px rgba(0,0,0,.15);
   background-color: var(--root-color);
-  width: var(--empty-width);
+  min-width: var(--empty-width);
   padding: var(--page-padding);
   border-radius: var(--radius);
   display: flex;

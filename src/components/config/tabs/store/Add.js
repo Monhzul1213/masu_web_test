@@ -33,9 +33,9 @@ export function Add(props){
   const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
-    if(name?.value?.trim()){
+    if(name?.value){
       setLoading(true);
-      let data = { name: name?.value?.trim(), address: address?.value?.trim(), phone: phone?.value?.trim(), descr: descr?.value?.trim() };
+      let data = { name: name?.value, address: address?.value, phone: phone?.value, descr: descr?.value };
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       console.log(data);
@@ -49,7 +49,7 @@ export function Add(props){
       }
       setLoading(false);
     } else {
-      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
     }
   }
 

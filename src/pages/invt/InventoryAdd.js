@@ -73,7 +73,7 @@ export function InventoryAdd(){
 
   const onClickSave = async () => {
     /*
-    if(name?.value?.trim()){
+    if(name?.value){
       let newSites = [];
       sites?.forEach(s => {
         if(s?.checked){
@@ -86,9 +86,9 @@ export function InventoryAdd(){
         }
       });
       let data = {
-        name: name?.value?.trim(), category: category?.value, descr: descr?.value?.trim(), isEach: isEach?.value,
+        name: name?.value, category: category?.value, descr: descr?.value, isEach: isEach?.value,
         price: parseFloat(price?.value ? price?.value : 0), cost: parseFloat(cost?.value ? cost?.value : 0),
-        sku: sku?.value?.trim(), barcode: barcode?.value?.trim(), isKit, isTrack,
+        sku: sku?.value, barcode: barcode?.value, isKit, isTrack,
         image, sites: newSites
       };
       console.log(data);
@@ -104,7 +104,7 @@ export function InventoryAdd(){
       }
       setLoading(false);
     } else {
-      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
     }
     */
   }

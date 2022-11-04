@@ -44,9 +44,9 @@ export function Add(props){
   const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
-    if(name?.value?.trim() && site?.value && (type?.value || type?.value === 0)){
+    if(name?.value && site?.value && (type?.value || type?.value === 0)){
       setLoading(true);
-      let data1 = { descr: name?.value?.trim(), systemType: type?.value, currentDate: moment().format('yyyy.MM.DD') };
+      let data1 = { descr: name?.value, systemType: type?.value, currentDate: moment().format('yyyy.MM.DD') };
       let data2 = selected 
         ? { siteId: site?.value, terminalId: selected?.terminalId, lastUpdate: moment().format('yyyy.MM.DD') }
         : { siteID: site?.value };
@@ -62,7 +62,7 @@ export function Add(props){
       }
       setLoading(false);
     } else {
-      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       if(!site?.value) setSite({ value: null, error: t('error.not_empty') });
       if(!type?.value && type?.value !== 0) setType({ value: null, error: t('error.not_empty') });
     }
