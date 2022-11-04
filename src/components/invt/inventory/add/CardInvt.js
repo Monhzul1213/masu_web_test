@@ -48,6 +48,7 @@ export function CardInvt(props){
     setTotal(newTotal);
     setCost({ value: newTotal });
     setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
+    setSearch({ value: null });
   }
 
   const onFocus = async () => {
@@ -94,6 +95,7 @@ export function CardInvt(props){
     setTotal(total);
     setCost({ value: total });
     setEdited && setEdited(true);
+    setSearch({ value: null });
   }
 
   const filterOption = (input, option) => {
@@ -103,6 +105,7 @@ export function CardInvt(props){
   const onChangeKit = value => {
     setIsKit(value);
     setCost({ value: value ? total : 0 });
+    setSearch({ value: null });
   }
 
   const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack') };

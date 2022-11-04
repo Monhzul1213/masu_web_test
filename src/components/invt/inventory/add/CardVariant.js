@@ -45,17 +45,20 @@ export function CardVariant(props){
 
   const onClickDelete = row => {
     setData(data?.filter(item => item?.VariantName !== row?.original?.VariantName));
+    setSearch({ value: search?.value });
   }
 
   const handleEnter = () => {
     let VariantName = search?.value?.trim();
-    let exists = data?.findIndex(d => d.VariantName?.toLowerCase() === VariantName?.toLowerCase());
-    if(exists === -1){
-      let item = { VariantName, Price: price?.value ?? 0, Cost: cost?.value ?? 0, Sku: '', Barcode: '' };//InvtID, MerchantID
-      setData(old => [...old, item]);
-      setSearch({ value: '' });
-      setEdited && setEdited(true);
-    } else setSearch({ value: search?.value?.trim(), error: t('inventory.variant_error') });
+    if(VariantName){
+      let exists = data?.findIndex(d => d.VariantName?.toLowerCase() === VariantName?.toLowerCase());
+      if(exists === -1){
+        let item = { VariantName, Price: price?.value ?? 0, Cost: cost?.value ?? 0, Sku: '', Barcode: '' };//InvtID, MerchantID
+        setData(old => [...old, item]);
+        setSearch({ value: '' });
+        setEdited && setEdited(true);
+      } else setSearch({ value: search?.value?.trim(), error: t('inventory.variant_error') });
+    }
   }
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
