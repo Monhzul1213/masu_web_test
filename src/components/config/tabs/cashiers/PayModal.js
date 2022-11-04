@@ -17,12 +17,12 @@ export function PayModal(props){
   const onClickSave = e => {
     e?.preventDefault();
     setError(null);
-    if(type?.value && name?.value?.trim() && shop?.value?.length){
+    if(type?.value && name?.value && shop?.value?.length){
       // setLoading(true);
       setTimeout(() => setLoading(false), 1200);
     } else {
       if(!type?.value) setType({ value: null, error: t('error.not_empty') });
-      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       if(!shop?.value?.length) setShop({ value: [], error: t('error.not_empty') });
     }
   }

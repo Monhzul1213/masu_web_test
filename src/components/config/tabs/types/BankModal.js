@@ -17,13 +17,13 @@ export function BankModal(props){
   const onClickSave = e => {
     e?.preventDefault();
     setError(null);
-    if(card?.value?.trim() && name?.value?.trim() && date?.value?.trim() && code?.value?.trim()){
+    if(card?.value && name?.value && date?.value && code?.value){
       setTimeout(() => setLoading(false), 1200);
     } else {
-      if(!card?.value?.trim()) setCard({ value: '', error: t('error.not_empty') });
-      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
-      if(!date?.value?.trim()) setDate({ value: '', error: t('error.not_empty') });
-      if(!code?.value?.trim()) setCode({ value: '', error: t('error.not_empty') });
+      if(!card?.value) setCard({ value: '', error: t('error.not_empty') });
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      if(!date?.value) setDate({ value: '', error: t('error.not_empty') });
+      if(!code?.value) setCode({ value: '', error: t('error.not_empty') });
     }
   }
 

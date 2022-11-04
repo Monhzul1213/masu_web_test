@@ -23,6 +23,10 @@ export function MaskedInput(props){
     }
   }
 
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error });
+  }
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
 
   return (
@@ -34,6 +38,7 @@ export function MaskedInput(props){
           mask={mask}
           maskChar='-'
           onKeyDown={onKeyDown}
+          onBlur={onBlur}
           placeholder={placeholder}
           value={value?.value}
           onChange={onChange} />
