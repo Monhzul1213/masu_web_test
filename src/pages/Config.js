@@ -30,7 +30,7 @@ export function Config(){
   const cardProps = { selectedKeys, setSelectedKeys };
   
   return (
-    <div className='s_container'>
+    <div className='s_container_c'>
       {visible && <AppModal {...modalProps} />}
       <Card {...cardProps} />
       <div className='c_gap' />
