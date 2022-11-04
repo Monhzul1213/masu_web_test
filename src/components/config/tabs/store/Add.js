@@ -35,7 +35,7 @@ export function Add(props){
     setError(null);
     if(name?.value){
       setLoading(true);
-      let data = { name: name?.value, address: address?.value, phone: phone?.value, descr: descr?.value };
+      let data = { name: name?.value, address: address?.value, phone: phone?.value, descr: descr?.value?.trim() };
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       console.log(data);

@@ -10,6 +10,10 @@ export function FloatingInput(props){
     setError && setError(null);
   }
 
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error });
+  }
+
   const onKeyDown = e => {
     if(e?.key?.toLowerCase() === "enter"){
       if(handleEnter) handleEnter(e);
@@ -26,7 +30,7 @@ export function FloatingInput(props){
 
   const style = value?.error ? { borderColor: '#e41051' } : {};
   const style1 = value?.error ? { color: '#e41051' } : {};
-  const inputProps = { className: 'f_input_back', value: value?.value, onChange, onKeyDown, style };
+  const inputProps = { className: 'f_input_back', value: value?.value, onChange, onKeyDown, style, onBlur };
 
   return (
     <div className='f_input_container'>
@@ -65,9 +69,13 @@ export function FloatingPassword(props){
     }
   }
 
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error });
+  }
+
   const style = value?.error ? { borderColor: '#e41051' } : {};
   const style1 = value?.error ? { color: '#e41051' } : {};
-  const inputProps = { className: 'f_input_back', value: value?.value, type: visible ? 'text' : 'password', onChange, onKeyDown, style };
+  const inputProps = { className: 'f_input_back', value: value?.value, type: visible ? 'text' : 'password', onChange, onKeyDown, style, onBlur };
 
   return (
     <div className='f_input_container'>

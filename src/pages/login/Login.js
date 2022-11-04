@@ -33,9 +33,9 @@ export function Login(){
   const handleSubmit = async e => {
     e?.preventDefault();
     setError(null);
-    if(email?.value?.trim() && password?.value?.trim()){
+    if(email?.value && password?.value?.trim()){
       setLoading(true);
-      const response = await dispatch(apiLogin(email?.value?.trim(), password?.value?.trim()));
+      const response = await dispatch(apiLogin(email?.value, password?.value?.trim()));
       if(response?.error) setError(response?.error);
       else {
         dispatch(setLogin({ toRemember: checked }));
@@ -45,7 +45,7 @@ export function Login(){
       }
       setLoading(false);
     } else {
-      if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
+      if(!email?.value) setEmail({ value: '', error: t('error.not_empty') });
       if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
     }
   }

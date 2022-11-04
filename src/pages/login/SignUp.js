@@ -26,20 +26,20 @@ export function SignUp(){
 
   const checkValid = () => {
     let passwordLength = 8, businessLength = 6, addressLength = 30;
-    let isValid = email?.value?.trim() && password?.value?.trim() && business?.value?.trim() && address?.value?.trim();
-    let isEmailValid = validateEmail(email?.value?.trim());
-    let isPasswordValid = password?.value?.trim()?.length >= passwordLength;
-    let isBusinessValid = business?.value?.trim()?.length >= businessLength;
+    let isValid = email?.value && password?.value && business?.value && address?.value?.trim();
+    let isEmailValid = validateEmail(email?.value);
+    let isPasswordValid = password?.value?.length >= passwordLength;
+    let isBusinessValid = business?.value?.length >= businessLength;
     let isAddressValid = address?.value?.trim()?.length >= addressLength;
     if(isValid && isEmailValid && isPasswordValid && isBusinessValid && isAddressValid){
       return true;
     } else {
-      if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
-      else if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
-      if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
-      else if(!isPasswordValid) setPassword({ value: password?.value?.trim(), error: ' ' + passwordLength + t('error.longer_than') });
-      if(!business?.value?.trim()) setBusiness({ value: '', error: t('error.not_empty') });
-      else if(!isBusinessValid) setBusiness({ value: business?.value?.trim(), error: ' ' + businessLength + t('error.longer_than') });
+      if(!email?.value) setEmail({ value: '', error: t('error.not_empty') });
+      else if(!isEmailValid) setEmail({ value: email?.value, error: t('error.be_right') });
+      if(!password?.value) setPassword({ value: '', error: t('error.not_empty') });
+      else if(!isPasswordValid) setPassword({ value: password?.value, error: ' ' + passwordLength + t('error.longer_than') });
+      if(!business?.value) setBusiness({ value: '', error: t('error.not_empty') });
+      else if(!isBusinessValid) setBusiness({ value: business?.value, error: ' ' + businessLength + t('error.longer_than') });
       if(!address?.value?.trim()) setAddress({ value: '', error: t('error.not_empty') });
       else if(!isAddressValid) setAddress({ value: address?.value?.trim(), error: ' ' + addressLength + t('error.longer_than') });
       return false;
@@ -65,7 +65,7 @@ export function SignUp(){
     setError(null);
     if(checkValid()){
       setLoading(true);
-      let data = { mail: email?.value?.trim(), password: password?.value?.trim(), descr: business?.value?.trim(), address: address?.value?.trim() };
+      let data = { mail: email?.value, password: password?.value, descr: business?.value, address: address?.value?.trim() };
       const response = await dispatch(apiRegister(data));
       console.log(response);
       if(response?.error) setError(response?.error);
