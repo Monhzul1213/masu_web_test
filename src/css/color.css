@@ -38,4 +38,5 @@
   --radius: 5px;
   --list-h-height: 56px;
   --pg-height: 32px;
+  --safe-width: calc(100vw - var(--side-width) - var(--page-padding) * 2)
 }

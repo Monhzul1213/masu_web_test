@@ -14,7 +14,7 @@
   box-shadow: 0 2px 5px rgba(0,0,0,.15);
   background-color: var(--root-color);
   width: var(--empty-width);
-  max-width: calc(100vw - var(--side-width) - var(--page-padding) * 2);
+  max-width: var(--safe-width);
   padding: var(--empty-padding);
   border-radius: var(--radius);
   display: flex;
@@ -115,6 +115,17 @@
   border-radius: var(--radius);
   display: flex;
   flex-flow: column;
+}
+
+.card_container_small {
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  width: var(--empty-width);
+  padding: var(--page-padding);
+  border-radius: var(--radius);
+  display: flex;
+  flex-flow: column;
+  max-width: var(--safe-width);
 }
 
 .cat_item {
