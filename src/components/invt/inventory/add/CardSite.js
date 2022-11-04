@@ -17,7 +17,7 @@ export function CardSite(props){
       {
         id: 'check', noSort: true, isBtn: true, customStyle: { width: 75 },
         Header: <div style={style}>{t('inventory.t_choose')}</div>,
-        Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
+        Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       { Header: <div style={{flex: 1}}>{t('inventory.t_site')}</div>, accessor: 'name', disabled: true },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_price')}</div>, accessor: 'price', noSort: true, isMoney: true,
@@ -63,8 +63,8 @@ export function CardSite(props){
  
   const defaultColumn = { Cell: EditableCell };
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
-  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData },
-    useSortBy, usePagination, useRowSelect);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+    updateMyData, onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
 
