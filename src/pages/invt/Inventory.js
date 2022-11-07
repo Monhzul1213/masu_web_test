@@ -12,6 +12,7 @@ export function Inventory(){
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
+  const [filtering, setFiltering] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -51,11 +52,11 @@ export function Inventory(){
   return (
     <div className='s_container_i'>
       <Overlay loading={loading}>
-        {data?.length ?
+        {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <div className='i_list_cont'>
             <Header {...headerProps} />
           </div>
-        : <Empty {...emptyProps} />}
+        }
       </Overlay>
     </div>
   )
