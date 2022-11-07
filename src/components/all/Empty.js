@@ -22,15 +22,15 @@ export function Empty(props){
 }
 
 export function Empty1(props){
-  const { icon, type, noDescr } = props;
+  const { icon, noDescr } = props;
   const { t } = useTranslation();
 
   return (
-    <div className='empty_back'>
+    <div className='empty_back1'>
       <div className='empty_icon_back'>
         <DynamicMDIcon className='empty_icon' name={icon} />
       </div>
-      <p className='empty_descr'>{noDescr ? '' : t(type + '.descr')}</p>
+      <p className='empty_descr'>{noDescr ? '' : t('page.no_filter')}</p>
     </div>
   )
 }

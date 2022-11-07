@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { ButtonRowAdd, Confirm, Empty, Error1, Overlay, PlainSelect } from '../../components/all';
+import { ButtonRowAdd, Confirm, Empty, Empty1, Error1, Overlay, PlainSelect } from '../../components/all';
 import { List } from '../../components/invt/modifier';
 
 export function Modifier(){
@@ -23,11 +23,12 @@ export function Modifier(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    setData([
-      { modiferName: 'Decorated', optionName: 'Heart, Star' },
-      { modiferName: 'Packed', optionName: 'Paper, Box' },
-      { modiferName: 'Sealed', optionName: 'Waterproof' }
-    ]);
+    // setFiltering(true);
+    // setData([
+    //   { modiferName: 'Decorated', optionName: 'Heart, Star' },
+    //   { modiferName: 'Packed', optionName: 'Paper, Box' },
+    //   { modiferName: 'Sealed', optionName: 'Waterproof' }
+    // ]);
     return () => {};
   }, []);
 
@@ -88,7 +89,7 @@ export function Modifier(){
               <ButtonRowAdd {...addProps} />
               <PlainSelect {...siteProps} />
             </div>
-            <List {...listProps} /> 
+            {!data?.length ? <Empty1 {...emptyProps} /> :<List {...listProps} />}
           </div>
         }
       </Overlay>

@@ -22,6 +22,17 @@
   align-items: center;
 }
 
+.empty_back1 {
+  background-color: var(--root-color);
+  width: var(--empty-width);
+  max-width: var(--safe-width);
+  padding: 30px 0;
+  border-radius: var(--radius);
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
 .empty_icon_back {
   width: var(--empty-icon);
   height: var(--empty-icon);
