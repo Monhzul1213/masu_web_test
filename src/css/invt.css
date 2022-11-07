@@ -366,6 +366,24 @@
   width: 32px;
   color: var(--text2-color);
   padding: 5px;
+  margin-left: 5px;
+}
+
+.ih_search:hover {
+  cursor: pointer;
+  color: var(--config-color);
+}
+
+.ih_search_back {
+  position: absolute;
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  right: var(--page-padding);
+  height: 40px;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  padding: 0 var(--page-padding);
 }
 
 .kit_search {
@@ -477,4 +495,8 @@
 
 #mo_ac_btns {
   max-width: 600px;
+}
+
+.ih_input_icon {
+  
 }

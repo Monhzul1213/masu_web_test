@@ -32,7 +32,7 @@ export function Inventory(){
   }
 
   const onClickAdd = () => {
-    navigate('invt_add');
+    // navigate('invt_add');
   }
 
   const onClickDelete = () => {
