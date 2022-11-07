@@ -6,7 +6,7 @@ import { DynamicBSIcon, Input, PaginationTable, Table } from '../../../all';
 import { EditableCell } from '../../inventory/add/EditableCell';
 
 export function CardOption(props){
-  const { name, setName, setError, data, setData, setDItems } = props;
+  const { name, setName, setError, data, setData, setDItems, setEdited } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [disabled, setDisabled] = useState(false);
@@ -16,7 +16,7 @@ export function CardOption(props){
     setColumns([
       {
         Header: t('page.name'), accessor: 'optionName',
-        customStyle: { width: 550, paddingRight: 18 }, width: 530
+        customStyle: { width: 430, paddingRight: 18 }, width: 410
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'price', isMoney: true,// autoFocus: true,
@@ -42,6 +42,7 @@ export function CardOption(props){
       if(!value && columnId === 'optionName') hasError = true;
     }
     setDisabled(hasError);
+    setEdited && setEdited(true);
     setData(old => old.map((row, index) => {
       if(index === rowIndex){
         return { ...old[rowIndex], [columnId]: value, error: hasError ? columnId : null };
@@ -68,6 +69,7 @@ export function CardOption(props){
       setData(data?.filter((item, index) => row?.index !== index))
     }
     setSearch({ value: search?.value });
+    setEdited && setEdited(true);
   }
 
   const handleEnter = e => {
@@ -79,11 +81,12 @@ export function CardOption(props){
         let item = { optionName, price: 0, rowStatus: 'I', modifireItemID: -1 };
         setData(old => [...old, item]);
         setSearch({ value: '' });
+        setEdited && setEdited(true);
       } else setSearch({ value: search?.value?.trim(), error: t('modifier.option_error') });
     }
   }
 
-  const nameProps = { value: name, setValue: setName, label: t('modifier.name'), placeholder: t('modifier.name'), setError, inRow: true };
+  const nameProps = { value: name, setValue: setName, label: t('modifier.name'), placeholder: t('modifier.name'), setError, inRow: true, setEdited };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 190px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false,
@@ -93,7 +96,7 @@ export function CardOption(props){
   const addProps = { value: search, setValue: setSearch, placeholder: t('modifier.new'), handleEnter, inRow: true };
 
   return (
-    <div className='ac_back'>
+    <div className='ac_back' id='mo_ac_back'>
       <Input {...nameProps} />
       <div style={{padding: 7}} />
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>

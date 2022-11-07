@@ -470,3 +470,11 @@
   width: 120px;
   margin: 20px 0 15px 0;
 }
+
+#mo_ac_back {
+  width: 600px;
+}
+
+#mo_ac_btns {
+  max-width: 600px;
+}

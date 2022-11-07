@@ -79,7 +79,7 @@
 
 .ed_input {
   border: none;
-  border-bottom: solid 2px var(--line-color);
+  border-bottom: solid 1px #d2d2d2;
 }
 
 .ed_input:focus {
