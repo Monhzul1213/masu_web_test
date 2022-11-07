@@ -31,7 +31,8 @@ export function CardOption(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
-  const updateMyData = (rowIndex, columnId, value) => {
+  const updateMyData = (rowIndex, columnId, value, e) => {
+    e?.preventDefault();
     let hasError = false, errorIndex = -1;
     if(columnId === 'optionName'){
       errorIndex = data?.findIndex((item, index) =>

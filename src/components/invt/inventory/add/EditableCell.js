@@ -10,8 +10,8 @@ export const EditableCell = ({ value: initialValue, row, column: { id, isText, i
     setValue(e.target.value)
   }
 
-  const onBlur = () => {
-    updateMyData(row?.index, id, value)
+  const onBlur = e => {
+    updateMyData(row?.index, id, value, e)
   }
 
   const onValueChange = e => {
@@ -20,7 +20,7 @@ export const EditableCell = ({ value: initialValue, row, column: { id, isText, i
 
   const onKeyDown = e => {
     if(e?.key?.toLowerCase() === "enter")
-      updateMyData(row?.index, id, value);
+      updateMyData(row?.index, id, value, e);
   }
 
   useEffect(() => {

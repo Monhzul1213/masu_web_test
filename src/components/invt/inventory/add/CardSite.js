@@ -50,7 +50,8 @@ export function CardSite(props){
     }));
   }
 
-  const updateMyData = (rowIndex, columnId, value) => {
+  const updateMyData = (rowIndex, columnId, value, e) => {
+    e?.preventDefault();
     setData(old => old.map((row, index) => {
       if(index === rowIndex){
         if(columnId === 'price') return { ...old[rowIndex], [columnId]: value, changed: true };

@@ -80,7 +80,8 @@ export function CardInvt(props){
     );
   }
 
-  const updateMyData = (rowIndex, columnId, value) => {
+  const updateMyData = (rowIndex, columnId, value, e) => {
+    e?.preventDefault();
     let total = 0;
     setData(old => old.map((row, index) => {
       if(index === rowIndex){
