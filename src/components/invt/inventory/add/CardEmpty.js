@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { DynamicBSIcon, DynamicMDIcon, IconButton } from '../../../all';
 
 export function CardEmpty(props){
-  const { title, icon, route, btn } = props;
+  const { title, icon, route, btn, id } = props;
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const onClickAdd = () => navigate(route);
 
   return (
-    <div className='ac_back'>
+    <div className='ac_back' id={id}>
       <p className='ac_title'>{t(title)}</p>
       <div className='ac_empty_back'>
         <DynamicMDIcon className='ac_empty_icon' name={icon} />
