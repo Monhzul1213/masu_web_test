@@ -70,7 +70,7 @@ export function Header(props){
     label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'site' };
   const categoryProps = { value: category, setValue: onChangeCategory, data: categories, s_value: 'categoryId', s_descr: 'categoryName',
     className: 'ih_select', label: t('inventory.category'), onFocus: onFocusCategory, loading: loading === 'category' };
-  const style = { opacity: showSearch ? "0" : "1", transition: "all .2s ease-in", };
+  const style = { width: showSearch ? 0 : null, overflow: 'hidden', transition: 'width 0.5s ease-in' };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch };
 

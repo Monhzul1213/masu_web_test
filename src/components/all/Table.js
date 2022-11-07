@@ -13,14 +13,17 @@ export function Table(props){
       <thead>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th className='table_header_text' {...column.getHeaderProps(column.getSortByToggleProps())}>
-                <div className='table_header_cell'>
-                  <span style={{flex: 1}}>{column.render('Header')}</span>
-                  {!column?.noSort && <Sort data={column} />}
-                </div>
-              </th>
-            ))}
+            {headerGroup.headers.map(column => {
+              let style = column?.customStyle ?? { };
+              return (
+                <th className='table_header_text' {...column.getHeaderProps(column.getSortByToggleProps())} style={style}>
+                  <div className='table_header_cell'>
+                    <span style={{flex: 1}}>{column.render('Header')}</span>
+                    {!column?.noSort && <Sort data={column} />}
+                  </div>
+                </th>
+              )
+            })}
           </tr>
         ))}
       </thead>
