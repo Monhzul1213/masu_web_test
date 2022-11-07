@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { ButtonRowAdd, Empty, Error1, Overlay, PlainSelect } from '../../components/all';
+import { ButtonRowAdd, Confirm, Empty, Error1, Overlay, PlainSelect } from '../../components/all';
 import { List } from '../../components/invt/modifier';
 
 export function Modifier(){
@@ -17,12 +17,17 @@ export function Modifier(){
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [filtering, setFiltering] = useState(false);
+  const [open, setOpen] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // setData([{ modiferName: 'Decorated' }, { modiferName: 'Star' }, { modiferName: 'Heart' }])
+    setData([
+      { modiferName: 'Decorated', optionName: 'Heart, Star' },
+      { modiferName: 'Packed', optionName: 'Paper, Box' },
+      { modiferName: 'Sealed', optionName: 'Waterproof' }
+    ]);
     return () => {};
   }, []);
 
@@ -51,18 +56,30 @@ export function Modifier(){
 
   const onClickAdd = () => navigate('modi_add');
 
-  const onClickDelete = () => {
+  const onClickDelete = () => setOpen(true);
 
-  }
+  const confirm = sure => {
+    setOpen(false);
+    if(sure){
+      let toDelete = [];
+      data?.forEach(item => {
+        if(item.checked){
+          toDelete?.push({...item, rowStatus: 'D'});
+        }
+      });
+    }
+  };
 
   const siteProps = { value: site, setValue: onSelectSite, data: sites, s_value: 'siteId', s_descr: 'name', className: 'r_select',
     onFocus: onFocusSite, loading: loading === 'sites' };
   const listProps = { data, setData, setShow };
   const emptyProps = { icon: 'MdOutlineFactCheck', type: 'modifier', onClickAdd };
   const addProps = { type: 'modifier', onClickAdd, show, onClickDelete };
+  const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
     <div className='s_container_mo'>
+      {open && <Confirm {...confirmProps} />}
       <Overlay loading={loading === 'loading'}>
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
@@ -74,7 +91,6 @@ export function Modifier(){
             <List {...listProps} /> 
           </div>
         }
-        {/* {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />} */}
       </Overlay>
     </div>
   )

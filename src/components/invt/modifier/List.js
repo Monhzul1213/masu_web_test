@@ -3,6 +3,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
 import { Check, PaginationTable, Table } from '../../all';
+import { SelectItem } from '../inventory/add/SelectItem';
 
 export function List(props){
   const { data, setData, onClickAdd, setShow } = props;
@@ -19,7 +20,10 @@ export function List(props){
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('page.name'), accessor: 'modiferName' },
+      {
+        Header: t('page.name'), accessor: 'modiferName',
+        Cell: ({ row }) => (<SelectItem item={{name: row?.original?.modiferName, sku: row?.original?.optionName}} label='' />)
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
