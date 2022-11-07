@@ -77,6 +77,13 @@ code {
   max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
 }
 
+.s_container_mo {
+  margin: var(--page-padding) var(--page-padding) var(--page-padding) calc(var(--side-width) + var(--page-padding));
+  overflow: scroll;
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
+  display: flex;
+}
+
 .s_container_c {
   margin: var(--page-padding) var(--page-padding) var(--page-padding) calc(var(--side-width) + var(--page-padding));
   overflow: scroll;

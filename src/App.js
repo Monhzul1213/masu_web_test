@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Header, Menu } from './components/menu';
-import { Loading, Login, SignUp, Confirm, Home, Config, Category, Inventory, InventoryAdd } from './pages';
+import { Loading, Login, SignUp, Confirm, Home, Config, Category, Inventory, InventoryAdd, Modifier } from './pages';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -69,6 +69,7 @@ export function App(){
                 <Route path='/inventory/invt_category' element={<Category />} />
                 <Route path='/inventory/invt_list' element={<Inventory />} />
                 <Route path='/inventory/invt_list/invt_add' element={<InventoryAdd />} />
+                <Route path='/inventory/invt_modi' element={<Modifier />} />
               </Routes>
             </Layout>
           </Layout>
