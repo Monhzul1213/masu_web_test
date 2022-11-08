@@ -23,27 +23,61 @@ export function ModifierAdd(){
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
   const [search, setSearch] = useState({ value: '' });
+  const [checked, setChecked] = useState(true);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getSites();
+    getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getData = async () => {
+    let modifireID = searchParams?.get('modifireID');
+    let response = await getSites();
+    if(response && (modifireID || modifireID === 0)) await getModifier(modifireID, response);
+  }
+
+  const getModifier = async (modifireid, siteRes) => {
+    setError(null);
+    setLoading(true);
+    let response = await dispatch(getList(user, token, 'Inventory/GetModifer/ModifireID', null, { modifireid }));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      setItem(response?.data);
+      setName({ value: response?.data?.modifer?.modiferName ?? '' });
+      response?.data?.modiferItems?.forEach(item => item.rowStatus = 'U');
+      setItems(response?.data?.modiferItems);
+      siteRes?.forEach(item => {
+        let exists = response?.data?.modiferSites?.filter(si => si.siteId === item.siteId)[0];
+        item.checked = exists?.useModifier === 'Y';
+        if(exists) item.rowStatus = 'U';
+        else setChecked(false);
+      });
+      setSites(siteRes);
+    }
+  }
 
   const getSites = async () => {
     setError(null);
     setLoading(false);
     const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    if(response?.error) setError(response?.error);
-    else {
-      response?.data?.map(item => item.checked = true);
-      setSites(response?.data);
-    }
     setLoading(false);
+    if(response?.error){
+      setError(response?.error);
+      return false;
+    } else {
+      response?.data?.forEach(item => {
+        item.checked = true;
+        item.rowStatus = 'I';
+      });
+      setSites(response?.data);
+      return response?.data;
+    }
   }
 
   const onClickCancel = () => {
@@ -88,7 +122,7 @@ export function ModifierAdd(){
   }
   
   const optionProps = { name, setName, setError, data: items, setData: setItems, setDItems, setEdited, disabled, setDisabled, search, setSearch };
-  const siteProps = { data: sites, setData: setSites, setEdited };
+  const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'mo_ac_back' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true : false, id: 'mo_ac_btns' };
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
