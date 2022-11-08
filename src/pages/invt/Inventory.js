@@ -18,7 +18,7 @@ export function Inventory(){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // getData();
+    getData();
     return () => {};
   }, []);
 
@@ -53,7 +53,7 @@ export function Inventory(){
     <div className='s_container_i'>
       <Overlay loading={loading}>
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
-          <div className='i_list_cont'>
+          <div className='i_list_cont' id='invt_list'>
             <Header {...headerProps} />
           </div>
         }

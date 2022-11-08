@@ -60,7 +60,7 @@ export function Header(props){
   }
 
   const handleEnter = value => {
-
+    console.log(value);
   }
 
   const onClickSearch = () => setShowSearch(!showSearch);
