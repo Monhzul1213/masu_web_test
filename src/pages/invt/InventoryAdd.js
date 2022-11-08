@@ -77,6 +77,54 @@ export function InventoryAdd(){
   }
 
   const onClickSave = async () => {
+    /**
+     * msInventory.InvtID - Барааын код GetNewID() үүсгэнэ
+msInventory.MerchantID - @MerchantID
+msInventory.Name - Барааны нэр - Дэлгэцээс бөглөнө
+msInventory.CategoryID  - Категори - Дэлгэцээс бөглөнө
+msInventory.Descr - Тайлбар - Дэлгэцээс бөглөнө
+msInventory.IsEach - Ширхэг эсэх - Дэлгэцээс бөглөнө
+msInventory.Price - Үнэ - Дэлгэцээс бөглөнө
+msInventory.Cost - Өртөг - Дэлгэцээс бөглөнө
+msInventory.SKU - SKU - Дэлгэцээс бөглөнө
+msInventory.BarCode - BarCode - Дэлгэцээс бөглөнө
+msInventory.IsKit - Багцлах эсэх - Дэлгэцээс бөглөнө
+msInventory.IsTrackStock - Нөөц тооцох эсэх - Дэлгэцээс бөглөнө
+msInventory.Image - Зураг -  Дэлгэцээс сонгоно /Барааны зургийг авах Service гаргах учир бодолцоорой!/
+Барааны хувилбар/msInventoryVariant/
+if(msInventory.IsKit <>'Y')
+{
+msInventoryVariant.VariantID - Хувилбар дугаар GetNewID() үүсгэнэ
+msInventoryVariant.InvtID - Барааын код - msInventory.InvtID 
+msInventoryVariant.MerchantID- @MerchantID
+msInventoryVariant.VariantName  - Хувилбар барааны нэр - Дэлгэцээс бөглөнө
+msInventoryVariant.Price - Хувилбар барааны үнэ - Дэлгэцээс бөглөнө
+msInventoryVariant.Cost - Хувилбар барааны өртөг - Дэлгэцээс бөглөнө
+msInventoryVariant.SKU - Хувилбар барааны өртөг - Дэлгэцээс бөглөнө
+msInventoryVariant.BarCode - Хувилбар барааны баркод - Дэлгэцээс бөглөнө
+}
+Барааны бүрдэц /msInvKitItem/
+if(msInventory.IsKit = 'Y')
+{
+msInvKitItem.KitID - Барааын код - msInventory.InvtID
+msInvKitItem.MerchantID - @MerchantID
+msInvKitItem.InvtID - Бүрдэц бараа - Дэлгэцээс бөглөнө
+msInvKitItem.Qty -  Бүрдэц тоо - Дэлгэцээс бөглөнө
+msInvKitItem.Cost -  Өртөг - Дэлгэцээс бөглөнө
+}
+Барааны нэмэлт төлбөр /msInventoryMofifier/
+msInventoryMofifier.InvtID - Барааын код - msInventory.InvtID
+msInventoryMofifier.MerchantID - @MerchantID
+msInventoryMofifier.ModifireID - msModifer.ModifireID - Дэлгэцээс сонгоно
+msInventoryMofifier.UseModifier - Барааын нэмэлт ашиглах эсэх -  Дэлгэцээс сонгоно
+ 
+Барааны үнэ/psSalesPrice/
+psSalesPrice.MerchantID - @MerchantID
+psSalesPrice.SiteID - Салбар - msSite.SiteID - Дэлгэцээс сонгоно
+psSalesPrice.InvtID - Барааны код - msInventory.InvtID
+psSalesPrice.Price - Үнэ - Дэлгэцээс бөглөнө
+psSalesPrice.Status - Төлөв - Дэлгэцээс бөглөнө
+     */
     /*
     if(name?.value){
       let newSites = [];

@@ -343,6 +343,7 @@
   display: flex;
   flex-flow: row;
   align-items: flex-end;
+  justify-content: flex-end;
 }
 
 .p_select_lbl {
@@ -393,6 +394,7 @@
   display: flex;
   flex-flow: row;
   justify-content: center;
+  border-radius: var(--radius);
 }
 
 .kit_search {
