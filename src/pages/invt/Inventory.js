@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { Empty, Overlay } from '../../components/all';
-import { Header } from '../../components/invt/inventory/list';
+import { Empty, Empty1, Overlay } from '../../components/all';
+import { Header, List } from '../../components/invt/inventory/list';
 
 export function Inventory(){
   const [loading, setLoading] = useState(false);
@@ -46,8 +46,8 @@ export function Inventory(){
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   // const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
-  // const listProps = { setError };//onClickAdd, onClickDelete, 
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };
+  const listProps = { data };
 
   return (
     <div className='s_container_i'>
@@ -55,6 +55,7 @@ export function Inventory(){
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <div className='i_list_cont' id='invt_list'>
             <Header {...headerProps} />
+            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
           </div>
         }
       </Overlay>

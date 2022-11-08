@@ -24,8 +24,8 @@
 
 .empty_back1 {
   background-color: var(--root-color);
-  width: var(--empty-width);
-  max-width: var(--safe-width);
+  /* width: var(--empty-width); */
+  /* max-width: var(--safe-width); */
   padding: 30px 0;
   border-radius: var(--radius);
   display: flex;

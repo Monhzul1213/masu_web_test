@@ -1,8 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useTranslation } from 'react-i18next';
 
-export function List(){
+import { Check, PaginationTable, Table } from '../../../all';
+import { SelectItem } from '../add/SelectItem';
+
+export function List(props){
+  const { data, onClickAdd } = props;
+  const [columns, setColumns] = useState([]);
+  const [checked, setChecked] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  useEffect(() => {
+    const customStyle = { width: 40 };
+    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
+    setColumns([
+      {
+        id: 'check', noSort: true, isBtn: true, customStyle,
+        Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
+        Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
+      },
+      {
+        Header: t('page.name'), accessor: 'modiferName',
+        Cell: ({ row }) => (<SelectItem item={{name: row?.original?.modiferName, sku: row?.original?.optionName}} label='' />)
+      },
+    ]);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n?.language]);
+
+
+  const onClickCheckAll = e => {
+
+  }
+
+  const onClickCheck = e => {
+
+  }
+  
+  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+    onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
+  const tableProps = { tableInstance, onRowClick: onClickAdd };
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
+
   return (
-    <div className='i_list_cont'>
+    <div>
+      <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>
+        <Table {...tableProps} />
+      </div>
+      <PaginationTable {...tableProps} />
     </div>
   )
 }

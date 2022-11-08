@@ -18,17 +18,13 @@ export function Modifier(){
   const [show, setShow] = useState(false);
   const [filtering, setFiltering] = useState(false);
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // setFiltering(true);
-    // setData([
-    //   { modiferName: 'Decorated', optionName: 'Heart, Star' },
-    //   { modiferName: 'Packed', optionName: 'Paper, Box' },
-    //   { modiferName: 'Sealed', optionName: 'Waterproof' }
-    // ]);
+    getData(-1);
     return () => {};
   }, []);
 
@@ -37,8 +33,24 @@ export function Modifier(){
     getData(value);
   }
 
-  const getData = async site => {
-
+  const getData = async siteid => {
+    setError(null);
+    setLoading('loading');
+    setFiltering(siteid !== -1 ? true : false);
+    let api = siteid === -1 ? 'Inventory/GetModifer' : 'Inventory/GetModifer/SiteID';
+    let headers = siteid === -1 ? null : { siteid };
+    let response = await dispatch(getList(user, token, api, null, headers));
+    if(response?.error) setError(response?.error);
+    else {
+      response?.data?.forEach(item => {
+        let options = item?.modiferItems?.map(mod => mod.optionName);
+        item.modifer.options = options?.join(', ');
+      });
+      setData(response?.data);
+      setShow(false);
+      setChecked(false);
+    }
+    setLoading(false);
   }
 
   const onFocusSite = async () => {
@@ -73,7 +85,7 @@ export function Modifier(){
 
   const siteProps = { value: site, setValue: onSelectSite, data: sites, s_value: 'siteId', s_descr: 'name', className: 'r_select',
     onFocus: onFocusSite, loading: loading === 'sites' };
-  const listProps = { data, setData, setShow };
+  const listProps = { data, setData, setShow, checked, setChecked };
   const emptyProps = { icon: 'MdOutlineFactCheck', type: 'modifier', onClickAdd };
   const addProps = { type: 'modifier', onClickAdd, show, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };

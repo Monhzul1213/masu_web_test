@@ -6,9 +6,8 @@ import { Check, PaginationTable, Table } from '../../all';
 import { SelectItem } from '../inventory/add/SelectItem';
 
 export function List(props){
-  const { data, setData, onClickAdd, setShow } = props;
+  const { data, setData, onClickAdd, setShow, checked, setChecked } = props;
   const [columns, setColumns] = useState([]);
-  const [checked, setChecked] = useState(false);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -21,8 +20,9 @@ export function List(props){
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       {
-        Header: t('page.name'), accessor: 'modiferName',
-        Cell: ({ row }) => (<SelectItem item={{name: row?.original?.modiferName, sku: row?.original?.optionName}} label='' />)
+        Header: t('page.name'), accessor: 'modifer.modiferName',
+        Cell: ({ row }) =>
+          (<SelectItem item={{name: row?.original?.modifer?.modiferName, sku: row?.original?.modifer?.options}} label='' />)
       },
     ]);
     return () => {};
