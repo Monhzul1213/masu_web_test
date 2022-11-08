@@ -37,24 +37,45 @@ export function InventoryAdd(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    getSites();
-    // setModifiers([
-    //   { modiferName: 'Decorated', optionName: 'Heart, Star' },
-    //   { modiferName: 'Packed', optionName: 'Paper, Box' },
-    //   { modiferName: 'Sealed', optionName: 'Waterproof' }
-    // ])
+    getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getData = async () => {
+    let response = await getSites();
+    if(response) await getModifiers();
+  }
 
   const getSites = async () => {
     setError(null);
     setLoading(false);
     const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    if(response?.error) setError(response?.error);
-    else {
+    setLoading(false);
+    if(response?.error){
+      setError(response?.error);
+      return false;
+    } else {
       response?.data?.map(item => item.checked = true);
       setSites(response?.data);
+      return true;
+    }
+  }
+
+  const getModifiers = async () => {
+    setError(null);
+    setLoading(false);
+    const response = await dispatch(getList(user, token, 'Inventory/GetModifer'));
+    if(response?.error) setError(response?.error);
+    else {
+      response?.data?.forEach(item => {
+        // item?.modiferSites?.forEach(sit => {
+
+        // });
+        let options = item?.modiferItems?.map(mod => mod.optionName);
+        item.modifer.options = options?.join(', ');
+      });
+      setModifiers(response?.data);
     }
     setLoading(false);
   }

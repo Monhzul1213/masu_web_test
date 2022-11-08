@@ -22,8 +22,8 @@ export function CardModifier(props){
     return (
       <div className='a_item' key={index} style={{marginRight: 5}}>
         <div className='a_item_text'>
-          <p className='a_item_title'>{item?.modiferName}</p>
-          <p className='a_item_sub_title'>{item?.optionName}</p>
+          <p className='a_item_title'>{item?.modifer?.modiferName}</p>
+          <p className='a_item_sub_title'>{item?.modifer?.options}</p>
         </div>
         <Switch className='a_item_check' checked={item?.checked} onChange={e => onChange(index, e)} />
       </div>
@@ -36,7 +36,7 @@ export function CardModifier(props){
   return (
     <div className='ac_back'>
       <p className='ac_title'>{t('modifier.title')}</p>
-      <div className='list_back' id='paging' style={{ maxHeight, marginTop: 15 }}>
+      <div className='list_back' id='paging' style={{ maxHeight, marginTop: 15, paddingBottom: 4 }}>
         {data?.slice(start, end)?.map(renderItem)}
       </div>
       <Pagination {...pageProps} />

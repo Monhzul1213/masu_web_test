@@ -18,7 +18,7 @@ export function Inventory(){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getData();
+    // getData();
     return () => {};
   }, []);
 
