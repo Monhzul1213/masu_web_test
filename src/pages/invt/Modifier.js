@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import '../../css/invt.css';
-import { getList } from '../../services';
+import { getList, sendRequest } from '../../services';
 import { ButtonRowAdd, Confirm, Empty, Empty1, Error1, Overlay, PlainSelect } from '../../components/all';
 import { List } from '../../components/invt/modifier';
 
@@ -71,15 +72,25 @@ export function Modifier(){
 
   const onClickDelete = () => setOpen(true);
 
-  const confirm = sure => {
+  const confirm = async sure => {
     setOpen(false);
     if(sure){
       let toDelete = [];
       data?.forEach(item => {
         if(item.checked){
-          toDelete?.push({...item, rowStatus: 'D'});
+          item.modifer.rowStatus = 'D';
+          item.modiferItems.forEach(sit => sit.rowStatus = 'U');
+          item.modiferSites.forEach(sit => sit.rowStatus = 'U');
+          toDelete.push(item);
         }
       });
+      setLoading('loading');
+      setError(null);
+      let response = await dispatch(sendRequest(user, token, 'Inventory/Modifer', toDelete));
+      if(response?.error) setError(response?.error);
+      else message.success(t('modifier.delete_success'));
+      setLoading(false);
+      getData(site);
     }
   };
 

@@ -85,11 +85,6 @@ export function ModifierAdd(){
     else navigate('/inventory/invt_modi');
   }
 
-  const confirm = sure => {
-    setOpen(false);
-    if(sure) navigate('/inventory/invt_modi');
-  }
-
   const onClickSave = async () => {
     if(name?.value && items?.length && !disabled){
       setLoading(true);
@@ -117,8 +112,23 @@ export function ModifierAdd(){
     }
   }
 
-  const onClickDelete = () => {
+  const onClickDelete = () => setOpen(true);
 
+  const confirm = async sure => {
+    setOpen(false);
+    if(sure){
+      setLoading(true);
+      setError(null);
+      item.modifer.rowStatus = 'D';
+      item.modiferSites.forEach(sit => sit.rowStatus = 'U');
+      let response = await dispatch(sendRequest(user, token, 'Inventory/Modifer', [item]));
+      if(response?.error) setError(response?.error);
+      else {
+        message.success(t('modifier.delete_success'));
+        navigate('/inventory/invt_modi');
+      }
+      setLoading(false);
+    }
   }
   
   const optionProps = { name, setName, setError, data: items, setData: setItems, setDItems, setEdited, disabled, setDisabled, search, setSearch };
