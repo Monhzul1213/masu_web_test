@@ -38,7 +38,6 @@ export function InventoryAdd(){
 
   useEffect(() => {
     getSites();
-    setInvt(null); //if edit inventory
     // setModifiers([
     //   { modiferName: 'Decorated', optionName: 'Heart, Star' },
     //   { modiferName: 'Packed', optionName: 'Paper, Box' },

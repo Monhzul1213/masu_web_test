@@ -10,18 +10,22 @@ export function CardModifier(props){
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(10);
 
-  const onChange = (item, value) => {
-
+  const onChange = (row, value) => {
+    setData(old => old.map((item, index) => {
+      if(row === index) return {...old[index], checked: value};
+      return item;
+    }));
+    setEdited && setEdited(true);
   }
 
   const renderItem = (item, index) => {
     return (
-      <div className='a_item' key={index}>
+      <div className='a_item' key={index} style={{marginRight: 5}}>
         <div className='a_item_text'>
           <p className='a_item_title'>{item?.modiferName}</p>
           <p className='a_item_sub_title'>{item?.optionName}</p>
         </div>
-        <Switch className='a_item_check' checked={item?.checked} onChange={e => onChange(item, e)} />
+        <Switch className='a_item_check' checked={item?.checked} onChange={e => onChange(index, e)} />
       </div>
     )
   }
