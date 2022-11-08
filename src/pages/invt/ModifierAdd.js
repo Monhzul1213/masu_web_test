@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import '../../css/invt.css';
 import { getList, sendRequest } from '../../services';
@@ -23,6 +23,7 @@ export function ModifierAdd(){
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
   const [search, setSearch] = useState({ value: '' });
+  const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();

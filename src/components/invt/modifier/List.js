@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import { Check, PaginationTable, Table } from '../../all';
 import { SelectItem } from '../inventory/add/SelectItem';
 
 export function List(props){
-  const { data, setData, onClickAdd, setShow, checked, setChecked } = props;
+  const { data, setData, setShow, checked, setChecked } = props;
   const [columns, setColumns] = useState([]);
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const customStyle = { width: 40 };
@@ -53,10 +55,14 @@ export function List(props){
     setShow(count);
   }
 
+  const onRowClick = row => {
+    navigate({ pathname: 'modi_add', search: createSearchParams({ modifireID: row?.original?.modifer?.modifireID }).toString() });
+  }
+
   
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick: onClickAdd };
+  const tableProps = { tableInstance, onRowClick };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   
   return (
