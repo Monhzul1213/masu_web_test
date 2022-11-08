@@ -94,13 +94,13 @@ export function ModifierAdd(){
     if(name?.value && items?.length && !disabled){
       setLoading(true);
       setError(null);
-      let modifer = { modifireID: item?.modifireID ?? -1, modiferName: name?.value, rowStatus: item ? 'U' : 'I' };
+      let modifer = { modifireID: item?.modifer?.modifireID ?? -1, modiferName: name?.value, rowStatus: item ? 'U' : 'I' };
       let modiferItems = [], modiferSites = [];
       items?.forEach(it => modiferItems?.push({...it, price: parseFloat(it?.price ? it?.price : 0)}));
       dItems?.forEach(it => modiferItems?.push({...it, price: parseFloat(it?.price ? it?.price : 0), rowStatus: 'D'}));
       sites?.forEach(si => {
         if(si?.checked) modiferSites?.push({ siteId: si?.siteId, useModifier: 'Y', rowStatus: si?.rowStatus ?? 'I' });
-        else if(si?.rowStatus) modiferSites?.push({ siteId: si?.siteId, useModifier: 'N', rowStatus: 'D' });
+        else if(si?.rowStatus === 'U') modiferSites?.push({ siteId: si?.siteId, useModifier: 'N', rowStatus: 'D' });
       });
       let data = [{ modifer, modiferItems, modiferSites }];
       let response = await dispatch(sendRequest(user, token, 'Inventory/Modifer', data));
