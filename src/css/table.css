@@ -86,3 +86,11 @@
   outline: none;
   border-color: var(--config-color);
 }
+
+.t_expand {
+  color: var(--text4-color);
+}
+
+.t_expand:hover {
+  color: var(--text3-color);
+}

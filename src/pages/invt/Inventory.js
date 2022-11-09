@@ -18,7 +18,17 @@ export function Inventory(){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // getData();
+    // setData([
+    //   { name: 'Actimel', category: 'Milk', price: 3200, cost: 2800, margin: +((3200 - 2800) / 3200 * 100).toFixed(2) + '%', variants: [] },
+    //   { name: 'Tseneg', category: 'Supplement', price: 2400, cost: 2000, margin: +((2400 - 2000) / 2400 * 100).toFixed(2) + '%',
+    //     variants: [
+    //       { name: 'Pomegranate', price: 2400, cost: 2000, margin: +((2400 - 2000) / 2400 * 100).toFixed(2) + '%' },
+    //       { name: 'Wisperia', price: 2400, cost: 2000, margin: +((2400 - 2000) / 2400 * 100).toFixed(2) + '%' },
+    //     ]
+    //   },
+    // ]);
+    // // setFiltering(true);
+    getData();
     return () => {};
   }, []);
 
