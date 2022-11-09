@@ -94,3 +94,41 @@
 .t_expand:hover {
   color: var(--text3-color);
 }
+
+.ed_select_back {
+  border-bottom: 1px solid var(--root-color);
+}
+
+.ed_select_back:focus-within {
+  border-color: var(--success-color);
+}
+
+.table_row:hover .ed_select_back, .table_row_selected:hover .ed_select_back {
+  border-color: var(--text4-color);
+}
+
+.ed_select.ant-select .ant-select-selector {
+  box-shadow: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 14px;
+  background-color: var(--root-color);
+  padding: 0;
+}
+
+.ed_select.ant-select .ant-select-selector {
+  box-shadow: none !important;
+}
+
+.ed_select .ant-select-selector {
+  box-shadow: none !important;
+}
+
+.ed_select .ant-select-selection-search {
+  left: 0 !important;
+}
+
+.ed_select .ant-select-arrow {
+  color: var(--text4-color);
+  right: 5px;
+}

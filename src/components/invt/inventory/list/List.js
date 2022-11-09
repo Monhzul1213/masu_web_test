@@ -3,6 +3,7 @@ import { useTable, usePagination, useRowSelect, useSortBy, useExpanded } from 'r
 import { useTranslation } from 'react-i18next';
 
 import { Check, DynamicFAIcon, PaginationTable, Table, TableDetail, TableRow } from '../../../all';
+import { SelectableCell } from '../add/EditableCell';
 
 function Detail(props){
   const { data } = props;
@@ -46,7 +47,7 @@ function Detail(props){
 }
 
 export function List(props){
-  const { data, onClickAdd } = props;
+  const { data, onClickAdd, categories } = props;
   const [columns, setColumns] = useState([]);
   const [checked, setChecked] = useState(false);
   const { t, i18n } = useTranslation();
@@ -70,7 +71,8 @@ export function List(props){
         Header: t('page.name'), accessor: 'name',
       },
       {
-        Header: t('category.title'), accessor: 'category', customStyle: { width: 240 }
+        Header: t('category.title'), accessor: 'category', customStyle: { width: 240 }, width: 220,
+        Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' />
       },
       {
         Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 }
@@ -86,6 +88,10 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
+  const updateMyData = (row, column, value) => {
+    console.log(row, column, value);
+  }
+
   const onClickCheckAll = e => {
 
   }
@@ -95,7 +101,7 @@ export function List(props){
   }
   
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    onClickCheckAll, checked, onClickCheck }, useSortBy, useExpanded, usePagination, useRowSelect);
+    onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd, Detail: ({ data }) => <Detail data={data} />, detailName: 'variants', colSpan: 7 };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
 

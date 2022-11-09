@@ -34,6 +34,7 @@ export function Inventory(){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
+    setLoading(false);
     if(response?.error){
       setError(response?.error);
       return false;
@@ -69,7 +70,7 @@ export function Inventory(){
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   // const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
-  const listProps = { data };
+  const listProps = { data, categories };
 
   return (
     <div className='s_container_i'>
