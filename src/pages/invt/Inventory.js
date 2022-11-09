@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
@@ -8,31 +9,42 @@ import { Empty, Empty1, Overlay } from '../../components/all';
 import { Header, List } from '../../components/invt/inventory/list';
 
 export function Inventory(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [filtering, setFiltering] = useState(false);
+  const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const { user, token }  = useSelector(state => state.login);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // setData([
-    //   { name: 'Actimel', category: 'Milk', price: 3200, cost: 2800, margin: +((3200 - 2800) / 3200 * 100).toFixed(2) + '%', variants: [] },
-    //   { name: 'Tseneg', category: 'Supplement', price: 2400, cost: 2000, margin: +((2400 - 2000) / 2400 * 100).toFixed(2) + '%',
-    //     variants: [
-    //       { name: 'Pomegranate', price: 2400, cost: 2000, margin: +((2400 - 2000) / 2400 * 100).toFixed(2) + '%' },
-    //       { name: 'Wisperia', price: 2400, cost: 2000, margin: +((2400 - 2000) / 2400 * 100).toFixed(2) + '%' },
-    //     ]
-    //   },
-    // ]);
-    // // setFiltering(true);
     getData();
     return () => {};
   }, []);
 
   const getData = async () => {
+    let response = await getCategories();
+    if(response) await getInventory();
+  }
+
+  const getCategories = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
+    if(response?.error){
+      setError(response?.error);
+      return false;
+    } else {
+      let data = [...[{categoryId: -1, categoryName: t('inventory.no_category')}], ...response?.data];
+      setCategories(data);
+      return true;
+    }
+  }
+
+  const getInventory = async () => {
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
@@ -51,12 +63,12 @@ export function Inventory(){
 
   const onSearch = (site, category, name) => {
     console.log(site, category, name);
-    //getData(site, category, name)
+    //getInventory(site, category, name)
   }
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   // const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
-  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };
+  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
   const listProps = { data };
 
   return (

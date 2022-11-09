@@ -7,12 +7,11 @@ import { ButtonRowAdd, DynamicAIIcon, Input, PlainSelect } from '../../../all';
 import { SearchInput } from './SearchInput';
 
 export function Header(props){
-  const { onClickAdd, onClickDelete, show, setError, onSearch } = props;
+  const { onClickAdd, onClickDelete, show, setError, onSearch, cats } = props;
   const { t } = useTranslation();
   const [sites, setSites] = useState([{siteId: -1, name: t('pos.all')}]);
   const [site, setSite] = useState(-1);
-  const [categories, setCategories] =
-    useState([{categoryId: -2, categoryName: t('inventory.all_category')},{categoryId: -1, categoryName: t('inventory.no_category')}]);
+  const [categories, setCategories] = useState([{categoryId: -2, categoryName: t('inventory.all_category')}]);
   const [category, setCategory] = useState(-2);
   const [loading, setLoading] = useState(null);
   const [search, setSearch] = useState('');
@@ -35,17 +34,8 @@ export function Header(props){
   }
 
   const onFocusCategory = async () => {
-    if(!categories?.length || categories?.length === 2){
-      setError && setError(null);
-      setLoading('category');
-      const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
-      if(response?.error) setError && setError(response?.error);
-      else {
-        let data = [...[{categoryId: -2, categoryName: t('inventory.all_category')},{categoryId: -1, categoryName: t('inventory.no_category')}],
-          ...response?.data];
-        setCategories(data);
-      }
-      setLoading(null);
+    if(!categories?.length || categories?.length === 1){
+      setCategories([...[{categoryId: -2, categoryName: t('inventory.all_category')}], ...cats])
     }
   }
 

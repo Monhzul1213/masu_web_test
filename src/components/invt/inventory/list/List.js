@@ -15,7 +15,7 @@ function Detail(props){
       { id: 'expander', noSort: true, customStyle, Header: '', Cell: '' },
       { id: 'check', noSort: true, customStyle, Header: '', Cell: '' },
       { Header: t('page.name'), accessor: 'name' },
-      { id: 'category', noSort: true, Header: '', Cell: '', customStyle: { width: 210 } },
+      { id: 'category', noSort: true, Header: '', Cell: '', customStyle: { width: 240 } },
       {
         Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 }
       },
@@ -70,7 +70,7 @@ export function List(props){
         Header: t('page.name'), accessor: 'name',
       },
       {
-        Header: t('category.title'), accessor: 'category', customStyle: { width: 210 }
+        Header: t('category.title'), accessor: 'category', customStyle: { width: 240 }
       },
       {
         Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 }
