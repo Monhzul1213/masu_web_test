@@ -57,10 +57,6 @@
   height: 32px;
 }
 
-.side_menu {
-  /* z-index: 9900; */
-}
-
 .side_menu .ant-menu-item {
   padding: 0 !important;
   height: var(--menu-height) !important;
