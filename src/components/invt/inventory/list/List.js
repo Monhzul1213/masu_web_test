@@ -76,26 +76,26 @@ export function List(props){
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       {
-        Header: t('page.name'), accessor: 'name',
+        Header: t('page.name'), accessor: 'msInventory.name',
       },
       {
-        Header: t('category.title'), accessor: 'category', customStyle: { width: 240 }, width: 220, isBtn: true,
+        Header: t('category.title'), accessor: 'msInventory.categoryId', customStyle: { width: 240 }, width: 220, isBtn: true,
         Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' />
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'price', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price', customStyle: { width: 100 },
         Cell: props => props?.row?.original?.variants?.length ? '' :
           (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost',
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'msInventory.cost',
         customStyle: { width: 100 }, width: 80, isBtn: true,
         Cell: props => props?.row?.original?.variants?.length ? '' : props?.row?.original?.isKit
           ? (<div style={{textAlign: 'right', paddingRight: 10}}>₮{formatNumber(props?.value)}</div>)
           : <EditableCell {...props} cellID='hide_border' />, isMoney: true,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.margin')}</div>, accessor: 'margin', customStyle: { width: 90 },
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.margin')}</div>, accessor: 'msInventory.margin', customStyle: { width: 90 },
         Cell: props => props?.row?.original?.variants?.length ? '' :
           <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>
       },

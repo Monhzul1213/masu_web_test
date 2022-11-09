@@ -31,7 +31,7 @@ export function CardInvt(props){
         customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>{formatNumber(value)}</div>,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>₮{formatNumber(value)}</div>,
       },
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>
@@ -60,10 +60,10 @@ export function CardInvt(props){
   }
 
   const onSelect = value => {
-    let invt = items[value?.value];
+    let invt = items[value?.value]?.msInventory;
     let exists = data?.findIndex(d => d.invtId === invt?.invtId);
     if(exists === -1){
-      let item = { invtId: invt.invtId, name: invt.descr, qty: 0, cost: 0, unitCost: invt.cost };
+      let item = { invtId: invt.invtId, name: invt.name, qty: 0, cost: 0, unitCost: invt.cost };
       setData(old => [...old, item]);
       setSearch({ value: null });
     } else {
@@ -72,9 +72,10 @@ export function CardInvt(props){
   }
 
   const renderItem = (item, index) => {
+    let optItem = { name: item?.msInventory?.name, sku: item?.msInventory?.sku };
     return (
-      <Option key={index} value={index} name={item?.name ?? item?.descr} sku={(item?.sku ?? item?.invtId) + ''}>
-        <SelectItem item={item} />
+      <Option key={index} value={index} name={optItem?.name} sku={optItem?.sku}>
+        <SelectItem item={optItem} />
       </Option>
     );
   }

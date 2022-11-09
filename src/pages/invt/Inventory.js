@@ -50,7 +50,13 @@ export function Inventory(){
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else {
+      response?.data?.forEach(item => {
+        let margin = +((item.msInventory.price - item.msInventory.cost) / item.msInventory.price * 100).toFixed(2);
+        item.msInventory.margin = (isNaN(margin) ? 0 : margin) + '%'
+      });
+      setData(response?.data);
+    }
     setLoading(false);
   }
 
