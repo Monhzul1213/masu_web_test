@@ -124,7 +124,7 @@ export function List(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, Detail: ({ data }) => <Detail data={data} />, detailName: 'msInventoryVariants', colSpan: 7 };
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 11px)';
 
   return (
     <div>
