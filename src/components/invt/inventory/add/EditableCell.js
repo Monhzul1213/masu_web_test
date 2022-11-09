@@ -5,7 +5,7 @@ import CurrencyInput from 'react-currency-input-field';
 const { Option } = Select;
 
 export const EditableCell = props => {
-  const { value: initialValue, row, column: { id, isText, isMoney, isQty, width, autoFocus }, updateMyData, disabled } = props;
+  const { value: initialValue, row, column: { id, isText, isMoney, isQty, width, autoFocus }, updateMyData, disabled, cellID } = props;
   const [value, setValue] = useState(initialValue);
   const hasError = row?.original?.error === id;
   const notEditable = disabled && !hasError;
@@ -35,11 +35,11 @@ export const EditableCell = props => {
   const style = {...{ textAlign: 'right', width }, ...errorStyle};
   const style1 = {...{ width }, ...errorStyle};
   const moneyProps = { className: 'ed_input', prefix: '₮', allowNegativeValue: false, decimalsLimit: 4, value, maxLength: 15, onValueChange, onBlur, style,
-    onKeyDown, autoFocus, disabled: notEditable };
+    onKeyDown, autoFocus, disabled: notEditable, id: cellID };
   const textProps = { className: 'ed_input', value, onChange, onBlur, onKeyDown, autoFocus, style: width ? style1 : errorStyle,
-    disabled: notEditable };
+    disabled: notEditable, id: cellID };
   const qtyProps = { className: 'ed_input', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,
-    disableGroupSeparators: true, style, onKeyDown, autoFocus, disabled: notEditable };
+    disableGroupSeparators: true, style, onKeyDown, autoFocus, disabled: notEditable, id: cellID };
 
   return isText
     ? (<p className='ed_text'>{value}</p>)

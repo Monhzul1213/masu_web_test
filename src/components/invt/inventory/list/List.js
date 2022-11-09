@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useExpanded } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
+import { formatNumber } from '../../../../helpers';
 import { Check, DynamicFAIcon, PaginationTable, Table, TableDetail, TableRow } from '../../../all';
-import { SelectableCell } from '../add/EditableCell';
+import { EditableCell, SelectableCell } from '../add/EditableCell';
 
 function Detail(props){
   const { data } = props;
@@ -18,13 +19,16 @@ function Detail(props){
       { Header: t('page.name'), accessor: 'name' },
       { id: 'category', noSort: true, Header: '', Cell: '', customStyle: { width: 240 } },
       {
-        Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 }
+        Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 },
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>
       },
       {
-        Header: t('inventory.cost'), accessor: 'cost', customStyle: { width: 100 }
+        Header: t('inventory.cost'), accessor: 'cost', customStyle: { width: 100 }, width: 80, isBtn: true,
+        Cell: props => <EditableCell {...props} cellID='hide_border' />, isMoney: true
       },
       {
-        Header: t('inventory.margin'), accessor: 'margin', customStyle: { width: 90 }
+        Header: t('inventory.margin'), accessor: 'margin', customStyle: { width: 90 },
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>
       },
     ]);
     return () => {};
@@ -35,7 +39,11 @@ function Detail(props){
     console.log(row?.original);
   }
 
-  const tableInstance = useTable({ columns, data, autoResetPage: false}, useSortBy, useRowSelect);
+  const updateMyData = (row, column, value) => {
+    console.log(row, column, value);
+  }
+
+  const tableInstance = useTable({ columns, data, autoResetPage: false, updateMyData }, useSortBy, useRowSelect);
   const tableProps = { tableInstance, onRowClick, noHeader: true };
   const maxHeight = 'calc(70vh)';
 
@@ -71,17 +79,25 @@ export function List(props){
         Header: t('page.name'), accessor: 'name',
       },
       {
-        Header: t('category.title'), accessor: 'category', customStyle: { width: 240 }, width: 220,
+        Header: t('category.title'), accessor: 'category', customStyle: { width: 240 }, width: 220, isBtn: true,
         Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' />
       },
       {
-        Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 }
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'price', customStyle: { width: 100 },
+        Cell: props => props?.row?.original?.variants?.length ? '' :
+          (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
       },
       {
-        Header: t('inventory.cost'), accessor: 'cost', customStyle: { width: 100 }
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost',
+        customStyle: { width: 100 }, width: 80, isBtn: true,
+        Cell: props => props?.row?.original?.variants?.length ? '' : props?.row?.original?.isKit
+          ? (<div style={{textAlign: 'right', paddingRight: 10}}>₮{formatNumber(props?.value)}</div>)
+          : <EditableCell {...props} cellID='hide_border' />, isMoney: true,
       },
       {
-        Header: t('inventory.margin'), accessor: 'margin', customStyle: { width: 90 }
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.margin')}</div>, accessor: 'margin', customStyle: { width: 90 },
+        Cell: props => props?.row?.original?.variants?.length ? '' :
+          <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>
       },
     ]);
     return () => {};
@@ -99,10 +115,15 @@ export function List(props){
   const onClickCheck = e => {
 
   }
+
+  const onRowClick = row => {
+    console.log(row?.original);
+    //onClickAdd
+  }
   
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick: onClickAdd, Detail: ({ data }) => <Detail data={data} />, detailName: 'variants', colSpan: 7 };
+  const tableProps = { tableInstance, onRowClick, Detail: ({ data }) => <Detail data={data} />, detailName: 'variants', colSpan: 7 };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
 
   return (

@@ -82,7 +82,7 @@
   border-bottom: solid 1px #d2d2d2;
 }
 
-.ed_input:focus {
+.ed_input:focus, #hide_border:focus {
   outline: none;
   border-color: var(--config-color);
 }
@@ -103,7 +103,7 @@
   border-color: var(--success-color);
 }
 
-.table_row:hover .ed_select_back, .table_row_selected:hover .ed_select_back {
+.table_row:hover .ed_select_back, .table_row_selected:hover .ed_select_back, .table_row:hover #hide_border, .table_row_selected:hover #hide_border {
   border-color: var(--text4-color);
 }
 
@@ -131,4 +131,8 @@
 .ed_select .ant-select-arrow {
   color: var(--text4-color);
   right: 5px;
+}
+
+#hide_border {
+  border-color: var(--root-color);
 }
