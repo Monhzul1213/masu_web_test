@@ -6,11 +6,9 @@ import { Table, PaginationTable, Input, DynamicBSIcon } from '../../../all';
 import { EditableCell } from './EditableCell';
 
 export function CardVariant(props){
-  const { data, setData, setEdited, price, cost } = props;
+  const { data, setData, setEdited, price, cost, search, setSearch, disabled, setDisabled } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [search, setSearch] = useState({ value: '' });
-  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     setColumns([

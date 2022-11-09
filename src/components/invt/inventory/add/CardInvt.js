@@ -13,10 +13,9 @@ import { EditableCell } from './EditableCell';
 const { Option } = Select;
 
 export function CardInvt(props){
-  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost } = props;
+  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [search, setSearch] = useState({ value: null });
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
   const { user, token }  = useSelector(state => state.login);

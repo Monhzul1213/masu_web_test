@@ -6,9 +6,8 @@ import { Check, CheckAll, PaginationTable, Table } from '../../../all';
 import { EditableCell } from './EditableCell';
 
 export function CardSite(props){
-  const { isTrack, data, setData, setEdited } = props;
+  const { isTrack, data, setData, setEdited, checked, setChecked } = props;
   const { t, i18n } = useTranslation();
-  const [checked, setChecked] = useState(true);
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {

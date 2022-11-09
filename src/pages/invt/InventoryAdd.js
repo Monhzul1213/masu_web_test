@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-// import { message } from 'antd';
+import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
-import { getList } from '../../services';
-// import { getList, sendRequest } from '../../services';
+import { getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
 import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty, CardModifier } from '../../components/invt/inventory/add';
 
@@ -19,7 +18,7 @@ export function InventoryAdd(){
   const [cost, setCost] = useState({ value: '' });
   const [sku, setSku] = useState({ value: '' });
   const [barcode, setBarcode] = useState({ value: '' });
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState('');
   const [isKit, setIsKit] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
@@ -31,6 +30,10 @@ export function InventoryAdd(){
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(true);
+  const [searchI, setSearchI] = useState({ value: null });
+  const [searchV, setSearchV] = useState({ value: '' });
+  const [disabledV, setDisabledV] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -97,75 +100,52 @@ export function InventoryAdd(){
     if(sure) navigate('/inventory/invt_list');
   }
 
-  const onClickSave = async () => {
-    /**
-     * msInventory.InvtID - Барааын код GetNewID() үүсгэнэ
-msInventory.MerchantID - @MerchantID
-msInventory.Name - Барааны нэр - Дэлгэцээс бөглөнө
-msInventory.CategoryID  - Категори - Дэлгэцээс бөглөнө
-msInventory.Descr - Тайлбар - Дэлгэцээс бөглөнө
-msInventory.IsEach - Ширхэг эсэх - Дэлгэцээс бөглөнө
-msInventory.Price - Үнэ - Дэлгэцээс бөглөнө
-msInventory.Cost - Өртөг - Дэлгэцээс бөглөнө
-msInventory.SKU - SKU - Дэлгэцээс бөглөнө
-msInventory.BarCode - BarCode - Дэлгэцээс бөглөнө
-msInventory.IsKit - Багцлах эсэх - Дэлгэцээс бөглөнө
-msInventory.IsTrackStock - Нөөц тооцох эсэх - Дэлгэцээс бөглөнө
-msInventory.Image - Зураг -  Дэлгэцээс сонгоно /Барааны зургийг авах Service гаргах учир бодолцоорой!/
-Барааны хувилбар/msInventoryVariant/
-if(msInventory.IsKit <>'Y')
-{
-msInventoryVariant.VariantID - Хувилбар дугаар GetNewID() үүсгэнэ
-msInventoryVariant.InvtID - Барааын код - msInventory.InvtID 
-msInventoryVariant.MerchantID- @MerchantID
-msInventoryVariant.VariantName  - Хувилбар барааны нэр - Дэлгэцээс бөглөнө
-msInventoryVariant.Price - Хувилбар барааны үнэ - Дэлгэцээс бөглөнө
-msInventoryVariant.Cost - Хувилбар барааны өртөг - Дэлгэцээс бөглөнө
-msInventoryVariant.SKU - Хувилбар барааны өртөг - Дэлгэцээс бөглөнө
-msInventoryVariant.BarCode - Хувилбар барааны баркод - Дэлгэцээс бөглөнө
-}
-Барааны бүрдэц /msInvKitItem/
-if(msInventory.IsKit = 'Y')
-{
-msInvKitItem.KitID - Барааын код - msInventory.InvtID
-msInvKitItem.MerchantID - @MerchantID
-msInvKitItem.InvtID - Бүрдэц бараа - Дэлгэцээс бөглөнө
-msInvKitItem.Qty -  Бүрдэц тоо - Дэлгэцээс бөглөнө
-msInvKitItem.Cost -  Өртөг - Дэлгэцээс бөглөнө
-}
-Барааны нэмэлт төлбөр /msInventoryMofifier/
-msInventoryMofifier.InvtID - Барааын код - msInventory.InvtID
-msInventoryMofifier.MerchantID - @MerchantID
-msInventoryMofifier.ModifireID - msModifer.ModifireID - Дэлгэцээс сонгоно
-msInventoryMofifier.UseModifier - Барааын нэмэлт ашиглах эсэх -  Дэлгэцээс сонгоно
- 
-Барааны үнэ/psSalesPrice/
-psSalesPrice.MerchantID - @MerchantID
-psSalesPrice.SiteID - Салбар - msSite.SiteID - Дэлгэцээс сонгоно
-psSalesPrice.InvtID - Барааны код - msInventory.InvtID
-psSalesPrice.Price - Үнэ - Дэлгэцээс бөглөнө
-psSalesPrice.Status - Төлөв - Дэлгэцээс бөглөнө
-     */
-    /*
+  const validateData = () => {
+    let invkite = [], invvar = [], invmod = [], invsales = [];
     if(name?.value){
-      let newSites = [];
-      sites?.forEach(s => {
-        if(s?.checked){
-          newSites.push({
-            siteId: s.siteId,
-            price: parseFloat(s.price ? s.price : 0),
-            stock: parseFloat(s.stock ? s.stock : 0),
-            track: parseFloat(s.track ? s.track : 0),
+      if(isKit){
+        if(kits?.length){
+          //parsefloat
+          //"invkite": [ { "invtID": 0, "qty": 0, "cost": 0 } ]
+        } else {
+          setSearchI({ value: searchI?.value, error: t('inventory.kit_error') });
+          return false;
+        }
+      } else {
+        if(disabledV){
+          setSearchV({ value: searchV?.value, error: t('inventory.variant_error1') });
+          return false;
+        } else {
+          variants?.forEach(item => {
+            invvar.push({ variantName: item?.VariantName, barCode: item?.Barcode?.trim(), sku: item?.Sku?.trim(),
+              price: parseFloat(item?.Price ? item?.Price : 0), cost: parseFloat(item?.Cost ? item?.Cost : 0) });
           });
         }
+      }
+      modifiers?.forEach(item => {
+        if(item?.checked) invmod.push({ modifireID: item?.modifer?.modifireID, useModifier: 'Y' });
+      });
+      sites?.forEach(item => {
+        if(item?.checked) invsales.push({ siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0), status: 0 });//status?
       });
       let data = {
-        name: name?.value, category: category?.value, descr: descr?.value, isEach: isEach?.value,
-        price: parseFloat(price?.value ? price?.value : 0), cost: parseFloat(cost?.value ? cost?.value : 0),
-        sku: sku?.value, barcode: barcode?.value, isKit, isTrack,
-        image, sites: newSites
+        name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value,
+        price: parseFloat(price?.value ? price?.value : 0),
+        cost: parseFloat(cost?.value ? cost?.value : 0),
+        sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
+        UseAllSite: checked ? 'Y' : 'N', image,
+        invkite, invvar, invmod, invsales
       };
-      console.log(data);
+      return data;
+    } else {
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      return false;
+    }
+  }
+
+  const onClickSave = async () => {
+    let data = validateData();
+    if(data){
       setLoading(true);
       setError(null);
       let api = invt ? 'Inventory/UpdateInventory' : 'Inventory/AddInventory';
@@ -177,10 +157,7 @@ psSalesPrice.Status - Төлөв - Дэлгэцээс бөглөнө
         navigate('/inventory/invt_list');
       }
       setLoading(false);
-    } else {
-      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
     }
-    */
   }
 
   const onClickDelete = async () => {
@@ -190,9 +167,11 @@ psSalesPrice.Status - Төлөв - Дэлгэцээс бөглөнө
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit };
-  const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost };
-  const variantProps = { data: variants, setData: setVariants, setEdited, price, cost };
-  const siteProps = { isTrack, data: sites, setData: setSites, setEdited };
+  const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost,
+    search: searchI, setSearch: setSearchI };
+  const variantProps = { data: variants, setData: setVariants, setEdited, price, cost,
+    search: searchV, setSearch: setSearchV, disabled: disabledV, setDisabled: setDisabledV };
+  const siteProps = { isTrack, data: sites, setData: setSites, setEdited, checked, setChecked };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add' };
   const modiProps = { data: modifiers, setData: setModifiers, setEdited };
   const modiEmptyProps = { title: 'modifier.title', icon: 'MdStorefront', route: '/inventory/invt_modi', btn: 'modifier.add' };
