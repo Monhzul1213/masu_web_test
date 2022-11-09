@@ -34,7 +34,7 @@ export const sendRequest = (user, token, api, data) => async dispatch => {
       data
     }
     const response = await fetchRetry(config);
-    console.log('++++++++++++++++++++++=', response);
+    // console.log('++++++++++++++++++++++=', response);
     if(response?.result === 2){
       const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
       if(responseLogin?.error) return responseLogin;
@@ -45,7 +45,7 @@ export const sendRequest = (user, token, api, data) => async dispatch => {
           data
         }
         const responseNew = await fetchRetry(configNew);
-        console.log('=====================', responseNew)
+        // console.log('=====================', responseNew)
         if(responseNew?.rettype === 0){
           return Promise.resolve({ error: null, data: responseNew?.retdata });
         } else
@@ -69,7 +69,7 @@ export const deleteRequest = (user, token, api, data) => async dispatch => {
     }
     if(data) config.data = data;
     const response = await fetchRetry(config);
-    console.log('++++++++++++++++++++++=', response);
+    // console.log('++++++++++++++++++++++=', response);
     if(response?.result === 2){
       const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
       if(responseLogin?.error) return responseLogin;
@@ -80,7 +80,7 @@ export const deleteRequest = (user, token, api, data) => async dispatch => {
         }
         if(data) configNew.data = data;
         const responseNew = await fetchRetry(configNew);
-        console.log('=====================', responseNew)
+        // console.log('=====================', responseNew)
         if(responseNew?.rettype === 0){
           return Promise.resolve({ error: null, data: responseNew?.retdata });
         } else
@@ -104,7 +104,7 @@ export const deleteMultiRequest = (user, token, api, data) => async dispatch => 
       data
     }
     const response = await fetchRetry(config);
-    console.log('++++++++++++++++++++++=', response);
+    // console.log('++++++++++++++++++++++=', response);
     if(response?.result === 2){
       const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
       if(responseLogin?.error) return responseLogin;
@@ -115,7 +115,7 @@ export const deleteMultiRequest = (user, token, api, data) => async dispatch => 
           data
         }
         const responseNew = await fetchRetry(configNew);
-        console.log('=====================', responseNew)
+        // console.log('=====================', responseNew)
         if(responseNew?.rettype === 0){
           return Promise.resolve({ error: null, data: responseNew?.retdata });
         } else
@@ -138,7 +138,7 @@ export const getConstants = (user, token, type, setFunction) => async dispatch =
       headers: { 'authorization': token, 'Accept': '*/*', 'ConstType': type }
     };
     const response = await fetchRetry(config);
-    console.log('++++++++++++++++++++++=', response);
+    // console.log('++++++++++++++++++++++=', response);
     if(response?.result === 2){
       const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
       if(responseLogin?.error) return responseLogin;
@@ -148,7 +148,7 @@ export const getConstants = (user, token, type, setFunction) => async dispatch =
           headers: { 'authorization': responseLogin?.token ?? token, 'Accept': '*/*', 'ConstType': type }
         };
         const responseNew = await fetchRetry(configNew);
-        console.log('=====================', responseNew)
+        // console.log('=====================', responseNew)
         if(responseNew?.rettype === 0){
           setFunction && dispatch(setFunction(responseNew?.retdata));
           return Promise.resolve({ error: null, data: responseNew?.retdata });
@@ -173,7 +173,7 @@ export const getList = (user, token, api, setFunction, headers) => async dispatc
       headers: {...{ 'authorization': token, 'Accept': '*/*' }, ...headers}
     };
     const response = await fetchRetry(config);
-    console.log('++++++++++++++++++++++=', response);
+    // console.log('++++++++++++++++++++++=', response);
     if(response?.result === 2){
       const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
       if(responseLogin?.error) return responseLogin;
@@ -183,7 +183,7 @@ export const getList = (user, token, api, setFunction, headers) => async dispatc
           headers: {...{ 'authorization': responseLogin?.token ?? token, 'Accept': '*/*' }, ...headers}
         };
         const responseNew = await fetchRetry(configNew);
-        console.log('=====================', responseNew)
+        // console.log('=====================', responseNew)
         if(responseNew?.rettype === 0){
           setFunction && dispatch(setFunction(responseNew?.retdata));
           return Promise.resolve({ error: null, data: responseNew?.retdata });

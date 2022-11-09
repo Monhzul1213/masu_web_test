@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -13,6 +13,11 @@ export function CardMain(props){
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    onFocus();
+    return () => {};
+  }, []);
 
   const onFocus = async () => {
     if(!categories?.length || categories?.length === 1){

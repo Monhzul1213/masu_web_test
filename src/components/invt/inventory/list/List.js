@@ -116,10 +116,7 @@ export function List(props){
 
   }
 
-  const onRowClick = row => {
-    console.log(row?.original);
-    //onClickAdd
-  }
+  const onRowClick = row => onClickAdd(row?.original?.msInventory);
   
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);

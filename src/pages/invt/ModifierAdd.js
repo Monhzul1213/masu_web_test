@@ -56,9 +56,9 @@ export function ModifierAdd(){
         let exists = response?.data?.modiferSites?.filter(si => si.siteId === item.siteId)[0];
         item.checked = exists?.useModifier === 'Y';
         if(exists) item.rowStatus = 'U';
-        else setChecked(false);
       });
       setSites(siteRes);
+      setChecked(response?.data?.modifer?.useAllSite === 'Y');
     }
   }
 
@@ -89,7 +89,8 @@ export function ModifierAdd(){
     if(name?.value && items?.length && !disabled){
       setLoading(true);
       setError(null);
-      let modifer = { modifireID: item?.modifer?.modifireID ?? -1, modiferName: name?.value, rowStatus: item ? 'U' : 'I' };
+      let modifer = { modifireID: item?.modifer?.modifireID ?? -1, modiferName: name?.value,
+        rowStatus: item ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N' };
       let modiferItems = [], modiferSites = [];
       items?.forEach(it => modiferItems?.push({...it, price: parseFloat(it?.price ? it?.price : 0)}));
       dItems?.forEach(it => modiferItems?.push({...it, price: parseFloat(it?.price ? it?.price : 0), rowStatus: 'D'}));

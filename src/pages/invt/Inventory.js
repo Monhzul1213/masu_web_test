@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
@@ -49,6 +49,7 @@ export function Inventory(){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
+    console.log(response);
     if(response?.error) setError(response?.error);
     else {
       response?.data?.forEach(item => {
@@ -64,13 +65,14 @@ export function Inventory(){
     setLoading(false);
   }
 
-  const onClickAdd = () => {
-    navigate('invt_add');
+  const onClickAdd = row => {
+    if(row) navigate({ pathname: 'invt_add', search: createSearchParams({ invtId: row?.invtId }).toString() });
+    else navigate('invt_add');
   }
 
   const onClickDelete = () => {
     console.log('onClickDelete');
-  }
+  } 
 
   const onSearch = (site, category, name) => {
     console.log(site, category, name);
@@ -78,9 +80,8 @@ export function Inventory(){
   }
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
-  // const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
-  const listProps = { data, categories };
+  const listProps = { data, categories, onClickAdd };
 
   return (
     <div className='s_container_i'>

@@ -12,17 +12,17 @@ export function CardVariant(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('inventory.t_variant'), accessor: 'VariantName', customStyle: { paddingRight: 18 }, width: null },
+      { Header: t('inventory.t_variant'), accessor: 'variantName', customStyle: { paddingRight: 18 }, width: null },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'Price', isMoney: true,
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'price', isMoney: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'Cost', isMoney: true,
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isMoney: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80
       },
-      { Header: t('inventory.sku'), accessor: 'Sku', customStyle: { width: 120, paddingRight: 18 }, width: 100 },//, autoFocus: true
-      { Header: t('inventory.barcode'), accessor: 'Barcode', customStyle: { width: 120, paddingRight: 18 }, width: 100 },
+      { Header: t('inventory.sku'), accessor: 'sku', customStyle: { width: 120, paddingRight: 18 }, width: 100 },//, autoFocus: true
+      { Header: t('inventory.barcode'), accessor: 'barCode', customStyle: { width: 120, paddingRight: 18 }, width: 100 },
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>
           (<div className='ac_delete_back'>
@@ -37,11 +37,11 @@ export function CardVariant(props){
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     let hasError = false, errorIndex = -1;
-    if(columnId === 'VariantName' || columnId === 'Sku'){
+    if(columnId === 'variantName' || columnId === 'sku'){
       errorIndex = data?.findIndex((item, index) =>
         value && index !== rowIndex && item[columnId]?.trim()?.toLowerCase() === value?.trim()?.toLowerCase());
       hasError = errorIndex !== -1;
-      if(!value && columnId === 'VariantName') hasError = true;
+      if(!value && columnId === 'variantName') hasError = true;
     }
     setDisabled(hasError);
     setData(old => old.map((row, index) => {
@@ -74,11 +74,11 @@ export function CardVariant(props){
 
   const handleEnter = e => {
     e?.preventDefault();
-    let VariantName = search?.value?.trim();
-    if(VariantName){
-      let exists = data?.findIndex(d => d.VariantName?.toLowerCase() === VariantName?.toLowerCase());
+    let variantName = search?.value?.trim();
+    if(variantName){
+      let exists = data?.findIndex(d => d.variantName?.toLowerCase() === variantName?.toLowerCase());
       if(exists === -1){
-        let item = { VariantName, Price: price?.value ?? 0, Cost: cost?.value ?? 0, Sku: '', Barcode: '' };//InvtID, MerchantID
+        let item = { variantName, price: price?.value ?? 0, cost: cost?.value ?? 0, sku: '', barCode: '' };//InvtID, MerchantID
         setData(old => [...old, item]);
         setSearch({ value: '' });
         setEdited && setEdited(true);

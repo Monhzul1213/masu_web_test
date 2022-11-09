@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
@@ -32,10 +32,12 @@ export function InventoryAdd(){
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true);
   const [searchI, setSearchI] = useState({ value: null });
+  const [totalI, setTotalI] = useState(0);
   const [searchV, setSearchV] = useState({ value: '' });
   const [disabledV, setDisabledV] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,8 +48,54 @@ export function InventoryAdd(){
   }, []);
 
   const getData = async () => {
+    let invtId = searchParams?.get('invtId'), response1 = false;
     let response = await getSites();
-    if(response) await getModifiers();
+    if(response) response1 = await getModifiers();
+    if(response1 && (invtId || invtId === 0)) await getInventory(invtId, response, response1);
+    else {
+      setSites(response);
+      setModifiers(response1);
+    }
+  }
+
+  const getInventory = async (value, sites1, modifiers1) => {
+    setError(null);
+    setLoading(true);
+    let data = [{ fieldName: 'InvtID', value }];
+    let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', data));
+    setLoading(false);
+    let invt = response && response?.data && response?.data[0];
+    console.log(response);
+    if(response?.error) setError(response?.error);
+    else if(invt) {
+      setInvt(invt);
+      setName({ value: invt?.msInventory?.name ?? '' });
+      setCategory({ value: invt?.msInventory?.categoryId ?? -1 });
+      setIsEach({ value: invt?.msInventory?.isEach ?? 'Y' });
+      setDescr({ value: invt?.msInventory?.descr ?? '' });
+      setPrice({ value: invt?.msInventory?.price ?? 0 });
+      setCost({ value: invt?.msInventory?.cost ?? 0 });
+      setSku({ value: invt?.msInventory?.sku ?? '' });
+      setBarcode({ value: invt?.msInventory?.barCode ?? '' });
+      setIsKit(invt?.msInventory?.isKit === 'Y');
+      if(invt?.msInventory?.isKit === 'Y'){
+        invt?.msInvKitItems?.forEach(kit => kit.unitCost = kit.cost / kit.qty);
+        setKits(invt?.msInvKitItems);
+        setTotalI(invt?.msInventory?.cost ?? 0);
+      } else setVariants(invt?.msInventoryVariants);
+      setChecked(invt?.msInventory?.useAllSite === 'Y');
+      sites1?.forEach(item => {
+        let exists = invt?.psSalesPrices?.filter(si => si.siteId === item.siteId)[0];
+        item.checked = exists ? true : false;
+        if(exists) item.price = exists.price;
+      });
+      setSites(sites1);
+      modifiers1.forEach(item => {
+        let exists = invt?.msInventoryModifers?.filter(si => si.modifireId === item?.modifer?.modifireID)[0];
+        item.checked = exists?.useModifier === 'Y';
+      });
+      setModifiers(modifiers1);
+    }
   }
 
   const getSites = async () => {
@@ -60,8 +108,7 @@ export function InventoryAdd(){
       return false;
     } else {
       response?.data?.map(item => item.checked = true);
-      setSites(response?.data);
-      return true;
+      return response?.data;
     }
   }
 
@@ -69,18 +116,17 @@ export function InventoryAdd(){
     setError(null);
     setLoading(false);
     const response = await dispatch(getList(user, token, 'Inventory/GetModifer'));
-    if(response?.error) setError(response?.error);
-    else {
+    setLoading(false);
+    if(response?.error){
+      setError(response?.error);
+      return false;
+    } else {
       response?.data?.forEach(item => {
-        // item?.modiferSites?.forEach(sit => {
-
-        // });
         let options = item?.modiferItems?.map(mod => mod.optionName);
         item.modifer.options = options?.join(', ');
       });
-      setModifiers(response?.data);
+      return response?.data;
     }
-    setLoading(false);
   }
 
   const onPriceChange = () => {
@@ -105,8 +151,9 @@ export function InventoryAdd(){
     if(name?.value){
       if(isKit){
         if(kits?.length){
-          //parsefloat
-          //"invkite": [ { "invtID": 0, "qty": 0, "cost": 0 } ]
+          kits?.forEach(item => {
+            invkite.push({ invtID: item?.invtId, qty: parseFloat(item?.qty ? item?.qty : 0), cost: parseFloat(item?.cost ? item?.cost : 0) });
+          });
         } else {
           setSearchI({ value: searchI?.value, error: t('inventory.kit_error') });
           return false;
@@ -117,8 +164,8 @@ export function InventoryAdd(){
           return false;
         } else {
           variants?.forEach(item => {
-            invvar.push({ variantName: item?.VariantName, barCode: item?.Barcode?.trim(), sku: item?.Sku?.trim(),
-              price: parseFloat(item?.Price ? item?.Price : 0), cost: parseFloat(item?.Cost ? item?.Cost : 0) });
+            invvar.push({ variantName: item?.variantName, barCode: item?.barCode?.trim(), sku: item?.sku?.trim(),
+              price: parseFloat(item?.price ? item?.price : 0), cost: parseFloat(item?.cost ? item?.cost : 0) });
           });
         }
       }
@@ -145,6 +192,7 @@ export function InventoryAdd(){
 
   const onClickSave = async () => {
     let data = validateData();
+    console.log(data);
     if(data){
       setLoading(true);
       setError(null);
@@ -168,7 +216,7 @@ export function InventoryAdd(){
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost,
-    search: searchI, setSearch: setSearchI };
+    search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost,
     search: searchV, setSearch: setSearchV, disabled: disabledV, setDisabled: setDisabledV };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited, checked, setChecked };
