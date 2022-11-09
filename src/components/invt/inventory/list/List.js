@@ -16,7 +16,7 @@ function Detail(props){
     setColumns([
       { id: 'expander', noSort: true, customStyle, Header: '', Cell: '' },
       { id: 'check', noSort: true, customStyle, Header: '', Cell: '' },
-      { Header: t('page.name'), accessor: 'name' },
+      { Header: t('page.name'), accessor: 'variantName' },
       { id: 'category', noSort: true, Header: '', Cell: '', customStyle: { width: 240 } },
       {
         Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 },
@@ -65,7 +65,7 @@ export function List(props){
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       { id: 'expander', noSort: true, isBtn: true, customStyle, Header: '',
-        Cell: ({ row }) => !row?.original?.variants?.length ? '' :
+        Cell: ({ row }) => !row?.original?.msInventoryVariants?.length ? '' :
           (<div style={style}>
             <DynamicFAIcon {...row.getToggleRowExpandedProps()} name={row.isExpanded ? 'FaChevronUp': 'FaChevronDown'} className='t_expand' />
           </div>)
@@ -84,19 +84,19 @@ export function List(props){
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price', customStyle: { width: 100 },
-        Cell: props => props?.row?.original?.variants?.length ? '' :
+        Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' :
           (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'msInventory.cost',
         customStyle: { width: 100 }, width: 80, isBtn: true,
-        Cell: props => props?.row?.original?.variants?.length ? '' : props?.row?.original?.isKit
+        Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' : props?.row?.original?.msInventory?.isKit === 'Y'
           ? (<div style={{textAlign: 'right', paddingRight: 10}}>₮{formatNumber(props?.value)}</div>)
           : <EditableCell {...props} cellID='hide_border' />, isMoney: true,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.margin')}</div>, accessor: 'msInventory.margin', customStyle: { width: 90 },
-        Cell: props => props?.row?.original?.variants?.length ? '' :
+        Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' :
           <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>
       },
     ]);
@@ -123,7 +123,7 @@ export function List(props){
   
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick, Detail: ({ data }) => <Detail data={data} />, detailName: 'variants', colSpan: 7 };
+  const tableProps = { tableInstance, onRowClick, Detail: ({ data }) => <Detail data={data} />, detailName: 'msInventoryVariants', colSpan: 7 };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
 
   return (
