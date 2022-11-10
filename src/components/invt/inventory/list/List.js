@@ -110,6 +110,7 @@ export function List(props){
     newData.invmod = data[row]?.msInventoryModifers?.map(item => { return {...item, rowStatus: 'U'}});
     newData.invsales = data[row]?.psSalesPrices?.map(item => { return {...item, rowStatus: 'U'}});
     if(column === 'msInventory.categoryId') newData.categoryID = value;
+    else if(column === 'msInventory.cost') newData.cost = parseFloat(value ? value : 0);
     updateInventory(newData);
   }
 
@@ -139,7 +140,7 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original?.msInventory);
   
-  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, Detail: ({ data }) => <Detail data={data} />, detailName: 'msInventoryVariants', colSpan: 7 };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 11px)';
