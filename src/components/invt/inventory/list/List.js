@@ -55,7 +55,7 @@ function Detail(props){
 }
 
 export function List(props){
-  const { data, setData, onClickAdd, categories, setShow, checked, setChecked } = props;
+  const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory } = props;
   const [columns, setColumns] = useState([]);
   const { t, i18n } = useTranslation();
 
@@ -104,7 +104,13 @@ export function List(props){
   }, [i18n?.language]);
 
   const updateMyData = (row, column, value) => {
-    console.log(row, column, value);
+    let newData = {...data[row]?.msInventory, invtID: data[row]?.msInventory?.invtId, categoryID: data[row]?.msInventory?.categoryId, rowStatus: 'U' };
+    newData.invvar = data[row]?.msInventoryVariants?.map(item => { return {...item, rowStatus: 'U'}});
+    newData.invkite = data[row]?.msInvKitItems?.map(item => { return {...item, rowStatus: 'U'}});
+    newData.invmod = data[row]?.msInventoryModifers?.map(item => { return {...item, rowStatus: 'U'}});
+    newData.invsales = data[row]?.psSalesPrices?.map(item => { return {...item, rowStatus: 'U'}});
+    if(column === 'msInventory.categoryId') newData.categoryID = value;
+    updateInventory(newData);
   }
 
   const onClickCheckAll = e => {

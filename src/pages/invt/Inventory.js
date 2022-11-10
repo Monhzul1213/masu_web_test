@@ -109,11 +109,23 @@ export function Inventory(){
     }
   }
 
+  const updateInventory = async data => {
+    setLoading(true);
+    setError(null);
+    const response = await dispatch(sendRequest(user, token, 'Inventory/UpdateInventory', data));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      message.success(t('inventory.add_success'));
+      onSearch(filter);
+    }
+  }
+
   const onClickDelete = () => setOpen(true);
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
-  const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked };
+  const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
