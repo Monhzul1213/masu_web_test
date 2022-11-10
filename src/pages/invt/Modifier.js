@@ -27,6 +27,7 @@ export function Modifier(){
   useEffect(() => {
     getData(-1);
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSelectSite = value => {

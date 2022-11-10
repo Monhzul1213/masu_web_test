@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
-import { getList, sendRequest } from '../../services';
+import { deleteRequest, getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
 import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty, CardModifier } from '../../components/invt/inventory/add';
 
@@ -122,8 +122,11 @@ export function InventoryAdd(){
       return false;
     } else {
       response?.data?.forEach(item => {
-        let options = item?.modiferItems?.map(mod => mod.optionName);
-        item.modifer.options = options?.join(', ');
+        if(item?.modifer?.useAllSite === 'Y') item.modifer.options = t('inventory.modifer_all');
+        else {
+          let options = item?.modiferSites?.map(mod => mod.name);
+          item.modifer.options = options?.join(', ');
+        }
       });
       return response?.data;
     }
@@ -141,14 +144,9 @@ export function InventoryAdd(){
     else navigate('/inventory/invt_list');
   }
 
-  const confirm = sure => {
-    setOpen(false);
-    if(sure) navigate('/inventory/invt_list');
-  }
-
   const validateData = () => {
     let invkite = [], invvar = [], invmod = [], invsales = [];
-    if(name?.value){
+    if(name?.value && barcode?.value){
       if(isKit){
         if(kits?.length){
           kits?.forEach(item => {
@@ -186,6 +184,7 @@ export function InventoryAdd(){
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      if(!barcode?.value) setBarcode({ value: '', error: t('error.not_empty') });
       return false;
     }
   }
@@ -208,8 +207,21 @@ export function InventoryAdd(){
     }
   }
 
-  const onClickDelete = async () => {
+  const onClickDelete = () => setOpen(true);
 
+  const confirm = async sure => {
+    setOpen(false);
+    setError(null);
+    if(sure){
+      setLoading(true);
+      const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteInventory/' + invt?.msInventory?.invtId));
+      setLoading(false);
+      if(response?.error) setError(response?.error);
+      else {
+        message.success(t('inventory.delete_success'));
+        navigate('/inventory/invt_list');
+      }
+    }
   }
 
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
