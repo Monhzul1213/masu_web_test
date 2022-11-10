@@ -9,7 +9,7 @@ export function ModalTitle(props){
 
   return (
     <div className='m_title_row'>
-      {isMD ? <DynamicMDIcon {...iconProps} /> : <DynamicTBIcon {...iconProps} />}
+      {!icon ? null : isMD ? <DynamicMDIcon {...iconProps} /> : <DynamicTBIcon {...iconProps} />}
       <p className='m_title'>{title}</p>
     </div>
   );

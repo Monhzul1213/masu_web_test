@@ -56,7 +56,7 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
-  const updateMyData = (row, column, value, e, invvar) => {
+  const updateMyData = async (row, column, value, e, invvar, isEdit) => {
     let newData = {...data[row]?.msInventory, invtID: data[row]?.msInventory?.invtId, categoryID: data[row]?.msInventory?.categoryId, rowStatus: 'U' };
     newData.invvar = invvar ?? data[row]?.msInventoryVariants?.map(item => { return {...item, rowStatus: 'U'}});
     newData.invkite = data[row]?.msInvKitItems?.map(item => { return {...item, rowStatus: 'U'}});
@@ -64,7 +64,8 @@ export function List(props){
     newData.invsales = data[row]?.psSalesPrices?.map(item => { return {...item, rowStatus: 'U'}});
     if(column === 'msInventory.categoryId') newData.categoryID = value;
     else if(column === 'msInventory.cost') newData.cost = parseFloat(value ? value : 0);
-    updateInventory(newData);
+    const response = await updateInventory(newData, isEdit);
+    return response;
   }
 
   const onClickCheckAll = e => {

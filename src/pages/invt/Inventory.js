@@ -110,16 +110,16 @@ export function Inventory(){
     }
   }
 
-  const updateInventory = async data => {
-    setLoading(true);
+  const updateInventory = async (data, isEdit) => {
+    if(!isEdit) setLoading(true);
     setError(null);
     const response = await dispatch(sendRequest(user, token, 'Inventory/UpdateInventory', data));
     setLoading(false);
-    if(response?.error) setError(response?.error);
-    else {
+    if(!response?.error){
       message.success(t('inventory.add_success'));
       onSearch(filter);
-    }
+    } else if(response?.error && !isEdit) setError(response?.error);
+    return response;
   }
 
   const onClickDelete = () => setOpen(true);

@@ -5,10 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { formatNumber } from '../../../../helpers';
 import { TableRow } from '../../../all';
 import { EditableCell } from '../add/EditableCell';
+import { VariantEdit } from './VariantEdit';
 
 export function Detail(props){
   const { data, index, updateData } = props;
   const [columns, setColumns] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState(null);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -36,7 +39,17 @@ export function Detail(props){
   }, [i18n?.language]);
 
   const onRowClick = row => {
-    console.log(row?.original);
+    setVisible(true);
+    setSelected(row?.original);
+  }
+
+  const onSave = async variant => {
+    let invvar = data?.map(item => {
+      if(variant?.variantID === item.variantId) return variant;
+      return {...item, rowStatus: 'U'};
+    });
+    const response = await updateData(index, null, null, null, invvar, true);
+    return response;
   }
 
   const updateMyData = (row, column, value) => {
@@ -50,9 +63,11 @@ export function Detail(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, updateMyData }, useSortBy, useRowSelect);
   const tableProps = { tableInstance, onRowClick, noHeader: true };
   const maxHeight = 'calc(70vh)';
+  const editProps = { visible, selected, onSave, setVisible };
 
   return (
     <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+      {visible && <VariantEdit {...editProps} />}
       <TableRow {...tableProps} />
     </div>
   )
