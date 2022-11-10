@@ -3,7 +3,7 @@
 :root {
   --header-color: #b44af7;
   --header-padding: 5px 10px;
-  --icon-size: 28px;
+  --icon-size: 24px;
   --title-size: 18px;
   --side-color: #ffffff;
   --menu-height: 56px;
@@ -26,6 +26,7 @@
 .h_icon_btn {
   height: 36px;
   width: 36px;
+  padding: 0;
   background-color: rgba(0, 0, 0, 0);
   border: none;
   box-shadow: none;
@@ -212,6 +213,8 @@
   width: 100%;
   background-color: var(--root-color);
   align-items: center;
+  padding: 0;
+  margin: 0 3px;
 }
 
 .p_btn:hover {
