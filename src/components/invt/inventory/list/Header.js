@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getList } from '../../../../services';
-import { ButtonRowAdd, DynamicAIIcon, Input, PlainSelect } from '../../../all';
+import { ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
 import { SearchInput } from './SearchInput';
 
 export function Header(props){
@@ -41,16 +41,16 @@ export function Header(props){
 
   const onChangeSite = value => {
     setSite(value);
-    onSearch(value, category);
+    onSearch(value, category, '');
   }
 
   const onChangeCategory = value => {
     setCategory(value);
-    onSearch(site, value);
+    onSearch(site, value, '');
   }
 
   const handleEnter = value => {
-    console.log(value);
+    onSearch(site, category, value);
   }
 
   const onClickSearch = () => setShowSearch(!showSearch);

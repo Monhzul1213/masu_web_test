@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
-import { getList } from '../../services';
+import { getList, sendRequest } from '../../services';
 import { Empty, Empty1, Overlay } from '../../components/all';
 import { Header, List } from '../../components/invt/inventory/list';
 
@@ -45,11 +45,7 @@ export function Inventory(){
     }
   }
 
-  const getInventory = async () => {
-    setError(null);
-    setLoading(true);
-    const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
-    console.log(response);
+  const setInventory = response => {
     if(response?.error) setError(response?.error);
     else {
       response?.data?.forEach(item => {
@@ -65,6 +61,25 @@ export function Inventory(){
     setLoading(false);
   }
 
+  const getInventory = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
+    setInventory(response);
+  }
+
+  const onSearch = async (site, category, name) => {
+    let data = [];
+    if(site !== -1) data.push({ fieldName: 'SiteID', value: site });
+    if(category !== -2) data.push({ fieldName: 'CategoryID', value: category });
+    data.push({ fieldName: 'Name', value: name });
+    setError(null);
+    setLoading(true);
+    let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', data));
+    setInventory(response);
+    setFiltering(true);
+  }
+
   const onClickAdd = row => {
     if(row) navigate({ pathname: 'invt_add', search: createSearchParams({ invtId: row?.invtId }).toString() });
     else navigate('invt_add');
@@ -73,11 +88,6 @@ export function Inventory(){
   const onClickDelete = () => {
     console.log('onClickDelete');
   } 
-
-  const onSearch = (site, category, name) => {
-    console.log(site, category, name);
-    //getInventory(site, category, name)
-  }
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
