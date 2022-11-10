@@ -17,6 +17,7 @@ export function CardMain(props){
   useEffect(() => {
     onFocus();
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onFocus = async () => {
