@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import { message } from 'antd';
 
 import '../../css/invt.css';
-import { getList, sendRequest } from '../../services';
-import { Empty, Empty1, Overlay } from '../../components/all';
+import { deleteMultiRequest, getList, sendRequest } from '../../services';
+import { Confirm, Empty, Empty1, Error1, Overlay } from '../../components/all';
 import { Header, List } from '../../components/invt/inventory/list';
 
 export function Inventory(){
@@ -14,8 +15,11 @@ export function Inventory(){
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
+  const [checked, setChecked] = useState(false);
   const [filtering, setFiltering] = useState(false);
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
+  const [open, setOpen] = useState(false);
+  const [filter, setFilter] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -59,6 +63,8 @@ export function Inventory(){
       setData(response?.data);
     }
     setLoading(false);
+    setShow(false);
+    setChecked(false);
   }
 
   const getInventory = async () => {
@@ -68,15 +74,12 @@ export function Inventory(){
     setInventory(response);
   }
 
-  const onSearch = async (site, category, name) => {
-    let data = [];
-    if(site !== -1) data.push({ fieldName: 'SiteID', value: site });
-    if(category !== -2) data.push({ fieldName: 'CategoryID', value: category });
-    if(name) data.push({ fieldName: 'Name', value: name });
+  const onSearch = async filter => {
+    setFilter(filter);
     setError(null);
     setLoading(true);
-    let response = data?.length
-      ? await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', data))
+    let response = filter?.length
+      ? await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
       : await dispatch(getList(user, token, 'Inventory/GetInventory'));
     setInventory(response);
     setFiltering(true);
@@ -87,17 +90,37 @@ export function Inventory(){
     else navigate('invt_add');
   }
 
-  const onClickDelete = () => {
-    console.log('onClickDelete');
-  } 
+  const confirm = async sure => {
+    setOpen(false);
+    if(sure){
+      let toDelete = [];
+      data?.forEach(item => {
+        if(item.checked) toDelete.push({ invtID: item?.msInventory?.invtId });
+      });
+      setError(null);
+      setLoading(true);
+      let response = await dispatch(deleteMultiRequest(user, token, 'Inventory/DcInventory', toDelete));
+      setLoading(false);
+      if(response?.error) setError(response?.error);
+      else {
+        message.success(t('inventory.delete_success'));
+        onSearch(filter);
+      }
+    }
+  }
+
+  const onClickDelete = () => setOpen(true);
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
-  const listProps = { data, categories, onClickAdd };
+  const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked };
+  const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
     <div className='s_container_i'>
+      {open && <Confirm {...confirmProps} />}
       <Overlay loading={loading}>
+        {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <div className='i_list_cont' id='invt_list'>
             <Header {...headerProps} />

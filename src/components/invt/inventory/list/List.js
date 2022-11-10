@@ -55,9 +55,8 @@ function Detail(props){
 }
 
 export function List(props){
-  const { data, onClickAdd, categories } = props;
+  const { data, setData, onClickAdd, categories, setShow, checked, setChecked } = props;
   const [columns, setColumns] = useState([]);
-  const [checked, setChecked] = useState(false);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -109,11 +108,27 @@ export function List(props){
   }
 
   const onClickCheckAll = e => {
-
+    setShow(!checked);
+    setChecked(!checked);
+    setData(old => old.map((row, index) => {
+      return { ...old[index], checked: !checked };
+    }));
   }
 
-  const onClickCheck = e => {
-
+  const onClickCheck = (e, item) => {
+    e?.preventDefault();
+    setChecked(false);
+    let count = false;
+    setData(old => old.map((row, index) => {
+      if(index === item?.index){
+        if(!row?.checked) count = true;
+        return { ...old[item?.index], checked: !row?.checked };
+      } else {
+        if(row?.checked) count = true;
+        return row;
+      }
+    }));
+    setShow(count);
   }
 
   const onRowClick = row => onClickAdd(row?.original?.msInventory);

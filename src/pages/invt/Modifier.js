@@ -88,10 +88,12 @@ export function Modifier(){
       setLoading('loading');
       setError(null);
       let response = await dispatch(sendRequest(user, token, 'Inventory/Modifer', toDelete));
-      if(response?.error) setError(response?.error);
-      else message.success(t('modifier.delete_success'));
       setLoading(false);
-      getData(site);
+      if(response?.error) setError(response?.error);
+      else {
+        message.success(t('modifier.delete_success'));
+        getData(site);
+      }
     }
   };
 

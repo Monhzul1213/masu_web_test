@@ -39,18 +39,26 @@ export function Header(props){
     }
   }
 
+  const setFilter = (site1, cat1, name1) => {
+    let data = [];
+    if(site1 !== -1) data.push({ fieldName: 'SiteID', value: site1 });
+    if(cat1 !== -2) data.push({ fieldName: 'CategoryID', value: cat1 });
+    if(name1) data.push({ fieldName: 'Name', value: name1 });
+    onSearch(data);
+  }
+
   const onChangeSite = value => {
     setSite(value);
-    onSearch(value, category, '');
+    setFilter(value, category, '');
   }
 
   const onChangeCategory = value => {
     setCategory(value);
-    onSearch(site, value, '');
+    setFilter(site, value, '');
   }
 
   const handleEnter = value => {
-    onSearch(site, category, value);
+    setFilter(site, category, value);
   }
 
   const onClickSearch = () => setShowSearch(!showSearch);
