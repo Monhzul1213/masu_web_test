@@ -30,26 +30,38 @@ export function Add(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const checkValid = () => {
+    let nameLength = 2, addressLength = 20, phoneLength = 8;
+    let isNameValid = name?.value && name?.value?.length >= nameLength;
+    let isAddressValid = !address?.value || address?.value?.length >= addressLength;
+    let isPhoneValid = !phone?.value || phone?.value?.length >= phoneLength;
+    if(isNameValid && isAddressValid && isPhoneValid){
+      return true;
+    } else {
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      else if(!isNameValid) setName({ value: name?.value, error: ' ' + nameLength + t('error.longer_than') });
+      if(!isAddressValid) setAddress({ value: address?.value, error: ' ' + addressLength + t('error.longer_than') });
+      if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
+      return false;
+    }
+  }
+
   const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
-    if(name?.value){
+    if(checkValid()){
       setLoading(true);
       let data = { name: name?.value, address: address?.value, phone: phone?.value, descr: descr?.value?.trim() };
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
-      console.log(data);
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
       const response = await dispatch(sendRequest(user, token, api, data));
-      console.log(response);
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);
         message.success(t('shop.add_success'));
       }
       setLoading(false);
-    } else {
-      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
     }
   }
 
