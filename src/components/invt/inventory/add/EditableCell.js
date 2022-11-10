@@ -59,7 +59,7 @@ export const SelectableCell = props => {
   }, [initialValue]);
 
   const onChange = e => {
-    setValue(e);
+    // setValue(e);
     updateMyData(row?.index, id, e)
   }
 

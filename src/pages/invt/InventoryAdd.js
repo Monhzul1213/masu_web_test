@@ -32,6 +32,7 @@ export function InventoryAdd(){
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
   const [checked, setChecked] = useState(true);
   const [searchI, setSearchI] = useState({ value: null });
   const [totalI, setTotalI] = useState(0);
@@ -148,6 +149,11 @@ export function InventoryAdd(){
     else navigate('/inventory/invt_list');
   }
 
+  const confirm = sure => {
+    setOpen(false);
+    if(sure) navigate('/inventory/invt_list');
+  }
+
   const validateData = () => {
     let invkite = [], invvar = [], invmod = [], invsales = [];
     if(name?.value && barcode?.value){
@@ -229,10 +235,10 @@ export function InventoryAdd(){
     }
   }
 
-  const onClickDelete = () => setOpen(true);
+  const onClickDelete = () => setOpen1(true);
 
-  const confirm = async sure => {
-    setOpen(false);
+  const confirm1 = async sure => {
+    setOpen1(false);
     setError(null);
     if(sure){
       setLoading(true);
@@ -247,6 +253,7 @@ export function InventoryAdd(){
   }
 
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
+  const confirm1Props = { open: open1, text: t('page.delete_confirm'), confirm: confirm1 };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
@@ -262,6 +269,7 @@ export function InventoryAdd(){
   return (
     <Overlay className='i_container' loading={loading}>
       {open && <Confirm {...confirmProps} />}
+      {open1 && <Confirm {...confirm1Props} />}
       <div className='i_scroll'>
         {error && <Error1 error={error} />}
         <form>
