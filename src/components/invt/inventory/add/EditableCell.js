@@ -54,6 +54,10 @@ export const SelectableCell = props => {
   const { value: initialValue, row, column: { id, width }, updateMyData, disabled, data, s_value, s_descr } = props;
   const [value, setValue] = useState(initialValue);
 
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
   const onChange = e => {
     setValue(e);
     updateMyData(row?.index, id, e)

@@ -194,7 +194,9 @@ export function InventoryAdd(){
         price: parseFloat(price?.value ? price?.value : 0),
         cost: parseFloat(cost?.value ? cost?.value : 0),
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
-        UseAllSite: checked ? 'Y' : 'N', image, rowStatus: invt ? 'U' : 'D',
+        UseAllSite: checked ? 'Y' : 'N',
+        image: '', // image,
+        rowStatus: invt ? 'U' : 'D',
         invkite, invvar, invmod, invsales
       };
       if(invt){

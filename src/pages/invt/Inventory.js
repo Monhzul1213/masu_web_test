@@ -72,10 +72,12 @@ export function Inventory(){
     let data = [];
     if(site !== -1) data.push({ fieldName: 'SiteID', value: site });
     if(category !== -2) data.push({ fieldName: 'CategoryID', value: category });
-    data.push({ fieldName: 'Name', value: name });
+    if(name) data.push({ fieldName: 'Name', value: name });
     setError(null);
     setLoading(true);
-    let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', data));
+    let response = data?.length
+      ? await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', data))
+      : await dispatch(getList(user, token, 'Inventory/GetInventory'));
     setInventory(response);
     setFiltering(true);
   }
