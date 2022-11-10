@@ -6,7 +6,7 @@ import { Table, PaginationTable, Input, DynamicBSIcon } from '../../../all';
 import { EditableCell } from './EditableCell';
 
 export function CardVariant(props){
-  const { data, setData, setEdited, price, cost, search, setSearch, disabled, setDisabled } = props;
+  const { data, setData, setEdited, price, cost, search, setSearch, disabled, setDisabled, setDVariants } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -57,6 +57,7 @@ export function CardVariant(props){
   }
 
   const onClickDelete = row => {
+    if(row?.original?.variantId || row?.original?.variantId === 0) setDVariants(old => [...old, row?.original]);
     if(row?.original?.error){
       setDisabled(false);
       setData(old => old?.reduce(function(list, item, index) {

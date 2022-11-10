@@ -90,7 +90,7 @@ export function ModifierAdd(){
       setLoading(true);
       setError(null);
       let modifer = { modifireID: item?.modifer?.modifireID ?? -1, modiferName: name?.value,
-        rowStatus: item ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N' };
+        rowStatus: item ? 'U' : 'I', UseAllSite: checked ? 'Y' : 'N', useAllSite: checked ? 'Y' : 'N' };
       let modiferItems = [], modiferSites = [];
       items?.forEach(it => modiferItems?.push({...it, price: parseFloat(it?.price ? it?.price : 0)}));
       dItems?.forEach(it => modiferItems?.push({...it, price: parseFloat(it?.price ? it?.price : 0), rowStatus: 'D'}));

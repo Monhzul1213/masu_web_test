@@ -13,7 +13,7 @@ import { EditableCell } from './EditableCell';
 const { Option } = Select;
 
 export function CardInvt(props){
-  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch, total, setTotal } = props;
+  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch, total, setTotal, setDKits } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [items, setItems] = useState([]);
@@ -42,6 +42,7 @@ export function CardInvt(props){
   }, [i18n?.language]);
 
   const onClickDelete = row => {
+    if(row?.original?.kitId || row?.original?.kitId === 0) setDKits(old => [...old, row?.original]);
     let newTotal = total - (row?.original?.cost ?? 0);
     setTotal(newTotal);
     setCost({ value: newTotal });

@@ -25,7 +25,9 @@ export function InventoryAdd(){
   const [invt, setInvt] = useState(null);
   const [edited, setEdited] = useState(false);
   const [kits, setKits] = useState([]);
+  const [dkits, setDKits] = useState([]);
   const [variants, setVariants] = useState([]);
+  const [dvariants, setDVariants] = useState([]);
   const [modifiers, setModifiers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -88,11 +90,13 @@ export function InventoryAdd(){
         let exists = invt?.psSalesPrices?.filter(si => si.siteId === item.siteId)[0];
         item.checked = exists ? true : false;
         if(exists) item.price = exists.price;
+        item.rowStatus = exists ? 'U' : 'I';
       });
       setSites(sites1);
       modifiers1.forEach(item => {
         let exists = invt?.msInventoryModifers?.filter(si => si.modifireId === item?.modifer?.modifireID)[0];
         item.checked = exists?.useModifier === 'Y';
+        item.rowStatus = exists ? 'U' : 'I';
       });
       setModifiers(modifiers1);
     }
@@ -124,7 +128,7 @@ export function InventoryAdd(){
       response?.data?.forEach(item => {
         if(item?.modifer?.useAllSite === 'Y') item.modifer.options = t('inventory.modifer_all');
         else {
-          let options = item?.modiferSites?.map(mod => mod.name);
+          let options = item?.modiferSites?.map(mod => mod.siteName);
           item.modifer.options = options?.join(', ');
         }
       });
@@ -150,8 +154,10 @@ export function InventoryAdd(){
       if(isKit){
         if(kits?.length){
           kits?.forEach(item => {
-            invkite.push({ invtID: item?.invtId, qty: parseFloat(item?.qty ? item?.qty : 0), cost: parseFloat(item?.cost ? item?.cost : 0) });
+            invkite.push({ invtID: item?.invtId, qty: parseFloat(item?.qty ? item?.qty : 0), cost: parseFloat(item?.cost ? item?.cost : 0),
+              rowStatus: item?.kitId || item?.kitId === 0 ? 'U' : 'I' });
           });
+          dkits?.forEach(it => invkite?.push({...it, rowStatus: 'D'}));
         } else {
           setSearchI({ value: searchI?.value, error: t('inventory.kit_error') });
           return false;
@@ -162,25 +168,39 @@ export function InventoryAdd(){
           return false;
         } else {
           variants?.forEach(item => {
-            invvar.push({ variantName: item?.variantName, barCode: item?.barCode?.trim(), sku: item?.sku?.trim(),
-              price: parseFloat(item?.price ? item?.price : 0), cost: parseFloat(item?.cost ? item?.cost : 0) });
+            let varItem = { variantName: item?.variantName, barCode: item?.barCode?.trim(), sku: item?.sku?.trim(),
+              price: parseFloat(item?.price ? item?.price : 0), cost: parseFloat(item?.cost ? item?.cost : 0) };
+            if(invt){
+              varItem.variantID = item?.variantId ?? -1;
+              varItem.rowStatus = item?.variantId || item?.variantId === 0 ? 'U' : 'I';
+            }
+            invvar.push(varItem);
           });
+          dvariants?.forEach(it => invvar?.push({...it, rowStatus: 'D'}));
         }
       }
       modifiers?.forEach(item => {
-        if(item?.checked) invmod.push({ modifireID: item?.modifer?.modifireID, useModifier: 'Y' });
+        if(item?.checked) invmod.push({ modifireID: item?.modifer?.modifireID, useModifier: 'Y', rowStatus: item?.rowStatus ?? 'I' });
+        else if(item?.rowStatus === 'U') invmod.push({ modifireID: item?.modifer?.modifireID, useModifier: 'N', rowStatus: 'D' });
       });
       sites?.forEach(item => {
-        if(item?.checked) invsales.push({ siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0), status: 0 });//status?
+        if(item?.checked)
+          invsales.push({ siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0), status: 0, rowStatus: item?.rowStatus ?? 'I' });
+        else if(item?.rowStatus === 'U')
+          invsales.push({ siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0), status: 0, rowStatus: 'D' });
       });
       let data = {
         name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value,
         price: parseFloat(price?.value ? price?.value : 0),
         cost: parseFloat(cost?.value ? cost?.value : 0),
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
-        UseAllSite: checked ? 'Y' : 'N', image,
+        UseAllSite: checked ? 'Y' : 'N', image, rowStatus: invt ? 'U' : 'D',
         invkite, invvar, invmod, invsales
       };
+      if(invt){
+        data.invtID = invt?.msInventory?.invtId;
+        data.useAllSite = checked ? 'Y' : 'N';
+      }
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
@@ -227,9 +247,9 @@ export function InventoryAdd(){
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit };
-  const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost,
+  const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
-  const variantProps = { data: variants, setData: setVariants, setEdited, price, cost,
+  const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,
     search: searchV, setSearch: setSearchV, disabled: disabledV, setDisabled: setDisabledV };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited, checked, setChecked };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add' };
