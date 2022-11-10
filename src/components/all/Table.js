@@ -137,7 +137,7 @@ export function TableDetail(props){
               </tr>
               {row?.isExpanded ?
                 <tr colSpan={colSpan}><td colSpan={colSpan}>
-                  <Detail data={row?.original && row?.original[detailName]} />
+                  <Detail data={row?.original && row?.original[detailName]} index={row?.index} />
                 </td></tr>
               : null}
             </>

@@ -7,7 +7,7 @@ import { Check, DynamicFAIcon, PaginationTable, Table, TableDetail, TableRow } f
 import { EditableCell, SelectableCell } from '../add/EditableCell';
 
 function Detail(props){
-  const { data } = props;
+  const { data, index, updateData } = props;
   const [columns, setColumns] = useState([]);
   const { t, i18n } = useTranslation();
 
@@ -40,7 +40,11 @@ function Detail(props){
   }
 
   const updateMyData = (row, column, value) => {
-    console.log(row, column, value);
+    let invvar = data?.map((item, index) => {
+      if(row === index) return {...item, rowStatus: 'U', cost: parseFloat(value ? value : 0)};
+      return {...item, rowStatus: 'U'};
+    });
+    updateData(index, null, null, null, invvar)
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, updateMyData }, useSortBy, useRowSelect);
@@ -103,9 +107,9 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
-  const updateMyData = (row, column, value) => {
+  const updateMyData = (row, column, value, e, invvar) => {
     let newData = {...data[row]?.msInventory, invtID: data[row]?.msInventory?.invtId, categoryID: data[row]?.msInventory?.categoryId, rowStatus: 'U' };
-    newData.invvar = data[row]?.msInventoryVariants?.map(item => { return {...item, rowStatus: 'U'}});
+    newData.invvar = invvar ?? data[row]?.msInventoryVariants?.map(item => { return {...item, rowStatus: 'U'}});
     newData.invkite = data[row]?.msInvKitItems?.map(item => { return {...item, rowStatus: 'U'}});
     newData.invmod = data[row]?.msInventoryModifers?.map(item => { return {...item, rowStatus: 'U'}});
     newData.invsales = data[row]?.psSalesPrices?.map(item => { return {...item, rowStatus: 'U'}});
@@ -140,9 +144,11 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original?.msInventory);
   
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
+  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,// autoResetExpanded: false,
+    initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick, Detail: ({ data }) => <Detail data={data} />, detailName: 'msInventoryVariants', colSpan: 7 };
+  const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
+    detailName: 'msInventoryVariants', colSpan: 7 };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 11px)';
 
   return (
