@@ -81,6 +81,7 @@
 .ed_input {
   border: none;
   border-bottom: solid 1px #d2d2d2;
+  border-radius: 0;
 }
 
 .ed_input:focus, #hide_border:focus {
