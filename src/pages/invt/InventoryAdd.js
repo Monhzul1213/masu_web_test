@@ -5,6 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
+import { useExitPrompt } from '../../helpers';
 import { deleteRequest, getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
 import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty, CardModifier } from '../../components/invt/inventory/add';
@@ -23,7 +24,8 @@ export function InventoryAdd(){
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
   const [invt, setInvt] = useState(null);
-  const [edited, setEdited] = useState(false);
+  // const [edited, setEdited] = useState(false);
+  const [edited, setEdited] = useExitPrompt(false);
   const [kits, setKits] = useState([]);
   const [dkits, setDKits] = useState([]);
   const [variants, setVariants] = useState([]);
@@ -46,7 +48,7 @@ export function InventoryAdd(){
 
   useEffect(() => {
     getData();
-    return () => {};
+    return () => setEdited(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
