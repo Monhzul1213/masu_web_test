@@ -48,6 +48,7 @@
     "/inventory/invt_category": "Категор",
     "/inventory/invt_list": "Барааны жагсаалт",
     "/inventory/invt_list/invt_add": "Бараа нэмэх",
+    "/employee/emp_list": "Ажилтны жагсаалт",
     "/inventory/invt_modi": "Нэмэлт төлбөр",
     "/inventory/invt_modi/modi_add": "Нэмэлт төлбөр үүсгэх"
   },
@@ -62,6 +63,7 @@
     "config": "Тохиргоо",
     "help": "Тусламж",
     "invt_list": "Барааны жагсаалт",
+    "emp_list": "Ажилтны жагсаалт",
     "invt_category": "Категор",
     "invt_modi": "Нэмэлт төлбөр",
     "invt_discount": "Хөнгөлөлт"
@@ -297,5 +299,9 @@
     "option_error2": "Сонголтууд алдаатай байж болохгүй.",
     "add_success": "Нэмэлт төлбөр амжилттай бүртгэлээ.",
     "delete_success": "Нэмэлт төлбөр амжилттай устгалаа."
+  },
+  "employee": {
+    "title": "Ажилтан",
+    "add": "Ажилтан нэмэх"
   }
 }

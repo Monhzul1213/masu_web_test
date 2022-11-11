@@ -19,6 +19,7 @@ export function InventoryAdd(){
   const [sku, setSku] = useState({ value: '' });
   const [barcode, setBarcode] = useState({ value: '' });
   const [image, setImage] = useState('');
+  const [type, setType] = useState('');
   const [isKit, setIsKit] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
@@ -199,8 +200,8 @@ export function InventoryAdd(){
         cost: parseFloat(cost?.value ? cost?.value : 0),
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
         UseAllSite: checked ? 'Y' : 'N',
-        image: '', // image,
-        rowStatus: invt ? 'U' : 'D',
+        image: { FileData: image ?? '', FileType: type ?? '' },
+        rowStatus: invt ? 'U' : 'I',
         invkite, invvar, invmod, invsales
       };
       if(invt){
@@ -260,7 +261,7 @@ export function InventoryAdd(){
 
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit };
+    barcode, setBarcode, image, setImage, setType, onPriceChange, setEdited, isKit };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,

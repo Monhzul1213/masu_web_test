@@ -39,7 +39,9 @@ export function Menu(props){
       getItem(t('menu.invt_discount'), '/inventory/invt_discount')
     ]),
     getItem(t('menu.management'), '/management', <TbBuildingWarehouse />),
-    getItem(t('menu.employee'), '/employee', <RiContactsLine />),
+    getItem(t('menu.employee'), '/employee', <RiContactsLine />, [
+      getItem(t('menu.emp_list'), '/employee/emp_list'),
+    ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />),
     getItem(t('menu.config'), '/config', <BsGear />),

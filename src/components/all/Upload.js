@@ -4,7 +4,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { checkMimeType } from '../../helpers';
 
 export function UploadImage(props){
-  const { image, setImage, setImageFile } = props;
+  const { image, setImage, setType, setImageFile, setEdited } = props;
   const [loading, setLoading] = useState(false);
 
   const getBase64 = (img, callback) => {
@@ -24,11 +24,14 @@ export function UploadImage(props){
       setLoading(false);
       setImageFile && setImageFile(null);
       setImage(null);
+      setType(null);
     } else {
       if(info.file.status === 'done'){
         getBase64(info.file.originFileObj, image => {
           setImageFile && setImageFile(info.file.originFileObj);
           setImage(image);
+          setEdited && setEdited(true);
+          setType(info.file.originFileObj?.type?.replace(/(.*)\//g, ''));
           setLoading(false);
         });
       }
