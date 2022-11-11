@@ -8,7 +8,7 @@ import { EditableCell, SelectableCell } from '../add/EditableCell';
 import { Detail } from './Detail';
 
 export function List(props){
-  const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory } = props;
+  const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory, autoResetExpanded } = props;
   const [columns, setColumns] = useState([]);
   const { t, i18n } = useTranslation();
 
@@ -94,7 +94,7 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original?.msInventory);
   
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,// autoResetExpanded: false,
+  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, autoResetExpanded,
     initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,

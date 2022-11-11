@@ -20,6 +20,7 @@ export function Inventory(){
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState([]);
+  const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -71,14 +72,16 @@ export function Inventory(){
   const getInventory = async () => {
     setError(null);
     setLoading(true);
+    setAutoResetExpanded(true);
     const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
     setInventory(response);
   }
 
-  const onSearch = async filter => {
+  const onSearch = async (filter, isEdit) => {
     setFilter(filter);
     setError(null);
     setLoading(true);
+    setAutoResetExpanded(isEdit ? false : true);
     let response = filter?.length
       ? await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
       : await dispatch(getList(user, token, 'Inventory/GetInventory'));
@@ -117,7 +120,7 @@ export function Inventory(){
     setLoading(false);
     if(!response?.error){
       message.success(t('inventory.add_success'));
-      onSearch(filter);
+      onSearch(filter, isEdit);
     } else if(response?.error && !isEdit) setError(response?.error);
     return response;
   }
@@ -126,7 +129,7 @@ export function Inventory(){
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
-  const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory };
+  const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory, autoResetExpanded };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
