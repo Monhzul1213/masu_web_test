@@ -1,12 +1,16 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
 import CurrencyInput from 'react-currency-input-field';
+import { useTranslation } from 'react-i18next';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, length } = props;
+  const { t } = useTranslation();
 
   const onChange = e => {
-    setValue({ value: e.target.value });
+    e?.target?.value?.length > length 
+      ? setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+      : setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);
   }
@@ -53,10 +57,13 @@ export function Input(props){
 }
 
 export function DescrInput(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, inRow } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, inRow, length } = props;
+  const { t } = useTranslation();
 
   const onChange = e => {
-    setValue({ value: e.target.value });
+    e?.target?.value?.length > length 
+      ? setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+      : setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);
   }

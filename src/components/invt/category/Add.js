@@ -86,7 +86,7 @@ export function Add(props){
   }
   
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
-  const nameProps = { value: name, setValue: setName, label: t('category.name'), placeholder: t('category.name'), setError };
+  const nameProps = { value: name, setValue: setName, label: t('category.name'), placeholder: t('category.name'), setError, length: 20 };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   
   return (

@@ -12,7 +12,7 @@ export function CardVariant(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('inventory.t_variant'), accessor: 'variantName', customStyle: { paddingRight: 18 }, width: null },
+      { Header: t('inventory.t_variant'), accessor: 'variantName', customStyle: { paddingRight: 18 }, width: null, length: 30 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'price', isMoney: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80
@@ -21,8 +21,8 @@ export function CardVariant(props){
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isMoney: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80
       },
-      { Header: t('inventory.sku'), accessor: 'sku', customStyle: { width: 120, paddingRight: 18 }, width: 100 },//, autoFocus: true
-      { Header: t('inventory.barcode'), accessor: 'barCode', customStyle: { width: 120, paddingRight: 18 }, width: 100 },
+      { Header: t('inventory.sku'), accessor: 'sku', customStyle: { width: 120, paddingRight: 18 }, width: 100, length: 30 },//, autoFocus: true
+      { Header: t('inventory.barcode'), accessor: 'barCode', customStyle: { width: 120, paddingRight: 18 }, width: 100, length: 30 },
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>
           (<div className='ac_delete_back'>
@@ -92,7 +92,7 @@ export function CardVariant(props){
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     updateMyData, onClickDelete, disabled }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  const addProps = { value: search, setValue: setSearch, placeholder: t('inventory.add_variant'), handleEnter, inRow: true };
+  const addProps = { value: search, setValue: setSearch, placeholder: t('inventory.add_variant'), handleEnter, inRow: true, length: 30 };
 
   return (
     <div className='ac_back'>

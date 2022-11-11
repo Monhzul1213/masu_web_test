@@ -14,7 +14,7 @@ export function CardOption(props){
     setColumns([
       {
         Header: t('page.name'), accessor: 'optionName',
-        customStyle: { width: 430, paddingRight: 18 }, width: 410
+        customStyle: { width: 430, paddingRight: 18 }, width: 410, length: 20
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'price', isMoney: true,// autoFocus: true,
@@ -85,14 +85,14 @@ export function CardOption(props){
     }
   }
 
-  const nameProps = { value: name, setValue: setName, label: t('modifier.name'), placeholder: t('modifier.name'), setError, inRow: true, setEdited };
+  const nameProps = { value: name, setValue: setName, label: t('modifier.name'), placeholder: t('modifier.name'), setError, inRow: true, setEdited, length: 20 };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 190px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false,
     initialState: { pageIndex: 0, pageSize: 25 },
     updateMyData, onClickDelete, disabled }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  const addProps = { value: search, setValue: setSearch, placeholder: t('modifier.new'), handleEnter, inRow: true };
+  const addProps = { value: search, setValue: setSearch, placeholder: t('modifier.new'), handleEnter, inRow: true, length: 20 };
 
   return (
     <div className='ac_back' id='mo_ac_back'>

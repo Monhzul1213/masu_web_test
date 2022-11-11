@@ -87,7 +87,7 @@ export function Add(props){
     }
   }
 
-  const nameProps = { value: name, setValue: setName, label: t('pos.name'), placeholder: t('pos.name1'), setError };
+  const nameProps = { value: name, setValue: setName, label: t('pos.name'), placeholder: t('pos.name1'), setError, length: 40 };
   const siteProps = { value: site, setValue: setSite, label: t('pos.site'), placeholder: t('pos.site1'), setError,
     data: sites, s_value: 'siteId', s_descr: 'name' };
   const typeProps = { value: type, setValue: setType, label: t('pos.type'), placeholder: t('pos.type1'), setError,

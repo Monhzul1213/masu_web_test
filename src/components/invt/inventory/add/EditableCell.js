@@ -5,13 +5,16 @@ import CurrencyInput from 'react-currency-input-field';
 const { Option } = Select;
 
 export const EditableCell = props => {
-  const { value: initialValue, row, column: { id, isText, isMoney, isQty, width, autoFocus }, updateMyData, disabled, cellID } = props;
+  const { value: initialValue, row, column: { id, isText, isMoney, isQty, width, autoFocus, length }, updateMyData, disabled, cellID } = props;
   const [value, setValue] = useState(initialValue);
   const hasError = row?.original?.error === id;
   const notEditable = disabled && !hasError;
 
   const onChange = e => {
-    setValue(e.target.value)
+    // setValue(e.target.value)
+    e?.target?.value?.length > length 
+      ? setValue(value)
+      : setValue(e.target.value);
   }
 
   const onBlur = e => {
