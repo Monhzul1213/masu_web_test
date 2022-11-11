@@ -42,3 +42,9 @@ export const getBase64 = (file, callback) => {
 export function formatNumber(num, dec){
   return new Intl.NumberFormat('en-US', { style: 'decimal', maximumFractionDigits: dec ?? 2 }).format(num ?? 0);
 }
+
+export const urlToFile = async (url, mimeType) => {
+  const res = await fetch(url);
+  const buf = await res.arrayBuffer();
+  return new File([buf], 'imagefile', { type: mimeType });
+};

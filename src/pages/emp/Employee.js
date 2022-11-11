@@ -16,10 +16,8 @@ export function Employee(){
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState(false);
   const [filtering, setFiltering] = useState(false);
-  const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [open, setOpen] = useState(false);
   const [filter, setFilter] = useState([]);
-  const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,8 +33,8 @@ export function Employee(){
     // else navigate('invt_add');
   }
   const emptyProps = { icon: 'MdOutlinePersonOutline', type: 'employee', onClickAdd, noDescr: true };
-  // const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
-  // const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory, autoResetExpanded };
+  // const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };
+  // const listProps = { data, setData, onClickAdd, setShow, checked, setChecked, updateInventory };
   // const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (

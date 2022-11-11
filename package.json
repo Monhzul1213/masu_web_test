@@ -14,6 +14,7 @@
     "i18next": "^21.10.0",
     "i18next-browser-languagedetector": "^6.1.6",
     "i18next-http-backend": "^1.4.4",
+    "mime": "^3.0.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-currency-input-field": "^3.6.9",

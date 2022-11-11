@@ -7,7 +7,7 @@ import { DescrInput, Input, MoneyInput, Radio, Select, UploadImage } from '../..
 
 export function CardMain(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, setType, onPriceChange, setEdited, isKit } = props;
+    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [loading, setLoading] = useState(false);
@@ -46,7 +46,7 @@ export function CardMain(props){
   const skuProps = { value: sku, setValue: setSku, label: t('inventory.sku'), placeholder: t('inventory.sku'), setEdited, setError, inRow: true, length: 30 };
   const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setEdited, setError,
     inRow: true, length: 30 };
-  const imageProps = { image, setImage, setType, setEdited, setError };
+  const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError };
   
   return (
     <div className='ac_back'>

@@ -3,8 +3,10 @@ import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import mime from 'mime';
 
 import '../../css/invt.css';
+import { urlToFile } from '../../helpers';
 import { deleteRequest, getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty, CardModifier } from '../../components/invt/inventory/add';
@@ -18,8 +20,9 @@ export function InventoryAdd(){
   const [cost, setCost] = useState({ value: '' });
   const [sku, setSku] = useState({ value: '' });
   const [barcode, setBarcode] = useState({ value: '' });
-  const [image, setImage] = useState('');
-  const [type, setType] = useState('');
+  const [image, setImage] = useState(null);
+  const [image64, setImage64] = useState('');
+  const [imageType, setImageType] = useState('');
   const [isKit, setIsKit] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
@@ -68,6 +71,17 @@ export function InventoryAdd(){
     }
   }
 
+  const getImage = async inventory => {
+    setImage64(inventory?.fileRaw?.fileData ?? '');
+    let type = inventory?.fileRaw?.fileType?.replace('.', '');
+    setImageType(type ?? '');
+    let mimeType = mime.getType(type);
+    let dataPrefix = `data:` + mimeType + `;base64,`;
+    let attach64 = `${dataPrefix}${inventory?.fileRaw?.fileData}`;
+    let attachFile = await urlToFile(attach64, mimeType);
+    setImage(attachFile);
+  }
+
   const getInventory = async (value, sites1, modifiers1) => {
     setError(null);
     setLoading(true);
@@ -107,6 +121,7 @@ export function InventoryAdd(){
         item.rowStatus = exists ? 'U' : 'I';
       });
       setModifiers(modifiers1);
+      getImage(invt?.msInventory);
     }
   }
 
@@ -200,7 +215,7 @@ export function InventoryAdd(){
         cost: parseFloat(cost?.value ? cost?.value : 0),
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
         UseAllSite: checked ? 'Y' : 'N',
-        image: { FileData: image ?? '', FileType: type ?? '' },
+        image: { FileData: image64 ?? '', FileType: imageType ?? '' },
         rowStatus: invt ? 'U' : 'I',
         invkite, invvar, invmod, invsales
       };
@@ -261,7 +276,7 @@ export function InventoryAdd(){
 
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, setType, onPriceChange, setEdited, isKit };
+    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, image64 };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,

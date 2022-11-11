@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+
 import { checkMimeType } from '../../helpers';
 
 export function UploadImage(props){
-  const { image, setImage, setType, setImageFile, setEdited } = props;
+  const { image, setImage, setImage64, setImageType, setEdited } = props;
   const [loading, setLoading] = useState(false);
 
   const getBase64 = (img, callback) => {
@@ -22,16 +23,16 @@ export function UploadImage(props){
     if(error){
       message.error(error, 10);
       setLoading(false);
-      setImageFile && setImageFile(null);
+      setImage64(null);
       setImage(null);
-      setType(null);
+      setImageType(null);
     } else {
       if(info.file.status === 'done'){
         getBase64(info.file.originFileObj, image => {
-          setImageFile && setImageFile(info.file.originFileObj);
-          setImage(image);
+          setImage(info.file.originFileObj);
+          setImage64(image);
           setEdited && setEdited(true);
-          setType(info.file.originFileObj?.type?.replace(/(.*)\//g, ''));
+          setImageType(info.file.originFileObj?.type?.replace(/(.*)\//g, ''));
           setLoading(false);
         });
       }
@@ -58,7 +59,7 @@ export function UploadImage(props){
       customRequest={dummyRequest}
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
       onChange={handleChange}>
-      {image ? <img src={image} alt="avatar" className='upload_image' /> : uploadButton}
+      {image ? <img src={URL.createObjectURL(image)} alt="avatar" className='upload_image' /> : uploadButton}
     </Upload>
   )
 }
