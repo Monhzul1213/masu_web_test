@@ -5,7 +5,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
-import { useExitPrompt } from '../../helpers';
 import { deleteRequest, getList, sendRequest } from '../../services';
 import { ButtonRow1, Confirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty, CardModifier } from '../../components/invt/inventory/add';
@@ -24,8 +23,7 @@ export function InventoryAdd(){
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
   const [invt, setInvt] = useState(null);
-  // const [edited, setEdited] = useState(false);
-  const [edited, setEdited] = useExitPrompt(false);
+  const [edited, setEdited] = useState(false);
   const [kits, setKits] = useState([]);
   const [dkits, setDKits] = useState([]);
   const [variants, setVariants] = useState([]);
@@ -34,12 +32,12 @@ export function InventoryAdd(){
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [open1, setOpen1] = useState(false);
   const [checked, setChecked] = useState(true);
   const [searchI, setSearchI] = useState({ value: null });
   const [totalI, setTotalI] = useState(0);
   const [searchV, setSearchV] = useState({ value: '' });
   const [disabledV, setDisabledV] = useState(false);
+  const [saved, setSaved] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
@@ -51,6 +49,12 @@ export function InventoryAdd(){
     return () => setEdited(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if(saved) onClickCancel();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saved]);
 
   const getData = async () => {
     let invtId = searchParams?.get('invtId'), response1 = false;
@@ -146,15 +150,7 @@ export function InventoryAdd(){
     }));
   }
 
-  const onClickCancel = () => {
-    if(edited) setOpen(true);
-    else navigate('/inventory/invt_list');
-  }
-
-  const confirm = sure => {
-    setOpen(false);
-    if(sure) navigate('/inventory/invt_list');
-  }
+  const onClickCancel = () => navigate('/inventory/invt_list');
 
   const validateData = () => {
     let invkite = [], invvar = [], invmod = [], invsales = [];
@@ -219,43 +215,50 @@ export function InventoryAdd(){
     }
   }
 
+  const onLoad = () => {
+    setError(null);
+    setLoading(true);
+    setEdited(false);
+  }
+
+  const onError = err => {
+    setError(err);
+    setEdited(true);
+    setLoading(false);
+  }
+
+  const onSuccess = msg => {
+    message.success(msg);
+    setSaved(true);
+    setLoading(false);
+  }
+
   const onClickSave = async () => {
     let data = validateData();
-    console.log(data);
     if(data){
-      setLoading(true);
-      setError(null);
+      onLoad();
       let api = invt ? 'Inventory/UpdateInventory' : 'Inventory/AddInventory';
       const response = await dispatch(sendRequest(user, token, api, data));
       console.log(response);
-      if(response?.error) setError(response?.error);
-      else {
-        message.success(t('inventory.add_success'));
-        navigate('/inventory/invt_list');
-      }
-      setLoading(false);
+      if(response?.error) onError(response?.error);
+      else onSuccess(t('inventory.add_success'));
     }
   }
 
-  const onClickDelete = () => setOpen1(true);
+  const onClickDelete = () => setOpen(true);
 
-  const confirm1 = async sure => {
-    setOpen1(false);
+  const confirm = async sure => {
+    setOpen(false);
     setError(null);
     if(sure){
-      setLoading(true);
+      onLoad();
       const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteInventory/' + invt?.msInventory?.invtId));
-      setLoading(false);
-      if(response?.error) setError(response?.error);
-      else {
-        message.success(t('inventory.delete_success'));
-        navigate('/inventory/invt_list');
-      }
+      if(response?.error) onError(response?.error);
+      else onSuccess(t('inventory.delete_success'));
     }
   }
 
-  const confirmProps = { open, text: t('page.back_confirm'), confirm };
-  const confirm1Props = { open: open1, text: t('page.delete_confirm'), confirm: confirm1 };
+  const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, onPriceChange, setEdited, isKit };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
@@ -272,7 +275,6 @@ export function InventoryAdd(){
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
       {open && <Confirm {...confirmProps} />}
-      {open1 && <Confirm {...confirm1Props} />}
       <div className='i_scroll'>
         {error && <Error1 error={error} />}
         <form>
