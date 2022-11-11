@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import '../../css/invt.css';
 import { getList, sendRequest } from '../../services';
-import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
+import { ButtonRow1, Confirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardOption, CardSite } from '../../components/invt/modifier/add';
 import { CardEmpty } from '../../components/invt/inventory/add';
 
@@ -140,6 +140,7 @@ export function ModifierAdd(){
 
   return (
     <Overlay className='i_container' loading={loading}>
+      <Prompt edited={edited} />
       {open && <Confirm {...confirmProps} />}
       <div className='i_scroll'>
         {error && <Error1 error={error} />}
