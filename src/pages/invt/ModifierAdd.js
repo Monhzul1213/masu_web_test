@@ -154,8 +154,8 @@ export function ModifierAdd(){
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
       {open && <Confirm {...confirmProps} />}
+      {error && <Error1 error={error} />}
       <div className='i_scroll'>
-        {error && <Error1 error={error} />}
         <form>
           <CardOption {...optionProps} />
           <div className='gap' />

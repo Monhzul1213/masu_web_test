@@ -274,6 +274,7 @@
   display: flex;
   flex-flow: column;
   overflow: scroll;
+  max-height: calc(100vh - var(--header-height) - var(--page-padding));
 }
 
 .i_scroll {
