@@ -75,6 +75,22 @@ export const apiLogin = (mail, password) => async dispatch => {
   }
 };
 
+export const apiValidate = mail => async dispatch => {
+  try {
+    const config = {
+      method: 'GET',
+      url: loginConfig?.url + 'Merchant/validate/' + mail,
+      headers: { 'Accept': '*/*' }, 
+    };
+    const response = await fetchRetryLogin(config);
+    console.log('++++++++++++++++++++++=', response);
+    return Promise.resolve({ response });
+  } catch (err) {
+    console.log(err);
+    return Promise.resolve({ error: err?.toString() });
+  }
+};
+
 function fetchRetryLogin(config, retries = 5) {
   return axios(config)
     .then(res => {
