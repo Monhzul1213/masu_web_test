@@ -1,7 +1,8 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
+import { createBrowserHistory } from "history";
 
 import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Config } from './pages';
@@ -55,7 +56,7 @@ export function App(){
   const menuProps = { collapsed, setCollapsed };
   
   return (
-    <BrowserRouter>
+    <HistoryRouter history={createBrowserHistory()}>
       <Suspense fallback={<Loading />}>
         <Layout style={{minHeight: '100vh'}}>
           <Header {...menuProps} />
@@ -77,6 +78,6 @@ export function App(){
           </Layout>
         </Layout>
       </Suspense>
-    </BrowserRouter>
+    </HistoryRouter>
   )
 }

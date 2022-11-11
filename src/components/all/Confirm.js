@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactRouterPrompt from "react-router-prompt";
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +18,27 @@ export function Confirm(props){
       </div>
       <ButtonRow onClickCancel={() => confirm(false)} onClickSave={() => confirm(true)} text1='page.no' text2='page.yes' />
     </Modal>
+  );
+}
+
+export function Prompt(props){
+  const { edited } = props;
+  const { t } = useTranslation();
+
+  return (
+    <ReactRouterPrompt when={edited}>
+      {({ isActive, onConfirm, onCancel }) =>
+        isActive && (
+          <Modal title={null} footer={null} closable={false} open={true} centered={true} width={360}>
+            <div className='m_back'>
+              <p className='m_title' id='m_confirm'>{t('page.confirm')}</p>
+              <p className='m_descr'>{t('page.back_confirm')}</p>
+            </div>
+            <ButtonRow onClickCancel={onCancel} onClickSave={onConfirm} text1='page.no' text2='page.yes' />
+          </Modal>
+        )
+      }
+    </ReactRouterPrompt>
   );
 }
 

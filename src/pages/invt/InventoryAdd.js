@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import '../../css/invt.css';
 import { useExitPrompt } from '../../helpers';
 import { deleteRequest, getList, sendRequest } from '../../services';
-import { ButtonRow1, Confirm, Error1, Overlay } from '../../components/all';
+import { ButtonRow1, Confirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty, CardModifier } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
@@ -270,6 +270,7 @@ export function InventoryAdd(){
 
   return (
     <Overlay className='i_container' loading={loading}>
+      <Prompt edited={edited} />
       {open && <Confirm {...confirmProps} />}
       {open1 && <Confirm {...confirm1Props} />}
       <div className='i_scroll'>
