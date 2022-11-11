@@ -24,6 +24,7 @@ export function ModifierAdd(){
   const [item, setItem] = useState(null);
   const [search, setSearch] = useState({ value: '' });
   const [checked, setChecked] = useState(true);
+  const [saved, setSaved] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -34,6 +35,12 @@ export function ModifierAdd(){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  useEffect(() => {
+    if(saved) onClickCancel();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saved]);
 
   const getData = async () => {
     let modifireID = searchParams?.get('modifireID');
@@ -80,15 +87,29 @@ export function ModifierAdd(){
     }
   }
 
-  const onClickCancel = () => {
-    if(edited) setOpen(true);
-    else navigate('/inventory/invt_modi');
+  const onClickCancel = () => navigate('/inventory/invt_modi');
+
+  const onLoad = () => {
+    setError(null);
+    setLoading(true);
+    setEdited(false);
+  }
+
+  const onError = err => {
+    setError(err);
+    setEdited(true);
+    setLoading(false);
+  }
+
+  const onSuccess = msg => {
+    message.success(msg);
+    setSaved(true);
+    setLoading(false);
   }
 
   const onClickSave = async () => {
     if(name?.value && items?.length && !disabled){
-      setLoading(true);
-      setError(null);
+      onLoad();
       let modifer = { modifireID: item?.modifer?.modifireID ?? -1, modiferName: name?.value,
         rowStatus: item ? 'U' : 'I', UseAllSite: checked ? 'Y' : 'N', useAllSite: checked ? 'Y' : 'N' };
       let modiferItems = [], modiferSites = [];
@@ -100,12 +121,8 @@ export function ModifierAdd(){
       });
       let data = [{ modifer, modiferItems, modiferSites }];
       let response = await dispatch(sendRequest(user, token, 'Inventory/Modifer', data));
-      if(response?.error) setError(response?.error);
-      else {
-        message.success(t('modifier.add_success'));
-        navigate('/inventory/invt_modi');
-      }
-      setLoading(false);
+      if(response?.error) onError(response?.error);
+      else onSuccess(t('modifier.add_success'));
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       if(!items?.length) setSearch({ value: search?.value, error: t('modifier.option_error1')});
@@ -118,17 +135,12 @@ export function ModifierAdd(){
   const confirm = async sure => {
     setOpen(false);
     if(sure){
-      setLoading(true);
-      setError(null);
+      onLoad();
       item.modifer.rowStatus = 'D';
       item.modiferSites.forEach(sit => sit.rowStatus = 'U');
       let response = await dispatch(sendRequest(user, token, 'Inventory/Modifer', [item]));
-      if(response?.error) setError(response?.error);
-      else {
-        message.success(t('modifier.delete_success'));
-        navigate('/inventory/invt_modi');
-      }
-      setLoading(false);
+      if(response?.error) onError(response?.error);
+      else onSuccess(t('modifier.delete_success'));
     }
   }
   
@@ -136,7 +148,7 @@ export function ModifierAdd(){
   const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'mo_ac_back' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true : false, id: 'mo_ac_btns' };
-  const confirmProps = { open, text: t('page.back_confirm'), confirm };
+  const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
     <Overlay className='i_container' loading={loading}>
