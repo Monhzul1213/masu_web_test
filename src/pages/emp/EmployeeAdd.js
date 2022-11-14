@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { Error1, Overlay, Prompt } from '../../components/all';
+import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardMain } from '../../components/emp/employee/add';
 import { CardSite } from '../../components/invt/modifier/add';
 import { CardEmpty } from '../../components/invt/inventory/add';
@@ -24,6 +24,7 @@ export function EmployeeAdd(props){
   const [sites, setSites] = useState([]);
   const [checked, setChecked] = useState(true);
   const [saved, setSaved] = useState(false);
+  const [selected, setSelected] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -83,9 +84,18 @@ export function EmployeeAdd(props){
     }
   }
 
+  const onClickSave = async () => {
+
+  }
+
+  const onClickDelete = async () => {
+
+  }
+
   let mainProps = { setError, setEdited, name, setName, mail, setMail, phone, setPhone, role, setRole, code, setCode, invite, setInvite };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'emp_ac_back' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'emp_ac_back' };
+  // let btnProps = { onClickCancel, onClickSave, onClickDelete, show: selected ? true : false, id: 'emp_ac_back' };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -98,6 +108,7 @@ export function EmployeeAdd(props){
           {sites?.length ? <CardSite {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}
         </form>
       </div>
+      {/* <ButtonRowConfirm {...btnProps} /> */}
     </Overlay>
   );
 }

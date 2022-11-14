@@ -8,6 +8,7 @@ import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Config } from './pages';
 import { Category, Inventory, InventoryAdd, Modifier, ModifierAdd } from './pages/invt';
 import { Employee, EmployeeAdd } from './pages/emp';
+import { Customer, Discount, DiscountAdd } from './src1/pages';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -76,6 +77,9 @@ export function App(){
                 <Route path='/inventory/invt_modi/modi_add' element={<ModifierAdd />} />
                 <Route path='/employee/emp_list' element={<Employee />} />
                 <Route path='/employee/emp_list/emp_add' element={<EmployeeAdd />} />
+                <Route path='/inventory/invt_discount' element={<Discount />} />
+                <Route path='/inventory/invt_discount/disc_add' element={<DiscountAdd />} />
+                <Route path='/customer' element={<Customer />} />
               </Routes>
             </Layout>
           </Layout>
