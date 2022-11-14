@@ -39,7 +39,7 @@ export function CheckBox(props){
   return (
     <div className='i_check_row'>
       <Check checked={checked} onClick={onClick} />
-      <p className='check_all_lbl'>{t(label)}</p>
+      <p className='i_check_lbl'>{t(label)}</p>
     </div>
   );
 }

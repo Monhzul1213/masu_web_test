@@ -551,5 +551,15 @@
 }
 
 .i_check_row {
-  
+  display: flex;  
+  flex-flow: row;
+  align-items: center;
+  margin: 20px 0 0 0;
+}
+
+.i_check_lbl {
+  font-size: 14px;
+  font-weight: 450;
+  color: var(--text-color);
+  margin: 0 0 0 10px;
 }

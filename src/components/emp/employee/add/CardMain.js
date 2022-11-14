@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Checkbox } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { CheckAll, CheckBox, Input, Select } from '../../../all';
+import { CheckBox, Input, Select } from '../../../all';
 
 export function CardMain(props){
   const { setError, setEdited, name, setName, mail, setMail, phone, setPhone, role, setRole, code, setCode, invite, setInvite } = props;
@@ -29,8 +28,8 @@ export function CardMain(props){
       <Input {...mailProps} />
       <Input {...phonProps} />
       <Select {...roleProps} />
-      <Input {...codeProps} />
-      <CheckBox {...checkProps} />
+      {role?.value && <Input {...codeProps} />}
+      {role?.value && <CheckBox {...checkProps} />}
     </div>
   )
 }
