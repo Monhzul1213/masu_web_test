@@ -8,7 +8,7 @@ import mime from 'mime';
 import '../../css/invt.css';
 import { urlToFile } from '../../helpers';
 import { deleteRequest, getList, sendRequest } from '../../services';
-import { ButtonRow1, Confirm, Error1, Overlay, Prompt } from '../../components/all';
+import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardMain, CardInvt, CardSite, CardVariant, CardEmpty, CardModifier } from '../../components/invt/inventory/add';
 
 export function InventoryAdd(){
@@ -35,7 +35,6 @@ export function InventoryAdd(){
   const [modifiers, setModifiers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(true);
   const [searchI, setSearchI] = useState({ value: null });
   const [totalI, setTotalI] = useState(0);
@@ -91,7 +90,6 @@ export function InventoryAdd(){
     let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', data));
     setLoading(false);
     let invt = response && response?.data && response?.data[0];
-    console.log(response);
     if(response?.error) setError(response?.error);
     else if(invt) {
       setInvt(invt);
@@ -257,26 +255,18 @@ export function InventoryAdd(){
       onLoad();
       let api = invt ? 'Inventory/UpdateInventory' : 'Inventory/AddInventory';
       const response = await dispatch(sendRequest(user, token, api, data));
-      console.log(response);
       if(response?.error) onError(response?.error);
       else onSuccess(t('inventory.add_success'));
     }
   }
 
-  const onClickDelete = () => setOpen(true);
-
-  const confirm = async sure => {
-    setOpen(false);
-    setError(null);
-    if(sure){
-      onLoad();
-      const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteInventory/' + invt?.msInventory?.invtId));
-      if(response?.error) onError(response?.error);
-      else onSuccess(t('inventory.delete_success'));
-    }
+  const onClickDelete = async () => {
+    onLoad();
+    const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteInventory/' + invt?.msInventory?.invtId));
+    if(response?.error) onError(response?.error);
+    else onSuccess(t('inventory.delete_success'));
   }
 
-  const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
     barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, image64 };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
@@ -292,7 +282,6 @@ export function InventoryAdd(){
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
-      {open && <Confirm {...confirmProps} />}
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>
@@ -307,7 +296,7 @@ export function InventoryAdd(){
           {modifiers?.length ? <CardModifier {...modiProps} /> : <CardEmpty {...modiEmptyProps} />}
         </form>
       </div>
-      <ButtonRow1 {...btnProps} />
+      <ButtonRowConfirm {...btnProps} />
     </Overlay>
   )
 }
