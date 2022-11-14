@@ -50,15 +50,11 @@ export function ButtonRowConfirm(props){
   const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2, id } = props;
   const [open, setOpen] = useState(false);
 
+  const onDelete = () => setOpen(true);
+
   const confirm = async sure => {
-    // setOpen(false);
-    // setError(null);
-    // if(sure){
-    //   onLoad();
-    //   const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteInventory/' + invt?.msInventory?.invtId));
-    //   if(response?.error) onError(response?.error);
-    //   else onSuccess(t('inventory.delete_success'));
-    // }
+    setOpen(false);
+    if(sure) onClickDelete();
   }
 
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
@@ -66,7 +62,7 @@ export function ButtonRowConfirm(props){
   return (
     <div className='invt_btn_row' id={id}>
       {open && <Confirm {...confirmProps} />}
-      {show && <DynamicBSIcon className='a_btn_delete' name='BsTrash' onClick={onClickDelete} />}
+      {show && <DynamicBSIcon className='a_btn_delete' name='BsTrash' onClick={onDelete} />}
       <Button className='invt_btn' text={t(text1 ?? 'page.cancel')} onClick={onClickCancel} />
       <Button className='invt_btn' id='invt_btn_save' text={t(text2 ?? 'page.save')} type={type} onClick={onClickSave} />
     </div>

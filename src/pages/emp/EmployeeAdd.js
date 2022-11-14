@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
-import { getList } from '../../services';
+import { getList, sendRequest } from '../../services';
+import { validateEmail } from '../../helpers';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardMain } from '../../components/emp/employee/add';
 import { CardSite } from '../../components/invt/modifier/add';
@@ -12,6 +14,7 @@ import { CardEmpty } from '../../components/invt/inventory/add';
 
 export function EmployeeAdd(props){
   const { } = props;
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
@@ -84,8 +87,35 @@ export function EmployeeAdd(props){
     }
   }
 
-  const onClickSave = async () => {
+  const validateData = () => {
+    let codeLength = 4;
+    let isEmailValid = validateEmail(mail?.value);
+    let password = code?.value?.replace(/[ _]/g, '');
+    let isCodeValid = password?.length === 4;
+    if(name?.value && mail?.value && isEmailValid && (role?.value || role?.value === 0) && code?.value && isCodeValid){
+      let data = [{ empCode: selected?.empCode ?? -1, empName: name?.value, email: mail?.value, password,
+        phone: phone?.value, role: role?.value, rowStatus: selected ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N'
+      }];
+      return data;
+    } else {
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      if(!mail?.value) setMail({ value: '', error: t('error.not_empty') });
+      else if(!isEmailValid) setMail({ value: mail?.value, error: t('error.be_right') });
+      if(!(role?.value || role?.value === 0)) setRole({ value: role?.value, error: t('error.not_empty') });
+      if(!code?.value) setCode({ value: '', error: t('error.not_empty') });
+      else if(!isCodeValid) setCode({ value: code?.value, error: codeLength + t('error.must_be') })
+      return false;
+    }
+  }
 
+  const onClickSave = async () => {
+    let data = validateData();
+    if(data){
+      onLoad();
+      const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
+      if(response?.error) onError(response?.error);
+      else onSuccess(t('employee.add_success'));
+    }
   }
 
   const onClickDelete = async () => {
@@ -95,7 +125,7 @@ export function EmployeeAdd(props){
   let mainProps = { setError, setEdited, name, setName, mail, setMail, phone, setPhone, role, setRole, code, setCode, invite, setInvite };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'emp_ac_back' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'emp_ac_back' };
-  // let btnProps = { onClickCancel, onClickSave, onClickDelete, show: selected ? true : false, id: 'emp_ac_back' };
+  let btnProps = { onClickCancel, onClickSave, onClickDelete, show: selected ? true : false, id: 'emp_ac_back' };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -108,7 +138,7 @@ export function EmployeeAdd(props){
           {sites?.length ? <CardSite {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}
         </form>
       </div>
-      {/* <ButtonRowConfirm {...btnProps} /> */}
+      <ButtonRowConfirm {...btnProps} />
     </Overlay>
   );
 }

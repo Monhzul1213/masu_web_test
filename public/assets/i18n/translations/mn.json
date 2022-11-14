@@ -33,7 +33,8 @@
     "must_number": " тоо байх ёстой",
     "be_right": " зөв оруулна уу",
     "longer_than": "-с дээш тэмдэгттэй байх ёстой",
-    "shorter_than": "-с дээш тэмдэгттэй байж болохгүй"
+    "shorter_than": "-с дээш тэмдэгттэй байж болохгүй",
+    "must_be": " тэмдэгттэй байх ёстой"
   },
   "header": {
     "/": "Home",
@@ -312,7 +313,9 @@
     "mail": "И-мэйл",
     "role": "Албан тушаал",
     "code": "ПОС код",
-    "invite": "Invite to the back office"
+    "invite": "Invite to the back office",
+    "add_success": "Ажилтан амжилттай бүртгэлээ.",
+    "delete_success": "Ажилтан амжилттай устгалаа."
   },
   "customer":{
     "t_name":"Харилцагч нэр",
