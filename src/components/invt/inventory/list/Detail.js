@@ -44,20 +44,13 @@ export function Detail(props){
   }
 
   const onSave = async variant => {
-    let invvar = data?.map(item => {
-      if(variant?.variantID === item.variantId) return variant;
-      return {...item, rowStatus: 'U'};
-    });
-    const response = await updateData(index, null, null, null, invvar, true);
+    const response = await updateData(index, null, null, null, variant, true);
     return response;
   }
 
   const updateMyData = (row, column, value) => {
-    let invvar = data?.map((item, index) => {
-      if(row === index) return {...item, rowStatus: 'U', cost: parseFloat(value ? value : 0)};
-      return {...item, rowStatus: 'U'};
-    });
-    updateData(index, null, null, null, invvar)
+    let variant = {...data[row], rowStatus: 'U', cost: parseFloat(value ? value : 0)};
+    updateData(index, null, null, null, variant, false, true)
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, updateMyData }, useSortBy, useRowSelect);

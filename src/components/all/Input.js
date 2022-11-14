@@ -4,7 +4,7 @@ import CurrencyInput from 'react-currency-input-field';
 import { useTranslation } from 'react-i18next';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, length } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, maskChar, inRow, length } = props;
   const { t } = useTranslation();
 
   const onChange = e => {
@@ -44,7 +44,7 @@ export function Input(props){
           className='m_input'
           mask={mask}
           disabled={disabled}
-          maskChar='-'
+          maskChar={maskChar ?? '-'}
           onKeyDown={onKeyDown}
           onBlur={onBlur}
           placeholder={placeholder}

@@ -27,3 +27,19 @@ export function CheckAll(props){
     </div>
   )
 }
+
+export function CheckBox(props){
+  const { label, checked, setChecked } = props;
+  const { t } = useTranslation();
+
+  const onClick = () => {
+    setChecked(!checked);
+  }
+
+  return (
+    <div className='i_check_row'>
+      <Check checked={checked} onClick={onClick} />
+      <p className='check_all_lbl'>{t(label)}</p>
+    </div>
+  );
+}

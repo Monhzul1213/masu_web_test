@@ -56,15 +56,13 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
-  const updateMyData = async (row, column, value, e, invvar, isEdit) => {
-    let newData = {...data[row]?.msInventory, invtID: data[row]?.msInventory?.invtId, categoryID: data[row]?.msInventory?.categoryId, rowStatus: 'U' };
-    newData.invvar = invvar ?? data[row]?.msInventoryVariants?.map(item => { return {...item, rowStatus: 'U'}});
-    newData.invkite = data[row]?.msInvKitItems?.map(item => { return {...item, rowStatus: 'U'}});
-    newData.invmod = data[row]?.msInventoryModifers?.map(item => { return {...item, rowStatus: 'U'}});
-    newData.invsales = data[row]?.psSalesPrices?.map(item => { return {...item, rowStatus: 'U'}});
+  const updateMyData = async (row, column, value, e, invvar, isEdit, isExpand) => {
+    let item = data[row]?.msInventory;
+    let newData = { invtID: item?.invtId, categoryID: item?.categoryId, cost: item?.cost };
     if(column === 'msInventory.categoryId') newData.categoryID = value;
     else if(column === 'msInventory.cost') newData.cost = parseFloat(value ? value : 0);
-    const response = await updateInventory(newData, isEdit);
+    else if(invvar) newData.invvar = invvar;
+    const response = await updateInventory(newData, isEdit, isExpand);
     return response;
   }
 

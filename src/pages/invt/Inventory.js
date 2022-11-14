@@ -113,14 +113,14 @@ export function Inventory(){
     }
   }
 
-  const updateInventory = async (data, isEdit) => {
+  const updateInventory = async (data, isEdit, isExpand) => {
     if(!isEdit) setLoading(true);
     setError(null);
-    const response = await dispatch(sendRequest(user, token, 'Inventory/UpdateInventory', data));
+    const response = await dispatch(sendRequest(user, token, 'Inventory/UInvCustom', data));
     setLoading(false);
     if(!response?.error){
       message.success(t('inventory.add_success'));
-      onSearch(filter, isEdit);
+      onSearch(filter, isEdit || isExpand);
     } else if(response?.error && !isEdit) setError(response?.error);
     return response;
   }
