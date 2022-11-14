@@ -541,3 +541,11 @@
   cursor: pointer;
   color: var(--config-color);
 }
+
+#emp_ac_back {
+  width: 480px;
+}
+
+#emp_ac_btns {
+  max-width: 480px;
+}

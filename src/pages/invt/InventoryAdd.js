@@ -72,14 +72,16 @@ export function InventoryAdd(){
   }
 
   const getImage = async inventory => {
-    setImage64(inventory?.fileRaw?.fileData ?? '');
-    let type = inventory?.fileRaw?.fileType?.replace('.', '');
-    setImageType(type ?? '');
-    let mimeType = mime.getType(type);
-    let dataPrefix = `data:` + mimeType + `;base64,`;
-    let attach64 = `${dataPrefix}${inventory?.fileRaw?.fileData}`;
-    let attachFile = await urlToFile(attach64, mimeType);
-    setImage(attachFile);
+    if(inventory?.fileRaw?.fileData){
+      let type = inventory?.fileRaw?.fileType?.replace('.', '');
+      setImageType(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${inventory?.fileRaw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage64(attach64);
+      setImage(attachFile);
+    }
   }
 
   const getInventory = async (value, sites1, modifiers1) => {

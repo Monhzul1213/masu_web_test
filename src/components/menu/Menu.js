@@ -20,7 +20,8 @@ export function Menu(props){
   const hideMenu = pathname?.includes('confirm');
 
   const style = {
-    overflow: 'auto',
+    overflowY: 'auto',
+    overflowX: 'hidden',
     position: 'fixed',
     left: 0,
     top: 'var(--header-height)',

@@ -266,3 +266,7 @@
   background-color: var(--menu-active-bgcolor);
   cursor: pointer;
 }
+
+.ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+  border: none;
+}
