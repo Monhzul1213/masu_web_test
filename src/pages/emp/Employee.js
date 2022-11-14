@@ -31,7 +31,7 @@ export function Employee(){
   const onClickAdd = row => {
     // if(row) navigate({ pathname: 'invt_add', search: createSearchParams({ invtId: row?.invtId }).toString() });
     // else
-    // navigate('emp_add');
+    navigate('emp_add');
   }
   const emptyProps = { icon: 'MdOutlinePersonOutline', type: 'employee', onClickAdd, noDescr: true };
   // const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };

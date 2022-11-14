@@ -5,7 +5,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { Check, CheckAll, PaginationTable, Table } from '../../../all';
 
 export function CardSite(props){
-  const { data, setData, setEdited, checked, setChecked } = props;
+  const { data, setData, setEdited, checked, setChecked, id } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -48,7 +48,7 @@ export function CardSite(props){
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
 
   return (
-    <div className='ac_back' id='mo_ac_back'>
+    <div className='ac_back' id={id ?? 'mo_ac_back'}>
       <p className='ac_title'>{t('inventory.sites')}</p>
       <div style={{padding: 5}} />
       <CheckAll {...checkProps} />
