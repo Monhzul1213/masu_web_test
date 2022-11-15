@@ -68,3 +68,28 @@ export function ButtonRowConfirm(props){
     </div>
   )
 }
+
+export function ButtonRowAddConfirm(props){
+  const { t } = useTranslation();
+  const { type, onClickAdd, show, onClickDelete } = props;
+  const [open, setOpen] = useState(false);
+
+  const onDelete = () => setOpen(true);
+
+  const confirm = async sure => {
+    setOpen(false);
+    if(sure) onClickDelete();
+  }
+
+  const confirmProps = { open, text: t('page.delete_confirm'), confirm };
+
+  return (
+    <div className='add_row_back'>
+      {open && <Confirm {...confirmProps} />}
+      <IconButton className='add_row_btn' text={t(type + '.add')} id='add_row_add'
+        icon={<DynamicBSIcon name='BsPlusLg' className='add_row_icon' />} onClick={() => onClickAdd()} />
+      {show && <IconButton className='add_row_btn' text={t('page.delete')} id='add_row_delete'
+        icon={<DynamicBSIcon name='BsTrash' className='add_row_delete_icon' />} onClick={onDelete} />}
+    </div>
+  )
+}

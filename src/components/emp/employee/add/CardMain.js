@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -12,6 +12,12 @@ export function CardMain(props){
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    onFocus();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onFocus = async () => {
     if(!roles?.length){
@@ -41,7 +47,7 @@ export function CardMain(props){
       <InputPassword {...passProps} />
       <Input {...phonProps} />
       <Select {...roleProps} />
-      {role?.value && <Input {...codeProps} />}
+      {role?.value ? <Input {...codeProps} /> : null}
     </div>
   )
 }

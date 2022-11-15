@@ -28,6 +28,7 @@ export function EmployeeAdd(props){
   const [checked, setChecked] = useState(true);
   const [saved, setSaved] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -65,9 +66,35 @@ export function EmployeeAdd(props){
   }
 
   const getData = async () => {
-    // let modifireID = searchParams?.get('modifireID');
+    let empCode = searchParams?.get('empCode');
     let response = await getSites();
-    // if(response && (modifireID || modifireID === 0)) await getModifier(modifireID, response);
+    if(response && (empCode || empCode === 0)) await getEmployee(empCode, response);
+  }
+
+  const getEmployee = async (empCode, sites1) => {
+    onLoad();
+    let response = await dispatch(getList(user, token, 'Employee/GetEmployees?EmpCode=' + empCode));
+    if(response?.error) onError(response?.error, false);
+    else {
+      onSuccess();
+      let emp = response && response?.data && response?.data[0];
+      console.log(emp);
+      if(emp){
+        setSelected(emp);
+        setName({ value: emp.empName ?? '' });
+        setMail({ value: emp.email ?? '' });
+        setPhone({ value: emp.phone ?? '' });
+        setRole({ value: emp?.roleId });
+        setChecked(emp?.useAllSite === 'Y');
+        sites1?.forEach(item => {
+          // let exists = invt?.psSalesPrices?.filter(si => si.siteId === item.siteId)[0];
+          // item.checked = exists ? true : false;
+          // if(exists) item.price = exists.price;
+          // item.rowStatus = exists ? 'U' : 'I';
+        });
+        setSites(sites1);
+      }
+    }
   }
 
   const getSites = async () => {
@@ -100,7 +127,7 @@ export function EmployeeAdd(props){
         else if(item?.rowStatus === 'U') employeeSites.push({ siteID: item?.siteId, rowStatus: 'D' });
       });
       let data = [{ empCode: selected?.empCode ?? -1, empName: name?.value, email: mail?.value, password: password?.value, employeeSites,
-        phone: phone?.value, role: role?.value, rowStatus: selected ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N', pin
+        phone: phone?.value, roleID: role?.value, rowStatus: selected ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N', poS_PIN: pin
       }];
       return data;
     } else {
@@ -127,7 +154,11 @@ export function EmployeeAdd(props){
   }
 
   const onClickDelete = async () => {
-
+    onLoad();
+    let data = [{...selected, rowStatus: 'D', roleID: selected?.roleId, password: '', poS_PIN: '', employeeSites: []}];
+    const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
+    if(response?.error) onError(response?.error, true);
+    else onSuccess(t('employee.delete_success'), true);
   }
 
   let mainProps = { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode };
