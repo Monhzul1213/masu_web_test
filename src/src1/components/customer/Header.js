@@ -7,16 +7,9 @@ export function Header(props){
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
 
-  const setFilter = ( custName) => {
-    let data = [];
-    if(custName) data.push({ fieldName: 'custName', value: custName })
-    console.log(data);
-    onSearch(data);
-  }
-
-
   const handleEnter = value => {
-    setFilter( value);
+    onSearch( search, value);
+    
   }
 
   const onClickSearch = () => setShowSearch(!showSearch);
@@ -24,7 +17,7 @@ export function Header(props){
   const addProps = { type: 'customer', onClickAdd, show, onClickDelete };
   const style = { width: showSearch ? 0 : 440, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
-  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch };
+  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch};
 
   return (
     <div className='i_list_header_z'>  

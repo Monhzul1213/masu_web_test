@@ -19,9 +19,11 @@ export function Customer(props){
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [filtering, setFiltering] = useState(false);
-  const [filter,  setFilter] = useState([]);
+  const [filter,  setFilter] =   useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const [autoResetExpanded, setAutoResetExpanded] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   
   useEffect(() => {
@@ -35,11 +37,13 @@ export function Customer(props){
     setLoading(true);
     let headers = { custId};
     const response = await dispatch(getList(user, token, 'Site/GetCustomer', null, headers));
-    console.log(response, '-------');
+    console.log(response?.error, );
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoaded(loaded + 1);
     setLoading(false);
+    setShow(false)
+    setChecked(false)
   }
 
   const onClickDelete = () => setOpen(true);
@@ -55,13 +59,19 @@ export function Customer(props){
           toDelete.push(item);
         }
       });
-      setLoading('loading');
+      setLoading(true);
       setError(null);
       let response = await dispatch(sendRequest(user, token, 'Site/Customer', toDelete));
-      if(response?.error) setError(response?.error);
-      else message.success(t('customer.delete_success'));
       setLoading(false);
-      getData();
+      setShow(false);
+      if(response?.error) setError(response?.error);
+      else {
+        message.success(t('customer.delete_success'))
+        onSearch(filter)
+        console.log(filter)        
+        console.log(sure)
+
+      }
     }
   };
 
@@ -75,28 +85,27 @@ export function Customer(props){
     setItem(null);
     if(toGet) getData();
   }
-  const onSearch = async () => {
-    setFilter(filter);
+  const onSearch = async( name , isEdit)=> {
+    setFilter(name);
     setError(null);
     setLoading(true);
-    let fil = []
-    filter?.forEach(item=>{
-      fil.push(item?.value)
-    })
-    let response = filter?.length
-      ? await dispatch(getList(user, token, 'Site/GetCustomer/' + fil ))
-      : await dispatch(getList(user, token, 'Site/GetCustomer'));
-      console.log(fil?.length)
-    setData(response);
-    setFiltering(true);
+    setAutoResetExpanded(isEdit ? false : true);
+    let headers = { custId};
+    let response = name
+      ? await dispatch(getList(user, token, 'Site/GetCustomer/' + name ))
+      : await dispatch(getList(user, token, 'Site/GetCustomer',null,  headers));
+    console.log(response)
+    console.log(name)
+    setData(response?.data);
     setLoading(false);
+    setFiltering(true);
   }
   
   const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , };
-  const modalProps = { visible, closeModal, selected: item, item, data};
+  const modalProps = { visible, closeModal, selected: item, onSearch, filter, data, };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
-  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };
-  const listProps = { data, onClickAdd, setData , loaded, getData, setShow, loading, setLoading, setError, error , confirm   };
+  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch ,};
+  const listProps = { data, onClickAdd, setData , loaded, getData, setShow,  autoResetExpanded, checked, setChecked  };
   return (
     <div className='s_container_z'>
       {visible && <Add {...modalProps} />}

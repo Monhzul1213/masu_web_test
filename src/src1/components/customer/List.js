@@ -7,20 +7,14 @@ import { Table  } from '../all/all_m';
 
 
 export function List(props){
-  const { onClickAdd, data, setData, loaded, setShow} = props;
+  const { onClickAdd, data, setData, loaded, setShow, autoResetExpanded, checked, setChecked} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [checked, setChecked] = useState(false);
+
+
 
   useEffect(() => {
-    setShow(false);
-    setChecked(false);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loaded])
-
-  useEffect(() => {
-    const customStyle = { width: 30 };
+    const customStyle = { width: 20 };
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       { id: 'expander', noSort: true, isBtn: true, customStyle, Header: '',
@@ -37,8 +31,10 @@ export function List(props){
       { Header: t('customer.t_name'), accessor: 'custName' },
       { Header: t('customer.addr'), accessor: 'phone',
         Cell: props => <div >{props.value}</div>},
-      { Header: t('customer.first_visit'), accessor: 'createdDate' },
-      { Header: t('customer.last_visit'), accessor: 'lastUpdate' },
+      { Header: t('customer.first_visit'), accessor: 'createdDate' , 
+        Cell: props => <div style={{fontSize: 13.5, paddingRight: 15}}>{props.value}</div>},
+      { Header: t('customer.last_visit'), accessor: 'lastUpdate',
+        Cell: props => <div style={{fontSize: 13.5, paddingRight: 15}}>{props.value}</div> },
       { Header: <div style={{textAlign: 'right'}}>{t('customer.visit_total')}</div>, accessor: 'total', 
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('customer.total_spent')}</div>, accessor: 'total_spent', 
@@ -65,19 +61,21 @@ export function List(props){
     setData(old => old.map((row, index) => {
       if(index === item?.index){
         if(!row?.checked) count = true;
+         console.log(row)
         return { ...old[item?.index], checked: !row?.checked };
       } else {
         if(row?.checked) count = true;
         return row;
       }
     }));
+  
     setShow(count);
   }
 
  
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
-  const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+  const tableInstance = useTable( { columns, data, autoResetPage: false, autoResetExpanded, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd, };
 

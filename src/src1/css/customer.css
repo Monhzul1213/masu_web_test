@@ -189,7 +189,7 @@
   margin-top: var(--page-padding);
   align-items: center;
   }
-  .line1{
+.line1{
     display: flex;
     flex-flow: row;
     margin: 10px 0 0 10px;
@@ -198,14 +198,9 @@
     padding: 0 ;
     margin-top: 20px ;
   }
-.selected_div{
-  max-height: 20vh  ;
-  overflow-y: scroll;
-}
+
 .empty_back1 {
   background-color: var(--root-color);
-  /* width: var(--empty-width); */
-  /* max-width: var(--safe-width); */
   padding: 30px 0;
   border-radius: var(--radius);
   display: flex;

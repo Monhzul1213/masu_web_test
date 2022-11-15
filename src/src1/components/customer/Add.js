@@ -7,7 +7,7 @@ import { sendRequest } from '../../services';
 import { ButtonRow, ModalTitle, Overlay, Error, Confirm ,} from '../all/all_m';
 import { Input } from '../all/all_m';
 export function Add(props){
-  const { visible, selected, closeModal, item } = props;
+  const { visible, selected, closeModal, onSearch, filter} = props;
   const { t } = useTranslation();
   const [custName, setCustName] = useState({ value: '' });
   const [address, setAddress] = useState({ value: '' });
@@ -31,14 +31,14 @@ export function Add(props){
       setCustCode({ value: selected?.custCode ?? '' });
 
     }
-    console.log(item)
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const checkValid = () => {
  
     let isEmailValid = validateEmail(email?.value?.trim());
-    if( isEmailValid  && custName?.value?.trim()){
+    if( isEmailValid  && custName?.value?.trim() && phone?.value?.trim()
+    &&custCode?.value?.trim()){
       return true;
     } else {
       if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
@@ -70,15 +70,14 @@ export function Add(props){
             "note": note?.value?.trim(),
             "rowStatus" : selected ? "U" : "I",
           }]
-      console.log(data )
       const response = await dispatch(sendRequest(user, token, 'Site/Customer',  data));
-      console.log(response);
+      setLoading(false);
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);
         message.success(t('customer.add_success'));
+        onSearch(filter)
       }
-      setLoading(false);
     } 
   }
  
@@ -122,14 +121,14 @@ export function Add(props){
       setLoading(false);
     }
   }
-  const maxheight1= 'calc(90vh - 405px)';
+  const maxheight1= 'calc(90vh - 250px)';
   const maxheight= 'calc(90vh - 105px )';
-  const nameProps = { value: custName, setValue: setCustName, label: t('page.name'), placeholder: t('customer.name'), setError, length: 64 };
-  const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, };
+  const nameProps = { value: custName, setValue: setCustName, label: t('page.name'), placeholder: t('customer.name'), setError, length: 64 , length1: 2 };
+  const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, length: 8 ,  };
   const mailProps = { value: email, setValue: setEmail, label: t('page.email'), placeholder: t('customer.email'), setError, length: 100};
   const codeProps = { value: custCode, setValue: setCustCode, label: t('page.code'), placeholder: t('customer.code'), setError,  };
-  const descrProps = { value: note, setValue: setNote, label: t('customer.desc'), placeholder: t('customer.desc'), setError , length: 255};
-  const addressProps = {  value: address, setValue: setAddress,label: t('customer.address'), placeholder: t('customer.address1'), setError, length: 192 };
+  const descrProps = { value: note, setValue: setNote, label: t('customer.desc'), placeholder: t('customer.desc'), setError , length: 255, length1:10};
+  const addressProps = {  value: address, setValue: setAddress,label: t('customer.address'), placeholder: t('customer.address1'), setError, length: 192, length1: 8 };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
 
@@ -146,13 +145,13 @@ export function Add(props){
               <Input {...mailProps} />
               <Input {...addressProps} />
               <Input {...codeProps} />
-              {<Input {...descrProps} />}
+              <Input {...descrProps} />
+              <div className='gap'/>
             </form>
-            {error && <Error error={error} id = 'm_error' />}
-            
           </div>
-          {selected && <div className='selected_div'>
-                <div className='line'/>
+          {error && <Error error={error} id = 'm_error' />}
+
+          {/* {selected && <div className='selected_div'>
                   <div className='line1'>
                     <div className='a_item_text'>
                       <p className='a_item_title'>{item.createdDate}</p>
@@ -180,7 +179,7 @@ export function Add(props){
                     </div>
                   </div>
                  
-            </div>}
+            </div>} */}
         </div>
         <ButtonRow {...btnProps} />
       </Overlay>

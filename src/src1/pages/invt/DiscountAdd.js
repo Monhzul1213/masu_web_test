@@ -18,6 +18,7 @@ export function DiscountAdd(){
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [checked, setChecked] = useState(true);
   const { user, token }  = useSelector(state => state.login);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -71,7 +72,7 @@ export function DiscountAdd(){
   const confirmProps = { open, text: t('page.back_confirm'), confirm };
   const mainProps = { setError, name, setName,  descr, setDescr, isEach, setIsEach,
   setEdited,  };
-  const siteProps = {  data: sites, setData: setSites, setEdited };
+  const siteProps = {  data: sites, setData: setSites, setEdited, checked, setChecked  };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'mo_ac_back' };
 

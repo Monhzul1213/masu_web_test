@@ -4,12 +4,15 @@ import CurrencyInput from 'react-currency-input-field';
 import { useTranslation } from 'react-i18next';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, length } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, length, length1 } = props;
     const { t } = useTranslation();
 
   const onChange = e => {
     e?.target?.value?.length > length 
-      ? setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+      ? setValue({ value: value?.value, error: '' + length + t('error.shorter_than') })
+      : setValue({ value: e.target.value });
+    e?.target?.value?.length < length1 
+      ? setValue({ error: '' + length1 + t('error.longer_than') })
       : setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);

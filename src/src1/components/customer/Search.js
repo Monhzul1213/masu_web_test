@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DynamicAIIcon } from '../../components/all/all_m';
 
 export function Search(props){
-  const { showSearch, setShowSearch, handleEnter, search, setSearch } = props;
+  const { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch } = props;
   const { t } = useTranslation();
   const inputRef = useRef(null);
 
@@ -24,7 +24,7 @@ export function Search(props){
   const onClose = () => {
     setShowSearch(!showSearch);
     setSearch('');
-    handleEnter('');
+    onSearch('');
   }
 
   return (

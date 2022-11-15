@@ -34,8 +34,8 @@ export function Add(props){
 
 
   const nameProps = { value: name, setValue: setName, label: t('discount.name'), placeholder: t('discount.name'), setError, inRow: true, setEdited, length: 20 };
-  const valueProps = { value: price, setValue: setPrice, label: t('discount.value'), placeholder: t('discount.value'), setError,  };
-  const percProps = { value: perc, setValue: setPerc, label: t('discount.value'), setError, mask: '99.99' };
+  const valueProps = { value: price, setValue: setPrice, label: t('discount.amount'), placeholder: t('discount.amount'), setError,  };
+  const percProps = { value: perc, setValue: setPerc, label: t('discount.perc'),placeholder: t('discount.perc'), setError, mask: '99.99' };
   const unitProps = { value: isEach, setValue: setIsEach, label: t('discount.type'), data: t('discount.types'), setEdited, setError };
 
   return (

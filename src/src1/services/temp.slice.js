@@ -34,7 +34,7 @@ export const sendRequest = (user, token, api, data) => async dispatch => {
       data
     }
     const response = await fetchRetry(config);
-    // console.log('++++++++++++++++++++++=', response);
+    console.log('++++++++++++++++++++++=', response);
     if(response?.result === 2){
       const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
       if(responseLogin?.error) return responseLogin;
@@ -52,6 +52,7 @@ export const sendRequest = (user, token, api, data) => async dispatch => {
           return Promise.resolve({ error: responseNew?.retdesc ?? responseNew?.message ?? 'Алдаа гарлаа.' });
       }
     } else if(response?.rettype === 0){
+      console.log(response)
       return Promise.resolve({ error: null, data: response?.retdata });
     }
     return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });

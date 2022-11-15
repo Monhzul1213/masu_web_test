@@ -53,7 +53,7 @@ export function Discount(){
   const siteProps = { value: site, setValue: onSelectSite, data: sites, s_value: 'siteId', s_descr: 'name', className: 'r_select',
     onFocus: onFocusSite, loading: loading === 'sites' };
   const listProps = { data, setData, setShow, checked, setChecked };
-  const emptyProps = { icon: 'MdOutlineFactCheck', type: 'discount', onClickAdd };
+  const emptyProps = { icon: 'MdOutlineFactCheck', type: 'discount', onClickAdd  };
   const addProps = { type: 'discount', onClickAdd, show, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
