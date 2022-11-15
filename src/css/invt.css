@@ -563,3 +563,16 @@
   color: var(--text-color);
   margin: 0 0 0 10px;
 }
+
+.m_input_show {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  font-size: 20px;
+  color: var(--text2-color);
+}
+
+.m_input_show:hover {
+  cursor: pointer;
+  color: var(--logo1-color);
+}

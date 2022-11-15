@@ -20,10 +20,10 @@ export function EmployeeAdd(props){
   const [error, setError] = useState(null);
   const [name, setName] = useState({ value: '' });
   const [mail, setMail] = useState({ value: '' });
+  const [password, setPassword] = useState({ value: '' });
   const [phone, setPhone] = useState({ value: '' });
   const [role, setRole] = useState({ value: null });
   const [code, setCode] = useState({ value: '' });
-  const [invite, setInvite] = useState(false);
   const [sites, setSites] = useState([]);
   const [checked, setChecked] = useState(true);
   const [saved, setSaved] = useState(false);
@@ -59,7 +59,7 @@ export function EmployeeAdd(props){
   }
 
   const onSuccess = (msg, saved) => {
-    if(msg) message.success(msg);
+    if(msg) message.success(t(msg));
     if(saved) setSaved(true);
     setLoading(false);
   }
@@ -88,13 +88,19 @@ export function EmployeeAdd(props){
   }
 
   const validateData = () => {
-    let codeLength = 4;
+    let codeLength = 4, passwordLength = 8;
     let isEmailValid = validateEmail(mail?.value);
-    let password = code?.value?.replace(/[ _]/g, '');
-    let isCodeValid = password?.length === 4;
-    if(name?.value && mail?.value && isEmailValid && (role?.value || role?.value === 0) && code?.value && isCodeValid){
-      let data = [{ empCode: selected?.empCode ?? -1, empName: name?.value, email: mail?.value, password,
-        phone: phone?.value, role: role?.value, rowStatus: selected ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N'
+    let pin = code?.value?.replace(/[ _]/g, '');
+    let isCodeValid = pin?.length === 4;
+    let isPasswordValid = password?.value?.length >= passwordLength;
+    if(name?.value && isEmailValid && (role?.value || role?.value === 0) && isCodeValid && isPasswordValid){
+      let employeeSites = [];
+      sites?.forEach(item => {
+        if(item?.checked) employeeSites.push({ siteID: item?.siteId, rowStatus: item?.rowStatus ?? 'I' });
+        else if(item?.rowStatus === 'U') employeeSites.push({ siteID: item?.siteId, rowStatus: 'D' });
+      });
+      let data = [{ empCode: selected?.empCode ?? -1, empName: name?.value, email: mail?.value, password: password?.value, employeeSites,
+        phone: phone?.value, role: role?.value, rowStatus: selected ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N', pin
       }];
       return data;
     } else {
@@ -103,7 +109,9 @@ export function EmployeeAdd(props){
       else if(!isEmailValid) setMail({ value: mail?.value, error: t('error.be_right') });
       if(!(role?.value || role?.value === 0)) setRole({ value: role?.value, error: t('error.not_empty') });
       if(!code?.value) setCode({ value: '', error: t('error.not_empty') });
-      else if(!isCodeValid) setCode({ value: code?.value, error: codeLength + t('error.must_be') })
+      else if(!isCodeValid) setCode({ value: code?.value, error: codeLength + t('error.must_be') });
+      if(!password?.value) setPassword({ value: '', error: t('error.not_empty') });
+      else if(!isPasswordValid) setPassword({ value: password?.value, error: ' ' + passwordLength + t('error.longer_than') });
       return false;
     }
   }
@@ -113,8 +121,8 @@ export function EmployeeAdd(props){
     if(data){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
-      if(response?.error) onError(response?.error);
-      else onSuccess(t('employee.add_success'));
+      if(response?.error) onError(response?.error, true);
+      else onSuccess(t('employee.add_success'), true);
     }
   }
 
@@ -122,7 +130,7 @@ export function EmployeeAdd(props){
 
   }
 
-  let mainProps = { setError, setEdited, name, setName, mail, setMail, phone, setPhone, role, setRole, code, setCode, invite, setInvite };
+  let mainProps = { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'emp_ac_back' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'emp_ac_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show: selected ? true : false, id: 'emp_ac_back' };

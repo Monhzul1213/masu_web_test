@@ -315,7 +315,8 @@
     "code": "ПОС код",
     "invite": "Invite to the back office",
     "add_success": "Ажилтан амжилттай бүртгэлээ.",
-    "delete_success": "Ажилтан амжилттай устгалаа."
+    "delete_success": "Ажилтан амжилттай устгалаа.",
+    "password": "Нууц үг"
   },
   "customer":{
     "t_name":"Харилцагч нэр",
