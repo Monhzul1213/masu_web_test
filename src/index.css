@@ -163,6 +163,31 @@ code {
   margin-bottom: 5px;
 }
 
+.check_btn {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text4-color);
+}
+
+.check_btn:hover {
+  cursor: pointer;
+  color: var(--text3-color);
+}
+
+.check_btn:disabled {
+  color: var(--line-color);
+}
+
+.check_btn_icon {
+  height: 18px;
+  width: 18px;
+}
+
 .check_all_btn {
   height: 18px;
   width: 18px;

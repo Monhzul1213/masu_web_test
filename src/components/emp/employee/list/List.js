@@ -1,13 +1,15 @@
  import React, { useState, useEffect } from 'react';
  import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
- import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
-import { Check, PaginationTable, Table } from '../../../all';
+import { Check, CheckBtn, PaginationTable, Table } from '../../../all';
 
 export function List(props){
   const { data, setData, onClickAdd, setShow, checked, setChecked } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const { user: { mail } } = useSelector(state => state.login);
 
   useEffect(() => {
     const customStyle = { width: 40 };
@@ -16,7 +18,10 @@ export function List(props){
       {
         id: 'check', noSort: true, isBtn: true, customStyle,
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
-        Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
+        Cell: ({ row, onClickCheck }) => {
+          let disabled = row?.original?.isOwner === 'Y' || row?.original?.email === mail;
+          return (<div style={style}><CheckBtn checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} disabled={disabled} /></div>)
+        }
       },
       { Header: t('page.name'), accessor: 'empName' },
       { Header: t('employee.mail'), accessor: 'email' },
@@ -29,11 +34,17 @@ export function List(props){
 
 
   const onClickCheckAll = e => {
-    setShow(!checked);
-    setChecked(!checked);
+    let count = false;
     setData(old => old.map((row, index) => {
-      return { ...old[index], checked: !checked };
+      let disabled = row?.isOwner === 'Y' || row?.email === mail;
+      if(disabled) return row;
+      else {
+        if(!checked) count = true;
+        return { ...old[index], checked: !checked };
+      }
     }));
+    setShow(count);
+    setChecked(!checked);
   }
 
   const onClickCheck = (e, item) => {
