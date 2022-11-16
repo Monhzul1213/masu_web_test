@@ -31,7 +31,7 @@ export function ModifierAdd(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    getData();
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

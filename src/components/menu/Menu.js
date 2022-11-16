@@ -48,16 +48,16 @@ export function Menu(props){
     ]),
     getItem(t('menu.inventory'), '/inventory', <BsInboxes />, [
       getItem(t('menu.invt_list'), '/inventory/invt_list', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.invt_category'), '/inventory/invt_category'),
-      getItem(t('menu.invt_modi'), '/inventory/invt_modi'),
-      getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageLoyalty !== 'Y')
+      getItem(t('menu.invt_category'), '/inventory/invt_category', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(t('menu.invt_modi'), '/inventory/invt_modi', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
     getItem(t('menu.management'), '/management', <TbBuildingWarehouse />),
     getItem(t('menu.employee'), '/employee', <RiContactsLine />, [
       getItem(t('menu.emp_list'), '/employee/emp_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(t('menu.access_config'), '/employee/access_config'),
-      getItem(t('menu.shift_config'), '/employee/shift_config'),
-      getItem(t('menu.shift_list'), '/employee/shift_list'),
+      getItem(t('menu.access_config'), '/employee/access_config', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(t('menu.shift_config'), '/employee/shift_config', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />),
