@@ -6,7 +6,7 @@ import { getList } from '../../../../services';
 import { Input, Select, InputPassword } from '../../../all';
 
 export function CardMain(props){
-  const { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode } = props;
+  const { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode, selected } = props;
   const { t } = useTranslation();
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,11 +29,11 @@ export function CardMain(props){
       setLoading(false);
     }
   }
-  
+
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('page.name'), setError, inRow: true, setEdited, length: 50 };
-  const mailProps = { value: mail, setValue: setMail, label: t('employee.mail'), placeholder: t('employee.mail'), setError, setEdited, length: 20 };
+  const mailProps = { value: mail, setValue: setMail, label: t('employee.mail'), placeholder: t('employee.mail'), setError, setEdited };
   const passProps = { value: password, setValue: setPassword, label: t('employee.password'), placeholder: t('employee.password'),
-    setError, setEdited, length: 20 };
+    setError, setEdited, length: 20, disabled: selected ? true : false };
   const phonProps = { value: phone, setValue: setPhone, label: t('shop.phone'), placeholder: t('shop.phone'), setError, setEdited, length: 20 };
   const roleProps = { value: role, setValue: setRole, label: t('employee.role'), placeholder: t('employee.role'), setError, setEdited,
     data: roles, s_value: 'roleId', s_descr: 'roleName', onFocus, loading };

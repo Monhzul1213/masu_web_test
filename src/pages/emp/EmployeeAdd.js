@@ -137,7 +137,7 @@ export function EmployeeAdd(){
       if(!(role?.value || role?.value === 0)) setRole({ value: role?.value, error: t('error.not_empty') });
       if(!code?.value) setCode({ value: '', error: t('error.not_empty') });
       else if(!isCodeValid) setCode({ value: code?.value, error: codeLength + t('error.must_be') });
-      if(!password?.value) setPassword({ value: '', error: t('error.not_empty') });
+      if(!password?.value && !selected) setPassword({ value: '', error: t('error.not_empty') });
       else if(!isPasswordValid) setPassword({ value: password?.value, error: ' ' + passwordLength + t('error.longer_than') });
       return false;
     }
@@ -169,7 +169,7 @@ export function EmployeeAdd(){
     else onSuccess(t('employee.delete_success'), true);
   }
 
-  let mainProps = { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode };
+  let mainProps = { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode, selected };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'emp_ac_back' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'emp_ac_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_back' };

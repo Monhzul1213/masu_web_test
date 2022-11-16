@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import CurrencyInput from 'react-currency-input-field';
 import { useTranslation } from 'react-i18next';
@@ -146,7 +146,13 @@ export function InputPassword(props){
   const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, length } = props;
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
-  const [editable, setEditable] = useState(false);
+  const [editable, setEditable] = useState(true);
+
+  useEffect(() => {
+    setEditable(!disabled);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [disabled]);
 
   const onChange = e => {
     e?.target?.value?.length > length 
@@ -193,7 +199,7 @@ export function InputPassword(props){
         {label && <p className='select_lbl' style={style}>{label}</p>}
         <InputMask
           className='m_input'
-          disabled={disabled || !editable}
+          disabled={!editable}
           onKeyDown={onKeyDown}
           onBlur={onBlur}
           placeholder={placeholder}
