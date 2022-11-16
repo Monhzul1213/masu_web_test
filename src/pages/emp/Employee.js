@@ -23,7 +23,7 @@ export function Employee(){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // getData();
+    getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -43,8 +43,8 @@ export function Employee(){
   }
 
   const onClickAdd = row => {
-    // if(row) navigate({ pathname: 'emp_add', search: createSearchParams({ empCode: row?.empCode }).toString() });
-    // else navigate('emp_add');
+    if(row) navigate({ pathname: 'emp_add', search: createSearchParams({ empCode: row?.empCode }).toString() });
+    else navigate('emp_add');
   }
 
   const onClickDelete = async () => {

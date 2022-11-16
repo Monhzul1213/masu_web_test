@@ -12,8 +12,7 @@ import { CardMain } from '../../components/emp/employee/add';
 import { CardSite } from '../../components/invt/modifier/add';
 import { CardEmpty } from '../../components/invt/inventory/add';
 
-export function EmployeeAdd(props){
-  const { } = props;
+export function EmployeeAdd(){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
@@ -84,13 +83,13 @@ export function EmployeeAdd(props){
         setName({ value: emp.empName ?? '' });
         setMail({ value: emp.email ?? '' });
         setPhone({ value: emp.phone ?? '' });
+        setCode({ value: emp.poS_PIN ?? '' });
         setRole({ value: emp?.roleId });
         setChecked(emp?.useAllSite === 'Y');
         sites1?.forEach(item => {
-          // let exists = invt?.psSalesPrices?.filter(si => si.siteId === item.siteId)[0];
-          // item.checked = exists ? true : false;
-          // if(exists) item.price = exists.price;
-          // item.rowStatus = exists ? 'U' : 'I';
+          let exists = emp?.empsites?.filter(si => si.siteId === item.siteId)[0];
+          item.checked = exists ? true : false;
+          item.rowStatus = exists ? 'U' : 'I';
         });
         setSites(sites1);
       }
@@ -119,7 +118,7 @@ export function EmployeeAdd(props){
     let isEmailValid = validateEmail(mail?.value);
     let pin = code?.value?.replace(/[ _]/g, '');
     let isCodeValid = pin?.length === 4;
-    let isPasswordValid = password?.value?.length >= passwordLength;
+    let isPasswordValid = (selected && !password?.value) || password?.value?.length >= passwordLength;
     if(name?.value && isEmailValid && (role?.value || role?.value === 0) && isCodeValid && isPasswordValid){
       let employeeSites = [];
       sites?.forEach(item => {
