@@ -535,6 +535,7 @@
 
 .m_input:disabled {
   cursor: not-allowed;
+  color: var(--text4-color);
 }
 
 .select_m .ant-select-selection-placeholder {

@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
-import { getList, sendRequest } from '../../services';
+import { apiLogin, getList, sendRequest } from '../../services';
 import { validateEmail } from '../../helpers';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardMain } from '../../components/emp/employee/add';
@@ -149,7 +149,15 @@ export function EmployeeAdd(){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
       if(response?.error) onError(response?.error, true);
-      else onSuccess(t('employee.add_success'), true);
+      else {
+        if(selected && selected?.email === user?.mail){
+          let pass = password?.value ? password?.value : user?.password;
+          const response1 = await dispatch(apiLogin(mail?.value, pass));
+          if(response1?.error) onError(response1?.error, true);
+          else onSuccess(t('employee.add_success'), true);
+        } else 
+          onSuccess(t('employee.add_success'), true);
+      }
     }
   }
 

@@ -146,6 +146,7 @@ export function InputPassword(props){
   const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, length } = props;
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
+  const [editable, setEditable] = useState(false);
 
   const onChange = e => {
     e?.target?.value?.length > length 
@@ -178,6 +179,11 @@ export function InputPassword(props){
     setVisible(!visible);
   }
 
+  const onClickLock = e => {
+    e.preventDefault();
+    setEditable(true);
+  }
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
@@ -187,15 +193,18 @@ export function InputPassword(props){
         {label && <p className='select_lbl' style={style}>{label}</p>}
         <InputMask
           className='m_input'
-          disabled={disabled}
+          disabled={disabled || !editable}
           onKeyDown={onKeyDown}
           onBlur={onBlur}
           placeholder={placeholder}
-          value={value?.value}
+          value={editable ? value?.value : '********'}
           type={visible ? 'text' : 'password'}
           onChange={onChange} />
       </div>
-      <DynamicAIIcon className='m_input_show' name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
+      {editable
+        ? <DynamicAIIcon className='m_input_show' name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
+        : <DynamicAIIcon className='m_input_show' name='AiOutlineLock' onClick={onClickLock} />
+      }
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
     </div>
   );
