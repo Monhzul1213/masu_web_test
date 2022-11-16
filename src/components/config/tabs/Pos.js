@@ -108,8 +108,10 @@ export function Pos(props){
       {visible && <Add {...modalProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        <div className='pos_select'><PlainSelect {...siteProps} /></div>
-        {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />}
+        <div style={{position: 'relative'}}>
+          <div className='pos_select'><PlainSelect {...siteProps} /></div>
+          {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />}
+        </div>
       </Overlay>
     </div>
   )
