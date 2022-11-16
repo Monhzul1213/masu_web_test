@@ -26,7 +26,7 @@ export function Inventory(){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getData();
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

@@ -48,7 +48,7 @@ export function InventoryAdd(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    getData();
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => setEdited(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

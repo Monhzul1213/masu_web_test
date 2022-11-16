@@ -23,7 +23,7 @@ export function Employee(){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getData();
+    user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

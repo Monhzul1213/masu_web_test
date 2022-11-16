@@ -33,7 +33,7 @@ export function EmployeeAdd(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    getData();
+    user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
