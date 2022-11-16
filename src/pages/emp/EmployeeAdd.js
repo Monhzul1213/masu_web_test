@@ -27,6 +27,7 @@ export function EmployeeAdd(){
   const [checked, setChecked] = useState(true);
   const [saved, setSaved] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [show, setShow] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -77,9 +78,9 @@ export function EmployeeAdd(){
     else {
       onSuccess();
       let emp = response && response?.data && response?.data[0];
-      console.log(emp);
       if(emp){
         setSelected(emp);
+        setShow(emp?.isOwner !== 'Y' && emp?.email !== user?.mail);
         setName({ value: emp.empName ?? '' });
         setMail({ value: emp.email ?? '' });
         setPhone({ value: emp.phone ?? '' });
@@ -163,7 +164,7 @@ export function EmployeeAdd(){
   let mainProps = { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'emp_ac_back' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'emp_ac_back' };
-  let btnProps = { onClickCancel, onClickSave, onClickDelete, show: selected ? true : false, id: 'emp_ac_back' };
+  let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_back' };
 
   return (
     <Overlay className='i_container' loading={loading}>
