@@ -8,6 +8,7 @@ const initialState = {
   user: null,
   webUser: null,
   toRemember: false,
+  msRole: null
 };
 
 export const loginSlice = createSlice({
@@ -66,7 +67,7 @@ export const apiLogin = (mail, password) => async dispatch => {
       return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
     } else {
       dispatch(setToken(response?.token));
-      dispatch(setUser({ mail, password, merchantId: response?.merchantId }));
+      dispatch(setUser({ mail, password, merchantId: response?.merchantId, msRole: response?.msRole }));
       return Promise.resolve({ error: null, token: response?.token });
     }
   } catch (err) {

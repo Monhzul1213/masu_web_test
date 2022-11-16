@@ -32,7 +32,19 @@ export function Menu(props){
   };
 
   const items = [
-    getItem(t('menu.report'), '/report', <BsClipboardData />),
+    getItem(t('menu.report'), '/report', <BsClipboardData />, [
+      getItem(t('menu.report_sales'), '/report/report_sales'),
+      getItem(t('menu.report_invtentory'), '/report/report_invtentory'),
+      getItem(t('menu.report_category'), '/report/report_category'),
+      getItem(t('menu.report_employee'), '/report/report_employee'),
+      getItem(t('menu.report_payment'), '/report/report_payment'),
+      getItem(t('menu.report_document'), '/report/report_document'),
+      getItem(t('menu.report_edited'), '/report/report_edited'),
+      getItem(t('menu.report_discount'), '/report/report_discount'),
+      getItem(t('menu.report_noat'), '/report/report_noat'),
+      getItem(t('menu.report_cashier'), '/report/report_cashier'),
+
+    ]),
     getItem(t('menu.inventory'), '/inventory', <BsInboxes />, [
       getItem(t('menu.invt_list'), '/inventory/invt_list'),
       getItem(t('menu.invt_category'), '/inventory/invt_category'),
@@ -42,6 +54,9 @@ export function Menu(props){
     getItem(t('menu.management'), '/management', <TbBuildingWarehouse />),
     getItem(t('menu.employee'), '/employee', <RiContactsLine />, [
       getItem(t('menu.emp_list'), '/employee/emp_list'),
+      getItem(t('menu.access_config'), '/employee/access_config'),
+      getItem(t('menu.shift_config'), '/employee/shift_config'),
+      getItem(t('menu.shift_list'), '/employee/shift_list'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />),
