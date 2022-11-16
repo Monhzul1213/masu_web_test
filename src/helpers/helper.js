@@ -1,5 +1,5 @@
-export function getItem(label, key, icon, children, type) {
-  return { key, icon, children, label, type };
+export function getItem(label, key, icon, children, type, disabled) {
+  return { key, icon, children, label, type, disabled };
 }
 
 export function validateEmail(mail) {

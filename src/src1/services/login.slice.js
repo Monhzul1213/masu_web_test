@@ -8,7 +8,6 @@ const initialState = {
   user: null,
   webUser: null,
   toRemember: false,
-  msRole: null
 };
 
 export const loginSlice = createSlice({

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { getItem } from '../../../helpers';
 import { Title } from './Title';
@@ -8,6 +9,7 @@ import { Title } from './Title';
 export function Card(props){
   const { selectedKeys, setSelectedKeys } = props;
   const { t } = useTranslation();
+  const { user: { msRole } } = useSelector(state => state.login);
 
   const items = [
     getItem(t('system_menu.additional'), 'additional'),
@@ -23,7 +25,7 @@ export function Card(props){
 
   const items1 = [
     getItem(t('system_menu.store'), 'store'),
-    getItem(t('system_menu.pos'), 'pos'),
+    getItem(t('system_menu.pos'), 'pos', null, null, null, msRole?.webManagePos !== 'Y'),
   ];
 
   const onClick = e => setSelectedKeys([e?.key]);
