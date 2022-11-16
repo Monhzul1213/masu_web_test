@@ -29,7 +29,13 @@ export function Role(){
     const response = await dispatch(getList(user, token, 'Employee/Role/-1'));
     console.log(response);
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else {
+      response?.data?.forEach(item => {
+        item.accesses = (item?.webAccess === 'Y' ? 'Back office' : '') +
+          (item?.posAccess === 'Y' && item?.webAccess === 'Y' ? ' and ' : '') + (item?.posAccess === 'Y' ? 'POS' : '')
+      });
+      setData(response?.data);
+    }
     setLoading(false);
     setShow(false);
     setChecked(false);
