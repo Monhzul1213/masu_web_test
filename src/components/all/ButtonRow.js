@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, IconButton } from './Button';
-import { Confirm } from './Confirm';
+import { Confirm, Warning } from './Confirm';
 import { DynamicBSIcon } from './DynamicIcon';
 
 export function ButtonRow(props){
@@ -47,21 +47,28 @@ export function ButtonRowAdd(props){
 
 export function ButtonRowConfirm(props){
   const { t } = useTranslation();
-  const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2, id } = props;
+  const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2, id, disabled, error } = props;
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
 
-  const onDelete = () => setOpen(true);
+  const onDelete = () => {
+    disabled ? setOpen1(true) : setOpen(true);
+  }
 
   const confirm = async sure => {
     setOpen(false);
     if(sure) onClickDelete();
   }
 
+  const close = () => setOpen1(false);
+
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
+  const warningProps = { open: open1, text: error, close };
 
   return (
     <div className='invt_btn_row' id={id}>
       {open && <Confirm {...confirmProps} />}
+      {open1 && <Warning {...warningProps} />}
       {show && <DynamicBSIcon className='a_btn_delete' name='BsTrash' onClick={onDelete} />}
       <Button className='invt_btn' text={t(text1 ?? 'page.cancel')} onClick={onClickCancel} />
       <Button className='invt_btn' id='invt_btn_save' text={t(text2 ?? 'page.save')} type={type} onClick={onClickSave} />

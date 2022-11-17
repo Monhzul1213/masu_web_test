@@ -650,8 +650,16 @@
   color: var(--text3-color);
 }
 
+.role_item_check:disabled {
+  cursor: not-allowed;
+}
+
 .role_item_text {
   color: var(--text-color);
   margin: 0 0 0 15px;
   font-size: 15px;
+}
+
+.ant-switch-disabled, .ant-switch-loading {
+  opacity: 0.8;
 }

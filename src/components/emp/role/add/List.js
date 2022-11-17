@@ -6,7 +6,7 @@ import { DynamicMDIcon } from '../../../all';
 import { Item } from './Item';
 
 export function List(props){
-  const { type, value, setValue, data, setData } = props;
+  const { type, value, setValue, data, setData, disabled } = props;
   const { t } = useTranslation();
 
   const onChange = checked => setValue(checked ? 'Y' : 'N');
@@ -19,7 +19,7 @@ export function List(props){
   }
 
   const renderItem = (item, index) => {
-    const itemProps = { key: index, item, index, onCheck };
+    const itemProps = { key: index, item, index, onCheck, disabled };
     return (<Item {...itemProps} />);
   }
 
@@ -31,7 +31,7 @@ export function List(props){
           <p className='role_header_title'>{t('role.' + type + '.title')}</p>
           <p className='role_header_descr'>{t('role.' + type + '.descr')}</p>
         </div>
-        <Switch className='a_item_check' checked={value === 'Y'} onChange={onChange} />
+        <Switch className='a_item_check' checked={value === 'Y'} onChange={onChange} disabled={disabled} />
       </div>
       {value === 'Y' && <div style={{marginTop: 10}}>{data?.map(renderItem)}</div>}
     </div>

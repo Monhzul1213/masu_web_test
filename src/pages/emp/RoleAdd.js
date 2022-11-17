@@ -5,7 +5,7 @@
  import { useSelector, useDispatch } from 'react-redux';
 
 import { posList, webList } from '../../helpers';
-import { getList, sendRequest } from '../../services';
+import { apiLogin, getList, sendRequest } from '../../services';
 import { ButtonRowConfirm, Error1, Input, Overlay, Prompt } from '../../components/all';
 import { List } from '../../components/emp/role/add';
 
@@ -15,6 +15,7 @@ export function RoleAdd(){
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [show, setShow] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [saved, setSaved] = useState(false);
   const [name, setName] = useState({ value: '' });
   const [posAccess, setPosAccess] = useState('N');
@@ -22,6 +23,7 @@ export function RoleAdd(){
   const [posData, setPosData] = useState([]);
   const [webData, setWebData] = useState([]);
   const [role, setRole] = useState(null);
+  const [deletable, setDeletable] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -76,7 +78,7 @@ export function RoleAdd(){
       let role = response && response?.data;
       if(role){
         setRole(role);
-        setShow(role?.roleId !== 1 && role?.roleId !== user?.msRole?.roleId);
+        setDisabled(role?.roleId === 1);
         setName({ value: role.roleName ?? '' });
         setPosAccess(role?.posAccess);
         setWebAccess(role?.webAccess);
@@ -84,6 +86,8 @@ export function RoleAdd(){
         setPosData(posList);
         webList?.forEach(item => item.checked = role[item?.value] === 'Y');
         setWebData(webList);
+        setShow(role && role?.roleId !== 1);
+        setDeletable(role?.empQty !== 0);
       }
     }
   }
@@ -109,30 +113,28 @@ export function RoleAdd(){
       const response = await dispatch(sendRequest(user, token, 'Employee/Role', data));
       if(response?.error) onError(response?.error, true);
       else {
-        //if current user role
-        // if(role && role?.email === user?.mail){
-        //   let pass = password?.value ? password?.value : user?.password;
-        //   const response1 = await dispatch(apiLogin(mail?.value, pass));
-        //   if(response1?.error) onError(response1?.error, true);
-        //   else onSuccess(t('employee.add_success'), true);
-        // } else 
+        if(role && role?.roleId === user?.msRole?.roleId){
+          const response1 = await dispatch(apiLogin(user?.mail, user?.password));
+          if(response1?.error) onError(response1?.error, true);
+          else onSuccess(t('role.add_success'), true);
+        } else 
           onSuccess(t('role.add_success'), true);
       }
     }
   }
 
   const onClickDelete = async () => {
-    // onLoad();
-    // let data = [{...role, rowStatus: 'D', roleID: role?.roleId, password: '', poS_PIN: '', employeeSites: []}];
-    // const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
-    // if(response?.error) onError(response?.error, true);
-    // else onSuccess(t('employee.delete_success'), true);
+    onLoad();
+    let data = [{...role, rowStatus: 'D'}];
+    const response = await dispatch(sendRequest(user, token, 'Employee/Role', data));
+    if(response?.error) onError(response?.error, true);
+    else onSuccess(t('role.delete_success'), true);
   }
 
   let nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('page.name'), setError, inRow: true, setEdited, length: 50 };
-  let posProps = { type: 'pos', value: posAccess, setValue: setPosAccess, data: posData, setData: setPosData };
-  let webProps = { type: 'web', value: webAccess, setValue: setWebAccess, data: webData, setData: setWebData };
-  let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'role_ac_back' };
+  let posProps = { type: 'pos', value: posAccess, setValue: setPosAccess, data: posData, setData: setPosData, disabled };
+  let webProps = { type: 'web', value: webAccess, setValue: setWebAccess, data: webData, setData: setWebData, disabled };
+  let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'role_ac_back', disabled: deletable, error: 'role.delete_qty' };
 
   return (
     <Overlay className='i_container' loading={loading}>
