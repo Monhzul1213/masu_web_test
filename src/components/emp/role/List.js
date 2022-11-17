@@ -24,7 +24,7 @@ export function List(props){
       { Header: t('page.name'), accessor: 'roleName' },
       { Header: t('role.name'), accessor: 'accesses' },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('role.qty')}</div>, accessor: 'qty',
+        Header: <div style={{textAlign: 'right'}}>{t('role.qty')}</div>, accessor: 'empQty',
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value ? props.value : 0}</div>
       },
     ]);

@@ -5,7 +5,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { Check, CheckAll, PaginationTable, Table } from '../../../all';
 
 export function CardSite(props){
-  const { data, setData, setEdited, checked, setChecked, id } = props;
+  const { data, setData, setEdited, checked, setChecked, id, label } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -41,7 +41,7 @@ export function CardSite(props){
     }));
   }
 
-  const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
+  const checkProps = { type: label ?? 'inventory', checked, onCheckAll, style: {border: 'none'} };
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
