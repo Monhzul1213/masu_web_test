@@ -5,7 +5,7 @@
  import { useSelector, useDispatch } from 'react-redux';
 
 import { posList, webList } from '../../helpers';
-import { sendRequest } from '../../services';
+import { getList, sendRequest } from '../../services';
 import { ButtonRowConfirm, Error1, Input, Overlay, Prompt } from '../../components/all';
 import { List } from '../../components/emp/role/add';
 
@@ -22,6 +22,7 @@ export function RoleAdd(){
   const [posData, setPosData] = useState([]);
   const [webData, setWebData] = useState([]);
   const [role, setRole] = useState(null);
+  const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,9 +57,35 @@ export function RoleAdd(){
     setLoading(false);
   }
 
-  const getData = async () => {
-    setPosData(posList);
-    setWebData(webList);
+  const getData = () => {
+    let roleId = searchParams?.get('roleId');
+    if(roleId || roleId === 0){
+      getRole(roleId)
+    } else {
+      setPosData(posList);
+      setWebData(webList);
+    }
+  }
+
+  const getRole = async roleId => {
+    onLoad();
+    let response = await dispatch(getList(user, token, 'Employee/Role/' + roleId));
+    if(response?.error) onError(response?.error, false);
+    else {
+      onSuccess();
+      let role = response && response?.data;
+      if(role){
+        setRole(role);
+        setShow(role?.roleId !== 1 && role?.roleId !== user?.msRole?.roleId);
+        setName({ value: role.roleName ?? '' });
+        setPosAccess(role?.posAccess);
+        setWebAccess(role?.webAccess);
+        posList?.forEach(item => item.checked = role[item?.value] === 'Y');
+        setPosData(posList);
+        webList?.forEach(item => item.checked = role[item?.value] === 'Y');
+        setWebData(webList);
+      }
+    }
   }
 
   const onClickCancel = () => navigate('/employee/access_config');
@@ -124,73 +151,3 @@ export function RoleAdd(){
     </Overlay>
   );
 }
-
-/**
-
-import '../../css/invt.css';
-import { apiLogin, getList, sendRequest } from '../../services';
-import { validateEmail } from '../../helpers';
-import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
-import { CardMain } from '../../components/emp/employee/add';
-import { CardSite } from '../../components/invt/modifier/add';
-import { CardEmpty } from '../../components/invt/inventory/add';
-
-export function EmployeeAdd(){
-  const [mail, setMail] = useState({ value: '' });
-  const [password, setPassword] = useState({ value: '' });
-  const [phone, setPhone] = useState({ value: '' });
-  const [role, setRole] = useState({ value: null });
-  const [code, setCode] = useState({ value: '' });
-  const [sites, setSites] = useState([]);
-  const [checked, setChecked] = useState(true);
-  const [searchParams] = useSearchParams();
-
-  const getData = async () => {
-    let empCode = searchParams?.get('empCode');
-    let response = await getSites();
-    if(response && (empCode || empCode === 0)) await getEmployee(empCode, response);
-  }
-
-  const getEmployee = async (empCode, sites1) => {
-    onLoad();
-    let response = await dispatch(getList(user, token, 'Employee/GetEmployees?EmpCode=' + empCode));
-    if(response?.error) onError(response?.error, false);
-    else {
-      onSuccess();
-      let emp = response && response?.data && response?.data[0];
-      if(emp){
-        setRole(emp);
-        setShow(emp?.isOwner !== 'Y' && emp?.email !== user?.mail);
-        setName({ value: emp.empName ?? '' });
-        setMail({ value: emp.email ?? '' });
-        setPhone({ value: emp.phone ?? '' });
-        setCode({ value: emp.poS_PIN ?? '' });
-        setRole({ value: emp?.roleId });
-        setChecked(emp?.useAllSite === 'Y');
-        sites1?.forEach(item => {
-          let exists = emp?.empsites?.filter(si => si.siteId === item.siteId)[0];
-          item.checked = exists ? true : false;
-          item.rowStatus = exists ? 'U' : 'I';
-        });
-        setSites(sites1);
-      }
-    }
-  }
-
-  const getSites = async () => {
-    onLoad();
-    const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    if(response?.error){
-      onError(response?.error, false);
-      return false;
-    } else {
-      response?.data?.forEach(item => {
-        item.checked = true;
-        item.rowStatus = 'I';
-      });
-      setSites(response?.data);
-      onSuccess();
-      return response?.data;
-    }
-  }
- */
