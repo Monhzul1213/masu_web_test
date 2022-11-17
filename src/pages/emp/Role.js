@@ -42,8 +42,8 @@ export function Role(){
   }
 
   const onClickAdd = row => {
-    // if(row) navigate({ pathname: 'emp_add', search: createSearchParams({ empCode: row?.empCode }).toString() });
-    // else navigate('emp_add');
+    if(row) navigate({ pathname: 'access_add', search: createSearchParams({ roleId: row?.roleId }).toString() });
+    else navigate('access_add');
   }
 
   const onClickDelete = async () => {

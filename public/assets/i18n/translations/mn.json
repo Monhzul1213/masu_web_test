@@ -56,6 +56,7 @@
     "/employee/emp_list": "Ажилтны жагсаалт",
     "/employee/emp_list/emp_add": "Ажилтан нэмэх",
     "/employee/access_config": "Эрхийн тохиргоо",
+    "/employee/access_config/access_add": "Эрх нэмэх",
     "/employee/shift_config": "Цагийн тохиргоо",
     "/employee/shift_list": "Цагийн жагсаалт",
     "/customer": "Харилцагч",
@@ -400,6 +401,16 @@
     "title": "Эрхийн тохиргоо",
     "add": "Эрх нэмэх",
     "name": "Эрх",
-    "qty": "Ажилтан тоо"
+    "qty": "Ажилтан тоо",
+    "pos": {
+      "icon": "MdStayCurrentPortrait",
+      "title": "POS",
+      "descr": "Ажилтнууд ПИН код ашиглан програм руу нэвтрэнэ."
+    },
+    "web": {
+      "icon": "MdAutoGraph",
+      "title": "Back office",
+      "descr": "Ажилтнууд цахим шуудан болон нэвтрэх нууц үг ашиглан системд нэвтрэнэ."
+    }
   }
 }

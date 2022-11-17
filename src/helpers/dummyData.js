@@ -29,23 +29,41 @@ export const colors = [
   '#9c27b0'
 ];
 
-export const categories = [
-  { color: '#e91e63', name: 'Sweets', count: 0 }
-];
-
-export const posList = [
-  { name: 'POS1', site: "5 Mart", status: "Идэвхтэй", type: "Windows", noat: "тийм" },
-  { name: 'POS2', site: "15 Mart", status: "Идэвхтэй", type: "Android", noat: "тийм" },
-  { name: 'POS3', site: "25 Marts", status: "Идэвхтэй", type: "Windows", noat: "тийм" },
-  { name: 'POS4', site: "51 Mart", status: "Идэвхтэй", type: "Windows", noat: "тийм" },
-  { name: 'POS5', site: "52 Mart", status: "Идэвхтэй", type: "iOS", noat: "тийм" },
-  { name: 'POS6', site: "53 Mart", status: "Идэвхтэй", type: "Windows", noat: "тийм" },
-  { name: 'POS7', site: "54 Mart", status: "Идэвхтэй", type: "Android", noat: "тийм" },
-  { name: 'POS8', site: "55 Mart", status: "Идэвхтэй", type: "iOS", noat: "тийм" }
-];
-
 export const posTypes = [
   { value: "Windows", label: "Windows" },
   { value: "Android", label: "Android" },
   { value: "iOS", label: "iOS" }
+];
+
+export const posList = [
+  { label: 'Бүх борлуулалтыг харах', value: 'posViewReceipt' },
+  { label: 'Хөнгөлөлт ашиглах', value: 'posDiscount' },
+  { label: 'Борлуулалт болон татвар өөрчлөх', value: 'posChangeSalesTaxes' },
+  { label: 'Буцаалт авах', value: 'posReturn' },
+  { label: 'Бүх нээлттэй захиалгыг удирдах', value: 'posManageTicket' },
+  { label: 'Нээлттэй захиалгыг хүчингүй болгох', value: 'posVoidTicket' },
+  { label: 'Ээлжийн тайлан харах', value: 'posViewShiftReport' },
+  { label: 'Мөнгөний шургуулга нээх', value: 'posOpenCashDrawer' },
+  { label: 'Баримт дахин хэвлэх', value: 'posReprintReceipt' },
+  { label: 'Бараа бүртгэх', value: 'posManageItems' },
+  { label: 'Тохиргоо өөрчлөх', value: 'posChangeSettings' },
+  { label: 'Чатад хандах', value: 'posChat' },
+  { label: 'Чатад хариу өгөх', value: '"posLiveChatSuport' },
+];
+
+export const webList = [
+  { label: 'Борлуулалтын тайлан харах', value: 'webViewSalesReport' },
+  { label: 'Борлуулалт хүчингүй болгох', value: 'webCancelReceipts' },
+  { label: 'Бараа бүртгэх', value: 'webManageItem' },
+  { label: 'Ажилтан бүртгэх', value: 'webManageEmployy' },
+  { label: 'Харилцагч бүртгэх', value: 'webManageCustomer' },
+  { label: 'Тохиргоо өөрчлөх', value: 'webEditSettings' },
+  { label: 'Тооцоог бүртгэх', value: 'webManageBilling' },
+  { label: 'Төлбөрийн төрөл бүртгэх', value: 'webManagePaymentType' },
+  { label: 'Хөнгөлөлт бүртгэх', value: 'webManageLoyalty' },
+  { label: 'Татвар бүртгэх', value: 'webManageTaxes' },
+  { label: 'Kitchen принтер бүртгэх', value: 'webManageKitchenPrinter' },
+  { label: 'Хоолны сонголт бүртгэх', value: 'webManageDinigOptions' },
+  { label: 'ПОС бүртгэх', value: 'webManagePos' },
+  { label: 'Чатад харах', value: 'webManageChat' },
 ];
