@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+ import { message } from 'antd';
+ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
-import { getList } from '../../services';
+import { getList, sendRequest } from '../../services';
 import { ButtonRowAddConfirm, Empty, Error1, Overlay } from '../../components/all';
 import { List } from '../../components/emp/role';
 
 export function Role(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -27,7 +30,6 @@ export function Role(){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Employee/Role/-1'));
-    console.log(response);
     if(response?.error) setError(response?.error);
     else {
       response?.data?.forEach(item => {
@@ -47,19 +49,19 @@ export function Role(){
   }
 
   const onClickDelete = async () => {
-    // let toDelete = [];
-    // data?.forEach(item => {
-    //   if(item.checked) toDelete.push({...item, rowStatus: 'D', roleID: item?.roleId, password: '', poS_PIN: '', employeeSites: [] });
-    // });
-    // setError(null);
-    // setLoading(true);
-    // let response = await dispatch(sendRequest(user, token, 'Employee/Modify', toDelete));
-    // setLoading(false);
-    // if(response?.error) setError(response?.error);
-    // else {
-    //   message.success(t('employee.delete_success'));
-    //   getData(filter);
-    // }
+    let toDelete = [];
+    data?.forEach(item => {
+      if(item.checked) toDelete.push({...item, rowStatus: 'D' });
+    });
+    setError(null);
+    setLoading(true);
+    let response = await dispatch(sendRequest(user, token, 'Employee/Role', toDelete));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      message.success(t('role.delete_success'));
+      getData();
+    }
   }
   
   const emptyProps = { icon: 'MdOutlineSupervisorAccount', type: 'role', onClickAdd, noDescr: true };

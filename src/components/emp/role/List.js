@@ -17,7 +17,7 @@ export function List(props){
         id: 'check', noSort: true, isBtn: true, customStyle,
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => {
-          let disabled = row?.original?.roleId === 1;
+          let disabled = row?.original?.roleId === 1 || row?.original?.empQty !== 0;
           return (<div style={style}><CheckBtn checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} disabled={disabled} /></div>)
         }
       },
@@ -35,7 +35,7 @@ export function List(props){
   const onClickCheckAll = e => {
     let count = false;
     setData(old => old.map((row, index) => {
-      let disabled = row?.roleId === 1;
+      let disabled = row?.roleId === 1 || row?.empQty !== 0;
       if(disabled) return row;
       else {
         if(!checked) count = true;
