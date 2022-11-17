@@ -50,17 +50,16 @@ export function List(props){
   const onClickCheck = (e, item) => {
     e?.preventDefault();
     setChecked(false);
-    let count = false;
+    setShow(false);
     setData(old => old.map((row, index) => {
       if(index === item?.index){
-        if(!row?.checked) count = true;
+        if(!row?.checked) setShow(true);
         return { ...old[item?.index], checked: !row?.checked };
       } else {
-        if(row?.checked) count = true;
+        if(row?.checked) setShow(true);
         return row;
       }
     }));
-    setShow(count);
   }
 
   const onRowClick = row => onClickAdd(row?.original);
