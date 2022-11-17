@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ButtonRowAdd, Confirm, Empty, Empty1, Error1, Overlay, PlainSelect } from '../../components/all/all_m';
 import { List } from '../../components/invt/discount';
+import { useSelector, } from 'react-redux';
 
 export function Discount(){
   const { t } = useTranslation();
@@ -17,9 +18,10 @@ export function Discount(){
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const navigate = useNavigate();
+  const { user }  = useSelector(state => state.login);
 
   useEffect(() => {
-    getData(-1);
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -53,7 +55,7 @@ export function Discount(){
   const siteProps = { value: site, setValue: onSelectSite, data: sites, s_value: 'siteId', s_descr: 'name', className: 'r_select',
     onFocus: onFocusSite, loading: loading === 'sites' };
   const listProps = { data, setData, setShow, checked, setChecked };
-  const emptyProps = { icon: 'MdOutlineFactCheck', type: 'discount', onClickAdd  };
+  const emptyProps = { icon: 'MdOutlineFactCheck', type: 'discount',   };
   const addProps = { type: 'discount', onClickAdd, show, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 

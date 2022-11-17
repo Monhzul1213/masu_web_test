@@ -46,6 +46,7 @@ export function List(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd};
+  
   return (
     <div>
       {open && <Confirm {...confirmProps} />}

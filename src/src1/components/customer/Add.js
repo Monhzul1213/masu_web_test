@@ -35,9 +35,10 @@ export function Add(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const checkValid = () => {
- 
+    let phoneLength = 8 ;
+    let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
     let isEmailValid = validateEmail(email?.value?.trim());
-    if( isEmailValid  && custName?.value?.trim() && phone?.value?.trim()
+    if( isEmailValid  && custName?.value?.trim() && isPhoneValid
     &&custCode?.value?.trim()){
       return true;
     } else {
@@ -46,7 +47,7 @@ export function Add(props){
       if(!custName?.value?.trim()) setCustName({ value: '', error: t('error.not_empty') });
       if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
       if(!custCode?.value?.trim()) setCustCode({ value: '', error: t('error.not_empty') });
-      
+      if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
     }
   }
   const onClickSave = async e => {
@@ -124,7 +125,7 @@ export function Add(props){
   const maxheight1= 'calc(90vh - 250px)';
   const maxheight= 'calc(90vh - 105px )';
   const nameProps = { value: custName, setValue: setCustName, label: t('page.name'), placeholder: t('customer.name'), setError, length: 64 , length1: 2 };
-  const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, length: 8 ,  };
+  const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, };
   const mailProps = { value: email, setValue: setEmail, label: t('page.email'), placeholder: t('customer.email'), setError, length: 100};
   const codeProps = { value: custCode, setValue: setCustCode, label: t('page.code'), placeholder: t('customer.code'), setError,  };
   const descrProps = { value: note, setValue: setNote, label: t('customer.desc'), placeholder: t('customer.desc'), setError , length: 255, length1:10};

@@ -6,6 +6,7 @@ import { Add, List , Header} from '../components/customer';
 import { getList , sendRequest} from '../services';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 export function Customer(props){
   const { t } = useTranslation();
@@ -22,12 +23,13 @@ export function Customer(props){
   const [filter,  setFilter] =   useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const [checked, setChecked] = useState(false);
 
   
   useEffect(() => {
-    getData();
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

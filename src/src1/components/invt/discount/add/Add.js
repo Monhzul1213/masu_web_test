@@ -1,23 +1,22 @@
 
 
-import React, { useState, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AddItem } from './AddItem';
 
 import {  Input,  Radio, MoneyInput} from '../../../all/all_m';
 
 export function Add(props){
-  const { name, setName, setError,setIsEach, setEdited, isEach } = props;
+  const { name, setName, setError,setIsEach, setEdited, isEach,
+     perc, setPerc, price, setPrice, checked, setChecked } = props;
   const { t } = useTranslation();
-  const [price, setPrice] = useState({ value: '' });
-  const [checked, setChecked] = useState({});
-  const [perc, setPerc] = useState({ value: '' });
+
 
   useEffect(() => {
-    // getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const onCheck = (label, value) => {
     setChecked({...checked, ...{[label]: value}});
   }
@@ -29,9 +28,6 @@ export function Add(props){
         const itemProps = { key: index, item, more: t('page.more'), onCheck };
         return (<AddItem {...itemProps} />);
       }
-
-
-
 
   const nameProps = { value: name, setValue: setName, label: t('discount.name'), placeholder: t('discount.name'), setError, inRow: true, setEdited, length: 20 };
   const valueProps = { value: price, setValue: setPrice, label: t('discount.amount'), placeholder: t('discount.amount'), setError,  };
