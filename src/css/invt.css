@@ -579,4 +579,5 @@
 
 #role_list {
   width: 780px;
+  max-width: calc(100vw - var(--side-width) - var(--page-padding) * 2);
 }

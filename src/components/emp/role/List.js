@@ -33,33 +33,33 @@ export function List(props){
   }, [i18n?.language]);
 
   const onClickCheckAll = e => {
-    // let count = false;
-    // setData(old => old.map((row, index) => {
-    //   let disabled = row?.isOwner === 'Y' || row?.email === mail;
-    //   if(disabled) return row;
-    //   else {
-    //     if(!checked) count = true;
-    //     return { ...old[index], checked: !checked };
-    //   }
-    // }));
-    // setShow(count);
-    // setChecked(!checked);
+    let count = false;
+    setData(old => old.map((row, index) => {
+      let disabled = row?.roleId === 1;
+      if(disabled) return row;
+      else {
+        if(!checked) count = true;
+        return { ...old[index], checked: !checked };
+      }
+    }));
+    setShow(count);
+    setChecked(!checked);
   }
 
   const onClickCheck = (e, item) => {
-    // e?.preventDefault();
-    // setChecked(false);
-    // let count = false;
-    // setData(old => old.map((row, index) => {
-    //   if(index === item?.index){
-    //     if(!row?.checked) count = true;
-    //     return { ...old[item?.index], checked: !row?.checked };
-    //   } else {
-    //     if(row?.checked) count = true;
-    //     return row;
-    //   }
-    // }));
-    // setShow(count);
+    e?.preventDefault();
+    setChecked(false);
+    let count = false;
+    setData(old => old.map((row, index) => {
+      if(index === item?.index){
+        if(!row?.checked) count = true;
+        return { ...old[item?.index], checked: !row?.checked };
+      } else {
+        if(row?.checked) count = true;
+        return row;
+      }
+    }));
+    setShow(count);
   }
 
   const onRowClick = row => onClickAdd(row?.original);
