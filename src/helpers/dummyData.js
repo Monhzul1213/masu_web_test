@@ -65,5 +65,5 @@ export const webList = [
   { label: 'Kitchen принтер бүртгэх', value: 'webManageKitchenPrinter', checked: false },
   { label: 'Хоолны сонголт бүртгэх', value: 'webManageDinigOptions', checked: false },
   { label: 'ПОС бүртгэх', value: 'webManagePos', checked: false },
-  { label: 'Чатад харах', value: 'webManageChat', checked: false },
+  { label: 'Чат харах', value: 'webManageChat', checked: false },
 ];
