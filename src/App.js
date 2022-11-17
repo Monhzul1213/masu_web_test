@@ -7,7 +7,7 @@ import { createBrowserHistory } from "history";
 import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Config } from './pages';
 import { Category, Inventory, InventoryAdd, Modifier, ModifierAdd } from './pages/invt';
-import { Employee, EmployeeAdd, Role, RoleAdd } from './pages/emp';
+import { Employee, EmployeeAdd, Role, RoleAdd, Time } from './pages/emp';
 import { Customer, Discount, DiscountAdd } from './src1/pages';
 import { setIsLoggedIn } from './services';
 
@@ -82,6 +82,7 @@ export function App(){
                 <Route path='/customer' element={<Customer />} />
                 <Route path='/employee/access_config' element={<Role />} />
                 <Route path='/employee/access_config/access_add' element={<RoleAdd />} />
+                <Route path='/employee/shift_config' element={<Time />} />
               </Routes>
             </Layout>
           </Layout>
