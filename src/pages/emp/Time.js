@@ -1,29 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import '../../css/invt.css';
+import { Error1, Overlay } from '../../components/all';
 
 export function Time(){
-  return (
-    <div>
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
+  return (
+    <div className='s_container_i'>
+      <Overlay loading={loading}>
+        {error && <Error1 error={error} />}
+        {/* {!data?.length && !filtering ? <Empty {...emptyProps} /> :
+          <div className='i_list_cont' id='invt_list'>
+            <Header {...headerProps} />
+            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
+          </div>
+        } */}
+      </Overlay>
     </div>
   );
 }
 
 /**
- import React, { useState, useEffect } from 'react';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 
-import '../../css/invt.css';
 import { getList, sendRequest } from '../../services';
 import { Empty, Empty1, Error1, Overlay } from '../../components/all';
 import { Header, List } from '../../components/emp/employee/list';
 
 export function Employee(){
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -79,17 +89,7 @@ export function Employee(){
   const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
 
   return (
-    <div className='s_container_i'>
-      <Overlay loading={loading}>
-        {error && <Error1 error={error} />}
-        {!data?.length && !filtering ? <Empty {...emptyProps} /> :
-          <div className='i_list_cont' id='invt_list'>
-            <Header {...headerProps} />
-            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
-          </div>
-        }
-      </Overlay>
-    </div>
+    
   )
 }
  */

@@ -30,11 +30,16 @@ export function CardMain(props){
     }
   }
 
+  const changePhone = value => {
+    let text = value?.value?.replace(/[^0-9]/g, '');
+    setPhone({ value: text });
+  }
+
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('page.name'), setError, inRow: true, setEdited, length: 50 };
   const mailProps = { value: mail, setValue: setMail, label: t('employee.mail'), placeholder: t('employee.mail'), setError, setEdited };
   const passProps = { value: password, setValue: setPassword, label: t('employee.password'), placeholder: t('employee.password'),
     setError, setEdited, length: 20, disabled: selected ? true : false };
-  const phonProps = { value: phone, setValue: setPhone, label: t('shop.phone'), placeholder: t('shop.phone'), setError, setEdited, length: 20 };
+  const phonProps = { value: phone, setValue: changePhone, label: t('shop.phone'), placeholder: t('shop.phone'), setError, setEdited, length: 20 };
   const roleProps = { value: role, setValue: setRole, label: t('employee.role'), placeholder: t('employee.role'), setError, setEdited,
     data: roles, s_value: 'roleId', s_descr: 'roleName', onFocus, loading };
   const codeProps = { value: code, setValue: setCode, label: t('employee.code'), placeholder: t('employee.code'), setError, setEdited,
