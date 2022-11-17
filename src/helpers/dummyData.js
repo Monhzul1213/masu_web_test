@@ -48,7 +48,7 @@ export const posList = [
   { label: 'Бараа бүртгэх', value: 'posManageItems' },
   { label: 'Тохиргоо өөрчлөх', value: 'posChangeSettings' },
   { label: 'Чатад хандах', value: 'posChat' },
-  { label: 'Чатад хариу өгөх', value: '"posLiveChatSuport' },
+  { label: 'Чатад хариу өгөх', value: 'posLiveChatSuport' },
 ];
 
 export const webList = [

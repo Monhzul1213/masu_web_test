@@ -13,7 +13,7 @@ export function List(props){
 
   const onCheck = i => {
     setData(old => old.map((row, index) => {
-      if(index === i) return { ...old[i], checked: row?.checked === 'Y' ? 'N' : 'Y' };
+      if(index === i) return { ...old[i], checked: !row?.checked };
       else return row;
     }));
   }

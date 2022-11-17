@@ -9,7 +9,7 @@ export function Item(props){
 
   return (
     <div className='role_item'>
-      <CheckBtn checked={item?.checked === 'Y'} onClick={onClick} className='role_item_check' />
+      <CheckBtn checked={item?.checked} onClick={onClick} className='role_item_check' />
       <p className='role_item_text'>{item?.label}</p>
     </div>
   );
