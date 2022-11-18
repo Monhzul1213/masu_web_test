@@ -546,7 +546,7 @@
   left: 0;
 }
 
-.ant-select-multiple .ant-select-selection-search {
+.select_m.ant-select-multiple .ant-select-selection-search {
   -webkit-margin-start: 0;
   margin-inline-start: 0;
 }
