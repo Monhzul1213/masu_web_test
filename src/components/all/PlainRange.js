@@ -1,11 +1,13 @@
 import React from 'react';
 import { DatePicker } from 'antd';
-
-import { DynamicAIIcon } from './DynamicIcon';
 const { RangePicker } = DatePicker;
 
 export function PlainRange(props){
-  const { classBack, label, className, value, disabled, setValue, placeholder } = props;
+  const { classBack, label, className, value, disabled, setValue, placeholder, onHide } = props;
+
+  const onOpenChange = show => {
+    if(!show) onHide();
+  }
 
   return (
     <div className={classBack}>
@@ -15,11 +17,11 @@ export function PlainRange(props){
         suffixIcon={null}
         allowClear={false}
         placeholder={placeholder}
+        onOpenChange={onOpenChange}
         value={value}
         format='yyyy.MM.DD'
         disabled={disabled}
         onChange={setValue} />
-      <DynamicAIIcon className='date_icon' name='AiOutlineCalendar' />
     </div>
   );
 }

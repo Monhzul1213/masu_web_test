@@ -109,7 +109,7 @@ export function CustomSelect(props){
 }
 
 export function MultiSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, maxTag } = props;
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, maxTag, onHide } = props;
   const { t } = useTranslation();
   
   const renderItem = (item, index) => {
@@ -119,6 +119,10 @@ export function MultiSelect(props){
   const onClick = () => {
     let all = data?.map(item => item[s_value ?? 'value']);
     setValue(all);
+  }
+
+  const onDropdownVisibleChange = show => {
+    if(!show) onHide();
   }
 
   const dropdownRender = menu => {
@@ -142,6 +146,7 @@ export function MultiSelect(props){
         loading={loading}
         onFocus={onFocus}
         mode='multiple'
+        onDropdownVisibleChange={onDropdownVisibleChange}
         dropdownRender={dropdownRender}
         maxTagCount={0}
         maxTagPlaceholder={maxTag}
