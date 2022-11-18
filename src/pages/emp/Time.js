@@ -23,7 +23,7 @@ export function Time(){
   }, []);
 
   const getData = async query => {
-    // setData([{}]);
+    setData([{}]);
     // setError(null);
     // setLoading(true);
     // let api = 'Employee/GetEmployees' + (query ?? '');
