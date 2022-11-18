@@ -1,6 +1,8 @@
 import React from 'react';
 import { Select as AntSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
+
+import { Button } from './Button';
 const { Option } = AntSelect;
 
 export function Select(props){
@@ -106,15 +108,22 @@ export function CustomSelect(props){
 }
 
 export function MultiSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex } = props;
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, maxTag } = props;
+  const { t } = useTranslation();
   
   const renderItem = (item, index) => {
     return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
   }
 
+  const onClick = () => {
+    let all = data?.map(item => item[s_value ?? 'value']);
+    setValue(all);
+  }
+
   const dropdownRender = menu => {
     return (
       <>
+        <Button className='multi_btn' text={t('time.all')} onClick={onClick} />
         {menu}
       </>
     );
@@ -133,6 +142,8 @@ export function MultiSelect(props){
         onFocus={onFocus}
         mode='multiple'
         dropdownRender={dropdownRender}
+        maxTagCount={0}
+        maxTagPlaceholder={maxTag}
         placeholder={placeholder}>
         {data?.map(renderItem)}
       </AntSelect>
