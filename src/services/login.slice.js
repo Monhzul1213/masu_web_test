@@ -40,7 +40,6 @@ export const apiRegister = data => async dispatch => {
       data
     };
     const response = await fetchRetryLogin(config);
-    console.log('++++++++++++++++++++++=', response, response?.rettype);
     if(!response || response?.rettype || response?.rettype === undefined){
       return Promise.resolve({ error: response?.retdesc ?? (response?.rettype === undefined ? response?.toString() : 'Алдаа гарлаа.') });
     } else {
@@ -100,6 +99,7 @@ function fetchRetryLogin(config, retries = 5) {
         console.log('retrying network', retries);
         return fetchRetryLogin(config, retries - 1)
       }
+      else return { result: 444, rettype: 444, message: error?.message, retdesc: error?.message };
     });
 }
 

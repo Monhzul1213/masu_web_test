@@ -17,3 +17,4 @@ export * from './Pagination';
 export * from './Sort';
 export * from './Radio';
 export * from './Upload';
+export * from './PlainRange';

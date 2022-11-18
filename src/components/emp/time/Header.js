@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getList } from '../../../services';
-import { ButtonRowAddConfirm, MultiSelect } from '../../all';
+import { ButtonRowAddConfirm, MultiSelect, PlainRange } from '../../all';
 
 export function Header(props){
   const { onClickAdd, show, onClickDelete, setError, onSearch } = props;
@@ -57,17 +57,16 @@ export function Header(props){
     label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('cashier.pay_shop2') };
   const empProps = { value: emp, setValue: onChangeEmp, data: emps, s_value: 'empCode', s_descr: 'empName', className: 'ih_select',
     label: t('employee.title'), onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp') };
+  const dateProps = { label: t('page.date') };//classBack, , className, value, disabled, setValue, placeholder
 
   return (
     <div className='i_list_header'>
       <ButtonRowAddConfirm {...addProps} />
       <div className='i_list_header1'>
+        <PlainRange {...dateProps} />
         <MultiSelect {...empProps} />
         <MultiSelect {...siteProps} />
       </div>
-      {/*
-        <DynamicAIIcon {...searchProps} />
-      */}
     </div>
   );
 }
