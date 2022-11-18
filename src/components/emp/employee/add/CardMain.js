@@ -6,7 +6,7 @@ import { getList } from '../../../../services';
 import { Input, Select, InputPassword } from '../../../all';
 
 export function CardMain(props){
-  const { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode, selected } = props;
+  const { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode, selected, isOwner } = props;
   const { t } = useTranslation();
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -41,7 +41,7 @@ export function CardMain(props){
     setError, setEdited, length: 20, disabled: selected ? true : false };
   const phonProps = { value: phone, setValue: changePhone, label: t('shop.phone'), placeholder: t('shop.phone'), setError, setEdited, length: 20 };
   const roleProps = { value: role, setValue: setRole, label: t('employee.role'), placeholder: t('employee.role'), setError, setEdited,
-    data: roles, s_value: 'roleId', s_descr: 'roleName', onFocus, loading };
+    data: roles, s_value: 'roleId', s_descr: 'roleName', onFocus, loading, disabled: isOwner };
   const codeProps = { value: code, setValue: setCode, label: t('employee.code'), placeholder: t('employee.code'), setError, setEdited,
     mask: '9 9 9 9', maskChar: '_' };
 

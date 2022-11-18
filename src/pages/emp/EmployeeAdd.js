@@ -173,7 +173,8 @@ export function EmployeeAdd(){
     else onSuccess(t('employee.delete_success'), true);
   }
 
-  let mainProps = { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode, selected };
+  let mainProps = { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode, selected,
+    isOwner: selected?.isOwner === 'Y' };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'emp_ac_back', label: 'employee' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'emp_ac_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_back' };
