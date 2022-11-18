@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import '../../css/invt.css';
-import { Empty, Error1, Overlay } from '../../components/all';
-import { Header } from '../../components/emp/time';
+import { Empty, Empty1, Error1, Overlay } from '../../components/all';
+import { Header, List } from '../../components/emp/time';
 
 export function Time(){
   const [loading, setLoading] = useState(false);
@@ -12,6 +12,8 @@ export function Time(){
   const [data, setData] = useState([]);
   const [filtering, setFiltering] = useState(false);
   const [show, setShow] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [filter, setFilter] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,7 +25,6 @@ export function Time(){
   }, []);
 
   const getData = async query => {
-    setData([{}]);
     // setError(null);
     // setLoading(true);
     // let api = 'Employee/GetEmployees' + (query ?? '');
@@ -60,6 +61,7 @@ export function Time(){
 
   const emptyProps = { icon: 'MdSchedule', type: 'time', onClickAdd, noDescr: true };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData };
+  const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
 
   return (
     <div className='s_container_i'>
@@ -68,40 +70,10 @@ export function Time(){
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <div className='i_list_cont' id='invt_list'>
             <Header {...headerProps} />
-            {/* {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />} */}
+            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
           </div>
         }
       </Overlay>
     </div>
   );
 }
-
-/**
-import { useTranslation } from 'react-i18next';
-import { message } from 'antd';
-
-import { getList, sendRequest } from '../../services';
-import { Empty, Empty1, Error1, Overlay } from '../../components/all';
-import { Header, List } from '../../components/emp/employee/list';
-
-export function Employee(){
-  const { t } = useTranslation();
-  const [checked, setChecked] = useState(false);
-  const [filter, setFilter] = useState([]);
-  
-
-  
-
-  
-
-  
-
-  
-
-  const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
-
-  return (
-    
-  )
-}
- */

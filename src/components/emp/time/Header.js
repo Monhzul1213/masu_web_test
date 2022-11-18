@@ -41,7 +41,7 @@ export function Header(props){
   }
 
   const onHide = () => {
-    // console.log(date, emp, site);
+    onSearch(date, emp, site);
   }
 
   const addProps = { type: 'time', onClickAdd, show, onClickDelete };
