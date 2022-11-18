@@ -4,7 +4,8 @@ import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import '../../css/invt.css';
 import { Empty, Empty1, Error1, Overlay } from '../../components/all';
-import { Header, List } from '../../components/emp/time';
+import { Header, List, Add } from '../../components/emp/time';
+import { getList } from '../../services';
 
 export function Time(){
   const [loading, setLoading] = useState(false);
@@ -14,6 +15,10 @@ export function Time(){
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState(false);
   const [filter, setFilter] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [item, setItem] = useState(null);
+  const [sites, setSites] = useState([]);
+  const [emps, setEmps] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,6 +30,7 @@ export function Time(){
   }, []);
 
   const getData = async query => {
+    setData([{}]);
     // setError(null);
     // setLoading(true);
     // let api = 'Employee/GetEmployees' + (query ?? '');
@@ -39,8 +45,8 @@ export function Time(){
   }
 
   const onClickAdd = row => {
-    // if(row) navigate({ pathname: 'emp_add', search: createSearchParams({ empCode: row?.empCode }).toString() });
-    // else navigate('emp_add');
+    setVisible(true);
+    setItem(row);
   }
 
   const onClickDelete = async () => {
@@ -59,12 +65,34 @@ export function Time(){
     // }
   }
 
+  const closeModal = toGet => {
+    setVisible(false);
+    setItem(null);
+    if(toGet) getData(filter);
+  }
+
+  const getSites = async () => {
+    const response = await dispatch(getList(user, token, 'Site/GetSite'));
+    if(response?.error) return response?.error;
+    else setSites(response?.data);
+    return null;
+  }
+
+  const getEmps = async () => {
+    const response = await dispatch(getList(user, token, 'Employee/GetEmployees'));
+    if(response?.error) return response?.error;
+    else setEmps(response?.data);
+    return null;
+  }
+
   const emptyProps = { icon: 'MdSchedule', type: 'time', onClickAdd, noDescr: true };
-  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData };
+  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData, sites, setSites, emps, setEmps, getSites, getEmps };
   const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
+  const modalProps = { visible, closeModal, selected: item };
 
   return (
     <div className='s_container_i'>
+      {visible && <Add {...modalProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :

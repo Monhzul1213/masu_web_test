@@ -7,12 +7,10 @@ import { getList } from '../../../services';
 import { ButtonRowAddConfirm, MultiSelect, PlainRange } from '../../all';
 
 export function Header(props){
-  const { onClickAdd, show, onClickDelete, setError, onSearch } = props;
+  const { onClickAdd, show, onClickDelete, setError, onSearch, sites, setSites, emps, setEmps, getSites, getEmps } = props;
   const { t } = useTranslation();
   const [site, setSite] = useState([]);
-  const [sites, setSites] = useState([]);
   const [emp, setEmp] = useState([]);
-  const [emps, setEmps] = useState([]);
   const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -22,9 +20,11 @@ export function Header(props){
     if(!sites?.length){
       setError && setError(null);
       setLoading('sites');
-      const response = await dispatch(getList(user, token, 'Site/GetSite'));
-      if(response?.error) setError && setError(response?.error);
-      else setSites(response?.data);
+      const response = await getSites();
+      console.log(response);
+      // const response = await dispatch(getList(user, token, 'Site/GetSite'));
+      // if(response?.error) setError && setError(response?.error);
+      // else setSites(response?.data);
       setLoading(false);
     }
   }
