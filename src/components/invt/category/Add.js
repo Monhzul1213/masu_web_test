@@ -39,7 +39,9 @@ export function Add(props){
   const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
-    if(name?.value && color !== null){
+    let nameLength = 2;
+    let isNameValid = name?.value?.length >= nameLength;
+    if(isNameValid && color !== null){
       setLoading(true);
       let data = selected
         ? { categoryId: selected?.categoryId, categoryName: name?.value, color }
@@ -55,6 +57,7 @@ export function Add(props){
       setLoading(false);
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      else if(!isNameValid) setName({ value: name.value, error: ' ' + nameLength + t('error.longer_than') })
       if(color === null) setError(t('category.color') + '' + t('error.not_empty'))
     }
   }

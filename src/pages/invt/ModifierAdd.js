@@ -108,7 +108,9 @@ export function ModifierAdd(){
   }
 
   const onClickSave = async () => {
-    if(name?.value && items?.length && !disabled){
+    let nameLength = 2;
+    let isNameValid = name?.value?.length >= nameLength;
+    if(isNameValid && items?.length && !disabled){
       onLoad();
       let modifer = { modifireID: item?.modifer?.modifireID ?? -1, modiferName: name?.value,
         rowStatus: item ? 'U' : 'I', UseAllSite: checked ? 'Y' : 'N', useAllSite: checked ? 'Y' : 'N' };
@@ -125,6 +127,7 @@ export function ModifierAdd(){
       else onSuccess(t('modifier.add_success'));
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      else if(!isNameValid) setName({ value: name.value, error: ' ' + nameLength + t('error.longer_than') })
       if(!items?.length) setSearch({ value: search?.value, error: t('modifier.option_error1')});
       else if(disabled) setSearch({ value: search?.value, error: t('modifier.option_error2')});
     }

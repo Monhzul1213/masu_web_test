@@ -44,7 +44,9 @@ export function Add(props){
   const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
-    if(name?.value && site?.value && (type?.value || type?.value === 0)){
+    let nameLength = 2;
+    let isNameValid = name?.value?.length >= nameLength;
+    if(isNameValid && site?.value && (type?.value || type?.value === 0)){
       setLoading(true);
       let data1 = { descr: name?.value, systemType: type?.value, currentDate: moment().format('yyyy.MM.DD') };
       let data2 = selected 
@@ -63,6 +65,7 @@ export function Add(props){
       setLoading(false);
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      else if(!isNameValid) setName({ value: name.value, error: ' ' + nameLength + t('error.longer_than') })
       if(!site?.value) setSite({ value: null, error: t('error.not_empty') });
       if(!type?.value && type?.value !== 0) setType({ value: null, error: t('error.not_empty') });
     }

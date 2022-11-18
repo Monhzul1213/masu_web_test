@@ -95,13 +95,16 @@ export function RoleAdd(){
   const onClickCancel = () => navigate('/employee/access_config');
 
   const validateData = () => {
-    if(name?.value){
+    let nameLength = 2;
+    let isNameValid = name?.value?.length >= nameLength;
+    if(isNameValid){
       let data = { merchantId: user?.merchantId, roleId: role?.roleId ?? -1, roleName: name?.value, posAccess, webAccess, rowStatus: role ? 'U' : 'I' };
       posData?.forEach(item => data[item?.value] = (item?.checked && posAccess === 'Y') ? 'Y' : 'N');
       webData?.forEach(item => data[item?.value] = (item?.checked && webAccess === 'Y') ? 'Y' : 'N');
       return [data];
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      else if(!isNameValid) setName({ value: name?.value, error: ' ' + nameLength + t('error.longer_than') });
       return false;
     }
   }

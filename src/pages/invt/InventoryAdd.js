@@ -169,8 +169,10 @@ export function InventoryAdd(){
   const onClickCancel = () => navigate('/inventory/invt_list');
 
   const validateData = () => {
+    let nameLength = 2;
+    let isNameValid = name?.value?.length >= nameLength;
     let invkite = [], invvar = [], invmod = [], invsales = [];
-    if(name?.value && barcode?.value){
+    if(isNameValid && barcode?.value){
       if(isKit){
         if(kits?.length){
           kits?.forEach(item => {
@@ -226,6 +228,7 @@ export function InventoryAdd(){
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      else if(!isNameValid) setName({ value: name.value, error: ' ' + nameLength + t('error.longer_than') })
       if(!barcode?.value) setBarcode({ value: '', error: t('error.not_empty') });
       return false;
     }

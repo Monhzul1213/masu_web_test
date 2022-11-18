@@ -115,13 +115,14 @@ export function EmployeeAdd(){
   }
 
   const validateData = () => {
-    let codeLength = 4, passwordLength = 8, nameLength = 2;
+    let codeLength = 4, passwordLength = 8, nameLength = 2, phoneLength = 8;
     let isEmailValid = validateEmail(mail?.value);
     let pin = code?.value?.replace(/[ _]/g, '');
     let isCodeValid = pin?.length === 4;
     let isPasswordValid = (selected && !password?.value) || password?.value?.length >= passwordLength;
     let isNameValid = name?.value?.length >= nameLength;
-    if(isNameValid && isEmailValid && (role?.value || role?.value === 0) && isCodeValid && isPasswordValid){
+    let isPhoneValid = !phone?.value || phone?.value?.length >= phoneLength;
+    if(isNameValid && isEmailValid && (role?.value || role?.value === 0) && isCodeValid && isPasswordValid && isPhoneValid){
       let employeeSites = [];
       sites?.forEach(item => {
         if(item?.checked) employeeSites.push({ siteID: item?.siteId, rowStatus: item?.rowStatus ?? 'I' });
@@ -141,6 +142,7 @@ export function EmployeeAdd(){
       else if(!isCodeValid) setCode({ value: code?.value, error: codeLength + t('error.must_be') });
       if(!password?.value && !selected) setPassword({ value: '', error: t('error.not_empty') });
       else if(!isPasswordValid) setPassword({ value: password?.value, error: ' ' + passwordLength + t('error.longer_than') });
+      if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') })
       return false;
     }
   }

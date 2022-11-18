@@ -31,7 +31,7 @@ export function Add(props){
   }, []);
 
   const checkValid = () => {
-    let nameLength = 2, addressLength = 20, phoneLength = 8;
+    let nameLength = 2, addressLength = 8, phoneLength = 8;
     let isNameValid = name?.value && name?.value?.length >= nameLength;
     let isAddressValid = !address?.value || address?.value?.length >= addressLength;
     let isPhoneValid = !phone?.value || phone?.value?.length >= phoneLength;
