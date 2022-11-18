@@ -78,7 +78,7 @@ export function RoleAdd(){
       let role = response && response?.data;
       if(role){
         setRole(role);
-        setDisabled(role?.roleId === 1);
+        setDisabled(role?.roleId === 1 || role?.isUpdate === 'N');
         setName({ value: role.roleName ?? '' });
         setPosAccess(role?.posAccess);
         setWebAccess(role?.webAccess);
