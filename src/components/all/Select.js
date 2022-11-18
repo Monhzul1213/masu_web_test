@@ -104,3 +104,38 @@ export function CustomSelect(props){
     </div>
   );
 }
+
+export function MultiSelect(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex } = props;
+  
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  const dropdownRender = menu => {
+    return (
+      <>
+        {menu}
+      </>
+    );
+  }
+
+  return (
+    <div className={classBack}>
+      {label && <p className='p_select_lbl'>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={setValue}
+        value={value}
+        loading={loading}
+        onFocus={onFocus}
+        mode='multiple'
+        dropdownRender={dropdownRender}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+    </div>
+  );
+}
