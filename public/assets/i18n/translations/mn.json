@@ -23,10 +23,10 @@
     "sign_accept5": " бүрэн уншиж хүлээн зөвшөөрч байна.",
     "signup": "БҮРТГҮҮЛЭХ",
     "go_login": "Та өмнө нэвтэрч байсан бол: ",
-    "congrats": "Амжилттай",
+    "congrats": "Баяр хүргэе",
     "confirmed": "Таны бүртгэл амжилттай баталгаажлаа",
-    "go_back": "Now you can continue your work in your backoffice.",
-    "go_back_btn": "Enter the backoffice"
+    "go_back": "Та бүртгүүлсэн эрхээрээ нэвтэрч системийг ашиглах боломжтой боллоо",
+    "go_back_btn": "Систем рүү нэвтрэх"
   },
   "error": {
     "not_empty": " хоосон байж болохгүй",
