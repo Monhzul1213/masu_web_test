@@ -3,7 +3,7 @@ import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { ButtonRowConfirm, Date, Error, ModalTitle, Overlay, Select } from '../../all';
+import { ButtonRowConfirm, Date, Error, ModalTitle, Overlay, Select, Time } from '../../all';
 
 export function Add(props){
   const { visible, closeModal, selected, sites, emps } = props;
@@ -14,6 +14,9 @@ export function Add(props){
   const [site, setSite] = useState({ value: null });
   const [date1, setDate1] = useState({ value: moment() });
   const [date2, setDate2] = useState({ value: moment() });
+  const [time1, setTime1] = useState({ value: '' });
+  const [time2, setTime2] = useState({ value: '' });
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     return () => {};
@@ -54,6 +57,10 @@ export function Add(props){
     // }
   }
 
+  const onChangeTime = (start, end) => {
+    console.log(start, end);
+  }
+
   const nameProps = { value: name, setValue: setName, label: t('employee.title'), placeholder: t('time.select_emp'), 
     data: emps, setError, s_value: 'empCode', s_descr: 'empName' };
   const siteProps = { value: site, setValue: setSite, label: t('shop.title'), placeholder: t('time.select_shop'), 
@@ -61,6 +68,8 @@ export function Add(props){
   const disabledDate = d => !d || d.isAfter(moment().add('day', 1).format('yyyy-MM-DD'))
   const date1Props = { value: date1, setValue: setDate1, label: t('time.date1'), setError, inRow: true, disabledDate };
   const date2Props = { value: date2, setValue: setDate2, label: t('time.date2'), setError, inRow: true, disabledDate };
+  const time1Props = { value: time1, setValue: setTime1, label: t('time.time1'), setError, inRow: true }
+  const time2Props = { value: time2, setValue: setTime2, label: t('time.time2'), setError, inRow: true }
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete, isModal: true };
 
   return (
@@ -77,6 +86,12 @@ export function Add(props){
                 <div className='gap' />
                 <Date {...date2Props} />
               </div>
+              <div className='ac_row' style={{marginTop: 20}}>
+                <Time {...time1Props} />
+                <div className='gap' />
+                <Time {...time2Props} />
+              </div>
+              <p className='m_footer'>{t('time.total')}: {total}</p>
             </form>
             {error && <Error error={error} id='m_error' />}
           </div>
