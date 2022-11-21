@@ -71,24 +71,10 @@ export function Time(){
     if(toGet) getData(filter);
   }
 
-  const getSites = async () => {
-    const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    if(response?.error) return response?.error;
-    else setSites(response?.data);
-    return null;
-  }
-
-  const getEmps = async () => {
-    const response = await dispatch(getList(user, token, 'Employee/GetEmployees'));
-    if(response?.error) return response?.error;
-    else setEmps(response?.data);
-    return null;
-  }
-
   const emptyProps = { icon: 'MdSchedule', type: 'time', onClickAdd, noDescr: true };
-  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData, sites, setSites, emps, setEmps, getSites, getEmps };
+  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData, sites, setSites, emps, setEmps };
   const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
-  const modalProps = { visible, closeModal, selected: item };
+  const modalProps = { visible, closeModal, selected: item, sites, emps };
 
   return (
     <div className='s_container_i'>

@@ -2,20 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { Error, Input, ModalTitle, Overlay, Select } from '../../all';
+import { ButtonRowConfirm, Error, ModalTitle, Overlay, Select } from '../../all';
 
 export function Add(props){
-  const { visible, selected, emps, onFocusEmp } = props;
+  const { visible, closeModal, selected, sites, emps } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [name, setName] = useState({ value: null });
+  const [site, setSite] = useState({ value: null });
+
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   const onClickSave = async e => {
     // e?.preventDefault();
     // setError(null);
     // if(checkValid()){
-      // setLoading('add');
+      // setLoading(true);
     //   let data = { name: name?.value, address: address?.value, phone: phone?.value, descr: descr?.value?.trim() };
     //   if(selected) data.siteID = selected.siteId;
     //   else data.merchantID = user?.merchantId;
@@ -30,26 +35,42 @@ export function Add(props){
     // }
   }
 
+  const onClickDelete = async () => {
+    // setError(null);
+    // setOpen(false);
+    // if(sure){
+      // setLoading(true);
+    //   const response = await dispatch(deleteRequest(user, token, 'Site/DeleteSite/' + selected?.siteId));
+    //   console.log(response);
+    //   if(response?.error) setError(response?.error);
+    //   else {
+    //     closeModal(true);
+    //     message.success(t('shop.delete_success'));
+    //   }
+    //   setLoading(false);
+    // }
+  }
+
   const nameProps = { value: name, setValue: setName, label: t('employee.title'), placeholder: t('time.select_emp'), 
-    data: emps, setError, s_value: 'empCode', s_descr: 'empName', onFocus: onFocusEmp, loading: loading === 'emps' };
+    data: emps, setError, s_value: 'empCode', s_descr: 'empName' };
+  const siteProps = { value: site, setValue: setSite, label: t('shop.title'), placeholder: t('time.select_shop'), 
+    data: sites, setError, s_value: 'siteId', s_descr: 'name' };
+  const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete, isModal: true };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={440}>
-      <Overlay loading={loading === 'add'}>
+      <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSchedule' title={t(selected ? 'time.edit' : 'time.add')} isMD={true} />
           <div className='m_scroll'>
             <form onSubmit={onClickSave}>
               <Select {...nameProps} />
-              {/*
-              <Input {...addrProps} />
-              <Input {...phoneProps} />
-              <Input {...descrProps} /> */}
+              <Select {...siteProps} />
             </form>
             {error && <Error error={error} id='m_error' />}
           </div>
         </div>
-        {/* <ButtonRow {...btnProps} /> */}
+        <ButtonRowConfirm {...btnProps} />
       </Overlay>
     </Modal>
   )
@@ -104,32 +125,6 @@ export function Add(props){
       return false;
     }
   }
-
-  
-
-  const onClickDelete = () => setOpen(true);
-
-  const onDelete = async sure => {
-    setError(null);
-    setOpen(false);
-    if(sure){
-      setLoading('add');
-      const response = await dispatch(deleteRequest(user, token, 'Site/DeleteSite/' + selected?.siteId));
-      console.log(response);
-      if(response?.error) setError(response?.error);
-      else {
-        closeModal(true);
-        message.success(t('shop.delete_success'));
-      }
-      setLoading(false);
-    }
-  }
-
-  const addrProps = { value: address, setValue: setAddress, label: t('shop.addr'), placeholder: t('shop.addr1'), setError, length: 250 };
-  const phoneProps = { value: phone, setValue: setPhone, label: t('shop.phone'), placeholder: t('shop.phone1'), setError, length: 20 };
-  const descrProps = { value: descr, setValue: setDescr, label: t('shop.descr'), placeholder: t('shop.descr1'), setError, handleEnter: onClickSave, length: 128 };
-  const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
-  const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>

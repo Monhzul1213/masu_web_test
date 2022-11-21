@@ -210,6 +210,7 @@ function fetchRetry(config, retries = 5) {
         console.log('retrying network', retries);
         return fetchRetry(config, retries - 1)
       }
+      else return { result: 444, rettype: 444, message: error?.message, retdesc: error?.message };
     });
 }
 

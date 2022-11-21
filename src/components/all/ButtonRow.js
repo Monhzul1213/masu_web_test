@@ -47,7 +47,7 @@ export function ButtonRowAdd(props){
 
 export function ButtonRowConfirm(props){
   const { t } = useTranslation();
-  const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2, id, disabled, error } = props;
+  const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2, id, disabled, error, isModal } = props;
   const [open, setOpen] = useState(false);
   const [open1, setOpen1] = useState(false);
 
@@ -66,12 +66,13 @@ export function ButtonRowConfirm(props){
   const warningProps = { open: open1, text: error, close };
 
   return (
-    <div className='invt_btn_row' id={id}>
+    <div className={isModal ? 'a_btn_row' : 'invt_btn_row'} id={id}>
       {open && <Confirm {...confirmProps} />}
       {open1 && <Warning {...warningProps} />}
       {show && <DynamicBSIcon className='a_btn_delete' name='BsTrash' onClick={onDelete} />}
-      <Button className='invt_btn' text={t(text1 ?? 'page.cancel')} onClick={onClickCancel} />
-      <Button className='invt_btn' id='invt_btn_save' text={t(text2 ?? 'page.save')} type={type} onClick={onClickSave} />
+      <Button className={isModal ? 'a_btn' : 'invt_btn'} text={t(text1 ?? 'page.cancel')} onClick={onClickCancel} />
+      <Button className={isModal ? 'a_btn' : 'invt_btn'} id={isModal ? 'a_btn_save' : 'invt_btn_save'}
+        text={t(text2 ?? 'page.save')} type={type} onClick={onClickSave} />
     </div>
   )
 }
