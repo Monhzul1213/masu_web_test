@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
-import { ButtonRowConfirm, Error, ModalTitle, Overlay, Select } from '../../all';
+import { ButtonRowConfirm, Date, Error, ModalTitle, Overlay, Select } from '../../all';
 
 export function Add(props){
   const { visible, closeModal, selected, sites, emps } = props;
@@ -11,6 +12,8 @@ export function Add(props){
   const [error, setError] = useState(null);
   const [name, setName] = useState({ value: null });
   const [site, setSite] = useState({ value: null });
+  const [date1, setDate1] = useState({ value: moment() });
+  const [date2, setDate2] = useState({ value: moment() });
 
   useEffect(() => {
     return () => {};
@@ -55,6 +58,9 @@ export function Add(props){
     data: emps, setError, s_value: 'empCode', s_descr: 'empName' };
   const siteProps = { value: site, setValue: setSite, label: t('shop.title'), placeholder: t('time.select_shop'), 
     data: sites, setError, s_value: 'siteId', s_descr: 'name' };
+  const disabledDate = d => !d || d.isAfter(moment().add('day', 1).format('yyyy-MM-DD'))
+  const date1Props = { value: date1, setValue: setDate1, label: t('time.date1'), setError, inRow: true, disabledDate };
+  const date2Props = { value: date2, setValue: setDate2, label: t('time.date2'), setError, inRow: true, disabledDate };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete, isModal: true };
 
   return (
@@ -66,6 +72,11 @@ export function Add(props){
             <form onSubmit={onClickSave}>
               <Select {...nameProps} />
               <Select {...siteProps} />
+              <div className='ac_row' style={{marginTop: 20}}>
+                <Date {...date1Props} />
+                <div className='gap' />
+                <Date {...date2Props} />
+              </div>
             </form>
             {error && <Error error={error} id='m_error' />}
           </div>
