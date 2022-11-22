@@ -55,7 +55,7 @@ export function Header(props){
     let query = '?BeginTime=' + date[0]?.startOf('day')?.format('yyyy-MM-DD HH:mm:ss')
       + '&EndTime=' + date[1]?.endOf('day')?.format('yyyy-MM-DD HH:mm:ss');
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCodes=' + item);
-    if(site?.length === sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
+    // if(site?.length === sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
     onSearch(query)
   }
 

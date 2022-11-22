@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import '../../css/invt.css';
-import { getList } from '../../services';
+import { getList, sendRequest } from '../../services';
 import { Empty1, Error1, Overlay } from '../../components/all';
 import { Header, List, Add } from '../../components/emp/time';
 
 export function Time(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -26,7 +29,7 @@ export function Time(){
   useEffect(() => {
     if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
     else {
-      let query = '?BeginTime=' + moment()?.startOf('day')?.format('yyyy-MM-DD HH:mm:ss')
+      let query = '?BeginTime=' + moment()?.startOf('month')?.startOf('day')?.format('yyyy-MM-DD HH:mm:ss')
         + '&EndTime=' + moment()?.endOf('day')?.format('yyyy-MM-DD HH:mm:ss');
       getData(query);
     }
@@ -53,19 +56,19 @@ export function Time(){
   }
 
   const onClickDelete = async () => {
-    // let toDelete = [];
-    // data?.forEach(item => {
-    //   if(item.checked) toDelete.push({...item, rowStatus: 'D', roleID: item?.roleId, password: '', poS_PIN: '', employeeSites: [] });
-    // });
-    // setError(null);
-    // setLoading(true);
-    // let response = await dispatch(sendRequest(user, token, 'Employee/Modify', toDelete));
-    // setLoading(false);
-    // if(response?.error) setError(response?.error);
-    // else {
-    //   message.success(t('employee.delete_success'));
-    //   getData(filter);
-    // }
+    let toDelete = [];
+    data?.forEach(item => {
+      if(item.checked) toDelete.push({...item, rowStatus: 'D' });
+    });
+    setError(null);
+    setLoading(true);
+    let response = await dispatch(sendRequest(user, token, 'Employee/TimeCard', toDelete));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      message.success(t('time.delete_success'));
+      getData(filter);
+    }
   }
 
   const closeModal = toGet => {

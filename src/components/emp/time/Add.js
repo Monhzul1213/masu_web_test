@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Modal, message } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
@@ -25,9 +25,16 @@ export function Add(props){
 
   useEffect(() => {
     if(selected){
-      console.log(selected);
+      setName({ value: selected?.empCode });
+      setSite({ value: selected?.siteId });
+      setDate1({ value: moment(selected?.beginTime) });
+      setDate2({ value: moment(selected?.endTime) });
+      setTime1({ value: moment(selected?.beginTime + 'Z').format('HH:mm') })
+      setTime2({ value: moment(selected?.endTime + 'Z').format('HH:mm') })
+      setTotal(selected?.totalHours);
     }
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkValid = () => {
@@ -73,19 +80,16 @@ export function Add(props){
   }
 
   const onClickDelete = async () => {
-    // setError(null);
-    // setOpen(false);
-    // if(sure){
-      // setLoading(true);
-    //   const response = await dispatch(deleteRequest(user, token, 'Site/DeleteSite/' + selected?.siteId));
-    //   console.log(response);
-    //   if(response?.error) setError(response?.error);
-    //   else {
-    //     closeModal(true);
-    //     message.success(t('shop.delete_success'));
-    //   }
-    //   setLoading(false);
-    // }
+    setError(null);
+    setLoading(true);
+    let data = [{...selected, rowStatus: 'D'}];
+    const response = await dispatch(sendRequest(user, token, 'Employee/TimeCard', data));
+    if(response?.error) setError(response?.error);
+    else {
+      closeModal(true);
+      message.success(t('time.delete_success'));
+    }
+    setLoading(false);
   }
 
   const onChangeDate1 = value => {
@@ -142,9 +146,9 @@ export function Add(props){
   }
 
   const nameProps = { value: name, setValue: setName, label: t('employee.title'), placeholder: t('time.select_emp'), 
-    data: emps, setError, s_value: 'empCode', s_descr: 'empName' };
+    data: emps, setError, s_value: 'empCode', s_descr: 'empName', disabled: selected ? true : false };
   const siteProps = { value: site, setValue: setSite, label: t('shop.title'), placeholder: t('time.select_shop'), 
-    data: sites, setError, s_value: 'siteId', s_descr: 'name' };
+    data: sites, setError, s_value: 'siteId', s_descr: 'name', disabled: selected ? true : false  };
   const disabledDate = d => !d || d.isAfter(moment().add(1, 'day').format('yyyy-MM-DD'));
   const date1Props = { value: date1, setValue: onChangeDate1, label: t('time.date1'), inRow: true, disabledDate };
   const date2Props = { value: date2, setValue: onChangeDate2, label: t('time.date2'), inRow: true, disabledDate };
