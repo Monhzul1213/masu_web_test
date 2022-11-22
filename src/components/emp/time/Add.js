@@ -24,6 +24,9 @@ export function Add(props){
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if(selected){
+      console.log(selected);
+    }
     return () => {};
   }, []);
 

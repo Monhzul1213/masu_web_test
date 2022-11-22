@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select as AntSelect } from 'antd';
+import { BsCheckLg } from 'react-icons/bs';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from './Button';
@@ -146,6 +147,7 @@ export function MultiSelect(props){
         loading={loading}
         onFocus={onFocus}
         mode='multiple'
+        menuItemSelectedIcon={<BsCheckLg />}
         onDropdownVisibleChange={onDropdownVisibleChange}
         dropdownRender={dropdownRender}
         maxTagCount={0}

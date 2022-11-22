@@ -336,3 +336,12 @@ code {
   max-height: 60px;
   overflow-y: scroll;
 }
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: transparent;
+  font-weight: 500;
+}
+
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled) .ant-select-item-option-state {
+  color: var(--config-color);
+}

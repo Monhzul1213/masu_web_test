@@ -66,7 +66,8 @@ export function List(props){
   const onRowClick = row => onClickAdd(row?.original);
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
+  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
     onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
 
