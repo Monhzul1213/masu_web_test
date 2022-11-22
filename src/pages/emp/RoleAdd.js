@@ -138,7 +138,7 @@ export function RoleAdd(){
   let nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('page.name'), setError, inRow: true, setEdited, length: 50 };
   let posProps = { type: 'pos', value: posAccess, setValue: setPosAccess, data: posData, setData: setPosData, disabled };
   let webProps = { type: 'web', value: webAccess, setValue: setWebAccess, data: webData, setData: setWebData, disabled };
-  let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'role_ac_back', disabled: deletable, error: 'role.delete_qty' };
+  let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'role_ac_btns', disabled: deletable, error: 'role.delete_qty' };
 
   return (
     <Overlay className='i_container' loading={loading}>

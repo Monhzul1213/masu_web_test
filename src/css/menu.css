@@ -5,6 +5,7 @@
   --header-padding: 5px 10px;
   --icon-size: 24px;
   --title-size: 18px;
+  --title-size-m: 16px;
   --side-color: #ffffff;
   --menu-height: 56px;
   --menu-active-bgcolor: #f8eefe;
@@ -44,14 +45,6 @@
   cursor: pointer;
   background-color: rgba(255,255,255,0.15);
   border-radius: 5px;
-}
-
-.h_title {
-  margin: 0 10px;
-  color: var(--root-color);
-  font-size: var(--title-size);
-  font-weight: 650;
-  flex: 1;
 }
 
 .h_logo {
@@ -269,4 +262,46 @@
 
 .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
   border: none;
+}
+
+@media only screen and (min-width: 740px) { /* desktop */
+  .ant-layout-sider {
+    max-height: calc(100vh - var(--header-height));
+  }
+
+  .ant-drawer {
+    display: none;
+  }
+
+  .h_title {
+    margin: 0 10px;
+    color: var(--root-color);
+    font-size: var(--title-size);
+    font-weight: 650;
+    flex: 1;
+  }
+}
+
+@media only screen and (max-width: 740px) { /* mobile */
+  .ant-layout-sider {
+    display: none;
+  }
+  
+  .ant-drawer {
+    top: var(--header-height);
+  }
+
+  .ant-drawer-body {
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  .h_title {
+    margin: 0 10px;
+    color: var(--root-color);
+    font-size: var(--title-size-m);
+    font-weight: 550;
+    flex: 1;
+    line-height: 18px;
+  }
 }

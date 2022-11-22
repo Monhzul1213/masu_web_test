@@ -52,7 +52,7 @@ export function App(){
 
   const onClickLayout = e => {
     e?.preventDefault();
-    if(!collapsed) setCollapsed(true);
+    // if(!collapsed) setCollapsed(true);
   }
 
   const menuProps = { collapsed, setCollapsed };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu as AntMenu } from 'antd';
+import { Layout, Menu as AntMenu, Drawer } from 'antd';
 import { RiContactsLine, RiTeamLine } from 'react-icons/ri';
 import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
 import { TbBuildingWarehouse } from 'react-icons/tb';
@@ -24,10 +24,6 @@ export function Menu(props){
   const style = {
     overflowY: 'auto',
     overflowX: 'hidden',
-    position: 'fixed',
-    left: 0,
-    top: 'var(--header-height)',
-    bottom: 0,
     backgroundColor: 'var(--side-color)',
     boxShadow: '0px 2px 5px rgba(0,0,0,.15)',
     zIndex: 1000
@@ -70,14 +66,22 @@ export function Menu(props){
     setCollapsed(true);
   }
 
-  const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style };
+  const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style, breakpoint: 'lg', width: 300,
+    onCollapse: setCollapsed };
+  const drawerProps = { placement: 'left', onClose: () => setCollapsed(true), closable: false, visible: !collapsed };
   const profileProps = { collapsed, setCollapsed };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
 
   return hideMenu ? null : (
-    <Sider {...siderProps} width={300}>
-      <Profile {...profileProps} />
-      <AntMenu {...menuProps} />
-    </Sider>
+    <>
+      <Sider {...siderProps}>
+        <Profile {...profileProps} />
+        <AntMenu {...menuProps} />
+      </Sider>
+      <Drawer {...drawerProps}>
+        <Profile {...profileProps} />
+        <AntMenu {...menuProps} />
+      </Drawer>
+    </>
   )
 }

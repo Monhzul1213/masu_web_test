@@ -38,5 +38,16 @@
   --radius: 5px;
   --list-h-height: 56px;
   --pg-height: 32px;
-  --safe-width: calc(100vw - var(--side-width) - var(--page-padding) * 2)
+}
+
+@media only screen and (min-width: 740px) { /* desktop */
+  :root {
+    --safe-width: calc(100vw - var(--side-width) - var(--page-padding) * 2)
+  }
+}
+
+@media only screen and (max-width: 740px) { /* mobile */
+  :root {
+    --safe-width: calc(100vw - var(--page-padding) * 2)
+  }
 }

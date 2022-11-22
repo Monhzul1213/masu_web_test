@@ -177,7 +177,7 @@ export function EmployeeAdd(){
     isOwner: selected?.isOwner === 'Y' };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'emp_ac_back', label: 'employee' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'emp_ac_back' };
-  let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_back' };
+  let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_btns' };
 
   return (
     <Overlay className='i_container' loading={loading}>

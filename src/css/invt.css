@@ -268,7 +268,7 @@
 }
 
 .i_container {
-  margin-left: var(--side-width);
+  /* margin-left: var(--side-width); */
   padding: 0 var(--page-padding);
   margin-top: var(--page-padding);
   display: flex;
@@ -330,7 +330,8 @@
   border-radius: var(--radius);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding: var(--page-padding);
-  width: calc(100vw - var(--side-width) - var(--page-padding) * 2);
+  min-width: 400px
+  /* width: calc(100vw - var(--side-width) - var(--page-padding) * 2); */
 }
 
 #invt_list {
@@ -579,12 +580,18 @@
 
 #role_list {
   width: 780px;
-  max-width: calc(100vw - var(--side-width) - var(--page-padding) * 2);
+  max-width: calc(100vw - var(--page-padding) * 2);
+  /* max-width: calc(100vw - var(--side-width) - var(--page-padding) * 2); */
 }
 
 #role_ac_back {
   width: 600px;
   max-width: calc(100vw - var(--side-width) - var(--page-padding) * 2);
+}
+
+#role_ac_btns {
+  max-width: 600px;
+  /* max-width: calc(100vw - var(--side-width) - var(--page-padding) * 2); */
 }
 
 .role_add_back {
