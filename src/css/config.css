@@ -530,9 +530,11 @@
   color: var(--text-color);
   font-size: 14px;
   height: 32px;
+  padding-left: 0;
 }
 
 .m_input_descr {
+  padding-left: 0;
   border: none;
   color: var(--text-color);
   font-size: 14px;

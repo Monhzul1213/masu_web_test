@@ -586,7 +586,8 @@
 
 #role_ac_back {
   width: 600px;
-  max-width: calc(100vw - var(--side-width) - var(--page-padding) * 2);
+  max-width: calc(100vw - var(--page-padding) * 2);
+  /* max-width: calc(100vw - var(--side-width) - var(--page-padding) * 2); */
 }
 
 #role_ac_btns {
