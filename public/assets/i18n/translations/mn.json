@@ -61,6 +61,7 @@
     "/employee/access_config/access_add": "Эрх нэмэх",
     "/employee/shift_config": "Цагийн тохиргоо",
     "/employee/shift_list": "Цагийн жагсаалт",
+    "/employee/hours_worked": "Ажилласан цагийн лавлагаа",
     "/customer": "Харилцагч",
     "/integration": "Интеграци",
     "/help": "Тусламж",
@@ -70,7 +71,7 @@
     "/inventory/invt_modi": "Нэмэлт төлбөр",
     "/inventory/invt_modi/modi_add": "Нэмэлт төлбөр үүсгэх",
     "/inventory/invt_discount": "Хөнгөлөлт",
-    "/inventory/invt_list/disc_add": "Хөнгөлөлт нэмэх"
+    "/inventory/invt_discount/disc_add": "Хөнгөлөлт нэмэх"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -99,7 +100,8 @@
     "emp_list": "Ажилтны жагсаалт",
     "access_config": "Эрхийн тохиргоо",
     "shift_config": "Цагийн тохиргоо",
-    "shift_list": "Цагийн жагсаалт"
+    "shift_list": "Цагийн жагсаалт",
+    "hours_worked": "Ажилласан цагийн лавлагаа"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
@@ -389,15 +391,18 @@
     "address1": "Тухайн дэлгүүрийн хаяг",
     "type": "Төрөл",
     "value": "Үнэ",
+    "amount": "Дүн",
+    "perc": "Хувь",
     "desc": "Тодорхойлолт",
     "title1": "Хязгаарлагдмал хандалт",
     "title2": "Зөвхөн зохих нэвтрэх эрхтэй ажилчид энэ хөнгөлөлтийг ашиглах боломжтой    ",
     "types": [
-      { "label": "Хувь", "value": "Y" },
-      { "label": "Дүн", "value": "N" }
+      { "label": "Хувь", "value": "0" },
+      { "label": "Дүн", "value": "1" }
     ],
-    "add_success": "Харилцагч амжилттай бүртгэгдлээ",
-    "delete_success": "Харилцагчыг амжилттай устгалаа"
+    "add_success": "Хөнгөлөлт амжилттай бүртгэлээ.",
+    "delete_success": "Хөнгөлөлт амжилттай устгалаа.",
+    "isRestrictedAccess": "Эрх шалгах"
   },
   "role": {
     "title": "Эрхийн тохиргоо",
