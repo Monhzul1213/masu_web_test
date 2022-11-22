@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Layout, Menu as AntMenu, Drawer } from 'antd';
 import { RiContactsLine, RiTeamLine } from 'react-icons/ri';
 import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
@@ -20,6 +20,12 @@ export function Menu(props){
   const path = pathname?.split('/') && pathname?.split('/')[1];
   const navigate = useNavigate();
   const hideMenu = pathname?.includes('confirm');
+
+  useEffect(() => {
+    setCollapsed(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const style = {
     overflowY: 'auto',
@@ -61,9 +67,9 @@ export function Menu(props){
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
   ];
 
-  const onClick = e => {
+  const onClick = (e, hide) => {
     navigate(e?.key);
-    setCollapsed(true);
+    if(hide) setCollapsed(true);
   }
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style, breakpoint: 'lg', width: 300,
@@ -71,6 +77,7 @@ export function Menu(props){
   const drawerProps = { placement: 'left', onClose: () => setCollapsed(true), closable: false, visible: !collapsed };
   const profileProps = { collapsed, setCollapsed };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
+  const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
 
   return hideMenu ? null : (
     <>
@@ -80,7 +87,7 @@ export function Menu(props){
       </Sider>
       <Drawer {...drawerProps}>
         <Profile {...profileProps} />
-        <AntMenu {...menuProps} />
+        <AntMenu {...menu1Props} />
       </Drawer>
     </>
   )
