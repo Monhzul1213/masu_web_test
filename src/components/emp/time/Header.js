@@ -52,7 +52,10 @@ export function Header(props){
   }
 
   const onHide = () => {
-    onSearch(date, emp, site);
+    let query = '?BeginTime=' + date[0]?.toISOString() + '&EndTime=' + date[1]?.toISOString();
+    emp?.forEach(item => query += '&EmpCodes=' + item);
+    site?.forEach(item => query += '&SiteIDs=' + item);
+    onSearch(query)
   }
 
   const addProps = { type: 'time', onClickAdd, show, onClickDelete };

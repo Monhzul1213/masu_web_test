@@ -51,7 +51,7 @@ export function Role(){
   const onClickDelete = async () => {
     let toDelete = [];
     data?.forEach(item => {
-      if(item.checked) toDelete.push({...item, rowStatus: 'D' });
+      if(item.checked) toDelete.push({...item, rowStatus: 'D', isUpdate: item?.isUpate ?? 'Y' });
     });
     setError(null);
     setLoading(true);

@@ -59,7 +59,7 @@ export function Date(props){
 }
 
 export function Time(props){
-  const { inRow, disabled, value, setValue, handleEnter, setError, setEdited, label } = props;
+  const { inRow, disabled, value, setValue, handleEnter, setError, setEdited, label, onTime } = props;
 
   const onChange = e => {
     setValue({ value: e.target.value });
@@ -79,6 +79,12 @@ export function Time(props){
         }
       }
     }
+  }
+
+  const onBlur = () => {
+    let length = value?.value?.replace(/[-:]/g, '')?.length;
+    if(length !== 0 && length !== 4) setValue({ value: value?.value?.replace(/-/g, '0') });
+    onTime && onTime(length ? { value: value?.value?.replace(/-/g, '0') } : null);
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
@@ -105,6 +111,7 @@ export function Time(props){
           maskChar='-'
           onKeyDown={onKeyDown}
           placeholder='hh:mm'
+          onBlur={onBlur}
           value={value?.value}
           formatChars={formatChars}
           beforeMaskedValueChange={beforeMaskedValueChange}

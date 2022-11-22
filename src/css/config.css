@@ -236,6 +236,12 @@
   background-color: var(--config-t-color);
 }
 
+#a_btn_save:disabled {
+  cursor: not-allowed;
+  color: var(--text3-color);
+  background-color: transparent;
+}
+
 #t_title {
   margin: 0 0 var(--title-padding) 0;
 }

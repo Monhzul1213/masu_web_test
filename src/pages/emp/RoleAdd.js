@@ -98,7 +98,8 @@ export function RoleAdd(){
     let nameLength = 2;
     let isNameValid = name?.value?.length >= nameLength;
     if(isNameValid){
-      let data = { merchantId: user?.merchantId, roleId: role?.roleId ?? -1, roleName: name?.value, posAccess, webAccess, rowStatus: role ? 'U' : 'I' };
+      let data = { merchantId: user?.merchantId, roleId: role?.roleId ?? -1, roleName: name?.value, posAccess, webAccess, rowStatus: role ? 'U' : 'I',
+        isUpdate: role?.isUpate ?? 'Y' };
       posData?.forEach(item => data[item?.value] = (item?.checked && posAccess === 'Y') ? 'Y' : 'N');
       webData?.forEach(item => data[item?.value] = (item?.checked && webAccess === 'Y') ? 'Y' : 'N');
       return [data];
@@ -128,7 +129,7 @@ export function RoleAdd(){
 
   const onClickDelete = async () => {
     onLoad();
-    let data = [{...role, rowStatus: 'D'}];
+    let data = [{...role, rowStatus: 'D', isUpdate: role?.isUpate ?? 'Y'}];
     const response = await dispatch(sendRequest(user, token, 'Employee/Role', data));
     if(response?.error) onError(response?.error, true);
     else onSuccess(t('role.delete_success'), true);
