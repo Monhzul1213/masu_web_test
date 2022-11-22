@@ -34,7 +34,7 @@ export function Add(props){
     let isDateValid = checkDate(date1, date2);
     let isNameValid = name?.value || name?.value === 0;
     let isSiteValid = site?.value || site?.value === 0;
-    if(isDateValid && isNameValid && isSiteValid){
+    if((isDateValid || isDateValid === 0) && isNameValid && isSiteValid){
       let beginTime = moment(date1?.value?.format('yyyy.MM.DD') + ' ' + time1?.value, 'yyyy.MM.DD HH:mm')?.toISOString();
       let endTime = moment(date2?.value?.format('yyyy.MM.DD') + ' ' + time2?.value, 'yyyy.MM.DD HH:mm')?.toISOString();
       let data = [{
@@ -43,7 +43,7 @@ export function Add(props){
         siteId: site?.value,
         beginTime,
         endTime,
-        totalHours: total,
+        totalHours: isDateValid,
         rowStatus: selected ? 'U' : 'I'
       }];
       return data;
@@ -132,7 +132,7 @@ export function Add(props){
       if(hours >= 0){
         setTotal(hours);
         setTime2({ value: t2?.value });
-        return true;
+        return hours;
       } else {
         setTime2({ value: t2?.value, error: t('error.time_early') });
         setTotal(0);

@@ -52,13 +52,10 @@ export function Header(props){
   }
 
   const onHide = () => {
-    let query = '';
-    // let query = '?BeginTime=2022-11-01 00:00:00.000&EndTime=2022-11-30 00:00:00.000';
-    // let query = '?BeginTime=' + '&EndTime=';
-    // let query = '?BeginTime=' + date[0]?.format('yyyy-MM-DD HH:mm:sS') + '&EndTime=' + date[1]?.format('yyyy-MM-DD HH:mm:ss');
-    // let query = '?BeginTime=' + date[0]?.format('yyyy-MM-DD HH:mm:ss.fff') + '&EndTime=' + date[1]?.format('yyyy-MM-DD HH:mm:ss.fff');
-    // if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCodes=' + item);
-    //if(site?.length === sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
+    let query = '?BeginTime=' + date[0]?.startOf('day')?.format('yyyy-MM-DD HH:mm:ss')
+      + '&EndTime=' + date[1]?.endOf('day')?.format('yyyy-MM-DD HH:mm:ss');
+    if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCodes=' + item);
+    if(site?.length === sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
     onSearch(query)
   }
 

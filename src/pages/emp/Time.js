@@ -26,7 +26,8 @@ export function Time(){
   useEffect(() => {
     if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
     else {
-      let query = '?BeginTime=' + moment().startOf('month').format('yyyy-MM-DD') + '&EndTime=' + moment().format('yyyy-MM-DD')
+      let query = '?BeginTime=' + moment()?.startOf('day')?.format('yyyy-MM-DD HH:mm:ss')
+        + '&EndTime=' + moment()?.endOf('day')?.format('yyyy-MM-DD HH:mm:ss');
       getData(query);
     }
     return () => {};

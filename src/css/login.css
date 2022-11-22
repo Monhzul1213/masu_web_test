@@ -80,6 +80,7 @@ input:-webkit-autofill:active{
 .f_input_back {
   border-style: solid;
   border-width: 0 0 2px 0;
+  border-radius: 0;
   border-color: var(--border-color);
   color: var(--text-color);
   font-size: var(--input-font);
