@@ -58,6 +58,57 @@ export function Input(props){
   );
 }
 
+export function Input_Z(props){
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow,  } = props;
+   
+  const onChange = e => {
+    setValue({ value: e.target.value });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter"){
+      if(handleEnter) handleEnter(e);
+      else {
+        const form = e.target.form;
+        if(form){
+          const index = [...form].indexOf(e.target);
+          form.elements[index + 1]?.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+  let formatChars = { '1': '[0-9]', '2': '[0-9]', '3': '[0-9]', '4': '[0-9]' };
+  let mask = '12.34';
+
+  return (
+    <div style={inRow ? { flex: 1 } : {}}>
+      <div className='cust_back' style={backStyle}>
+        {label && <p className='select_lbl' style={style}>{label}</p>}
+        <div className='cust_back1'>
+            {/* <DynamicAIIcon className='cus_icon' name={icon} /> */}
+            <InputMask
+            className='c_input'
+            mask={mask}
+            disabled={disabled}
+            maskChar='-'
+            onKeyDown={onKeyDown}
+            placeholder={placeholder}
+            value={value?.value}
+            formatChars={formatChars}
+            onChange={onChange} />
+        </div>
+        
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}
 export function DescrInput(props){
   const { value, setValue, label, placeholder, disabled, setError, setEdited, inRow, length } = props;
   const { t } = useTranslation();

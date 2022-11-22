@@ -1,0 +1,31 @@
+@import './color.css';
+
+:root {
+  --empty-width: 560px;
+  --table-width: 800px;
+  --empty-padding: 45px 20px;
+  --empty-icon: 120px;
+  --color-width: 60px;
+  --cat-width: 40px;
+  --cus-width: 520px;
+  --t-btn-height: 36px;
+}
+.r_select_z.ant-select .ant-select-selector {
+    box-shadow: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 14px;
+    background-color: var(--back-color);
+    border-radius: var(--radius);
+    width: 180px;
+    margin-left: var(--title-padding);
+  }
+  
+  .r_select_z .ant-select-selector {
+    box-shadow: none !important;
+  }
+  
+  .r_select_z .ant-select-arrow {
+    color: var(--text4-color);
+    font-size: 16px;
+  }

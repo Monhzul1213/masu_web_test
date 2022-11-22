@@ -39,6 +39,7 @@ export function Customer(props){
     setLoading(true);
     let headers = { custId};
     const response = await dispatch(getList(user, token, 'Site/GetCustomer', null, headers));
+    console.log(response?.error, );
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoaded(loaded + 1);
@@ -69,9 +70,6 @@ export function Customer(props){
       else {
         message.success(t('customer.delete_success'))
         onSearch(filter)
-        console.log(filter)        
-        console.log(sure)
-
       }
     }
   };

@@ -52,7 +52,6 @@ export const sendRequest = (user, token, api, data) => async dispatch => {
           return Promise.resolve({ error: responseNew?.retdesc ?? responseNew?.message ?? 'Алдаа гарлаа.' });
       }
     } else if(response?.rettype === 0){
-      console.log(response)
       return Promise.resolve({ error: null, data: response?.retdata });
     }
     return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });
@@ -211,6 +210,7 @@ function fetchRetry(config, retries = 5) {
         console.log('retrying network', retries);
         return fetchRetry(config, retries - 1)
       }
+      else return { result: 444, rettype: 444, message: error?.message, retdesc: error?.message };
     });
 }
 

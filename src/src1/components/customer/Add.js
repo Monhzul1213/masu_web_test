@@ -122,7 +122,7 @@ export function Add(props){
       setLoading(false);
     }
   }
-  const maxheight1= 'calc(90vh - 250px)';
+ 
   const maxheight= 'calc(90vh - 105px )';
   const nameProps = { value: custName, setValue: setCustName, label: t('page.name'), placeholder: t('customer.name'), setError, length: 64 , length1: 2 };
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, };
@@ -139,7 +139,7 @@ export function Add(props){
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSupervisorAccount' title={t(selected ? 'customer.edit' : 'customer.new')} isMD={true} />
-          <div style={{ overflowY: 'scroll', maxHeight: selected ? maxheight1 : maxheight }}>
+          <div style={{ overflowY: 'scroll', maxHeight: maxheight }}>
             <form onSubmit={onClickSave}>
               <Input {...nameProps}  />
               <Input {...phoneProps} />

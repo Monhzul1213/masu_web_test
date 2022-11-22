@@ -60,3 +60,8 @@
   justify-content: flex-end;
   align-items: center;
 }
+.gap1 {
+  width: 150px;
+  height: var(--page-padding);
+}
+

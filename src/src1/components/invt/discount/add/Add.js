@@ -4,11 +4,11 @@ import React, {  useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AddItem } from './AddItem';
 
-import {  Input,  Radio, MoneyInput} from '../../../all/all_m';
+import {  Input,  Radio, MoneyInput, Input_Z} from '../../../all/all_m';
 
 export function Add(props){
   const { name, setName, setError,setIsEach, setEdited, isEach,
-     perc, setPerc, price, setPrice, checked, setChecked } = props;
+     perc, setPerc, price, setPrice, isCheck, setIsCheck } = props;
   const { t } = useTranslation();
 
 
@@ -17,32 +17,20 @@ export function Add(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onCheck = (label, value) => {
-    setChecked({...checked, ...{[label]: value}});
-  }
-  const items = [
-    { title: t('discount.title1'), sub_title: t('discount.title2'), checked: checked['discount'], label: 'discount' },
-  ];
-
-  const renderItem = (item, index) => {
-        const itemProps = { key: index, item, more: t('page.more'), onCheck };
-        return (<AddItem {...itemProps} />);
-      }
-
   const nameProps = { value: name, setValue: setName, label: t('discount.name'), placeholder: t('discount.name'), setError, inRow: true, setEdited, length: 20 };
   const valueProps = { value: price, setValue: setPrice, label: t('discount.amount'), placeholder: t('discount.amount'), setError,  };
   const percProps = { value: perc, setValue: setPerc, label: t('discount.perc'),placeholder: t('discount.perc'), setError, mask: '99.99' };
   const unitProps = { value: isEach, setValue: setIsEach, label: t('discount.type'), data: t('discount.types'), setEdited, setError };
+  const checkProps = { value: isCheck, setValue: setIsCheck, label: t('discount.title1'), label1: t('discount.title2'),  setEdited, setError };
 
   return (
     <div className='ac_back' id='mo_ac_back'>
         <Input {...nameProps} />
         <Radio {...unitProps}/>
-       {(isEach.value === 'Y') ? <Input {...percProps}/> : 
-         <MoneyInput {...valueProps}/>} 
+       {(isEach.value === '0') ? <Input_Z {...percProps}/> :  <MoneyInput {...valueProps}/>} 
         <div className='c_tab_back1'>
-               {items?.map(renderItem)}
-            </div>
+              <AddItem {...checkProps}/>
+        </div>
     </div>
   )
 }
