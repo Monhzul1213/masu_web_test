@@ -867,3 +867,18 @@
   width: 10px;
   height: 10px;
 }
+
+.ii_page_row_large {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ii_page_row_small .ac_page_total {
+  color: var(--text-color);
+  margin: 10px 0 0 0;
+  font-size: 14px;
+  font-weight: 550;
+  text-align: end;
+}

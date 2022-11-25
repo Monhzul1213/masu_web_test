@@ -3,6 +3,7 @@ import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { withSize } from 'react-sizeme';
 
 import { getList } from '../../../../services';
 import { formatNumber } from '../../../../helpers';
@@ -12,8 +13,9 @@ import { SelectItem } from './SelectItem';
 import { EditableCell } from './EditableCell';
 const { Option } = Select;
 
-export function CardInvt(props){
-  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch, total, setTotal, setDKits } = props;
+export function Card(props){
+  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch, total, setTotal, setDKits,
+    size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [items, setItems] = useState([]);
@@ -109,6 +111,8 @@ export function CardInvt(props){
     setSearch({ value: null });
   }
 
+  const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
+
   const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack') };
   const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
@@ -118,9 +122,9 @@ export function CardInvt(props){
   const tableProps = { tableInstance };
   const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
     className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption};
- 
+
   return (
-    <div className='ac_back'>
+    <div className='ia_back'>
       <p className='ac_title'>{t('inventory.title')}</p>
       <SwitchLabel {...isPackProps} />
       {!isKit && false && <SwitchLabel {...isTrackProps} />}
@@ -129,7 +133,7 @@ export function CardInvt(props){
           <Table {...tableProps} />
         </div>
         <CustomSelect {...selectProps} />
-        <div className='ac_paging'>
+        <div className={classPage}>
           <PaginationTable {...tableProps} />
           <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total)}</p>
         </div>
@@ -137,3 +141,6 @@ export function CardInvt(props){
     </div>
   );
 }
+
+const withSizeHOC = withSize();
+export const CardInvt = withSizeHOC(Card);
