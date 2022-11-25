@@ -95,7 +95,7 @@ export function CardVariant(props){
   const addProps = { value: search, setValue: setSearch, placeholder: t('inventory.add_variant'), handleEnter, inRow: true, length: 30 };
 
   return (
-    <div className='ac_back'>
+    <div className='ia_back'>
       <p className='ac_title'>{t('inventory.variant')}</p>
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />

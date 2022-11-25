@@ -12,7 +12,7 @@ export function CardEmpty(props){
   const onClickAdd = () => navigate(route);
 
   return (
-    <div className='ac_back' id={id}>
+    <div className='ia_back' id={id}>
       <p className='ac_title'>{t(title)}</p>
       <div className='ac_empty_back'>
         <DynamicMDIcon className='ac_empty_icon' name={icon} />
