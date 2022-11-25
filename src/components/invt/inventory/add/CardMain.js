@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
+import { withSize } from 'react-sizeme';
 
 import { getList } from '../../../../services';
 import { DescrInput, Input, MoneyInput, Radio, Select, UploadImage } from '../../../all';
 
-export function CardMain(props){
+function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit } = props;
+    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, size } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,9 @@ export function CardMain(props){
     }
   }
 
+  const id = size?.width > 480 ? 'im_large' : 'im_small';
+  const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
+
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true, length: 30 };
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false,
     data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus, loading };
@@ -46,11 +50,11 @@ export function CardMain(props){
   const skuProps = { value: sku, setValue: setSku, label: t('inventory.sku'), placeholder: t('inventory.sku'), setEdited, setError, inRow: true, length: 30 };
   const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setEdited, setError,
     inRow: true, length: 30 };
-  const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError };
+  const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image' };
   
   return (
-    <div className='ac_back'>
-      <div className='ac_row'>
+    <div className='ia_back' id={id}>
+      <div className='ia_image_row'>
         <div style={{flex: 1}}>
           <Input {...nameProps} />
           <Select {...categoryProps} />
@@ -60,16 +64,19 @@ export function CardMain(props){
         <UploadImage {...imageProps} />
       </div>
       <DescrInput {...descrProps} />
-      <div className='ac_row' style={{marginTop: 10}}>
+      <div id={idRow}>
         <MoneyInput {...priceProps} />
-        <div className='gap' />
+        <div className='im_gap' />
         <MoneyInput {...costProps} />
       </div>
-      <div className='ac_row' style={{marginTop: 10}}>
+      <div id={idRow}>
         <Input {...skuProps} />
-        <div className='gap' />
+        <div className='im_gap' />
         <Input {...barcodeProps} />
       </div>
     </div>
   );
 }
+
+const withSizeHOC = withSize();
+export const CardMain = withSizeHOC(Card);

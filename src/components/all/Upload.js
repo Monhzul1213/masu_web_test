@@ -5,7 +5,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { checkMimeType } from '../../helpers';
 
 export function UploadImage(props){
-  const { image, setImage, setImage64, setImageType, setEdited } = props;
+  const { image, setImage, setImage64, setImageType, setEdited, className } = props;
   const [loading, setLoading] = useState(false);
 
   const getBase64 = (img, callback) => {
@@ -53,7 +53,7 @@ export function UploadImage(props){
   return (
     <Upload
       name='avatar'
-      className='u_image'
+      className={className ?? 'u_image'}
       listType='picture-card'
       showUploadList={false}
       customRequest={dummyRequest}
