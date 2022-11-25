@@ -13,8 +13,7 @@
 .empty_back {
   box-shadow: 0 2px 5px rgba(0,0,0,.15);
   background-color: var(--root-color);
-  width: var(--empty-width);
-  max-width: var(--safe-width);
+  max-width: var(--empty-width);
   padding: var(--empty-padding);
   border-radius: var(--radius);
   display: flex;
@@ -881,4 +880,14 @@
   font-size: 14px;
   font-weight: 550;
   text-align: end;
+}
+
+.ca_list {
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  max-width: var(--empty-width);
+  padding: var(--page-padding);
+  border-radius: var(--radius);
+  display: flex;
+  flex-flow: column;
 }

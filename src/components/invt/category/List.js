@@ -58,7 +58,7 @@ export function List(props){
   const pageProps = { total: data?.length, setStart, setEnd };
 
   return (
-    <div className='card_container_small'>
+    <div className='ca_list'>
       {open && <Confirm {...confirmProps} />}
       <ButtonRowAdd {...addProps} />
       <div style={{height: 20}} />
