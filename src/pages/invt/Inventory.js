@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SizeMe } from 'react-sizeme';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -138,10 +139,12 @@ export function Inventory(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
-          <div className='i_list_cont' id='invt_list'>
-            <Header {...headerProps} />
-            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
-          </div>
+          <SizeMe>{({ size }) => 
+            <div className='i_list_cont' id='invt_list'>
+              <Header {...headerProps} size={size} />
+              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
+            </div>
+          }</SizeMe>
         }
       </Overlay>
     </div>

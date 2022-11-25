@@ -348,3 +348,8 @@ code {
 .ant-select-item-option-selected:not(.ant-select-item-option-disabled) .ant-select-item-option-state {
   color: var(--config-color);
 }
+
+.row {
+  display: flex;
+  flex-flow: row;
+}

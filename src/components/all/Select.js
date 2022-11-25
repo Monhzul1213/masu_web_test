@@ -52,7 +52,7 @@ export function Select(props){
 }
 
 export function PlainSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex } = props;
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, classLabel } = props;
   
   const renderItem = (item, index) => {
     return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
@@ -60,7 +60,7 @@ export function PlainSelect(props){
 
   return (
     <div className={classBack}>
-      {label && <p className='p_select_lbl'>{label}</p>}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
       <AntSelect
         className={className}
         showSearch

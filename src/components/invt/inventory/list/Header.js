@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getList } from '../../../../services';
-import { ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
+import { Button, ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
 import { SearchInput } from './SearchInput';
 
 export function Header(props){
-  const { onClickAdd, onClickDelete, show, setError, onSearch, cats } = props;
+  const { onClickAdd, onClickDelete, show, setError, onSearch, cats, size } = props;
   const { t } = useTranslation();
   const [sites, setSites] = useState([{siteId: -1, name: t('pos.all')}]);
   const [site, setSite] = useState(-1);
@@ -63,19 +63,32 @@ export function Header(props){
 
   const onClickSearch = () => setShowSearch(!showSearch);
 
+  const id = size?.width > 780 ? 'ih_large' : 'ih_small';
+  const width = showSearch ? 0 : (size?.width > 780 ? 440 : (size?.width - 30));
+  const width1 = !showSearch ? 0 : (size?.width > 470 ? 440 : (size?.width - 30));
+  const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
+
   const addProps = { type: 'inventory', onClickAdd, show, onClickDelete };
-  const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name', className: 'ih_select',
-    label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'site' };
+  const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
+  const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name',
+    label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'site', classBack, classLabel, className };
   const categoryProps = { value: category, setValue: onChangeCategory, data: categories, s_value: 'categoryId', s_descr: 'categoryName',
-    className: 'ih_select', label: t('inventory.category'), onFocus: onFocusCategory, loading: loading === 'category' };
-  const style = { width: showSearch ? 0 : 440, overflow: 'hidden', transition: 'width 0.2s ease-in' };
+    label: t('inventory.category'), onFocus: onFocusCategory, loading: loading === 'category', classBack, classLabel, className };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
-  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch };
+  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
+  const importProps = { className: 'ih_btn', text: t('page.import'), disabled: true };
+  const exportProps = { className: 'ih_btn', text: t('page.export'), disabled: true };
 
   return (
-    <div className='i_list_header'>
-      <ButtonRowAdd {...addProps} />
-      <div className='i_list_header1' style={style}>
+    <div className='ih_header' id={id}>
+      <div className='ih_header1'>
+        <ButtonRowAdd {...addProps} />
+        <div className='ih_btn_row'>
+          <Button {...importProps} />
+          <Button {...exportProps} />
+        </div>
+      </div>
+      <div className='ih_header2' style={style}>
         <PlainSelect {...siteProps} />
         <PlainSelect {...categoryProps} />
         <DynamicAIIcon {...searchProps} />
