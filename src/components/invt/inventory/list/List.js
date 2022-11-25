@@ -8,7 +8,7 @@ import { EditableCell, SelectableCell } from '../add/EditableCell';
 import { Detail } from './Detail';
 
 export function List(props){
-  const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory, autoResetExpanded } = props;
+  const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory, autoResetExpanded, size } = props;
   const [columns, setColumns] = useState([]);
   const { t, i18n } = useTranslation();
 
@@ -96,7 +96,9 @@ export function List(props){
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
     detailName: 'msInventoryVariants', colSpan: 7 };
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 11px)';
+  const maxHeight = size?.width > 780
+    ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
+    : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
 
   return (
     <div>
