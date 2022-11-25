@@ -788,7 +788,8 @@
   display: flex;
   flex-flow: row;
   align-items: center;
+  left: 0;
   border-radius: var(--radius);
   bottom: 5px;
-  max-width: 440;
+  max-width: 412;
 }

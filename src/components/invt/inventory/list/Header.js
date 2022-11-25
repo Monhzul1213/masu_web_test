@@ -64,8 +64,8 @@ export function Header(props){
   const onClickSearch = () => setShowSearch(!showSearch);
 
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
-  const width = showSearch ? 0 : (size?.width > 780 ? 440 : (size?.width - 30));
-  const width1 = !showSearch ? 0 : (size?.width > 470 ? 440 : (size?.width - 30));
+  const width = showSearch ? 0 : (size?.width > 780 ? 412 : (size?.width - 30));
+  const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
 
   const addProps = { type: 'inventory', onClickAdd, show, onClickDelete };
