@@ -83,7 +83,7 @@ export function Header(props){
     <div className='ih_header' id={id}>
       <div className='ih_header1'>
         <ButtonRowAdd {...addProps} />
-        <div className='ih_btn_row'>
+        <div className='ih_btn_row' style={{display: 'none'}}>
           <Button {...importProps} />
           <Button {...exportProps} />
         </div>
