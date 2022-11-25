@@ -34,7 +34,7 @@ export function CardModifier(props){
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
 
   return (
-    <div className='ac_back'>
+    <div className='ia_back'>
       <p className='ac_title'>{t('modifier.title')}</p>
       <div className='list_back' id='paging' style={{ maxHeight, marginTop: 15, paddingBottom: 4 }}>
         {data?.slice(start, end)?.map(renderItem)}
