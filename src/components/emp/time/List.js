@@ -6,9 +6,10 @@ import moment from 'moment';
 import { Check, CheckBtn, PaginationTable, Table } from '../../all';
 
 export function List(props){
-  const { data, setData, onClickAdd, setShow, checked, setChecked } = props;
+  const { data, setData, onClickAdd, setShow, checked, setChecked, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [maxHeight, setMaxHeight] = useState('300px');
 
   useEffect(() => {
     const customStyle = { width: 40 };
@@ -21,14 +22,8 @@ export function List(props){
           return (<div style={style}><CheckBtn checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>)
         }
       },
-      {
-        Header: t('time.t_start'), accessor: 'beginTime',
-        Cell: ({ value }) => <div>{moment(value + 'Z').format('yyyy.MM.DD HH:mm')}</div>
-      },
-      {
-        Header: t('time.t_end'), accessor: 'endTime',
-        Cell: ({ value }) => <div>{moment(value + 'Z').format('yyyy.MM.DD HH:mm')}</div>
-      },
+      { Header: t('time.t_start'), accessor: 'begin' },
+      { Header: t('time.t_end'), accessor: 'end' },
       { Header: t('time.t_emp'), accessor: 'empName' },
       { Header: t('time.t_site'), accessor: 'siteName' },
       {
@@ -39,6 +34,14 @@ export function List(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
+
+  useEffect(() => {
+    if(size?.width >= 870) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 49px - 10px - 37px)');
+    else if(size?.width < 870 && size?.width >= 660) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 113px - 10px - 37px)');
+    else setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 162px - 10px - 37px)');
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size?.width]);
 
   const onClickCheckAll = e => {
     setData(old => old.map((row, index) => {
@@ -65,7 +68,6 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original);
 
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
     onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);

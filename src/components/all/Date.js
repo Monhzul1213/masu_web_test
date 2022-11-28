@@ -107,6 +107,7 @@ export function Time(props){
         <InputMask
           className='m_input'
           mask={mask}
+          style={{width: '100%'}}
           disabled={disabled}
           maskChar='-'
           onKeyDown={onKeyDown}

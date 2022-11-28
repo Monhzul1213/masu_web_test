@@ -42,9 +42,17 @@ export function Time(){
     setError(null);
     setLoading(true);
     let api = 'Employee/TimeCard/GetTimeCard' + (query ?? '');
+    // http://192.168.1.224:89/Employee/TimeCard/GetTimeCard?BeginTime=1&EndTime=1&BeginDate=1&EndDate=1&EmpCodes=1&SiteIDs=1
     const response = await dispatch(getList(user, token, api));
+    console.log(response);
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else {
+      response?.data?.forEach(item => {
+        item.begin = item.beginDate + ' ' + item?.beginTime;
+        item.end = item.endDate + ' ' + item?.endTime;
+      });
+      setData(response?.data);
+    }
     setLoading(false);
     setShow(false);
     setChecked(false);
@@ -91,7 +99,7 @@ export function Time(){
         <SizeMe>{({ size }) => 
           <div className='i_list_cont' id='invt_list'>
             <Header {...headerProps} size={size} />
-            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
+            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
           </div>
         }</SizeMe>
       </Overlay>

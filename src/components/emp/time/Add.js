@@ -48,8 +48,10 @@ export function Add(props){
         empCode: name?.value,
         timeCardId: selected?.timeCardId ?? -1,
         siteId: site?.value,
-        beginTime,
-        endTime,
+        beginDate: date1?.value?.format('yyyy.MM.DD'),
+        endDate: date2?.value?.format('yyyy.MM.DD'),
+        beginTime: time1?.value?.replace(/-/g, '0') + ':00',
+        endTime: time2?.value?.replace(/-/g, '0') + ':00',
         totalHours: isDateValid,
         rowStatus: selected ? 'U' : 'I'
       }];
