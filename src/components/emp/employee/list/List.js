@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { Check, CheckBtn, PaginationTable, Table } from '../../../all';
 
 export function List(props){
-  const { data, setData, onClickAdd, setShow, checked, setChecked } = props;
+  const { data, setData, onClickAdd, setShow, checked, setChecked, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const { user: { mail } } = useSelector(state => state.login);
@@ -64,7 +64,9 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original);
   
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 11px)';
+  const maxHeight = size?.width > 440
+    ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
+    : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };

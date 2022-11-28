@@ -76,7 +76,7 @@ export function Employee(){
           <SizeMe>{({ size }) => 
             <div className='i_list_cont' id='invt_list'>
               <Header {...headerProps} size={size} />
-              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
+              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
             </div>
           }</SizeMe>
         }
