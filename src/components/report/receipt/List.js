@@ -18,7 +18,6 @@ export function List(props){
 
   const width = showSearch ? 0 : 50;
   const width1 = !showSearch ? 0 : (size?.width > 465 ? 320 : (size?.width - 30));
-  console.log('width1', width1);
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const exportProps = { label: t('page.export'), className: 'rp_list_select', data: t('report_receipt.export') };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
