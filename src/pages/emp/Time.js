@@ -30,8 +30,7 @@ export function Time(){
   useEffect(() => {
     if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
     else {
-      let query = '?BeginTime=' + moment()?.startOf('month')?.startOf('day')?.format('yyyy-MM-DD HH:mm:ss')
-        + '&EndTime=' + moment()?.endOf('day')?.format('yyyy-MM-DD HH:mm:ss');
+      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
       getData(query);
     }
     return () => {};
@@ -42,9 +41,7 @@ export function Time(){
     setError(null);
     setLoading(true);
     let api = 'Employee/TimeCard/GetTimeCard' + (query ?? '');
-    // http://192.168.1.224:89/Employee/TimeCard/GetTimeCard?BeginTime=1&EndTime=1&BeginDate=1&EndDate=1&EmpCodes=1&SiteIDs=1
     const response = await dispatch(getList(user, token, api));
-    console.log(response);
     if(response?.error) setError(response?.error);
     else {
       response?.data?.forEach(item => {
