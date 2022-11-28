@@ -46,7 +46,7 @@ export function CardMain(props){
     mask: '9 9 9 9', maskChar: '_' };
 
   return (
-    <div className='ac_back' id='emp_ac_back'>
+    <div className='ea_back'>
       <Input {...nameProps} />
       <Input {...mailProps} />
       <InputPassword {...passProps} />

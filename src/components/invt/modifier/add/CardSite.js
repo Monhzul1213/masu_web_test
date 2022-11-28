@@ -48,7 +48,7 @@ export function CardSite(props){
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
 
   return (
-    <div className={id}>
+    <div className={id ?? 'ma_back'}>
       <p className='ac_title'>{t('inventory.sites')}</p>
       <div style={{padding: 5}} />
       <CheckAll {...checkProps} />
