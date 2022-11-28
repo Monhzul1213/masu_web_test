@@ -27,10 +27,10 @@ export function Add(props){
     if(selected){
       setName({ value: selected?.empCode });
       setSite({ value: selected?.siteId });
-      setDate1({ value: moment(selected?.beginTime) });
-      setDate2({ value: moment(selected?.endTime) });
-      setTime1({ value: moment(selected?.beginTime + 'Z').format('HH:mm') })
-      setTime2({ value: moment(selected?.endTime + 'Z').format('HH:mm') })
+      setDate1({ value: moment(selected?.beginDate, 'yyyy.MM.DD') });
+      setDate2({ value: moment(selected?.endDate, 'yyyy.MM.DD') });
+      setTime1({ value: selected?.beginTime });
+      setTime2({ value: selected?.endTime });
       setTotal(selected?.totalHours);
     }
     return () => {};
@@ -42,16 +42,14 @@ export function Add(props){
     let isNameValid = name?.value || name?.value === 0;
     let isSiteValid = site?.value || site?.value === 0;
     if((isDateValid || isDateValid === 0) && isNameValid && isSiteValid){
-      let beginTime = moment(date1?.value?.format('yyyy.MM.DD') + ' ' + time1?.value, 'yyyy.MM.DD HH:mm')?.toISOString();
-      let endTime = moment(date2?.value?.format('yyyy.MM.DD') + ' ' + time2?.value, 'yyyy.MM.DD HH:mm')?.toISOString();
       let data = [{
         empCode: name?.value,
         timeCardId: selected?.timeCardId ?? -1,
         siteId: site?.value,
         beginDate: date1?.value?.format('yyyy.MM.DD'),
         endDate: date2?.value?.format('yyyy.MM.DD'),
-        beginTime: time1?.value?.replace(/-/g, '0') + ':00',
-        endTime: time2?.value?.replace(/-/g, '0') + ':00',
+        beginTime: time1?.value?.replace(/-/g, '0'),
+        endTime: time2?.value?.replace(/-/g, '0'),
         totalHours: isDateValid,
         rowStatus: selected ? 'U' : 'I'
       }];
@@ -131,8 +129,8 @@ export function Add(props){
 
   const checkTime = (d1, d2, t1, t2) => {
     if(t1?.value && t2?.value){
-      const dt1 = moment(d1?.value?.format('yyyy.MM.DD') + ' ' + t1?.value, 'yyyy.MM.DD HH:mm');
-      const dt2 = moment(d2?.value?.format('yyyy.MM.DD') + ' ' + t2?.value, 'yyyy.MM.DD HH:mm');
+      const dt1 = moment(d1?.value?.format('yyyy.MM.DD') + ' ' + t1?.value, 'yyyy.MM.DD HH:mm:ss');
+      const dt2 = moment(d2?.value?.format('yyyy.MM.DD') + ' ' + t2?.value, 'yyyy.MM.DD HH:mm:ss');
       let duration = moment.duration(dt2.diff(dt1));
       let hours = +(duration?.asHours()?.toFixed(2));
       if(hours >= 0){

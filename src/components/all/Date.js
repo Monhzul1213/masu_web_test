@@ -83,15 +83,15 @@ export function Time(props){
 
   const onBlur = () => {
     let length = value?.value?.replace(/[-:]/g, '')?.length;
-    if(length !== 0 && length !== 4) setValue({ value: value?.value?.replace(/-/g, '0') });
+    if(length !== 0 && length !== 6) setValue({ value: value?.value?.replace(/-/g, '0') });
     onTime && onTime(length ? { value: value?.value?.replace(/-/g, '0') } : null);
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
-  let mask = '12:34';
-  let formatChars = { '1': '[0-2]', '2': '[0-9]', '3': '[0-5]', '4': '[0-9]' };
+  let mask = '12:34:56';
+  let formatChars = { '1': '[0-2]', '2': '[0-9]', '3': '[0-5]', '4': '[0-9]', '5': '[0-5]', '6': '[0-9]' };
 
   let beforeMaskedValueChange = (newState, oldState, userInput) => {
     let { value } = newState;
@@ -111,7 +111,7 @@ export function Time(props){
           disabled={disabled}
           maskChar='-'
           onKeyDown={onKeyDown}
-          placeholder='hh:mm'
+          placeholder='hh:mm:ss'
           onBlur={onBlur}
           value={value?.value}
           formatChars={formatChars}
