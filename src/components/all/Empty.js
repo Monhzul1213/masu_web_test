@@ -22,11 +22,11 @@ export function Empty(props){
 }
 
 export function Empty1(props){
-  const { icon } = props;
+  const { icon, id } = props;
   const { t } = useTranslation();
 
   return (
-    <div className='empty_back1'>
+    <div className='empty_back1' id={id}>
       <div className='empty_icon_back'>
         <DynamicMDIcon className='empty_icon' name={icon} />
       </div>

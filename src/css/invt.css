@@ -1035,7 +1035,12 @@
   fill: rgba(0,0,0,0) !important;
 }
 
+#rp_empty {
+  max-width: 1260px;
+}
+
 .rp_card {
+  max-width: 1260px;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -1103,4 +1108,20 @@
   margin: 0;
   text-align: left;
   line-height: 28px;
+}
+
+.rp_list {
+  max-width: 1260px;
+  margin: 1px 0 2px 1px;
+  display: flex;
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding: var(--page-padding);
+}
+
+.rp_list_select {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
 }

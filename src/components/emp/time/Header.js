@@ -63,7 +63,7 @@ export function Header(props){
   const onHide = () => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCodes=' + item);
-    // if(site?.length === sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
+    if(site?.length === sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
     onSearch(query)
   }
 
