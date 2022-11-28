@@ -18,7 +18,7 @@ export function Dropdown(props){
     <AntDrop overlay={menu}>
       <button className={className}>
         {label}
-        <DynamicAIIcon name='AiFillCaretDown' className='select_icon' />
+        <DynamicAIIcon name='AiFillCaretDown' className='drop_icon' />
       </button>
     </AntDrop>
   );
