@@ -67,13 +67,14 @@ export function Header(props){
   const width = showSearch ? 0 : (size?.width > 780 ? 412 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
+  const bStyle = { maxWidth: size?.width > 780 ? 180 : ((size?.width - 52) / 2) };
 
   const addProps = { type: 'inventory', onClickAdd, show, onClickDelete };
   const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name',
-    label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'site', classBack, classLabel, className };
+    label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'site', classBack, classLabel, className, bStyle };
   const categoryProps = { value: category, setValue: onChangeCategory, data: categories, s_value: 'categoryId', s_descr: 'categoryName',
-    label: t('inventory.category'), onFocus: onFocusCategory, loading: loading === 'category', classBack, classLabel, className };
+    label: t('inventory.category'), onFocus: onFocusCategory, loading: loading === 'category', classBack, classLabel, className, bStyle };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
   const importProps = { className: 'ih_btn', text: t('page.import'), disabled: true };

@@ -3,13 +3,15 @@ import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { withSize } from 'react-sizeme';
 
 import '../../css/invt.css';
 import { getList, sendRequest } from '../../services';
 import { ButtonRowAdd, Confirm, Empty, Empty1, Error1, Overlay, PlainSelect } from '../../components/all';
 import { List } from '../../components/invt/modifier';
 
-export function Modifier(){
+function Screen(props){
+  const { size } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
@@ -53,6 +55,7 @@ export function Modifier(){
       setChecked(false);
     }
     setLoading(false);
+    // setError('You can suppress this message by setting them explicitly: git config --global user.name "Your Name" git config --global user.email you@example.com');
   }
 
   const onFocusSite = async () => {
@@ -97,8 +100,11 @@ export function Modifier(){
     }
   };
 
-  const siteProps = { value: site, setValue: onSelectSite, data: sites, s_value: 'siteId', s_descr: 'name', className: 'r_select',
-    onFocus: onFocusSite, loading: loading === 'sites' };
+  const width = size?.width >= 560 ? 560 : size?.width;
+  const id = size?.width > 380 ? 'mo_large' : 'mo_small';
+
+  const siteProps = { value: site, setValue: onSelectSite, data: sites, s_value: 'siteId', s_descr: 'name',
+    classBack: 'mo_select_back', className: 'mo_select', onFocus: onFocusSite, loading: loading === 'sites' };
   const listProps = { data, setData, setShow, checked, setChecked };
   const emptyProps = { icon: 'MdOutlineFactCheck', type: 'modifier', onClickAdd };
   const addProps = { type: 'modifier', onClickAdd, show, onClickDelete };
@@ -107,11 +113,11 @@ export function Modifier(){
   return (
     <div className='s_container_mo'>
       {open && <Confirm {...confirmProps} />}
-      <Overlay loading={loading === 'loading'}>
+      <Overlay loading={loading === 'loading'} style={{flex: 1}}>
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
-          <div className='card_container'>
-            <div className='i_list_header'>
+          <div className='mo_container' style={{ width }}>
+            <div className='ih_header' id={id}>
               <ButtonRowAdd {...addProps} />
               <PlainSelect {...siteProps} />
             </div>
@@ -122,3 +128,6 @@ export function Modifier(){
     </div>
   )
 }
+
+const withSizeHOC = withSize();
+export const Modifier = withSizeHOC(Screen);
