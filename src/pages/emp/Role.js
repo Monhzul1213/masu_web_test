@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
- import { message } from 'antd';
- import { useSelector, useDispatch } from 'react-redux';
+import { message } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { withSize } from 'react-sizeme';
 
 import '../../css/invt.css';
 import { getList, sendRequest } from '../../services';
 import { ButtonRowAddConfirm, Empty, Error1, Overlay } from '../../components/all';
 import { List } from '../../components/emp/role';
 
-export function Role(){
+function Screen(props){
+  const { size } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -63,7 +65,8 @@ export function Role(){
       getData();
     }
   }
-  
+
+  const width = size?.width >= 780 ? 780 : size?.width;
   const emptyProps = { icon: 'MdOutlineSupervisorAccount', type: 'role', onClickAdd, noDescr: true };
   const addProps = { type: 'role', onClickAdd, show, onClickDelete };
   const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
@@ -73,7 +76,7 @@ export function Role(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!data?.length ? <Empty {...emptyProps} /> :
-          <div className='i_list_cont' id='role_list'>
+          <div className='mo_container' style={{ width }}>
             <ButtonRowAddConfirm {...addProps} />
             <List {...listProps} />
           </div>
@@ -82,3 +85,6 @@ export function Role(){
     </div>
   );
 }
+
+const withSizeHOC = withSize();
+export const Role = withSizeHOC(Screen);
