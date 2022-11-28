@@ -54,12 +54,14 @@ export function Menu(props){
       getItem(t('menu.invt_modi'), '/inventory/invt_modi', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
-    getItem(t('menu.management'), '/management', <TbBuildingWarehouse />),
+    getItem(t('menu.management'), '/management', <TbBuildingWarehouse />,[
+      getItem(t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageEmployy !== 'Y'),
+    ]),
     getItem(t('menu.employee'), '/employee', <RiContactsLine />, [
       getItem(t('menu.emp_list'), '/employee/emp_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(t('menu.access_config'), '/employee/access_config', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(t('menu.shift_config'), '/employee/shift_config', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(t('menu.shift_list'), '/employee/shift_lis', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />),

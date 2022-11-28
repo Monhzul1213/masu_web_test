@@ -9,7 +9,7 @@ import { Loading, Login, SignUp, Confirm, Home, Config } from './pages';
 import { Category, Inventory, InventoryAdd, Modifier, ModifierAdd } from './pages/invt';
 import { Employee, EmployeeAdd, Role, RoleAdd, Time } from './pages/emp';
 import { Receipt } from './pages/report';
-import { Customer, Discount, DiscountAdd, HoursWork} from './src1/pages';
+import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -84,7 +84,9 @@ export function App(){
                 <Route path='/employee/access_config' element={<Role />} />
                 <Route path='/employee/access_config/access_add' element={<RoleAdd />} />
                 <Route path='/employee/shift_config' element={<Time />} />
-                <Route path='/employee/hours_worked' element={<HoursWork />} />
+                <Route path='/employee/shift_list' element={<TimeList />} />
+                <Route path='/management/suppliers' element={<Suppliers />} />
+                <Route path='/management/suppliers/supp_add' element={<SupplierAdd/>} />
                 <Route path='/report/report_document' element={<Receipt />} />
               </Routes>
             </Layout>
