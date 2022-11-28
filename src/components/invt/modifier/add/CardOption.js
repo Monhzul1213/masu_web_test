@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { withSize } from 'react-sizeme';
 
 import { DynamicBSIcon, Input, PaginationTable, Table } from '../../../all';
 import { EditableCell } from '../../inventory/add/EditableCell';
 
-export function CardOption(props){
-  const { name, setName, setError, data, setData, setDItems, setEdited, disabled, setDisabled, search, setSearch } = props;
+function Card(props){
+  const { name, setName, setError, data, setData, setDItems, setEdited, disabled, setDisabled, search, setSearch, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
+    const width = size?.width >= 600 ? 430 : (size?.width - 170);
     setColumns([
       {
         Header: t('page.name'), accessor: 'optionName',
-        customStyle: { width: 430, paddingRight: 18 }, width: 410, length: 20
+        customStyle: { width, paddingRight: 18 }, width: width - 20, length: 20
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'price', isMoney: true,// autoFocus: true,
@@ -29,7 +31,7 @@ export function CardOption(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, size?.width]);
 
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
@@ -95,7 +97,7 @@ export function CardOption(props){
   const addProps = { value: search, setValue: setSearch, placeholder: t('modifier.new'), handleEnter, inRow: true, length: 20 };
 
   return (
-    <div className='ac_back' id='mo_ac_back'>
+    <div className='ma_back'>
       <Input {...nameProps} />
       <div style={{padding: 7}} />
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
@@ -108,3 +110,6 @@ export function CardOption(props){
     </div>
   )
 }
+
+const withSizeHOC = withSize();
+export const CardOption = withSizeHOC(Card);
