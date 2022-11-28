@@ -1,4 +1,5 @@
 
 export * from './invt';
 export * from './emp';
-export * from './Customer';
+export * from './customer';
+export * from './manage';

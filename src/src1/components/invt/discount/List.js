@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Check, Confirm, PaginationTable , Table} from '../../all/all_m';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useNavigate, createSearchParams } from 'react-router-dom';
-
+import { formatNumber } from '../../../helpers';
 export function List(props){
   const { data, setData, setShow, checked, setChecked } = props;
   const { t, i18n } = useTranslation();
@@ -13,8 +13,6 @@ export function List(props){
 
   useEffect(() => {
     const customStyle = { width: 40 }
-    const d =  data?.filter(i => i)
-    console.log(d)
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       {
@@ -26,7 +24,7 @@ export function List(props){
         Header: <div>{t('page.name')}</div>, accessor: 'discountName',
          },
       { Header: <div style={{textAlign: 'right',}}>{t('discount.amount')}</div> , accessor: 'discountValue',
-      Cell: props => props?.row?.original?.discountType===1 ? <div style={{textAlign: 'right', paddingRight: 15}}>₮{props.value}</div> 
+      Cell: props => props?.row?.original?.discountType===1 ? <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div> 
       : <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}%</div>
     },
       { id: 'isRestrictedAccess', Header: t('discount.isRestrictedAccess'), accessor: d => { return d.isRestrictedAccess=== 'Y' ? 'Тийм' : 'Үгүй' }},

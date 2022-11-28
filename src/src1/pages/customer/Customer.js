@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import '../css/customer.css'
-import { Empty, Overlay, Error1 , Confirm, Empty1} from '../components/all/all_m';
-import { Add, List , Header} from '../components/customer';
-import { getList , sendRequest} from '../services';
+import '../../css/customer.css'
+import { SizeMe } from 'react-sizeme';
+import { Empty, Overlay, Error1 , Confirm, Empty1} from '../../components/all/all_m';
+import { Add, List , Header} from '../../components/customer';
+import { getList , sendRequest} from '../../services';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -39,7 +40,6 @@ export function Customer(props){
     setLoading(true);
     let headers = { custId};
     const response = await dispatch(getList(user, token, 'Site/GetCustomer', null, headers));
-    console.log(response?.error, );
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoaded(loaded + 1);
@@ -93,18 +93,18 @@ export function Customer(props){
     let response = name
       ? await dispatch(getList(user, token, 'Site/GetCustomer/' + name ))
       : await dispatch(getList(user, token, 'Site/GetCustomer',null,  headers));
-    console.log(response)
-    console.log(name)
     setData(response?.data);
     setLoading(false);
     setFiltering(true);
   }
   
-  const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , };
+
+
+  const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , isMd : true};
   const modalProps = { visible, closeModal, selected: item, onSearch, filter, data, };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch ,};
-  const listProps = { data, onClickAdd, setData , loaded, getData, setShow,  autoResetExpanded, checked, setChecked  };
+  const listProps = { data, onClickAdd, setData , loaded, setShow,  autoResetExpanded, checked, setChecked  };
   return (
     <div className='s_container_z'>
       {visible && <Add {...modalProps} />}
@@ -112,10 +112,12 @@ export function Customer(props){
       {open && <Confirm {...confirmProps} />}
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
+          <SizeMe>{({ size }) => 
           <div className='i_list_cont_z' id='invt_list_z'>
-            <Header {...headerProps} />
-            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
+            <Header {...headerProps} size={size} />
+            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
           </div>
+        }</SizeMe>
         }      
         </Overlay>
     </div>

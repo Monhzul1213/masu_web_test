@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 export function Input(props){
   const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, length, length1 } = props;
     const { t } = useTranslation();
-
   const onChange = e => {
     e?.target?.value?.length > length 
       ? setValue({ value: value?.value, error: '' + length + t('error.shorter_than') })
@@ -49,7 +48,8 @@ export function Input(props){
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             value={value?.value}
-            onChange={onChange} />
+            onChange={onChange} 
+            />
         </div>
         
       </div>
@@ -58,8 +58,8 @@ export function Input(props){
   );
 }
 
-export function Input_Z(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow,  } = props;
+export function Percent(props){
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow  } = props;
    
   const onChange = e => {
     setValue({ value: e.target.value });
@@ -80,7 +80,10 @@ export function Input_Z(props){
       }
     }
   }
-
+  const onBlur = () => {
+    let length = value?.value?.replace()?.length;
+    if(length !== 0 && length !== 4) setValue({ value: value?.value?.replace(/-/g, '0') });
+  }
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
   let formatChars = { '1': '[0-9]', '2': '[0-9]', '3': '[0-9]', '4': '[0-9]' };
@@ -97,6 +100,7 @@ export function Input_Z(props){
             mask={mask}
             disabled={disabled}
             maskChar='-'
+            onBlur={onBlur}
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             value={value?.value}

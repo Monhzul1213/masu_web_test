@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getList } from '../../../services';
 
 export function Header(props){
-  const { onClickAdd, onClickDelete, show, onSearch, setError  } = props;
+  const { onClickAdd, onClickDelete, show, onSearch, setError, size  } = props;
   
   const { t } = useTranslation();
   const [site, setSite] = useState(-1);
@@ -33,13 +33,13 @@ export function Header(props){
     let api = '?siteId=' + value;
     onSearch(api);
   }
-
-  const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name', className: 'r_select_z',
+  const id = size?.width > 380 ? 'di_large' : 'di_small';
+  const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name', classBack: 'di_select_back', className: 'di_select',
     onFocus: onFocusSite, loading: loading === 'sites' , };
   const addProps = { type: 'discount', onClickAdd, show, onClickDelete };
 
   return (
-    <div className='i_list_header_z'>  
+    <div className='ih_header' id= {id}>  
       <ButtonRowAddConfirm {...addProps} />
       <PlainSelect {...siteProps} />
       </div>

@@ -1,6 +1,9 @@
 import React from 'react';
 import { Select as AntSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { Button } from './Button';
+import { BsCheckLg } from 'react-icons/bs';
+
 const { Option } = AntSelect;
 
 export function Select(props){
@@ -101,6 +104,57 @@ export function CustomSelect(props){
         </AntSelect>
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}
+
+export function MultiSelect(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, maxTag, onHide } = props;
+  const { t } = useTranslation();
+  
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  const onClick = () => {
+    let all = data?.map(item => item[s_value ?? 'value']);
+    setValue(all);
+  }
+
+  const onDropdownVisibleChange = show => {
+    if(!show) onHide();
+  }
+
+  const dropdownRender = menu => {
+    return (
+      <>
+        <Button className='multi_btn' text={t('time.all')} onClick={onClick} />
+        {menu}
+      </>
+    );
+  }
+
+  return (
+    <div className={classBack}>
+      {label && <p className='p_select_lbl'>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={setValue}
+        value={value}
+        loading={loading}
+        onFocus={onFocus}
+        mode='multiple'
+        menuItemSelectedIcon={<BsCheckLg />}
+        onDropdownVisibleChange={onDropdownVisibleChange}
+        dropdownRender={dropdownRender}
+        maxTagCount={0}
+        maxTagPlaceholder={maxTag}
+        placeholder={placeholder}
+        >
+        {data?.map(renderItem)}
+      </AntSelect>
     </div>
   );
 }

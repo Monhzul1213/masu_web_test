@@ -1,0 +1,25 @@
+@import './color.css';
+
+:root {
+  --empty-width: 560px;
+  --table-width: 800px;
+  --empty-padding: 45px 20px;
+  --empty-icon: 120px;
+  --color-width: 60px;
+  --cat-width: 40px;
+  --cus-width: 520px;
+  --t-btn-height: 36px;
+}
+#mo_ac_back_z {
+  width: 500px;
+}
+#btn_supp{
+  max-width: 500px;
+}
+.ac_back_z {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding:0 var(--page-padding) var(--page-padding) var(--page-padding);
+  width: var(--invt-width);
+}

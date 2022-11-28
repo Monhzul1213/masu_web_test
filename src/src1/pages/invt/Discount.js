@@ -6,7 +6,11 @@ import { List, Header } from '../../components/invt/discount';
 import { useDispatch, useSelector, } from 'react-redux';
 import { getList, sendRequest } from '../../services';
 import { message } from 'antd';
-export function Discount(){
+import { withSize } from 'react-sizeme';
+
+ function Screen(props){
+  const { size } = props;
+
   const { t } = useTranslation();
   const [loading, setLoading] = useState(null);
   const [error, setError] = useState(null);
@@ -50,7 +54,6 @@ export function Discount(){
       if(item.checked) toDelete.push({...item, rowStatus: 'D', discountSite: [] });
     });
     setError(null);
-    console.log(toDelete)
     setLoading(true);
     let response = await dispatch(sendRequest(user, token, 'Site/AddDiscount', toDelete));
     setLoading(false);
@@ -60,22 +63,26 @@ export function Discount(){
       getData(filter);
     }
   }
+  const width = size?.width >= 560 ? 560 : size?.width;
 
   const listProps = { data, setData, setShow, checked, setChecked };
   const emptyProps = { icon: 'BsTag', type: 'discount', onClickAdd , isMd: false  };
-  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData };
+  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData, size };
 
   return (
-    <div className='s_container'>
+    <div className='s_container_di'>
       <Overlay loading={loading === 'loading'}>
         {error && <Error1 error={error} />}
         {!data?.length  && !filtering  ? <Empty {...emptyProps} /> :
-          <div className='card_container'>
+          <div className='di_container' style={{ width }}>
             <Header {...headerProps}/>
             {!data?.length ? <Empty1 {...emptyProps} /> :<List {...listProps} />}
           </div>
         }
       </Overlay>
     </div>
+      
   )
 }
+const withSizeHOC = withSize();
+export const Discount = withSizeHOC(Screen);

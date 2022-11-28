@@ -173,7 +173,7 @@ export const getList = (user, token, api, setFunction, headers) => async dispatc
       headers: {...{ 'authorization': token, 'Accept': '*/*' }, ...headers}
     };
     const response = await fetchRetry(config);
-    // console.log('++++++++++++++++++++++=', response);
+    // console.log('++++++++++++++++++++++=', api);
     if(response?.result === 2){
       const responseLogin = await dispatch(apiLogin(user?.mail, user?.password));
       if(responseLogin?.error) return responseLogin;
@@ -183,7 +183,7 @@ export const getList = (user, token, api, setFunction, headers) => async dispatc
           headers: {...{ 'authorization': responseLogin?.token ?? token, 'Accept': '*/*' }, ...headers}
         };
         const responseNew = await fetchRetry(configNew);
-        // console.log('=====================', responseNew)
+        console.log('=====================', responseNew)
         if(responseNew?.rettype === 0){
           setFunction && dispatch(setFunction(responseNew?.retdata));
           return Promise.resolve({ error: null, data: responseNew?.retdata });

@@ -2,17 +2,17 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { IconButton } from './Button';
-import { DynamicBSIcon, DynamicMDIcon , } from './DynamicIcon';
+import { DynamicBSIcon, DynamicMDIcon ,DynamicTBIcon } from './DynamicIcon';
 
 export function Empty(props){
-  const { icon, type, onClickAdd, noDescr , isMd} = props;
+  const { icon, type, onClickAdd, noDescr , isMd, isTb} = props;
   const { t } = useTranslation();
 
   return (
     <div className='empty_back'>
       <div className='empty_icon_back'>
-       {isMd ? <DynamicMDIcon className='empty_icon' name={icon} /> :
-       <DynamicBSIcon className='empty_icon' name={icon} /> } 
+       { isTb ? <DynamicTBIcon className='empty_icon' name={icon} /> : isMd ? <DynamicMDIcon className='empty_icon' name={icon} /> :
+       <DynamicBSIcon className='empty_icon' name={icon} />} 
       </div>
       <p className='empty_title'>{t(type + '.title')}</p>
       <p className='empty_descr'>{noDescr ? '' : t(type + '.descr')}</p>

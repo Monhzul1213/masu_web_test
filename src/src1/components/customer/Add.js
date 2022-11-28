@@ -57,19 +57,19 @@ export function Add(props){
       setLoading(true);
       let data =
           [{
-            "custID": selected ? selected?.custId : -1,
-            "merchantID" : user?.merchantId,
-            "custCode": custCode?.value?.trim(),
-            "custName": custName?.value?.trim(),
-            "email": email?.value?.trim(),
-            "phone": phone?.value?.trim(),
-            "address": address?.value?.trim(),
-            "city": "",
-            "region": "",
-            "postalCode": "",
-            "country": "",
-            "note": note?.value?.trim(),
-            "rowStatus" : selected ? "U" : "I",
+            custID: selected ? selected?.custId : -1,
+            merchantID : user?.merchantId,
+            custCode: custCode?.value?.trim(),
+            custName: custName?.value?.trim(),
+            email: email?.value?.trim(),
+            phone: phone?.value?.trim(),
+            address: address?.value?.trim(),
+            city: "",
+            region: "",
+            postalCode: "",
+            country: "",
+            note: note?.value?.trim(),
+            rowStatus : selected ? "U" : "I",
           }]
       const response = await dispatch(sendRequest(user, token, 'Site/Customer',  data));
       setLoading(false);
@@ -97,19 +97,19 @@ export function Add(props){
       let data = 
         [
           {
-            "custID": selected?.custId,
-            "merchantID": user?.merchantId,
-            "custCode": selected?.custCode,
-            "custName": selected?.custName,
-            "email": selected?.email,
-            "phone": selected?.phone,
-            "address": selected?.address,
-            "city": "",
-            "region": "",
-            "postalCode": "",
-            "country": "",
-            "note": selected?.note,
-            "rowStatus" : "D"
+            custID: selected?.custId,
+            merchantID: user?.merchantId,
+            custCode: selected?.custCode,
+            custName: selected?.custName,
+            email: selected?.email,
+            phone: selected?.phone,
+            address: selected?.address,
+            city: "",
+            region: "",
+            postalCode: "",
+            country: "",
+            note: selected?.note,
+            rowStatus : "D"
           }
         ];
       const response = await dispatch(sendRequest(user, token, 'Site/Customer', data));
@@ -152,35 +152,7 @@ export function Add(props){
           </div>
           {error && <Error error={error} id = 'm_error' />}
 
-          {/* {selected && <div className='selected_div'>
-                  <div className='line1'>
-                    <div className='a_item_text'>
-                      <p className='a_item_title'>{item.createdDate}</p>
-                      <p className='a_item_sub_title'>{t('customer.first_visit')}</p>
-                    </div>
-                    <div className='a_item_text'>
-                      <p className='a_item_title'>{item.lastUpdate}</p>
-                      <p className='a_item_sub_title'>{t('customer.last_visit')}</p>
-                    </div>
-                  </div>
-                  <div className='line1'>
-                    <div className='a_item_text'>
-                      <p className='a_item_title'>{'0'}</p>
-                      <p className='a_item_sub_title'>{t('customer.visit_total')}</p>
-                    </div>
-                    <div className='a_item_text'>
-                      <p className='a_item_title'>{'₮0'}</p>
-                      <p className='a_item_sub_title'>{t('customer.total_spent')}</p>
-                    </div>
-                  </div>
-                  <div className='line1'>
-                    <div className='a_item_text'>
-                        <p className='a_item_title'>{'0'}</p>
-                        <p className='a_item_sub_title'>{t('customer.total_balance')}</p>
-                    </div>
-                  </div>
-                 
-            </div>} */}
+          
         </div>
         <ButtonRow {...btnProps} />
       </Overlay>

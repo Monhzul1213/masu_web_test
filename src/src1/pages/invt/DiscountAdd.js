@@ -7,7 +7,6 @@ import {  getList, sendRequest } from '../../services';
 import '../../css/discount.css';
 import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
 import { Add , Site, CardEmpty} from '../../components/invt/discount';
-
 export function DiscountAdd(){
   const [name, setName] = useState({ value: '' });
   const [price, setPrice] = useState({ value: '' });
@@ -97,18 +96,16 @@ export function DiscountAdd(){
     else {
       let dis = response && response?.data && response?.data[0];
       setSelected(dis)
-      console.log(dis?.isRestrictedAccess.toString())
       setItem(response?.data);
       setName({ value: dis?.discountName ?? '' });
       setIsEach({ value: dis?.discountType.toString() ?? '0' });
       setPrice({ value: dis?.discountValue ?? '' });
-      setPerc({ value: dis?.discountValue ?? '' });
+      setPerc({ value: dis?.discountValue ?? ''  });
       setIsCheck( dis?.isRestrictedAccess==='Y' );
       response?.data?.forEach(item => item.rowStatus = 'U');
       site?.forEach(item => {
         let exists = dis?.sites?.filter(si => si.siteId === item.siteId)[0];
         item.checked = exists; 
-        console.log(exists)
         if(exists) item.rowStatus = 'U';
       });
 
@@ -137,6 +134,7 @@ export function DiscountAdd(){
       discountSite
     }]
       const response = await dispatch(sendRequest(user, token, 'Site/AddDiscount', data));
+      console.log(data)
       if(response?.error) onError(response?.error);
       else onSuccess(t('discount.add_success'));
     } 
@@ -156,10 +154,9 @@ export function DiscountAdd(){
     else onSuccess(t('employee.delete_success'), true);
     console.log(data)
   }
-  // const confirmProps = { open, text: t('page.back_confirm'), confirm };
   const mainProps = { setError, name, setName, isEach, setIsEach, price, setPrice, perc, setPerc, setEdited,  setIsCheck, isCheck };
   const siteProps = {  data: sites, setData: setSites, setEdited, checked, setChecked  };
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , };
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'mo_ac_btn_z'  };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'mo_ac_back' };
 
   return (

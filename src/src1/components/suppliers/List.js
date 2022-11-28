@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
-import { formatNumber } from '../../helpers';
 import { Check, PaginationTable  } from '../all/all_m';
 import { Table  } from '../all/all_m';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 
 
 export function List(props){
-  const { onClickAdd, data, setData, loaded, setShow, autoResetExpanded, checked, setChecked, size} = props;
+  const {  data, setData, loaded, setShow, autoResetExpanded, checked, setChecked} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const navigate = useNavigate();
 
 
 
@@ -21,19 +22,13 @@ export function List(props){
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('customer.t_name'), accessor: 'custName' },
-      { Header: t('customer.addr'), accessor: 'phone',
+      { Header: t('supplier.name'), accessor: 'vendName' },
+      { Header: t('supplier.contact'), accessor: 'contact',
         Cell: props => <div >{props.value}</div>},
-      { Header: t('customer.first_visit'), accessor: 'createdDate' , 
+      { Header: t('page.phone'), accessor: 'phone' , 
         Cell: props => <div style={{fontSize: 13.5, paddingRight: 15}}>{props.value}</div>},
-      { Header: t('customer.last_visit'), accessor: 'lastUpdate',
+      { Header: t('page.email'), accessor: 'email',
         Cell: props => <div style={{fontSize: 13.5, paddingRight: 15}}>{props.value}</div> },
-      { Header: <div style={{textAlign: 'right'}}>{t('customer.visit_total')}</div>, accessor: 'total', 
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div>},
-      { Header: <div style={{textAlign: 'right'}}>{t('customer.total_spent')}</div>, accessor: 'total_spent', 
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div>},
-      { Header: <div style={{textAlign: 'right'} }>{t('customer.total_balance')}</div> , accessor: 'total_balance'  ,
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div>},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,7 +49,6 @@ export function List(props){
     setData(old => old.map((row, index) => {
       if(index === item?.index){
         if(!row?.checked) count = true;
-         console.log(row)
         return { ...old[item?.index], checked: !row?.checked };
       } else {
         if(row?.checked) count = true;
@@ -65,22 +59,21 @@ export function List(props){
     setShow(count);
   }
 
- 
+  const onRowClick = row => {
+    navigate({ pathname: 'supp_add', search: createSearchParams({ vendId: row?.original?.vendId }).toString() });
+  }
 
-  const maxHeight = size?.width > 780
-  ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
-  : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
-const tableInstance = useTable( { columns, data, autoResetPage: false, autoResetExpanded, initialState: { pageIndex: 0, pageSize: 25 },
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
+  const tableInstance = useTable( { columns, data, autoResetPage: false, autoResetExpanded, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick: onClickAdd, };
+  const tableProps = { tableInstance, onRowClick };
 
   return (
     <div >
-      <div style={{overflowX: 'scroll'}} >
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 720}}>
+      <div style={{overflowX: 'scroll'}} />
+        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight}}>
               <Table {...tableProps} />
         </div>
-      </div>
       <PaginationTable {...tableProps} />
     </div>
   )
