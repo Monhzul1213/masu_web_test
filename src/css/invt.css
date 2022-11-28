@@ -1008,3 +1008,28 @@
   width: 375px;
   max-width: calc(100vw - var(--page-padding) * 4);
 }
+
+.rp_h_back {
+  padding: 1px 0 15px 1px;
+}
+
+.rp_date .ant-picker-active-bar {
+  display: none;
+}
+
+.rp_date.ant-picker-range {
+  border: none;
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  height: 36px;
+}
+
+.rp_date .ant-picker-input>input {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.rp_date.ant-picker-range .ant-picker-separator svg {
+  fill: rgba(0,0,0,0) !important;
+}
