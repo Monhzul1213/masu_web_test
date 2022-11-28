@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment';
 
 import { Check, CheckBtn, PaginationTable, Table } from '../../all';
 
