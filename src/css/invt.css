@@ -622,7 +622,6 @@
 }
 
 .rh_date.ant-picker-range {
-  margin-left: 15px;
   box-shadow: none;
   border: none;
   background-color: var(--back-color);
@@ -971,4 +970,41 @@
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding: var(--page-padding);
   max-width: 600px;
+}
+
+.th_select_back {
+  margin-left: 15px;
+  width: 180px;
+}
+
+.th_header1 {
+  display: flex;
+  flex-flow: row;
+}
+
+.th_header2 {
+  display: flex;
+  flex-flow: row;
+  margin-top: 10px;
+}
+
+.th_header3 {
+  margin-top: 10px;
+} 
+
+.th_header1 .th_header_s, .th_header2 .th_header_s {
+  display: flex;
+  flex-flow: row;
+}
+
+.th_header3 .th_header_s {
+  display: flex;
+  flex-flow: row;
+  margin-top: 10px;
+  margin-left: -15px;
+}
+
+.th_header3 .rh_date {
+  width: 375px;
+  max-width: calc(100vw - var(--page-padding) * 4);
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SizeMe } from 'react-sizeme';
 import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -87,10 +88,12 @@ export function Time(){
       {visible && <Add {...modalProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        <div className='i_list_cont' id='invt_list'>
-          <Header {...headerProps} />
-          {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
-        </div>
+        <SizeMe>{({ size }) => 
+          <div className='i_list_cont' id='invt_list'>
+            <Header {...headerProps} size={size} />
+            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} />}
+          </div>
+        }</SizeMe>
       </Overlay>
     </div>
   );

@@ -12,7 +12,7 @@ export function PlainRange(props){
 
   return (
     <div className={classBack}>
-      {label && <p className='p_select_lbl'>{label}</p>}
+      {label && <p className='ih_select_lbl'>{label}</p>}
       <RangePicker
         className={className}
         suffixIcon={null}
