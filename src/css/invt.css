@@ -1128,6 +1128,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
+  margin-left: -5px;
 }
 
 .rp_list_select {
@@ -1141,6 +1142,7 @@
   font-size: 14px;
   font-weight: 500;
   border-radius: var(--radius);
+  padding: 3px 5px;
 }
 
 .rp_list_select:hover {

@@ -1,37 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Dropdown, DynamicAIIcon, Empty1 } from '../../all';
-import { SearchInput } from '../../invt/inventory/list/SearchInput';
+import { formatNumber } from '../../../helpers';
+import { PaginationTable, Table } from '../../all';
 
 export function List(props){
-  const { size, data } = props;
-  const { t } = useTranslation();
-  const [showSearch, setShowSearch] = useState(false);
-  const [search, setSearch] = useState('');
+  const { data } = props;
+  const { t, i18n } = useTranslation();
+  const [columns, setColumns] = useState([]);
 
-  const onClickSearch = () => setShowSearch(!showSearch);
+  useEffect(() => {
+    setColumns([
+      { Header: t('report_receipt.t_no'), accessor: 't_no' },
+      { Header: t('page.date'), accessor: 'date' },
+      { Header: t('time.t_site'), accessor: 't_site' },
+      { Header: t('time.t_emp'), accessor: 't_emp' },
+      { Header: t('report_receipt.t_user'), accessor: 't_user' },
+      { Header: t('report_receipt.t_type'), accessor: 't_type' },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 't_total', customStyle: { width: 100 },
+        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
+      },
+    ]);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n?.language]);
 
-  const handleEnter = value => {
-    console.log(value);
+  const onRowClick = row => {
+    console.log(row);
   }
 
-  const width = showSearch ? 0 : 50;
-  const width1 = !showSearch ? 0 : (size?.width > 465 ? 320 : (size?.width - 30));
-  const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
-  const exportProps = { label: t('page.export'), className: 'rp_list_select', data: t('report_receipt.export') };
-  const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
-  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1, className: 'rp_list_search_back' };
-  const emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
+  const maxHeight = '400px';
+  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 }},
+    useSortBy, usePagination, useRowSelect);
+  const tableProps = { tableInstance, onRowClick };
 
   return (
-    <div className='rp_list'>
-      <div className='rp_list_filter'>
-        <Dropdown {...exportProps}  />
-        <div className='rp_list_filter_icon' style={style}><DynamicAIIcon {...searchProps} /></div>
-        <SearchInput {...inputProps} />
+    <div>
+      <div style={{overflowX: 'scroll'}}>
+        <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+          <Table {...tableProps} />
+        </div>
       </div>
-      {data?.lenght ? <div>Table</div> : <Empty1 {...emptyProps} />}
+      <PaginationTable {...tableProps} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
- import React, { useState, useEffect } from 'react';
- import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -31,7 +31,6 @@ export function List(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
-
 
   const onClickCheckAll = e => {
     let count = false;
