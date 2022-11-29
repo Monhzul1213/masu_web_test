@@ -7,7 +7,7 @@ import { getList } from '../../../services';
 import { DynamicAIIcon, MonthRange, MultiSelect, TimeRange } from '../../all';
 
 export function Filter(props){
-  const { setError } = props;
+  const { setError, size } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState([moment().startOf('month'), moment()]);
@@ -16,6 +16,7 @@ export function Filter(props){
   const [site, setSite] = useState([]);
   const [emps, setEmps] = useState([]);
   const [emp, setEmp] = useState([]);
+  const [classH, setClassH] = useState('rp_h_back1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -25,6 +26,14 @@ export function Filter(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if(size?.width >= 920) setClassH('rp_h_back1');
+    else if(size?.width < 920 && size?.width >= 520) setClassH('rp_h_back2');
+    else setClassH('rp_h_back3');
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size?.width]);
 
   const onHide = () => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
@@ -73,11 +82,15 @@ export function Filter(props){
     onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxSite, placeholder: t('time.select_emp') };
 
   return (
-    <div className='rp_h_back'>
-      <MonthRange {...dateProps} />
-      <TimeRange {...timeProps} />
-      <MultiSelect {...siteProps} />
-      <MultiSelect {...empProps} />
+    <div className={classH}>
+      <div className='rp_h_row1'>
+        <MonthRange {...dateProps} />
+        <TimeRange {...timeProps} />
+      </div>
+      <div className='rp_h_row2'>
+        <MultiSelect {...siteProps} />
+        <MultiSelect {...empProps} />
+      </div>
     </div>
   );
 }

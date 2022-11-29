@@ -1010,10 +1010,36 @@
   max-width: calc(100vw - var(--page-padding) * 4);
 }
 
-.rp_h_back {
+.rp_h_back1 {
   padding: 1px 0 15px 1px;
   display: flex;
   flex-flow: row;
+}
+
+.rp_h_back2, .rp_h_back3 {
+  padding: 1px 0 15px 1px;
+  display: flex;
+  flex-flow: column;
+}
+
+.rp_h_row1 {
+  display: flex;
+  flex-flow: row;
+}
+
+.rp_h_back1 .rp_h_row2 {
+  display: flex;
+  flex-flow: row;
+}
+
+.rp_h_back2 .rp_h_row2, .rp_h_back3 .rp_h_row2 {
+  display: flex;
+  flex-flow: row;
+  margin-top: 10px;
+}
+
+.rp_h_back2 .rp_select_back, .rp_h_back2 .rp_select_back1 {
+  width: 237px;
 }
 
 .rp_date_back {
