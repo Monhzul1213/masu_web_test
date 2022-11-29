@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import moment from 'moment';
-import { DatePicker } from 'antd';
+import { DatePicker, Dropdown, Radio } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 import { DynamicAIIcon } from './DynamicIcon';
 const { RangePicker } = DatePicker;
@@ -162,5 +163,40 @@ export function MonthRange(props){
         <DynamicAIIcon name='AiOutlineRight' className='mr_icon' />
       </button>
     </div>
+  );
+}
+
+export function TimeRange(props){
+  const { classBack, label, setValue, onHide } = props;
+  const [custom, setCustom] = useState(false);
+  const { t } = useTranslation();
+
+  const onChange = e => {
+    e?.target?.value ? setValue([]) : setValue(null);
+    setCustom(e?.target?.value);
+  }
+
+  const onOpenChange = show => {
+    if(!show) onHide();
+  }
+
+  const menu = () => {
+    return (
+      <div className='mr_dropdown'>
+        <Radio.Group className='mr_radio' onChange={onChange} value={custom}>
+          <Radio value={false}>{t('report_receipt.all_day')}</Radio>
+          <Radio value={true}>{t('report_receipt.custom_day')}</Radio>
+        </Radio.Group>
+      </div>
+    )
+  }
+
+  return (
+    <Dropdown overlay={menu} trigger='click' onOpenChange={onOpenChange}>
+      <button className={classBack}>
+        <DynamicAIIcon name='AiOutlineClockCircle' className='mr_cal' />
+        <p className='mr_label'>{label}</p>
+      </button>
+    </Dropdown>
   )
 }
