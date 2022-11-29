@@ -1345,3 +1345,9 @@
   font-size: 14px;
   background-color: transparent;
 }
+
+.rp_select.ant-select-multiple .ant-select-selection-item {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}

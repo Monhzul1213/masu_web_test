@@ -45,7 +45,7 @@ function Screen(props){
     setFilter(query);
   }
 
-  let filterProps = { onSearch: getData, size };
+  let filterProps = { onSearch: getData, size, setError };
   let cardProps = { data, tab, setTab, size };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
