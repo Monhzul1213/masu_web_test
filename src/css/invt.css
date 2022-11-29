@@ -1110,6 +1110,7 @@
   margin-right: 15px;
   border: none;
   padding: 0;
+  width: 142px;
 }
 
 .rp_time_back:hover {
@@ -1327,6 +1328,16 @@
   display: flex;
   align-items: center;
   margin-right: 15px;
+  width: 180px;
+}
+
+.rp_select_back1 {
+  background-color: var(--root-color);
+  height: 36px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  display: flex;
+  align-items: center;
   width: 180px;
 }
 
