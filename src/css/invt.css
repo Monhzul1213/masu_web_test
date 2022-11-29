@@ -1012,6 +1012,60 @@
 
 .rp_h_back {
   padding: 1px 0 15px 1px;
+  display: flex;
+  flex-flow: row;
+}
+
+.rp_date_back {
+  background-color: var(--root-color);
+  height: 36px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  display: flex;
+  align-items: center;
+}
+
+.mr_btn {
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mr_btn:hover {
+  cursor: pointer;
+}
+
+#mr_btn1 {
+  border-color: var(--input1-color);
+  border-style: solid;
+  border-width: 0 1px 0 0;
+}
+
+#mr_btn2 {
+  border-color: var(--input1-color);
+  border-style: solid;
+  border-width: 0 0 0 1px;
+}
+
+.mr_icon {
+  color: var(--text2-color);
+  font-size: 16px;
+}
+
+.mr_btn:hover .mr_icon {
+  color: var(--config-color);
+}
+
+.mr_cal {
+  color: var(--text2-color);
+  font-size: 20px;
+  margin: 0 5px 0 10px;
 }
 
 .rp_date .ant-picker-active-bar {
@@ -1020,19 +1074,23 @@
 
 .rp_date.ant-picker-range {
   border: none;
-  background-color: var(--root-color);
-  border-radius: var(--radius);
-  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: transparent;
   height: 36px;
+  padding: 0;
 }
 
 .rp_date .ant-picker-input>input {
   color: var(--text-color);
   font-size: 14px;
+  text-align: center;
 }
 
-.rp_date.ant-picker-range .ant-picker-separator svg {
-  fill: rgba(0,0,0,0) !important;
+.rp_date.ant-picker-range .ant-picker-separator {
+  display: none;
+}
+
+.rp_date.ant-picker-focused {
+  box-shadow: none;
 }
 
 #rp_empty {
