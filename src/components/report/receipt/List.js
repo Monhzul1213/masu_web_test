@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Dropdown, DynamicAIIcon } from '../../all';
+import { Dropdown, DynamicAIIcon, Empty1 } from '../../all';
 import { SearchInput } from '../../invt/inventory/list/SearchInput';
 
 export function List(props){
-  const { size } = props;
+  const { size, data } = props;
   const { t } = useTranslation();
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
@@ -22,6 +22,7 @@ export function List(props){
   const exportProps = { label: t('page.export'), className: 'rp_list_select', data: t('report_receipt.export') };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1, className: 'rp_list_search_back' };
+  const emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
   return (
     <div className='rp_list'>
@@ -30,6 +31,7 @@ export function List(props){
         <div className='rp_list_filter_icon' style={style}><DynamicAIIcon {...searchProps} /></div>
         <SearchInput {...inputProps} />
       </div>
+      {data?.lenght ? <div>Table</div> : <Empty1 {...emptyProps} />}
     </div>
   );
 }

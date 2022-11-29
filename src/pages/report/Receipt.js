@@ -21,7 +21,6 @@ function Screen(props){
 
   let headerProps = { onSearch: getData };
   let cardProps = { data, tab, setTab, size };
-  // let emptyProps = { id: 'rp_empty' };
 
   return (
     <div className='s_container_i'>
@@ -29,7 +28,6 @@ function Screen(props){
         {error && <Error1 error={error} />}
         <Header {...headerProps} />
         <Card {...cardProps} />
-        {/* <Empty1 {...emptyProps} /> */}
         <List {...cardProps} />
       </Overlay>
     </div>
