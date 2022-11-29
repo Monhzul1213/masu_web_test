@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import moment from 'moment';
 
 import { formatNumber } from '../../../helpers';
 import { PaginationTable, Table } from '../../all';
@@ -12,14 +13,17 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('report_receipt.t_no'), accessor: 't_no' },
-      { Header: t('page.date'), accessor: 'date' },
-      { Header: t('time.t_site'), accessor: 't_site' },
-      { Header: t('time.t_emp'), accessor: 't_emp' },
-      { Header: t('report_receipt.t_user'), accessor: 't_user' },
-      { Header: t('report_receipt.t_type'), accessor: 't_type' },
+      { Header: t('report_receipt.t_no'), accessor: 'sale.salesNo' },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 't_total', customStyle: { width: 100 },
+        Header: t('page.date'), accessor: 'sale.salesDate',
+        Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD HH:mm')}</div>)
+      },
+      { Header: t('time.t_site'), accessor: 'sale.siteName' },
+      { Header: t('time.t_emp'), accessor: 'sale.empName' },
+      { Header: t('report_receipt.t_user'), accessor: 'sale.custName' },
+      { Header: t('report_receipt.t_type'), accessor: 'sale.typeName' },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 'sale.totalSalesAmount', customStyle: { width: 100 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
       },
     ]);
