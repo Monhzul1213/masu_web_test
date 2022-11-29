@@ -39,7 +39,7 @@ export function List(props){
   return (
     <div>
       <div style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+        <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />
         </div>
       </div>
