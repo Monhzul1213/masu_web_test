@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import moment from 'moment';
-import { DatePicker, Dropdown, Radio } from 'antd';
+import { DatePicker, Dropdown, Radio, Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
+import { timeList } from '../../helpers';
 import { DynamicAIIcon } from './DynamicIcon';
 const { RangePicker } = DatePicker;
+const { Option } = Select;
 
 export function PlainRange(props){
   const { classBack, label, className, value, disabled, setValue, placeholder, onHide } = props;
@@ -166,19 +168,52 @@ export function MonthRange(props){
   );
 }
 
+const TimeSelect = props => {
+  const { label, value, setValue } = props;
+
+  const renderItem = item => {
+    return (<Option key={item} value={item}>{item}</Option>);
+  }
+
+  return (
+    <div className='mr_time_back'>
+      <p className='mr_time_label'>{label}</p>
+      <Select
+        className='mr_time_select'
+        onChange={setValue}
+        value={value}>
+        {timeList?.map(renderItem)}
+      </Select>
+    </div>
+  )
+}
+
 export function TimeRange(props){
-  const { classBack, label, setValue, onHide } = props;
+  const { classBack, label, value, setValue, onHide } = props;
   const [custom, setCustom] = useState(false);
+  const [text, setText] = useState(label);
   const { t } = useTranslation();
 
   const onChange = e => {
-    e?.target?.value ? setValue([]) : setValue(null);
+    if(e?.target?.value){
+      setValue(['00:00', '23:00']);
+      setText('00:00 - 23:00');
+    } else {
+      setValue(null);
+      setText(label);
+    }
     setCustom(e?.target?.value);
   }
 
   const onOpenChange = show => {
     if(!show) onHide();
   }
+
+  const setTime = data => {
+    setValue(data);
+    setText(data[0] + ' - ' + data[1]);
+  }
+
 
   const menu = () => {
     return (
@@ -187,6 +222,11 @@ export function TimeRange(props){
           <Radio value={false}>{t('report_receipt.all_day')}</Radio>
           <Radio value={true}>{t('report_receipt.custom_day')}</Radio>
         </Radio.Group>
+        {custom && <div className='mr_times'>
+          <TimeSelect label={t('time.t_start')} value={value[0]} setValue={val => setTime([val, value[1]])} />
+          <div className='gap' />
+          <TimeSelect label={t('time.t_end')} value={value[1]} setValue={val => setTime([value[0], val])} />
+        </div>}
       </div>
     )
   }
@@ -195,7 +235,7 @@ export function TimeRange(props){
     <Dropdown overlay={menu} trigger='click' onOpenChange={onOpenChange}>
       <button className={classBack}>
         <DynamicAIIcon name='AiOutlineClockCircle' className='mr_cal' />
-        <p className='mr_label'>{label}</p>
+        <p className='mr_label'>{text}</p>
       </button>
     </Dropdown>
   )
