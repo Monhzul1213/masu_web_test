@@ -15,7 +15,7 @@ export function List(props){
     setColumns([
       { Header: t('report_receipt.t_no'), accessor: 'sale.salesNo' },
       {
-        Header: t('page.date'), accessor: 'sale.salesDate',
+        Header: t('page.date'), accessor: 'sale.createdDate',
         Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD HH:mm')}</div>)
       },
       { Header: t('time.t_site'), accessor: 'sale.siteName' },
