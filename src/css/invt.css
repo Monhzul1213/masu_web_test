@@ -1318,3 +1318,30 @@
   color: var(--text4-color);
   right: 0px;
 }
+
+.rp_select_back {
+  background-color: var(--root-color);
+  height: 36px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  width: 180px;
+}
+
+.rp_select {
+  width: 100%;
+}
+
+.rp_select .ant-select-selector {
+  box-shadow: none !important;
+}
+
+.rp_select.ant-select .ant-select-selector {
+  box-shadow: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 14px;
+  background-color: transparent;
+}
