@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
+import moment from 'moment';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
@@ -23,8 +24,7 @@ function Screen(props){
     console.log(filter);
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
     else {
-      // let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
-      let query = '?BeginDate=2022.01.01&EndDate=2022.12.31';
+      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
       getData(query);
     }
     return () => {};
