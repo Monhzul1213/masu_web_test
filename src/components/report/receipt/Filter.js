@@ -7,7 +7,7 @@ import { getList } from '../../../services';
 import { DynamicAIIcon, MonthRange, MultiSelect, TimeRange } from '../../all';
 
 export function Filter(props){
-  const { setError, size, onSearch } = props;
+  const { setError, size, onSearch, filter1 } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState([moment().startOf('month'), moment()]);
@@ -40,7 +40,7 @@ export function Filter(props){
     if(time) query += '&BeginTime=' + time[0] + '&EndTime=' + time[1]
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
-    onSearch && onSearch(query);
+    onSearch && onSearch(query, filter1);
   }
 
   const onFocusSite = async () => {

@@ -17,13 +17,13 @@ function Screen(props){
   const [filteredData, setFilteredData] = useState(null);
   const [tab, setTab] = useState(-1);
   const [filter, setFilter] = useState('');
+  const [filter1, setFilter1] = useState('');
   const [total, setTotal] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(filter);
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
     else {
       let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
@@ -33,10 +33,10 @@ function Screen(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async query => {
+  const getData = async (query, query1) => {
     setError(null);
     setLoading(true);
-    let api = 'Sales/GetSales' + (query ?? '');
+    let api = 'Sales/GetSales' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     console.log(api);
     const response = await dispatch(getList(user, token, api, null, headers));
@@ -56,6 +56,7 @@ function Screen(props){
     }
     setLoading(false);
     setFilter(query);
+    setFilter1(query1 ?? '');
   }
 
   const onChangeTab = value => {
@@ -71,7 +72,7 @@ function Screen(props){
       : setFilteredData(data);
   }
 
-  let filterProps = { onSearch: getData, size, setError, onFilter };
+  let filterProps = { onSearch: getData, size, setError, onFilter, filter, filter1 };
   let cardProps = { data: filteredData, tab, setTab: onChangeTab, size, total };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
