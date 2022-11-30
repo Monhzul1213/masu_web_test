@@ -16,7 +16,7 @@ export function SearchInput(props){
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in', height: 40 };
 
   const onKeyDown = e => {
-    if(e?.key?.toLowerCase() === "enter") handleEnter(search);
+    if(e?.key?.toLowerCase() === "enter") handleEnter && handleEnter(search);
   }
 
   const onChange = e => setSearch(e.target.value);
@@ -24,7 +24,7 @@ export function SearchInput(props){
   const onClose = () => {
     setShowSearch(!showSearch);
     setSearch('');
-    handleEnter('');
+    handleEnter && handleEnter('');
   }
 
   return (

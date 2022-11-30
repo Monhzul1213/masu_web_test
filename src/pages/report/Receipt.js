@@ -65,7 +65,13 @@ function Screen(props){
       : setFilteredData(data?.filter(item => item?.sale?.salesType === value));
   }
 
-  let filterProps = { onSearch: getData, size, setError };
+  const onFilter = value => {
+    value
+      ? setFilteredData(data?.filter(item => item?.sale?.salesNo?.toString()?.includes(value)))
+      : setFilteredData(data);
+  }
+
+  let filterProps = { onSearch: getData, size, setError, onFilter };
   let cardProps = { data: filteredData, tab, setTab: onChangeTab, size, total };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 

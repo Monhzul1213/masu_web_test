@@ -5,15 +5,16 @@ import { Dropdown, DynamicAIIcon } from '../../all';
 import { SearchInput } from '../../invt/inventory/list/SearchInput';
 
 export function Header(props){
-  const { size } = props;
+  const { size, onFilter } = props;
   const { t } = useTranslation();
   const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
 
   const onClickSearch = () => setShowSearch(!showSearch);
 
-  const handleEnter = value => {
-    console.log(value);
+  const onSearch = value => {
+    setSearch(value);
+    onFilter(value);
   }
 
   const exportProps = { label: t('page.export'), className: 'rp_list_select', data: t('report_receipt.export') };
@@ -21,7 +22,7 @@ export function Header(props){
   const width1 = !showSearch ? 0 : (size?.width > 495 ? 320 : (size?.width - 60));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
-  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1, className: 'rp_list_search_back' };
+  const inputProps = { showSearch, setShowSearch, search, setSearch: onSearch, width: width1, className: 'rp_list_search_back' };
 
   return (
     <div className='rp_list_filter'>
