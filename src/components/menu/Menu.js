@@ -76,7 +76,7 @@ export function Menu(props){
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style, breakpoint: 'lg', width: 300,
     onCollapse: setCollapsed };
-  const drawerProps = { placement: 'left', onClose: () => setCollapsed(true), closable: false, open: !collapsed };
+  const drawerProps = { className: 'menu_drawer', placement: 'left', onClose: () => setCollapsed(true), closable: false, open: !collapsed };
   const profileProps = { collapsed, setCollapsed };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
   const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };

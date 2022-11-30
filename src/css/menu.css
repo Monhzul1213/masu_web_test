@@ -269,7 +269,7 @@
     max-height: calc(100vh - var(--header-height));
   }
 
-  .ant-drawer {
+  .menu_drawer.ant-drawer {
     display: none;
   }
 

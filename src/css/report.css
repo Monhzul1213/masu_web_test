@@ -1,0 +1,113 @@
+@import './color.css';
+
+.rp_drawer .ant-drawer-body {
+  margin: var(--page-padding);
+  padding: 0;
+}
+
+.dr_close {
+  position: absolute;
+  top: var(--page-padding);
+  right: var(--page-padding);
+  font-size: 22px;
+  color: var(--text4-color);
+}
+
+.dr_close:hover {
+  cursor: pointer;
+  color: var(--header-color);
+}
+
+.dr_total {
+  padding: 25px 0 15px 0;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  border-bottom: solid 1px var(--input1-color);
+}
+
+.dr_total_value {
+  color: var(--text-color);
+  font-size: 34px;
+  margin: 0;
+  font-weight: 450;
+  line-height: 36px;
+}
+
+.dr_total_label {
+  color: var(--text-color);
+  font-size: 15px;
+  margin: 5px 0 0 0;
+  line-height: 18px;
+}
+
+.dr_section {
+  border-bottom: solid 1px var(--input1-color);
+  padding: 10px 0;
+}
+
+.dr_text {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  line-height: 22px;
+}
+
+.dr_item:not(:last-child) {
+  margin-bottom: 15px;
+}
+
+.dr_item_top {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.dr_item_title {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  flex: 1;
+  line-height: 20px;
+}
+
+.dr_item_total {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0 0 0 10px;
+  line-height: 20px;
+}
+
+.dr_item_price {
+  color: var(--text2-color);
+  font-size: 14px;
+  margin: 0;
+  line-height: 20px;
+}
+
+.dr_row {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  margin: 0 0 5px 0;
+}
+
+.dr_row_label, .dr_row_value {
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.dr_footer {
+  display: flex;
+  flex-flow: row;
+  padding: 10px 0 0 0;
+  justify-content: space-between;
+}
+
+.dr_footer_text {
+  color: var(--text2-color);
+  font-size: 14px;
+  margin: 0;
+}

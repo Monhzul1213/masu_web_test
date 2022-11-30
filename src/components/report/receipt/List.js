@@ -44,7 +44,7 @@ export function List(props){
   }, [size?.width]);
 
   const onRowClick = row => {
-    // setSelected(row?.original);
+    setSelected(row?.original);
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
