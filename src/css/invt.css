@@ -196,6 +196,16 @@
   margin-left: 20px;
 }
 
+.cat_icon {
+  height: var(--cat-width);
+  width: var(--cat-width);
+  margin-left: 20px;
+  /* filter: invert(49%) sepia(0%) saturate(584%) hue-rotate(134deg) brightness(92%) contrast(85%); */
+  filter: invert(28%) sepia(84%) saturate(3639%) hue-rotate(264deg) brightness(91%) contrast(102%);
+  /* filter: invert(58%) sepia(7%) saturate(3179%) hue-rotate(73deg) brightness(98%) contrast(102%); */
+  /* filter: invert(84%) sepia(53%) saturate(508%) hue-rotate(31deg) brightness(80%) contrast(92%); */
+}
+
 .cat_side {
   margin: 0 20px;
 }

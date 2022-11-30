@@ -27,7 +27,7 @@ export function Add(props){
 
   const getData = async () => {
     setName({ value: selected?.categoryName ?? '' });
-    setIcon({ value: selected?.icon ?? 1 });
+    setIcon(selected?.icon ?? 1);
   }
 
   const onClickSave = async e => {
