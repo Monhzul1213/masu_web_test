@@ -1270,6 +1270,7 @@
   justify-content: space-between;
   position: relative;
   margin-left: -5px;
+  padding-bottom: 6px;
 }
 
 .rp_list_select {
