@@ -7,7 +7,7 @@ export function Card(props){
   const { tab, setTab, size, total } = props;
   const { t } = useTranslation();
 
-  const id = size?.width >= 500 ? 'rp_card_large' : 'rp_card_small';
+  const id = size?.width >= 520 ? 'rp_card_large' : 'rp_card_small';
 
   const Tab = props => {
     const { label, value, icon, index, color } = props;
