@@ -14,7 +14,8 @@ function Screen(props){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
-  const [tab, setTab] = useState(1);
+  const [filteredData, setFilteredData] = useState(null);
+  const [tab, setTab] = useState(-1);
   const [filter, setFilter] = useState('');
   const [total, setTotal] = useState(null);
   const { user, token }  = useSelector(state => state.login);
@@ -48,13 +49,24 @@ function Screen(props){
         return: response?.data?.filter(item => item?.sale?.salesType === 1).length,
       });
       setData(response?.data);
+      tab === -1
+        ? setFilteredData(response?.data)
+        : setFilteredData(response?.data?.filter(item => item?.sale?.salesType === tab));
+      
     }
     setLoading(false);
     setFilter(query);
   }
 
+  const onChangeTab = value => {
+    setTab(value);
+    value === -1
+      ? setFilteredData(data)
+      : setFilteredData(data?.filter(item => item?.sale?.salesType === value));
+  }
+
   let filterProps = { onSearch: getData, size, setError };
-  let cardProps = { data, tab, setTab, size, total };
+  let cardProps = { data: filteredData, tab, setTab: onChangeTab, size, total };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
   return (
@@ -65,7 +77,7 @@ function Screen(props){
         <Card {...cardProps} />
         <div className='rp_list'>
           <Header {...filterProps} />
-          {data?.length ? <List {...cardProps} /> : <Empty1 {...emptyProps} />}
+          {filteredData?.length ? <List {...cardProps} /> : <Empty1 {...emptyProps} />}
         </div>
       </Overlay>
     </div>

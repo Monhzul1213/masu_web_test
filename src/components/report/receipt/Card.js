@@ -26,9 +26,9 @@ export function Card(props){
 
   return (
     <div className='rp_card' id={id}>
-      <Tab label='c_title1' value={total?.total} index={1} color='#b0b0b0' icon='TbReceipt' />
-      <Tab label='c_title2' value={total?.sales} index={2} color='#4BAF4F' icon='TbReceipt2' />
-      <Tab label='c_title3' value={total?.return} index={3} color='#e41051' icon='TbReceiptRefund' />
+      <Tab label='c_title1' value={total?.total} index={-1} color='#b0b0b0' icon='TbReceipt' />
+      <Tab label='c_title2' value={total?.sales} index={0} color='#4BAF4F' icon='TbReceipt2' />
+      <Tab label='c_title3' value={total?.return} index={1} color='#e41051' icon='TbReceiptRefund' />
     </div>
   );
 }
