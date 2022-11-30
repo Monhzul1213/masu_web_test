@@ -20,10 +20,10 @@ export function Add(props){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getData();
+    if(visible) getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [visible]);
 
   const getData = async () => {
     setName({ value: selected?.categoryName ?? '' });

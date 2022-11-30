@@ -66,7 +66,7 @@ export function Category(){
 
   return (
     <div className='s_container_i'>
-      {visible && <Add {...addProps} />}
+      <Add {...addProps} />
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {data?.length ? <List {...listProps} /> : <Empty {...emptyProps} />}
