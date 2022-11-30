@@ -52,7 +52,6 @@ function Screen(props){
       tab === -1
         ? setFilteredData(response?.data)
         : setFilteredData(response?.data?.filter(item => item?.sale?.salesType === tab));
-      
     }
     setLoading(false);
     setFilter(query);

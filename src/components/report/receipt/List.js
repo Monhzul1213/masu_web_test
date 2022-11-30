@@ -5,12 +5,14 @@ import moment from 'moment';
 
 import { formatNumber } from '../../../helpers';
 import { PaginationTable, Table } from '../../all';
+import { Drawer } from './Drawer';
 
 export function List(props){
   const { data, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     setColumns([
@@ -42,15 +44,17 @@ export function List(props){
   }, [size?.width]);
 
   const onRowClick = row => {
-    console.log(row);
+    // setSelected(row?.original);
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
+  const drawerProps = { selected, setSelected };
 
   return (
     <div>
+      <Drawer {...drawerProps} />
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />
