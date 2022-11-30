@@ -8,7 +8,7 @@ import { PaginationTable, Table } from '../../all';
 import { Drawer } from './Drawer';
 
 export function List(props){
-  const { data, size } = props;
+  const { data, size, loading, tab } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
@@ -42,6 +42,12 @@ export function List(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
+
+  useEffect(() => {
+    setSelected(null);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, tab]);
 
   const onRowClick = row => {
     setSelected(row?.original);

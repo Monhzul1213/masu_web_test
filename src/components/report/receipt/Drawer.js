@@ -78,6 +78,3 @@ export function Drawer(props){
     </AntDrawer>
   );
 }
-
-// totalNhatamount: 0
-// totalVatAmount: 0

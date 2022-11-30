@@ -66,7 +66,7 @@ function Screen(props){
   }
 
   let filterProps = { onSearch: getData, size, setError, filter, filter1 };
-  let cardProps = { data: filteredData, tab, setTab: onChangeTab, size, total };
+  let cardProps = { data: filteredData, tab, setTab: onChangeTab, size, total, loading };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
   return (
