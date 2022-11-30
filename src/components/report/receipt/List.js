@@ -36,7 +36,7 @@ export function List(props){
   }
 
   const maxHeight = '400px';
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 }},
+  const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 }},
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
 
