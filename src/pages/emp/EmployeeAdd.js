@@ -80,7 +80,7 @@ export function EmployeeAdd(){
       let emp = response && response?.data && response?.data[0];
       if(emp){
         setSelected(emp);
-        setShow(emp?.isOwner !== 'Y' && emp?.email !== user?.mail);
+        setShow(emp?.isOwner !== 'Y' && emp?.email?.toLowerCase() !== user?.mail?.toLowerCase());
         setName({ value: emp.empName ?? '' });
         setMail({ value: emp.email ?? '' });
         setPhone({ value: emp.phone ?? '' });
@@ -154,7 +154,7 @@ export function EmployeeAdd(){
       const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
       if(response?.error) onError(response?.error, true);
       else {
-        if(selected && selected?.email === user?.mail){
+        if(selected && selected?.email?.toLowerCase() === user?.mail?.toLowerCase()){
           let pass = password?.value ? password?.value : user?.password;
           const response1 = await dispatch(apiLogin(mail?.value, pass));
           if(response1?.error) onError(response1?.error, true);
