@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { SizeMe } from 'react-sizeme';
 import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getConstants, sendRequest, deleteRequest, setCategoryColors } from '../../../services';
-import { ButtonRow, DynamicAIIcon, Error, Input, ModalTitle, Overlay, Confirm } from '../../all';
+import { icons } from '../../../assets';
+import { sendRequest, deleteRequest } from '../../../services';
+import { ButtonRow, Error, Input, ModalTitle, Overlay, Confirm } from '../../all';
 
 export function Add(props){
   const { visible, closeModal, selected } = props;
   const { t } = useTranslation();
   const [name, setName] = useState({ value: '' });
-  const [color, setColor] = useState(null);
+  const [icon, setIcon] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const { user, token }  = useSelector(state => state.login);
-  const colors = useSelector(state => state.temp.categoryColors);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,15 +26,8 @@ export function Add(props){
   }, []);
 
   const getData = async () => {
-    if(!colors?.length){
-      setLoading(true);
-      const response = await dispatch(getConstants(user, token, 'msCategory_Color', setCategoryColors));
-      if(response?.error) setError(response?.error);
-      else setColor(selected?.color ?? (response?.data && response?.data[0] && response?.data[0].valueNum));
-      setLoading(false);
-    } else
-      setColor(selected?.color ?? colors[0].valueNum);
     setName({ value: selected?.categoryName ?? '' });
+    setIcon({ value: selected?.icon ?? 1 });
   }
 
   const onClickSave = async e => {
@@ -41,14 +35,13 @@ export function Add(props){
     setError(null);
     let nameLength = 2;
     let isNameValid = name?.value?.length >= nameLength;
-    if(isNameValid && color !== null){
+    if(isNameValid && icon){
       setLoading(true);
       let data = selected
-        ? { categoryId: selected?.categoryId, categoryName: name?.value, color }
-        : { merchantID: user?.merchantId, categoryName: name?.value, color };
+        ? { categoryId: selected?.categoryId, categoryName: name?.value, color: 0, icon }
+        : { merchantID: user?.merchantId, categoryName: name?.value, color: 0, icon };
       let api = selected ? 'Inventory/UpdateCategory' : 'Inventory/AddCategory';
       const response = await dispatch(sendRequest(user, token, api, data));
-      console.log(response);
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);
@@ -58,7 +51,7 @@ export function Add(props){
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       else if(!isNameValid) setName({ value: name.value, error: ' ' + nameLength + t('error.longer_than') })
-      if(color === null) setError(t('category.color') + '' + t('error.not_empty'))
+      if(!icon) setError(t('category.icon') + '' + t('error.not_empty'))
     }
   }
 
@@ -79,11 +72,13 @@ export function Add(props){
     }
   }
 
-  const renderItem = (item, index) => {
-    const selected = item?.valueNum === color;
+  const renderItem = (item, index, width) => {
+    const selected = (index + 1) === icon;
+    const height = (width - 50) / 5;
+    const style = { width: height, height: height, borderColor: selected ? 'var(--icon-color)' : 'transparent' };
     return (
-      <div key={index} className='color_btn' style={{backgroundColor: item?.constKey}} onClick={() => setColor(item?.valueNum)}>
-        {selected && <DynamicAIIcon className='color_icon' name='AiOutlineCheck' />}
+      <div key={index} className='color_btn' style={style} onClick={() => setIcon(index + 1)}>
+        <img src={item} className={selected ? 'color_btn_active' : 'color_btn_icon'} alt={'icon' + (index + 1)} />
       </div>
     )
   }
@@ -100,9 +95,11 @@ export function Add(props){
           <ModalTitle icon='MdOutlineCategory' title={t(selected ? 'category.edit' : 'category.add')} isMD={true} />
           <div className='m_scroll'>
             <Input {...nameProps} />
-            <div className='color_back'>
-              {colors?.map(renderItem)}
-            </div>
+            <SizeMe>{({ size }) => 
+              <div className='color_back'>
+                {icons?.map((item, index) => renderItem(item, index, size?.width))}
+              </div>
+            }</SizeMe>
             {error && <Error error={error} id='m_error' />}
           </div>
         </div>
