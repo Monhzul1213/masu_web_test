@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DynamicTBIcon } from '../../all';
 
 export function Card(props){
-  const { data, tab, setTab, size } = props;
+  const { tab, setTab, size, total } = props;
   const { t } = useTranslation();
 
   const id = size?.width >= 500 ? 'rp_card_large' : 'rp_card_small';
@@ -26,9 +26,9 @@ export function Card(props){
 
   return (
     <div className='rp_card' id={id}>
-      <Tab label='c_title1' value={data?.value1} index={1} color='#b0b0b0' icon='TbReceipt' />
-      <Tab label='c_title2' value={data?.value2} index={2} color='#4BAF4F' icon='TbReceipt2' />
-      <Tab label='c_title3' value={data?.value3} index={3} color='#e41051' icon='TbReceiptRefund' />
+      <Tab label='c_title1' value={total?.total} index={1} color='#b0b0b0' icon='TbReceipt' />
+      <Tab label='c_title2' value={total?.sales} index={2} color='#4BAF4F' icon='TbReceipt2' />
+      <Tab label='c_title3' value={total?.return} index={3} color='#e41051' icon='TbReceiptRefund' />
     </div>
   );
 }
