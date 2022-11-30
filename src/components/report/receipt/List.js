@@ -22,9 +22,10 @@ export function List(props){
         Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD HH:mm')}</div>)
       },
       { Header: t('time.t_site'), accessor: 'sale.siteName' },
-      { Header: t('time.t_emp'), accessor: 'sale.empName' },
-      { Header: t('report_receipt.t_user'), accessor: 'sale.custName' },
-      { Header: t('report_receipt.t_type'), accessor: 'sale.typeName' },
+      { Header: t('time.t_emp'), accessor: 'sale.cashierName' },
+      // { Header: t('time.t_emp'), accessor: 'sale.empName' },
+      // { Header: t('report_receipt.t_user'), accessor: 'sale.custName' },
+      { Header: t('report_receipt.t_type'), accessor: 'sale.salesTypeName' },
       {
         Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 'sale.totalSalesAmount', customStyle: { width: 100 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
