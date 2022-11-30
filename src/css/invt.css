@@ -1288,55 +1288,9 @@
   position: relative;
 }
 
-.rp_list_filter {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  margin-left: -5px;
-  padding-bottom: 6px;
-}
-
-.rp_list_select {
-  border: none;
-  box-shadow: none;
-  background-color: transparent;
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  color: var(--text-color);
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: var(--radius);
-  padding: 3px 5px;
-}
-
-.rp_list_select:hover {
-  cursor: pointer;
-  background-color: var(--back-color);
-}
-
 .drop_icon {
   color: var(--text2-color);
   margin-left: 10px;
-}
-
-.rp_list_filter_icon {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.rp_list_search_back {
-  position: absolute;
-  box-shadow: 0 2px 5px rgba(0,0,0,.15);
-  background-color: var(--root-color);
-  right: 0;
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  border-radius: var(--radius);
-  top: -4px
 }
 
 .mr_dropdown {

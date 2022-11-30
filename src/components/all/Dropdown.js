@@ -4,7 +4,7 @@ import { Dropdown as AntDrop, Menu } from 'antd';
 import { DynamicAIIcon } from './DynamicIcon';
 
 export function Dropdown(props){
-  const { label, className, data, d_value } = props;
+  const { label, className, data, d_value, disabled } = props;
 
   const menu = (
     <Menu>
@@ -15,8 +15,8 @@ export function Dropdown(props){
   );
 
   return (
-    <AntDrop overlay={menu}>
-      <button className={className}>
+    <AntDrop overlay={menu} disabled={disabled}>
+      <button className={className} disabled={disabled}>
         {label}
         <DynamicAIIcon name='AiFillCaretDown' className='drop_icon' />
       </button>
