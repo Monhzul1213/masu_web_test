@@ -24,18 +24,6 @@
   box-shadow: 0 1px 5px rgba(0,0,0,.4);
 }
 
-.h_icon_btn {
-  height: 36px;
-  width: 36px;
-  padding: 0;
-  background-color: rgba(0, 0, 0, 0);
-  border: none;
-  box-shadow: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .h_icon {
   color: var(--root-color);
   font-size: var(--icon-size);
@@ -280,6 +268,19 @@
     font-weight: 650;
     flex: 1;
   }
+
+  .h_icon_btn {
+    height: 36px;
+    width: 36px;
+    padding: 0;
+    margin-left: 7px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 @media only screen and (max-width: 740px) { /* mobile */
@@ -303,5 +304,17 @@
     font-weight: 550;
     flex: 1;
     line-height: 18px;
+  }
+
+  .h_icon_btn {
+    height: 36px;
+    width: 36px;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
