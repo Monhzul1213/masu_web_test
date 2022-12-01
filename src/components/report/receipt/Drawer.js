@@ -8,10 +8,10 @@ import { formatNumber } from '../../../helpers';
 import { DynamicAIIcon } from '../../all';
 
 export function Drawer(props){
-  const { selected, setSelected } = props;
+  const { selected, open, setOpen } = props;
   const { t } = useTranslation();
 
-  const onClose = () => setSelected(null);
+  const onClose = () => setOpen(null);
 
   const renderItem = (item, index) => {
     return (
@@ -27,7 +27,7 @@ export function Drawer(props){
     )
   }
 
-  const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open: selected ? true : false, mask: false };
+  const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
 
   return (
     <AntDrawer {...drawerProps}>

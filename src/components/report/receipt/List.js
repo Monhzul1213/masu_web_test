@@ -13,6 +13,7 @@ export function List(props){
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
   const [selected, setSelected] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setColumns([
@@ -44,6 +45,7 @@ export function List(props){
   }, [size?.width]);
 
   useEffect(() => {
+    setOpen(false);
     setSelected(null);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,12 +53,13 @@ export function List(props){
 
   const onRowClick = row => {
     setSelected(row?.original);
+    setOpen(true);
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
-  const drawerProps = { selected, setSelected };
+  const drawerProps = { selected, open, setOpen };
 
   return (
     <div>
