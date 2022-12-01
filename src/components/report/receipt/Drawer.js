@@ -39,7 +39,7 @@ export function Drawer(props){
         </div>
         <div className='dr_section'>
           <p className='dr_text'>{t('report_receipt.cashier')}: {selected?.sale?.cashierName}</p>
-          <p className='dr_text'>{t('report_receipt.pos')}: {selected?.sale?.terminalName}</p>
+          <p className='dr_text'>{t('report_receipt.pos')}: {selected?.sale?.terminalDescr}</p>
         </div>
         <div className='dr_section'>
           {selected?.saleitem?.map(renderItem)}
