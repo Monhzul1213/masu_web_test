@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Menu as AntMenu, Drawer } from 'antd';
 import { RiContactsLine, RiTeamLine } from 'react-icons/ri';
 import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
@@ -15,6 +15,7 @@ const { Sider } = Layout;
 export function Menu(props){
   const { collapsed, setCollapsed } = props;
   const { t } = useTranslation();
+  const [openKeys, setOpenKeys] = useState([]);
   const { pathname } = useLocation();
   const { user: { msRole } } = useSelector(state => state.login);
   const path = pathname?.split('/') && pathname?.split('/')[1];
@@ -74,11 +75,22 @@ export function Menu(props){
     if(hide) setCollapsed(true);
   }
 
+  const rootSubmenuKeys = ['/report', '/inventory', '/management', '/employee', '/customer', '/integration', '/config', '/help'];
+
+  const onOpenChange = (keys) => {
+    const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
+    if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      setOpenKeys(keys);
+    } else {
+      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
+    }
+  };
+
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style, breakpoint: 'lg', width: 300,
     onCollapse: setCollapsed };
   const drawerProps = { className: 'menu_drawer', placement: 'left', onClose: () => setCollapsed(true), closable: false, open: !collapsed };
   const profileProps = { collapsed, setCollapsed };
-  const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
+  const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline', openKeys, onOpenChange };
   const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
 
   return hideMenu ? null : (
