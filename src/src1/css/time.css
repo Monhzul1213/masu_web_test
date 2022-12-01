@@ -1,0 +1,26 @@
+@import './color.css';
+
+.rh_date_z .ant-picker-active-bar {
+    display: none;
+  }
+  
+.rh_date_z.ant-picker-range {
+    box-shadow: none;
+    border: none;
+    /* margin-left: 5px; */
+    background-color: var(--back-color);
+    border-radius: var(--radius);
+  }
+  
+  .rh_date_z .ant-picker-input>input {
+    color: var(--text-color);
+    font-size: 14px;
+  }
+  
+  .rh_date_z.ant-picker-range .ant-picker-separator svg {
+    fill: rgba(0,0,0,0) !important;
+  }
+  .th_header3 .rh_date_z {
+    width: 375px;
+    max-width: calc(100vw - var(--page-padding) * 4);
+  }

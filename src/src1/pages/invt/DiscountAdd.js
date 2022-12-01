@@ -95,6 +95,7 @@ export function DiscountAdd(){
     if(response?.error) setError(response?.error);
     else {
       let dis = response && response?.data && response?.data[0];
+      console.log(response?.data[0])
       setSelected(dis)
       setItem(response?.data);
       setName({ value: dis?.discountName ?? '' });

@@ -29,7 +29,8 @@
 .a_item_check1.ant-switch-checked {
   background-color: var(--config-c-color) !important;
 }
-#mo_ac_back {
+
+#mo_ac_back_dz{
   max-width: 600px;
 }
 #mo_ac_btn_z{

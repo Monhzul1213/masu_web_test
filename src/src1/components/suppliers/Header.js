@@ -7,10 +7,7 @@ export function Header(props){
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
 
-  // const handleEnter = value => {
-  //   onSearch( search, value);
-    
-  // }
+
   const handleEnter = value => {
     let api = (value ? ('?vendName=' + value) : '');
     onSearch(api);

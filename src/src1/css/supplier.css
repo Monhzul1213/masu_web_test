@@ -11,7 +11,7 @@
   --t-btn-height: 36px;
 }
 #mo_ac_back_z {
-  width: 500px;
+  max-width: 500px;
 }
 #btn_supp{
   max-width: 500px;
@@ -21,5 +21,12 @@
   border-radius: var(--radius);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding:0 var(--page-padding) var(--page-padding) var(--page-padding);
-  width: var(--invt-width);
+  max-width: var(--invt-width);
+}
+.ac_back_dz {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding:0 var(--page-padding) var(--page-padding) var(--page-padding);
+  max-width: var(--invt-width);
 }

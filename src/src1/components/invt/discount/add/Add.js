@@ -24,7 +24,7 @@ export function Add(props){
   const checkProps = { value: isCheck, setValue: setIsCheck, label: t('discount.title1'), label1: t('discount.title2'),  setEdited, setError };
 
   return (
-    <div className='ac_back' id='mo_ac_back'>
+    <div className='ac_back_dz' id='mo_ac_back_dz'>
         <Input {...nameProps} />
         <Radio {...unitProps}/>
        {(isEach.value === '0') ? <Percent {...percProps}/> :  <MoneyInput {...valueProps}/>} 

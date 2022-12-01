@@ -11,6 +11,7 @@ import {  validateEmail } from '../../helpers';
 
 export function SupplierAdd(){
     const [name, setName] = useState({ value: '' });
+    const [vendCode, setVendCode] = useState({ value: '' });
     const [address, setAddress] = useState({ value: '' });
     const [phone, setPhone] = useState({ value: '' });
     const [email, setEmail] = useState({ value: '' });
@@ -52,13 +53,13 @@ export function SupplierAdd(){
   const GetVend = async (vendId ) => {
     setError(null);
     setLoading(true);
-    let api = '?vendId=' + vendId
+    let api = '?vendId=' + vendId;
     let response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'+ api,   ));
     setLoading(false);
-    if(response?.error) setError(response?.error);
+    if(response?.error) setError(response?.error)
     else {
-    
       let vend = response && response?.data && response?.data[0];
+      // console.log(vend)
       setSelected(vend)
       setItem(response?.data);
       setAddress({ value: vend?.address1 ?? '' });
@@ -69,6 +70,7 @@ export function SupplierAdd(){
       setPhone({ value: vend?.phone ?? ''  });
       setWeb({ value: vend?.webSite ?? ''  });
       setName({ value: vend?.vendName ?? ''  });
+      setVendCode({ value: vend?.vendCode ?? ''  });
       response?.data?.forEach(item => item.rowStatus = 'U');
     
     }
@@ -107,6 +109,7 @@ export function SupplierAdd(){
       if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
       else if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(!vendCode?.value?.trim()) setVendCode({ value: '', error: t('error.not_empty') });
       if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
     }
@@ -128,13 +131,14 @@ export function SupplierAdd(){
         address2: address1?.value?.trim(),
         city: "",
         region: "",
-        vendCode: "",
+        vendCode: vendCode?.value?.trim(),
         postalCode: "",
         country: "",
         note: note?.value?.trim(),
         rowStatus: selected ? "U" : "I"
       }]
       const response = await dispatch(sendRequest(user, token, 'Merchant/vendor',  data));
+      console.log(response)
       if(response?.error) onError(response?.error);
       else onSuccess(t('supplier.add_success'));
     } 
@@ -149,7 +153,7 @@ export function SupplierAdd(){
     console.log(data)
   }
   const mainProps = { setError, name, setName, contact, setContact, phone, setPhone, email, setEmail,
-     setEdited, address, setAddress, address1, setAddress1, web, setWeb, note, setNote  };
+     setEdited, address, setAddress, address1, setAddress1, web, setWeb, note, setNote, setVendCode, vendCode };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
 
   return (

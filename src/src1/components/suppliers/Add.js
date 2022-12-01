@@ -4,7 +4,7 @@ import { Input } from '../all/all_m';
 
 
 export function Add(props){
-  const {setEdited, setError, name, setName, contact, setContact, phone, setPhone, email, setEmail,
+  const {setEdited, setError, name, setName, vendCode, setVendCode, contact, setContact, phone, setPhone, email, setEmail,
      address, setAddress, address1, setAddress1, web, setWeb, note, setNote} = props;
   const { t } = useTranslation();
 
@@ -20,6 +20,7 @@ export function Add(props){
   } 
   
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('supplier.name'), setError,length1:2, setEdited,};
+  const codeProps = { value: vendCode, setValue: setVendCode, label: t('supplier.vendCode'), placeholder: t('supplier.vendCode'), setError, setEdited,};
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('supplier.phone'), setError ,setEdited };
   const mailProps = { value: email, setValue: setEmail, label: t('page.email'), placeholder: t('supplier.email'), setError, length: 100,setEdited};
   const contProps = { value: contact, setValue: setContact, label: t('supplier.contact'), placeholder: t('supplier.contact'), setError, length: 100,setEdited};
@@ -32,6 +33,7 @@ export function Add(props){
     <div className='ac_back_z' id='mo_ac_back_z'>
       <form>
             <Input {...nameProps}  />
+            <Input {...codeProps}  />
             <Input {...contProps} />
             <Input {...mailProps} />
             <Input {...phoneProps} />

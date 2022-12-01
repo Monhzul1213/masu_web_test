@@ -32,7 +32,7 @@ export function Table(props){
               {row.cells.map(cell => {
                 let style = cell?.column?.customStyle ?? { };
                 return (
-                  <td className='table_cell_text' {...cell.getCellProps()} style={style}
+                  <td className='table_cell_text1' {...cell.getCellProps()} style={style}
                     onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
                     {cell.render('Cell')}
                   </td>

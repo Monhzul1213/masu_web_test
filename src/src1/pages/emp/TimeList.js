@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { getList, } from '../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { SizeMe } from 'react-sizeme';
-
+import '../../css/time.css'
 import { Header, List } from '../../components/emp/timelist';
 
 export function TimeList(){
