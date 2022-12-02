@@ -109,7 +109,8 @@ export function CustomSelect(props){
 }
 
 export function MultiSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, maxTag, onHide } = props;
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
+    dropdownStyle, dropdownAlign } = props;
   const { t } = useTranslation();
   
   const renderItem = (item, index) => {
@@ -136,6 +137,7 @@ export function MultiSelect(props){
 
   return (
     <div className={classBack}>
+      {Icon && <Icon />}
       {label && <p className='p_select_lbl'>{label}</p>}
       <AntSelect
         className={className}
@@ -146,13 +148,14 @@ export function MultiSelect(props){
         loading={loading}
         onFocus={onFocus}
         mode='multiple'
+        dropdownStyle={dropdownStyle}
+        dropdownAlign={dropdownAlign}
         menuItemSelectedIcon={<BsCheckLg />}
         onDropdownVisibleChange={onDropdownVisibleChange}
         dropdownRender={dropdownRender}
         maxTagCount={0}
         maxTagPlaceholder={maxTag}
-        placeholder={placeholder}
-        >
+        placeholder={placeholder}>
         {data?.map(renderItem)}
       </AntSelect>
     </div>

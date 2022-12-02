@@ -3,7 +3,7 @@ import moment from 'moment';
 import { DatePicker, Dropdown, Radio, Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { timeList } from '../../../helpers';
+import { timeList } from '../../../../helpers';
 import { DynamicAIIcon } from './DynamicIcon';
 const { RangePicker } = DatePicker;
 const { Option } = Select;

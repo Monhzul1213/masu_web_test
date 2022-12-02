@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
-import {  getList, sendRequest } from '../../services';
+import {  getList, sendRequest } from '../../../services';
 import '../../css/discount.css';
 import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
 import { Add , Site, CardEmpty} from '../../components/invt/discount';

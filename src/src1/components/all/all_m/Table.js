@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../../../css/table.css';
+import '../../../../css/table.css';
 import { Sort } from './Sort';
      
 export function Table(props){

@@ -109,7 +109,7 @@
   color: var(--text-color);
   font-size: 14px;
   height: 32px;
-  width: 330px;
+  max-width: 330px;
 }
 .c_input:focus, .m_input_descr:focus {
   outline: none;

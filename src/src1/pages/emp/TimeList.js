@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getList, } from '../../services';
+import { getList, } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { SizeMe } from 'react-sizeme';
 import '../../css/time.css'
@@ -44,8 +44,8 @@ export function TimeList(){
         }
         else {
           grpData[index].totalHours += element.totalHours 
-          grpData[index].siteCount += 1 
-          grpData[index].siteName = (grpData[index].siteId=== element.siteId) ? grpData[index].siteName  :grpData[index].siteCount + ' дэлгүүр' 
+          grpData[index].siteCount +=  (grpData[index].siteId=== element.siteId) ? 0 :  1 ;
+          grpData[index].siteName = grpData[index].siteCount=== 1 ? grpData[index].siteName :  grpData[index].siteCount + ' дэлгүүр' 
         
         }
       })

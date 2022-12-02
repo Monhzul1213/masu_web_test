@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import moment from 'moment';
 
-import { formatNumber } from '../../../helpers';
+import { formatNumber } from '../../../../helpers';
 import { PaginationTable, Table } from '../../all/all_m';
 // import { Drawer } from '../../../../components/report/receipt/Drawer';
 
@@ -12,7 +12,7 @@ export function List(props){
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
-  const [ setSelected] = useState(null);
+  // const [ setSelected] = useState(null);
 
   useEffect(() => {
     setColumns([
@@ -44,18 +44,18 @@ export function List(props){
   }, [size?.width]);
 
   useEffect(() => {
-    setSelected(null);
+    // setSelected(null);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, tab]);
 
-  const onRowClick = row => {
-    setSelected(row?.original);
-  }
+  // const onRowClick = row => {
+  //   setSelected(row?.original);
+  // }
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick };
+  const tableProps = { tableInstance,  };
   // const drawerProps = { selected, setSelected };
 
   return (
