@@ -41,7 +41,7 @@ export function Profile(props){
   }
   
   return (
-    <Dropdown overlay={menu}>
+    <Dropdown overlay={menu} trigger='click'>
       <button className='p_btn' onClick={e => e.preventDefault()}>
         <RiUserSettingsLine className='p_icon' />
         {!collapsed && <div className='p_side'>
