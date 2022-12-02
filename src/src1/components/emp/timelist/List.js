@@ -10,11 +10,12 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('time.t_emp'), accessor: 'empName' },
+      { Header: t('time.t_emp'), accessor: 'empName',
+    },
       { Header: t('time.t_site'), accessor: 'siteName' },
       {
         Header: <div style={{textAlign: 'right'}}>{t('time.t_total')}</div>, accessor: 'totalHours',
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value ? props.value : 0}</div>
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value ? props.value : 0}</div>,
       },
     ]);
     return () => {};

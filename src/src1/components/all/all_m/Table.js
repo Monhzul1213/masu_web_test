@@ -42,6 +42,24 @@ export function Table(props){
           );
         })}
       </tbody>
+      {/* <tfoot>
+        {
+          footerGroups.map(footerGroup => (
+            <tr {...footerGroup.getFooterGroupProps()}>
+                {
+                 
+                  footerGroup.headers.map( column =>(
+                    <td className='table_header_text' {...column.getFooterProps}>
+                      {
+                        column.render('Footer')
+                      }
+                    </td>
+                  ))
+                }
+            </tr>
+          ))
+        }
+      </tfoot> */}
     </table>
   );
 }

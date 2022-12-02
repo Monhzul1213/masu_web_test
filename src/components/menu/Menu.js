@@ -62,7 +62,7 @@ export function Menu(props){
       getItem(t('menu.emp_list'), '/employee/emp_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(t('menu.access_config'), '/employee/access_config', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(t('menu.shift_config'), '/employee/shift_config', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(t('menu.shift_list'), '/employee/shift_lis', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />),

@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
 import { getList } from '../../../services';
-import {  MultiSelect, PlainRange, Button } from '../../../components/all/all_m';
+import { Button, MultiSelect, PlainRange } from '../../../components/all/all_m';
 
 export function Header(props){
-  const {setError, onSearch, sites, emps, setSites, setEmps , size} = props;
+  const { setError, onSearch, sites, emps, setSites, setEmps, size } = props;
   const { t } = useTranslation();
   const [site, setSite] = useState([]);
   const [emp, setEmp] = useState([]);
@@ -61,10 +61,9 @@ export function Header(props){
   }
 
   const onHide = () => {
-    let query = '?BeginTime=' + date[0]?.startOf('day')?.format('yyyy-MM-DD HH:mm:ss')
-      + '&EndTime=' + date[1]?.endOf('day')?.format('yyyy-MM-DD HH:mm:ss');
+    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCodes=' + item);
-    // if(site?.length === sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
+    if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
     onSearch(query)
   }
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';

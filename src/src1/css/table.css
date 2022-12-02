@@ -38,7 +38,7 @@
   align-items: center;
 }
 
-.table_back th {
+.table_back th{
   border-bottom: solid 1px var(--text4-color);
 }
 
@@ -57,11 +57,7 @@
   background-color: var(--config-t-color);
 }
 
-.table_cell_text {
-  color: var(--text-color);
-  font-size: 15px;
-  padding: var(--page-padding) 0;
-}
+
 
 .table_back {
   border-collapse: separate;

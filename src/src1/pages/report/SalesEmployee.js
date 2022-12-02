@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
 
-// import { getList } from '../../services';
+import { getList } from '../../services';
 import {  Error1, Overlay } from '../../components/all/all_m';
-import {  Header, } from '../../../components/report/receipt';
-import {Filter} from '../../components/report/employee'
+import {Filter, Header, } from '../../components/report/employee'
 function Screen(props){
   const { size } = props;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-//   const [data, setData] = useState(null);
-//   const [filteredData, setFilteredData] = useState(null);
-//   const [tab, ] = useState(-1);
+  // const [data, setData] = useState(null);
+  // const [filteredData, setFilteredData] = useState(null);
+  // const [tab, setTab] = useState(-1)
   const [filter, setFilter] = useState('');
   const [filter1, setFilter1] = useState('');
-//   const [total, setTotal] = useState(null);
-  const { user,  }  = useSelector(state => state.login);
-//   const dispatch = useDispatch();
+  // const [total, setTotal] = useState(null);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,32 +34,33 @@ function Screen(props){
   const getData = async (query, query1) => {
     setError(null);
     setLoading(true);
-    // let api = 'Sales/GetSales' + (query ?? '') + (query1 ?? '');
-    // let headers = { merchantid: user?.merchantId };
-    // console.log(api);
-    // const response = await dispatch(getList(user, token, api, null, headers));
-    // console.log(response?.data);
-    // if(response?.error) setError(response?.error);
-    // else {
-    //   setTotal({
-    //     total: response?.data?.length,
-    //     sales: response?.data?.filter(item => item?.sale?.salesType === 0).length,
-    //     return: response?.data?.filter(item => item?.sale?.salesType === 1).length,
-    //   });
-    //   setData(response?.data);
-    //   tab === -1
-    //     ? setFilteredData(response?.data)
-    //     : setFilteredData(response?.data?.filter(item => item?.sale?.salesType === tab));
-    // }
+    let api = 'Sales/GetSales' + (query ?? '') + (query1 ?? '');
+    let headers = { merchantid: user?.merchantId };
+    console.log(api);
+    const response = await dispatch(getList(user, token, api, null, headers));
+    console.log(response?.data);
+    if(response?.error) setError(response?.error);
+    else {
+      // setTotal({
+      //   total: response?.data?.length,
+      //   sales: response?.data?.filter(item => item?.sale?.salesType === 0).length,
+      //   return: response?.data?.filter(item => item?.sale?.salesType === 1).length,
+      // });
+      // setData(response?.data);
+      // tab === -1
+      //   ? setFilteredData(response?.data)
+      //   : setFilteredData(response?.data?.filter(item => item?.sale?.salesType === tab));
+    }
     setLoading(false);
     setFilter(query);
     setFilter1(query1 ?? '');
   }
 
 
+
   let filterProps = { onSearch: getData, size, setError, filter, filter1 };
-//   let cardProps = {  size, loading };
-//   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
+  // let cardProps = { data: filteredData, size, total, loading };
+  // let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
   return (
     <div className='s_container_r'>

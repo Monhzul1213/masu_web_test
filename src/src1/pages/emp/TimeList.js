@@ -6,7 +6,7 @@ import { Empty1, Error1, Overlay } from '../../../components/all';
 import { SizeMe } from 'react-sizeme';
 import '../../css/time.css'
 import { Header, List } from '../../components/emp/timelist';
-
+import moment from 'moment';
 export function TimeList(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,7 +19,11 @@ export function TimeList(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
+    else {
+      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
+      getData(query);
+    }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -29,16 +33,31 @@ export function TimeList(){
     setLoading(true);
     let api = 'Employee/TimeCard/GetTimeCard' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
-    console.log(response)
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else {
+      let grpData =[];
+      response?.data.forEach((element)=>{
+        let index = grpData?.findIndex(item => item.empCode === element.empCode )
+        if(index === -1){
+          element.siteCount = 1;
+          grpData.push(element)
+        }
+        else {
+          grpData[index].totalHours += element.totalHours 
+          grpData[index].siteCount += 1 
+          grpData[index].siteName = (grpData[index].siteId=== element.siteId) ? grpData[index].siteName  :grpData[index].siteCount + ' дэлгүүр' 
+        
+        }
+      })
+      setData(grpData);
+    }
     setLoading(false);
     // setFilter(query);
   }
 
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
   const headerProps = {  setError, onSearch: getData, sites, setSites, emps, setEmps };
-  const listProps = { data, setData };
+  const listProps = { data, };
 
   return (
     <div className='s_container_i'>
