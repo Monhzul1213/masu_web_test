@@ -162,3 +162,88 @@
   border-radius: var(--radius);
   top: -4px
 }
+
+.rp_card {
+  max-width: 1260px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  margin: 1px 0 15px 1px;
+  overflow: scroll;
+}
+
+#rp_card_large .rp_card_btn {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 15px 5px;
+  flex: 1;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-width: 0 0 3px 0;
+  border-color: transparent;
+}
+
+#rp_card_small .rp_card_btn {
+  background-color: transparent;
+  box-shadow: none;
+  padding: 5px 5px;
+  flex: 1;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-width: 0 0 3px 0;
+  border-color: transparent;
+}
+
+#rp_card_large .rp_card_icon_back {
+  width: var(--rp-icon);
+  height: var(--rp-icon);
+  min-width: var(--rp-icon);
+  min-height: var(--rp-icon);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+#rp_card_small .rp_card_icon_back {
+  display: none;
+}
+
+.rp_card_icon {
+  color: var(--root-color);
+  font-size: 24px;
+}
+
+.rp_card_label {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0 0 2px 0;
+  text-align: left;
+  line-height: 16px;
+}
+
+#rp_card_large .rp_card_value {
+  color: var(--text-color);
+  font-size: 26px;
+  margin: 0;
+  text-align: left;
+  line-height: 32px;
+}
+
+#rp_card_small .rp_card_value {
+  color: var(--text-color);
+  font-size: 22px;
+  margin: 0;
+  text-align: left;
+  line-height: 28px;
+}

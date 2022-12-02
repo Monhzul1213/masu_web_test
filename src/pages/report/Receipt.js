@@ -43,10 +43,20 @@ function Screen(props){
     console.log(response?.data);
     if(response?.error) setError(response?.error);
     else {
+      let salesQty = 0, returnQty = 0, salesAmt = 0, returnAmt = 0;
+      response?.data?.forEach(item => {
+        if(item?.sale?.salesType === 0){
+          salesQty += 1;
+          salesAmt += (item?.sale?.totalSalesAmount ?? 0);
+        } else {
+          returnQty += 1;
+          returnAmt += (item?.sale?.totalSalesAmount ?? 0);
+        }
+      });
       setTotal({
-        total: response?.data?.length,
-        sales: response?.data?.filter(item => item?.sale?.salesType === 0).length,
-        return: response?.data?.filter(item => item?.sale?.salesType === 1).length,
+        totalQty: response?.data?.length,
+        totalAmt: salesAmt - returnAmt,
+        salesQty, returnQty, salesAmt, returnAmt
       });
       setData(response?.data);
       tab === -1
