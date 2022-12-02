@@ -15,12 +15,12 @@ export function Card(props){
     getItem(t('system_menu.additional'), 'additional'),
     getItem(t('system_menu.type'), 'type'),
     getItem(t('system_menu.cashier'), 'cashier'),
-    getItem(t('system_menu.promo'), 'promo'),
+    // getItem(t('system_menu.promo'), 'promo'),
     getItem(t('system_menu.tax'), 'tax'),
     getItem(t('system_menu.document'), 'document'),
-    getItem(t('system_menu.meal'), 'meal'),
-    getItem(t('system_menu.kitchen'), 'kitchen'),
-    getItem(t('system_menu.order'), 'order'),
+    // getItem(t('system_menu.meal'), 'meal'),
+    // getItem(t('system_menu.kitchen'), 'kitchen'),
+    // getItem(t('system_menu.order'), 'order'),
   ];
 
   const items1 = [
