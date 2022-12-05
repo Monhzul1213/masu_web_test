@@ -4,6 +4,7 @@ import * as AIIcons from 'react-icons/ai';
 import * as BSIcons from 'react-icons/bs';
 import * as TBIcons from 'react-icons/tb';
 import * as FAIcons from 'react-icons/fa';
+import * as RIIcons from 'react-icons/ri';
 
 export const DynamicMDIcon = props => {
   const IconComponent = Icons[props?.name];
@@ -35,6 +36,13 @@ export const DynamicTBIcon = props => {
 
 export const DynamicFAIcon = props => {
   const IconComponent = FAIcons[props?.name];
+
+  if(!IconComponent){ return <TBIcons.TbHome {...props} />; }
+  return <IconComponent {...props} />;
+};
+
+export const DynamicRIIcon = props => {
+  const IconComponent = RIIcons[props?.name];
 
   if(!IconComponent){ return <TBIcons.TbHome {...props} />; }
   return <IconComponent {...props} />;

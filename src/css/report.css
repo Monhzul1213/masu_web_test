@@ -22,6 +22,15 @@
   color: var(--header-color);
 }
 
+.dr_title {
+  color: var(--text-color);
+  font-size: 16px;
+  margin: 0;
+  font-weight: 450;
+  text-align: center;
+  padding: 25px 0 10px 0;
+}
+
 .dr_total {
   padding: 25px 0 15px 0;
   display: flex;
@@ -55,10 +64,6 @@
   font-size: 14px;
   margin: 0;
   line-height: 22px;
-}
-
-.dr_item:not(:last-child) {
-  margin-bottom: 15px;
 }
 
 .dr_item_top {
@@ -313,4 +318,126 @@
   font-size: 14px;
   font-weight: 600;
   margin: 0 0 0 0;
+}
+
+.dr_field {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.dr_field_icon {
+  color: var(--text2-color);
+  margin-right: 7px;
+  font-size: 18px;
+}
+
+.dr_field_label {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  line-height: 16px;
+  width: 80px;
+}
+
+.dr_field_label1 {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0 5px 0 0;
+  line-height: 16px;
+}
+
+.dr_field_value {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+  line-height: 16px;
+  flex: 1;
+}
+
+.dr_header {
+  display: flex;
+  flex-flow: row;
+  border-bottom: solid 1px var(--input1-color);
+  border-top: solid 1px var(--input1-color);
+  margin: 15px 0 5px 0;
+  padding: 5px 0;
+}
+
+.dr_header_text1 {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 550;
+  margin: 0;
+  width: 40%;
+}
+
+.dr_header_text2 {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 550;
+  margin: 0;
+  width: 10%;
+  text-align: right;
+}
+
+.dr_header_text3 {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 550;
+  margin: 0;
+  width: 22%;
+  text-align: right;
+}
+
+.dr_header_text4 {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 550;
+  margin: 0;
+  width: 28%;
+  text-align: right;
+}
+
+.dr_list {
+  border-bottom: solid 1px var(--input1-color);
+}
+
+.dr_item {
+  display: flex;
+  flex-flow: row;
+  padding-bottom: 5px;
+}
+
+.dr_item_text1 {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  width: 40%;
+}
+
+.dr_item_text2 {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  width: 10%;
+  text-align: right;
+}
+
+.dr_item_text3 {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  width: 22%;
+  text-align: right;
+}
+
+.dr_item_text4 {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
+  width: 28%;
+  text-align: right;
 }
