@@ -1,7 +1,6 @@
 import React from 'react';
 import { Drawer as AntDrawer } from 'antd';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment';
 
 import '../../../css/report.css';
 import { formatNumber } from '../../../helpers';
