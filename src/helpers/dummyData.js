@@ -105,4 +105,11 @@ export const addrList = [
   { label: 'Говьсүмбэр аймаг', value: 'Говьсүмбэр аймаг' },
   { label: 'Дархан-Уул аймаг', value: 'Дархан-Уул аймаг' },
   { label: 'Орхон аймаг', value: 'Орхон аймаг ' },
+];
+
+export const limitList = [
+  { value: 0, label: 'Нас харгалзахгүй' },
+  { value: 16, label: '16 дээш ' },
+  { value: 18, label: '18 дээш ' },
+  { value: 21, label: '21 дээш ' },
 ]

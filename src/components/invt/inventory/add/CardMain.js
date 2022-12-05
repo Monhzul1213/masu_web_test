@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
+import { limitList } from '../../../../helpers';
 
 import { getList } from '../../../../services';
 import { DescrInput, Input, MoneyInput, Radio, Select, UploadImage } from '../../../all';
 
 function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, size } = props;
+    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [loading, setLoading] = useState(false);
@@ -51,6 +52,7 @@ function Card(props){
   const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setEdited, setError,
     inRow: true, length: 30 };
   const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image' };
+  const limitProps = { value: buyAgeLimit, setValue: setBuyAgeLimit, label: t('inventory.limit'), setError, setEdited, data: limitList, inRow: true };
   
   return (
     <div className='ia_back' id={id}>
@@ -73,6 +75,11 @@ function Card(props){
         <Input {...skuProps} />
         <div className='im_gap' />
         <Input {...barcodeProps} />
+      </div>
+      <div id={idRow}>
+        <Select {...limitProps} />
+        <div className='im_gap' />
+        <div style={{flex: 1}} />
       </div>
     </div>
   );

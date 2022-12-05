@@ -23,6 +23,7 @@ export function InventoryAdd(){
   const [image, setImage] = useState(null);
   const [image64, setImage64] = useState('');
   const [imageType, setImageType] = useState('');
+  const [buyAgeLimit, setBuyAgeLimit] = useState({ value: 0 });
   const [isKit, setIsKit] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
@@ -95,6 +96,7 @@ export function InventoryAdd(){
       setInvt(invt);
       setName({ value: invt?.msInventory?.name ?? '' });
       setCategory({ value: invt?.msInventory?.categoryId ?? -1 });
+      setBuyAgeLimit({ value: invt?.msInventory?.buyAgeLimit ?? 0 })
       setIsEach({ value: invt?.msInventory?.isEach ?? 'Y' });
       setDescr({ value: invt?.msInventory?.descr ?? '' });
       setPrice({ value: invt?.msInventory?.price ?? 0 });
@@ -212,7 +214,7 @@ export function InventoryAdd(){
           invsales.push({ siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0), status: 0, rowStatus: 'D' });
       });
       let data = {
-        name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value,
+        name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value, buyAgeLimit: buyAgeLimit?.value,
         price: parseFloat(price?.value ? price?.value : 0),
         cost: parseFloat(cost?.value ? cost?.value : 0),
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
@@ -271,7 +273,7 @@ export function InventoryAdd(){
   }
 
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, image64 };
+    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,
