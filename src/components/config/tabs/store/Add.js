@@ -4,7 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteRequest, sendRequest } from '../../../../services';
-import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm } from '../../../all';
+import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select } from '../../../all';
+import { addrList } from '../../../../helpers';
 
 export function Add(props){
   const { visible, selected, closeModal } = props;
@@ -12,7 +13,7 @@ export function Add(props){
   const [name, setName] = useState({ value: '' });
   const [address, setAddress] = useState({ value: '' });
   const [phone, setPhone] = useState({ value: '' });
-  const [descr, setDescr] = useState({ value: '' });
+  const [descr, setDescr] = useState({ value: null });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
@@ -24,7 +25,7 @@ export function Add(props){
       setName({ value: selected?.name ?? '' });
       setAddress({ value: selected?.address ?? '' });
       setPhone({ value: selected?.phone ?? '' });
-      setDescr({ value: selected?.descr ?? '' });
+      setDescr({ value: selected?.descr ? selected?.descr : null });
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,13 +36,14 @@ export function Add(props){
     let isNameValid = name?.value && name?.value?.length >= nameLength;
     let isAddressValid = !address?.value || address?.value?.length >= addressLength;
     let isPhoneValid = !phone?.value || phone?.value?.length >= phoneLength;
-    if(isNameValid && isAddressValid && isPhoneValid){
+    if(isNameValid && isAddressValid && isPhoneValid && descr?.value){
       return true;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       else if(!isNameValid) setName({ value: name?.value, error: ' ' + nameLength + t('error.longer_than') });
       if(!isAddressValid) setAddress({ value: address?.value, error: ' ' + addressLength + t('error.longer_than') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
+      if(!descr?.value) setDescr({ value: null, error: t('error.not_empty') });
       return false;
     }
   }
@@ -51,7 +53,7 @@ export function Add(props){
     setError(null);
     if(checkValid()){
       setLoading(true);
-      let data = { name: name?.value, address: address?.value, phone: phone?.value, descr: descr?.value?.trim() };
+      let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value };
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
@@ -84,9 +86,11 @@ export function Add(props){
   }
 
   const nameProps = { value: name, setValue: setName, label: t('shop.name'), placeholder: t('shop.name1'), setError, length: 40 };
+  const descrProps = { value: descr, setValue: setDescr, label: t('shop.location'), placeholder: t('shop.location1'), setError,
+    data: addrList };
   const addrProps = { value: address, setValue: setAddress, label: t('shop.addr'), placeholder: t('shop.addr1'), setError, length: 250 };
-  const phoneProps = { value: phone, setValue: setPhone, label: t('shop.phone'), placeholder: t('shop.phone1'), setError, length: 20 };
-  const descrProps = { value: descr, setValue: setDescr, label: t('shop.descr'), placeholder: t('shop.descr1'), setError, handleEnter: onClickSave, length: 128 };
+  const phoneProps = { value: phone, setValue: setPhone, label: t('shop.phone'), placeholder: t('shop.phone1'), setError, length: 20,
+    handleEnter: onClickSave };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
 
@@ -99,9 +103,9 @@ export function Add(props){
           <div className='m_scroll'>
             <form onSubmit={onClickSave}>
               <Input {...nameProps} />
+              <Select {...descrProps} />
               <Input {...addrProps} />
               <Input {...phoneProps} />
-              <Input {...descrProps} />
             </form>
             {error && <Error error={error} id='m_error' />}
           </div>

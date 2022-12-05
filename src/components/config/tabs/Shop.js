@@ -22,7 +22,10 @@ export function Shop(props){
   useEffect(() => {
     setColumns([
       { Header: t('shop.t_name'), accessor: 'name' },
-      { Header: t('shop.t_addr'), accessor: 'address' },
+      {
+        Header: t('shop.t_addr'), accessor: 'address',
+        Cell: props => <div>{props?.row?.original?.descr} {props.value}</div>
+      },
       {
         Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'posQty',
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}</div>
