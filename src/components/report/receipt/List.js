@@ -36,10 +36,11 @@ export function List(props){
   }, [i18n?.language]);
 
   useEffect(() => {
-    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 86px - 38px - 39px)');
-    else if(size?.width < 920 && size?.width >= 520)
-      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 86px - 38px - 39px)');
-    else setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 60px - 38px - 39px)');
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 117px - 38px - 39px)');
+    else if(size?.width < 920 && size?.width >= 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 117px - 38px - 39px)');
+    else if(size?.width < 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)');
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
