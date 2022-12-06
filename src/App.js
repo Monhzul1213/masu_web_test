@@ -8,7 +8,7 @@ import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Config } from './pages';
 import { Category, Inventory, InventoryAdd, Modifier, ModifierAdd } from './pages/invt';
 import { Employee, EmployeeAdd, Role, RoleAdd, Time } from './pages/emp';
-import { Receipt } from './pages/report';
+import { Receipt, Review } from './pages/report';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { setIsLoggedIn } from './services';
 
@@ -88,6 +88,7 @@ export function App(){
                 <Route path='/management/suppliers' element={<Suppliers />} />
                 <Route path='/management/suppliers/supp_add' element={<SupplierAdd/>} />
                 <Route path='/report/report_document' element={<Receipt />} />
+                <Route path='/report/report_sales' element={<Review />} />
               </Routes>
             </Layout>
           </Layout>

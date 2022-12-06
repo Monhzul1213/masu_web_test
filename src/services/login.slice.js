@@ -66,7 +66,7 @@ export const apiLogin = (mail, password) => async dispatch => {
     } else {
       dispatch(setToken(response?.token));
       dispatch(setUser({ mail, password, merchantId: response?.merchantId, msRole: response?.msRole }));
-      return Promise.resolve({ error: null, token: response?.token });
+      return Promise.resolve({ error: null, token: response?.token, viewReport: response?.msRole?.webViewSalesReport === 'Y' });
     }
   } catch (err) {
     console.log(err);
