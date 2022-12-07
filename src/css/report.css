@@ -219,6 +219,10 @@
   flex-flow: column;
 }
 
+.rp_card_btn:hover {
+  cursor: pointer;
+}
+
 #rp_card_large .rp_card_header {
   display: flex;
   flex-flow: row;
@@ -440,4 +444,55 @@
   margin: 0;
   width: 28%;
   text-align: right;
+}
+
+.rr_graph_cont {
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  max-width: 1260px;
+  border-radius: var(--radius);
+}
+
+.rr_card_back {
+  display: flex;
+  flex-flow: row;
+  overflow: scroll;
+  border-bottom: solid 1px var(--input1-color);
+}
+
+.rr_card {
+  flex: 1;
+  padding: 15px 5px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  border-style: solid;
+  border-width: 0 0 3px 0;
+  border-color: transparent;
+  min-width: 130px;
+  background-color: transparent;
+}
+
+.rr_card:hover {
+  cursor: pointer;
+}
+
+.rr_card_label {
+  color: var(--text-color);
+  font-size: 13px;
+  margin: 0 0 2px 0;
+  line-height: 15px;
+}
+
+.rr_card_value {
+  color: var(--text-color);
+  font-size: 28px;
+  margin: 0 0 2px 0;
+  line-height: 32px;
+}
+
+.rr_card_value1 {
+  font-size: 13px;
+  margin: 0;
+  line-height: 15px;
 }

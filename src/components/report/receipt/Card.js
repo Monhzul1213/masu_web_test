@@ -14,7 +14,7 @@ export function Card(props){
 
   const Tab = props => {
     const { label, value, value1, icon, index, color } = props;
-    const btnStyle = index === tab ?  { borderColor: '#4BAF4F', maxWidth, width: maxWidth } : { maxWidth, width: maxWidth };
+    const btnStyle = index === tab ?  { borderColor: 'var(--config-color)', maxWidth, width: maxWidth } : { maxWidth, width: maxWidth };
 
     return (
       <button className='rp_card_btn' style={btnStyle} onClick={() => setTab(index)}>

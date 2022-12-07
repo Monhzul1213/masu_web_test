@@ -6,11 +6,13 @@ import { withSize } from 'react-sizeme';
 import '../../css/invt.css';
 import { Error1, Overlay } from '../../components/all';
 import { Filter } from '../../components/report/receipt';
+import { Graph } from '../../components/report/review';
 
 function Screen(props){
   const { size } = props;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [tab, setTab] = useState(0);
   const { user, token }  = useSelector(state => state.login);
   const navigate = useNavigate();
 
@@ -29,12 +31,14 @@ function Screen(props){
   }
   
   let filterProps = { onSearch: getData, size, setError };
+  let graphProps = { tab, setTab };
 
   return (
     <div className='s_container_r'>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
+        <Graph {...graphProps} />
         {/* <Card {...cardProps} />
         <div className='rp_list'>
           <Header {...filterProps} />
