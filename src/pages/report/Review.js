@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
 
@@ -12,12 +13,16 @@ import { getList } from '../../services';
 
 function Screen(props){
   const { size } = props;
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState('c_sales');
   const [period, setPeriod] = useState('D');
   const [filter, setFilter] = useState('');
   const [total, setTotal] = useState(null);
+  const [data, setData] = useState(null);
+  const [graphData, setGraphData] = useState({});
+  const [periodData, setPeriodData] = useState(t('report_review.periods'));
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,18 +30,38 @@ function Screen(props){
   useEffect(() => {
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
     else {
-      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
-      getData(query);
+      let dates = [moment()?.startOf('month'), moment()];
+      let query = '?BeginDate=' + dates[0]?.format('yyyy.MM.DD') + '&EndDate=' + dates[1]?.format('yyyy.MM.DD');
+      getData(query, null, dates);
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async query => {
-    console.log(query);
+  const setPeriods = dates => {
+    let diff = dates[1]?.diff(dates[0], 'days');
+    let newPeriod = period;
+    if(diff === 0){
+      setPeriodData(old => old?.map(item => { return {...item, disabled: item.value !== 'H'} }));
+      newPeriod = 'H';
+    } else {
+      if(period === 'H') newPeriod = 'D';
+      if(dates[1].isSame(dates[0], 'month')){
+        if(period === 'M') newPeriod = 'D';
+        setPeriodData(old => old?.map(item => { return {...item, disabled: item.value === 'H' || item.value === 'M' } }));
+      } else {
+        setPeriodData(old => old?.map(item => { return {...item, disabled: item.value === 'H'} }));
+      }
+    }
+    setPeriod(newPeriod)
+    return newPeriod;
+  }
+
+  const getData = async (query, q2, dates) => {
+    let period1 = setPeriods(dates);
     setError(null);
     setLoading(true);
-    let api = 'Sales/GetSalesSummary' + (query ?? '') + '&SearchPeriod=' + period;
+    let api = 'Sales/GetSalesSummary' + (query ?? '') + '&SearchPeriod=' + period1;
     console.log(api);
     const response = await dispatch(getList(user, token, api));
     console.log(response?.data);
@@ -51,7 +76,7 @@ function Screen(props){
         profit += item?.totalProfitAmt;
       });
       setTotal({ sales, refund, discount, net, profit });
-      // setData(response?.data);
+      setData(response?.data);
       // tab === -1
       //   ? setFilteredData(response?.data)
       //   : setFilteredData(response?.data?.filter(item => item?.sale?.salesType === tab));
@@ -59,9 +84,13 @@ function Screen(props){
     setLoading(false);
     setFilter(query);
   }
+
+  const changeTab = value => {
+    setTab(value);
+  }
   
   let filterProps = { onSearch: getData, size, setError };
-  let graphProps = { tab, setTab, total };
+  let graphProps = { tab, changeTab, total, graphData, size, periodData, period, setPeriod };
 
   return (
     <div className='s_container_r'>

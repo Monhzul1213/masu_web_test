@@ -55,7 +55,7 @@ export function PlainSelect(props){
   const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, classLabel, bStyle } = props;
   
   const renderItem = (item, index) => {
-    return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+    return (<Option disabled={item?.disabled} key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
   }
 
   return (

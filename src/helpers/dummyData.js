@@ -113,3 +113,8 @@ export const limitList = [
   { value: 18, label: '18 дээш ' },
   { value: 21, label: '21 дээш ' },
 ]
+
+export const graphList = [
+  { value: true, label: 'Bar' },
+  { value: false, label: 'Area' },
+];

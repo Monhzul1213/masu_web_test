@@ -16,6 +16,10 @@ code {
     monospace;
 }
 
+p {
+  color: var(--text-color);
+}
+
 ::-webkit-scrollbar {
   width: 0;
   background: transparent;

@@ -510,6 +510,12 @@
     "c_refund": "Буцаалт",
     "c_discount": "Хөнгөлөлт",
     "c_net": "Цэвэр борлуулалт",
-    "c_profit": "Ашиг"
+    "c_profit": "Ашиг",
+    "periods": [
+      { "value": "H", "label": "Цагаар" },
+      { "value": "D", "label": "Өдрөөр" },
+      { "value": "W", "label": "7 хоногоор" },
+      { "value": "M", "label": "Сараар" }
+    ]
   }
 }
