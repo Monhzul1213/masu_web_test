@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import '../../../css/report.css';
 import { formatNumber, graphList } from '../../../helpers';
-import { AreaChart, BarChart, PlainSelect } from '../../all';
+import { AreaChart, BarChart, PlainSelect, Empty1 } from '../../all';
 
 export function Graph(props){
   const { tab, setTab, total, size, periodData, period, setPeriod, data } = props;
@@ -34,7 +34,8 @@ export function Graph(props){
   let typeProps = { value: isBar, setValue: setIsBar, data: graphList, className: 'rr_graph_select', bStyle: { } };
   let periodProps = { value: period, setValue: setPeriod, data: periodData, className: 'rr_graph_select', bStyle: { marginLeft: 15 } };
   let width = size?.width >= 1290 ? 1260 : (size?.width - 30);
-  let chartProps = { style: { width, height: 360 }, data, dataKey: period === 'W' ? 'weekInterval' : 'salesDate',
+  let style = { width, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' };
+  let chartProps = { style, data, dataKey: period === 'W' ? 'weekInterval' : 'salesDate',
     bars: [{color: '#4BAF4F', key: tab}], hasLegend: false,
     tickFormatter: tick => { return '₮' + formatNumber(tick) }, xFormatter,
     legendFormatter: () => t('report_review.' + tab),
@@ -57,7 +58,9 @@ export function Graph(props){
             <PlainSelect {...periodProps} />
           </div>
         </div>
-        {isBar ? <BarChart {...chartProps} /> : <AreaChart {...chartProps} />}
+        {!data?.length
+          ? <div style={style}><Empty1 icon='MdBarChart' /></div>
+          : isBar ? <BarChart {...chartProps} /> : <AreaChart {...chartProps} />}
       </div>
     </div>
   )
