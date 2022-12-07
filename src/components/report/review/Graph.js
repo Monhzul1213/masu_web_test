@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 import '../../../css/report.css';
 import { formatNumber, graphList } from '../../../helpers';
@@ -22,12 +23,20 @@ export function Graph(props){
     )
   }
 
+  const xFormatter = value => {
+    if(period === 'H') return value + ':00';
+    else if(period === 'D') return moment(value)?.format('yyyy.MM.DD');
+    else if(period === 'W') return value;
+    else if(period === 'M') return value + t('page.month');
+  }
+
   let id = size?.width >= 400 ? 'rr_large' : 'rr_small';
   let typeProps = { value: isBar, setValue: setIsBar, data: graphList, className: 'rr_graph_select', bStyle: { } };
   let periodProps = { value: period, setValue: setPeriod, data: periodData, className: 'rr_graph_select', bStyle: { marginLeft: 15 } };
   let width = size?.width >= 1290 ? 1260 : (size?.width - 30);
-  let chartProps = { style: { width, height: 360 }, data, dataKey: 'label', bars: [{color: '#4BAF4F', key: tab}], hasLegend: false,
-    tickFormatter: tick => { return '₮' + formatNumber(tick) },
+  let chartProps = { style: { width, height: 360 }, data, dataKey: period === 'W' ? 'weekInterval' : 'salesDate',
+    bars: [{color: '#4BAF4F', key: tab}], hasLegend: false,
+    tickFormatter: tick => { return '₮' + formatNumber(tick) }, xFormatter,
     legendFormatter: () => t('report_review.' + tab),
     tipFormatter: (value, name, props) => ['₮' + formatNumber(value), t('report_review.' + tab)] };
 

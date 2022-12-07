@@ -2,7 +2,7 @@ import React from 'react';
 import { BarChart as ReBarChart, AreaChart as ReAreaChart, Bar, Area, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 export function BarChart(props){
-  const { style, className, data, dataKey, tickFormatter, bars, tipFormatter, legendFormatter, hasLegend } = props;
+  const { style, className, data, dataKey, tickFormatter, bars, tipFormatter, legendFormatter, hasLegend, xFormatter } = props;
 
   return (
     <div style={style} className={className}>
@@ -11,11 +11,11 @@ export function BarChart(props){
           width={500}
           height={360}
           data={data}
-          margin={{ top: 5, right: 5, left: 28, bottom: 5}}>
+          margin={{ top: 5, right: 15, left: 28, bottom: 5}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={dataKey} />
+          <XAxis dataKey={dataKey} tickFormatter={xFormatter} />
           <YAxis tickFormatter={tickFormatter} />
-          <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} />
+          <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} labelFormatter={xFormatter} />
           {hasLegend && <Legend formatter={legendFormatter} />}
           {bars?.map(item => {
             return (<Bar maxBarSize={32} dataKey={item?.key} fill={item?.color} />);
@@ -27,7 +27,7 @@ export function BarChart(props){
 }
 
 export function AreaChart(props){
-  const { style, className, data, dataKey, tickFormatter, bars, tipFormatter, legendFormatter, hasLegend } = props;
+  const { style, className, data, dataKey, tickFormatter, bars, tipFormatter, legendFormatter, hasLegend, xFormatter } = props;
   
   return (
     <div style={style} className={className}>
@@ -36,11 +36,11 @@ export function AreaChart(props){
           width={500}
           height={360}
           data={data}
-          margin={{ top: 5, right: 5, left: 28, bottom: 5}}>
+          margin={{ top: 5, right: 15, left: 28, bottom: 5}}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey={dataKey} />
+          <XAxis dataKey={dataKey} tickFormatter={xFormatter} />
           <YAxis tickFormatter={tickFormatter} />
-          <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} />
+          <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} labelFormatter={xFormatter} />
           {hasLegend && <Legend formatter={legendFormatter} />}
           {bars?.map(item => {
             return (<Area dataKey={item?.key} fill={item?.color} stroke={item?.color} />);
