@@ -456,20 +456,20 @@
 .rr_card_back {
   display: flex;
   flex-flow: row;
-  overflow: scroll;
   border-bottom: solid 1px var(--input1-color);
+  overflow: scroll;
 }
 
 .rr_card {
-  flex: 1;
   padding: 15px 5px;
+  flex: 1;
   display: flex;
   flex-flow: column;
   align-items: center;
   border-style: solid;
   border-width: 0 0 3px 0;
   border-color: transparent;
-  min-width: 130px;
+  min-width: 150px;
   background-color: transparent;
 }
 
@@ -482,17 +482,21 @@
   font-size: 13px;
   margin: 0 0 2px 0;
   line-height: 15px;
+  font-weight: 450;
 }
 
 .rr_card_value {
   color: var(--text-color);
-  font-size: 28px;
+  font-size: 24px;
   margin: 0 0 2px 0;
-  line-height: 32px;
+  line-height: 28px;
+  word-break: break-all;
+  text-align: center;
 }
 
 .rr_card_value1 {
   font-size: 13px;
   margin: 0;
   line-height: 15px;
+  font-weight: 500;
 }
