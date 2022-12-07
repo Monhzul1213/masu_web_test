@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import '../../../css/report.css';
 import { formatNumber, graphList } from '../../../helpers';
-import { BarChart, PlainSelect } from '../../all';
+import { AreaChart, BarChart, PlainSelect } from '../../all';
 
 export function Graph(props){
   const { tab, setTab, total, size, periodData, period, setPeriod, data } = props;
@@ -48,7 +48,7 @@ export function Graph(props){
             <PlainSelect {...periodProps} />
           </div>
         </div>
-        {isBar ? <BarChart {...chartProps} /> : null}
+        {isBar ? <BarChart {...chartProps} /> : <AreaChart {...chartProps} />}
       </div>
     </div>
   )
