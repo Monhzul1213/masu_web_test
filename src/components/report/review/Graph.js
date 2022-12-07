@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import '../../../css/report.css';
 import { formatNumber, graphList } from '../../../helpers';
-import { PlainSelect } from '../../all';
+import { BarChart, PlainSelect } from '../../all';
 
 export function Graph(props){
-  const { tab, changeTab, total, size, periodData, period, setPeriod, graphData } = props;
+  const { tab, setTab, total, size, periodData, period, setPeriod, data } = props;
   const { t } = useTranslation();
   const [isBar, setIsBar] = useState(true);
 
@@ -15,7 +15,7 @@ export function Graph(props){
     const style = label === tab ?  { borderColor: 'var(--config-color)' } : { };
 
     return (
-      <div className='rr_card' style={style} onClick={() => changeTab(label)}>
+      <div className='rr_card' style={style} onClick={() => setTab(label)}>
         <p className='rr_card_label'>{t('report_review.' + label)}</p>
         <div className='rr_card_value'>₮{formatNumber(value)}</div>
       </div>
@@ -25,15 +25,20 @@ export function Graph(props){
   let id = size?.width >= 400 ? 'rr_large' : 'rr_small';
   let typeProps = { value: isBar, setValue: setIsBar, data: graphList, className: 'rr_graph_select', bStyle: { } };
   let periodProps = { value: period, setValue: setPeriod, data: periodData, className: 'rr_graph_select', bStyle: { marginLeft: 15 } };
+  let width = size?.width >= 1290 ? 1260 : (size?.width - 30);
+  let chartProps = { style: { width, height: 360 }, data, dataKey: 'label', bars: [{color: '#4BAF4F', key: tab}], hasLegend: false,
+    tickFormatter: tick => { return '₮' + formatNumber(tick) },
+    legendFormatter: () => t('report_review.' + tab),
+    tipFormatter: (value, name, props) => ['₮' + formatNumber(value), t('report_review.' + tab)] };
 
   return (
     <div className='rr_graph_cont' id={id}>
       <div className='rr_card_back'>
-        <Card label='c_sales' isPos={true} value={total?.sales} />
-        <Card label='c_refund' isPos={false} value={total?.refund} />
-        <Card label='c_discount' isPos={false} value={total?.discount} />
-        <Card label='c_net' isPos={true} value={total?.net} />
-        <Card label='c_profit' isPos={true} value={total?.profit} />
+        <Card label='totalSalesAmt' isPos={true} value={total?.sales} />
+        <Card label='totalReturnAmt' isPos={false} value={total?.refund} />
+        <Card label='totalDiscAmt' isPos={false} value={total?.discount} />
+        <Card label='totalNetSalesAmt' isPos={true} value={total?.net} />
+        <Card label='totalProfitAmt' isPos={true} value={total?.profit} />
       </div>
       <div className='rr_graph_back'>
         <div className='rr_graph_header'>
@@ -43,6 +48,7 @@ export function Graph(props){
             <PlainSelect {...periodProps} />
           </div>
         </div>
+        {isBar ? <BarChart {...chartProps} /> : null}
       </div>
     </div>
   )

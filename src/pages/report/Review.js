@@ -16,12 +16,11 @@ function Screen(props){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [tab, setTab] = useState('c_sales');
+  const [tab, setTab] = useState('totalSalesAmt');
   const [period, setPeriod] = useState('D');
   const [filter, setFilter] = useState('');
   const [total, setTotal] = useState(null);
   const [data, setData] = useState(null);
-  const [graphData, setGraphData] = useState({});
   const [periodData, setPeriodData] = useState(t('report_review.periods'));
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -57,8 +56,8 @@ function Screen(props){
     return newPeriod;
   }
 
-  const getData = async (query, q2, dates) => {
-    let period1 = setPeriods(dates);
+  const getData = async (query, q2, dates, period2) => {
+    let period1 = dates ? setPeriods(dates) : period2;
     setError(null);
     setLoading(true);
     let api = 'Sales/GetSalesSummary' + (query ?? '') + '&SearchPeriod=' + period1;
@@ -74,23 +73,25 @@ function Screen(props){
         discount += item?.totalDiscAmt;
         net += item?.totalNetSalesAmt;
         profit += item?.totalProfitAmt;
+        if(period1 === 'H') item.label = item.salesDate + ':00';
+        else if(period1 === 'D') item.label = moment(item?.salesDate)?.format('yyyy.MM.DD');
+        else if(period1 === 'W') item.label = item.weekInterval;
+        else if(period1 === 'M') item.label = item.salesDate + t('page.month');
       });
       setTotal({ sales, refund, discount, net, profit });
       setData(response?.data);
-      // tab === -1
-      //   ? setFilteredData(response?.data)
-      //   : setFilteredData(response?.data?.filter(item => item?.sale?.salesType === tab));
     }
     setLoading(false);
     setFilter(query);
   }
 
-  const changeTab = value => {
-    setTab(value);
+  const changePeriod = value => {
+    setPeriod(value);
+    getData(filter, null, null, value);
   }
-  
+
   let filterProps = { onSearch: getData, size, setError };
-  let graphProps = { tab, changeTab, total, graphData, size, periodData, period, setPeriod };
+  let graphProps = { tab, setTab, total, data, size, periodData, period, setPeriod: changePeriod };
 
   return (
     <div className='s_container_r'>

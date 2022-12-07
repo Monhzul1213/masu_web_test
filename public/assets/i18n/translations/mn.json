@@ -127,7 +127,8 @@
     "no_filter": "Сонгосон шүүлтүүрт тохирох мэдээлэл байхгүй байна",
     "search": "Хайх",
     "import": "ИМПОРТ",
-    "export": "ЭКСПОРТ"
+    "export": "ЭКСПОРТ",
+    "month": " сар"
   },
   "profile": {
     "account": "Хэрэглэгч",
@@ -506,11 +507,11 @@
     "amt": "Нийт"
   },
   "report_review": {
-    "c_sales": "Борлуулалт",
-    "c_refund": "Буцаалт",
-    "c_discount": "Хөнгөлөлт",
-    "c_net": "Цэвэр борлуулалт",
-    "c_profit": "Ашиг",
+    "totalSalesAmt": "Борлуулалт",
+    "totalReturnAmt": "Буцаалт",
+    "totalDiscAmt": "Хөнгөлөлт",
+    "totalNetSalesAmt": "Цэвэр борлуулалт",
+    "totalProfitAmt": "Ашиг",
     "periods": [
       { "value": "H", "label": "Цагаар" },
       { "value": "D", "label": "Өдрөөр" },

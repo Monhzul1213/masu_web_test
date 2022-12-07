@@ -570,15 +570,11 @@
   width: 120px;
 }
 
-/**
-.r_select
-
-.r_select .ant-select-selector {
+.rr_graph_select .ant-select-selector {
   box-shadow: none !important;
 }
 
-.r_select .ant-select-arrow {
+.rr_graph_select .ant-select-arrow {
   color: var(--text4-color);
   font-size: 16px;
 }
-*/
