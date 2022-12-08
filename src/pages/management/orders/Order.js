@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SizeMe } from 'react-sizeme';
+import { useNavigate } from 'react-router-dom';
 
 import '../../../css/order.css';
 import { Overlay, Error1, Empty } from '../../../components/all';
@@ -9,10 +10,9 @@ export function Order(){
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [filtering, setFiltering] = useState(false);
+  const navigate = useNavigate();
 
-  const onClickAdd = row => {
-
-  }
+  const onClickAdd = () => navigate('order_add');
   
   const emptyProps = { icon: 'MdOutlineArticle', type: 'order', noDescr: true, onClickAdd };
   
