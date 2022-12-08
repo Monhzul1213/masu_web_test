@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { PaginationTable, Table } from '../../../all';
+import { PaginationTable, Table, DynamicBSIcon } from '../../../all';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
 import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
+import { formatNumber } from '../../../../helpers';
 
 function Card(props){
   const { valid, setValid, items, setItems, size } = props;
@@ -19,16 +20,22 @@ function Card(props){
         Header: t('inventory.title'), accessor: 'name',
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
-      // { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', isQty: true,
-      //   customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
-      // {
-      //   Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
-      //   Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>₮{formatNumber(value)}</div>,
-      // },
-      // { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
-      //   Cell: ({ row, onClickDelete }) =>
-      //     (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      // },
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', isText: true,
+        customStyle: { width: 100, paddingRight: 18 }, width: 80 },
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'transitQty', isText: true,
+        customStyle: { width: 100, paddingRight: 18 }, width: 80 },
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true,
+        customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', isMoney: true,
+        customStyle: { width: 120, paddingRight: 18 }, width: 100 },//, autoFocus: true
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', isText: true, customStyle: { width: 100 },
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>₮{formatNumber(value)}</div>,
+      },
+      { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
+        Cell: ({ row, onClickDelete }) =>
+          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,63 +95,3 @@ function Card(props){
 
 const withSizeHOC = withSize();
 export const Items = withSizeHOC(Card);
-
-/**
- * import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { getList } from '../../../../services';
-import { formatNumber } from '../../../../helpers';
-import { PaginationTable, Table, CustomSelect, DynamicBSIcon } from '../../../all';
-import { SwitchLabel } from './SwitchLabel';
-import { SelectItem } from './SelectItem';
-import { EditableCell } from './EditableCell';
-
-export function Card(props){
-  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch, total, setTotal, setDKits,
-    size } = props;
-  const [items, setItems] = useState([]);
-  const { user, token }  = useSelector(state => state.login);
-  const dispatch = useDispatch();
-
- 
-
-  
-
-  
-
-  
-  
-
-  
-  
-
-  const onChangeKit = value => {
-    setIsKit(value);
-    setCost({ value: value ? total : 0 });
-    setSearch({ value: null });
-  }
-
-
-  const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack') };
-  const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
-  
-  
-
-  return (
-    <div className='ia_back'>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
-          <Table {...tableProps} />
-        </div>
-        <CustomSelect {...selectProps} />
-        <div className={classPage}>
-          <PaginationTable {...tableProps} />
-          <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total)}</p>
-        </div>
-    </div>
-  );
-}
-
-const withSizeHOC = withSize();
-export const CardInvt = withSizeHOC(Card);
- */
