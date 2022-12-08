@@ -63,12 +63,14 @@ function Screen(props){
     let newData = [];
     if(period === 'D'){
       let diff = date[1]?.diff(date[0], 'days');
-      for (let index = 0; index <= diff; index++) {
-        let salesDate = moment(date[0]).add(index, 'days')?.format('yyyy-MM-DDT00:00:00');
-        let exists = data?.findIndex(res => salesDate === res?.salesDate);
-        if(exists !== -1) newData.push(data[exists]);
-        else newData.push({ salesDate, totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
-      }
+      if(diff <= 60){
+        for (let index = 0; index <= diff; index++) {
+          let salesDate = moment(date[0]).add(index, 'days')?.format('yyyy-MM-DDT00:00:00');
+          let exists = data?.findIndex(res => salesDate === res?.salesDate);
+          if(exists !== -1) newData.push(data[exists]);
+          else newData.push({ salesDate, totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
+        }
+      } else newData = data;
     } else if(period === 'H'){
       for (let index = 0; index <= 23; index++) {
         let exists = data?.findIndex(res => index === res?.salesDate);
