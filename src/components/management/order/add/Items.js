@@ -84,7 +84,7 @@ function Card(props){
   const selectProps = { search, setSearch, data: items, setData: setItems, newItem };
 
   return (
-    <div className='ia_back'>
+    <div className='po_back'>
       <p className='ac_title'>{t('inventory.title')}</p>
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />

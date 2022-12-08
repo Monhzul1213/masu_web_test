@@ -53,7 +53,7 @@ function Card(props){
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100 };
 
   return (
-    <div className='ia_back' id={id}>
+    <div className='po_back' id={id}>
       <div id={idRow} style={{marginTop: 0}}>
         <Select {...vendProps} />
         <div className='im_gap' />
