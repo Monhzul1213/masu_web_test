@@ -71,6 +71,10 @@ function Screen(props){
         discount += item?.totalDiscAmt ?? 0;
         net += item?.totalNetSalesAmt ?? 0;
         profit += item?.totalProfitAmt ?? 0;
+        if(period1 === 'H') item.label = item.salesDate + ':00';
+        else if(period1 === 'D') item.label = moment(item.salesDate)?.format('yyyy.MM.DD');
+        else if(period1 === 'W') item.label = item.weekInterval;
+        else if(period1 === 'M') item.label = item.salesDate + t('page.month');
       });
       setTotal({ sales, refund, discount, net, profit });
       setData(response?.data);

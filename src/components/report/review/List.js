@@ -1,44 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useSortBy } from 'react-table';
-import moment from 'moment';
 
 import '../../../css/report.css';
 import { formatNumber } from '../../../helpers';
 import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon } from '../../all';
 
 export function List(props){
-  const { data, size } = props;
+  const { data } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [columns1, setColumns1] = useState([]);
 
   useEffect(() => {
-    setColumns([
-      { Header: t('report_receipt.t_no'), accessor: 'sale.salesNo' },
-      {
-        Header: t('page.date'), accessor: 'sale.createdDate',
-        Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD HH:mm')}</div>)
-      },
-      { Header: t('time.t_site'), accessor: 'sale.siteName' },
-      { Header: t('time.t_emp'), accessor: 'sale.cashierName' },
-      { Header: t('report_receipt.t_user'), accessor: 'sale.custName' },
-      { Header: t('report_receipt.t_type'), accessor: 'sale.salesTypeName' },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 'sale.totalSalesAmount', customStyle: { width: 100 },
-        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
-      },
-    ]);
+    changeColumns(['totalSalesAmt', 'totalReturnAmt', 'totalDiscAmt', 'totalNetSalesAmt', 'costOfGoods', 'totalProfitAmt']);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
+  const changeColumns = value => {
+    let columns = [{ Header: t('page.date'), accessor: 'label' }];
+    setColumns1(value);
+    t('report_review.columns')?.forEach(item => {
+      let exists = value?.findIndex(val => val === item?.value) !== -1;
+      if(exists){
+        columns.push({
+          Header: <div style={{textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
+          Cell: props => (
+            <div style={{textAlign: 'right', paddingRight: 15}}>
+              {item?.value === 'margin' ? (+(props?.value)?.toFixed(2) + '%') : ('₮' + formatNumber(props?.value))}
+            </div>)
+        });
+      }
+    });
+    setColumns(columns);
+  }
+
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)';
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesNo', desc: true }] }}, useSortBy, usePagination);
+    initialState: { pageIndex: 0, pageSize: 25 }}, useSortBy, usePagination);
   const tableProps = { tableInstance };
   const exportProps = { className: 'rp_list_select', text: t('page.export'), disabled: true };
-  const columnProps = { value: columns1, setValue: setColumns1, data: t('report_review.columns'), className: 'rp_list_drop',
+  const columnProps = { value: columns1, setValue: changeColumns, data: t('report_review.columns'), className: 'rp_list_drop',
     Icon: () => <DynamicMDIcon name='MdOutlineViewColumn' className='rp_list_drop_icon' />,
     dropdownStyle: { minWidth: 200 }, dropdownAlign: { offset: [-165, 5] } };
 
