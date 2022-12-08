@@ -9,10 +9,11 @@ import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { formatNumber } from '../../../../helpers';
 
 function Card(props){
-  const { valid, setValid, items, setItems, size } = props;
+  const { valid, setValid, items, setItems, dItems, setDItems, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [search, setSearch] = useState({ value: null });
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setColumns([
@@ -61,12 +62,11 @@ function Card(props){
   }
 
   const onClickDelete = row => {
-    // if(row?.original?.kitId || row?.original?.kitId === 0) setDKits(old => [...old, row?.original]);
-    // let newTotal = total - (row?.original?.cost ?? 0);
-    // setTotal(newTotal);
-    // setCost({ value: newTotal });
-    // setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
-    // setSearch({ value: null });
+    if(row?.original?.orderItemId || row?.original?.orderItemId === 0) setDItems(old => [...old, row?.original]);
+    let newTotal = total - (row?.original?.totalCost ?? 0);
+    setTotal(newTotal);
+    setItems(items?.filter(item => item?.invtId !== row?.original?.invtId));
+    setSearch({ value: null });
   }
   
   const newItem = invt => {
