@@ -5,7 +5,7 @@ import moment from 'moment';
 import '../../../css/invt.css';
 import '../../../css/order.css';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../../components/all';
-import { Main } from '../../../components/management/order/add';
+import { Main, Items } from '../../../components/management/order/add';
 
 export function OrderAdd(){
   const [loading, setLoading] = useState(false);
@@ -26,6 +26,7 @@ export function OrderAdd(){
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading };
+  let itemsProps = { };
   let btnProps = { onClickCancel, onClickSave, type: 'submit', show: false };
 
   return (
@@ -35,6 +36,8 @@ export function OrderAdd(){
       <div className='i_scroll'>
         <form>
           <Main {...mainProps} />
+          <div className='gap' />
+          <Items {...itemsProps} />
         </form>
       </div>
       {/* <ButtonRowConfirm {...btnProps} /> */}
@@ -45,8 +48,6 @@ export function OrderAdd(){
 /**
  * 
  * 
- *    <CardMain {...mainProps} />
-          <div className='gap' />
           <CardInvt {...invtProps} />
           <div className='gap' />
           {!isKit && <CardVariant {...variantProps} />}
