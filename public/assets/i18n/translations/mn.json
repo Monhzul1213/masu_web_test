@@ -517,6 +517,16 @@
       { "value": "D", "label": "Өдрөөр" },
       { "value": "W", "label": "7 хоногоор" },
       { "value": "M", "label": "Сараар" }
+    ],
+    "columns": [
+      { "label": "Борлуулалт", "value": "totalSalesAmt" },
+      { "label": "Буцаалт", "value": "totalReturnAmt" },
+      { "label": "Хөнгөлөлт", "value": "totalDiscAmt" },
+      { "label": "Цэвэр борлуулалт", "value": "totalNetSalesAmt" },
+      { "label": "Барааны өртөг", "value": "costOfGoods" },
+      { "label": "Нийт ашиг", "value": "totalProfitAmt" },
+      { "label": "Ашиг", "value": "margin" },
+      { "label": "Татвар", "value": "taxes" }
     ]
   }
 }

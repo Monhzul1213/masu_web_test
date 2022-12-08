@@ -451,6 +451,7 @@
   background-color: var(--root-color);
   max-width: 1260px;
   border-radius: var(--radius);
+  margin-bottom: var(--page-padding);
 }
 
 .rr_card_back {
@@ -577,4 +578,31 @@
 .rr_graph_select .ant-select-arrow {
   color: var(--text4-color);
   font-size: 16px;
+}
+
+.rp_list_drop.ant-select .ant-select-selector {
+  box-shadow: none;
+  border: none;
+  font-size: 14px;
+  background-color: transparent;
+  border-radius: var(--radius);
+}
+
+.rp_list_drop .ant-select-selection-overflow {
+  display: none;
+}
+
+.rp_list_drop .ant-select-arrow {
+  right: 0;
+}
+
+.rp_list_drop_icon {
+  color: var(--text2-color);
+  font-size: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.rp_list_drop:hover .rp_list_drop_icon {
+  color: var(--config-color);
 }

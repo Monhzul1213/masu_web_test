@@ -6,10 +6,10 @@ import { withSize } from 'react-sizeme';
 import moment from 'moment';
 
 import '../../css/invt.css';
-import { Error1, Overlay } from '../../components/all';
-import { Filter } from '../../components/report/receipt';
-import { Graph } from '../../components/report/review';
 import { getList } from '../../services';
+import { Empty1, Error1, Overlay } from '../../components/all';
+import { Filter } from '../../components/report/receipt';
+import { Graph, List } from '../../components/report/review';
 
 function Screen(props){
   const { size } = props;
@@ -86,6 +86,8 @@ function Screen(props){
 
   let filterProps = { onSearch: getData, size, setError };
   let graphProps = { tab, setTab, total, data, size, periodData, period, setPeriod: changePeriod };
+  let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
+  let listProps = { data, size };
 
   return (
     <div className='s_container_r'>
@@ -93,11 +95,9 @@ function Screen(props){
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
         <Graph {...graphProps} />
-        {/* <Card {...cardProps} />
         <div className='rp_list'>
-          <Header {...filterProps} />
-          {filteredData?.length ? <List {...cardProps} /> : <Empty1 {...emptyProps} />}
-        </div> */}
+          {data?.length ? <List {...listProps} /> : <Empty1 {...emptyProps} />}
+        </div>
       </Overlay>
     </div>
   )
