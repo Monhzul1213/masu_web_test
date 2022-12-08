@@ -111,7 +111,7 @@ function Screen(props){
       });
       setTotal({ sales, refund, discount, net, profit });
       setData(response?.data);
-      setGraphData(formatData(response?.data, period1, dates ?? date));
+      setGraphData(response?.data?.length ? formatData(response?.data, period1, dates ?? date) : []);
     }
     setLoading(false);
     setFilter(query);
