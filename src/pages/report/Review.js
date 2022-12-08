@@ -76,6 +76,15 @@ function Screen(props){
         else newData.push({ salesDate: index > 10 ? index : ('0' + index),
           totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
       }
+    } else if(period === 'W'){
+      let start = moment(date[0]).startOf('isoWeek');
+      while(start.isBefore(date[1])){
+        let weekInterval = start.format('yyyy.MM.DD') + ' - ' + moment(start).endOf('isoWeek').format('yyyy.MM.DD');
+        let exists = data?.findIndex(res => weekInterval === res?.weekInterval);
+        if(exists !== -1) newData.push(data[exists]);
+        else newData.push({ weekInterval, totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
+        start.add(7, 'days');
+      }
     } else newData = data;
     return newData;
   }

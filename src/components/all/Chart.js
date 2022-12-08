@@ -18,7 +18,7 @@ export function BarChart(props){
           <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} labelFormatter={xFormatter} />
           {hasLegend && <Legend formatter={legendFormatter} />}
           {bars?.map(item => {
-            return (<Bar maxBarSize={20} dataKey={item?.key} fill={item?.color} />);
+            return (<Bar key={item?.key} maxBarSize={20} dataKey={item?.key} fill={item?.color} />);
           })}
         </ReBarChart>
       </ResponsiveContainer>
