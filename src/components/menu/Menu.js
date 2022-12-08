@@ -56,7 +56,8 @@ export function Menu(props){
       getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
     getItem(t('menu.management'), '/management', <TbBuildingWarehouse />,[
-      getItem(t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(t('menu.order_list'), '/management/order_list', null, null, null, msRole?.webManageItem !== 'Y'),
     ]),
     getItem(t('menu.employee'), '/employee', <RiContactsLine />, [
       getItem(t('menu.emp_list'), '/employee/emp_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
