@@ -69,6 +69,10 @@ export function Card(props){
     setSearch({ value: null });
   }
 
+  const newItem = invt => {
+    return { invtId: invt.invtId, name: invt.name, qty: 0, cost: 0, unitCost: invt.cost };
+  }
+
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
 
   const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack') };
@@ -78,7 +82,7 @@ export function Card(props){
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData, onClickDelete },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  const selectProps = { search, setSearch, data, setData };
+  const selectProps = { search, setSearch, data, setData, newItem };
 
   return (
     <div className='ia_back'>

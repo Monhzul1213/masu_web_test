@@ -19,7 +19,7 @@ export function SelectItem(props){
 }
 
 export function ItemSelect(props){
-  const { search, setSearch, data, setData } = props;
+  const { search, setSearch, data, setData, newItem } = props;
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,7 +30,7 @@ export function ItemSelect(props){
     let invt = items[value?.value]?.msInventory;
     let exists = data?.findIndex(d => d.invtId === invt?.invtId);
     if(exists === -1){
-      let item = { invtId: invt.invtId, name: invt.name, qty: 0, cost: 0, unitCost: invt.cost };
+      let item = newItem(invt);
       setData(old => [...old, item]);
       setSearch({ value: null });
     } else {

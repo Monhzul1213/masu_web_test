@@ -21,9 +21,9 @@ function Card(props){
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', isText: true,
-        customStyle: { width: 100, paddingRight: 18 }, width: 80 },
+        customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'transitQty', isText: true,
-        customStyle: { width: 100, paddingRight: 18 }, width: 80 },
+        customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', isMoney: true,
@@ -68,6 +68,11 @@ function Card(props){
     // setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
     // setSearch({ value: null });
   }
+  
+  const newItem = invt => {
+    //invtCode
+    return { invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0 };
+  }
 
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
@@ -76,7 +81,7 @@ function Card(props){
   const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     updateMyData, onClickDelete }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  const selectProps = { search, setSearch, data: items, setData: setItems };
+  const selectProps = { search, setSearch, data: items, setData: setItems, newItem };
 
   return (
     <div className='ia_back'>
