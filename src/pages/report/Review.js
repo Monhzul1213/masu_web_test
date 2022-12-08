@@ -21,6 +21,8 @@ function Screen(props){
   const [filter, setFilter] = useState('');
   const [total, setTotal] = useState(null);
   const [data, setData] = useState(null);
+  const [date, setDate] = useState([]);
+  const [graphData, setGraphData] = useState(null);
   const [periodData, setPeriodData] = useState(t('report_review.periods'));
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -52,8 +54,30 @@ function Screen(props){
         setPeriodData(old => old?.map(item => { return {...item, disabled: item.value === 'H'} }));
       }
     }
-    setPeriod(newPeriod)
+    setPeriod(newPeriod);
+    setDate(dates);
     return newPeriod;
+  }
+   
+  const formatData = (data, period, date) => {
+    let newData = [];
+    if(period === 'D'){
+      let diff = date[1]?.diff(date[0], 'days');
+      for (let index = 0; index <= diff; index++) {
+        let salesDate = moment(date[0]).add(index, 'days')?.format('yyyy-MM-DDT00:00:00');
+        let exists = data?.findIndex(res => salesDate === res?.salesDate);
+        if(exists !== -1) newData.push(data[exists]);
+        else newData.push({ salesDate, totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
+      }
+    } else if(period === 'H'){
+      for (let index = 0; index <= 23; index++) {
+        let exists = data?.findIndex(res => index === res?.salesDate);
+        if(exists !== -1) newData.push(data[exists]);
+        else newData.push({ salesDate: index > 10 ? index : ('0' + index),
+          totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
+      }
+    } else newData = data;
+    return newData;
   }
 
   const getData = async (query, q2, dates, period2) => {
@@ -78,6 +102,7 @@ function Screen(props){
       });
       setTotal({ sales, refund, discount, net, profit });
       setData(response?.data);
+      setGraphData(formatData(response?.data, period1, dates ?? date));
     }
     setLoading(false);
     setFilter(query);
@@ -89,7 +114,7 @@ function Screen(props){
   }
 
   let filterProps = { onSearch: getData, size, setError };
-  let graphProps = { tab, setTab, total, data, size, periodData, period, setPeriod: changePeriod };
+  let graphProps = { tab, setTab, total, data: graphData, size, periodData, period, setPeriod: changePeriod };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
   let listProps = { data, size };
 

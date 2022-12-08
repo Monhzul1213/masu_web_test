@@ -43,7 +43,7 @@ export function AreaChart(props){
           <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} labelFormatter={xFormatter} />
           {hasLegend && <Legend formatter={legendFormatter} />}
           {bars?.map(item => {
-            return (<Area dataKey={item?.key} fill={item?.fill} stroke={item?.color} dot={{ fill: item?.color, strokeWidth: 1 }} />);
+            return (<Area key={item?.key} dataKey={item?.key} fill={item?.fill} stroke={item?.color} dot={{ fill: item?.color, strokeWidth: 1 }} />);
           })}
         </ReAreaChart>
       </ResponsiveContainer>
