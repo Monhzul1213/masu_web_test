@@ -1,9 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+
+import { CustomSelect, Table } from '../../../all';
+import { EditableCell } from '../../../invt/inventory/add/EditableCell';
 
 export function Items(props){
+  const { data } = props;
+  const { t, i18n } = useTranslation();
+  const [columns, setColumns] = useState([]);
+
+  const updateMyData = (rowIndex, columnId, value, e) => {
+    // e?.preventDefault();
+    // let total = 0;
+    // setData(old => old.map((row, index) => {
+    //   if(index === rowIndex){
+    //     let cost = old[rowIndex]?.unitCost * parseFloat(value ? value : 0);
+    //     total += cost;
+    //     return { ...old[rowIndex], [columnId]: value, cost };
+    //   } else {
+    //     total += row.cost;
+    //     return row;
+    //   }
+    // }));
+    // setTotal(total);
+    // setCost({ value: total });
+    // setEdited && setEdited(true);
+    // setSearch({ value: null });
+  }
+
+  const onClickDelete = row => {
+    // if(row?.original?.kitId || row?.original?.kitId === 0) setDKits(old => [...old, row?.original]);
+    // let newTotal = total - (row?.original?.cost ?? 0);
+    // setTotal(newTotal);
+    // setCost({ value: newTotal });
+    // setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
+    // setSearch({ value: null });
+  }
+  
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
+  const defaultColumn = { Cell: EditableCell };
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+    updateMyData, onClickDelete }, useSortBy, usePagination, useRowSelect);
+  const tableProps = { tableInstance };
+  // const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
+  //   className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption};
+
   return (
-    <div>
-      Items
+    <div className='ia_back'>
+      <p className='ac_title'>{t('inventory.title')}</p>
+      <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+        <Table {...tableProps} />
+      </div>
+      {/* <CustomSelect {...selectProps} /> */}
+        {/* 
+        <div className={classPage}>
+          <PaginationTable {...tableProps} />
+          <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total)}</p>
+        </div> */}
     </div>
   );
 }
@@ -11,9 +65,7 @@ export function Items(props){
 /**
  * import React, { useState, useEffect } from 'react';
 import { Select } from 'antd';
-import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
 import { getList } from '../../../../services';
@@ -27,8 +79,6 @@ const { Option } = Select;
 export function Card(props){
   const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch, total, setTotal, setDKits,
     size } = props;
-  const { t, i18n } = useTranslation();
-  const [columns, setColumns] = useState([]);
   const [items, setItems] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -54,14 +104,7 @@ export function Card(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
-  const onClickDelete = row => {
-    if(row?.original?.kitId || row?.original?.kitId === 0) setDKits(old => [...old, row?.original]);
-    let newTotal = total - (row?.original?.cost ?? 0);
-    setTotal(newTotal);
-    setCost({ value: newTotal });
-    setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
-    setSearch({ value: null });
-  }
+  
 
   const onFocus = async () => {
     if(!items?.length){
@@ -93,25 +136,7 @@ export function Card(props){
     );
   }
 
-  const updateMyData = (rowIndex, columnId, value, e) => {
-    e?.preventDefault();
-    let total = 0;
-    setData(old => old.map((row, index) => {
-      if(index === rowIndex){
-        let cost = old[rowIndex]?.unitCost * parseFloat(value ? value : 0);
-        total += cost;
-        return { ...old[rowIndex], [columnId]: value, cost };
-      } else {
-        total += row.cost;
-        return row;
-      }
-    }));
-    setTotal(total);
-    setCost({ value: total });
-    setEdited && setEdited(true);
-    setSearch({ value: null });
-  }
-
+  
   const filterOption = (input, option) => {
     return option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option?.sku?.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
@@ -126,20 +151,11 @@ export function Card(props){
 
   const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack') };
   const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const defaultColumn = { Cell: EditableCell };
-  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData, onClickDelete },
-    useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
-  const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
-    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption};
+  
+  
 
   return (
     <div className='ia_back'>
-      <p className='ac_title'>{t('inventory.title')}</p>
-      <SwitchLabel {...isPackProps} />
-      {!isKit && false && <SwitchLabel {...isTrackProps} />}
-      {!isKit ? null : <>
         <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
           <Table {...tableProps} />
         </div>
@@ -148,7 +164,6 @@ export function Card(props){
           <PaginationTable {...tableProps} />
           <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total)}</p>
         </div>
-      </>}
     </div>
   );
 }

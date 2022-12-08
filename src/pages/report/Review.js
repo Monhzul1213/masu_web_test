@@ -61,16 +61,14 @@ function Screen(props){
    
   const formatData = (data, period, date) => {
     let newData = [];
-    if(period === 'D'){
-      let diff = date[1]?.diff(date[0], 'days');
-      if(diff <= 60){
-        for (let index = 0; index <= diff; index++) {
-          let salesDate = moment(date[0]).add(index, 'days')?.format('yyyy-MM-DDT00:00:00');
-          let exists = data?.findIndex(res => salesDate === res?.salesDate);
-          if(exists !== -1) newData.push(data[exists]);
-          else newData.push({ salesDate, totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
-        }
-      } else newData = data;
+    let diff = date[1]?.diff(date[0], 'days');
+    if(period === 'D' && diff <= 60){
+      for (let index = 0; index <= diff; index++) {
+        let salesDate = moment(date[0]).add(index, 'days')?.format('yyyy-MM-DDT00:00:00');
+        let exists = data?.findIndex(res => salesDate === res?.salesDate);
+        if(exists !== -1) newData.push(data[exists]);
+        else newData.push({ salesDate, totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
+      }
     } else if(period === 'H'){
       for (let index = 0; index <= 23; index++) {
         let exists = data?.findIndex(res => index === res?.salesDate);
@@ -78,7 +76,7 @@ function Screen(props){
         else newData.push({ salesDate: index > 10 ? index : ('0' + index),
           totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
       }
-    } else if(period === 'W'){
+    } else if(period === 'W' && diff <= 366){
       let start = moment(date[0]).startOf('isoWeek');
       while(start.isBefore(date[1])){
         let weekInterval = start.format('yyyy.MM.DD') + ' - ' + moment(start).endOf('isoWeek').format('yyyy.MM.DD');

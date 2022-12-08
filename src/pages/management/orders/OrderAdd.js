@@ -26,7 +26,7 @@ export function OrderAdd(){
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading };
-  let itemsProps = { };
+  let itemsProps = { data: [] };
   let btnProps = { onClickCancel, onClickSave, type: 'submit', show: false };
 
   return (
