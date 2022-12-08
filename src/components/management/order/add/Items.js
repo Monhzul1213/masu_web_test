@@ -1,14 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { withSize } from 'react-sizeme';
 
-import { CustomSelect, Table } from '../../../all';
+import { PaginationTable, Table } from '../../../all';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
+import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 
-export function Items(props){
-  const { data } = props;
+function Card(props){
+  const { valid, setValid, items, setItems, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [search, setSearch] = useState({ value: null });
+
+  useEffect(() => {
+    setColumns([
+      {
+        Header: t('inventory.title'), accessor: 'name',
+        Cell: ({ row }) => (<SelectItem item={row?.original} />)
+      },
+      // { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', isQty: true,
+      //   customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
+      // {
+      //   Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
+      //   Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>₮{formatNumber(value)}</div>,
+      // },
+      // { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
+      //   Cell: ({ row, onClickDelete }) =>
+      //     (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+      // },
+    ]);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n?.language]);
 
   const updateMyData = (rowIndex, columnId, value, e) => {
     // e?.preventDefault();
@@ -37,14 +61,15 @@ export function Items(props){
     // setData(data?.filter(item => item?.invtId !== row?.original?.invtId));
     // setSearch({ value: null });
   }
-  
+
+  const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
+
   const defaultColumn = { Cell: EditableCell };
-  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+  const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     updateMyData, onClickDelete }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  // const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
-  //   className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption};
+  const selectProps = { search, setSearch, data: items, setData: setItems };
 
   return (
     <div className='ia_back'>
@@ -52,21 +77,21 @@ export function Items(props){
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />
       </div>
-      {/* <CustomSelect {...selectProps} /> */}
-        {/* 
-        <div className={classPage}>
-          <PaginationTable {...tableProps} />
-          <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total)}</p>
-        </div> */}
+      <ItemSelect {...selectProps} />
+      <div className={classPage}>
+        <PaginationTable {...tableProps} />
+        <div />
+      </div>
     </div>
   );
 }
 
+const withSizeHOC = withSize();
+export const Items = withSizeHOC(Card);
+
 /**
  * import React, { useState, useEffect } from 'react';
-import { Select } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { withSize } from 'react-sizeme';
 
 import { getList } from '../../../../services';
 import { formatNumber } from '../../../../helpers';
@@ -74,7 +99,6 @@ import { PaginationTable, Table, CustomSelect, DynamicBSIcon } from '../../../al
 import { SwitchLabel } from './SwitchLabel';
 import { SelectItem } from './SelectItem';
 import { EditableCell } from './EditableCell';
-const { Option } = Select;
 
 export function Card(props){
   const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch, total, setTotal, setDKits,
@@ -83,63 +107,17 @@ export function Card(props){
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    setColumns([
-      {
-        Header: t('inventory.t_comp'), accessor: 'name',
-        Cell: ({ row }) => (<SelectItem item={row?.original} />)
-      },
-      { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', isQty: true,
-        customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>₮{formatNumber(value)}</div>,
-      },
-      { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
-        Cell: ({ row, onClickDelete }) =>
-          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      },
-    ]);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+ 
 
   
 
-  const onFocus = async () => {
-    if(!items?.length){
-      setError(null);
-      const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
-      if(response?.error) setError(response?.error);
-      else setItems(response?.data);
-    }
-  }
-
-  const onSelect = value => {
-    let invt = items[value?.value]?.msInventory;
-    let exists = data?.findIndex(d => d.invtId === invt?.invtId);
-    if(exists === -1){
-      let item = { invtId: invt.invtId, name: invt.name, qty: 0, cost: 0, unitCost: invt.cost };
-      setData(old => [...old, item]);
-      setSearch({ value: null });
-    } else {
-      setSearch({ value: null, error: t('inventory.already_added') });
-    }
-  }
-
-  const renderItem = (item, index) => {
-    let optItem = { name: item?.msInventory?.name, sku: item?.msInventory?.sku };
-    return (
-      <Option key={index} value={index} name={optItem?.name} sku={optItem?.sku}>
-        <SelectItem item={optItem} />
-      </Option>
-    );
-  }
+  
 
   
-  const filterOption = (input, option) => {
-    return option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option?.sku?.toLowerCase().indexOf(input.toLowerCase()) >= 0
-  }
+  
+
+  
+  
 
   const onChangeKit = value => {
     setIsKit(value);
@@ -147,7 +125,6 @@ export function Card(props){
     setSearch({ value: null });
   }
 
-  const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
 
   const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack') };
   const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };

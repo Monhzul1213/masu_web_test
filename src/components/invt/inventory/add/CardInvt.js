@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { getList } from '../../../../services';
 import { formatNumber } from '../../../../helpers';
-import { PaginationTable, Table, CustomSelect, DynamicBSIcon } from '../../../all';
+import { PaginationTable, Table, DynamicBSIcon } from '../../../all';
 import { SwitchLabel } from './SwitchLabel';
-import { SelectItem } from './SelectItem';
+import { ItemSelect, SelectItem } from './SelectItem';
 import { EditableCell } from './EditableCell';
-const { Option } = Select;
 
 export function Card(props){
-  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setError, setEdited, setCost, search, setSearch, total, setTotal, setDKits,
-    size } = props;
+  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setEdited, setCost, search, setSearch, total, setTotal, setDKits, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [items, setItems] = useState([]);
-  const { user, token }  = useSelector(state => state.login);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setColumns([
@@ -52,36 +44,6 @@ export function Card(props){
     setSearch({ value: null });
   }
 
-  const onFocus = async () => {
-    if(!items?.length){
-      setError(null);
-      const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
-      if(response?.error) setError(response?.error);
-      else setItems(response?.data);
-    }
-  }
-
-  const onSelect = value => {
-    let invt = items[value?.value]?.msInventory;
-    let exists = data?.findIndex(d => d.invtId === invt?.invtId);
-    if(exists === -1){
-      let item = { invtId: invt.invtId, name: invt.name, qty: 0, cost: 0, unitCost: invt.cost };
-      setData(old => [...old, item]);
-      setSearch({ value: null });
-    } else {
-      setSearch({ value: null, error: t('inventory.already_added') });
-    }
-  }
-
-  const renderItem = (item, index) => {
-    let optItem = { name: item?.msInventory?.name, sku: item?.msInventory?.sku };
-    return (
-      <Option key={index} value={index} name={optItem?.name} sku={optItem?.sku}>
-        <SelectItem item={optItem} />
-      </Option>
-    );
-  }
-
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     let total = 0;
@@ -101,10 +63,6 @@ export function Card(props){
     setSearch({ value: null });
   }
 
-  const filterOption = (input, option) => {
-    return option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option?.sku?.toLowerCase().indexOf(input.toLowerCase()) >= 0
-  }
-
   const onChangeKit = value => {
     setIsKit(value);
     setCost({ value: value ? total : 0 });
@@ -120,8 +78,7 @@ export function Card(props){
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData, onClickDelete },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
-    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption};
+  const selectProps = { search, setSearch, data, setData };
 
   return (
     <div className='ia_back'>
@@ -132,7 +89,7 @@ export function Card(props){
         <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
           <Table {...tableProps} />
         </div>
-        <CustomSelect {...selectProps} />
+        <ItemSelect {...selectProps} />
         <div className={classPage}>
           <PaginationTable {...tableProps} />
           <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total)}</p>

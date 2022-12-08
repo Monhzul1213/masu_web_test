@@ -16,6 +16,8 @@ export function OrderAdd(){
   const [orderDate, setOrderDate] = useState({ value: moment() });
   const [reqDate, setReqDate] = useState({ value: null });
   const [notes, setNotes] = useState({ value: '' });
+  const [valid, setValid] = useState(null);
+  const [items, setItems] = useState([]);
 
   const navigate = useNavigate();
 
@@ -26,7 +28,7 @@ export function OrderAdd(){
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading };
-  let itemsProps = { data: [] };
+  let itemsProps = { valid, setValid, items, setItems };
   let btnProps = { onClickCancel, onClickSave, type: 'submit', show: false };
 
   return (
