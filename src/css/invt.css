@@ -362,6 +362,7 @@
 
 #invt_list {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
+  max-width: 1260px;
 }
 
 .kit_search {
