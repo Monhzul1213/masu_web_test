@@ -1,1 +1,94 @@
 @import './color.css';
+
+.po_container {
+  padding: 0 var(--page-padding);
+  margin-top: var(--page-padding);
+  display: flex;
+  flex-flow: column;
+  overflow: scroll;
+  max-height: calc(100vh - var(--header-height) - var(--page-padding));
+}
+
+.po_scroll {
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2 - 46px);
+  display: flex;
+  flex-flow: column;
+  overflow: scroll;
+}
+
+.po_back {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding: var(--page-padding);
+  max-width: 720px;
+}
+
+
+/**
+#im_large .ia_image_row {
+  display: flex;
+  flex-flow: row;
+}
+
+#im_small .ia_image_row {
+  display: flex;
+  flex-flow: column-reverse;
+}
+
+#im_large .im_image {
+  width: 227px;
+  height: 227px;
+  margin-left: 10px;
+}
+
+#im_small .im_image {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+#im_large .im_image .ant-upload.ant-upload-select-picture-card {
+  width: 227px;
+  height: 227px;
+  overflow: hidden;
+  border-color: var(--line-color);
+  background-color: var(--back-color);
+  align-self: center;
+}
+
+#im_small .im_image .ant-upload.ant-upload-select-picture-card {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-color: var(--line-color);
+  background-color: var(--back-color);
+  align-self: center;
+}
+
+#im_large .im_image .ant-upload.ant-upload-select-picture-card:hover, #im_small .im_image .ant-upload.ant-upload-select-picture-card:hover {
+  border-color: var(--config-color);
+}
+
+#im_input_row_large {
+  display: flex;
+  flex-flow: row;
+  margin-top: 10px;
+}
+
+#im_input_row_small {
+  display: flex;
+  flex-flow: column;
+  margin-top: 10px;
+}
+
+#im_input_row_large .im_gap {
+  width: var(--page-padding);
+  height: var(--page-padding);
+}
+
+#im_input_row_small .im_gap {
+  width: 10px;
+  height: 10px;
+}
+*/
