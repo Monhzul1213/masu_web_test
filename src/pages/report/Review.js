@@ -61,9 +61,7 @@ function Screen(props){
     setError(null);
     setLoading(true);
     let api = 'Sales/GetSalesSummary' + (query ?? '') + '&SearchPeriod=' + period1;
-    console.log(api);
     const response = await dispatch(getList(user, token, api));
-    console.log(response?.data);
     if(response?.error) setError(response?.error);
     else {
       let sales = 0, refund = 0, discount = 0, net = 0, profit = 0;
