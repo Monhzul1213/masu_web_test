@@ -68,11 +68,11 @@ function Screen(props){
     else {
       let sales = 0, refund = 0, discount = 0, net = 0, profit = 0;
       response?.data?.forEach(item => {
-        sales += item?.totalSalesAmt;
-        refund += item?.totalReturnAmt;
-        discount += item?.totalDiscAmt;
-        net += item?.totalNetSalesAmt;
-        profit += item?.totalProfitAmt;
+        sales += item?.totalSalesAmt ?? 0;
+        refund += item?.totalReturnAmt ?? 0;
+        discount += item?.totalDiscAmt ?? 0;
+        net += item?.totalNetSalesAmt ?? 0;
+        profit += item?.totalProfitAmt ?? 0;
       });
       setTotal({ sales, refund, discount, net, profit });
       setData(response?.data);

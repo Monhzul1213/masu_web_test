@@ -36,7 +36,7 @@ export function Graph(props){
   let width = size?.width >= 1290 ? 1260 : (size?.width - 30);
   let style = { width, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' };
   let chartProps = { style, data, dataKey: period === 'W' ? 'weekInterval' : 'salesDate',
-    bars: [{color: '#4BAF4F', key: tab}], hasLegend: false,
+    bars: [{color: '#4BAF4F', fill: '#4BAF4F55', key: tab}], hasLegend: false,
     tickFormatter: tick => { return '₮' + formatNumber(tick) }, xFormatter,
     legendFormatter: () => t('report_review.' + tab),
     tipFormatter: (value, name, props) => ['₮' + formatNumber(value), t('report_review.' + tab)] };

@@ -18,7 +18,7 @@ export function BarChart(props){
           <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} labelFormatter={xFormatter} />
           {hasLegend && <Legend formatter={legendFormatter} />}
           {bars?.map(item => {
-            return (<Bar maxBarSize={32} dataKey={item?.key} fill={item?.color} />);
+            return (<Bar maxBarSize={20} dataKey={item?.key} fill={item?.color} />);
           })}
         </ReBarChart>
       </ResponsiveContainer>
@@ -43,7 +43,7 @@ export function AreaChart(props){
           <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} labelFormatter={xFormatter} />
           {hasLegend && <Legend formatter={legendFormatter} />}
           {bars?.map(item => {
-            return (<Area dataKey={item?.key} fill={item?.color} stroke={item?.color} />);
+            return (<Area dataKey={item?.key} fill={item?.fill} stroke={item?.color} dot={{ fill: item?.color, strokeWidth: 1 }} />);
           })}
         </ReAreaChart>
       </ResponsiveContainer>
