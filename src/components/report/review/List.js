@@ -12,7 +12,6 @@ export function List(props){
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [columns1, setColumns1] = useState([]);
-  const [maxHeight, setMaxHeight] = useState('300px');
 
   useEffect(() => {
     setColumns([
@@ -34,17 +33,7 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
-  useEffect(() => {
-    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 117px - 38px - 39px)');
-    else if(size?.width < 920 && size?.width >= 720)
-      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 117px - 38px - 39px)');
-    else if(size?.width < 720)
-      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)');
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size?.width]);
-
-
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)';
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesNo', desc: true }] }}, useSortBy, usePagination);
   const tableProps = { tableInstance };
