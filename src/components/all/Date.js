@@ -34,7 +34,7 @@ export function PlainRange(props){
 }
 
 export function Date(props){
-  const { inRow, value, setValue, label, setError, className, disabled, disabledDate, setEdited, allowClear } = props;
+  const { inRow, value, setValue, label, setError, className, disabled, disabledDate, setEdited, allowClear, placeholder } = props;
 
   const handleChange = e => {
     setValue({ value: e });
@@ -54,7 +54,7 @@ export function Date(props){
           value={value?.value}
           disabled={disabled}
           format='yyyy.MM.DD'
-          placeholder=''
+          placeholder={placeholder ?? ''}
           allowClear={allowClear ?? false}
           disabledDate={disabledDate}
           onChange={handleChange} />

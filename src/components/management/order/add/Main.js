@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
 
 import { getList } from '../../../../services';
-import { Select } from '../../../all';
+import { Date, DescrInput, Select } from '../../../all';
 
 function Card(props){
   const { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, size,
@@ -36,7 +36,6 @@ function Card(props){
       return false;
     } else {
       setData(response?.data);
-      console.log(response?.data);
       return true;
     }
   }
@@ -48,6 +47,10 @@ function Card(props){
     s_value: 'vendId', s_descr: 'vendName', inRow: true };
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true };
+  const dateProps = { value: orderDate, setValue: setOrderDate, label: t('order.date'), setError, setEdited, inRow: true };
+  const reqProps = { value: reqDate, setValue: setReqDate, label: t('order.req'), placeholder: t('order.req'), setError, setEdited,
+    allowClear: true, inRow: true };
+  const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100 };
 
   return (
     <div className='ia_back' id={id}>
@@ -56,6 +59,12 @@ function Card(props){
         <div className='im_gap' />
         <Select {...siteProps} />
       </div>
+      <div id={idRow}>
+        <Date {...dateProps} />
+        <div className='im_gap' />
+        <Date {...reqProps} />
+      </div>
+      <DescrInput {...descrProps} />
     </div>
   );
 }
