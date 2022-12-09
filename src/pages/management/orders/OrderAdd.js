@@ -40,7 +40,9 @@ export function OrderAdd(){
         <form>
           <Main {...mainProps} />
           <div className='gap' />
-          <Items {...itemsProps} />
+          <div className='po_back'>
+            <Items {...itemsProps} />
+          </div>
         </form>
       </div>
       {/* <ButtonRowConfirm {...btnProps} /> */}
