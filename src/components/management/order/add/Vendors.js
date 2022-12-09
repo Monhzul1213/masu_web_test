@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams, createSearchParams } from 'react-router-dom';
 
 import '../../../../css/order.css';
 import { placeholder } from '../../../../assets';
@@ -6,6 +7,8 @@ import { placeholder } from '../../../../assets';
 export function Vendors(props){
   const { size, data } = props;
   const [width, setWidth] = useState(300);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(size?.width >= 1275) setWidth(300);
@@ -17,7 +20,8 @@ export function Vendors(props){
   }, [size?.width]);
 
   const onClick = item => {
-    console.log(item);
+    let pathname = searchParams?.get('next')
+    navigate({ pathname, search: createSearchParams({ vendId: item?.vendId }).toString() });
   }
 
   const renderItem = (item, index) => {

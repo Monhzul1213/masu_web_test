@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SizeMe } from 'react-sizeme';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import '../../../css/order.css';
 import { Overlay, Error1, Empty } from '../../../components/all';
@@ -27,7 +27,9 @@ export function Order(){
     setData([]);
   }
 
-  const onClickAdd = () => navigate('order_vendors');
+  const onClickAdd = () => {
+    navigate({ pathname: '/management/order_list/order_vendors', search: createSearchParams({ next: '/management/order_list/order_add' }).toString() });
+  }
   
   const emptyProps = { icon: 'MdOutlineArticle', type: 'order', noDescr: true, onClickAdd };
   
