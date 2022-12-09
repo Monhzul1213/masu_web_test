@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SizeMe } from 'react-sizeme';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import '../../../css/order.css';
@@ -10,19 +11,23 @@ export function Order(){
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [filtering, setFiltering] = useState(false);
+  const { user }  = useSelector(state => state.login);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(false);
-    setError(false);
-    setFiltering(false);
-    setData([]);
-
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onClickAdd = () => navigate && console.log('hey')// navigate('order_vendors');
+  const getData = async () => {
+    setLoading(false);
+    setError(false);
+    setFiltering(false);
+    setData([]);
+  }
+
+  const onClickAdd = () => navigate('order_vendors');
   
   const emptyProps = { icon: 'MdOutlineArticle', type: 'order', noDescr: true, onClickAdd };
   
