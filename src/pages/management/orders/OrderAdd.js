@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import '../../../css/invt.css';
 import '../../../css/order.css';
-import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../../components/all';
-import { Main, Items, Additional } from '../../../components/management/order/add';
+import { Error1, Overlay, Prompt } from '../../../components/all';
+import { Main, Items, Additional, ButtonRow } from '../../../components/management/order/add';
 
 export function OrderAdd(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
@@ -23,6 +25,7 @@ export function OrderAdd(){
   const [total1, setTotal1] = useState(0);
   const [total2, setTotal2] = useState(0);
   const [order, setOrder] = useState(null);
+  const [search, setSearch] = useState({ value: null });
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -36,15 +39,55 @@ export function OrderAdd(){
 
   const onClickCancel = () => navigate('/management/order_list');
 
-  const onClickSave = async () => {
-    console.log(dItems, dAdds);
+  const validateData = status => {
+    let isSiteValid = siteId?.value || siteId?.value === 0;
+    let isDateValid = !reqDate?.value || reqDate?.value?.isAfter(orderDate?.value);
+    if(isSiteValid && isDateValid && items?.length){
+      let orderNo = order?.orderNo ?? '', itemValid = true;;
+      let orderItems = items?.map(item => {
+        if(item?.orderQty){
+          item.orderNo = orderNo;
+          item.rowStatus = order ? 'U' : 'I';
+        } else {
+          itemValid = false;
+          item.error = 'orderQty'
+        }
+        return item;
+      })
+      if(!itemValid){
+        setItems(orderItems);
+        return false;
+      }
+      dItems?.forEach(it => orderItems?.push({...it, rowStatus: 'D'}));
+
+
+      //  "orderCosts": [ { "orderNo": "string", "orderAdditionalId": 0, "addCostName": "string", "addCostAmount": 0, "rowStatus": "string" } ] }
+
+      let data = {
+        orderNo, vendId: vendId?.value, siteId: siteId?.value, status, notes: notes?.value,
+        orderDate: orderDate?.value?.format('yyyy.MM.DD'),
+        reqDate: reqDate?.value ? reqDate?.value?.format('yyyy.MM.DD') : '',
+        rowStatus: order ? 'U' : 'I',
+        orderItems
+      };
+      return data;
+    } else {
+      if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
+      if(reqDate?.value && reqDate?.value?.isBefore(orderDate?.value)) setReqDate({ value: reqDate?.value, error: t('error.order_date') });
+      if(!items?.length) setSearch({ value: null, error: t('order.items_error') });
+      return false;
+    }
+  }
+
+  const onClickSave = async status => {
+    let data = validateData(status);
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading,
     order };
-  let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1 };
+  let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
-  let btnProps = { onClickCancel, onClickSave, type: 'submit', show: false, id: 'po_btns' };
+  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns' };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -60,7 +103,7 @@ export function OrderAdd(){
           </div>
         </form>
       </div>
-      <ButtonRowConfirm {...btnProps} />
+      <ButtonRow {...btnProps} />
     </Overlay>
   );
 }

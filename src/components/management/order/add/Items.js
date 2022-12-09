@@ -9,10 +9,9 @@ import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { formatNumber } from '../../../../helpers';
 
 function Card(props){
-  const { items, setItems, setDItems, size, setEdited, total, setTotal } = props;
+  const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [search, setSearch] = useState({ value: null });
 
   useEffect(() => {
     setColumns([
@@ -50,7 +49,7 @@ function Card(props){
           ? old[rowIndex]?.orderQty * parseFloat(value ? value : 0)
           : old[rowIndex]?.cost * parseFloat(value ? value : 0);
         total += totalCost;
-        return { ...old[rowIndex], [columnId]: value, totalCost };
+        return { ...old[rowIndex], [columnId]: parseFloat(value ? value : 0), totalCost, error: null };
       } else {
         total += row.totalCost;
         return row;
@@ -70,7 +69,8 @@ function Card(props){
   }
   
   const newItem = invt => {
-    return { invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0, invtCode: '' };
+    return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0,
+      invtCode: '', rowStatus: 'I' };
   }
 
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
