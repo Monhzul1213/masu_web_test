@@ -36,9 +36,10 @@ function Card(props){
     let total = 0;
     setAdds(old => old.map((row, index) => {
       if(index === rowIndex){
-        let addCostAmount = columnId === 'addCostAmount' ? parseFloat(value ? value : 0) : old[rowIndex]?.addCostAmount;
+        let newValue = columnId === 'addCostAmount' ? parseFloat(value ? value : 0) : value;
+        let addCostAmount = columnId === 'addCostAmount' ? newValue : old[rowIndex]?.addCostAmount;
         total += addCostAmount;
-        return { ...old[rowIndex], [columnId]: value };
+        return { ...old[rowIndex], [columnId]: newValue, error: null };
       } else {
         total += row.addCostAmount;
         return row;
@@ -49,14 +50,14 @@ function Card(props){
   }
 
   const onClickDelete = row => {
-    if(row?.original?.orderAdditionalId || row?.original?.orderAdditionalId === 0) setDAdds(old => [...old, row?.original]);
+    if(row?.original?.orderAdditionalId !== -1) setDAdds(old => [...old, row?.original]);
     let newTotal = total2 - (row?.original?.addCostAmount ?? 0);
     setTotal(newTotal);
     setAdds(adds?.filter((item, index) => index !== row?.index));
   }
   
   const onClick = () => {
-    setAdds(old => [...old, { addCostName: '', addCostAmount: 0 }]);
+    setAdds(old => [...old, { addCostName: '', addCostAmount: 0, orderAdditionalId: -1 }]);
   }
 
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';

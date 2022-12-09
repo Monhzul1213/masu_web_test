@@ -61,7 +61,7 @@ function Card(props){
   }
 
   const onClickDelete = row => {
-    if(row?.original?.orderItemId || row?.original?.orderItemId === 0) setDItems(old => [...old, row?.original]);
+    if(row?.original?.orderItemId !== -1) setDItems(old => [...old, row?.original]);
     let newTotal = total - (row?.original?.totalCost ?? 0);
     setTotal(newTotal);
     setItems(items?.filter(item => item?.invtId !== row?.original?.invtId));

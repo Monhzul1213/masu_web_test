@@ -43,7 +43,7 @@ export function OrderAdd(){
     let isSiteValid = siteId?.value || siteId?.value === 0;
     let isDateValid = !reqDate?.value || reqDate?.value?.isAfter(orderDate?.value);
     if(isSiteValid && isDateValid && items?.length){
-      let orderNo = order?.orderNo ?? '', itemValid = true;;
+      let orderNo = order?.orderNo ?? '', itemValid = true, addValid = true;
       let orderItems = items?.map(item => {
         if(item?.orderQty){
           item.orderNo = orderNo;
@@ -60,15 +60,27 @@ export function OrderAdd(){
       }
       dItems?.forEach(it => orderItems?.push({...it, rowStatus: 'D'}));
 
-
-      //  "orderCosts": [ { "orderNo": "string", "orderAdditionalId": 0, "addCostName": "string", "addCostAmount": 0, "rowStatus": "string" } ] }
-
+      let orderCosts = adds?.map(item => {
+        if(item?.addCostAmount && item?.addCostName){
+          item.orderNo = orderNo;
+          item.rowStatus = order ? 'U' : 'I';
+        } else {
+          addValid = false;
+          item.error = item?.addCostName ? 'addCostAmount' : 'addCostName'
+        }
+        return item;
+      })
+      if(!addValid){
+        setAdds(orderCosts);
+        return false;
+      }
+      dAdds?.forEach(it => orderCosts?.push({...it, rowStatus: 'D'}));
       let data = {
         orderNo, vendId: vendId?.value, siteId: siteId?.value, status, notes: notes?.value,
         orderDate: orderDate?.value?.format('yyyy.MM.DD'),
         reqDate: reqDate?.value ? reqDate?.value?.format('yyyy.MM.DD') : '',
         rowStatus: order ? 'U' : 'I',
-        orderItems
+        orderItems, orderCosts
       };
       return data;
     } else {
@@ -81,6 +93,7 @@ export function OrderAdd(){
 
   const onClickSave = async status => {
     let data = validateData(status);
+    console.log(data);
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading,
