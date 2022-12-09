@@ -1,6 +1,7 @@
 import login_image from './3.png';
 import header_image from './4.png';
 import logo from './6.png';
+import placeholder from './7.png';
 import icon1 from './masu_icons/1.png';
 import icon2 from './masu_icons/2.png';
 import icon3 from './masu_icons/3.png';
@@ -25,7 +26,7 @@ import icon21 from './masu_icons/21.png';
 import icon22 from './masu_icons/22.png';
 import icon23 from './masu_icons/23.png';
 
-export { login_image, header_image, logo };
+export { login_image, header_image, logo, placeholder };
 export const icons = [
   icon1, icon2, icon3, icon4, icon5,
   icon6, icon7, icon8, icon9, icon10,

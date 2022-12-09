@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import '../../../../css/order.css';
+import { placeholder } from '../../../../assets';
 
 export function Vendors(props){
   const { size, data } = props;
@@ -22,6 +23,7 @@ export function Vendors(props){
   const renderItem = (item, index) => {
     return (
       <button key={index} className='po_vend_btn' style={{ width }} onClick={() => onClick(item)}>
+        <img src={placeholder} className='po_vend_logo' alt={item?.vendName} />
         <p className='po_vend_title'>{item?.vendName}</p>
       </button>
     )

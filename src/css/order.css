@@ -79,7 +79,11 @@
   box-shadow: 0px 2px 5px rgba(0,0,0,.35);
 }
 
-
+.po_vend_logo {
+  height: 80px;
+  margin-bottom: 15px;
+  filter: invert(82%) sepia(3%) saturate(9%) hue-rotate(315deg) brightness(111%) contrast(90%);
+}
 
 @media only screen and (max-height: 700px) { /* mobile */
   .po_vend_title {
