@@ -28,7 +28,7 @@ export function DiscountAdd(){
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
-    user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
     getSites();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -23,11 +23,11 @@ export function List(props){
       {
         Header: <div>{t('page.name')}</div>, accessor: 'discountName',
          },
-      { Header: <div style={{textAlign: 'right',}}>{t('discount.amount')}</div> , accessor: 'discountValue',
+      { Header: <div style={{textAlign: 'right',}}>{t('discount.amount')}</div> , accessor: 'discountValue', customStyle: { width: 100 }, width: 80,
       Cell: props => props?.row?.original?.discountType===1 ? <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div> 
       : <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}%</div>
     },
-      { id: 'isRestrictedAccess', Header: t('discount.isRestrictedAccess'), accessor: d => { return d.isRestrictedAccess=== 'Y' ? 'Тийм' : 'Үгүй' }},
+      { id: 'isRestrictedAccess', Header: t('discount.isRestrictedAccess'), customStyle: { width: 120 }, accessor: d => { return d.isRestrictedAccess=== 'Y' ? 'Тийм' : 'Үгүй' }},
       
     ]);
     return () => {};

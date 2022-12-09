@@ -24,4 +24,7 @@
     width: 375px;
     max-width: calc(100vw - var(--page-padding) * 4);
   }
+  #invt_list_zz {
+    padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
+  }
  

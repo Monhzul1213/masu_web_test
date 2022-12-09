@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
-
+import '../../css/report.css'
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../components/all/all_m';
-import {Filter, Header, List } from '../../components/report/employee'
+import {Filter,  List,  } from '../../components/report/category'
 function Screen(props){
   const { size } = props;
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ function Screen(props){
   const getData = async (query, query1) => {
     setError(null);
     setLoading(true);
-    let api = 'Sales/GetSalesByEmployee' + (query ?? '') + (query1 ?? '');
+    let api = 'Sales/GetSalesByCategory' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     console.log(api);
     const response = await dispatch(getList(user, token, api, null, headers));
@@ -57,7 +57,6 @@ function Screen(props){
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
         <div className='rp_list'>
-          <Header {...filterProps} />
           {data?.length ? <List {...cardProps} /> : <Empty1 {...emptyProps} />}
         </div>
       </Overlay>
@@ -66,4 +65,4 @@ function Screen(props){
 }
 
 const withSizeHOC = withSize();
-export const SalesEmployee = withSizeHOC(Screen);
+export const SalesCategory = withSizeHOC(Screen);

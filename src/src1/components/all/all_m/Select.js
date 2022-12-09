@@ -27,12 +27,12 @@ export function Select(props){
 
   return (
     <div style={inRow ? { flex: 1 } : {}}>
-      <div className='select_back' style={backStyle}>
+      <div className='select_back_z' style={backStyle}>
         <p className='select_lbl' style={style}>{label}</p>
         <AntSelect
           mode={mode}
           loading={loading}
-          className='select_m'
+          className='select_z'
           showSearch
           filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
           onChange={handleChange}

@@ -6,7 +6,7 @@ import { Sort } from './Sort';
 export function Table(props){
   const { tableInstance, onRowClick } = props;
 
-  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } = tableInstance;
+  const { getTableProps, getTableBodyProps, headerGroups,   prepareRow, page } = tableInstance;
 
   return (
     <table className='table_back' {...getTableProps()}>
@@ -49,7 +49,7 @@ export function Table(props){
                 {
                  
                   footerGroup.headers.map( column =>(
-                    <td className='table_header_text' {...column.getFooterProps}>
+                    <td  {...column.getFooterProps}>
                       {
                         column.render('Footer')
                       }

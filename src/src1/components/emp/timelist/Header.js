@@ -81,7 +81,7 @@ export function Header(props){
   const exportProps = { className: 'ih_btn_z', text: t('page.export'), disabled: true };
 
   return (
-    <div className='ih_header' id={id}>
+    <div className='ih_header' id={id}  >
         <div className='ih_btn_row_z' //style={{display: 'none'}} 
         >
           <Button {...exportProps} />

@@ -64,7 +64,7 @@ export function TimeList(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
           <SizeMe>{({ size }) => 
-              <div className='i_list_cont_zz' id='invt_list_z'>
+              <div className='i_list_cont_zz' id='invt_list_zz'>
                 <Header {...headerProps} size={size} />
                 {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
               </div>
