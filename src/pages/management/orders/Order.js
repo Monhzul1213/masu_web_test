@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SizeMe } from 'react-sizeme';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,17 @@ export function Order(){
   const [filtering, setFiltering] = useState(false);
   const navigate = useNavigate();
 
-  const onClickAdd = () => navigate('order_add');
+  useEffect(() => {
+    setLoading(false);
+    setError(false);
+    setFiltering(false);
+    setData([]);
+
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onClickAdd = () => navigate && console.log('hey')// navigate('order_vendors');
   
   const emptyProps = { icon: 'MdOutlineArticle', type: 'order', noDescr: true, onClickAdd };
   

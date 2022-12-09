@@ -58,6 +58,7 @@
     "/management/suppliers/supp_add": "Нийлүүлэгч нэмэх",
     "/management/order_list": "Худалдан авалтын захиалга",
     "/management/order_list/order_add": "Худалдан авалтын захиалга нэмэх",
+    "/management/order_list/order_vendors": "Нийлүүлэгч сонгох",
     "/employee": "Ажилтан",
     "/employee/emp_list": "Ажилтны жагсаалт",
     "/employee/emp_list/emp_add": "Ажилтан нэмэх",
