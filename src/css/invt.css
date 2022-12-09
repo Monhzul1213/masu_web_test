@@ -1313,11 +1313,3 @@
   border: none;
   padding: 0;
 }
-
-.po_back {
-  background-color: var(--root-color);
-  border-radius: var(--radius);
-  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
-  padding: var(--page-padding);
-  max-width: 840px;
-}

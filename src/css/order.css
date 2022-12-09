@@ -1,1 +1,50 @@
 @import './color.css';
+
+.po_back {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding: var(--page-padding);
+  max-width: 840px;
+}
+
+#po_back_invt {
+  padding: var(--page-padding) 0;
+}
+
+.po_back_invt1 {
+  padding: 0 var(--page-padding) var(--page-padding) var(--page-padding);
+  border-bottom: 1px solid var(--line-color);
+}
+
+.po_back_invt2 {
+  padding: var(--page-padding) var(--page-padding) 0 var(--page-padding);
+}
+
+.po_add_btn {
+  border: none;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  background-color: transparent;
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  color: var(--config-color);
+  font-size: 15px;
+  font-weight: 500;
+  margin-left: -5px;
+}
+
+.po_add_btn:hover {
+  background-color: var(--config-t-color);
+  cursor: pointer;
+}
+
+.po_add_icon {
+  font-size: 13px;
+  margin-right: 5px;
+}
+
+#po_btns {
+  max-width: 840px;
+}

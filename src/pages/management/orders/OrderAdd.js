@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 import '../../../css/invt.css';
 import '../../../css/order.css';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../../components/all';
-import { Main, Items } from '../../../components/management/order/add';
+import { Main, Items, Additional } from '../../../components/management/order/add';
 
 export function OrderAdd(){
   const [loading, setLoading] = useState(false);
@@ -16,21 +16,25 @@ export function OrderAdd(){
   const [orderDate, setOrderDate] = useState({ value: moment() });
   const [reqDate, setReqDate] = useState({ value: null });
   const [notes, setNotes] = useState({ value: '' });
-  const [valid, setValid] = useState(null);
   const [items, setItems] = useState([]);
   const [dItems, setDItems] = useState([]);
+  const [adds, setAdds] = useState([]);
+  const [dAdds, setDAdds] = useState([]);
+  const [total1, setTotal1] = useState(0);
+  const [total2, setTotal2] = useState(0);
 
   const navigate = useNavigate();
 
   const onClickCancel = () => navigate('/management/order_list');
 
   const onClickSave = async () => {
-
+    console.log(dItems, dAdds);
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading };
-  let itemsProps = { valid, setValid, items, setItems, setDItems, setEdited };
-  let btnProps = { onClickCancel, onClickSave, type: 'submit', show: false };
+  let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1 };
+  let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
+  let btnProps = { onClickCancel, onClickSave, type: 'submit', show: false, id: 'po_btns' };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -40,12 +44,13 @@ export function OrderAdd(){
         <form>
           <Main {...mainProps} />
           <div className='gap' />
-          <div className='po_back'>
+          <div className='po_back' id='po_back_invt'>
             <Items {...itemsProps} />
+            <Additional {...addProps} />
           </div>
         </form>
       </div>
-      {/* <ButtonRowConfirm {...btnProps} /> */}
+      <ButtonRowConfirm {...btnProps} />
     </Overlay>
   );
 }

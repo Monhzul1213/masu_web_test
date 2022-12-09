@@ -9,11 +9,10 @@ import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { formatNumber } from '../../../../helpers';
 
 function Card(props){
-  const { items, setItems, setDItems, size, setEdited } = props;
+  const { items, setItems, setDItems, size, setEdited, total, setTotal } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [search, setSearch] = useState({ value: null });
-  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setColumns([
@@ -84,7 +83,7 @@ function Card(props){
   const selectProps = { search, setSearch, data: items, setData: setItems, newItem };
 
   return (
-    <div>
+    <div className='po_back_invt1'>
       <p className='ac_title'>{t('inventory.title')}</p>
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />
