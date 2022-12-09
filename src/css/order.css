@@ -50,7 +50,7 @@
 }
 
 .po_vend_container {
-  padding: 0 5px 0 var(--page-padding);
+  padding: 0 0 0 var(--page-padding);
   margin-top: var(--page-padding);
   display: flex;
   flex-flow: column;
@@ -59,7 +59,7 @@
 }
 
 .po_vend_back {
-  max-width: 1240px;
+  max-width: 1260px;
   display: flex;
   flex-flow: row;
   flex-wrap: wrap;
@@ -69,7 +69,7 @@
   border: none;
   background-color: var(--root-color);
   border-radius: var(--radius);
-  margin: 0 10px 10px 0;
+  margin: 0 15px 15px 0;
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding: 10px 5px;
 }

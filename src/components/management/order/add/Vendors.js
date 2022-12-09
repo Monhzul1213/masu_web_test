@@ -8,10 +8,10 @@ export function Vendors(props){
   const [width, setWidth] = useState(300);
 
   useEffect(() => {
-    if(size?.width >= 1270) setWidth(300);
-    else if(size?.width >= 1030 && size?.width < 1270) setWidth((size?.width - 60) / 4);
-    else if(size?.width >= 780 && size?.width < 1030) setWidth((size?.width - 50) / 3);
-    else setWidth((size?.width - 40) / 2);
+    if(size?.width >= 1275) setWidth(300);
+    else if(size?.width >= 1050 && size?.width < 1275) setWidth(Math.floor((size?.width - 75) / 4));
+    else if(size?.width >= 795 && size?.width < 1050) setWidth(Math.floor((size?.width - 60) / 3));
+    else setWidth(Math.floor((size?.width - 45) / 2));
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
