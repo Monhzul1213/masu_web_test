@@ -48,3 +48,52 @@
 #po_btns {
   max-width: 840px;
 }
+
+.po_vend_container {
+  padding: 0 5px 0 var(--page-padding);
+  margin-top: var(--page-padding);
+  display: flex;
+  flex-flow: column;
+  overflow: scroll;
+  max-height: calc(100vh - var(--header-height) - var(--page-padding));
+}
+
+.po_vend_back {
+  max-width: 1240px;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
+.po_vend_btn {
+  border: none;
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  margin: 0 10px 10px 0;
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding: 10px 5px;
+}
+
+.po_vend_btn:hover {
+  cursor: pointer;
+  box-shadow: 0px 2px 5px rgba(0,0,0,.35);
+}
+
+
+
+@media only screen and (max-height: 700px) { /* mobile */
+  .po_vend_title {
+    font-size: 13px;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+@media only screen and (min-height: 700px) { /* desktop */
+  .po_vend_title {
+    font-size: 15px;
+    margin: 0;
+    font-weight: 500;
+  }
+}
+

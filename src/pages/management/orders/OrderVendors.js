@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 
 import '../../../css/invt.css';
+import '../../../css/order.css';
 import { getList } from '../../../services';
 import { Error1, Overlay } from '../../../components/all';
 import { Empty } from '../../../src1/components/all/all_m';
+import { Vendors } from '../../../components/management/order/add';
 
 function Screen(props){
   const { size } = props;
@@ -35,11 +37,12 @@ function Screen(props){
   const onClickAdd = () => navigate('/management/suppliers');
 
   const emptyProps = { icon: 'TbCar', type: 'supplier', noDescr: true, onClickAdd, isTb: true };
+  const listProps = { data, size };
 
   return (
-    <Overlay className='i_container' loading={loading}>
+    <Overlay className='po_vend_container' loading={loading}>
       {error && <Error1 error={error} />}
-      {!data?.length ? <Empty {...emptyProps} /> : 'OrderVendors'}
+      {!data?.length ? <Empty {...emptyProps} /> : <Vendors {...listProps} />}
     </Overlay>
   );
 }
