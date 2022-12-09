@@ -9,7 +9,7 @@ import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { formatNumber } from '../../../../helpers';
 
 function Card(props){
-  const { valid, setValid, items, setItems, dItems, setDItems, size } = props;
+  const { valid, setValid, items, setItems, setDItems, size, setEdited } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [search, setSearch] = useState({ value: null });
@@ -43,22 +43,23 @@ function Card(props){
   }, [i18n?.language]);
 
   const updateMyData = (rowIndex, columnId, value, e) => {
-    // e?.preventDefault();
-    // let total = 0;
-    // setData(old => old.map((row, index) => {
-    //   if(index === rowIndex){
-    //     let cost = old[rowIndex]?.unitCost * parseFloat(value ? value : 0);
-    //     total += cost;
-    //     return { ...old[rowIndex], [columnId]: value, cost };
-    //   } else {
-    //     total += row.cost;
-    //     return row;
-    //   }
-    // }));
-    // setTotal(total);
-    // setCost({ value: total });
-    // setEdited && setEdited(true);
-    // setSearch({ value: null });
+    e?.preventDefault();
+    let total = 0;
+    setItems(old => old.map((row, index) => {
+      if(index === rowIndex){
+        let totalCost = columnId === 'cost'
+          ? old[rowIndex]?.orderQty * parseFloat(value ? value : 0)
+          : old[rowIndex]?.cost * parseFloat(value ? value : 0);
+        total += totalCost;
+        return { ...old[rowIndex], [columnId]: value, totalCost };
+      } else {
+        total += row.totalCost;
+        return row;
+      }
+    }));
+    setTotal(total);
+    setEdited && setEdited(true);
+    setSearch({ value: null });
   }
 
   const onClickDelete = row => {
@@ -70,8 +71,7 @@ function Card(props){
   }
   
   const newItem = invt => {
-    //invtCode
-    return { invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0 };
+    return { invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0, invtCode: '' };
   }
 
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
