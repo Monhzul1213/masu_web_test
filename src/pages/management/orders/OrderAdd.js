@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import moment from 'moment';
 
 import '../../../css/invt.css';
@@ -22,8 +22,17 @@ export function OrderAdd(){
   const [dAdds, setDAdds] = useState([]);
   const [total1, setTotal1] = useState(0);
   const [total2, setTotal2] = useState(0);
-
+  const [order, setOrder] = useState(null);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let vendor = searchParams?.get('vendId')
+    setOrder(vendor ? null : {});
+    setVendId({ value: parseInt(vendor) });
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onClickCancel = () => navigate('/management/order_list');
 
@@ -31,7 +40,8 @@ export function OrderAdd(){
     console.log(dItems, dAdds);
   }
 
-  let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading };
+  let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading,
+    order };
   let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1 };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
   let btnProps = { onClickCancel, onClickSave, type: 'submit', show: false, id: 'po_btns' };

@@ -8,7 +8,7 @@ import { Date, DescrInput, Select } from '../../../all';
 
 function Card(props){
   const { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, size,
-    setLoading } = props;
+    setLoading, order } = props;
   const { t } = useTranslation();
   const [vendors, setVendors] = useState([]);
   const [sites, setSites] = useState([]);
@@ -44,7 +44,7 @@ function Card(props){
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
 
   const vendProps = { value: vendId, setValue: setVendId, label: t('order.vend'), placeholder: t('order.vend'), data: vendors, setError, setEdited,
-    s_value: 'vendId', s_descr: 'vendName', inRow: true };
+    s_value: 'vendId', s_descr: 'vendName', inRow: true, disabled: order ? false : true };
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true };
   const dateProps = { value: orderDate, setValue: setOrderDate, label: t('order.date'), setError, setEdited, inRow: true };
