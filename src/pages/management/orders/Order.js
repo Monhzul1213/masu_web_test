@@ -27,10 +27,8 @@ export function Order(){
     setError(null);
     setLoading(true);
     const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get' + (query ?? '')));
-    //?OrderNo=1&SiteID=1&VendID=1&Status=1
     if(response?.error) setError(response?.error);
     else setData(response?.data);
-    console.log(response?.data);
     setLoading(false);
     setFiltering(query ? true : false);
   }

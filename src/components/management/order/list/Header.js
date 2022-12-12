@@ -7,7 +7,7 @@ import { ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
 import { SearchInput } from '../../../invt/inventory/list/SearchInput';
 
 export function Header(props){
-  const { size, onClickAdd, setError } = props;
+  const { size, onClickAdd, setError, onSearch } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
@@ -75,23 +75,32 @@ export function Header(props){
   
   const onClickSearch = () => setShowSearch(!showSearch);
 
+  const setFilter = (status, vendor, site) => {
+    let query = '';
+    if(status !== -1) query += '?Status=' + status;
+    if(vendor !== -1) query += (status === -1 ? '?' : '&') + 'VendID=' + vendor;
+    if(site !== -1) query += ((status === -1 && vendor === -1) ? '?' : '&') + 'SiteID=' + site;
+    onSearch(query);
+  }
+
   const handleEnter = value => {
-    // setFilter(site, category, value);
+    if(value) onSearch('?OrderNo=' + value);
+    else setFilter(status, vendor, site);
   }
 
   const onChangeSite = value => {
     setSite(value);
-    // setFilter(value, category, '');
+    setFilter(status, vendor, value);
   }
 
   const onChangeVendor = value => {
     setVendor(value);
-    // setFilter(value, category, '');
+    setFilter(status, value, site);
   }
 
   const onChangeStatus = value => {
     setStatus(value);
-    // setFilter(value, category, '');
+    setFilter(value, vendor, site);
   }
 
   const id = size?.width >= 830 ? 'po_large' : 'po_small';
