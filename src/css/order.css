@@ -209,8 +209,46 @@
 }
 
 .ps_menu_back {
-  padding: var(--page-padding);
+  padding: 10px 10px;
   display: flex;
   flex-flow: row;
   border-bottom: solid 1px var(--input1-color);
+  align-items: center;
+}
+
+.ps_back_btn {
+  border: none;
+  border-radius: var(--radius);
+  background-color: transparent;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 5px;
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.ps_back_icon {
+  margin-right: 2px;
+  font-size: 24px;
+}
+
+.ps_btn {
+  border: none;
+  border-radius: var(--radius);
+  background-color: transparent;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  padding: 5px;
+  color: var(--text-color);
+  font-size: 15px;
+  font-weight: 500;
+  margin-left: 15px;
+}
+
+.ps_back_btn:hover {
+  cursor: pointer;
+  background-color: var(--back-color);
 }
