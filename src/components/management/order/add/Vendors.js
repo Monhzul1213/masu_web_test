@@ -1,8 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, createSearchParams } from 'react-router-dom';
+import mime from 'mime';
 
 import '../../../../css/order.css';
 import { placeholder } from '../../../../assets';
+import { urlToFile } from '../../../../helpers';
+
+function Item(props){
+  const { item, width, onClick } = props;
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    getImage();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getImage = async () => {
+    if(item?.fileraw?.fileData){
+      let type = item?.fileraw?.fileType?.replace('.', '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${item?.fileraw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage(attachFile);
+    }
+  }
+
+  let style = { maxWidth: width - 30, objectFit: 'cover' };
+
+  return (
+    <button className='po_vend_btn' style={{ width }} onClick={() => onClick(item)}>
+      {image
+        ? <img src={URL.createObjectURL(image)} className='po_vend_logo' alt={item?.vendName} style={style} />
+        : <img src={placeholder} className='po_vend_place' alt={item?.vendName} />}
+      <p className='po_vend_title'>{item?.vendName}</p>
+    </button>
+  )
+}
 
 export function Vendors(props){
   const { size, data } = props;
@@ -25,12 +60,8 @@ export function Vendors(props){
   }
 
   const renderItem = (item, index) => {
-    return (
-      <button key={index} className='po_vend_btn' style={{ width }} onClick={() => onClick(item)}>
-        <img src={placeholder} className='po_vend_logo' alt={item?.vendName} />
-        <p className='po_vend_title'>{item?.vendName}</p>
-      </button>
-    )
+    const itemProps = { key: index, item, width, onClick };
+    return (<Item {...itemProps} />);
   }
 
   return (

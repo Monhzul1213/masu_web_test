@@ -72,6 +72,10 @@
   margin: 0 15px 15px 0;
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding: 10px 5px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .po_vend_btn:hover {
@@ -79,10 +83,15 @@
   box-shadow: 0px 2px 5px rgba(0,0,0,.35);
 }
 
-.po_vend_logo {
+.po_vend_place {
   height: 80px;
   margin-bottom: 15px;
   filter: invert(82%) sepia(3%) saturate(9%) hue-rotate(315deg) brightness(111%) contrast(90%);
+}
+
+.po_vend_logo {
+  margin: auto 0;
+  max-height: 80px;
 }
 
 @media only screen and (max-height: 700px) { /* mobile */
