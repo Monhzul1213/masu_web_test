@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import { formatNumber } from '../../../../helpers';
 import { PaginationTable, Table } from '../../../all';
@@ -10,6 +11,7 @@ export function List(props){
   const { t, i18n } = useTranslation();
   const [maxHeight, setMaxHeight] = useState('300px');
   const [columns, setColumns] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setColumns([
@@ -37,7 +39,9 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
-  const onRowClick = row => console.log(row);
+  const onRowClick = row => {
+    navigate({ pathname: 'order', search: createSearchParams({ orderNo: row?.original?.poOrder?.orderNo }).toString() });
+  }
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'poOrder.orderNo', desc: true }] }}, useSortBy, usePagination, useRowSelect);
