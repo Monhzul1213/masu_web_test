@@ -92,7 +92,8 @@ export function Inventory(){
 
   const onClickAdd = row => {
     if(row) navigate({ pathname: 'invt_add', search: createSearchParams({ invtId: row?.invtId }).toString() });
-    else navigate('invt_add');
+    else
+      navigate({ pathname: '/management/order_list/order_vendors', search: createSearchParams({ next: '/inventory/invt_list/invt_add' }).toString() });
   }
 
   const confirm = async sure => {

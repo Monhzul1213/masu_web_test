@@ -24,6 +24,7 @@ export function InventoryAdd(){
   const [image64, setImage64] = useState('');
   const [imageType, setImageType] = useState('');
   const [buyAgeLimit, setBuyAgeLimit] = useState({ value: 0 });
+  const [vendId, setVendId] = useState({ value: null });
   const [isKit, setIsKit] = useState(false);
   const [isTrack, setIsTrack] = useState(false);
   const [sites, setSites] = useState([]);
@@ -68,6 +69,8 @@ export function InventoryAdd(){
     else {
       setSites(response);
       setModifiers(response1);
+      let vendor = searchParams?.get('vendId');
+      if(vendor) setVendId({ value: parseInt(vendor) });
     }
   }
 
@@ -97,6 +100,7 @@ export function InventoryAdd(){
       setName({ value: invt?.msInventory?.name ?? '' });
       setCategory({ value: invt?.msInventory?.categoryId ?? -1 });
       setBuyAgeLimit({ value: invt?.msInventory?.buyAgeLimit ?? 0 })
+      setVendId({ value: invt?.msInventory?.vendID })
       setIsEach({ value: invt?.msInventory?.isEach ?? 'Y' });
       setDescr({ value: invt?.msInventory?.descr ?? '' });
       setPrice({ value: invt?.msInventory?.price ?? 0 });
@@ -174,7 +178,7 @@ export function InventoryAdd(){
     let nameLength = 2;
     let isNameValid = name?.value?.length >= nameLength;
     let invkite = [], invvar = [], invmod = [], invsales = [];
-    if(isNameValid && barcode?.value){
+    if(isNameValid && barcode?.value && vendId?.value){
       if(isKit){
         if(kits?.length){
           kits?.forEach(item => {
@@ -215,6 +219,7 @@ export function InventoryAdd(){
       });
       let data = {
         name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value, buyAgeLimit: buyAgeLimit?.value,
+        vendID: vendId?.value, vendInvtID: invt?.vendInvtID ?? '', vendUnitID: invt?.vendUnitID ?? '',
         price: parseFloat(price?.value ? price?.value : 0),
         cost: parseFloat(cost?.value ? cost?.value : 0),
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
@@ -232,6 +237,7 @@ export function InventoryAdd(){
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       else if(!isNameValid) setName({ value: name.value, error: ' ' + nameLength + t('error.longer_than') })
       if(!barcode?.value) setBarcode({ value: '', error: t('error.not_empty') });
+      if(!vendId?.value) setVendId({ value: '', error: t('error.not_empty') });
       return false;
     }
   }
@@ -273,7 +279,7 @@ export function InventoryAdd(){
   }
 
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit };
+    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit, vendId, setVendId };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,

@@ -9,20 +9,27 @@ import { DescrInput, Input, MoneyInput, Radio, Select, UploadImage } from '../..
 
 function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit } = props;
+    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId
+  } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
+  const [vendors, setVendors] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    onFocus();
+    getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onFocus = async () => {
+  const getData = async () => {
+    let response = await getVendors();
+    if(response) await getCategories();
+  }
+
+  const getCategories = async () => {
     if(!categories?.length || categories?.length === 1){
       setError(null);
       setLoading(true);
@@ -36,12 +43,26 @@ function Card(props){
     }
   }
 
+  const getVendors = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
+    setLoading(false);
+    if(response?.error){
+      setError(response?.error);
+      return false;
+    } else {
+      setVendors(response?.data);
+      return true;
+    }
+  }
+
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
 
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true, length: 30 };
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false,
-    data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus, loading };
+    data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories, loading };
   const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setEdited, setError, length: 30 };
   const unitProps = { value: isEach, setValue: setIsEach, label: t('inventory.unit'), data: t('inventory.units'), setEdited, setError };
   const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setEdited, setError,
@@ -53,6 +74,8 @@ function Card(props){
     inRow: true, length: 30 };
   const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image' };
   const limitProps = { value: buyAgeLimit, setValue: setBuyAgeLimit, label: t('inventory.limit'), setError, setEdited, data: limitList, inRow: true };
+  const vendProps = { value: vendId, setValue: setVendId, label: t('inventory.vendor'), setError, setEdited, data: vendors, inRow: true,
+    s_value: 'vendId', s_descr: 'vendName', placeholder: t('inventory.vendor') };
   
   return (
     <div className='ia_back' id={id}>
@@ -79,7 +102,7 @@ function Card(props){
       <div id={idRow}>
         <Select {...limitProps} />
         <div className='im_gap' />
-        <div style={{flex: 1}} />
+        <Select {...vendProps} />
       </div>
     </div>
   );
