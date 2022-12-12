@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { SizeMe } from 'react-sizeme';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import '../../../css/order.css';
+import { sendRequest } from '../../../services';
 import { Overlay, Error1, Empty } from '../../../components/all';
+import { Header } from '../../../components/management/order/list';
 
 export function Order(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [filtering, setFiltering] = useState(false);
-  const { user }  = useSelector(state => state.login);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,11 +23,16 @@ export function Order(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async () => {
+  const getData = async query => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get' + (query ?? '')));
+    //?OrderNo=1&SiteID=1&VendID=1&Status=1
+    if(response?.error) setError(response?.error);
+    else setData(response?.data);
+    console.log(response?.data);
     setLoading(false);
-    setError(false);
-    setFiltering(false);
-    setData([]);
+    setFiltering(query ? true : false);
   }
 
   const onClickAdd = () => {
@@ -32,6 +40,7 @@ export function Order(){
   }
   
   const emptyProps = { icon: 'MdOutlineArticle', type: 'order', noDescr: true, onClickAdd };
+  const headerProps = { onClickAdd, setError, onSearch: getData };
   
   return (
     <div className='s_container_i'>
@@ -40,7 +49,7 @@ export function Order(){
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <SizeMe>{({ size }) => 
             <div className='i_list_cont' id='invt_list'>
-              {/* <Header {...headerProps} size={size} /> */}
+              <Header {...headerProps} size={size} />
               {/* {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />} */}
             </div>
           }</SizeMe>

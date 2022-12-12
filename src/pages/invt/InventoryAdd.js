@@ -237,7 +237,7 @@ export function InventoryAdd(){
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       else if(!isNameValid) setName({ value: name.value, error: ' ' + nameLength + t('error.longer_than') })
       if(!barcode?.value) setBarcode({ value: '', error: t('error.not_empty') });
-      if(!vendId?.value) setVendId({ value: '', error: t('error.not_empty') });
+      if(!vendId?.value) setVendId({ value: null, error: t('error.not_empty') });
       return false;
     }
   }
