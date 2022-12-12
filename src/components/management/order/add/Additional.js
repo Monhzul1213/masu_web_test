@@ -29,7 +29,7 @@ function Card(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, size?.width]);
 
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
