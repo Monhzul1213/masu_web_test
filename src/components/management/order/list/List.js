@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, createSearchParams } from 'react-router-dom';
+import moment from 'moment';
 
 import { formatNumber } from '../../../../helpers';
 import { PaginationTable, Table } from '../../../all';
@@ -21,10 +22,16 @@ export function List(props){
       { Header: t('order.site'), accessor: 'poOrder.siteName' },
       { Header: t('order.status'), accessor: 'poOrder.statusName' },
       // { Header: t('order.t_received'), accessor: 'poOrder.totalQty' },//progress?????????
-      { Header: t('order.req'), accessor: 'poOrder.reqDate' },
+      {
+        Header: t('order.req'), accessor: 'poOrder.reqDate',
+        Cell: ({ value }) => {
+          let expired = moment().add(-1, 'day').isAfter(moment(value, 'yyyy.MM.DD'));
+          return <div style={{ color: expired ? 'var(--danger-color)' : 'var(--text-color)' }}>{value}</div>
+        }
+      },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total2')}</div>, accessor: 'poOrder.total',
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(value)}</div>
       },
     ]);
     return () => {};
