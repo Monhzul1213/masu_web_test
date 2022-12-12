@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-import { getList } from '../../../../services';
+import { getConstants, getList } from '../../../../services';
 import { ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
 import { SearchInput } from '../../../invt/inventory/list/SearchInput';
 
@@ -17,7 +17,7 @@ export function Header(props){
   const [vendor, setVendor] = useState(-1);
   const [vendors, setVendors] = useState([{vendId: -1, vendName: t('order.all_vendor')}]);
   const [status, setStatus] = useState(-1);
-  const [states, setStates] = useState([{vendId: -1, vendName: t('order.all_status')}]);
+  const [states, setStates] = useState([{valueNum: -1, valueStr1: t('order.all_status')}]);
   const [id2, setId2] = useState('po_filter1')
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -62,13 +62,12 @@ export function Header(props){
     if(!states?.length || states?.length === 1){
       setError && setError(null);
       setLoading('status');
-      setStates([{vendId: -1, vendName: t('order.all_status')}])
-      // const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
-      // if(response?.error) setError && setError(response?.error);
-      // else {
-      //   let data = [...[{vendId: -1, vendName: t('order.all_vendor')}], ...response?.data];
-      //   setVendors(data);
-      // }
+      const response = await dispatch(getConstants(user, token, 'poOrder_Status'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        let data = [...[{valueNum: -1, valueStr1: t('order.all_status')}], ...response?.data];
+        setStates(data);
+      }
       setLoading(null);
     }
   }
@@ -116,7 +115,7 @@ export function Header(props){
     label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'site', classBack, classLabel, className, bStyle };
   const vendProps = { value: vendor, setValue: onChangeVendor, data: vendors, s_value: 'vendId', s_descr: 'vendName',
     label: t('order.vend'), onFocus: onFocusVendor, loading: loading === 'vendor', classBack, classLabel, className, bStyle };
-  const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'vendId', s_descr: 'vendName',
+  const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'valueNum', s_descr: 'valueStr1',
     label: t('order.status'), onFocus: onFocusStatus, loading: loading === 'status', classBack, classLabel, className, bStyle };
   
   return (

@@ -193,3 +193,24 @@
   top: 62px;
   max-width: 412;
 }
+
+.ps_container {
+  overflow: scroll;
+}
+
+.ps_back {
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  margin: var(--page-padding);
+  border-radius: var(--radius);
+  max-width: 840px;
+  display: flex;
+  flex-flow: column;
+}
+
+.ps_menu_back {
+  padding: var(--page-padding);
+  display: flex;
+  flex-flow: row;
+  border-bottom: solid 1px var(--input1-color);
+}

@@ -144,7 +144,6 @@ export function OrderAdd(){
 
   const onClickSave = async status => {
     let data = validateData(status);
-    console.log(data);
     if(data){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/Order', data));
@@ -177,56 +176,3 @@ export function OrderAdd(){
     </Overlay>
   );
 }
-
-/**
-
-  const getInventory = async (value, sites1, modifiers1) => {
-    setError(null);
-    setLoading(true);
-    let data = [{ fieldName: 'InvtID', value }];
-    let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', data));
-    setLoading(false);
-    let invt = response && response?.data && response?.data[0];
-    if(response?.error) setError(response?.error);
-    else if(invt) {
-      setInvt(invt);
-      setName({ value: invt?.msInventory?.name ?? '' });
-      setCategory({ value: invt?.msInventory?.categoryId ?? -1 });
-      setBuyAgeLimit({ value: invt?.msInventory?.buyAgeLimit ?? 0 })
-      setIsEach({ value: invt?.msInventory?.isEach ?? 'Y' });
-      setDescr({ value: invt?.msInventory?.descr ?? '' });
-      setPrice({ value: invt?.msInventory?.price ?? 0 });
-      setCost({ value: invt?.msInventory?.cost ?? 0 });
-      setSku({ value: invt?.msInventory?.sku ?? '' });
-      setBarcode({ value: invt?.msInventory?.barCode ?? '' });
-      setIsKit(invt?.msInventory?.isKit === 'Y');
-      if(invt?.msInventory?.isKit === 'Y'){
-        invt?.msInvKitItems?.forEach(kit => kit.unitCost = kit.cost / kit.qty);
-        setKits(invt?.msInvKitItems);
-        setTotalI(invt?.msInventory?.cost ?? 0);
-      } else setVariants(invt?.msInventoryVariants);
-      setChecked(invt?.msInventory?.useAllSite === 'Y');
-      sites1?.forEach(item => {
-        let exists = invt?.psSalesPrices?.filter(si => si.siteId === item.siteId)[0];
-        item.checked = exists ? true : false;
-        if(exists) item.price = exists.price;
-        item.rowStatus = exists ? 'U' : 'I';
-      });
-      setSites(sites1);
-      modifiers1.forEach(item => {
-        let exists = invt?.msInventoryModifers?.filter(si => si.modifireId === item?.modifer?.modifireID)[0];
-        item.checked = exists?.useModifier === 'Y';
-        item.rowStatus = exists ? 'U' : 'I';
-      });
-      setModifiers(modifiers1);
-      getImage(invt?.msInventory);
-    }
-  }
-
-  const onClickDelete = async () => {
-    onLoad();
-    const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteInventory/' + invt?.msInventory?.invtId));
-    if(response?.error) onError(response?.error);
-    else onSuccess(t('inventory.delete_success'));
-  }
- */
