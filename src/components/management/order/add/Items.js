@@ -83,7 +83,7 @@ function Card(props){
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };
   const selectProps = { search, setSearch, data: items, setData: setItems, newItem };
-  const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, autoResetGlobalFilter: false,
+  const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, onClickDelete },
     useGlobalFilter, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };

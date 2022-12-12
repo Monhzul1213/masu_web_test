@@ -79,23 +79,17 @@ export function OrderAdd(){
   const validateData = status => {
     let isSiteValid = siteId?.value || siteId?.value === 0;
     let isDateValid = !reqDate?.value || reqDate?.value?.isAfter(orderDate?.value);
-    if(isSiteValid && isDateValid && items?.length){
-      let orderNo = order?.orderNo ?? '', itemValid = true, addValid = true;
-      let orderItems = items?.map(item => {
+    let length = items?.filter(item => item?.orderQty)?.length;
+    if(isSiteValid && isDateValid && length){
+      let orderNo = order?.orderNo ?? '', orderItems = [], addValid = true;
+      items?.forEach(item => {
         if(item?.orderQty){
           item.orderNo = orderNo;
           item.rowStatus = order ? 'U' : 'I';
           delete item['error'];
-        } else {
-          itemValid = false;
-          item.error = 'orderQty'
+          orderItems.push(item);
         }
-        return item;
       })
-      if(!itemValid){
-        setItems(orderItems);
-        return false;
-      }
       dItems?.forEach(it => orderItems?.push({...it, rowStatus: 'D'}));
 
       let orderCosts = adds?.map(item => {
@@ -125,7 +119,7 @@ export function OrderAdd(){
     } else {
       if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
       if(reqDate?.value && reqDate?.value?.isBefore(orderDate?.value)) setReqDate({ value: reqDate?.value, error: t('error.order_date') });
-      if(!items?.length) setSearch({ value: null, error: t('order.items_error') });
+      if(!length) setSearch({ value: null, error: t('order.items_error') });
       return false;
     }
   }
