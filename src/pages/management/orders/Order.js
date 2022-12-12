@@ -5,8 +5,8 @@ import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import '../../../css/order.css';
 import { sendRequest } from '../../../services';
-import { Overlay, Error1, Empty } from '../../../components/all';
-import { Header } from '../../../components/management/order/list';
+import { Overlay, Error1, Empty, Empty1 } from '../../../components/all';
+import { Header, List } from '../../../components/management/order/list';
 
 export function Order(){
   const [loading, setLoading] = useState(false);
@@ -41,6 +41,7 @@ export function Order(){
   
   const emptyProps = { icon: 'MdOutlineArticle', type: 'order', noDescr: true, onClickAdd };
   const headerProps = { onClickAdd, setError, onSearch: getData };
+  const listProps = { data };
   
   return (
     <div className='s_container_i'>
@@ -50,7 +51,7 @@ export function Order(){
           <SizeMe>{({ size }) => 
             <div className='i_list_cont' id='invt_list'>
               <Header {...headerProps} size={size} />
-              {/* {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />} */}
+              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
             </div>
           }</SizeMe>
         }
