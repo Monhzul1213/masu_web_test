@@ -47,11 +47,30 @@ export function OrderAdd(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [saved]);
 
-  const getData = () => {
+  const getData = async () => {
     let vendor = searchParams?.get('vendId');
     if(vendor){
       setOrder(null);
       setVendId({ value: parseInt(vendor) });
+      getItems(vendor);
+    }
+  }
+
+  const getItems = async vendor => {
+    setError(null);
+    setLoading(false);
+    let filter = [{fieldName: "VendID", value: vendor}]
+    const response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter));
+    setLoading(false);
+    if(response?.error){
+      setError(response?.error);
+    } else {
+      let items = response?.data?.map(item => {
+        let invt = item?.msInventory;
+        return { orderItemId: -1, invtId: invt?.invtId, name: invt?.name, orderQty: 0, totalCost: 0, cost: invt?.cost, siteQty: 0, transitQty: 0,
+          invtCode: '', rowStatus: 'I', sku: invt?.sku };
+      });
+      setItems(items);
     }
   }
 

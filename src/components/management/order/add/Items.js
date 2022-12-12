@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter } from 'react-table';
 import { withSize } from 'react-sizeme';
 
+import { formatNumber } from '../../../../helpers';
 import { PaginationTable, Table, DynamicBSIcon } from '../../../all';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
 import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
-import { formatNumber } from '../../../../helpers';
+import { Search } from './Search';
 
 function Card(props){
   const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch } = props;
@@ -19,6 +20,7 @@ function Card(props){
         Header: t('inventory.title'), accessor: 'name',
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
+      { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />) },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', isText: true,
         customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'transitQty', isText: true,
@@ -70,21 +72,27 @@ function Card(props){
   
   const newItem = invt => {
     return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0,
-      invtCode: '', rowStatus: 'I' };
+      invtCode: '', rowStatus: 'I', sku: invt?.sku };
   }
+
+  const filterFunction = useCallback((rows, ids, query) => {
+    return rows.filter(row => row.values['name']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['sku']?.includes(query));
+  }, []);
 
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-
   const defaultColumn = { Cell: EditableCell };
-  const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    updateMyData, onClickDelete }, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
   const selectProps = { search, setSearch, data: items, setData: setItems, newItem };
-
+  const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, autoResetGlobalFilter: false,
+    initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, onClickDelete },
+    useGlobalFilter, useSortBy, usePagination, useRowSelect);
+  const tableProps = { tableInstance };
+  const { setGlobalFilter } = tableInstance;
+  const searchProps = { handleEnter: setGlobalFilter, size };
+  
   return (
     <div className='po_back_invt1'>
-      <p className='ac_title'>{t('inventory.title')}</p>
+      <Search {...searchProps} />
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />
       </div>

@@ -16,7 +16,10 @@ export function SearchInput(props){
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in', height: 40 };
 
   const onKeyDown = e => {
-    if(e?.key?.toLowerCase() === "enter") handleEnter && handleEnter(search);
+    if(e?.key?.toLowerCase() === "enter"){
+      e?.preventDefault();
+      handleEnter && handleEnter(search);
+    }
   }
 
   const onChange = e => setSearch(e.target.value);

@@ -101,3 +101,28 @@
   }
 }
 
+.po_search_back {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding-bottom: 6px;
+}
+
+.po_search_icon {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.po_search_input {
+  position: absolute;
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  right: 0;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  border-radius: var(--radius);
+  top: -4px
+}
