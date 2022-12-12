@@ -10,7 +10,7 @@ export function List(props){
   const [columns1, setColumns1] = useState([]);
 
   useEffect(() => {
-    changeColumns(['qty',  'totalNetSalesAmt', 'totalCost', 'totalProfitAmt', ]);
+    changeColumns(['totalSalesAmt','totalReturnAmt', 'totalNetSalesAmt',  'totalProfitAmt', 'taxes' ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);

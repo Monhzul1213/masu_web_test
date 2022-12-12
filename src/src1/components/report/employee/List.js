@@ -14,20 +14,20 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: t('report.name'), accessor: 'empName',},
-      { Header: <div style={{textAlign: 'center'}}>{t('report.total_sales')}</div>, accessor: 'totalSalesAmt', customStyle: { width: 150 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('report.total_sales')}</div>, accessor: 'totalSalesAmt', customStyle: { width: 150 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div> },
-      { Header: <div style={{textAlign: 'center'}}>{t('report.refund')}</div>, accessor: 'totalReturnAmt' , customStyle: { width: 150 },
+      { Header: <div style={{textAlign: 'right'}}>{t('report.refund')}</div>, accessor: 'totalReturnAmt' , customStyle: { width: 150 },
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div>},
-      { Header: <div style={{textAlign: 'center'}}>{t('report.discount')}</div>, accessor: 'totalDiscAmt' , customStyle: { width: 100 },
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div>},
-      { Header: <div style={{textAlign: 'center'}}>{t('report.net_sales')}</div> , accessor: 'totalNetSalesAmt',customStyle: { width: 150 } ,
+      { Header: <div style={{textAlign: 'right'}}>{t('report.net_sales')}</div> , accessor: 'totalNetSalesAmt',customStyle: { width: 150 } ,
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div> },
-      { Header: <div style={{textAlign: 'center'}}>{t('report.receipt')}</div>, accessor: 'receipts',customStyle: { width: 100 },
+      { Header: <div style={{textAlign: 'right'}}>{t('report.discount')}</div>, accessor: 'totalDiscAmt' , customStyle: { width: 100 },
+      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div>},
+      { Header: <div style={{textAlign: 'right'}}>{t('report.receipt')}</div>, accessor: 'receipts',customStyle: { width: 100 },
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div> },
-      { Header:  <div style={{textAlign: 'center'}}>{t('report.ave_sale')}</div>, accessor: 'averageAmt',  customStyle: { width: 150 },
+      { Header:  <div style={{textAlign: 'right'}}>{t('report.ave_sale')}</div>, accessor: 'averageAmt',  customStyle: { width: 150 },
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div> },
       {
-        Header: <div style={{textAlign: 'center'}}>{t('report.signed_up')}</div>, accessor: 'customerQty', customStyle: { width: 120 },
+        Header: <div style={{textAlign: 'right'}}>{t('report.customer')}</div>, accessor: 'customerQty', customStyle: { width: 120 },
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div>,
       },
     ]);

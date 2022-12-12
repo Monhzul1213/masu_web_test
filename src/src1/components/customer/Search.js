@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DynamicAIIcon } from '../../components/all/all_m';
 
 export function Search(props){
-  const { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch, width } = props;
+  const { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch, width, className } = props;
   const { t } = useTranslation();
   const inputRef = useRef(null);
 
@@ -28,7 +28,7 @@ export function Search(props){
   }
 
   return (
-    <div className='ih_search_back_z' style={style}>
+    <div className={className ?? 'ih_search_back'} style={style}>
       <DynamicAIIcon className='ih_input_icon_z' name='AiOutlineSearch' />
       <input
         className='ih_input_z'

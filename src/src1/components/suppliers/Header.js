@@ -13,22 +13,18 @@ export function Header(props){
     onSearch(api);
   }
   const onClickSearch = () => setShowSearch(!showSearch);
-
-  const id = size?.width > 440 ? 'ih_large' : 'ih_small';
-  const width = showSearch ? 0 : (size?.width > 440 ? 217 : (size?.width - 30));
-  const width1 = !showSearch ? 0 : (size?.width > 465 ? 250 : (size?.width - 30));
+  const width = showSearch ? 0 : 50;
+  const width1 = !showSearch ? 0 : (size?.width > 495 ? 320 : (size?.width - 20));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
 
   const addProps = { type: 'supplier', onClickAdd, show, onClickDelete };
-  const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch,  };
-  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch, width: width1, show};
+  const searchProps = { className: 'ih_search1', name: 'AiOutlineSearch', onClick: onClickSearch,  };
+  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, onSearch, width: width1, className: 'rp_list_search_back' };
 
   return (
-    <div className='ih_header' id={id}>  
+    <div className='rp_list_filter'>  
       <ButtonRowAddConfirm {...addProps} />
-      <div className='ih_header2' style={style}>
-        <DynamicAIIcon {...searchProps} />
-      </div>
+      <div className='rp_list_filter_icon' style={style}><DynamicAIIcon {...searchProps} /></div>
       <Search {...inputProps} />
     </div>
   );

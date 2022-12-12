@@ -12,15 +12,15 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: t('report.pay_type'), accessor: 'paymentTypeName', Footer: 'Total'}, 
-      { Header: <div style={{textAlign: 'center'}}>{t('report.pay_trans')}</div> , accessor: 'paymentTranscation', customStyle: { width: 200 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('report.pay_trans')}</div> , accessor: 'paymentTranscation', customStyle: { width: 200 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div> ,  },
-      { Header: <div style={{textAlign: 'center'}}>{t('report.pay_amt')}</div>, accessor: 'paymentAmount', customStyle: { width: 200 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('report.pay_amt')}</div>, accessor: 'paymentAmount', customStyle: { width: 200 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div>  },
-      { Header: <div style={{textAlign: 'center'}}>{t('report.refund_trans')}</div>, accessor: 'refundTransaction' , customStyle: { width: 120 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('report.refund_trans')}</div>, accessor: 'refundTransaction' , customStyle: { width: 120 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div> },
-      { Header: <div style={{textAlign: 'center'}}>{t('report.refund_amt')}</div>, accessor: 'refundAmount', customStyle: { width: 200 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('report.refund_amt')}</div>, accessor: 'refundAmount', customStyle: { width: 200 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div>  },
-      { Header: <div style={{textAlign: 'center'}}>{t('report.net_amt')}</div>, accessor: 'netAmount', customStyle: { width: 200 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('report.net_amt')}</div>, accessor: 'netAmount', customStyle: { width: 200 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div>  },
     ]);
     return () => {};
