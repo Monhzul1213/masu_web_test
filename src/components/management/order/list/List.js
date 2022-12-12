@@ -18,7 +18,7 @@ export function List(props){
       { Header: t('order.vend'), accessor: 'poOrder.vendName' },
       { Header: t('order.site'), accessor: 'poOrder.siteName' },
       { Header: t('order.status'), accessor: 'poOrder.statusName' },
-      { Header: t('order.t_received'), accessor: 'poOrder.totalQty' },//progress?????????
+      // { Header: t('order.t_received'), accessor: 'poOrder.totalQty' },//progress?????????
       { Header: t('order.req'), accessor: 'poOrder.reqDate' },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total2')}</div>, accessor: 'poOrder.total',

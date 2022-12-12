@@ -28,7 +28,15 @@ export function Order(){
     setLoading(true);
     const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get' + (query ?? '')));
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else {
+      response?.data?.forEach(item => {
+        let total = 0;
+        item?.poOrderItems?.forEach(poItem => total += poItem.totalCost ?? 0);
+        item?.poOrderAddCosts?.forEach(addItem => total += addItem.addCostAmount ?? 0);
+        item.poOrder.total = total;
+      });
+      setData(response?.data);
+    }
     setLoading(false);
     setFiltering(query ? true : false);
   }
