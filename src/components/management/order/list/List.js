@@ -28,9 +28,10 @@ export function List(props){
       },
       {
         Header: t('order.req'), accessor: 'poOrder.reqDate',
-        Cell: ({ value }) => {
+        Cell: ({ value, row }) => {
           let expired = moment().add(-1, 'day').isAfter(moment(value, 'yyyy.MM.DD'));
-          return <div style={{ color: expired ? 'var(--danger-color)' : 'var(--text-color)' }}>{value}</div>
+          let danger = expired && (row?.original?.poOrder?.status === 0 || row?.original?.poOrder?.status === 1);
+          return <div style={{ color: danger ? 'var(--danger-color)' : 'var(--text-color)' }}>{value}</div>
         }
       },
       {
