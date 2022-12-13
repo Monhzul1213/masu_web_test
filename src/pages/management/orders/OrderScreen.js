@@ -7,12 +7,13 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Menu, Header, Info } from '../../../components/management/order/screen';
+import { Menu, Header, Info, Items } from '../../../components/management/order/screen';
 
 export function OrderScreen(){
-  const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [order, setOrder] = useState(null);
+  const [items, setItems] = useState([]);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ export function OrderScreen(){
           order.poOrder.transitQty = transitQty;
           order.poOrder.percent = parseFloat((transitQty * 100 / totalQty)?.toFixed(2));
           setOrder(order?.poOrder);
+          setItems(order?.poOrderItems);
         }
       }
       setLoading(false);
@@ -54,6 +56,7 @@ export function OrderScreen(){
 
   const menuProps = { order };
   const emptyProps = { text: '', icon: 'MdOutlineArticle' };
+  const listProps = { data: items };
 
   return (
     <Overlay className='ps_container' loading={loading}>
@@ -65,6 +68,7 @@ export function OrderScreen(){
           <div className='ps_scroll'>
             <Header {...menuProps} size={size} />
             <Info {...menuProps} size={size} />
+            <Items {...listProps} size={size} />
           </div>}
         </div>
       }</SizeMe>
