@@ -29,7 +29,6 @@ export function Order(){
     const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get' + (query ?? '')));
     if(response?.error) setError(response?.error);
     else {
-      console.log(response?.data);
       response?.data?.forEach(item => {
         let total = 0, totalQty = 0, transitQty = 0;
         item?.poOrderItems?.forEach(poItem => {
