@@ -7,7 +7,7 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Menu, Header } from '../../../components/management/order/screen';
+import { Menu, Header, Info } from '../../../components/management/order/screen';
 
 export function OrderScreen(){
   const [order, setOrder] = useState(null);
@@ -62,8 +62,9 @@ export function OrderScreen(){
         <div className='ps_back'>
           <Menu {...menuProps} size={size} />
           {!order ? <Empty1 {...emptyProps} /> :
-          <div>
+          <div className='ps_scroll'>
             <Header {...menuProps} size={size} />
+            <Info {...menuProps} size={size} />
           </div>}
         </div>
       }</SizeMe>
