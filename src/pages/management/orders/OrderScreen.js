@@ -34,6 +34,17 @@ export function OrderScreen(){
       else {
         let order = response?.data && response?.data[0];
         if(order){
+          let total = 0, totalQty = 0, transitQty = 0;
+          order?.poOrderItems?.forEach(poItem => {
+            total += poItem.totalCost ?? 0;
+            totalQty += poItem.orderQty ?? 0;
+            transitQty += poItem.transitQty ?? 0;
+          });
+          order?.poOrderAddCosts?.forEach(addItem => total += addItem.addCostAmount ?? 0);
+          order.poOrder.total = total;
+          order.poOrder.totalQty = totalQty;
+          order.poOrder.transitQty = transitQty;
+          order.poOrder.percent = parseFloat((transitQty * 100 / totalQty)?.toFixed(2));
           setOrder(order?.poOrder);
         }
       }

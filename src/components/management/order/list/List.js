@@ -21,7 +21,13 @@ export function List(props){
       { Header: t('order.date'), accessor: 'poOrder.orderDate' },
       { Header: t('order.vend'), accessor: 'poOrder.vendName' },
       { Header: t('order.site'), accessor: 'poOrder.siteName' },
-      { Header: t('order.status'), accessor: 'poOrder.statusName' },
+      {
+        Header: t('order.status'), accessor: 'poOrder.statusName',
+        Cell: ({ value }) => {
+          let color = value === 0 ? 'var(--danger-color)' : value === 1 ? 'var(--text-color)' : 'var(--text2-color)';
+          return <div style={{ color }}>{value}</div>
+        }
+      },
       {
         Header: t('order.t_received'), accessor: 'poOrder.percent', customStyle: { minWidth: 150, paddingTop: 0, paddingBottom: 0 },
         Cell: props => <Progress order={props?.row?.original?.poOrder} />

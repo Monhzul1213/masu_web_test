@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Progress } from '../list/Progress';
+
 export function Header(props){
   const { order } = props;
 
@@ -9,6 +11,7 @@ export function Header(props){
         <p className='ps_header_no'>{order?.orderNo}</p>
         <p className='ps_header_status'>{order?.statusName}</p>
       </div>
+      <Progress order={order} />
     </div>
   );
 }
