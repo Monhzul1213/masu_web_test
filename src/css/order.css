@@ -357,7 +357,13 @@
 }
 
 .ps_list_back {
-  padding: var(--page-padding);
+  padding: var(--page-padding) var(--page-padding) 10px var(--page-padding);
+  border-bottom: solid 1px var(--input1-color);
+}
+
+.ps_list_back1 {
+  padding: 5px var(--page-padding) 10px var(--page-padding);
+  border-bottom: solid 1px var(--input1-color);
 }
 
 .ps_title {

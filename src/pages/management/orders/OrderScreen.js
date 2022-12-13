@@ -7,13 +7,14 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Menu, Header, Info, Items } from '../../../components/management/order/screen';
+import { Menu, Header, Info, Items, Additional } from '../../../components/management/order/screen';
 
 export function OrderScreen(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [order, setOrder] = useState(null);
   const [items, setItems] = useState([]);
+  const [adds, setAdds] = useState([]);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ export function OrderScreen(){
           order.poOrder.percent = parseFloat((transitQty * 100 / totalQty)?.toFixed(2));
           setOrder(order?.poOrder);
           setItems(order?.poOrderItems);
+          setAdds(order?.poOrderAddCosts);
         }
       }
       setLoading(false);
@@ -57,6 +59,7 @@ export function OrderScreen(){
   const menuProps = { order };
   const emptyProps = { text: '', icon: 'MdOutlineArticle' };
   const listProps = { data: items };
+  const addProps = { data: adds };
 
   return (
     <Overlay className='ps_container' loading={loading}>
@@ -69,6 +72,7 @@ export function OrderScreen(){
             <Header {...menuProps} size={size} />
             <Info {...menuProps} size={size} />
             <Items {...listProps} size={size} />
+            {adds?.length ? <Additional {...addProps} size={size} /> : null}
           </div>}
         </div>
       }</SizeMe>
