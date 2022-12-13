@@ -12,7 +12,7 @@ export function Dropdown(props){
   const menu = (
     <Menu>
       {data?.map((item, index) => {
-        return (<Menu.Item key={index}>{item[d_value ?? 'label']}</Menu.Item>);
+        return (<Menu.Item key={index} onClick={item?.onClick}>{item[d_value ?? 'label']}</Menu.Item>);
       })}
     </Menu>
   );

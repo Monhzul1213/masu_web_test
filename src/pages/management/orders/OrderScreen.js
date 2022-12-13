@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { SizeMe } from 'react-sizeme';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -46,9 +47,11 @@ export function OrderScreen(){
   return (
     <Overlay className='ps_container' loading={loading}>
       {error && <Error1 error={error} />}
-      <div className='ps_back'>
-        <Menu {...menuProps} />
-      </div>
+      <SizeMe>{({ size }) => 
+        <div className='ps_back'>
+          <Menu {...menuProps} size={size} />
+        </div>
+      }</SizeMe>
     </Overlay>
-  )
+  );
 }

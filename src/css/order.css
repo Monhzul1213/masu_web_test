@@ -234,7 +234,7 @@
   font-size: 24px;
 }
 
-.ps_btn {
+.ps_btn, .ps_dropdown {
   border: none;
   border-radius: var(--radius);
   background-color: transparent;
@@ -248,7 +248,11 @@
   margin-left: 15px;
 }
 
-.ps_back_btn:hover {
+.ps_back_btn:hover, .ps_btn:hover, .ps_dropdown:hover {
   cursor: pointer;
   background-color: var(--back-color);
+}
+
+#ps_small .ps_btn {
+  display: none;
 }
