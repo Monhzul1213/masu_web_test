@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
-import { Error1, Overlay } from '../../../components/all';
+import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Menu, Header } from '../../../components/management/order/screen';
 
 export function OrderScreen(){
@@ -53,6 +53,7 @@ export function OrderScreen(){
   }
 
   const menuProps = { order };
+  const emptyProps = { text: '', icon: 'MdOutlineArticle' };
 
   return (
     <Overlay className='ps_container' loading={loading}>
@@ -60,7 +61,10 @@ export function OrderScreen(){
       <SizeMe>{({ size }) => 
         <div className='ps_back'>
           <Menu {...menuProps} size={size} />
-          <Header {...menuProps} size={size} />
+          {!order ? <Empty1 {...emptyProps} /> :
+          <div>
+            <Header {...menuProps} size={size} />
+          </div>}
         </div>
       }</SizeMe>
     </Overlay>

@@ -23,8 +23,9 @@ export function List(props){
       { Header: t('order.site'), accessor: 'poOrder.siteName' },
       {
         Header: t('order.status'), accessor: 'poOrder.statusName',
-        Cell: ({ value }) => {
-          let color = value === 0 ? 'var(--danger-color)' : value === 1 ? 'var(--text-color)' : 'var(--text2-color)';
+        Cell: ({ value, row }) => {
+          let status = row?.original?.poOrder?.status;
+          let color = status === 0 ? 'var(--danger-color)' : status === 1 ? 'var(--text-color)' : 'var(--text2-color)';
           return <div style={{ color }}>{value}</div>
         }
       },

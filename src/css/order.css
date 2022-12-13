@@ -287,3 +287,9 @@
   line-height: 18px;
   margin-left: 3px;
 }
+
+.ps_menu {
+  display: flex;
+  flex-flow: row;
+  margin-left: auto;
+}

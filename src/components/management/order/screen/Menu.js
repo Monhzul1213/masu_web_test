@@ -51,12 +51,14 @@ export function Menu(props){
   return (
     <div className='ps_menu_back' id={id}>
       <IconButton {...backProps} />
-      <div style={{flex: 1}} />
-      {order?.status === 0 && <Button {...approveProps} />}
-      {order?.status === 1 && <Button {...receiveProps} />}
-      {(order?.status === 0 || order?.status === 1) && <Button {...editProps} />}
-      <Button {...sendProps} />
-      <Dropdown {...menu1Props} />
+      {!order ? null :
+      <div className='ps_menu'>
+        {order?.status === 0 && <Button {...approveProps} />}
+        {order?.status === 1 && <Button {...receiveProps} />}
+        {(order?.status === 0 || order?.status === 1) && <Button {...editProps} />}
+        <Button {...sendProps} />
+        <Dropdown {...menu1Props} />
+      </div>}
     </div>
   )
 }
