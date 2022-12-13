@@ -256,3 +256,10 @@
 #ps_small .ps_btn {
   display: none;
 }
+
+.po_percent {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text2-color);
+  line-height: 12px;
+}

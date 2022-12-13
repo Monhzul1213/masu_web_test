@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import { formatNumber } from '../../../../helpers';
 import { PaginationTable, Table } from '../../../all';
+import { Progress } from './Progress';
 
 export function List(props){
   const { data, size } = props;
@@ -21,7 +22,10 @@ export function List(props){
       { Header: t('order.vend'), accessor: 'poOrder.vendName' },
       { Header: t('order.site'), accessor: 'poOrder.siteName' },
       { Header: t('order.status'), accessor: 'poOrder.statusName' },
-      // { Header: t('order.t_received'), accessor: 'poOrder.totalQty' },//progress?????????
+      {
+        Header: t('order.t_received'), accessor: 'poOrder.percent', customStyle: { minWidth: 150, paddingTop: 0, paddingBottom: 0 },
+        Cell: props => <Progress order={props?.row?.original?.poOrder} />
+      },
       {
         Header: t('order.req'), accessor: 'poOrder.reqDate',
         Cell: ({ value }) => {

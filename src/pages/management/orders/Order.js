@@ -31,10 +31,17 @@ export function Order(){
     else {
       console.log(response?.data);
       response?.data?.forEach(item => {
-        let total = 0;
-        item?.poOrderItems?.forEach(poItem => total += poItem.totalCost ?? 0);
+        let total = 0, totalQty = 0, transitQty = 0;
+        item?.poOrderItems?.forEach(poItem => {
+          total += poItem.totalCost ?? 0;
+          totalQty += poItem.orderQty ?? 0;
+          transitQty += poItem.transitQty ?? 0;
+        });
         item?.poOrderAddCosts?.forEach(addItem => total += addItem.addCostAmount ?? 0);
         item.poOrder.total = total;
+        item.poOrder.totalQty = totalQty;
+        item.poOrder.transitQty = transitQty;
+        item.poOrder.percent = parseFloat((transitQty * 100 / totalQty)?.toFixed(2));
       });
       setData(response?.data);
     }
