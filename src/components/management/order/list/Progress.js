@@ -2,12 +2,12 @@ import React from 'react';
 import { Progress as AntProgress } from 'antd';
 
 export function Progress(props){
-  const { order } = props;
+  const { order, width } = props;
 
   const pending = order?.status === 0 || order?.status === 1;
 
   return (
-    <div style={{paddingRight: 10}}>
+    <div style={{width, marginTop: -5}}>
       <AntProgress
         percent={order?.percent}
         showInfo={false}

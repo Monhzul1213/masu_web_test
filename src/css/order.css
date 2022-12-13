@@ -259,7 +259,31 @@
 
 .po_percent {
   margin: 0;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text2-color);
   line-height: 12px;
+}
+
+.ps_header_back {
+  display: flex;
+  flex-flow: row;
+  padding: var(--page-padding);
+}
+
+.ps_header_side {
+  flex: 1;
+}
+
+.ps_header_no {
+  font-size: 24px;
+  font-weight: 550;
+  margin: 0;
+  line-height: 28px;
+}
+
+.ps_header_status {
+  font-size: 15px;
+  margin: 0;
+  line-height: 18px;
+  margin-left: 3px;
 }

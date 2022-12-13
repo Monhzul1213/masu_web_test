@@ -29,8 +29,8 @@ export function List(props){
         }
       },
       {
-        Header: t('order.t_received'), accessor: 'poOrder.percent', customStyle: { minWidth: 150, paddingTop: 0, paddingBottom: 0 },
-        Cell: props => <Progress order={props?.row?.original?.poOrder} />
+        Header: t('order.t_received'), accessor: 'poOrder.percent', customStyle: { paddingTop: 0, paddingBottom: 0 },
+        Cell: props => <Progress order={props?.row?.original?.poOrder} width={130} />
       },
       {
         Header: t('order.req'), accessor: 'poOrder.reqDate',
