@@ -33,7 +33,6 @@ export function OrderScreen(){
       if(response?.error) setError(response?.error);
       else {
         let order = response?.data && response?.data[0];
-        console.log(order, order?.poOrder?.status);
         if(order){
           setOrder(order?.poOrder);
         }
