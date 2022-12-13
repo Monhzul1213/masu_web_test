@@ -371,3 +371,25 @@
   font-weight: 450;
   margin: 0;
 }
+
+.ps_footer {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding: var(--page-padding) var(--page-padding) 0 var(--page-padding);
+}
+
+.ps_footer_label {
+  font-size: 14px;
+  font-weight: 550;
+  margin: 0;
+}
+
+.ps_footer_value {
+  font-size: 14px;
+  font-weight: 550;
+  margin: 0 0 0 10px;
+  min-width: 150px;
+  text-align: right;
+}

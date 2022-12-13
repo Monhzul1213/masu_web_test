@@ -7,7 +7,7 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Menu, Header, Info, Items, Additional } from '../../../components/management/order/screen';
+import { Menu, Header, Info, Items, Additional, Footer } from '../../../components/management/order/screen';
 
 export function OrderScreen(){
   const [loading, setLoading] = useState(false);
@@ -73,6 +73,7 @@ export function OrderScreen(){
             <Info {...menuProps} size={size} />
             <Items {...listProps} size={size} />
             {adds?.length ? <Additional {...addProps} size={size} /> : null}
+            <Footer total={order?.poOrder?.total} />
           </div>}
         </div>
       }</SizeMe>
