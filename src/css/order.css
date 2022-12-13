@@ -324,9 +324,15 @@
   margin: 0;
 }
 
-.ps_col_back {
+#ps_info_large .ps_col_back {
   display: flex;
   flex-flow: row;
+  margin-top: 20px;
+}
+
+#ps_info_small .ps_col_back {
+  display: flex;
+  flex-flow: column;
   margin-top: 20px;
 }
 
@@ -348,4 +354,14 @@
 .ps_col_text {
   font-size: 14px;
   margin: 0 0 1px 0;
+}
+
+.ps_list_back {
+  padding: var(--page-padding);
+}
+
+.ps_title {
+  font-size: 17px;
+  font-weight: 450;
+  margin: 0;
 }

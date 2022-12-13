@@ -32,6 +32,14 @@
   z-index: 1;
 }
 
+.table_header_text1 {
+  color: var(--text2-color);
+  text-align: left;
+  padding: var(--page-padding) 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .table_header_cell {
   display: flex;
   flex-flow: row;

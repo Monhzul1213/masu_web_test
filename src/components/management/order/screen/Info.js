@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export function Info(props){
-  const { order } = props;
+  const { order, size } = props;
   const { t } = useTranslation();
 
   const Field = ({ label, value }) => {
@@ -14,8 +14,10 @@ export function Info(props){
     );
   }
 
+  const id = size?.width >= 600 ? 'ps_info_large' : 'ps_info_small';
+
   return (
-    <div className='ps_info_back'>
+    <div className='ps_info_back' id={id}>
       <Field label='date' value={order?.orderDate} />
       {order?.reqDate ? <Field label='req' value={order?.reqDate} /> : null}
       <Field label='created' value={order?.createdUserName} />
@@ -35,6 +37,11 @@ export function Info(props){
           {order?.sitePhone ? <p className='ps_col_text'>{order?.sitePhone}</p>: null}
         </div>
       </div>
+      {!order?.notes ? null :
+      <div style={{marginTop: 15}}>
+        <p className='ps_col_title'>{t('order.note')}:</p>
+        <p className='ps_col_text'>{order?.notes}</p>
+      </div>}
     </div>
   );
 }
