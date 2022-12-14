@@ -21,13 +21,13 @@ export function Menu(props){
       { label: t('order.copy'), onClick: onPressCopy },
       { label: t('order.print'), onClick: onPressPrint, disabled: true },
     ];
-    if(order?.status === 1) data.push({ label: t('order.cancel'), onClick: onPressCancel });
-    if(order?.status === 0) data.push({ label: t('order.delete'), onClick: onPressDelete });
+    if(order?.status === 1) data.push({ label: t('order.cancel'), onClick: onPressCancel, confirmText: t('order.cancel_confirm') });
+    if(order?.status === 0) data.push({ label: t('order.delete'), onClick: onPressDelete, confirmText: t('order.delete_confirm') });
     if(size?.width < 510){
       data.unshift({ label: t('order.send'), onClick: onPressSend, disabled: true });
       if(order?.status === 1 || order?.status === 1) data.unshift({ label: t('order.edit'), onClick: onPressEdit });
       if(order?.status === 1) data.unshift({ label: t('order.receive'), onClick: onPressReceive, disabled: true });
-      if(order?.status === 0) data.unshift({ label: t('order.approve'), onClick: onPressApprove });
+      if(order?.status === 0) data.unshift({ label: t('order.approve'), onClick: onPressApprove, confirmText: t('order.approve_confirm') });
     }
     setData(data);
     return () => {};
@@ -86,7 +86,7 @@ export function Menu(props){
   const receiveProps = { className: 'ps_btn', text: t('order.receive'), onClick: onPressReceive, disabled: true };
   const editProps = { className: 'ps_btn', text: t('order.edit'), onClick: onPressEdit };
   const sendProps = { className: 'ps_btn', text: t('order.send'), onClick: onPressSend, disabled: true };
-  const menu1Props = { className: 'ps_dropdown', label: t('order.more'), data };
+  const menuProps = { className: 'ps_dropdown', label: t('order.more'), data };
 
   return (
     <div className='ps_menu_back' id={id}>
@@ -97,7 +97,7 @@ export function Menu(props){
         {order?.status === 1 && <Button {...receiveProps} />}
         {(order?.status === 0 || order?.status === 1) && <Button {...editProps} />}
         <Button {...sendProps} />
-        <Dropdown {...menu1Props} />
+        <Dropdown {...menuProps} />
       </div>}
     </div>
   )
