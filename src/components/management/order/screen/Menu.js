@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { MdChevronLeft } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { sendRequest } from '../../../../services';
 import { IconButton, Button, Dropdown } from '../../../all';
 
 export function Menu(props){
-  const { order, size } = props;
+  const { order, items, adds, onLoad, onDone, getData, size } = props;
   const { t } = useTranslation();
   const [data, setData] = useState([]);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +20,7 @@ export function Menu(props){
       { label: t('order.pdf'), onClick: onPressExport },
       { label: t('order.copy'), onClick: onPressCopy },
       { label: t('order.print'), onClick: onPressPrint },
-      { label: t('order.cancel'), onClick: onPressCancel },
+      { label: t(order?.status === 0 ? 'order.delete' : 'order.cancel'), onClick: onPressCancel },
     ];
     if(size?.width < 510){
       data.unshift({ label: t('order.send'), onClick: onPressSend });
@@ -30,14 +34,32 @@ export function Menu(props){
   }, [size?.width, order?.status]);
 
   const onClick = () => navigate(-1);
-  const onPressApprove = () => console.log(order);
+
+  const updateOrder = async data => {
+    onLoad();
+    const response = await dispatch(sendRequest(user, token, 'Txn/Order', data));
+    if(response?.error){
+      onDone(true, response?.error);
+      return false;
+    } else {
+      onDone(false, t('order.approve_success'));
+      return true;
+    }
+  }
+  
+  const onPressApprove = async () => {
+    let data = { ...order, status: 1, rowStatus: 'U', orderItems: items, orderCosts: adds };
+    const response = await updateOrder(data);
+    if(response) getData(order?.orderNo)
+  }
+  
   const onPressReceive = () => {};
   const onPressEdit = () => {};
   const onPressSend = () => {};
   const onPressExport = () => console.log('onPressExport');
   const onPressCopy = () => console.log('onPressCopy');
   const onPressPrint = () => console.log('onPressPrint');
-  const onPressCancel = () => console.log('onPressCancel');
+  const onPressCancel = () => console.log('onPressCancel');//ALSO DELETE
 
   const id = size?.width >= 510 ? 'ps_large' : 'ps_small';
 

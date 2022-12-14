@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SizeMe } from 'react-sizeme';
+import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -21,18 +22,28 @@ export function OrderScreen(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    let orderNo = searchParams?.get('orderNo');
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData(orderNo);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async () => {
-    let orderNo = searchParams?.get('orderNo');
+  const onLoad = () => {
+    setError(null);
+    setLoading(true);
+  }
+
+  const onDone = (isError, msg) => {
+    setLoading(false);
+    if(isError) setError(msg);
+    else if(msg) message.success(msg);
+  }
+
+  const getData = async orderNo => {
     if(orderNo){
-      setError(null);
-      setLoading(true);
+      onLoad()
       const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get?OrderNo=' + orderNo));
-      if(response?.error) setError(response?.error);
+      if(response?.error) onDone(true, response?.error);
       else {
         let order = response?.data && response?.data[0];
         if(order){
@@ -41,8 +52,12 @@ export function OrderScreen(){
             total += poItem.totalCost ?? 0;
             totalQty += poItem.orderQty ?? 0;
             transitQty += poItem.transitQty ?? 0;
+            poItem.rowStatus = 'U';
           });
-          order?.poOrderAddCosts?.forEach(addItem => total += addItem.addCostAmount ?? 0);
+          order?.poOrderAddCosts?.forEach(addItem => {
+            total += addItem.addCostAmount ?? 0;
+            addItem.rowStatus = 'U';
+          });
           order.poOrder.total = total;
           order.poOrder.totalQty = totalQty;
           order.poOrder.transitQty = transitQty;
@@ -51,12 +66,12 @@ export function OrderScreen(){
           setItems(order?.poOrderItems);
           setAdds(order?.poOrderAddCosts);
         }
+        onDone();
       }
-      setLoading(false);
     }
   }
 
-  const menuProps = { order };
+  const menuProps = { order, items, adds, onLoad, onDone, getData };
   const emptyProps = { text: '', icon: 'MdOutlineArticle' };
   const listProps = { data: items };
   const addProps = { data: adds };
