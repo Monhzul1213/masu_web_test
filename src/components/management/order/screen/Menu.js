@@ -20,8 +20,9 @@ export function Menu(props){
       { label: t('order.pdf'), onClick: onPressExport },
       { label: t('order.copy'), onClick: onPressCopy },
       { label: t('order.print'), onClick: onPressPrint, disabled: true },
-      { label: t(order?.status === 0 ? 'order.delete' : 'order.cancel'), onClick: onPressCancel },
     ];
+    if(order?.status === 1) data.push({ label: t('order.cancel'), onClick: onPressCancel });
+    if(order?.status === 0) data.push({ label: t('order.delete'), onClick: onPressDelete });
     if(size?.width < 510){
       data.unshift({ label: t('order.send'), onClick: onPressSend, disabled: true });
       if(order?.status === 1 || order?.status === 1) data.unshift({ label: t('order.edit'), onClick: onPressEdit });
@@ -35,22 +36,34 @@ export function Menu(props){
 
   const onClick = () => navigate('/management/order_list');
 
-  const updateOrder = async data => {
+  const updateOrder = async (data, msg) => {
     onLoad();
     const response = await dispatch(sendRequest(user, token, 'Txn/Order', data));
     if(response?.error){
       onDone(true, response?.error);
       return false;
     } else {
-      onDone(false, t('order.approve_success'));
+      onDone(false, t('order.' + msg));
       return true;
     }
   }
   
   const onPressApprove = async () => {
     let data = { ...order, status: 1, rowStatus: 'U', orderItems: items, orderCosts: adds };
-    const response = await updateOrder(data);
-    if(response) getData(order?.orderNo)
+    const response = await updateOrder(data, 'approve_success');
+    if(response) getData(order?.orderNo);
+  }
+
+  const onPressCancel = async () => {
+    let data = { ...order, status: 3, rowStatus: 'U', orderItems: items, orderCosts: adds };
+    const response = await updateOrder(data, 'cancel_success');
+    if(response) getData(order?.orderNo);
+  }
+
+  const onPressDelete = async () => {
+    let data = { ...order, rowStatus: 'D', orderItems: items, orderCosts: adds };
+    const response = await updateOrder(data, 'delete_success');
+    if(response) onClick();
   }
 
   const onPressEdit = () => {
@@ -62,8 +75,6 @@ export function Menu(props){
   }
 
   const onPressExport = () => console.log('onPressExport');
-  const onPressCancel = () => console.log('onPressCancel');//ALSO DELETE
-
   const onPressReceive = () => {};//DISABLED FOR NOW
   const onPressSend = () => {};//DISABLED FOR NOW
   const onPressPrint = () => {};//DISABLED FOR NOW
