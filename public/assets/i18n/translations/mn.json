@@ -563,6 +563,7 @@
     "totalDiscAmt": "Хөнгөлөлт",
     "totalNetSalesAmt": "Цэвэр борлуулалт",
     "totalProfitAmt": "Ашиг",
+    "thousand": "(мянгаар)",
     "periods": [
       { "value": "H", "label": "Цагаар" },
       { "value": "D", "label": "Өдрөөр" },

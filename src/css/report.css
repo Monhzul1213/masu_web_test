@@ -549,6 +549,12 @@
   flex: 1;
 }
 
+.rr_graph_sub {
+  font-size: 13px;
+  margin: 0;
+  font-weight: normal;
+}
+
 #rr_large .rr_graph_selects {
   display: flex;
   flex-flow: row;

@@ -30,6 +30,12 @@ export function Graph(props){
     else if(period === 'M') return value + t('page.month');
   }
 
+  const tickFormatter = tick => {
+    if(tick >= 1000) return '₮' + formatNumber(tick / 1000, 0);
+    else return '₮' + formatNumber(tick / 1000, 2);
+    // return '₮' + formatNumber(tick);
+  }
+
   let id = size?.width >= 400 ? 'rr_large' : 'rr_small';
   let typeProps = { value: isBar, setValue: setIsBar, data: graphList, className: 'rr_graph_select', bStyle: { } };
   let periodProps = { value: period, setValue: setPeriod, data: periodData, className: 'rr_graph_select', bStyle: { marginLeft: 15 } };
@@ -37,7 +43,7 @@ export function Graph(props){
   let style = { width, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' };
   let chartProps = { style, data, dataKey: period === 'W' ? 'weekInterval' : 'salesDate',
     bars: [{color: '#4BAF4F', fill: '#4BAF4F55', key: tab}], hasLegend: false,
-    tickFormatter: tick => { return '₮' + formatNumber(tick) }, xFormatter,
+    tickFormatter, xFormatter,
     legendFormatter: () => t('report_review.' + tab),
     tipFormatter: (value, name, props) => ['₮' + formatNumber(value), t('report_review.' + tab)] };
 
@@ -52,7 +58,7 @@ export function Graph(props){
       </div>
       <div className='rr_graph_back'>
         <div className='rr_graph_header'>
-          <p className='rr_graph_title'>{t('report_review.' + tab)}</p>
+          <p className='rr_graph_title'>{t('report_review.' + tab)} <span className='rr_graph_sub'>{t('report_review.thousand')}</span></p>
           <div className='rr_graph_selects'>
             <PlainSelect {...typeProps} />
             <PlainSelect {...periodProps} />
