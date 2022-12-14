@@ -33,7 +33,7 @@ export function Menu(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width, order?.status]);
 
-  const onClick = () => navigate(-1);
+  const onClick = () => navigate('/management/order_list');
 
   const updateOrder = async data => {
     onLoad();

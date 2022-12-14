@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, createSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
@@ -42,7 +42,7 @@ export function OrderAdd(){
   }, []);
 
   useEffect(() => {
-    if(saved) onClickCancel();
+    if(saved) navigate({ pathname: '/management/order_list/order', search: createSearchParams({ orderNo: saved }).toString() });
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [saved]);
@@ -159,10 +159,10 @@ export function OrderAdd(){
     setLoading(false);
   }
 
-  const onSuccess = msg => {
+  const onSuccess = (msg, orderNo) => {
     if(msg){
       message.success(msg);
-      setSaved(true);
+      setSaved(orderNo);
     }
     setLoading(false);
   }
@@ -173,7 +173,7 @@ export function OrderAdd(){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/Order', data));
       if(response?.error) onError(response?.error, true);
-      else onSuccess(t('order.add_success'));
+      else onSuccess(t('order.add_success'), response?.data?.orderNo);
     }
   }
 
