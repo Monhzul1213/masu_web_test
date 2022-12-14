@@ -5,7 +5,7 @@ import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { sendRequest } from '../../../../services';
-import { IconButton, Button, Dropdown } from '../../../all';
+import { IconButton, Button, ButtonConfirm, Dropdown } from '../../../all';
 
 export function Menu(props){
   const { order, items, adds, onLoad, onDone, getData, size } = props;
@@ -82,7 +82,7 @@ export function Menu(props){
   const id = size?.width >= 510 ? 'ps_large' : 'ps_small';
 
   const backProps = { className: 'ps_back_btn', text: t('order.back'), icon: <MdChevronLeft className='ps_back_icon' />, onClick };
-  const approveProps = { className: 'ps_btn', text: t('order.approve'), onClick: onPressApprove };
+  const approveProps = { className: 'ps_btn', text: t('order.approve'), onClick: onPressApprove, confirmText: t('order.approve_confirm') };
   const receiveProps = { className: 'ps_btn', text: t('order.receive'), onClick: onPressReceive, disabled: true };
   const editProps = { className: 'ps_btn', text: t('order.edit'), onClick: onPressEdit };
   const sendProps = { className: 'ps_btn', text: t('order.send'), onClick: onPressSend, disabled: true };
@@ -93,7 +93,7 @@ export function Menu(props){
       <IconButton {...backProps} />
       {!order ? null :
       <div className='ps_menu'>
-        {order?.status === 0 && <Button {...approveProps} />}
+        {order?.status === 0 && <ButtonConfirm {...approveProps} />}
         {order?.status === 1 && <Button {...receiveProps} />}
         {(order?.status === 0 || order?.status === 1) && <Button {...editProps} />}
         <Button {...sendProps} />
