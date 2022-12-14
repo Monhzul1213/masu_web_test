@@ -99,7 +99,11 @@ export function OrderAdd(){
     }
   }
 
-  const onClickCancel = () => navigate('/management/order_list');
+  const onClickCancel = () => {
+    order?.orderNo
+      ? navigate({ pathname: '/management/order_list/order', search: createSearchParams({ orderNo: order?.orderNo }).toString() })
+      : navigate('/management/order_list');
+  }
 
   const validateData = status => {
     let isSiteValid = siteId?.value || siteId?.value === 0;
