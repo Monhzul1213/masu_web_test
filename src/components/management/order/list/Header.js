@@ -66,7 +66,7 @@ export function Header(props){
       if(response?.error) setError && setError(response?.error);
       else {
         let data = [...[{valueNum: -1, valueStr1: t('order.all_status')}], ...response?.data];
-        setStates(data);
+        setStates(data?.sort((a, b) => a.valueNum - b.valueNum));
       }
       setLoading(null);
     }
