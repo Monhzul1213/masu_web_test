@@ -254,6 +254,11 @@
   background-color: var(--back-color);
 }
 
+.ps_btn:disabled {
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
 #ps_small .ps_btn {
   display: none;
 }

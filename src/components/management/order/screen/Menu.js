@@ -25,7 +25,7 @@ export function Menu(props){
     if(size?.width < 510){
       data.unshift({ label: t('order.send'), onClick: onPressSend });
       if(order?.status === 1 || order?.status === 1) data.unshift({ label: t('order.edit'), onClick: onPressEdit });
-      if(order?.status === 1) data.unshift({ label: t('order.receive'), onClick: onPressReceive });
+      if(order?.status === 1) data.unshift({ label: t('order.receive'), onClick: onPressReceive, disabled: true });
       if(order?.status === 0) data.unshift({ label: t('order.approve'), onClick: onPressApprove });
     }
     setData(data);
@@ -65,7 +65,7 @@ export function Menu(props){
 
   const backProps = { className: 'ps_back_btn', text: t('order.back'), icon: <MdChevronLeft className='ps_back_icon' />, onClick };
   const approveProps = { className: 'ps_btn', text: t('order.approve'), onClick: onPressApprove };
-  const receiveProps = { className: 'ps_btn', text: t('order.receive'), onClick: onPressReceive };
+  const receiveProps = { className: 'ps_btn', text: t('order.receive'), onClick: onPressReceive, disabled: true };
   const editProps = { className: 'ps_btn', text: t('order.edit'), onClick: onPressEdit };
   const sendProps = { className: 'ps_btn', text: t('order.send'), onClick: onPressSend };
   const menu1Props = { className: 'ps_dropdown', label: t('order.more'), data };
