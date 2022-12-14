@@ -19,7 +19,7 @@ export function Menu(props){
     let data = [
       { label: t('order.pdf'), onClick: onPressExport },
       { label: t('order.copy'), onClick: onPressCopy },
-      { label: t('order.print'), onClick: onPressPrint },
+      { label: t('order.print'), onClick: onPressPrint, disabled: true },
       { label: t(order?.status === 0 ? 'order.delete' : 'order.cancel'), onClick: onPressCancel },
     ];
     if(size?.width < 510){
@@ -62,11 +62,11 @@ export function Menu(props){
   }
 
   const onPressExport = () => console.log('onPressExport');
-  const onPressPrint = () => console.log('onPressPrint');
   const onPressCancel = () => console.log('onPressCancel');//ALSO DELETE
 
   const onPressReceive = () => {};//DISABLED FOR NOW
   const onPressSend = () => {};//DISABLED FOR NOW
+  const onPressPrint = () => {};//DISABLED FOR NOW
 
   const id = size?.width >= 510 ? 'ps_large' : 'ps_small';
 
