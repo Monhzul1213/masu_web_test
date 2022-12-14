@@ -57,8 +57,11 @@ export function Menu(props){
     navigate({ pathname: '/management/order_list/order_add', search: createSearchParams({ orderNo: order?.orderNo }).toString() });
   };
 
+  const onPressCopy = () => {
+    navigate({ pathname: '/management/order_list/order_add', search: createSearchParams({ orderNo: order?.orderNo, copying: true }).toString() });
+  }
+
   const onPressExport = () => console.log('onPressExport');
-  const onPressCopy = () => console.log('onPressCopy');
   const onPressPrint = () => console.log('onPressPrint');
   const onPressCancel = () => console.log('onPressCancel');//ALSO DELETE
 

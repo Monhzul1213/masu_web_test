@@ -31,6 +31,7 @@ export function OrderAdd(){
   const [search, setSearch] = useState({ value: null });
   const [searchParams] = useSearchParams();
   const [saved, setSaved] = useState(false);
+  const [editing, setEditing] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,29 +51,33 @@ export function OrderAdd(){
   const getData = async () => {
     let vendor = searchParams?.get('vendId');
     let orderNo = searchParams?.get('orderNo');
+    let copying = searchParams?.get('copying');
     if(vendor){
       setOrder(null);
       setVendId({ value: parseInt(vendor) });
       getItems(vendor);
     } else if(orderNo)
-      getOrder(orderNo);
+      getOrder(orderNo, !copying);
   }
 
-  const getOrder = async orderNo => {
+  const getOrder = async (orderNo, editing) => {
     onLoad();
     const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get?OrderNo=' + orderNo));
     if(response?.error) onError(response?.error, false);
     else {
       let order = response?.data && response?.data[0];
       setOrder(order?.poOrder);
+      setEditing(editing);
       let total1 = 0, total2 = 0;
       order?.poOrderItems?.forEach(item => {
-        item.rowStatus = 'U';
+        item.rowStatus = editing ? 'U' : 'I';
+        if(!editing) item.orderItemId = -1;
         item.name = item?.invtName;
         total1 += item?.totalCost ?? 0;
       });
       order?.poOrderAddCosts?.forEach(item => {
-        item.rowStatus = 'U';
+        item.rowStatus = editing ? 'U' : 'I';
+        if(!editing) item.orderAdditionalId = -1;
         total2 += item?.addCostAmount ?? 0;
       });
       setItems(order?.poOrderItems);
@@ -110,7 +115,7 @@ export function OrderAdd(){
     let isDateValid = !reqDate?.value || reqDate?.value?.isAfter(orderDate?.value);
     let length = items?.filter(item => item?.orderQty)?.length;
     if(isSiteValid && isDateValid && length){
-      let orderNo = order?.orderNo ?? '', orderItems = [], addValid = true;
+      let orderNo = editing ? order?.orderNo : '', orderItems = [], addValid = true;
       items?.forEach(item => {
         if(item?.orderQty){
           item.orderNo = orderNo;
@@ -139,7 +144,7 @@ export function OrderAdd(){
         orderNo, vendId: vendId?.value, siteId: siteId?.value, status, notes: notes?.value,
         orderDate: orderDate?.value?.format('yyyy.MM.DD'),
         reqDate: reqDate?.value ? reqDate?.value?.format('yyyy.MM.DD') : '',
-        rowStatus: order ? 'U' : 'I',
+        rowStatus: editing ? 'U' : 'I',
         orderItems, orderCosts
       };
       return data;
@@ -182,10 +187,11 @@ export function OrderAdd(){
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading,
-    order };
+    order, editing };
   let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
-  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns', status: order?.status };
+  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
+    hide: editing && order?.status === 1 };
 
   return (
     <Overlay className='i_container' loading={loading}>

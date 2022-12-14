@@ -9,7 +9,7 @@ import { Date, DescrInput, Select } from '../../../all';
 
 function Card(props){
   const { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, size,
-    setLoading, order } = props;
+    setLoading, order, editing } = props;
   const { t } = useTranslation();
   const [vendors, setVendors] = useState([]);
   const [sites, setSites] = useState([]);
@@ -67,7 +67,7 @@ function Card(props){
 
   return (
     <div className='po_back' id={id}>
-      {order?.orderNo ? <p className='ps_header_no' style={{marginBottom: 10}}>{order?.orderNo}</p> : null}
+      {order?.orderNo && editing ? <p className='ps_header_no' style={{marginBottom: 10}}>{order?.orderNo}</p> : null}
       <div id={idRow} style={{marginTop: 0}}>
         <Select {...vendProps} />
         <div className='im_gap' />
