@@ -54,33 +54,48 @@ export function OrderAdd(){
       setOrder(null);
       setVendId({ value: parseInt(vendor) });
       getItems(vendor);
-    } else if(orderNo){
-      onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get?OrderNo=' + orderNo));
-      if(response?.error) onError(response?.error, false);
-      else {
-        let order = response?.data && response?.data[0];
-        setOrder(order?.poOrder);
-        onSuccess();
-      }
+    } else if(orderNo)
+      getOrder(orderNo);
+  }
+
+  const getOrder = async orderNo => {
+    onLoad();
+    const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get?OrderNo=' + orderNo));
+    if(response?.error) onError(response?.error, false);
+    else {
+      let order = response?.data && response?.data[0];
+      setOrder(order?.poOrder);
+      let total1 = 0, total2 = 0;
+      order?.poOrderItems?.forEach(item => {
+        item.rowStatus = 'U';
+        item.name = item?.invtName;
+        total1 += item?.totalCost ?? 0;
+      });
+      order?.poOrderAddCosts?.forEach(item => {
+        item.rowStatus = 'U';
+        total2 += item?.addCostAmount ?? 0;
+      });
+      setItems(order?.poOrderItems);
+      setAdds(order?.poOrderAddCosts);
+      setTotal1(total1);
+      setTotal2(total2);
+      onSuccess();
     }
   }
 
   const getItems = async vendor => {
-    setError(null);
-    setLoading(false);
+    onLoad();
     let filter = [{fieldName: "VendID", value: vendor}]
     const response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter));
-    setLoading(false);
-    if(response?.error){
-      setError(response?.error);
-    } else {
+    if(response?.error) onError(response?.error, false);
+    else {
       let items = response?.data?.map(item => {
         let invt = item?.msInventory;
         return { orderItemId: -1, invtId: invt?.invtId, name: invt?.name, orderQty: 0, totalCost: 0, cost: invt?.cost, siteQty: 0, transitQty: 0,
           invtCode: '', rowStatus: 'I', sku: invt?.sku };
       });
       setItems(items);
+      onSuccess();
     }
   }
 
@@ -95,7 +110,6 @@ export function OrderAdd(){
       items?.forEach(item => {
         if(item?.orderQty){
           item.orderNo = orderNo;
-          item.rowStatus = order ? 'U' : 'I';
           delete item['error'];
           orderItems.push(item);
         }
@@ -105,7 +119,6 @@ export function OrderAdd(){
       let orderCosts = adds?.map(item => {
         if(item?.addCostAmount && item?.addCostName){
           item.orderNo = orderNo;
-          item.rowStatus = order ? 'U' : 'I';
           delete item['error'];
         } else {
           addValid = false;
@@ -168,7 +181,7 @@ export function OrderAdd(){
     order };
   let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
-  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns' };
+  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns', status: order?.status };
 
   return (
     <Overlay className='i_container' loading={loading}>

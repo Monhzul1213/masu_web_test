@@ -57,7 +57,7 @@ function Card(props){
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
 
   const vendProps = { value: vendId, setValue: setVendId, label: t('order.vend'), placeholder: t('order.vend'), data: vendors, setError, setEdited,
-    s_value: 'vendId', s_descr: 'vendName', inRow: true, disabled: order ? false : true };
+    s_value: 'vendId', s_descr: 'vendName', inRow: true, disabled: true };
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true };
   const dateProps = { value: orderDate, setValue: setOrderDate, label: t('order.date'), setError, setEdited, inRow: true };

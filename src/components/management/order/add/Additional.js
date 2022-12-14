@@ -15,7 +15,7 @@ function Card(props){
   useEffect(() => {
     const width = size?.width >= 840 ? 670 : (size?.width - 170);
     setColumns([
-      { Header: t('order.t_name'), accessor: 'addCostName', customStyle: { width, paddingRight: 18 }, width: width - 20, length: 40, autoFocus: true },
+      { Header: t('order.t_name'), accessor: 'addCostName', customStyle: { width, paddingRight: 18 }, width: width - 20, length: 40 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_amt')}</div>, accessor: 'addCostAmount', isMoney: true,// autoFocus: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80
@@ -57,7 +57,7 @@ function Card(props){
   }
   
   const onClick = () => {
-    setAdds(old => [...old, { addCostName: '', addCostAmount: 0, orderAdditionalId: -1 }]);
+    setAdds(old => [...old, { addCostName: '', addCostAmount: 0, orderAdditionalId: -1, rowStatus: 'I' }]);
   }
 
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
