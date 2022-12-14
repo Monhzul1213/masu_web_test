@@ -23,7 +23,7 @@ export function Menu(props){
       { label: t(order?.status === 0 ? 'order.delete' : 'order.cancel'), onClick: onPressCancel },
     ];
     if(size?.width < 510){
-      data.unshift({ label: t('order.send'), onClick: onPressSend });
+      data.unshift({ label: t('order.send'), onClick: onPressSend, disabled: true });
       if(order?.status === 1 || order?.status === 1) data.unshift({ label: t('order.edit'), onClick: onPressEdit });
       if(order?.status === 1) data.unshift({ label: t('order.receive'), onClick: onPressReceive, disabled: true });
       if(order?.status === 0) data.unshift({ label: t('order.approve'), onClick: onPressApprove });
@@ -52,18 +52,18 @@ export function Menu(props){
     const response = await updateOrder(data);
     if(response) getData(order?.orderNo)
   }
-  
-  const onPressReceive = () => {};//DISABLED FOR NOW
 
   const onPressEdit = () => {
     navigate({ pathname: '/management/order_list/order_add', search: createSearchParams({ orderNo: order?.orderNo }).toString() });
   };
 
-  const onPressSend = () => {};
   const onPressExport = () => console.log('onPressExport');
   const onPressCopy = () => console.log('onPressCopy');
   const onPressPrint = () => console.log('onPressPrint');
   const onPressCancel = () => console.log('onPressCancel');//ALSO DELETE
+
+  const onPressReceive = () => {};//DISABLED FOR NOW
+  const onPressSend = () => {};//DISABLED FOR NOW
 
   const id = size?.width >= 510 ? 'ps_large' : 'ps_small';
 
@@ -71,7 +71,7 @@ export function Menu(props){
   const approveProps = { className: 'ps_btn', text: t('order.approve'), onClick: onPressApprove };
   const receiveProps = { className: 'ps_btn', text: t('order.receive'), onClick: onPressReceive, disabled: true };
   const editProps = { className: 'ps_btn', text: t('order.edit'), onClick: onPressEdit };
-  const sendProps = { className: 'ps_btn', text: t('order.send'), onClick: onPressSend };
+  const sendProps = { className: 'ps_btn', text: t('order.send'), onClick: onPressSend, disabled: true };
   const menu1Props = { className: 'ps_dropdown', label: t('order.more'), data };
 
   return (
