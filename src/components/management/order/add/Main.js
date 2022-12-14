@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
+import moment from 'moment';
 
 import { getList } from '../../../../services';
 import { Date, DescrInput, Select } from '../../../all';
@@ -20,6 +21,18 @@ function Card(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if(order){
+      setVendId({ value: order?.vendId });
+      setSiteId({ value: order?.siteId });
+      setOrderDate({ value: moment(order?.orderDate, 'yyyy.MM.DD') });
+      if(order?.reqDate) setReqDate({ value: moment(order?.reqDate, 'yyyy.MM.DD') });
+      setNotes({ value: order?.notes });
+    }
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order]);
 
   const getData = async () => {
     let response = await getLists('Merchant/vendor/getvendor', setVendors);
@@ -54,6 +67,7 @@ function Card(props){
 
   return (
     <div className='po_back' id={id}>
+      {order?.orderNo ? <p className='ps_header_no' style={{marginBottom: 10}}>{order?.orderNo}</p> : null}
       <div id={idRow} style={{marginTop: 0}}>
         <Select {...vendProps} />
         <div className='im_gap' />

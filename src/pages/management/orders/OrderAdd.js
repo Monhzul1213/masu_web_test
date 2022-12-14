@@ -49,10 +49,20 @@ export function OrderAdd(){
 
   const getData = async () => {
     let vendor = searchParams?.get('vendId');
+    let orderNo = searchParams?.get('orderNo');
     if(vendor){
       setOrder(null);
       setVendId({ value: parseInt(vendor) });
       getItems(vendor);
+    } else if(orderNo){
+      onLoad();
+      const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get?OrderNo=' + orderNo));
+      if(response?.error) onError(response?.error, false);
+      else {
+        let order = response?.data && response?.data[0];
+        setOrder(order?.poOrder);
+        onSuccess();
+      }
     }
   }
 
@@ -130,15 +140,17 @@ export function OrderAdd(){
     setEdited(false);
   }
 
-  const onError = err => {
+  const onError = (err, edited) => {
     setError(err);
-    setEdited(true);
+    setEdited(edited);
     setLoading(false);
   }
 
   const onSuccess = msg => {
-    message.success(msg);
-    setSaved(true);
+    if(msg){
+      message.success(msg);
+      setSaved(true);
+    }
     setLoading(false);
   }
 
@@ -147,7 +159,7 @@ export function OrderAdd(){
     if(data){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/Order', data));
-      if(response?.error) onError(response?.error);
+      if(response?.error) onError(response?.error, true);
       else onSuccess(t('order.add_success'));
     }
   }

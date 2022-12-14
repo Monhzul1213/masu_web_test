@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MdChevronLeft } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { sendRequest } from '../../../../services';
@@ -53,8 +53,12 @@ export function Menu(props){
     if(response) getData(order?.orderNo)
   }
   
-  const onPressReceive = () => {};
-  const onPressEdit = () => {};
+  const onPressReceive = () => {};//DISABLED FOR NOW
+
+  const onPressEdit = () => {
+    navigate({ pathname: '/management/order_list/order_add', search: createSearchParams({ orderNo: order?.orderNo }).toString() });
+  };
+
   const onPressSend = () => {};
   const onPressExport = () => console.log('onPressExport');
   const onPressCopy = () => console.log('onPressCopy');
