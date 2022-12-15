@@ -35,10 +35,11 @@ export function Suppliers(props){
   const onClickDelete = async () => {
     let toDelete = [];
     data?.forEach(item => {
-      if(item.checked) toDelete.push({...item, rowStatus: 'D' });
+      if(item.checked) toDelete.push({...item, rowStatus: 'D', image: {} });
     });
     setError(null);
     setLoading(true);
+    console.log(toDelete)
     let response = await dispatch(sendRequest(user, token, 'Merchant/vendor', toDelete));
     setLoading(false);
     if(response?.error) setError(response?.error);

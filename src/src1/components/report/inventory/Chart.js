@@ -1,62 +1,50 @@
-// import React, { useState, useEffect } from 'react';
-// import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
-// import { useTranslation } from 'react-i18next';
-// import { PaginationTable, PlainSelect, MultiSelect , LineCharts} from '../../all/all_m';
-// import { dayTypes, chartTypes } from '../../../../helpers/dummyData';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
-// export function Chart(props){
-//   const { data} = props;
-//   const { t, i18n } = useTranslation();
-//   const [columns, setColumns] = useState([]);
-//   const [type, setType] = useState({ value: 'line' });
-//   const [day, setDay] = useState({ value: 'day' });
+import '../../../css/report.css';
+import { formatNumber, graphList1 } from '../../../../helpers';
+import { LineChart, BarChart, PlainSelect, Empty1 } from '../../../components/all/all_m';
 
-//   useEffect(() => {
-//     setColumns([
-//       { Header: t('report.name'), accessor: 'empName',
-//     },
-//       { Header: t('report.total_sales'), accessor: 'siteName' },
-//       { Header: t('report.return'), accessor: 'siteNam' },
-//       { Header: t('report.discount'), accessor: 'siteNae' },
-//       { Header: t('report.net_sales'), accessor: 'siteNme' },
-//       { Header: t('report.receipt'), accessor: 'siteNe' },
-//       { Header: t('report.ave_sale'), accessor: 'iteName' },
-//       {
-//         Header: <div style={{textAlign: 'right'}}>{t('report.signed_up')}</div>, accessor: 'totalHours',
-//         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value ? props.value : 0}</div>,
-//       },
-//     ]);
-//     return () => {};
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [i18n?.language]);
+export function Graph(props){
+  const { tab, setTab, total, size, periodData, period, setPeriod, data } = props;
+  const { t } = useTranslation();
+  const [isBar, setIsBar] = useState('bar');
 
-  
+ 
 
-// const typeProps = { value: type, setValue: setType, data: chartTypes,  className: 'ch_select',  };
-// const dayProps = { value: day, setValue: setDay, data: dayTypes,  className: 'ch_select',  };
-//   return (
-//     <div className='chart_z'>
-//         <div className='top' >
-//             <div className='header_text'>
-//                 <p className='text'>Top 5</p>
-//                 <p className='text'>net sales</p> 
-//             </div>
-//         </div>
-//         <div className='divider'/>
-//         <div className='chart_back '>
-//           <div className='chart'>
-//             <div>
-//               <p className='text'></p>
-//             </div>
-//               <div className='chart_select'>    
-//               <PlainSelect {...typeProps} />
-//               {/* <PlainSelect {...dayProps} /> */}
-//               </div>
-//           </div>
-//           <div className='line1'> 
-//             {/* <LineCharts /> */}
-//           </div>
-//         </div>
-//     </div>
-//   );
-// }
+  const xFormatter = value => {
+    if(period === 'H') return value + ':00';
+    else if(period === 'D') return moment(value)?.format('yyyy.MM.DD');
+    else if(period === 'W') return value;
+    else if(period === 'M') return value + t('page.month');
+  }
+
+  let id = size?.width >= 400 ? 'rr_large' : 'rr_small';
+  let typeProps = { value: isBar, setValue: setIsBar, data: graphList1, className: 'rr_graph_select', bStyle: { } };
+  let periodProps = { value: period, setValue: setPeriod, data: periodData, className: 'rr_graph_select', bStyle: { marginLeft: 15 } };
+  let width = size?.width >= 1290 ? 1260 : (size?.width - 30);
+  let style = { width, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' };
+  let chartProps = { style, data, dataKey: period === 'W' ? 'weekInterval' : 'salesDate',
+    bars: [{color: '#4BAF4F', fill: '#4BAF4F55', key: tab}], hasLegend: false,
+    tickFormatter: tick => { return '₮' + formatNumber(tick) }, xFormatter, };
+
+  return (
+    <div className='rr_graph_cont' id={id}>
+      <div className='rr_card_back'>
+      </div>
+      <div className='rr_graph_back'>
+        <div className='rr_graph_header'>
+          <p className='rr_graph_title'>{t('report.grapic')}</p>
+          <div className='rr_graph_selects'>
+            <PlainSelect {...typeProps} />
+            <PlainSelect {...periodProps} />
+          </div>
+        </div>
+        {!data?.length
+          ? <div style={style}><Empty1 icon='MdBarChart' /></div>
+          : isBar ? <BarChart {...chartProps} /> : <LineChart {...chartProps} />}
+      </div>
+    </div>
+  )
+}

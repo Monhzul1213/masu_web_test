@@ -21,7 +21,7 @@
   border-radius: var(--radius);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding:0 var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: var(--invt-width);
+  max-width: 500px;
 }
 .ac_back_dz {
   background-color: var(--root-color);
@@ -39,4 +39,38 @@
 .ih_search1:hover {
   cursor: pointer;
   color: var(--config-color);
+}
+#im_large .im_image_z {
+  width: 170px;
+  height: 170px;
+  margin: 10px 150px ;
+}
+
+#im_small .im_image_z {
+  width: 200px;
+  height: 150px;
+  margin-top: 10px ;
+  margin-left: 50px;
+}
+
+#im_large .im_image_z .ant-upload.ant-upload-select-picture-card {
+  width: 170px;
+  height: 170px;
+  overflow: hidden;
+  border-color: var(--line-color);
+  background-color: var(--back-color);
+  align-self: center;
+}
+
+#im_small .im_image_z .ant-upload.ant-upload-select-picture-card {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-color: var(--line-color);
+  background-color: var(--back-color);
+  align-self: center;
+}
+
+#im_large .im_image_z .ant-upload.ant-upload-select-picture-card:hover, #im_small .im_image_z.ant-upload.ant-upload-select-picture-card:hover {
+  border-color: var(--config-color);
 }

@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input } from '../all/all_m';
+import { Input , UploadImage} from '../all/all_m';
+import { withSize } from 'react-sizeme';
 
 
-export function Add(props){
+ function Card(props){
   const {setEdited, setError, name, setName, vendCode, setVendCode, contact, setContact, phone, setPhone, email, setEmail,
-     address, setAddress, address1, setAddress1, web, setWeb, note, setNote} = props;
+     address, setAddress, address1, setAddress1, web, setWeb, note, setNote, image, setImage,size,  setImage64, setImageType} = props;
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -18,7 +19,8 @@ export function Add(props){
     if(isNaN(text)) setPhone({ value: value?.value, error: 'must_number'});
     else setPhone({ value: (text) });
   } 
-  
+  const id = size?.width > 480 ? 'im_large' : 'im_small';
+
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('supplier.name'), setError,length1:2, setEdited,};
   const codeProps = { value: vendCode, setValue: setVendCode, label: t('supplier.vendCode'), placeholder: t('supplier.vendCode'), setError, setEdited,};
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('supplier.phone'), setError ,setEdited };
@@ -28,10 +30,12 @@ export function Add(props){
   const address1Props = { value: address1, setValue: setAddress1, label: t('supplier.address2'), placeholder: t('supplier.address2'), setError, length: 100, length1: 6, setEdited};
   const descrProps = { value: note, setValue: setNote, label: t('supplier.desc'), placeholder: t('supplier.desc'), setError , length: 255, length1:10,setEdited};
   const addressProps = {  value: address, setValue: setAddress,label: t('supplier.address1'), placeholder: t('supplier.address1'), setError, length: 192, length1: 6,setEdited };
+  const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image_z' };
 
   return (
-    <div className='ac_back_z' id='mo_ac_back_z'>
+    <div className='ac_back_z' id={id}>
       <form>
+            <UploadImage {...imageProps} />
             <Input {...nameProps}  />
             <Input {...codeProps}  />
             <Input {...contProps} />
@@ -46,3 +50,5 @@ export function Add(props){
     
   )
 }
+const withSizeHOC = withSize();
+export const Add = withSizeHOC(Card);

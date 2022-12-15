@@ -11,7 +11,7 @@ export function Header(){
   const exportProps = { text: t('page.export'), className: 'rp_list_select', disabled: true };
   
   return (
-    <div className='ih_btn_row_z' id=''>
+    <div className='ih_btn_row_z' >
       <Button {...exportProps}  />
     </div>
   );

@@ -49,7 +49,7 @@ function Screen(props){
 
   let filterProps = { onSearch: getData, size, setError, filter, filter1 };
   let cardProps = { data, size,  loading };
-  let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
+  let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
 
   return (
     <div className='s_container_r'>

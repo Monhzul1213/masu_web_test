@@ -7,7 +7,9 @@ import {  getList, sendRequest } from '../../../services';
 import '../../css/discount.css';
 import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
 import { Add , } from '../../components/suppliers';
-import {  validateEmail } from '../../../helpers';
+import {  validateEmail, urlToFile } from '../../../helpers';
+import mime from 'mime';
+import '../../../css/invt.css';
 
 export function SupplierAdd(){
     const [name, setName] = useState({ value: '' });
@@ -19,6 +21,9 @@ export function SupplierAdd(){
     const [web, setWeb] = useState({ value: '' });
     const [address1, setAddress1] = useState({ value: '' });
     const [note, setNote] = useState({ value: '' });
+    const [image, setImage] = useState(null);
+    const [image64, setImage64] = useState('');
+    const [imageType, setImageType] = useState('');
   const [error, setError] = useState(null);
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -49,17 +54,29 @@ export function SupplierAdd(){
     let vendId = searchParams?.get('vendId');
     if(vendId || vendId === 0) {GetVend(vendId)} ;
   }
-
+  const getImage = async inventory => {
+    // console.log(inventory?.fileraw?.fileData)
+    if(inventory?.fileraw?.fileData){
+      let type = inventory?.fileraw?.fileType?.replace('.', '');
+      setImageType(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${inventory?.fileraw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage64(attach64);
+      setImage(attachFile);
+    }
+  }
   const GetVend = async (vendId ) => {
     setError(null);
     setLoading(true);
     let api = '?vendId=' + vendId;
     let response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'+ api,   ));
     setLoading(false);
+    let vend = response && response?.data && response?.data[0];
     if(response?.error) setError(response?.error)
-    else {
-      let vend = response && response?.data && response?.data[0];
-      // console.log(vend)
+    else if(vend){
+      console.log(vend)
       setSelected(vend)
       setItem(response?.data);
       setAddress({ value: vend?.address1 ?? '' });
@@ -70,9 +87,9 @@ export function SupplierAdd(){
       setPhone({ value: vend?.phone ?? ''  });
       setWeb({ value: vend?.webSite ?? ''  });
       setName({ value: vend?.vendName ?? ''  });
-      setVendCode({ value: vend?.vendCode ?? ''  });
+      setVendCode({ value: vend?.vendCode ?? ''  }); 
+      getImage(vend);
       response?.data?.forEach(item => item.rowStatus = 'U');
-    
     }
   }
 
@@ -95,7 +112,7 @@ export function SupplierAdd(){
     setSaved(true);
     setLoading(false);
   }
-
+ 
   const onClickCancel = () =>  navigate('/management/suppliers');
  
   const checkValid = () => {
@@ -117,10 +134,9 @@ export function SupplierAdd(){
   const onClickSave = async e => {
     e?.preventDefault();
     if(checkValid()){
-        onLoad();
+      onLoad();
       setLoading(true);
-      let data =
-     [ {
+      let data = [ {
         vendId: selected ? selected?.vendId : -1,
         vendName: name?.value?.trim(),
         contact: contact?.value?.trim(),
@@ -135,25 +151,27 @@ export function SupplierAdd(){
         postalCode: "",
         country: "",
         note: note?.value?.trim(),
-        rowStatus: selected ? "U" : "I"
+        rowStatus: selected ? "U" : "I",
+        image: { FileData: image64 ?? '', FileType: imageType ?? '' },
       }]
       const response = await dispatch(sendRequest(user, token, 'Merchant/vendor',  data));
       console.log(response)
       if(response?.error) onError(response?.error);
-      else onSuccess(t('supplier.add_success'));
+      else onSuccess(t('supplier.add_success'));  
     } 
   }
 
   const onClickDelete = async () => {
     onLoad();
-    let data = [{...selected, rowStatus: 'D',}];
+    let data = [{...selected, rowStatus: 'D', image : {}}];
     const response = await dispatch(sendRequest(user, token, 'Merchant/vendor', data));
     if(response?.error) onError(response?.error, true);
     else onSuccess(t('employee.delete_success'), true);
     console.log(data)
   }
+  
   const mainProps = { setError, name, setName, contact, setContact, phone, setPhone, email, setEmail,
-     setEdited, address, setAddress, address1, setAddress1, web, setWeb, note, setNote, setVendCode, vendCode };
+     setEdited, address, setAddress, address1, setAddress1, web, setWeb, note, setNote, setVendCode, vendCode , image, setImage, setImage64, image64, setImageType,};
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
 
   return (
@@ -162,7 +180,6 @@ export function SupplierAdd(){
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
           <Add {...mainProps}/>
-         
       </div>
       <ButtonRowConfirm {...btnProps} />
     </Overlay>

@@ -38,8 +38,6 @@ export function Input(props){
     <div style={inRow ? { flex: 1 } : {}}>
       <div className='cust_back' style={backStyle}>
         {label && <p className='select_lbl' style={style}>{label}</p>}
-        <div className='cust_back1'>
-            {/* <DynamicAIIcon className='cus_icon' name={icon} /> */}
             <InputMask
             className='c_input'
             mask={mask}
@@ -50,7 +48,6 @@ export function Input(props){
             value={value?.value}
             onChange={onChange} 
             />
-        </div>
         
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
