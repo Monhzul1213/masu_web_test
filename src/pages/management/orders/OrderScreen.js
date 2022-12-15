@@ -63,6 +63,7 @@ export function OrderScreen(){
           order.poOrder.transitQty = transitQty;
           order.poOrder.percent = parseFloat((transitQty * 100 / totalQty)?.toFixed(2));
           setOrder(order?.poOrder);
+          sessionStorage.setItem('order', JSON.stringify(order));
           setItems(order?.poOrderItems);
           setAdds(order?.poOrderAddCosts);
         }
