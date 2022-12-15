@@ -11,7 +11,7 @@ export function BarChart(props){
           width={500}
           height={360}
           data={data}
-          margin={{ top: 5, right: 15, left: 8, bottom: 5}}>
+          margin={{ top: 5, right: 15, left: 18, bottom: 5}}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey={dataKey} tickFormatter={xFormatter} />
           <YAxis tickFormatter={tickFormatter} />
@@ -36,7 +36,7 @@ export function AreaChart(props){
           width={500}
           height={360}
           data={data}
-          margin={{ top: 5, right: 15, left: 8, bottom: 5}}>
+          margin={{ top: 5, right: 15, left: 18, bottom: 5}}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey={dataKey} tickFormatter={xFormatter} />
           <YAxis tickFormatter={tickFormatter} />
