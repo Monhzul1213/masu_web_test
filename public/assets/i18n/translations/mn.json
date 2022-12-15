@@ -516,6 +516,7 @@
   },
   "report": {
     "name": "Нэр",
+    "total": "Нийт",
     "total_sales": "Борлуулалт",
     "refund": "Буцаалт",
     "discount": "Хөнгөлөлт",
@@ -535,6 +536,7 @@
     "items_sold": "Борлуулсан зүйлс ",
     "gross_profit": "Нийт ашиг",
     "margin": "Ашиг",
+    "grapic": "Барааны графикаар борлуулалт",
     "tax": "Татвар",
     "non_cash": "Бэлэн бус",
     "dr_site": "Салбар",
@@ -542,7 +544,7 @@
     "invt": "Бараа",
     "qty": "Т/Ш",
     "price": "Нэгж үнэ",
-    "amt": "Нийт",
+    "sales": "Зүйл",
     "columns": [
       { "label": "Борлуулалтын дүн", "value": "totalSalesAmt" },
       { "label": "Борлуулалтын тоо", "value": "qty" },
@@ -551,12 +553,27 @@
       { "label": "Цэвэр борлуулалт", "value": "totalNetSalesAmt" },
       { "label": "Хөнгөлөлт", "value": "totalDiscAmt" },
       { "label": "Өртөг ", "value": "totalCost" },
-      { "label": "Нийт ашиг", "value": "totalProfitAmt" },
+      { "label": "Нийт ашиг", "value": "totalProfitAmt" },  
+      { "label": "Ашиг хувь", "value": "margin" },
+      { "label": "Татвар", "value": "taxes" }
+
+    ],
+    "column": [
+      { "label": "Ангилал", "value": "categoryName" },
+      { "label": "Борлуулалтын дүн", "value": "totalSalesAmt" },
+      { "label": "Борлуулалтын тоо", "value": "qty" },
+      { "label": "Буцаалтын дүн", "value": "totalReturnAmt" },
+      { "label": "Буцаалтын тоо", "value": "totalReturnQty" },
+      { "label": "Цэвэр борлуулалт", "value": "totalNetSalesAmt" },
+      { "label": "Хөнгөлөлт", "value": "totalDiscAmt" },
+      { "label": "Өртөг ", "value": "totalCost" },
+      { "label": "Нийт ашиг", "value": "totalProfitAmt" },  
       { "label": "Ашиг хувь", "value": "margin" },
       { "label": "Татвар", "value": "taxes" }
 
     ]
   },
+  
   "report_review": {
     "totalSalesAmt": "Борлуулалт",
     "totalReturnAmt": "Буцаалт",

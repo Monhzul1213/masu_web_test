@@ -11,7 +11,7 @@ import { Employee, EmployeeAdd, Role, RoleAdd, Time } from './pages/emp';
 import { Receipt, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
-import { SalesEmployee ,  SalesCategory } from './src1/pages/report';
+import { SalesEmployee, SalesCategory, SalesPayment } from './src1/pages/report';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -96,6 +96,8 @@ export function App(){
                 <Route path='/report/report_document' element={<Receipt />} />
                 <Route path='/report/report_employee' element={<SalesEmployee />} />
                 <Route path='/report/report_category' element={<SalesCategory />} />
+                <Route path='/report/report_payment' element={<SalesPayment />} />
+                {/* <Route path='/report/report_invtentory' element={<SalesItem />} /> */}
                 <Route path='/report/report_sales' element={<Review />} />
               </Routes>
             </Layout>
