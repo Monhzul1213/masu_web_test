@@ -73,6 +73,11 @@ export const timeList = [
   '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00',
   '20:00', '21:00', '22:00', '23:00'
 ];
+export const chartTypes = [
+  { label: 'Line', value: 'line' },
+  { label: 'Bar', value: 'bar' },
+  { label: 'Pie', value: 'pie' },
+];
 
 export const addrList = [
   { label: 'Багахангай дүүрэг', value: 'Багахангай дүүрэг' },
@@ -117,4 +122,10 @@ export const limitList = [
 export const graphList = [
   { value: true, label: 'Bar' },
   { value: false, label: 'Area' },
+];
+
+export const graphList1 = [
+  { value: 'bar', label: 'Bar' },
+  { value: 'line', label: 'Line' },
+  { value: 'pie', label: 'Pie' },
 ];

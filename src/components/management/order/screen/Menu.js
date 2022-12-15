@@ -82,9 +82,22 @@ export function Menu(props){
 
   const onPressExport = () => {
     html2canvas(document.getElementById('order_pdf')).then(function(canvas) {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4', true);
-      pdf.addImage(imgData, 'JPEG', 0, 0);
+      // const imgData = canvas.toDataURL('image/png');
+      // const pdf = new jsPDF('p', 'mm', 'a4', true);
+      // pdf.addImage(imgData, 'JPEG', 0, 0);
+      // pdf.save('order_' + order?.orderNo + '.pdf');
+      const imgWidth = 208, pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight, position = 0;
+      heightLeft -= pageHeight;
+      const pdf = new jsPDF('p', 'mm');
+      pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+        heightLeft -= pageHeight;
+      }
       pdf.save('order_' + order?.orderNo + '.pdf');
     });
     // if(instance?.blob){
