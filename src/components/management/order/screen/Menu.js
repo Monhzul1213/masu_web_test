@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { MdChevronLeft } from 'react-icons/md';
+import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { usePDF } from '@react-pdf/renderer';
 
 import { sendRequest } from '../../../../services';
 import { IconButton, Button, ButtonConfirm, Dropdown } from '../../../all';
+import { PDF } from './PDF';
 
 export function Menu(props){
   const { order, items, adds, onLoad, onDone, getData, size } = props;
   const { t } = useTranslation();
   const [data, setData] = useState([]);
+  const [instance] = usePDF({ document: <PDF /> });
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -74,7 +78,17 @@ export function Menu(props){
     navigate({ pathname: '/management/order_list/order_add', search: createSearchParams({ orderNo: order?.orderNo, copying: true }).toString() });
   }
 
-  const onPressExport = () => console.log('onPressExport');
+  const onPressExport = () => {
+    if(instance?.blob){
+      const fileURL = window.URL.createObjectURL(instance?.blob);
+      let alink = document.createElement('a');
+      alink.href = fileURL;
+      alink.download = 'order_' + order?.orderNo + '.pdf';
+      alink.click();
+    } else
+      message.error(t('order.export_error'))
+  }
+
   const onPressReceive = () => {};//DISABLED FOR NOW
   const onPressSend = () => {};//DISABLED FOR NOW
   const onPressPrint = () => {};//DISABLED FOR NOW
