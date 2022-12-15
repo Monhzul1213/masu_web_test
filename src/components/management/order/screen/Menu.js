@@ -83,7 +83,7 @@ export function Menu(props){
   const onPressExport = () => {
     html2canvas(document.getElementById('order_pdf')).then(function(canvas) {
       const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
+      const pdf = new jsPDF('p', 'mm', 'a4', true);
       pdf.addImage(imgData, 'JPEG', 0, 0);
       pdf.save('order_' + order?.orderNo + '.pdf');
     });
