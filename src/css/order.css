@@ -399,3 +399,88 @@
   min-width: 150px;
   text-align: right;
 }
+
+.a4_back {
+  background-color: var(--root-color);
+  width: 210mm;
+  padding: 30px 25px;
+}
+
+.po_pdf_title {
+  font-weight: 550;
+  font-size: 22px;
+  margin: 0 0 20px 0;
+}
+
+.po_pdf_row {
+  display: flex;
+  flex-flow: row;
+  margin-bottom: 5px;
+}
+
+.po_pdf_label {
+  font-weight: 550;
+  font-size: 15px;
+  margin: 0;
+  white-space: pre;
+}
+
+.po_pdf_value {
+  font-size: 15px;
+  margin: 0;
+}
+
+.po_pdf_col_back {
+  margin: 20px 0;
+  display: flex;
+  flex-flow: row;
+}
+
+.po_pdf_col {
+  flex: 1
+}
+
+.po_pdf_col_gap {
+  width: 30px;
+  height: 30px;
+}
+
+.po_pdf_table_header {
+  display: flex;
+  flex-flow: row;
+  border-bottom: 1px solid;
+  width: '100%';
+  padding-top: 15px;
+  padding-bottom: 3px;
+}
+
+.po_pdf_table_header_text {
+  font-weight: 550;
+  font-size: 15px;
+  width: 40%;
+  text-align: right;
+  margin: 0;
+}
+
+.po_pdf_table_row {
+  display: flex;
+  flex-flow: row;
+  width: '100%';
+  padding: 7px 0 0 0;
+}
+
+.po_pdf_table_row_text {
+  font-size: 15px;
+  width: 40%;
+  text-align: right;
+  margin: 0;
+}
+
+.po_pdf_table_footer {
+  display: flex;
+  flex-flow: row;
+  border-top: 1px solid;
+  width: '100%';
+  padding-top: 3px;
+  margin-top: 7px;
+}
