@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart as ReBarChart, LineChart as ReLineChart, PieChart as RePieChart, Bar, Line, Pie, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart as ReBarChart, LineChart as ReLineChart, Bar, Line, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 export function BarChart(props){
   const { style, className, data, dataKey, tickFormatter, bars, tipFormatter, legendFormatter, hasLegend, xFormatter } = props;

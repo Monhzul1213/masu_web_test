@@ -7,7 +7,7 @@ import { formatNumber, graphList1 } from '../../../../helpers';
 import { LineChart, BarChart, PlainSelect, Empty1 } from '../../../components/all/all_m';
 
 export function Graph(props){
-  const { tab, setTab, total, size, periodData, period, setPeriod, data } = props;
+  const { tab, size, periodData, period, setPeriod, data } = props;
   const { t } = useTranslation();
   const [isBar, setIsBar] = useState('bar');
 
