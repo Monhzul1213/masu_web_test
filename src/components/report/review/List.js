@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useSortBy } from 'react-table';
+import moment from 'moment';
 
 import '../../../css/report.css';
 import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon, Money } from '../../all';
@@ -19,7 +20,10 @@ export function List(props){
   }, [i18n?.language]);
 
   const changeColumns = value => {
-    let columns = [{ Header: t('page.date'), accessor: 'label' }, { Header: t('order.site'), accessor: 'siteName' }];
+    let columns = [
+      { Header: t('page.date'), accessor: 'salesDate', Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD')}</div>) },
+      { Header: t('order.site'), accessor: 'siteName' }
+    ];
     setColumns1(value);
     t('report_review.columns')?.forEach(item => {
       let exists = value?.findIndex(val => val === item?.value) !== -1;
