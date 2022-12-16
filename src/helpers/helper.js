@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+
 export function getItem(label, key, icon, children, type, disabled) {
   return { key, icon, children, label, type, disabled };
 }
@@ -48,3 +50,15 @@ export const urlToFile = async (url, mimeType) => {
   const buf = await res.arrayBuffer();
   return new File([buf], 'imagefile', { type: mimeType });
 };
+
+export function useFormat(num, fontSize, dec){
+  const user = useSelector(state => state.login?.user);
+  const value = new Intl.NumberFormat('en-US', { style: 'decimal', maximumFractionDigits: dec ?? 2 }).format(num ?? 0);
+
+  return (
+    <span>
+      {value}
+      <span style={{ fontSize }}>{user?.merchant?.currency ?? '₮'}</span>
+    </span>
+  )
+}

@@ -513,7 +513,7 @@
   line-height: 28px;
   word-break: break-all;
   text-align: center;
-  margin: 0;
+  margin: 3px 0 0 0;
 }
 
 #rr_small .rr_card_value {
@@ -522,7 +522,7 @@
   line-height: 24px;
   word-break: break-all;
   text-align: center;
-  margin: 0;
+  margin: 3px 0 0 0;
 }
 
 .rr_card_value1 {
