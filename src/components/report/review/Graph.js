@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import '../../../css/report.css';
 import { formatNumber, graphList } from '../../../helpers';
-import { AreaChart, BarChart, PlainSelect, Empty1 } from '../../all';
+import { AreaChart, BarChart, PlainSelect, Empty1, Money } from '../../all';
 
 export function Graph(props){
   const { tab, setTab, total, size, periodData, period, setPeriod, data } = props;
@@ -18,7 +18,7 @@ export function Graph(props){
     return (
       <div className='rr_card' style={style} onClick={() => setTab(label)}>
         <p className='rr_card_label'>{t('report_review.' + label)}</p>
-        <div className='rr_card_value'>₮{formatNumber(value)}</div>
+        <Money className='rr_card_value' value={value} fontSize={20} />
       </div>
     )
   }

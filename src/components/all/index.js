@@ -20,3 +20,4 @@ export * from './Upload';
 export * from './Date';
 export * from './Dropdown';
 export * from './Chart';
+export * from './Money';
