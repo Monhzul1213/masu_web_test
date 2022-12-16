@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Select } from 'antd';
+import { useSelector } from 'react-redux';
 import CurrencyInput from 'react-currency-input-field';
 
 const { Option } = Select;
@@ -7,8 +8,10 @@ const { Option } = Select;
 export const EditableCell = props => {
   const { value: initialValue, row, column: { id, isText, isMoney, isQty, width, autoFocus, length }, updateMyData, disabled, cellID } = props;
   const [value, setValue] = useState(initialValue);
+  const user = useSelector(state => state.login?.user);
   const hasError = row?.original?.error === id;
   const notEditable = disabled && !hasError;
+  const suffix = user?.msMerchant?.currency ?? '';
 
   const onChange = e => {
     // setValue(e.target.value)
@@ -37,7 +40,7 @@ export const EditableCell = props => {
   const errorStyle = hasError ? { borderColor: '#e41051' } : {};
   const style = {...{ textAlign: 'right', width }, ...errorStyle};
   const style1 = {...{ width }, ...errorStyle};
-  const moneyProps = { className: 'ed_input', prefix: '₮', allowNegativeValue: false, decimalsLimit: 4, value, maxLength: 15, onValueChange, onBlur, style,
+  const moneyProps = { className: 'ed_input', suffix, allowNegativeValue: false, decimalsLimit: 4, value, maxLength: 15, onValueChange, onBlur, style,
     onKeyDown, autoFocus, disabled: notEditable, id: cellID };
   const textProps = { className: 'ed_input', value, onChange, onBlur, onKeyDown, autoFocus, style: width ? style1 : errorStyle,
     disabled: notEditable, id: cellID };

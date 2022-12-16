@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, useSortBy } from 'react-table';
 
-import { formatNumber } from '../../../../helpers';
-import { TableRow } from '../../../all';
+import { Money, TableRow } from '../../../all';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 
 export function Items(props){
@@ -23,11 +22,11 @@ export function Items(props){
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', noSort: true,
-        Cell: ({ value }) => <div style={{textAlign: 'right'}}>₮{formatNumber(value)}</div>
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}><Money value={value} fontSize={14} /></div>
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', noSort: true,
-        Cell: ({ value }) => <div style={{textAlign: 'right'}}>₮{formatNumber(value)}</div>
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}><Money value={value} fontSize={14} /></div>
       },
     ]);
     return () => {};

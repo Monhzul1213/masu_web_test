@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { formatNumber } from '../../../../helpers';
-import { PaginationTable, Table, DynamicBSIcon } from '../../../all';
+import { PaginationTable, Table, DynamicBSIcon, Money } from '../../../all';
 import { SwitchLabel } from './SwitchLabel';
 import { ItemSelect, SelectItem } from './SelectItem';
 import { EditableCell } from './EditableCell';
@@ -24,7 +23,7 @@ export function Card(props){
         customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>₮{formatNumber(value)}</div>,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={14} /></div>,
       },
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>
@@ -96,7 +95,7 @@ export function Card(props){
         <ItemSelect {...selectProps} />
         <div className={classPage}>
           <PaginationTable {...tableProps} />
-          <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total)}</p>
+          <p className='ac_page_total'>{t('inventory.total_cost')} : <Money value={total} fontSize={13} /></p>
         </div>
       </>}
     </div>

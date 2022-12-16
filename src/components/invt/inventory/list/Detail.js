@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { formatNumber } from '../../../../helpers';
-import { TableRow } from '../../../all';
+import { TableRow, Money } from '../../../all';
 import { EditableCell } from '../add/EditableCell';
 import { VariantEdit } from './VariantEdit';
 
@@ -23,7 +22,7 @@ export function Detail(props){
       { id: 'category', noSort: true, Header: '', Cell: '', customStyle: { width: 240 } },
       {
         Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 },
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={15} /></div>
       },
       {
         Header: t('inventory.cost'), accessor: 'cost', customStyle: { width: 100 }, width: 80, isBtn: true,

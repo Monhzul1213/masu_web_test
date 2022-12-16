@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useExpanded } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { formatNumber } from '../../../../helpers';
-import { Check, DynamicFAIcon, PaginationTable, TableDetail } from '../../../all';
+import { Check, DynamicFAIcon, PaginationTable, TableDetail, Money } from '../../../all';
 import { EditableCell, SelectableCell } from '../add/EditableCell';
 import { Detail } from './Detail';
 
@@ -37,13 +36,13 @@ export function List(props){
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price', customStyle: { width: 100 },
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' :
-          (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
+          (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={15} /></div>)
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'msInventory.cost',
         customStyle: { width: 100 }, width: 80, isBtn: true,
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' : props?.row?.original?.msInventory?.isKit === 'Y'
-          ? (<div style={{textAlign: 'right', paddingRight: 10}}>₮{formatNumber(props?.value)}</div>)
+          ? (<div style={{textAlign: 'right', paddingRight: 10}}><Money value={props?.value} fontSize={15} /></div>)
           : <EditableCell {...props} cellID='hide_border' />, isMoney: true,
       },
       {

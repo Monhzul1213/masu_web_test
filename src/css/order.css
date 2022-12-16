@@ -395,8 +395,7 @@
 .ps_footer_value {
   font-size: 14px;
   font-weight: 550;
-  margin: 0 0 0 10px;
-  min-width: 150px;
+  margin: 0 0 0 30px;
   text-align: right;
 }
 

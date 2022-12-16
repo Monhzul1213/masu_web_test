@@ -3,9 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { PaginationTable, Table, DynamicBSIcon, IconButton } from '../../../all';
+import { PaginationTable, Table, DynamicBSIcon, IconButton, Money } from '../../../all';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
-import { formatNumber } from '../../../../helpers';
 
 function Card(props){
   const { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal, size } = props;
@@ -78,7 +77,7 @@ function Card(props){
       <div style={{height: 5, width: 5}} />
       <div className={classPage}>
         {adds?.length ? <PaginationTable {...tableProps} /> : <div />}
-        <p className='ac_page_total'>{t('inventory.total_cost')} : ₮{formatNumber(total1 + total2)}</p>
+        <p className='ac_page_total'>{t('inventory.total_cost')} : <Money value={total1 + total2} fontSize={13} /></p>
       </div>
     </div>
   );

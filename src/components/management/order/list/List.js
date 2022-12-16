@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import moment from 'moment';
 
-import { formatNumber } from '../../../../helpers';
-import { PaginationTable, Table } from '../../../all';
+import { PaginationTable, Table, Money } from '../../../all';
 import { Progress } from './Progress';
 
 export function List(props){
@@ -43,7 +42,7 @@ export function List(props){
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total2')}</div>, accessor: 'poOrder.total',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(value)}</div>
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>
       },
     ]);
     return () => {};

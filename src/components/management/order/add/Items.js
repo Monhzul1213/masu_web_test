@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { formatNumber } from '../../../../helpers';
-import { PaginationTable, Table, DynamicBSIcon } from '../../../all';
+import { PaginationTable, Table, DynamicBSIcon, Money } from '../../../all';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
 import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { Search } from './Search';
@@ -31,7 +30,7 @@ function Card(props){
         customStyle: { width: 120, paddingRight: 18 }, width: 100 },//, autoFocus: true
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', isText: true, customStyle: { width: 100 },
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}>₮{formatNumber(value)}</div>,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
       },
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>

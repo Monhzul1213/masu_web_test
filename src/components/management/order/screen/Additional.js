@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, useSortBy } from 'react-table';
 
-import { formatNumber } from '../../../../helpers';
-import { TableRow } from '../../../all';
+import { Money, TableRow } from '../../../all';
 
 export function Additional(props){
   const { data } = props;
@@ -17,7 +16,7 @@ export function Additional(props){
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_amt')}</div>, accessor: 'addCostAmount', noSort: true,
-        Cell: ({ value }) => <div style={{textAlign: 'right'}}>₮{formatNumber(value)}</div>
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}><Money value={value} fontSize={14} /></div>
       },
     ]);
     return () => {};

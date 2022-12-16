@@ -65,7 +65,7 @@ export const apiLogin = (mail, password) => async dispatch => {
       return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
     } else {
       dispatch(setToken(response?.token));
-      dispatch(setUser({ mail, password, merchantId: response?.merchantId, msRole: response?.msRole }));
+      dispatch(setUser({ mail, password, merchantId: response?.merchantId, msRole: response?.msRole, msMerchant: response?.msMerchant }));
       return Promise.resolve({ error: null, token: response?.token, viewReport: response?.msRole?.webViewSalesReport === 'Y' });
     }
   } catch (err) {
