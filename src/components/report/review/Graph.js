@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 import '../../../css/report.css';
@@ -10,6 +11,8 @@ export function Graph(props){
   const { tab, setTab, total, size, periodData, period, setPeriod, data } = props;
   const { t } = useTranslation();
   const [isBar, setIsBar] = useState(true);
+  const user = useSelector(state => state.login?.user);
+  const currency = user?.msMerchant?.currency ?? '';
 
   const Card = props => {
     const { label, value } = props;
@@ -31,9 +34,8 @@ export function Graph(props){
   }
 
   const tickFormatter = tick => {
-    if(tick >= 1000) return '₮' + formatNumber(tick / 1000, 0);
-    else return '₮' + formatNumber(tick / 1000, 2);
-    // return '₮' + formatNumber(tick);
+    if(tick >= 1000) return formatNumber(tick / 1000, 0) + currency;
+    else return formatNumber(tick / 1000, 2) + currency;
   }
 
   let id = size?.width >= 400 ? 'rr_large' : 'rr_small';
@@ -45,7 +47,7 @@ export function Graph(props){
     bars: [{color: '#4BAF4F', fill: '#4BAF4F55', key: tab}], hasLegend: false,
     tickFormatter, xFormatter,
     legendFormatter: () => t('report_review.' + tab),
-    tipFormatter: (value, name, props) => ['₮' + formatNumber(value), t('report_review.' + tab)] };
+    tipFormatter: (value, name, props) => [formatNumber(value) + currency, t('report_review.' + tab)] };
 
   return (
     <div className='rr_graph_cont' id={id}>

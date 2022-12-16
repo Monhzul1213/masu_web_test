@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import moment from 'moment';
 
-import { formatNumber } from '../../../helpers';
-import { PaginationTable, Table } from '../../all';
+import { PaginationTable, Table, Money } from '../../all';
 import { Drawer } from './Drawer';
 
 export function List(props){
@@ -28,7 +27,7 @@ export function List(props){
       { Header: t('report_receipt.t_type'), accessor: 'sale.salesTypeName' },
       {
         Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 'sale.totalSalesAmount', customStyle: { width: 100 },
-        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props?.value)}</div>)
+        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
     ]);
     return () => {};

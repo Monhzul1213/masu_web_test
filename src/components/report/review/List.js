@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useSortBy } from 'react-table';
 
 import '../../../css/report.css';
-import { formatNumber } from '../../../helpers';
-import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon } from '../../all';
+import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon, Money } from '../../all';
 
 export function List(props){
   const { data } = props;
@@ -28,7 +27,7 @@ export function List(props){
           Header: <div style={{textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
           Cell: props => (
             <div style={{textAlign: 'right', paddingRight: 15}}>
-              {item?.value === 'margin' ? (+(props?.value)?.toFixed(2) + '%') : ('₮' + formatNumber(props?.value))}
+              {item?.value === 'margin' ? (+(props?.value)?.toFixed(2) + '%') : <Money value={props?.value} fontSize={14} />}
             </div>)
         });
       }

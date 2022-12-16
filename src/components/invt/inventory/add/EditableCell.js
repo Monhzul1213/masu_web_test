@@ -8,9 +8,9 @@ const { Option } = Select;
 export const EditableCell = props => {
   const { value: initialValue, row, column: { id, isText, isMoney, isQty, width, autoFocus, length }, updateMyData, disabled, cellID } = props;
   const [value, setValue] = useState(initialValue);
-  const user = useSelector(state => state.login?.user);
   const hasError = row?.original?.error === id;
   const notEditable = disabled && !hasError;
+  const user = useSelector(state => state.login?.user);
   const suffix = user?.msMerchant?.currency ?? '';
 
   const onChange = e => {

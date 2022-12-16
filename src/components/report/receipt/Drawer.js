@@ -3,8 +3,7 @@ import { Drawer as AntDrawer } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import '../../../css/report.css';
-import { formatNumber } from '../../../helpers';
-import { DynamicAIIcon, DynamicRIIcon } from '../../all';
+import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all';
 
 export function Drawer(props){
   const { selected, open, setOpen } = props;
@@ -17,8 +16,8 @@ export function Drawer(props){
       <div key={index} className='dr_item'>
         <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}</p>
         <p className='dr_item_text2'>{item?.qty}</p>
-        <p className='dr_item_text3'>₮{formatNumber(item?.price)}</p>
-        <p className='dr_item_text4'>₮{formatNumber(item?.amount)}</p>
+        <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>
+        <p className='dr_item_text4'><Money value={item?.amount} fontSize={13} /></p>
       </div>
     )
   }
@@ -59,19 +58,19 @@ export function Drawer(props){
         <div style={{padding: '5px 0 5px 0'}}>
           <div className='dr_row'>
             <p className='dr_row_label' style={{fontWeight: 'bold'}}>{t('report_receipt.t_total')}</p>
-            <p className='dr_row_value' style={{fontWeight: 'bold'}}>₮{formatNumber(selected?.sale?.totalSalesAmount)}</p>
+            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalSalesAmount} fontSize={13} /></p>
           </div>
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.discount')}</p>
-            <p className='dr_row_value'>₮{formatNumber(selected?.sale?.totalDiscountAmount)}</p>
+            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalDiscountAmount} fontSize={13} /></p>
           </div>
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.cash')}</p>
-            <p className='dr_row_value'>₮{formatNumber(selected?.sale?.totalCashAmount)}</p>
+            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalCashAmount} fontSize={13} /></p>
           </div>
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.non_cash')}</p>
-            <p className='dr_row_value'>₮{formatNumber(selected?.sale?.totalNonCashAmount)}</p>
+            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalNonCashAmount} fontSize={13} /></p>
           </div>
         </div>
       </div>

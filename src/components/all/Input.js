@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import CurrencyInput from 'react-currency-input-field';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { DynamicAIIcon } from './DynamicIcon';
 
@@ -96,6 +97,8 @@ export function DescrInput(props){
 
 export function MoneyInput(props){
   const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, onBlur } = props;
+  const user = useSelector(state => state.login?.user);
+  const suffix = user?.msMerchant?.currency ?? '';
 
   const onChange = value => {
     setValue({ value });
@@ -126,7 +129,7 @@ export function MoneyInput(props){
         <p className='select_lbl' style={style}>{label}</p>
         <CurrencyInput
           className='m_input'
-          prefix='₮'
+          suffix={suffix}
           allowNegativeValue={false}
           disabled={disabled}
           placeholder={placeholder}

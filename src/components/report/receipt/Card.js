@@ -2,8 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import '../../../css/report.css';
-import { formatNumber } from '../../../helpers';
-import { DynamicTBIcon } from '../../all';
+import { DynamicTBIcon, Money } from '../../all';
 
 export function Card(props){
   const { tab, setTab, size, total } = props;
@@ -23,7 +22,7 @@ export function Card(props){
           <DynamicTBIcon name={icon} className='rp_card_icon' style={{ color }} />
         </div>
         <div className='rp_card_side'>
-          <p className='rp_card_value'>₮{formatNumber(value1)}</p>
+          <p className='rp_card_value'><Money value={value1} fontSize={size?.width >= 720 ? 20 : 16} /></p>
           <p className='rp_card_value1' style={{ color: '#969696' }}>{value ?? 0}</p>
         </div>
       </button>
