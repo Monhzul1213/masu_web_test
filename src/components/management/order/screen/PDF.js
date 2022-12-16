@@ -1,10 +1,13 @@
 import React from 'react';
 import { Document, Page, View, Text, Font, StyleSheet } from '@react-pdf/renderer';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { formatNumber } from '../../../../helpers';
 
 export function PDF(){
   const { t } = useTranslation();
+  const user = useSelector(state => state.login?.user);
+  const suffix = user?.msMerchant?.currency ?? '';
   const fetchedData = JSON.parse(sessionStorage.getItem('order'));
 
   Font.register({ family: "Roboto", src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf" });
@@ -156,8 +159,8 @@ export function PDF(){
           <View key={'i' + index} style={styles.table_row}>
               <Text style={styles.table_row_text1}>{item?.invtName}</Text>
               <Text style={styles.table_row_text2}>{item?.orderQty}</Text>
-              <Text style={styles.table_row_text3}>{formatNumber(item?.cost)}</Text>
-              <Text style={styles.table_row_text4}>{formatNumber(item?.totalCost)}</Text>
+              <Text style={styles.table_row_text3}>{formatNumber(item?.cost)}{suffix}</Text>
+              <Text style={styles.table_row_text4}>{formatNumber(item?.totalCost)}{suffix}</Text>
             </View>
           );
         })}
@@ -166,8 +169,8 @@ export function PDF(){
           <View key={'a' + index} style={styles.table_row}>
               <Text style={styles.table_row_text1}>{item?.addCostName}</Text>
               <Text style={styles.table_row_text2}>1</Text>
-              <Text style={styles.table_row_text3}>{formatNumber(item?.addCostAmount)}</Text>
-              <Text style={styles.table_row_text4}>{formatNumber(item?.addCostAmount)}</Text>
+              <Text style={styles.table_row_text3}>{formatNumber(item?.addCostAmount)}{suffix}</Text>
+              <Text style={styles.table_row_text4}>{formatNumber(item?.addCostAmount)}{suffix}</Text>
             </View>
           );
         })}
@@ -175,7 +178,7 @@ export function PDF(){
           <Text style={styles.table_header_text1}></Text>
           <Text style={styles.table_header_text2}></Text>
           <Text style={styles.table_header_text3}>{t('order.f_total')}</Text>
-          <Text style={styles.table_header_text4}>{formatNumber(fetchedData?.poOrder?.total)}</Text>
+          <Text style={styles.table_header_text4}>{formatNumber(fetchedData?.poOrder?.total)}{suffix}</Text>
         </View>
       </Page>
     </Document>

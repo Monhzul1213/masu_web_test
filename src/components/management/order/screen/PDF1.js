@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { formatNumber } from '../../../../helpers';
+
+import { Money } from '../../../all';
 
 export function PDF1(props){
   const { order, items, adds } = props;
@@ -49,8 +50,8 @@ export function PDF1(props){
           <div key={'i' + index} className='po_pdf_table_row'>
               <p className='po_pdf_table_row_text' style={{width: '40%', textAlign: 'left'}}>{item?.invtName}</p>
               <p className='po_pdf_table_row_text' style={{width: '15%'}}>{item?.orderQty}</p>
-              <p className='po_pdf_table_row_text' style={{width: '20%'}}>{formatNumber(item?.cost)}</p>
-              <p className='po_pdf_table_row_text' style={{width: '25%'}}>{formatNumber(item?.totalCost)}</p>
+              <p className='po_pdf_table_row_text' style={{width: '20%'}}><Money value={item?.cost} fontSize={14} /> </p>
+              <p className='po_pdf_table_row_text' style={{width: '25%'}}><Money value={item?.totalCost} fontSize={14} /></p>
             </div>
           );
         })}
@@ -59,8 +60,8 @@ export function PDF1(props){
           <div key={'a' + index} className='po_pdf_table_row'>
               <p className='po_pdf_table_row_text' style={{width: '40%', textAlign: 'left'}}>{item?.addCostName}</p>
               <p className='po_pdf_table_row_text' style={{width: '15%'}}>1</p>
-              <p className='po_pdf_table_row_text' style={{width: '20%'}}>{formatNumber(item?.addCostAmount)}</p>
-              <p className='po_pdf_table_row_text' style={{width: '25%'}}>{formatNumber(item?.addCostAmount)}</p>
+              <p className='po_pdf_table_row_text' style={{width: '20%'}}><Money value={item?.addCostAmount} fontSize={14} /> </p>
+              <p className='po_pdf_table_row_text' style={{width: '25%'}}><Money value={item?.addCostAmount} fontSize={14} /></p>
             </div>
           );
         })}
@@ -68,7 +69,7 @@ export function PDF1(props){
           <p className='po_pdf_table_header_text' style={{width: '40%', textAlign: 'left'}}></p>
           <p className='po_pdf_table_header_text' style={{width: '15%'}}></p>
           <p className='po_pdf_table_header_text' style={{width: '20%'}}>{t('order.f_total')}</p>
-          <p className='po_pdf_table_header_text' style={{width: '25%'}}>{formatNumber(order?.total)}</p>
+          <p className='po_pdf_table_header_text' style={{width: '25%'}}><Money value={order?.total} fontSize={14} /></p>
         </div>
       </div>
     </div>
