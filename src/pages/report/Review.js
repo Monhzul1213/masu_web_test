@@ -98,7 +98,9 @@ function Screen(props){
     if(response?.error) setError(response?.error);
     else {
       let sales = 0, refund = 0, discount = 0, net = 0, profit = 0;
-      response?.data?.forEach(item => {
+      let graphData = response?.data && response?.data[0];
+      let data = response?.data && response?.data[1];
+      graphData?.forEach(item => {
         sales += item?.totalSalesAmt ?? 0;
         refund += item?.totalReturnAmt ?? 0;
         discount += item?.totalDiscAmt ?? 0;
@@ -110,8 +112,8 @@ function Screen(props){
         else if(period1 === 'M') item.label = item.salesDate + t('page.month');
       });
       setTotal({ sales, refund, discount, net, profit });
-      setData(response?.data);
-      setGraphData(response?.data?.length ? formatData(response?.data, period1, dates ?? date) : []);
+      setData(data ?? []);
+      setGraphData(graphData?.length ? formatData(graphData, period1, dates ?? date) : []);
     }
     setLoading(false);
     setFilter(query);

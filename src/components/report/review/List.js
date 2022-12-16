@@ -12,13 +12,14 @@ export function List(props){
   const [columns1, setColumns1] = useState([]);
 
   useEffect(() => {
-    changeColumns(['totalSalesAmt', 'totalReturnAmt', 'totalDiscAmt', 'totalNetSalesAmt', 'costOfGoods', 'totalProfitAmt']);
+    changeColumns(['totalSalesAmt', 'totalReturnAmt', 'totalDiscAmt', 'totalNetSalesAmt', 'totalCashAmount',
+      'totalNonCashAmount', 'costOfGoods', 'totalProfitAmt']);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
   const changeColumns = value => {
-    let columns = [{ Header: t('page.date'), accessor: 'label' }];
+    let columns = [{ Header: t('page.date'), accessor: 'label' }, { Header: t('order.site'), accessor: 'siteName' }];
     setColumns1(value);
     t('report_review.columns')?.forEach(item => {
       let exists = value?.findIndex(val => val === item?.value) !== -1;

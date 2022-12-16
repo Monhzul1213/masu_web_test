@@ -592,6 +592,8 @@
       { "label": "Буцаалт", "value": "totalReturnAmt" },
       { "label": "Хөнгөлөлт", "value": "totalDiscAmt" },
       { "label": "Цэвэр борлуулалт", "value": "totalNetSalesAmt" },
+      { "label": "Бэлэн", "value": "totalCashAmount" },
+      { "label": "Бэлэн бус", "value": "totalNonCashAmount" },
       { "label": "Барааны өртөг", "value": "costOfGoods" },
       { "label": "Нийт ашиг", "value": "totalProfitAmt" },
       { "label": "Ашиг", "value": "margin" },
