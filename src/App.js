@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, unstable_HistoryRouter as HistoryRouter } from 'react-router-dom';
 import { Layout } from 'antd';
+import { SizeMe } from 'react-sizeme';
 import { useSelector, useDispatch } from 'react-redux';
 import { createBrowserHistory } from "history";
 
@@ -65,8 +66,9 @@ export function App(){
       <Suspense fallback={<Loading />}>
         <Layout style={{minHeight: '100vh'}}>
           <Header {...menuProps} />
+          <SizeMe>{({ size }) => 
           <Layout>
-            <Menu {...menuProps} />
+            <Menu {...menuProps} size={size} />
             <Layout onClick={onClickLayout}>
               <Routes>
                 <Route path='/' element={<Home />} />
@@ -102,6 +104,7 @@ export function App(){
               </Routes>
             </Layout>
           </Layout>
+          }</SizeMe>
         </Layout>
       </Suspense>
     </HistoryRouter>
