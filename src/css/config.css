@@ -718,3 +718,9 @@
   font-weight: 550;
   line-height: 15px;
 }
+
+.co_back {
+  display: flex;
+  flex-flow: row;
+  margin: var(--page-padding);
+}

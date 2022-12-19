@@ -13,9 +13,10 @@ import { Profile } from './Profile';
 const { Sider } = Layout;
 
 export function Menu(props){
-  const { collapsed, setCollapsed } = props;
+  const { collapsed, setCollapsed, size } = props;
   const { t } = useTranslation();
   const [openKeys, setOpenKeys] = useState([]);
+  const [hideConfig, setHideConfig] = useState(true);
   const { pathname } = useLocation();
   const { user: { msRole } } = useSelector(state => state.login);
   const path = pathname?.split('/') && pathname?.split('/')[1];
@@ -27,6 +28,13 @@ export function Menu(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    let width = (size?.width ?? 1500) - 30 - (collapsed ? 72 : 300);
+    setHideConfig(width >= 1000);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size?.width, collapsed]);
 
   const style = {
     overflowY: 'auto',
@@ -66,8 +74,17 @@ export function Menu(props){
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
-    getItem(t('menu.integration'), '/integration', <BsPuzzle />),
-    getItem(t('menu.config'), '/config', <BsGear />),
+    getItem(t('menu.integration'), '/integration', <BsPuzzle />, null, null, msRole?.webManageCustomer !== 'Y'),
+    hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :
+    getItem(t('menu.config'), '/config/additional', <BsGear />, [
+      getItem(t('system_menu.additional'), '/config/additional', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.type'), '/config/type', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.cashier'), '/config/cashier', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.tax'), '/config/tax', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.document'), '/config/document', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.store'), '/config/store', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
+    ]),
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
   ];
 

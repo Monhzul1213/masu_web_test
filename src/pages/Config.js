@@ -1,34 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { withSize } from 'react-sizeme';
+import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 
 import '../css/config.css';
-import { Card, Tab, AppModal } from '../components/config';
+import { Card, AppModal, Pos, Shop, Additional, Type, Cashier, Tax, Document } from '../components/config';
 
-function Screen(props){
-  const { size } = props;
-  const [selectedKeys, setSelectedKeys] = useState(['additional']);
-  const [visible, setVisible] = useState(false);
+export function Config(props){
+  const { size, collapsed } = props;
   const [showMenu, setShowMenu] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     let mode = searchParams?.get('mode');
     if(mode === 'is_first') setVisible(true);
-    else {
-      let tab = searchParams?.get('tab');
-      if(tab) setSelectedKeys([tab]);
-    }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    // setShowMenu(size?.width >= 840)
-    setShowMenu(true);
+    let width = (size?.width ?? 1500) - 30 - (collapsed ? 72 : 300);
+    setShowMenu(width >= 1000);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size?.width]);
+  }, [size?.width, collapsed]);
 
   const closeModal = () => {
     setVisible(false);
@@ -37,17 +31,22 @@ function Screen(props){
   }
 
   const modalProps = { visible, closeModal };
-  const cardProps = { selectedKeys, setSelectedKeys };
-  
+
   return (
-    <div className='s_container_c'>
+    <div className='co_back'>
       {visible && <AppModal {...modalProps} />}
-      {showMenu && <Card {...cardProps} />}
-      {showMenu && <div className='c_gap' />}
-      <Tab {...cardProps} />
+      {showMenu && <Card />}
+      <Routes>
+        <Route path="/" element={<Navigate to="additional" replace />} />
+        <Route path="*" element={<Navigate to="additional" replace />} />
+        <Route path='additional' element={<Additional />} />
+        <Route path='type' element={<Type />} />
+        <Route path='cashier' element={<Cashier />} />
+        <Route path='tax' element={<Tax />} />
+        <Route path='document' element={<Document />} />
+        <Route path='pos' element={<Pos />} />
+        <Route path='store' element={<Shop />} />
+      </Routes>
     </div>
   )
 }
-
-const withSizeHOC = withSize();
-export const Config = withSizeHOC(Screen);

@@ -15,17 +15,13 @@ export function Card(props){
     getItem(t('system_menu.additional'), 'additional'),
     getItem(t('system_menu.type'), 'type'),
     getItem(t('system_menu.cashier'), 'cashier'),
-    // getItem(t('system_menu.promo'), 'promo'),
     getItem(t('system_menu.tax'), 'tax'),
     getItem(t('system_menu.document'), 'document'),
-    // getItem(t('system_menu.meal'), 'meal'),
-    // getItem(t('system_menu.kitchen'), 'kitchen'),
-    // getItem(t('system_menu.order'), 'order'),
   ];
 
   const items1 = [
     getItem(t('system_menu.store'), 'store'),
-    getItem(t('system_menu.pos'), 'pos', null, null, null, msRole?.webManagePos !== 'Y'),
+    getItem(t('system_menu.pos'), 'pos', null, null, null, msRole?.webEditSettings !== 'Y'),
   ];
 
   const onClick = e => setSelectedKeys([e?.key]);
