@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import '../css/config.css';
 import { Card, AppModal, Pos, Shop, Additional, Type, Cashier, Tax, Document } from '../components/config';
@@ -9,10 +10,15 @@ export function Config(props){
   const [showMenu, setShowMenu] = useState(true);
   const [visible, setVisible] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { user }  = useSelector(state => state.login);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    let mode = searchParams?.get('mode');
-    if(mode === 'is_first') setVisible(true);
+    if(user?.msRole?.webEditSettings !== 'Y') navigate({ pathname: '/' });
+    else {
+      let mode = searchParams?.get('mode');
+      if(mode === 'is_first') setVisible(true);
+    }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

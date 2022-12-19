@@ -14,9 +14,8 @@
 .c_card_back {
   background-color: var(--root-color);
   border-radius: var(--radius);
-  width: var(--config-card-width);
-  min-width: var(--config-card-width);
-  max-width: var(--config-card-width);
+  width: 360px;
+  margin-right: var(--page-padding);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
   overflow: scroll;
@@ -723,4 +722,5 @@
   display: flex;
   flex-flow: row;
   margin: var(--page-padding);
+  align-items: flex-start;
 }
