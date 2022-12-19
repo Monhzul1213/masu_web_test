@@ -13,10 +13,9 @@ import { Profile } from './Profile';
 const { Sider } = Layout;
 
 export function Menu(props){
-  const { collapsed, setCollapsed, size } = props;
+  const { collapsed, setCollapsed } = props;
   const { t } = useTranslation();
   const [openKeys, setOpenKeys] = useState([]);
-  const [hideConfig, setHideConfig] = useState(true);
   const { pathname } = useLocation();
   const { user: { msRole } } = useSelector(state => state.login);
   const path = pathname?.split('/') && pathname?.split('/')[1];
@@ -28,13 +27,6 @@ export function Menu(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    let width = (size?.width ?? 1000) - 50 - (collapsed ? 72 : 300);
-    setHideConfig(width >= 860);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size?.width, collapsed]);
 
   const style = {
     overflowY: 'auto',
@@ -75,16 +67,7 @@ export function Menu(props){
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />),
-    hideConfig ? getItem(t('menu.config'), '/config', <BsGear />) :
-    getItem(t('menu.config'), '/config', <BsGear />, [
-      getItem(t('system_menu.additional'), '/config?tab=additional'),
-      getItem(t('system_menu.type'), '/config?tab=type'),
-      getItem(t('system_menu.cashier'), '/config?tab=cashier'),
-      getItem(t('system_menu.tax'), '/config?tab=tax'),
-      getItem(t('system_menu.document'), '/config?tab=document'),
-      getItem(t('system_menu.store'), '/config?tab=store'),
-      getItem(t('system_menu.pos'), '/config?tab=pos'),
-    ]),
+    getItem(t('menu.config'), '/config', <BsGear />),
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
   ];
 
