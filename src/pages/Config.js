@@ -41,7 +41,7 @@ export function Config(props){
   const modalProps = { visible, closeModal };
 
   return (
-    <div className='s_container_i'>
+    <div className='co_back'>
       {visible && <AppModal {...modalProps} />}
       {showMenu && <Card />}
       <Routes>
