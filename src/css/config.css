@@ -725,10 +725,29 @@
     flex-flow: column;
     max-width: 750px;
   }
+
+  .cash_tab {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    display: flex;
+    flex-flow: column;
+    max-width: 540px;
+    width: 450px;
+  }
 }
 
 @media only screen and (max-width: 740px) { /* mobile */
   .co_tab {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    display: flex;
+    flex-flow: column;
+    width: calc(100vw - var(--page-padding) * 2);
+  }
+
+  .cash_tab {
     background-color: var(--root-color);
     border-radius: var(--radius);
     box-shadow: 0px 2px 5px rgba(0,0,0,.15);

@@ -3,8 +3,8 @@ import { Routes, Route, Navigate, useNavigate, useSearchParams } from 'react-rou
 import { useSelector } from 'react-redux';
 
 import '../css/config.css';
-import { Card, AppModal, Pos, Shop, Cashier, Tax, Document } from '../components/config';
-import { Additional, Type } from './configs';
+import { Card, AppModal, Pos, Shop, Tax, Document } from '../components/config';
+import { Additional, Type, Cashier } from './configs';
 
 export function Config(props){
   const { size, collapsed } = props;

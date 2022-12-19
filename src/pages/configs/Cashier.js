@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Checkbox } from 'antd';
 
-import { Overlay, ButtonRowAdd } from '../../all';
-import { PayModal } from './cashiers';
+import { ButtonRowAdd, Overlay } from '../../components/all';
+import { PayModal } from '../../components/config/cashier';
 
 export function Cashier(){
   const [loading, setLoading] = useState(false);
-  const [show, setShow] = useState(false);
-  const [data, setData] = useState([]);
-  const [checked, setChecked] = useState([]);
   const [visible, setVisible] = useState(null);
+  const [show, setShow] = useState(false);
+  const [checked, setChecked] = useState([]);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     setData([
@@ -20,12 +20,12 @@ export function Cashier(){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const onClickAdd = () => setVisible('pay');
   
+  const closeModal = () => setVisible(null);
+  
+  const onClickAdd = () => setVisible('pay');
+
   const onClickDelete = () => {
-    // setLoading(true);
-    console.log('onClickDelete');
     setTimeout(() => setLoading(false), 1200);
   };
 
@@ -33,14 +33,12 @@ export function Cashier(){
     setChecked(values);
     setShow(values?.length ? true : false);
   };
-
-  const closeModal = () => setVisible(null);
-
+  
   const payProps = { visible: visible === 'pay', closeModal };
   const addProps = { type: 'cashier', onClickAdd, show, onClickDelete };
 
   return (
-    <Overlay className='c_tab_cont' loading={loading}>
+    <Overlay className='cash_tab' loading={loading}>
       {visible === 'pay' && <PayModal {...payProps} />}
       <div style={{padding: 15}}>
         <ButtonRowAdd {...addProps} />
@@ -53,5 +51,5 @@ export function Cashier(){
           onChange={onChange} />
       </div>
     </Overlay>
-  );
+  )
 }

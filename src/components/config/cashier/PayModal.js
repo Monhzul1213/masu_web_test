@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { payTypes, payShops } from '../../../../helpers/dummyData';
-import { Error, Overlay, ButtonRow, ModalTitle, Select, Input } from '../../../all';
+import { payTypes, payShops } from '../../../helpers/dummyData';
+import { Error, Overlay, ButtonRow, ModalTitle, Select, Input } from '../../all';
 
 export function PayModal(props){
   const { visible, closeModal } = props;
