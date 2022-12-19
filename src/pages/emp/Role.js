@@ -75,7 +75,7 @@ function Screen(props){
     <div className='s_container_i'>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        {!data?.length ? <Empty {...emptyProps} /> :
+        {data?.length ? <Empty {...emptyProps} /> :
           <div className='mo_container' style={{ width }}>
             <ButtonRowAddConfirm {...addProps} />
             <List {...listProps} />

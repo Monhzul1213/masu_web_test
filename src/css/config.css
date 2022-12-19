@@ -804,3 +804,8 @@
 .co_t_item:last-child {
   margin-bottom: 0;
 }
+
+.store_tab {
+  overflow: scroll;
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
+}

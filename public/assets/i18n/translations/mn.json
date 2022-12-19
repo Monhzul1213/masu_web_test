@@ -77,7 +77,14 @@
     "/inventory/invt_modi": "Нэмэлт төлбөр",
     "/inventory/invt_modi/modi_add": "Нэмэлт төлбөр үүсгэх",
     "/inventory/invt_discount": "Хөнгөлөлт",
-    "/inventory/invt_discount/disc_add": "Хөнгөлөлт нэмэх"
+    "/inventory/invt_discount/disc_add": "Хөнгөлөлт нэмэх",
+    "/config/additional": "Нэмэлт тохиргоо",
+    "/config/type": "Төлбөртэй нэмэлт үйлчилгээ",
+    "/config/cashier": "Кассын төлбөрийн төрөл",
+    "/config/tax": "НӨАТ-н баримт хэвлэх",
+    "/config/document": "ПОС талоны загвар",
+    "/config/store": "Дэлгүүр",
+    "/config/pos": "ПОС төхөөрөмж"
   },
   "menu": {
     "profile": "Хэрэглэгч",

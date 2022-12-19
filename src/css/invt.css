@@ -13,13 +13,12 @@
 .empty_back {
   box-shadow: 0 2px 5px rgba(0,0,0,.15);
   background-color: var(--root-color);
-  max-width: var(--empty-width);
   padding: var(--empty-padding);
   border-radius: var(--radius);
   display: flex;
   flex-flow: column;
   align-items: center;
-  min-width: 400px;
+  max-width: var(--empty-width);
 }
 
 .empty_back1 {

@@ -3,9 +3,9 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { deleteRequest, sendRequest } from '../../../../services';
-import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select } from '../../../all';
-import { addrList } from '../../../../helpers';
+import { deleteRequest, sendRequest } from '../../../services'
+import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select } from '../../all';
+import { addrList } from '../../../helpers';
 
 export function Add(props){
   const { visible, selected, closeModal } = props;

@@ -3,8 +3,9 @@ import { Routes, Route, Navigate, useNavigate, useSearchParams } from 'react-rou
 import { useSelector } from 'react-redux';
 
 import '../css/config.css';
-import { Card, AppModal, Pos, Shop, Tax, Document } from '../components/config';
-import { Additional, Type, Cashier } from './configs';
+import '../css/invt.css';
+import { Card, AppModal, Pos, Tax, Document } from '../components/config';
+import { Additional, Type, Cashier, Store } from './configs';
 
 export function Config(props){
   const { size, collapsed } = props;
@@ -40,7 +41,7 @@ export function Config(props){
   const modalProps = { visible, closeModal };
 
   return (
-    <div className='co_back'>
+    <div className='s_container_i'>
       {visible && <AppModal {...modalProps} />}
       {showMenu && <Card />}
       <Routes>
@@ -52,7 +53,7 @@ export function Config(props){
         <Route path='tax' element={<Tax />} />
         <Route path='document' element={<Document />} />
         <Route path='pos' element={<Pos />} />
-        <Route path='store' element={<Shop />} />
+        <Route path='store' element={<Store />} />
       </Routes>
     </div>
   )
