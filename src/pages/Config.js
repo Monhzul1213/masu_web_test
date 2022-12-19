@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 
 import '../css/config.css';
 import '../css/invt.css';
-import { Card, AppModal, Tax, Document } from '../components/config';
-import { Additional, Type, Cashier, Store, Pos } from './configs';
+import { Card, AppModal } from '../components/config';
+import { Additional, Type, Cashier, Tax, Store, Pos, Document } from './configs';
 
 export function Config(props){
   const { size, collapsed } = props;
