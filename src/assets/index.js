@@ -33,4 +33,41 @@ export const icons = [
   icon11, icon12, icon13, icon14, icon15,
   icon16, icon17, icon18, icon19, icon20,
   icon21, icon22, icon23
+];
+
+export const icons1 = [
+  [
+    { icon: icon19, value: 19 },
+    { icon: icon20, value: 20 },
+    { icon: icon21, value: 21 },
+    { icon: icon23, value: 23 },
+  ],
+  [
+    { icon: icon1, value: 1 },
+    { icon: icon2, value: 2 },
+    { icon: icon3, value: 3 },
+    { icon: icon4, value: 4 },
+    { icon: icon5, value: 5 },
+    { icon: icon6, value: 6 },
+    { icon: icon7, value: 7 },
+    { icon: icon8, value: 8 },
+    { icon: icon9, value: 9 },
+    { icon: icon10, value: 10 },
+    { icon: icon11, value: 11 },
+    { icon: icon14, value: 14 },
+    { icon: icon15, value: 15 },
+    { icon: icon18, value: 18 },
+  ],
+  [
+    { icon: icon22, value: 22 }
+  ],
+  [],
+  [
+    { icon: icon12, value: 12 },
+    { icon: icon13, value: 13 },
+    { icon: icon16, value: 16 }
+  ],
+  [
+    { icon: icon17, value: 17 },
+  ]
 ]
