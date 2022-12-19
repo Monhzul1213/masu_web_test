@@ -119,13 +119,13 @@ export function SupplierAdd(){
     let phoneLength = 8 ;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
     let isEmailValid = validateEmail(email?.value?.trim());
-    if( isEmailValid  && name?.value?.trim() && isPhoneValid
-   ){
+    if( isEmailValid  && name?.value?.trim() && isPhoneValid ){
       return true;
     } else {
       if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
       else if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      // if(!image) setImage({ value: '', error: t('error.not_empty') });
       if(!vendCode?.value?.trim()) setVendCode({ value: '', error: t('error.not_empty') });
       if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });

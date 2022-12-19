@@ -526,11 +526,10 @@
     "ave_sale": "Дундаж сагс",
     "customer": "Харилцагч",
     "pay_type": " Төлбөрийн төрөл",
-    "pay_trans": "Төлбөрийн гүйлгээ",
-    "pay_amt": "Төлбөрийн хэмжээ",
-    "refund_trans": "Гүйлгээг буцаан олгох",
-    "refund_amt": "Буцаан олголтын хэмжээ",
-    "net_amt": "Цэвэр дүн",
+    "pay_trans": "Борлуулалтын тоо",
+    "pay_amt": "Борлуулалтын дүн",
+    "refund_trans": "Буцаалтын тоо",
+    "refund_amt": "Буцаалтын дүн",
     "category": "Ангилал",
     "cost": "Барааны өртөг ",
     "items_refund": "Барааг буцаан олгосон",
@@ -571,7 +570,11 @@
       { "label": "Нийт ашиг", "value": "totalProfitAmt" },  
       { "label": "Ашиг хувь", "value": "margin" },
       { "label": "Татвар", "value": "taxes" }
-
+    ],
+    "chart" :[
+      { "label": "BAR", "value" : "bar" },
+      { "label": "LINE", "value" : "line" },
+      { "label": "PIE", "value" : "pie" }
     ]
   },
   

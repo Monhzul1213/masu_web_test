@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { formatNumber } from '../../../../helpers';
-import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon } from '../../../components/all/all_m';
+import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon, Money } from '../../../components/all/all_m';
 export function List(props){
   const { data} = props;
   const { t, i18n } = useTranslation();
@@ -26,8 +26,8 @@ export function List(props){
           Cell: props => (
             <div style={{textAlign: 'right', paddingRight: 15}}>
               {item?.value === 'margin' ? (+(props?.value)?.toFixed(2) + '%')  : 
-              (item?.value === 'qty' ? formatNumber(props?.value) : 
-              (item?.value === 'totalReturnQty' ? formatNumber(props?.value) : 
+              (item?.value === 'qty' ? <Money value={props?.value} fontSize={15} /> : 
+              (item?.value === 'totalReturnQty' ? <Money value={props?.value} fontSize={15} /> : 
               (item?.value === 'categoryName' ? props?.value: ('₮' + formatNumber(props?.value)))))}
             </div>)
         });

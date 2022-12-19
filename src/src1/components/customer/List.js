@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
-import { formatNumber } from '../../../helpers';
-import { Check, PaginationTable  } from '../all/all_m';
+import { Check, PaginationTable, Money } from '../all/all_m';
 import { Table  } from '../all/all_m';
 
 
@@ -29,11 +28,11 @@ export function List(props){
       { Header: t('customer.last_visit'), accessor: 'lastUpdate',customStyle: { width: 150 },
         Cell: props => <div style={{fontSize: 13.5, paddingRight: 15}}>{props.value}</div> },
       { Header: <div style={{textAlign: 'right'}}>{t('customer.visit_total')}</div>, accessor: 'total', customStyle: { width: 120 },
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div>},
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value ? props?.value : 0 }</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('customer.total_spent')}</div>, accessor: 'total_spent', customStyle: { width: 150 }, 
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>₮{formatNumber(props.value)}</div>},
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={15} /></div>},
       { Header: <div style={{textAlign: 'right'} }>{t('customer.total_balance')}</div> , accessor: 'total_balance' , customStyle: { width: 100 },
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props.value)}</div>},
+      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value ? props?.value : 0 }</div>},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

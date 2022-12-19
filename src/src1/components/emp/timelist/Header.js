@@ -78,7 +78,7 @@ export function Header(props){
     label: t('employee.title'), onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp')};
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide,
     className: 'rh_date_z' , };
-  const exportProps = { className: 'ih_btn_z', text: t('page.export'), disabled: true };
+    const exportProps = { text: t('page.export'), className: 'rp_list_select', disabled: true };
 
   return (
     <div className='ih_header' id={id}  >

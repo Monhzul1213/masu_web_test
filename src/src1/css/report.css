@@ -1,16 +1,5 @@
 .rp_list_z {
   max-width: 1260px;
-  margin: 10px 0 2px 1px;
-  display: flex;
-  background-color: var(--root-color);
-  border-radius: var(--radius);
-  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
-  padding: var(--page-padding);
-  flex-flow: column;
-  position: relative;
-}
-.rp_list_z1 {
-  max-width: 1260px;
   margin: 1px 0 2px 1px;
   display: flex;
   background-color: var(--root-color);
@@ -20,9 +9,10 @@
   flex-flow: column;
   position: relative;
 }
+
 .rp_list_zz {
   max-width: 1260px;
-  margin: 10px 0 2px 1px;
+  margin: 1px 0 2px 1px;
   display: flex;
   background-color: var(--root-color);
   border-radius: var(--radius);

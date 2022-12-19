@@ -113,7 +113,6 @@ export function Add(props){
           }
         ];
       const response = await dispatch(sendRequest(user, token, 'Site/Customer', data));
-      console.log(response, '------');
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);
