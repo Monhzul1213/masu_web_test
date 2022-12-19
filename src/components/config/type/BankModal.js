@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { Error, Overlay, ButtonRow, ModalTitle, MaskedInput } from '../../../all';
+import { Error, Overlay, ButtonRow, ModalTitle, MaskedInput } from '../../all';
 
 export function BankModal(props){
   const { visible, closeModal } = props;

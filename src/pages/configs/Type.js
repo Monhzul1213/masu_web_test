@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { withSize } from 'react-sizeme';
 
-import { TypeItem, TypeItem2, BankModal } from './types';
+import { BankModal, Item1, Item2 } from '../../components/config/type';
 
-export function Type(){
+function Card(props){
+  const { size } = props;
   const { t } = useTranslation();
   const [visible, setVisible] = useState(null);
 
-  const onClick2 = (e, type) => {
-    e?.preventDefault();
-    setVisible(type);
-  }
+  const id = size?.width >= 500 ? 'co_t_large' : 'co_t_small';
 
   const items = [
     { title: t('type.emp1'), sub_title: t('type.emp2'), day: 14, icon: 'TbUser' },
@@ -24,24 +23,28 @@ export function Type(){
     { title: t('type.loan1'), sub_title: t('type.loan3'), btn: t('type.loan2'), icon: 'TbCurrencyTugrik', type: 'loan' },
   ];
 
-  const closeModal = () => setVisible(null);
+  const onClick2 = (e, type) => {
+    e?.preventDefault();
+    setVisible(type);
+  }
 
   const renderItem = (item, index) => {
     const itemProps = { key: index, item, subscribe: t('type.subscribe'), free: t('type.free') };
-    return (<TypeItem {...itemProps} />);
+    return (<Item1 {...itemProps} />);
   }
 
   const renderItem2 = (item, index) => {
     const itemProps = { key: index, item, onClick: onClick2 };
-    return (<TypeItem2 {...itemProps} />);
+    return (<Item2 {...itemProps} />);
   }
 
+  const closeModal = () => setVisible(null);
   const bankProps = { visible: visible === 'bank', closeModal };
 
   return (
-    <div className='c_tab_cont' id='t_tab_cont'>
+    <div className='co_tab' id='t_tab_cont'>
       {visible === 'bank' && <BankModal {...bankProps} />}
-      <div className='t_tab_back'>
+      <div className='t_tab_back' id={id}>
         <p className='c_tab_title' id='t_title'>{t('type.order')}</p>
         {items?.map(renderItem)}
         <div className='t_line' />
@@ -49,5 +52,8 @@ export function Type(){
         {items2?.map(renderItem2)}
       </div>
     </div>
-  );
+  )
 }
+
+const withSizeHOC = withSize();
+export const Type = withSizeHOC(Card);
