@@ -25,6 +25,8 @@ import icon20 from './masu_icons/20.png';
 import icon21 from './masu_icons/21.png';
 import icon22 from './masu_icons/22.png';
 import icon23 from './masu_icons/23.png';
+import icon24 from './masu_icons/24.png';
+import icon25 from './masu_icons/25.png';
 
 export { login_image, header_image, logo, placeholder };
 export const icons = [
@@ -32,7 +34,7 @@ export const icons = [
   icon6, icon7, icon8, icon9, icon10,
   icon11, icon12, icon13, icon14, icon15,
   icon16, icon17, icon18, icon19, icon20,
-  icon21, icon22, icon23
+  icon21, icon22, icon23, icon24, icon25
 ];
 
 export const icons1 = [
@@ -61,7 +63,10 @@ export const icons1 = [
   [
     { icon: icon22, value: 22 }
   ],
-  [],
+  [
+    { icon: icon24, value: 24 },
+    { icon: icon25, value: 25 }
+  ],
   [
     { icon: icon12, value: 12 },
     { icon: icon13, value: 13 },

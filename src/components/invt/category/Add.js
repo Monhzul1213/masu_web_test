@@ -30,10 +30,9 @@ export function Add(props){
   const getData = async () => {
     setError(null);
     setName({ value: selected?.categoryName ?? '' });
-    if(selected?.class || selected?.class === 0){
-      setIcon(selected?.icon ?? 1);
-      setClass1({ value: selected?.class ?? 1 });
-    }
+    const hasClass = selected?.class || selected?.class === 0;
+    setClass1({ value: hasClass ? selected?.class : 1 });
+    setIcon(hasClass ? selected?.icon : 1);
     getClasses();
   }
 
