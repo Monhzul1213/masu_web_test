@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Overlay, ButtonRow } from '../../all';
-import { AdditionalItem as Item } from './add';
+import { Overlay, ButtonRow } from '../../components/all';
+import { Item } from '../../components/config/add';
 
 export function Additional(){
   const { t } = useTranslation();
-  const [checked, setChecked] = useState({});
   const [loading, setLoading] = useState(false);
+  const [checked, setChecked] = useState({});
 
   const items = [
     { title: t('add_menu.cashier1'), sub_title: t('add_menu.cashier2'), checked: checked['cashier'], label: 'cashier' },
@@ -21,11 +21,6 @@ export function Additional(){
     { title: t('add_menu.barcode1'), sub_title: t('add_menu.barcode2'), checked: checked['barcode'], label: 'barcode' },
   ];
 
-  const renderItem = (item, index) => {
-    const itemProps = { key: index, item, more: t('page.more'), onCheck };
-    return (<Item {...itemProps} />);
-  }
-
   const onCheck = (label, value) => {
     setChecked({...checked, ...{[label]: value}});
   }
@@ -35,20 +30,24 @@ export function Additional(){
   }
 
   const onClickSave = () => {
-    // setLoading(true);
     console.log(checked);
     setTimeout(() => setLoading(false), 1200);
+  }
+
+  const renderItem = (item, index) => {
+    const itemProps = { key: index, item, more: t('page.more'), onCheck };
+    return (<Item {...itemProps} />);
   }
 
   const btnProps = { onClickCancel, onClickSave };
 
   return (
-    <Overlay className='c_tab_cont' loading={loading}>
+    <Overlay className='co_tab' loading={loading}>
       <p className='c_tab_title'>{t('system_menu.additional')}</p>
       <div className='c_tab_back'>
         {items?.map(renderItem)}
       </div>
       <ButtonRow {...btnProps} />
     </Overlay>
-  );
+  )
 }

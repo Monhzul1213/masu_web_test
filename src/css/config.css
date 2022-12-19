@@ -14,7 +14,8 @@
 .c_card_back {
   background-color: var(--root-color);
   border-radius: var(--radius);
-  width: 360px;
+  width: 390px;
+  min-width: 390px;
   margin-right: var(--page-padding);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
@@ -109,6 +110,7 @@
   background-color: var(--root-color);
   border-radius: var(--radius);
   min-width: var(--config-card-width);
+  max-width: calc(100vw - var(--page-padding) * 2);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   display: flex;
   flex-flow: column;
@@ -723,4 +725,26 @@
   flex-flow: row;
   margin: var(--page-padding);
   align-items: flex-start;
+}
+
+@media only screen and (min-width: 740px) { /* desktop */
+  .co_tab {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    display: flex;
+    flex-flow: column;
+    max-width: 750px;
+  }
+}
+
+@media only screen and (max-width: 740px) { /* mobile */
+  .co_tab {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    display: flex;
+    flex-flow: column;
+    width: calc(100vw - var(--page-padding) * 2);
+  }
 }
