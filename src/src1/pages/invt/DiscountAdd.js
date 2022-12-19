@@ -158,7 +158,7 @@ export function DiscountAdd(){
   const mainProps = { setError, name, setName, isEach, setIsEach, price, setPrice, perc, setPerc, setEdited,  setIsCheck, isCheck };
   const siteProps = {  data: sites, setData: setSites, setEdited, checked, setChecked  };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'mo_ac_btn_z'  };
-  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'mo_ac_back' };
+  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'mo_ac_back' };
 
   return (
     <Overlay className='i_container' loading={loading}>

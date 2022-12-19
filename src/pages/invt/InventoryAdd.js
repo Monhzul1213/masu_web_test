@@ -285,7 +285,7 @@ export function InventoryAdd(){
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,
     search: searchV, setSearch: setSearchV, disabled: disabledV, setDisabled: setDisabledV };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited, checked, setChecked };
-  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add' };
+  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add' };
   const modiProps = { data: modifiers, setData: setModifiers, setEdited };
   const modiEmptyProps = { title: 'modifier.title', icon: 'MdStorefront', route: '/inventory/invt_modi', btn: 'modifier.add' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };

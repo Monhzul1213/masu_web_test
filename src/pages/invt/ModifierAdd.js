@@ -149,7 +149,7 @@ export function ModifierAdd(){
   
   const optionProps = { name, setName, setError, data: items, setData: setItems, setDItems, setEdited, disabled, setDisabled, search, setSearch };
   const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'ma_back' };
-  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config?tab=store', btn: 'shop.add', id: 'ma_back' };
+  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ma_back' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true : false, id: 'mo_ac_btns' };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
