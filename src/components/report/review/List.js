@@ -4,7 +4,7 @@ import { useTable, usePagination, useSortBy } from 'react-table';
 import moment from 'moment';
 
 import '../../../css/report.css';
-import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon, Money } from '../../all';
+import { Button, PaginationTable, Table, IconSelect, DynamicMDIcon, Money } from '../../all';
 
 export function List(props){
   const { data } = props;
@@ -53,7 +53,7 @@ export function List(props){
     <div>
       <div className='rp_list_filter'>
         <Button {...exportProps} />
-        <IconDropdown {...columnProps} />
+        <IconSelect {...columnProps} />
       </div>
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
