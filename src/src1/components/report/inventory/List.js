@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { formatNumber } from '../../../../helpers';
-import { Button, PaginationTable, Table, IconSelect, DynamicMDIcon } from '../../../components/all/all_m';
+import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon } from '../../../components/all/all_m';
 export function List(props){
   const { data} = props;
   const { t, i18n } = useTranslation();
@@ -50,7 +50,7 @@ export function List(props){
     <div>
       <div className='rp_list_filter'>
         <Button {...exportProps} />
-        <IconSelect {...columnProps} />
+        <IconDropdown {...columnProps} />
       </div>
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
