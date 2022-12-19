@@ -24,7 +24,8 @@ function Screen(props){
   }, []);
 
   useEffect(() => {
-    setShowMenu(size?.width >= 840)
+    // setShowMenu(size?.width >= 840)
+    setShowMenu(true);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
@@ -43,9 +44,7 @@ function Screen(props){
       {visible && <AppModal {...modalProps} />}
       {showMenu && <Card {...cardProps} />}
       {showMenu && <div className='c_gap' />}
-      <div>
-        <Tab {...cardProps} />
-      </div>
+      <Tab {...cardProps} />
     </div>
   )
 }

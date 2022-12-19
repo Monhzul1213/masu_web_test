@@ -19,6 +19,7 @@
   display: flex;
   flex-flow: column;
   align-items: center;
+  min-width: 400px;
 }
 
 .empty_back1 {
