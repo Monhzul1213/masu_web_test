@@ -11,7 +11,7 @@ export const EditableCell = props => {
   const hasError = row?.original?.error === id;
   const notEditable = disabled && !hasError;
   const user = useSelector(state => state.login?.user);
-  const suffix = user?.msMerchant?.currency ?? '';
+  const suffix = ' ' + (user?.msMerchant?.currency ?? '');
 
   const onChange = e => {
     // setValue(e.target.value)

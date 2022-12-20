@@ -205,11 +205,32 @@ export const getList = (user, token, api, setFunction, headers) => async dispatc
   }
 };
 
+export const getService = url => async dispatch => {
+  try {
+    const config = {
+      method: 'GET', url,
+      headers: { 'Accept': '*/*', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    };
+    const response = await fetchRetry(config);
+    console.log('?????????????', response);
+    if(response?.rettype === 0)
+      return Promise.resolve({ error: null, data: response });
+    return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });
+    
+    // return Promise.resolve({ error: null, data: response });
+    // return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });
+  } catch (err) {
+    console.log(err);
+    return Promise.resolve({ error: err?.toString() });
+  }
+};
+
 function fetchRetry(config, retries = 5) {
   return axios(config)
     .then(res => {
       return res?.data;
     }).catch(error => {
+      console.log(error);
       if(error?.message === 'Network Error' && retries > 0){
         console.log('retrying network', retries);
         return fetchRetry(config, retries - 1)

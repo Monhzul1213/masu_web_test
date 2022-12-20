@@ -521,6 +521,7 @@
   font-size: 14px;
   height: 32px;
   padding-left: 0;
+  background-color:  var(--root-color);
 }
 
 .m_input_descr {
@@ -807,5 +808,42 @@
 
 .store_tab {
   overflow: scroll;
+}
+
+.add_tab {
+  display: flex;
+  flex-flow: column;
+  overflow: scroll;
   max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
+}
+
+.add_back {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding: var(--page-padding);
+  max-width: 840px;
+  margin: 0 2px 2px 2px;
+}
+
+#co_input_row {
+  display: flex;
+  flex-flow: row;
+}
+
+.co_check_btn {
+  border: none;
+  box-shadow: none;
+  background-color: var(--config-b-color);
+  height: 36px;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 550;
+  color: var(--root-color);
+  padding: 0 20px;
+}
+
+.co_check_btn:hover {
+  cursor: pointer;
+  background-color: var(--config-color);
 }

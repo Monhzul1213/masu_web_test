@@ -3,12 +3,16 @@ import { ImCheckboxChecked, ImCheckboxUnchecked } from 'react-icons/im';
 import { useTranslation } from 'react-i18next';
 
 export function Check(props){
-  const { checked, onClick } = props;
+  const { checked, onClick, disabled } = props;
+
+  const onPress = () => {
+    if(!disabled) onClick();
+  }
 
   return (
     checked
-      ? <ImCheckboxChecked className='check_all_btn' id='check_all_selected' onClick={onClick} />
-      : <ImCheckboxUnchecked className='check_all_btn' onClick={onClick} />
+      ? <ImCheckboxChecked className='check_all_btn' id='check_all_selected' onClick={onPress} />
+      : <ImCheckboxUnchecked className='check_all_btn' onClick={onPress} />
   );
 }
 
@@ -41,7 +45,7 @@ export function CheckAll(props){
 }
 
 export function CheckBox(props){
-  const { label, checked, setChecked } = props;
+  const { label, checked, setChecked, style, disabled } = props;
   const { t } = useTranslation();
 
   const onClick = () => {
@@ -49,8 +53,8 @@ export function CheckBox(props){
   }
 
   return (
-    <div className='i_check_row'>
-      <Check checked={checked} onClick={onClick} />
+    <div className='i_check_row' style={style}>
+      <Check checked={checked} onClick={onClick} disabled={disabled} />
       <p className='i_check_lbl'>{t(label)}</p>
     </div>
   );

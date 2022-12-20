@@ -98,7 +98,7 @@ export function DescrInput(props){
 export function MoneyInput(props){
   const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, onBlur } = props;
   const user = useSelector(state => state.login?.user);
-  const suffix = user?.msMerchant?.currency ?? '';
+  const suffix = ' ' +  (user?.msMerchant?.currency ?? '');
 
   const onChange = value => {
     setValue({ value });

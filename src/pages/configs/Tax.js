@@ -1,38 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 
 import { getList } from '../../services';
 import { ButtonRowAdd, Empty, Error1, Overlay } from '../../components/all';
-import { Add, List } from '../../components/config/store';
 
 function Card(props){
+  const { size } = props;
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
-  const emptyProps = { icon: 'MdOutlineReceipt', type: 'tax', noDescr: true };//onClickAdd
+  const onClickAdd = row => navigate('tax_add');
+
+  const width = size?.width >= 720 ? 720 : size?.width;
+  const emptyProps = { icon: 'MdOutlineReceipt', type: 'tax', noDescr: true, onClickAdd };
+  const addProps = { type: 'shop', onClickAdd };
 
   return (
     <div className='store_tab' style={{flex: 1}}>
-      <Empty {...emptyProps} />
-
-      {/* {visible && <Add {...modalProps} />} */}
       <Overlay loading={loading}>
-        {/* {error && <Error1 error={error} />} */}
-        {/* {!data?.length ? <div style={{ width }}><Empty {...emptyProps} /></div> :
+        {error && <Error1 error={error} />}
+        {!data?.length ? <div style={{ width }}><Empty {...emptyProps} /></div> :
           <div className='mo_container' style={{ width }}>
             <ButtonRowAdd {...addProps} />
-            <List {...listProps} />
+            {/* <List {...listProps} /> */}
           </div>
-        } */}
+        }
       </Overlay>
     </div>
   );
 }
 /*
 function Card(props){
-  const { size } = props;
-  const [error, setError] = useState(null);
-  const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
   const [item, setItem] = useState(null);
   const { user, token }  = useSelector(state => state.login);
@@ -64,10 +66,8 @@ function Card(props){
     if(toGet) getData();
   }
 
-  const width = size?.width >= 720 ? 720 : size?.width;
   const emptyProps = { icon: 'MdStorefront', type: 'shop', noDescr: true, onClickAdd };
   const modalProps = { visible, closeModal, selected: item };
-  const addProps = { type: 'shop', onClickAdd };
   const listProps = { data, onClickAdd };
 
   return (

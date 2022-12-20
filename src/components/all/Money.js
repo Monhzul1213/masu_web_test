@@ -10,7 +10,7 @@ export function Money(props){
   return (
     <span>
       {formatNumber(value, decimal)}
-      <span style={{ fontSize }}>{user?.msMerchant?.currency ?? ''}</span>
+      <span style={{ fontSize }}> {user?.msMerchant?.currency ?? ''}</span>
     </span>
   )
 }

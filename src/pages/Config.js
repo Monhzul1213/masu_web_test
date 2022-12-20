@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import '../css/config.css';
 import '../css/invt.css';
 import { Card, AppModal } from '../components/config';
-import { Additional, Type, Cashier, Tax, Store, Pos, Document } from './configs';
+import { Additional, Type, Cashier, Tax, Store, Pos, Document, TaxAdd } from './configs';
 
 export function Config(props){
   const { size, collapsed } = props;
@@ -51,6 +51,7 @@ export function Config(props){
         <Route path='type' element={<Type />} />
         <Route path='cashier' element={<Cashier />} />
         <Route path='tax' element={<Tax />} />
+        <Route path='tax/tax_add' element={<TaxAdd />} />
         <Route path='document' element={<Document />} />
         <Route path='pos' element={<Pos />} />
         <Route path='store' element={<Store />} />
