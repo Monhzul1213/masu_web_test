@@ -20,6 +20,7 @@ function Card(props){
     if(response?.error) setError(response?.error);
     else {
       ///resposne
+      //Татвар төлөгчийн регистерийн дугаараа шалгана уу!
     }
     setLoading(false);
   }

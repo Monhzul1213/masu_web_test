@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
 
+import { getList } from '../../services';
 import { Error1, Overlay, Prompt } from '../../components/all';
-import { Main } from '../../components/config/tax/add';
+import { Main, List } from '../../components/config/tax/add';
+import { CardEmpty } from '../../components/invt/inventory/add';
 
 function Screen(props){
   const { size } = props;
@@ -13,9 +16,44 @@ function Screen(props){
   const [name, setName] = useState({ value: '' });
   const [notes, setNotes] = useState({ value: '' });
   const [checked, setChecked] = useState(true);
+  const [sites, setSites] = useState([]);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getData();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getData = async () => {
+    // let modifireID = searchParams?.get('modifireID');
+    let response = await getSites();
+    // if(response && (modifireID || modifireID === 0)) await getModifier(modifireID, response);
+  }
+
+  const getSites = async () => {
+    setError(null);
+    setLoading(false);
+    const response = await dispatch(getList(user, token, 'Site/GetSite'));
+    setLoading(false);
+    if(response?.error){
+      setError(response?.error);
+      return false;
+    } else {
+      // response?.data?.forEach(item => {
+      //   item.checked = true;
+      //   item.rowStatus = 'I';
+      // });
+      setSites(response?.data);
+      return response?.data;
+    }
+  }
 
   const width = size?.width >= 690 ? 690 : size?.width;
   const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes };
+  const siteProps = { data: sites, setData: setSites, setEdited, id: 'add_back' };
+  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'add_back' };
 
   return (
     <div className='add_tab' style={{flex: 1}}>
@@ -25,9 +63,8 @@ function Screen(props){
         <div className='i_scroll' style={{ width }}>
           <form>
             <Main {...mainProps} />
-            {/* <CardOption {...optionProps} />
             <div className='gap' />
-            {sites?.length ? <CardSite {...siteProps} /> : <CardEmpty {...siteEmptyProps} />} */}
+            {sites?.length ? <List {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}
           </form>
         </div>
         {/*
@@ -42,7 +79,6 @@ function Screen(props){
  * import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import '../../css/invt.css';
@@ -57,22 +93,15 @@ export function ModifierAdd(){
   const [items, setItems] = useState([]);
   const [dItems, setDItems] = useState([]);
   const [disabled, setDisabled] = useState(false);
-  const [sites, setSites] = useState([]);
   const [open, setOpen] = useState(false);
   const [item, setItem] = useState(null);
   const [search, setSearch] = useState({ value: '' });
   const [checked, setChecked] = useState(true);
   const [saved, setSaved] = useState(false);
   const [searchParams] = useSearchParams();
-  const { user, token }  = useSelector(state => state.login);
-  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
 
-  useEffect(() => {
-    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   
   useEffect(() => {
     if(saved) onClickCancel();
@@ -80,11 +109,7 @@ export function ModifierAdd(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [saved]);
 
-  const getData = async () => {
-    let modifireID = searchParams?.get('modifireID');
-    let response = await getSites();
-    if(response && (modifireID || modifireID === 0)) await getModifier(modifireID, response);
-  }
+ 
 
   const getModifier = async (modifireid, siteRes) => {
     setError(null);
@@ -107,23 +132,7 @@ export function ModifierAdd(){
     }
   }
 
-  const getSites = async () => {
-    setError(null);
-    setLoading(false);
-    const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    setLoading(false);
-    if(response?.error){
-      setError(response?.error);
-      return false;
-    } else {
-      response?.data?.forEach(item => {
-        item.checked = true;
-        item.rowStatus = 'I';
-      });
-      setSites(response?.data);
-      return response?.data;
-    }
-  }
+  
 
   const onClickCancel = () => navigate('/inventory/invt_modi');
 
@@ -186,8 +195,6 @@ export function ModifierAdd(){
   }
   
   const optionProps = { name, setName, setError, data: items, setData: setItems, setDItems, setEdited, disabled, setDisabled, search, setSearch };
-  const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'ma_back' };
-  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ma_back' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true : false, id: 'mo_ac_btns' };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 

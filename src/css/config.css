@@ -847,3 +847,25 @@
   cursor: pointer;
   background-color: var(--config-color);
 }
+
+.co_coord_btn {
+  border: none;
+  background-color: transparent;
+  color: var(--text-color);
+  padding: 0 5px;
+  display: flex;
+  flex-flow: row;
+}
+
+.co_coord_icon {
+  font-size: 22px;
+  color: var(--config-color);
+}
+
+.co_coord_btn:hover {
+  cursor: pointer;
+}
+
+.co_coord_btn:hover .co_coord_icon {
+  color: var(--config-b-color);
+}
