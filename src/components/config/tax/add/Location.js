@@ -13,7 +13,7 @@ export function Location(props){
   const [lng, setLng] = useState(106.919143);
 
   useEffect(() => {
-    if(visible && selected && selected?.item && selected?.item?.haslocation){
+    if(visible && selected && selected?.item && selected?.item?.hasLocation){
       setLat(selected?.item?.locationY);
       setLng(selected?.item?.locationX);
     }

@@ -872,3 +872,9 @@
 .co_coord_btn:hover .co_coord_icon {
   color: var(--config-b-color);
 }
+
+.co_coord_text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 15px;
+}
