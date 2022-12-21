@@ -207,25 +207,9 @@ export const getList = (user, token, api, setFunction, headers) => async dispatc
 
 export const getService = url => async dispatch => {
   try {
-    const config = {
-      method: 'get', url,
-      // headers: { 'Accept': '*/*', 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-      withCredentials: false,
-      headers: {
-        'Access-Control-Allow-Origin': "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        'ContentType': 'application/json; charset=utf-8',
-      },
-    };
+    const config = { method: 'get', url };
     const response = await fetchRetry(config);
-    console.log('?????????????', response);
-    if(response?.rettype === 0)
-      return Promise.resolve({ error: null, data: response });
-    return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });
-    
-    // return Promise.resolve({ error: null, data: response });
-    // return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });
+    return Promise.resolve({ error: response?.retdesc, data: response });
   } catch (err) {
     console.log(err);
     return Promise.resolve({ error: err?.toString() });

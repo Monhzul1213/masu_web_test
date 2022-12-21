@@ -15,7 +15,7 @@ function Screen(props){
   const [regNo, setRegNo] = useState({ value: '' });
   const [name, setName] = useState({ value: '' });
   const [notes, setNotes] = useState({ value: '' });
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const [sites, setSites] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();

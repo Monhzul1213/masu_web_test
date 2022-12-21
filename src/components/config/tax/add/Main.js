@@ -15,12 +15,16 @@ function Card(props){
     e?.preventDefault();
     setLoading(true);
     setError(null);
-    let api = 'http://info.ebarimt.mn/rest/merchant/info?regno=' + regNo?.value; //5416019
+    let api = 'http://192.168.1.107:3001/?regno=' + regNo?.value
     const response = await dispatch(getService(api));
     if(response?.error) setError(response?.error);
-    else {
-      ///resposne
-      //Татвар төлөгчийн регистерийн дугаараа шалгана уу!
+    else if(response?.data?.found){
+      setName({ value: response?.data?.name });
+      setChecked(response?.data?.vatpayer);
+    } else {
+      setError(t('tax.error'));
+      setName({ value: '' });
+      setChecked(false);
     }
     setLoading(false);
   }
