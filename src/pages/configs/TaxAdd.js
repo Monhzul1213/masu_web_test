@@ -118,14 +118,15 @@ function Screen(props){
 
       let data = {
         reqeustId: request?.reqeustId ?? -1,
-        vatPayerNo: regNo?.value, vatPayerName: name?.value, isVat: checked,
+        vatPayerNo: regNo?.value, vatPayerName: name?.value, isVat: checked ? 1 : 0,
         vatPayerPhone: '', status: 0, descr: notes?.value,
         rowStatus: request ? 'U' : 'I',
         vatRequestItem
       };
       return data;
     } else {
-      if(!name?.value) setName({ value: '', error: t('error.not_empty') }); 
+      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      if(!items?.length) setError(t('tax.length_error'));
       return false;
     }
   }

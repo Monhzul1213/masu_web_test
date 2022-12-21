@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Table, PaginationTable, IconButton, DynamicMDIcon } from '../../../all';
+import { Table, PaginationTable, DynamicMDIcon, DynamicAIIcon } from '../../../all';
 import { Location } from './Location';
 
 export function List(props){
@@ -11,6 +11,18 @@ export function List(props){
   const [columns, setColumns] = useState([]);
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(null);
+
+  const Coordinate = props => {
+    const { onPressCoordinate, onPressDelete, value } = props;
+
+    return (
+      <div className='co_coord'>
+        <DynamicMDIcon name='MdLocationPin' className='co_coord_icon' onClick={onPressCoordinate} />
+        <div onClick={onPressCoordinate} className='co_coord_text'>{value}</div>
+        {value ? <DynamicAIIcon name='AiFillCloseCircle' className='co_coord_close' onClick={onPressDelete} /> : null}
+    </div>
+    )
+  }
 
   useEffect(() => {
     let columns = [
@@ -21,13 +33,9 @@ export function List(props){
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>
       },
       {
-        Header: t('tax.coordinate'), accessor: 'coordinate',
-        Cell: ({ value, onPressCoordinate, row }) => (
-          <div className='co_coord'>
-            <IconButton className='co_coord_btn' icon={<DynamicMDIcon name='MdLocationPin' className='co_coord_icon' />} onClick={() => onPressCoordinate(row)} />
-            <p className='co_coord_text'>{value}</p>
-          </div>
-        )
+        Header: t('tax.coordinate'), accessor: 'coordinate', customStyle: { width: 200 },
+        Cell: ({ value, onPressCoordinate, onPressDelete, row }) =>
+          (<Coordinate onPressCoordinate={() => onPressCoordinate(row)} value={value} onPressDelete={() => onPressDelete(row?.index)} />)
       }
     ];
     setColumns(columns);
@@ -38,6 +46,15 @@ export function List(props){
   const onPressCoordinate = row => {
     setSelected({ item: row?.original, index: row?.index });
     setVisible(true);
+  }
+
+  const onPressDelete = rowIndex => {
+    setData(old => old.map((row, index) => {
+      if(index === rowIndex) return { ...old[rowIndex], locationX: null, locationY: null, hasLocation: false, coordinate: '' };
+      else return row;
+    }));
+    setEdited && setEdited(true);
+    setError && setError(null);
   }
 
   const closeModal = (hasLocation, y, x) => {
@@ -56,7 +73,7 @@ export function List(props){
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    onPressCoordinate }, useSortBy, usePagination, useRowSelect);
+    onPressCoordinate, onPressDelete }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const mapProps = { visible, selected, closeModal };
   

@@ -851,34 +851,33 @@
 .co_coord {
   display: flex;
   flex-flow: row;
-}
-
-.co_coord_btn {
-  border: none;
-  background-color: transparent;
-  padding: 0 5px;
-  margin-right: 5px;
+  align-items: center;
+  padding: 0;
 }
 
 .co_coord_icon {
-  font-size: 22px;
   color: var(--config-color);
+  font-size: 22px;
 }
 
-.co_coord_btn:hover {
+.co_coord_icon:hover , .co_coord_close:hover {
   cursor: pointer;
-}
-
-.co_coord_btn:hover .co_coord_icon {
   color: var(--config-b-color);
 }
 
 .co_coord_text {
-  margin: 0;
+  margin: 0 5px;
   font-size: 13px;
   line-height: 15px;
+  max-width: 150px;
+  overflow: hidden;
 }
 
 #add_btns{
   max-width: 840px;
+}
+
+.co_coord_close {
+  font-size: 18px;
+  color: var(--text4-color);
 }
