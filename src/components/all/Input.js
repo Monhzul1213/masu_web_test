@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { DynamicAIIcon } from './DynamicIcon';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, maskChar, inRow, length } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, maskChar, inRow, length, noBlur } = props;
   const { t } = useTranslation();
 
   const onChange = e => {
@@ -33,7 +33,7 @@ export function Input(props){
   }
 
   const onBlur = () => {
-    setValue({ value: value?.value?.trim(), error: value?.error });
+    !noBlur && setValue({ value: value?.value?.trim(), error: value?.error });
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};

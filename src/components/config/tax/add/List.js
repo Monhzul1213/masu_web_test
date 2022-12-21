@@ -6,7 +6,7 @@ import { Table, PaginationTable, IconButton, DynamicMDIcon } from '../../../all'
 import { Location } from './Location';
 
 export function List(props){
-  const { data, setData, setEdited } = props;
+  const { data, setData, setEdited, setError } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -49,6 +49,7 @@ export function List(props){
         else return row;
       }));
       setEdited && setEdited(true);
+      setError && setError(null);
     }
     setSelected(null);
   }

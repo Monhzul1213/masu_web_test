@@ -11,6 +11,12 @@ function Card(props){
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
+  const changeNo = value => {
+    setRegNo(value);
+    setName({ value: '' });
+    setChecked(false);
+  }
+
   const handleEnter = async e => {
     e?.preventDefault();
     setLoading(true);
@@ -31,7 +37,8 @@ function Card(props){
 
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
-  const noProps = { value: regNo, setValue: setRegNo, label: t('tax.reg_no'), placeholder: t('tax.reg_no'), setError, setEdited, handleEnter, inRow: true };
+  const noProps = { value: regNo, setValue: changeNo, label: t('tax.reg_no'), placeholder: t('tax.reg_no'), setError, setEdited, handleEnter,
+    inRow: true, noBlur: true };
   const btnProps = { className: 'co_check_btn', text: t('tax.check'), onClick: handleEnter};
   const nameProps = { value: name, setValue: setName, label: t('tax.name'), placeholder: t('tax.name'), inRow: true, disabled: true };
   const checkProps = { checked, setChecked, label: 'tax.checked', style: { marginTop: 0 }, disabled: true };

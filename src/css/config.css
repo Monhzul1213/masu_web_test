@@ -878,3 +878,7 @@
   font-size: 13px;
   line-height: 15px;
 }
+
+#add_btns{
+  max-width: 840px;
+}
