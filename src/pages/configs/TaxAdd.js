@@ -52,7 +52,7 @@ function Screen(props){
 
   const width = size?.width >= 690 ? 690 : size?.width;
   const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes };
-  const siteProps = { data: sites, setData: setSites, setEdited, id: 'add_back' };
+  const siteProps = { data: sites, setData: setSites, setEdited };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'add_back' };
 
   return (
@@ -60,8 +60,8 @@ function Screen(props){
       <Overlay loading={loading}>
         <Prompt edited={edited} />
         {error && <Error1 error={error} />}
-        <div className='i_scroll' style={{ width }}>
-          <form>
+        <div className='i_scroll'>
+          <form style={{ width }}>
             <Main {...mainProps} />
             <div className='gap' />
             {sites?.length ? <List {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}

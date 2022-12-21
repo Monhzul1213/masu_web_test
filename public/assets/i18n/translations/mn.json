@@ -667,7 +667,8 @@
     "checked": "НӨАТ төлөгч эсэх",
     "note": "Тайлбар",
     "location": "Байршил",
-    "coordinate": "Координат"
+    "coordinate": "Координат",
+    "choose_location": "Байршил сонгох"
   },
   "document": {
     "title": "ПОС талоны загвар",

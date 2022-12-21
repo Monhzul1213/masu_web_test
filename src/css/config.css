@@ -848,13 +848,16 @@
   background-color: var(--config-color);
 }
 
+.co_coord {
+  display: flex;
+  flex-flow: row;
+}
+
 .co_coord_btn {
   border: none;
   background-color: transparent;
-  color: var(--text-color);
   padding: 0 5px;
-  display: flex;
-  flex-flow: row;
+  margin-right: 5px;
 }
 
 .co_coord_icon {
