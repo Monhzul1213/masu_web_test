@@ -119,7 +119,7 @@ function Screen(props){
       let data = {
         reqeustId: request?.reqeustId ?? -1,
         vatPayerNo: regNo?.value, vatPayerName: name?.value, isVat: checked ? 1 : 0,
-        vatPayerPhone: '', status: 0, descr: notes?.value,
+        vatPayerPhone: '', status: 1, descr: notes?.value,
         rowStatus: request ? 'U' : 'I',
         vatRequestItem
       };
