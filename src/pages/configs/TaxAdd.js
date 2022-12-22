@@ -83,7 +83,6 @@ function Screen(props){
       setShow(request?.status + '' === '1');
       let items = [...siteRes];
       request?.items?.forEach(item => {
-        console.log(item);
         let index = items?.findIndex(si => si.siteID === item.siteId);
         if(index === -1){
           item.locationX = parseFloat(item.locationX);
