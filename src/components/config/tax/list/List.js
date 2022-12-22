@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 import { PaginationTable, Table } from '../../../all';
 
@@ -11,10 +12,13 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('tax.t_no'), accessor: 'msVatRequest.VatPayerNo' },
-      { Header: t('tax.t_name'), accessor: 'msVatRequest.VatPayerName' },
-      { Header: t('tax.t_status'), accessor: 'msVatRequest.Status' },
-      { Header: t('tax.t_date'), accessor: 'msVatRequest.CreatedDate' },
+      { Header: t('tax.t_no'), accessor: 'vatPayerNo' },
+      { Header: t('tax.t_name'), accessor: 'vatPayerName' },
+      { Header: t('tax.t_status'), accessor: 'statusName' },
+      {
+        Header: t('tax.t_date'), accessor: 'createdDate',
+        Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

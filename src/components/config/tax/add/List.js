@@ -29,7 +29,7 @@ export function List(props){
       { Header: t('inventory.t_site'), accessor: 'name' },
       { Header: t('tax.location'), accessor: 'descr' },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'posQty',
+        Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'posCount',
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>
       },
       {

@@ -49,15 +49,15 @@ function Screen(props){
 
   const getSites = async () => {
     setError(null);
-    setLoading(false);
-    const response = await dispatch(getList(user, token, 'Site/GetSite'));
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest'));
     setLoading(false);
     if(response?.error){
       setError(response?.error);
       return false;
     } else {
-      setSites(response?.data);
-      return response?.data;
+      setSites(response?.data?.poscount);
+      return response?.data?.poscount;
     }
   }
 
