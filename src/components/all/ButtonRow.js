@@ -101,3 +101,35 @@ export function ButtonRowAddConfirm(props){
     </div>
   )
 }
+
+export function ButtonRowCancel(props){
+  const { t } = useTranslation();
+  const { onClickCancel, onClickSave, onClickDelete, type, show, id, disabled, error, msg, isModal } = props;
+  const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
+
+  const onDelete = () => {
+    disabled ? setOpen1(true) : setOpen(true);
+  }
+
+  const confirm = async sure => {
+    setOpen(false);
+    if(sure) onClickDelete();
+  }
+
+  const close = () => setOpen1(false);
+
+  const confirmProps = { open, text: msg, confirm };
+  const warningProps = { open: open1, text: error, close };
+  const btnClass = isModal ? 'a_btn' : 'invt_btn';
+
+  return (
+    <div className={btnClass + '_row'} id={id}>
+      {open && <Confirm {...confirmProps} />}
+      {open1 && <Warning {...warningProps} />}
+      <Button className={btnClass} text={t('page.cancel')} onClick={onClickCancel} />
+      {show && <Button className={btnClass} text={t('page.cancel1')} id={btnClass + '_cancel'} onClick={onDelete} />}
+      <Button className={btnClass} id={btnClass + '_save'} text={t('page.save')} type={type} onClick={onClickSave} />
+    </div>
+  )
+}

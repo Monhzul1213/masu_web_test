@@ -6,7 +6,7 @@ import { message } from 'antd';
 import { withSize } from 'react-sizeme';
 
 import { getList, sendRequest } from '../../services';
-import { Error1, Overlay, Prompt, ButtonRowConfirm } from '../../components/all';
+import { Error1, Overlay, Prompt, ButtonRowCancel } from '../../components/all';
 import { Main, List } from '../../components/config/tax/add';
 import { CardEmpty } from '../../components/invt/inventory/add';
 
@@ -155,7 +155,8 @@ function Screen(props){
   const onClickDelete = async () => {
     onLoad();
     request.isVat = parseInt(request.isVat);
-    request.rowStatus = 'D'
+    request.rowStatus = 'U';
+    request.status = 0;
     request.vatRequestItem = request?.items;
     let response = await dispatch(sendRequest(user, token, 'Merchant/VatRequest', request));
     if(response?.error) onError(response?.error);
@@ -166,7 +167,7 @@ function Screen(props){
   const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, request };
   const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled: request && !show };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'add_back' };
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns' };
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns', msg: 'tax.cancel_message' };
 
   return (
     <div className='add_tab' style={{flex: 1}}>
@@ -180,7 +181,7 @@ function Screen(props){
             {sites?.length ? <List {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}
           </form>
         </div>
-        <div style={{ width }}><ButtonRowConfirm {...btnProps} /></div>
+        <div style={{ width }}><ButtonRowCancel {...btnProps} /></div>
       </Overlay>
     </div>
   );

@@ -360,6 +360,16 @@
   background-color: var(--config-color);
 }
 
+#invt_btn_cancel {
+  color: var(--config-color);
+  font-weight: 550;
+}
+
+#invt_btn_cancel:hover {
+  cursor: pointer;
+  color: var(--config-b-color);
+}
+
 #invt_list {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
   max-width: 1260px;
