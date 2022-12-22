@@ -25,8 +25,8 @@ export function List(props){
   }, [i18n?.language]);
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
-  const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }},
-    useSortBy, usePagination, useRowSelect);
+  const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25,
+    sortBy: [{ id: 'createdDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd };
 
   return (

@@ -16,6 +16,9 @@ export function Location(props){
     if(visible && selected && selected?.item && selected?.item?.hasLocation){
       setLat(parseFloat(selected?.item?.locationY));
       setLng(parseFloat(selected?.item?.locationX));
+    } else {
+      setLat(47.914318);
+      setLng(106.919143);
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
