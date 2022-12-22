@@ -80,19 +80,22 @@ function Screen(props){
       setChecked((request?.isVat + '') === '1');
       setNotes({ value: request?.descr });
       setRequest(request);
-      setShow(true);
+      setShow(request?.status + '' === '1');
       let items = [...siteRes];
       request?.items?.forEach(item => {
+        console.log(item);
         let index = items?.findIndex(si => si.siteID === item.siteId);
         if(index === -1){
+          item.locationX = parseFloat(item.locationX);
+          item.locationY = parseFloat(item.locationY);
           item.posCount = item.poscount;
           item.hasLocation = true;
           item.coordinate = item.locationY + '\n' + item.locationX;
           item.rowStatus = 'U';
           items.push(item);
         } else {
-          items[index].locationX = item.locationX;
-          items[index].locationY = item.locationY;
+          items[index].locationX = parseFloat(item.locationX);
+          items[index].locationY = parseFloat(item.locationY);
           items[index].hasLocation = true;
           items[index].rowStatus = 'U';
           items[index].coordinate = item.locationY + '\n' + item.locationX;
@@ -172,8 +175,8 @@ function Screen(props){
   }
 
   const width = size?.width >= 690 ? 690 : size?.width;
-  const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes };
-  const siteProps = { data: sites, setData: setSites, setEdited, setError };
+  const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, request };
+  const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled: request && !show };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'add_back' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns' };
 

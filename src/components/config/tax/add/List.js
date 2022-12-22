@@ -6,7 +6,7 @@ import { Table, PaginationTable, DynamicMDIcon, DynamicAIIcon } from '../../../a
 import { Location } from './Location';
 
 export function List(props){
-  const { data, setData, setEdited, setError } = props;
+  const { data, setData, setEdited, setError, disabled } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -19,7 +19,7 @@ export function List(props){
       <div className='co_coord'>
         <DynamicMDIcon name='MdLocationPin' className='co_coord_icon' onClick={onPressCoordinate} />
         <div onClick={onPressCoordinate} className='co_coord_text'>{value}</div>
-        {value ? <DynamicAIIcon name='AiFillCloseCircle' className='co_coord_close' onClick={onPressDelete} /> : null}
+        {value && !disabled ? <DynamicAIIcon name='AiFillCloseCircle' className='co_coord_close' onClick={onPressDelete} /> : null}
     </div>
     )
   }
@@ -44,8 +44,10 @@ export function List(props){
   }, [i18n?.language]);
 
   const onPressCoordinate = row => {
-    setSelected({ item: row?.original, index: row?.index });
-    setVisible(true);
+    if(!disabled){
+      setSelected({ item: row?.original, index: row?.index });
+      setVisible(true);
+    }
   }
 
   const onPressDelete = rowIndex => {

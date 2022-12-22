@@ -7,10 +7,11 @@ import { getList } from '../../../../services';
 import { Input, Button, CheckBox, DescrInput } from '../../../all';
 
 function Card(props){
-  const { size, setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes } = props;
+  const { size, setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, request  } = props;
   const { t } = useTranslation();
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const disabled = request ? true : false;
 
   const changeNo = value => {
     setRegNo(value);
@@ -40,7 +41,7 @@ function Card(props){
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
   const noProps = { value: regNo, setValue: changeNo, label: t('tax.reg_no'), placeholder: t('tax.reg_no'), setError, setEdited, handleEnter,
-    inRow: true, noBlur: true };
+    inRow: true, noBlur: true, disabled };
   const btnProps = { className: 'co_check_btn', text: t('tax.check'), onClick: handleEnter};
   const nameProps = { value: name, setValue: setName, label: t('tax.name'), placeholder: t('tax.name'), inRow: true, disabled: true };
   const checkProps = { checked, setChecked, label: 'tax.checked', style: { marginTop: 0 }, disabled: true };
@@ -51,8 +52,8 @@ function Card(props){
       {/* {order?.orderNo && editing ? <p className='ps_header_no' style={{marginBottom: 10}}>{order?.orderNo}</p> : null} */}
       <div id={idRow} style={{marginTop: 0, flexFlow: 'row', alignItems: 'flex-end'}}>
         <Input {...noProps} />
-        <div className='im_gap' />
-        <Button {...btnProps} />
+        {!disabled && <div className='im_gap' />}
+        {!disabled && <Button {...btnProps} />}
       </div>
       <div id={idRow} style={{flexFlow: 'column', marginTop: 15, marginBottom: 10}}>
         <Input {...nameProps} />
