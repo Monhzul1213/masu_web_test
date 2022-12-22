@@ -27,7 +27,7 @@ export function List(props){
   useEffect(() => {
     let columns = [
       { Header: t('inventory.t_site'), accessor: 'name' },
-      { Header: t('tax.location'), accessor: 'descr' },
+      { Header: t('tax.location'), accessor: 'district' },
       {
         Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'posCount',
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>

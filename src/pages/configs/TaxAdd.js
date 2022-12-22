@@ -44,7 +44,10 @@ function Screen(props){
   const getData = async () => {
     let requestId = searchParams?.get('requestId');
     let response = await getSites();
-    if(response && (requestId || requestId === 0)) await getRequest(requestId, response);
+    if(response){
+      if(requestId || requestId === 0) await getRequest(requestId, response);
+      else setSites(response);
+    }
   }
 
   const getSites = async () => {
@@ -56,32 +59,47 @@ function Screen(props){
       setError(response?.error);
       return false;
     } else {
-      setSites(response?.data?.poscount);
+      response?.data?.poscount?.forEach(item => {
+        item.district = item.descr;
+      });
       return response?.data?.poscount;
     }
   }
 
   const getRequest = async (requestId, siteRes) => {
-    setShow(false);
-    setRequest(null);
-    // setError(null);
-    // setLoading(true);
-    // let response = await dispatch(getList(user, token, 'Inventory/GetModifer/ModifireID', null, { modifireid }));
-    // setLoading(false);
-    // if(response?.error) setError(response?.error);
-    // else {
-    //   setItem(response?.data);
-    //   setName({ value: response?.data?.modifer?.modiferName ?? '' });
-    //   response?.data?.modiferItems?.forEach(item => item.rowStatus = 'U');
-    //   setItems(response?.data?.modiferItems);
-    //   siteRes?.forEach(item => {
-    //     let exists = response?.data?.modiferSites?.filter(si => si.siteId === item.siteId)[0];
-    //     item.checked = exists?.useModifier === 'Y';
-    //     if(exists) item.rowStatus = 'U';
-    //   });
-    //   setSites(siteRes);
-    //   setChecked(response?.data?.modifer?.useAllSite === 'Y');
-    // }
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest'));//requestId
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      let request = response?.data && response?.data?.vatrequest && response?.data?.vatrequest && response?.data?.vatrequest[0];
+      console.log(request);
+      setRegNo({ value: request?.vatPayerNo });
+      setName({ value: request?.vatPayerName });
+      setChecked((request?.isVat + '') === '1');
+      setNotes({ value: request?.descr });
+      setRequest(request);
+      setShow(true);
+      let items = [...siteRes];
+      request?.items?.forEach(item => {
+        let index = items?.findIndex(si => si.siteID === item.siteId);
+        if(index === -1){
+          item.posCount = item.poscount;
+          item.hasLocation = true;
+          item.coordinate = item.locationY + '\n' + item.locationX;
+          item.rowStatus = 'U';
+          items.push(item);
+        } else {
+          items[index].locationX = item.locationX;
+          items[index].locationY = item.locationY;
+          items[index].hasLocation = true;
+          items[index].rowStatus = 'U';
+          items[index].coordinate = item.locationY + '\n' + item.locationX;
+        }
+      });
+      setSites(items);
+    }
   }
 
   const onClickCancel = () => navigate('/config/tax');
@@ -109,9 +127,9 @@ function Screen(props){
     if(regNo?.value && name?.value && items?.length){
       let vatRequestItem = items?.map(item => {
         let newItem = {
-          siteId: item?.siteId, district: item?.descr,
+          siteId: item?.siteId, district: item?.district,
           locationX: item?.locationX + '', locationY: item?.locationY + '',
-          poscount: item?.posQty, rowStatus: item?.rowStatus ?? 'I'
+          poscount: item?.posCount, rowStatus: item?.rowStatus ?? 'I'
         };
         return newItem
       });
