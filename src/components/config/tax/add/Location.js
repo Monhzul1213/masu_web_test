@@ -14,8 +14,8 @@ export function Location(props){
 
   useEffect(() => {
     if(visible && selected && selected?.item && selected?.item?.hasLocation){
-      setLat(selected?.item?.locationY);
-      setLng(selected?.item?.locationX);
+      setLat(parseFloat(selected?.item?.locationY));
+      setLng(parseFloat(selected?.item?.locationX));
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

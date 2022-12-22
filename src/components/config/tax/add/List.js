@@ -52,8 +52,10 @@ export function List(props){
 
   const onPressDelete = rowIndex => {
     setData(old => old.map((row, index) => {
-      if(index === rowIndex) return { ...old[rowIndex], locationX: null, locationY: null, hasLocation: false, coordinate: '' };
-      else return row;
+      if(index === rowIndex){
+        let rowStatus = old[rowIndex]?.rowStatus === 'U' ? 'D' : 'I';
+        return {...old[rowIndex], locationX: null, locationY: null, hasLocation: false, coordinate: '', rowStatus };
+      } else return row;
     }));
     setEdited && setEdited(true);
     setError && setError(null);
@@ -63,9 +65,12 @@ export function List(props){
     setVisible(false);
     if(hasLocation){
       setData(old => old.map((row, index) => {
-        let coordinate = y + '\n' + x;
-        if(index === selected?.index) return { ...old[selected?.index], locationX: x, locationY: y, hasLocation: true, coordinate };
-        else return row;
+        if(index === selected?.index){
+          let coordinate = y + '\n' + x;
+          let oldStatus = old[selected?.index]?.rowStatus;
+          let rowStatus = (oldStatus === 'U' || oldStatus === 'D') ? 'U' : 'I';
+          return { ...old[selected?.index], locationX: x, locationY: y, hasLocation: true, coordinate, rowStatus };
+        } else return row;
       }));
       setEdited && setEdited(true);
       setError && setError(null);

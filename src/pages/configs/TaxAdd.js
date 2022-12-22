@@ -43,11 +43,8 @@ function Screen(props){
 
   const getData = async () => {
     let requestId = searchParams?.get('requestId');
-    let response = await getSites();
-    if(response){
-      if(requestId || requestId === 0) await getRequest(requestId, response);
-      else setSites(response);
-    }
+    if(requestId || requestId === 0) getRequest(requestId);
+    else getSites();
   }
 
   const getSites = async () => {
@@ -55,18 +52,14 @@ function Screen(props){
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest'));
     setLoading(false);
-    if(response?.error){
-      setError(response?.error);
-      return false;
-    } else {
-      response?.data?.poscount?.forEach(item => {
-        item.district = item.descr;
-      });
-      return response?.data?.poscount;
+    if(response?.error) setError(response?.error);
+    else {
+      response?.data?.poscount?.forEach(item => item.district = item.descr ?? '');
+      setSites(response?.data?.poscount);
     }
   }
 
-  const getRequest = async (requestId, siteRes) => {
+  const getRequest = async requestId => {
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest'));//requestId
@@ -81,23 +74,19 @@ function Screen(props){
       setNotes({ value: request?.descr });
       setRequest(request);
       setShow(request?.status + '' === '1');
-      let items = [...siteRes];
-      request?.items?.forEach(item => {
-        let index = items?.findIndex(si => si.siteID === item.siteId);
+      let items = request?.items?.map(item => {
+        item.hasLocation = true;
+        item.coordinate = item.locationY + '\n' + item.locationX;
+        item.rowStatus = 'U';
+        item.posCount = item.poscount;
+        return item;
+      });
+      response?.data?.poscount?.forEach(pos => {
+        let index = items?.findIndex(item => item.siteId === pos.siteID);
         if(index === -1){
-          item.locationX = parseFloat(item.locationX);
-          item.locationY = parseFloat(item.locationY);
-          item.posCount = item.poscount;
-          item.hasLocation = true;
-          item.coordinate = item.locationY + '\n' + item.locationX;
-          item.rowStatus = 'U';
-          items.push(item);
+          items.push(pos);
         } else {
-          items[index].locationX = parseFloat(item.locationX);
-          items[index].locationY = parseFloat(item.locationY);
-          items[index].hasLocation = true;
-          items[index].rowStatus = 'U';
-          items[index].coordinate = item.locationY + '\n' + item.locationX;
+          items[index].name = pos.name;
         }
       });
       setSites(items);
@@ -125,11 +114,12 @@ function Screen(props){
   }
 
   const validateData = () => {
-    let items = sites?.filter(item => item.hasLocation);
-    if(regNo?.value && name?.value && items?.length){
+    let length = sites?.filter(item => item.hasLocation)?.length;
+    if(regNo?.value && name?.value && length){
+      let items = sites?.filter(item => item.hasLocation || item.rowStatus === 'D');
       let vatRequestItem = items?.map(item => {
         let newItem = {
-          siteId: item?.siteId, district: item?.district,
+          siteId: item?.siteId ?? item?.siteID, district: item?.district ?? '',
           locationX: item?.locationX + '', locationY: item?.locationY + '',
           poscount: item?.posCount, rowStatus: item?.rowStatus ?? 'I'
         };
@@ -146,7 +136,7 @@ function Screen(props){
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
-      if(!items?.length) setError(t('tax.length_error'));
+      if(!length) setError(t('tax.length_error'));
       return false;
     }
   }
@@ -163,14 +153,13 @@ function Screen(props){
   }
 
   const onClickDelete = async () => {
-    /**
-      onLoad();
-      item.modifer.rowStatus = 'D';
-      item.modiferSites.forEach(sit => sit.rowStatus = 'U');
-      let response = await dispatch(sendRequest(user, token, 'Inventory/Modifer', [item]));
-      if(response?.error) onError(response?.error);
-      else onSuccess(t('modifier.delete_success'));
-     */
+    onLoad();
+    request.isVat = parseInt(request.isVat);
+    request.rowStatus = 'D'
+    request.vatRequestItem = request?.items;
+    let response = await dispatch(sendRequest(user, token, 'Merchant/VatRequest', request));
+    if(response?.error) onError(response?.error);
+    else onSuccess(t('tax.delete_success'));
   }
 
   const width = size?.width >= 690 ? 690 : size?.width;
