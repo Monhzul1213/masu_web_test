@@ -1,14 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
 
-import { getService } from '../../../../services';
+import { getList } from '../../../../services';
 import { Input, Button, CheckBox, DescrInput } from '../../../all';
 
 function Card(props){
   const { size, setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes } = props;
   const { t } = useTranslation();
+  const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   const changeNo = value => {
@@ -19,20 +20,21 @@ function Card(props){
 
   const handleEnter = async e => {
     e?.preventDefault();
-    setLoading(true);
-    setError(null);
-    let api = 'http://192.168.1.107:3001/?regno=' + regNo?.value
-    const response = await dispatch(getService(api));
-    if(response?.error) setError(response?.error);
-    else if(response?.data?.found){
-      setName({ value: response?.data?.name });
-      setChecked(response?.data?.vatpayer);
-    } else {
-      setError(t('tax.error'));
-      setName({ value: '' });
-      setChecked(false);
-    }
-    setLoading(false);
+    if(regNo?.value){
+      setLoading(true);
+      setError(null);
+      const response = await dispatch(getList(user, token, 'Merchant/Info?regno=' + regNo?.value));
+      if(response?.error) setError(response?.error);
+      else if(response?.data?.found){
+        setName({ value: response?.data?.name });
+        setChecked(response?.data?.vatpayer);
+      } else {
+        setError(t('tax.error'));
+        setName({ value: '' });
+        setChecked(false);
+      }
+      setLoading(false);
+    } else setRegNo({ value: '', error: t('error.not_empty') });
   }
 
   const id = size?.width > 480 ? 'im_large' : 'im_small';

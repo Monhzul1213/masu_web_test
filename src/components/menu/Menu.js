@@ -76,7 +76,7 @@ export function Menu(props){
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />, null, null, msRole?.webManageCustomer !== 'Y'),
     hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :
-    getItem(t('menu.config'), '/config/additional', <BsGear />, [
+    getItem(t('menu.config'), '/config', <BsGear />, [
       getItem(t('system_menu.additional'), '/config/additional', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.type'), '/config/type', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.cashier'), '/config/cashier', null, null, null, msRole?.webEditSettings !== 'Y'),
