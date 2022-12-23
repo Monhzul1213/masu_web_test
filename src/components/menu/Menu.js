@@ -3,6 +3,7 @@ import { Layout, Menu as AntMenu, Drawer } from 'antd';
 import { RiContactsLine, RiTeamLine } from 'react-icons/ri';
 import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
 import { TbBuildingWarehouse } from 'react-icons/tb';
+import { FiTool } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -86,6 +87,9 @@ export function Menu(props){
       getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
+    getItem(t('menu.system'), '/system', <FiTool />, [
+      getItem(t('menu.solve'), '/system/request_solve'),
+    ]),
   ];
 
   const onClick = (e, hide) => {
