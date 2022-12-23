@@ -66,7 +66,7 @@ function Screen(props){
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      let request = response?.data && response?.data?.vatrequest && response?.data?.vatrequest && response?.data?.vatrequest[0];
+      let request = response?.data?.vatrequest?.filter(item => item.reqeustId + '' === requestId)[0];
       console.log(request);
       setRegNo({ value: request?.vatPayerNo });
       setName({ value: request?.vatPayerName });

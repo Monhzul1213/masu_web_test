@@ -79,8 +79,8 @@ export function List(props){
   }
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
-  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    onPressCoordinate, onPressDelete }, useSortBy, usePagination, useRowSelect);
+  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25,
+    sortBy: [{ id: 'name', desc: true }] }, onPressCoordinate, onPressDelete }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const mapProps = { visible, selected, closeModal };
   
