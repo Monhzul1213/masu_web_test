@@ -11,6 +11,7 @@ export function Location(props){
   const { t } = useTranslation();
   const [lat, setLat] = useState(47.914318);
   const [lng, setLng] = useState(106.919143);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if(visible && selected && selected?.item && selected?.item?.hasLocation){
@@ -20,6 +21,7 @@ export function Location(props){
       setLat(47.914318);
       setLng(106.919143);
     }
+    setLoaded(visible);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
@@ -37,7 +39,7 @@ export function Location(props){
       <div className='m_back'>
         <ModalTitle icon='MdLocationPin' title={t('tax.choose_location')} isMD={true} />
         <div style={{height: 5}} />
-        <Map {...mapProps} />
+        {loaded && <Map {...mapProps} />}
       </div>
       <ButtonRow {...btnProps} />
     </Modal>
