@@ -50,7 +50,7 @@ function Screen(props){
   const getSites = async () => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest'));
+    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest?ReqeustId=-2'));
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
@@ -62,12 +62,11 @@ function Screen(props){
   const getRequest = async requestId => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest'));//requestId
+    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest?ReqeustId=' + requestId));
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      let request = response?.data?.vatrequest?.filter(item => item.reqeustId + '' === requestId)[0];
-      console.log(request);
+      let request = response?.data?.vatrequest && response?.data?.vatrequest[0];
       setRegNo({ value: request?.vatPayerNo });
       setName({ value: request?.vatPayerName });
       setChecked((request?.isVat + '') === '1');
@@ -144,7 +143,6 @@ function Screen(props){
   const onClickSave = async () => {
     let data = validateData();
     if(data){
-      console.log(data);
       onLoad();
       let response = await dispatch(sendRequest(user, token, 'Merchant/VatRequest', data));
       if(response?.error) onError(response?.error);
