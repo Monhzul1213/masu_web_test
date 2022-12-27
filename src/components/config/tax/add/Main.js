@@ -49,7 +49,6 @@ function Card(props){
   
   return (
     <div className='add_back' id={id}>
-      {/* {order?.orderNo && editing ? <p className='ps_header_no' style={{marginBottom: 10}}>{order?.orderNo}</p> : null} */}
       <div id={idRow} style={{marginTop: 0, flexFlow: 'row', alignItems: 'flex-end'}}>
         <Input {...noProps} />
         {!disabled && <div className='im_gap' />}
@@ -64,87 +63,6 @@ function Card(props){
     </div>
   );
 }
-
-/**
- * import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import moment from 'moment';
-
-import { getList } from '../../../../services';
-import { Date, DescrInput, Select } from '../../../all';
-
-function Card(props){
-  const { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, size,
-    setLoading, order, editing } = props;
-  const [vendors, setVendors] = useState([]);
-  const [sites, setSites] = useState([]);
-  const { user, token }  = useSelector(state => state.login);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    getData();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if(order){
-      setVendId({ value: order?.vendId });
-      setSiteId({ value: order?.siteId });
-      setOrderDate({ value: moment(order?.orderDate, 'yyyy.MM.DD') });
-      if(order?.reqDate) setReqDate({ value: moment(order?.reqDate, 'yyyy.MM.DD') });
-      setNotes({ value: order?.notes });
-    }
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [order]);
-
-  const getData = async () => {
-    let response = await getLists('Merchant/vendor/getvendor', setVendors);
-    if(response) await getLists('Site/GetSite', setSites);
-  }
-
-  const getLists = async (api, setData) => {
-    setError(null);
-    setLoading(true);
-    const response = await dispatch(getList(user, token, api));
-    setLoading(false);
-    if(response?.error){
-      setError(response?.error);
-      return false;
-    } else {
-      setData(response?.data);
-      return true;
-    }
-  }
-
-
-  const vendProps = { value: vendId, setValue: setVendId, label: t('order.vend'), placeholder: t('order.vend'), data: vendors, setError, setEdited,
-    s_value: 'vendId', s_descr: 'vendName', inRow: true, disabled: true };
-  const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
-    s_value: 'siteId', s_descr: 'name', inRow: true };
-  const dateProps = { value: orderDate, setValue: setOrderDate, label: t('order.date'), setError, setEdited, inRow: true };
-  const reqProps = { value: reqDate, setValue: setReqDate, label: t('order.req'), placeholder: t('order.req'), setError, setEdited,
-    allowClear: true, inRow: true };
-
-  return (
-    <div className='po_back' id={id}>
-      {order?.orderNo && editing ? <p className='ps_header_no' style={{marginBottom: 10}}>{order?.orderNo}</p> : null}
-      <div id={idRow} style={{marginTop: 0}}>
-        <Select {...vendProps} />
-        <div className='im_gap' />
-        <Select {...siteProps} />
-      </div>
-      <div id={idRow}>
-        <Date {...dateProps} />
-        <div className='im_gap' />
-        <Date {...reqProps} />
-      </div>
-      <DescrInput {...descrProps} />
-    </div>
-  );
-}
- */
 
 const withSizeHOC = withSize();
 export const Main = withSizeHOC(Card);

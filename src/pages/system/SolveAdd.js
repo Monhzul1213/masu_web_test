@@ -4,16 +4,97 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+import '../../css/invt.css';
+import '../../css/config.css';
+import { getList } from '../../services';
+import { Error1, Overlay, Prompt } from '../../components/all';
+import { Main } from '../../components/system/solve/add/Main';
+
 export function SolveAdd(){
+  const [loading, setLoading] = useState(false);
+  const [edited, setEdited] = useState(false);
+  const [error, setError] = useState(null);
+  const [regNo, setRegNo] = useState({ value: '' });
+  const [name, setName] = useState({ value: '' });
+  const [notes, setNotes] = useState({ value: '' });
+  const [checked, setChecked] = useState(false);
+  const [status, setStatus] = useState({ value: null });
+  const [request, setRequest] = useState(null);
+  const [searchParams] = useSearchParams();
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : 
+    getData();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getData = async () => {
+    let requestId = searchParams?.get('requestId');
+    setError(null);
+    setLoading(true);
+    let api = 'Merchant/VatRequest/GetSolvedRequests?ReqeustId=' + requestId;
+    // let api = 'Merchant/VatRequest/GetSolvedRequests?BeginDate=2022.12.01&EndDate=2022.12.28';
+    let response = await dispatch(getList(user, token, api));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      let request = response?.data?.request && response?.data?.request[0];
+      // let request = response?.data?.request?.filter(item => item.reqeustId + '' === requestId)[0];
+      // console.log(request);
+      setRegNo({ value: request?.vatPayerNo });
+      setName({ value: request?.vatPayerName });
+      setChecked((request?.isVat + '') === '1');
+      setNotes({ value: request?.descr });
+      setStatus({ value: request?.status });
+      setRequest(request);
+    }
+    /**
+    
+    else {
+      setShow(request?.status + '' === '1');
+      let items = request?.items?.map(item => {
+        item.hasLocation = true;
+        item.coordinate = item.locationY + '\n' + item.locationX;
+        item.rowStatus = 'U';
+        item.posCount = item.poscount;
+        return item;
+      });
+      response?.data?.poscount?.forEach(pos => {
+        let index = items?.findIndex(item => item.siteId === pos.siteID);
+        if(index === -1){
+          items.push(pos);
+        } else {
+          items[index].name = pos.name;
+        }
+      });
+      setSites(items);
+    }
+     */
+  }
+  
+  let mainProps = { setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes };
+
   return (
-    <div>
-      SolveAdd
-    </div>
+    <Overlay className='i_container' loading={loading}>
+      <Prompt edited={edited} />
+      {error && <Error1 error={error} />}
+      <div className='i_scroll'>
+        <form>
+          <Main {...mainProps} />
+          {/*
+          <div className='gap' />
+          {sites?.length ? <CardSite {...siteProps} /> : <CardEmpty {...siteEmptyProps} />} */}
+        </form>
+      </div>
+      {/* <ButtonRowConfirm {...btnProps} /> */}
+    </Overlay>
   );
 }
 
 /*
-import '../../css/invt.css';
 import { apiLogin, getList, sendRequest } from '../../services';
 import { validateEmail } from '../../helpers';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
@@ -23,9 +104,6 @@ import { CardEmpty } from '../../components/invt/inventory/add';
 
 export function EmployeeAdd(){
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
-  const [edited, setEdited] = useState(false);
-  const [error, setError] = useState(null);
   const [name, setName] = useState({ value: '' });
   const [mail, setMail] = useState({ value: '' });
   const [password, setPassword] = useState({ value: '' });
@@ -37,16 +115,10 @@ export function EmployeeAdd(){
   const [saved, setSaved] = useState(false);
   const [selected, setSelected] = useState(null);
   const [show, setShow] = useState(false);
-  const [searchParams] = useSearchParams();
-  const { user, token }  = useSelector(state => state.login);
-  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : getData();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  
 
   useEffect(() => {
     if(saved) onClickCancel();
@@ -74,11 +146,7 @@ export function EmployeeAdd(){
     setLoading(false);
   }
 
-  const getData = async () => {
-    let empCode = searchParams?.get('empCode');
-    let response = await getSites();
-    if(response && (empCode || empCode === 0)) await getEmployee(empCode, response);
-  }
+  
 
   const getEmployee = async (empCode, sites1) => {
     onLoad();
@@ -188,19 +256,6 @@ export function EmployeeAdd(){
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ea_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_btns' };
 
-  return (
-    <Overlay className='i_container' loading={loading}>
-      <Prompt edited={edited} />
-      {error && <Error1 error={error} />}
-      <div className='i_scroll'>
-        <form>
-          <CardMain {...mainProps} />
-          <div className='gap' />
-          {sites?.length ? <CardSite {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}
-        </form>
-      </div>
-      <ButtonRowConfirm {...btnProps} />
-    </Overlay>
-  );
+  
 }
 */

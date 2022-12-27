@@ -536,7 +536,7 @@
   outline: none;
 }
 
-.m_input:disabled {
+.m_input:disabled, .m_input_descr:disabled {
   cursor: not-allowed;
   color: var(--text4-color);
 }
