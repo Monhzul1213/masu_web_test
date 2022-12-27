@@ -11,7 +11,7 @@ import { Category, Inventory, InventoryAdd, Modifier, ModifierAdd } from './page
 import { Employee, EmployeeAdd, Role, RoleAdd, Time } from './pages/emp';
 import { Receipt, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
-import { Solve } from './pages/system';
+import { Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment } from './src1/pages/report';
 import { setIsLoggedIn } from './services';
@@ -103,6 +103,7 @@ export function App(){
                 {/* <Route path='/report/report_invtentory' element={<SalesItem />} /> */}
                 <Route path='/report/report_sales' element={<Review />} />
                 <Route path='/system/request_solve' element={<Solve />} />
+                <Route path='/system/request_solve/solve_add' element={<SolveAdd />} />
               </Routes>
             </Layout>
           </Layout>

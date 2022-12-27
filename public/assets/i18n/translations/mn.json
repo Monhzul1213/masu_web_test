@@ -87,7 +87,8 @@
     "/config/store": "Дэлгүүр",
     "/config/pos": "ПОС төхөөрөмж",
     "/helpx": "Тусламж",
-    "/system/request_solve": "НӨАТ хэвлэх хүсэлт шийдэх"
+    "/system/request_solve": "НӨАТ хэвлэх хүсэлт шийдэх",
+    "/system/request_solve/solve_add": "НӨАТ хэвлэх хүсэлт шийдэх"
   },
   "menu": {
     "profile": "Хэрэглэгч",
