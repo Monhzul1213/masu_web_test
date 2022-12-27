@@ -63,7 +63,7 @@ export function Header(props){
   }
 
   const onHide = () => {
-    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&ÉndDate=' + date[1]?.format('yyyy.MM.DD');
+    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
     if(status !== -1) query += '&Status=' + status;
     onSearch(query);
@@ -71,7 +71,7 @@ export function Header(props){
 
   const onChangeStatus = value => {
     setStatus(value);
-    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&ÉndDate=' + date[1]?.format('yyyy.MM.DD');
+    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
     if(value !== -1) query += '&Status=' + value;
     onSearch(query)

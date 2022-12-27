@@ -19,7 +19,7 @@ export function Solve(){
 
   useEffect(() => {
     // if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
-    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&ÉndDate=' + moment()?.format('yyyy.MM.DD');
+    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
     getData(query);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,10 +31,7 @@ export function Solve(){
     let api = 'Merchant/VatRequest/GetSolvedRequests' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
-    else {
-      let data = response?.data && response?.data[0];
-      setData(data);
-    }
+    else setData(response?.data?.request);
     setLoading(false);
   }
 
