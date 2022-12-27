@@ -1323,3 +1323,8 @@
   border: none;
   padding: 0;
 }
+
+#solve_list {
+  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
+  max-width: 890px;
+}

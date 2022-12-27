@@ -110,7 +110,7 @@ export function CustomSelect(props){
 }
 
 export function MultiSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
     dropdownStyle, dropdownAlign } = props;
   const { t } = useTranslation();
   
@@ -139,7 +139,7 @@ export function MultiSelect(props){
   return (
     <div className={classBack}>
       {Icon && <Icon />}
-      {label && <p className='p_select_lbl'>{label}</p>}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
       <AntSelect
         className={className}
         showSearch
