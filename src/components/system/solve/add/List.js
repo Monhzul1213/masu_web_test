@@ -45,8 +45,8 @@ export function List(props){
   const tableProps = { tableInstance };
 
   return (
-    <div className='add_back' style={{paddingTop: 0}}>
-      <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+    <div className='add_back' style={{paddingTop: 0, overflowX: 'scroll'}}>
+      <div id='paging' style={{overflowY: 'scroll', minWidth: 780, maxHeight}}>
         <Table {...tableProps} />
       </div>
       <PaginationTable {...tableProps} />
