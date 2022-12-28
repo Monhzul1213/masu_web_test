@@ -4,15 +4,15 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { checkMimeType } from '../../helpers';
 
+const getBase64 = (img, callback) => {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => callback(reader.result));
+  reader.readAsDataURL(img);
+}
+
 export function UploadImage(props){
   const { image, setImage, setImage64, setImageType, setEdited, className } = props;
   const [loading, setLoading] = useState(false);
-
-  const getBase64 = (img, callback) => {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-  }
 
   const handleChange = info => {
     if(info.file.status === 'uploading'){
@@ -62,4 +62,32 @@ export function UploadImage(props){
       {image ? <img src={URL.createObjectURL(image)} alt="avatar" className='upload_image' /> : uploadButton}
     </Upload>
   )
+}
+
+export function UploadFile(props){
+  const { value, onUpload, types } = props;
+
+  const onChangeHandler = event => {
+    const error = checkMimeType(event.target.files[0], types);
+    if(error) message.error(error);
+    else {
+      getBase64(event.target.files[0], str64 => {
+        let name = event.target.files[0]?.name;
+        let type = event.target.files[0]?.type?.replace(/(.*)\//g, '');
+        onUpload({ name, str64, type });
+      });
+    }
+  }
+
+  return (
+    <div className='u_file_btn'>
+      <label>
+        <input id='u_file' type="file" name="file" onChange={onChangeHandler}/>
+        {value
+          ? <span className='u_file_name'>{value}</span>
+          : <span className='u_file_place'>Upload</span>
+        }
+      </label>
+    </div>
+  );
 }

@@ -31,12 +31,12 @@ export function Solve(){
     let api = 'Merchant/VatRequest/GetSolvedRequests' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
-    else setData(response?.data?.request);
+    else setData(response?.data);
     setLoading(false);
   }
 
   const onClickAdd = row => {
-    // navigate({ pathname: 'solve_add', search: createSearchParams({ requestId: row?.reqeustId }).toString() });
+    navigate({ pathname: 'solve_add', search: createSearchParams({ requestId: row?.reqeustId }).toString() });
   }
   
   const headerProps = { setError, onSearch: getData };

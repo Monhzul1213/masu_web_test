@@ -362,3 +362,43 @@ p {
   display: flex;
   flex-flow: row;
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.u_file_btn {
+  position: relative;
+  max-width: 180px;
+}
+
+.u_file_delete {
+  color: var(--text3-color);
+  height: 20px;
+  width: 20px;
+  background-color: var(--root-color);
+}
+
+.u_file_place {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text2-color);
+  border-color: var(--text3-color);
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  cursor: pointer;
+}
+
+.u_file_btn:hover .u_file_place {
+  color: var(--text3-color);
+}
+
+.u_file_name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--link-color);
+  border-color: var(--link-color);
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  cursor: pointer;
+}

@@ -55,11 +55,6 @@ export function App(){
     </BrowserRouter>
   );
 
-  const onClickLayout = e => {
-    e?.preventDefault();
-    // if(!collapsed) setCollapsed(true);
-  }
-
   const menuProps = { collapsed, setCollapsed };
   
   return (
@@ -70,7 +65,7 @@ export function App(){
           <SizeMe>{({ size }) => 
           <Layout>
             <Menu {...menuProps} size={size} />
-            <Layout onClick={onClickLayout}>
+            <Layout>
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='*' element={<Home />} />

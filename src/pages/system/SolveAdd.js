@@ -7,10 +7,11 @@ import { useTranslation } from 'react-i18next';
 import '../../css/invt.css';
 import '../../css/config.css';
 import { getList } from '../../services';
-import { Error1, Overlay, Prompt } from '../../components/all';
-import { Main } from '../../components/system/solve/add/Main';
+import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
+import { Main, List } from '../../components/system/solve/add';
 
 export function SolveAdd(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
@@ -19,10 +20,13 @@ export function SolveAdd(){
   const [notes, setNotes] = useState({ value: '' });
   const [checked, setChecked] = useState(false);
   const [status, setStatus] = useState({ value: null });
+  const [items, setItems] = useState([]);
   const [request, setRequest] = useState(null);
+  const [saved, setSaved] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : 
@@ -31,53 +35,73 @@ export function SolveAdd(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if(saved) onClickCancel();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saved]);
+
+  const onClickCancel = () => navigate('/system/request_solve');
+
   const getData = async () => {
     let requestId = searchParams?.get('requestId');
     setError(null);
     setLoading(true);
-    let api = 'Merchant/VatRequest/GetSolvedRequests?BeginDate=2022.12.01&EndDate=2022.12.28&RequestID=' + requestId;
-    // let api = 'Merchant/VatRequest/GetSolvedRequests?RequestID=' + requestId;
-    console.log(api);
+    let api = 'Merchant/VatRequest/GetSolvedRequests?RequestID=' + requestId;
     let response = await dispatch(getList(user, token, api));
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      let request = response?.data?.request && response?.data?.request[0];
-      console.log(response?.data);
-      // let request = response?.data?.request?.filter(item => item.reqeustId + '' === requestId)[0];
-      // console.log(request);
-      // setRegNo({ value: request?.vatPayerNo });
-      // setName({ value: request?.vatPayerName });
-      // setChecked((request?.isVat + '') === '1');
-      // setNotes({ value: request?.descr });
-      // setStatus({ value: request?.status });
-      // setRequest(request);
+      let request = response?.data && response?.data[0];
+      if(request){
+        setRequest(request);
+        setRegNo({ value: request?.vatPayerNo });
+        setName({ value: request?.vatPayerName });
+        setChecked((request?.isVat + '') === '1');
+        setNotes({ value: request?.descr });
+        setStatus({ value: request?.status });
+        request?.requestItem?.forEach(item => item.coordinate = item.locationY + '\n' + item.locationX);
+        setItems(request?.requestItem);
+      }
     }
-    /**
-    
-    else {
-      setShow(request?.status + '' === '1');
-      let items = request?.items?.map(item => {
-        item.hasLocation = true;
-        item.coordinate = item.locationY + '\n' + item.locationX;
-        item.rowStatus = 'U';
-        item.posCount = item.poscount;
-        return item;
-      });
-      response?.data?.poscount?.forEach(pos => {
-        let index = items?.findIndex(item => item.siteId === pos.siteID);
-        if(index === -1){
-          items.push(pos);
-        } else {
-          items[index].name = pos.name;
-        }
-      });
-      setSites(items);
+  }
+
+  const validateData = () => {
+    let names = [];
+    items?.forEach(item => { if(item.fileName) names.push(item.fileName); });
+    let lengthValid = names?.length === items?.length;
+    let nameValid = names.length === new Set(names).size;
+    if(lengthValid && nameValid){
+      let data = {...request, status: status?.value, descr: notes?.value, requestItem: items };
+      return data;
     }
-     */
+    else if(!lengthValid) setError(t('tax.file_error'));
+    else if(!nameValid) setError(t('tax.name_error'));
+    return false;
+  }
+
+  const onClickSave = async () => {
+    let data = validateData();
+    console.log(data);
+    // if(data){
+    //   onLoad();
+    //   const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
+    //   if(response?.error) onError(response?.error, true);
+    //   else {
+    //     if(selected && selected?.email?.toLowerCase() === user?.mail?.toLowerCase()){
+    //       let pass = password?.value ? password?.value : user?.password;
+    //       const response1 = await dispatch(apiLogin(mail?.value, pass));
+    //       if(response1?.error) onError(response1?.error, true);
+    //       else onSuccess(t('employee.add_success'), true);
+    //     } else 
+    //       onSuccess(t('employee.add_success'), true);
+    //   }
+    // }
   }
   
   let mainProps = { setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes };
+  let listProps = { data: items, setData: setItems, setEdited, setError };
+  let btnProps = { onClickCancel, onClickSave, id: 'add_btns' };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -86,12 +110,11 @@ export function SolveAdd(){
       <div className='i_scroll'>
         <form>
           <Main {...mainProps} />
-          {/*
           <div className='gap' />
-          {sites?.length ? <CardSite {...siteProps} /> : <CardEmpty {...siteEmptyProps} />} */}
+          {items?.length ? <List {...listProps} /> : null}
         </form>
       </div>
-      {/* <ButtonRowConfirm {...btnProps} /> */}
+      <ButtonRowConfirm {...btnProps} />
     </Overlay>
   );
 }
@@ -105,7 +128,6 @@ import { CardSite } from '../../components/invt/modifier/add';
 import { CardEmpty } from '../../components/invt/inventory/add';
 
 export function EmployeeAdd(){
-  const { t } = useTranslation();
   const [name, setName] = useState({ value: '' });
   const [mail, setMail] = useState({ value: '' });
   const [password, setPassword] = useState({ value: '' });
@@ -114,21 +136,13 @@ export function EmployeeAdd(){
   const [code, setCode] = useState({ value: '' });
   const [sites, setSites] = useState([]);
   const [checked, setChecked] = useState(true);
-  const [saved, setSaved] = useState(false);
   const [selected, setSelected] = useState(null);
   const [show, setShow] = useState(false);
 
-  const navigate = useNavigate();
 
   
 
-  useEffect(() => {
-    if(saved) onClickCancel();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [saved]);
-
-  const onClickCancel = () => navigate('/employee/emp_list');
+  
   
   const onLoad = () => {
     setError(null);
@@ -226,23 +240,7 @@ export function EmployeeAdd(){
     }
   }
 
-  const onClickSave = async () => {
-    let data = validateData();
-    if(data){
-      onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
-      if(response?.error) onError(response?.error, true);
-      else {
-        if(selected && selected?.email?.toLowerCase() === user?.mail?.toLowerCase()){
-          let pass = password?.value ? password?.value : user?.password;
-          const response1 = await dispatch(apiLogin(mail?.value, pass));
-          if(response1?.error) onError(response1?.error, true);
-          else onSuccess(t('employee.add_success'), true);
-        } else 
-          onSuccess(t('employee.add_success'), true);
-      }
-    }
-  }
+ 
 
   const onClickDelete = async () => {
     onLoad();
@@ -256,7 +254,6 @@ export function EmployeeAdd(){
     isOwner: selected?.isOwner === 'Y' };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'ea_back', label: 'employee' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ea_back' };
-  let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_btns' };
 
   
 }

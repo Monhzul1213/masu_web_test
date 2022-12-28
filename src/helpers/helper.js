@@ -10,9 +10,9 @@ export function validateEmail(mail) {
     return false;
 }
 
-export const checkMimeType = file => {
+export const checkMimeType = (file, types1) => {
   let err = ''
-  const types = ['image/png', 'image/jpeg', 'image/gif']
+  const types = types1 ?? ['image/png', 'image/jpeg', 'image/gif']
   if(types.every(type => file.type !== type)){
     console.log(file.type);
     err += file.type + ' формат буруу байна.';
@@ -23,7 +23,7 @@ export const checkMimeType = file => {
 }
 
 export const checkFileSize = file => {
-  let size = 1000000;
+  let size = 2000000;
   let err = ''; 
   if(file.size > size){
     err += 'Файлын хэмжээ хэт том байна.';
