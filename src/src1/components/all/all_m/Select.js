@@ -51,7 +51,7 @@ export function Select(props){
 }
 
 export function PlainSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, bStyle } = props;
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, bStyle } = props;
   
   const renderItem = (item, index) => {
     return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
@@ -59,7 +59,7 @@ export function PlainSelect(props){
 
   return (
     <div className={classBack} style={bStyle}>
-      {label && <p className='p_select_lbl'>{label}</p>}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
       <AntSelect
         className={className}
         showSearch
@@ -77,7 +77,7 @@ export function PlainSelect(props){
 }
 
 export function CustomSelect(props){
-  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem, filterOption, setError, setEdited } = props;
+  const { value, setValue, placeholder, data, className, classBack, classLabel, label, onFocus, loading, renderItem, filterOption, setError, setEdited } = props;
 
   const handleChange = e => {
     setValue({ value: e });
@@ -90,7 +90,7 @@ export function CustomSelect(props){
   return (
     <div className={classBack}>
       <div className='input_border' style={style}>
-        {label && <p className='p_select_lbl' style={style}>{label}</p>}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
         <AntSelect
           className={className}
           showSearch
@@ -109,7 +109,7 @@ export function CustomSelect(props){
 }
 
 export function MultiSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
     dropdownStyle, dropdownAlign } = props;
   const { t } = useTranslation();
   
@@ -138,7 +138,7 @@ export function MultiSelect(props){
   return (
     <div className={classBack}>
       {Icon && <Icon />}
-      {label && <p className='p_select_lbl'>{label}</p>}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
       <AntSelect
         className={className}
         showSearch

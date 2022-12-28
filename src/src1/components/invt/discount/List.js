@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Check, Confirm, PaginationTable , Table, Money} from '../../all/all_m';
+import { Check, Confirm, PaginationTable , Table, Money, } from '../../all/all_m';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 export function List(props){
@@ -23,7 +23,7 @@ export function List(props){
         Header: <div>{t('page.name')}</div>, accessor: 'discountName',
          },
       { Header: <div style={{textAlign: 'right',}}>{t('discount.amount')}</div> , accessor: 'discountValue', customStyle: { width: 100 }, width: 80,
-      Cell: props => props?.row?.original?.discountType===1 ? <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={15} /></div> 
+      Cell: props => props?.row?.original?.discountType===1 ? <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> 
       : <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}%</div>
     },
       { id: 'isRestrictedAccess', Header: t('discount.isRestrictedAccess'), customStyle: { width: 120 }, accessor: d => { return d.isRestrictedAccess=== 'Y' ? 'Тийм' : 'Үгүй' }},

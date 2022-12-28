@@ -36,7 +36,7 @@ export function Solve(){
   }
 
   const onClickAdd = row => {
-    navigate({ pathname: 'solve_add', search: createSearchParams({ requestId: row?.reqeustId }).toString() });
+    // navigate({ pathname: 'solve_add', search: createSearchParams({ requestId: row?.reqeustId }).toString() });
   }
   
   const headerProps = { setError, onSearch: getData };

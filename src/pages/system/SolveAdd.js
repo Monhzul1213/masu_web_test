@@ -35,21 +35,23 @@ export function SolveAdd(){
     let requestId = searchParams?.get('requestId');
     setError(null);
     setLoading(true);
-    let api = 'Merchant/VatRequest/GetSolvedRequests?ReqeustId=' + requestId;
-    // let api = 'Merchant/VatRequest/GetSolvedRequests?BeginDate=2022.12.01&EndDate=2022.12.28';
+    let api = 'Merchant/VatRequest/GetSolvedRequests?BeginDate=2022.12.01&EndDate=2022.12.28&RequestID=' + requestId;
+    // let api = 'Merchant/VatRequest/GetSolvedRequests?RequestID=' + requestId;
+    console.log(api);
     let response = await dispatch(getList(user, token, api));
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
       let request = response?.data?.request && response?.data?.request[0];
+      console.log(response?.data);
       // let request = response?.data?.request?.filter(item => item.reqeustId + '' === requestId)[0];
       // console.log(request);
-      setRegNo({ value: request?.vatPayerNo });
-      setName({ value: request?.vatPayerName });
-      setChecked((request?.isVat + '') === '1');
-      setNotes({ value: request?.descr });
-      setStatus({ value: request?.status });
-      setRequest(request);
+      // setRegNo({ value: request?.vatPayerNo });
+      // setName({ value: request?.vatPayerName });
+      // setChecked((request?.isVat + '') === '1');
+      // setNotes({ value: request?.descr });
+      // setStatus({ value: request?.status });
+      // setRequest(request);
     }
     /**
     

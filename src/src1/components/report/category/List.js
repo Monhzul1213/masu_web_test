@@ -26,7 +26,7 @@ export function List(props){
             <div style={{textAlign: 'right', paddingRight: 15}}>
               {item?.value === 'margin' ? (+(props?.value)?.toFixed(2) + '%')  : 
               (item?.value === 'qty' ? props?.value : 
-              (item?.value === 'totalReturnQty' ? props?.value : <Money value={props?.value} fontSize={15} />))}
+              (item?.value === 'totalReturnQty' ? props?.value : <Money value={props?.value} fontSize={14} />))}
             </div>)
         });
       }

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { PaginationTable, Table , Money} from '../../all/all_m';
+import moment from 'moment';
+
 
 export function List(props){
   const { data} = props;
@@ -11,23 +13,17 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('report.name'), accessor: 'empName',},
-      { Header: <div style={{textAlign: 'right'}}>{t('report.total_sales')}</div>, accessor: 'totalSalesAmt', customStyle: { width: 150 }, 
+      { Header: <div >{t('report.site')}</div>, accessor: 'siteName', customStyle: { width: 150 },  },
+      { Header: <div >{t('report.date')}</div>, accessor: 'salesDate' , customStyle: { width: 250 },
+      Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD HH:mm')}</div>)},
+      { Header: <div style={{textAlign: 'right'}}>{t('report.total_sales')}</div> , accessor: 'totalSalesAmount',
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> },
-      { Header: <div style={{textAlign: 'right'}}>{t('report.refund')}</div>, accessor: 'totalReturnAmt' , customStyle: { width: 150 },
+      { Header: <div style={{textAlign: 'right'}}>{t('report.refund')}</div>, accessor: 'totalReturnAmount' ,
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>},
-      { Header: <div style={{textAlign: 'right'}}>{t('report.net_sales')}</div> , accessor: 'totalNetSalesAmt',customStyle: { width: 150 } ,
+      { Header: <div style={{textAlign: 'right'}}>{t('report.noat')}</div>, accessor: 'totalVatAmount',
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> },
-      { Header: <div style={{textAlign: 'right'}}>{t('report.discount')}</div>, accessor: 'totalDiscAmt' , customStyle: { width: 100 },
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>},
-      { Header: <div style={{textAlign: 'right'}}>{t('report.receipt')}</div>, accessor: 'receipts',customStyle: { width: 100 },
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value ? props.value : 0} </div> },
-      { Header:  <div style={{textAlign: 'right'}}>{t('report.ave_sale')}</div>, accessor: 'averageAmt',  customStyle: { width: 150 },
+      { Header:  <div style={{textAlign: 'right'}}>{t('report.nhat')}</div>, accessor: 'totalNHATAmount',
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('report.customer')}</div>, accessor: 'customerQty', customStyle: { width: 120 },
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value ? props.value : 0}</div>,
-      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

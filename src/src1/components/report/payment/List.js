@@ -50,7 +50,7 @@ export function List(props){
         const total = React.useMemo(() =>
           info.rows.reduce((sum, row) => row.values.netAmount + sum, 0),
           [info.rows]  )
-        return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={15} /></div></>
+        return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /></div></>
        } },
     ]);
     return () => {};

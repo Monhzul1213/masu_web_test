@@ -29,4 +29,112 @@
     padding: 15px 0;
   }
 
-
+  .rr_card_back_z {
+    display: flex;
+    flex-flow: row;
+    border-bottom: solid 1px var(--input1-color);
+  }
+  #rr_large .rr_card_z {
+    padding: 15px ;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    /* align-items: center; */
+    border-style: solid;
+    border-width: 0 0 3px 0;
+    border-color: transparent;
+    /* min-width: 150px; */
+    background-color: transparent;
+  }
+  
+  #rr_small .rr_card_z {
+    padding: 10px 10px;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    /* align-items: center; */
+    border-style: solid;
+    border-width: 0 0 3px 0;
+    border-color: transparent;
+    /* min-width: 120px; */
+    background-color: transparent;
+  }
+  .rr_top_header{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+  }
+  .rr_top_text{
+    text-align: center;
+    font-size: 15px;
+    font-weight: 550;
+    color: var(--text-color)
+  }
+  .rr_top_text1{
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text2-color)
+  }
+  .rr_top_back{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+  }
+  #rr_large .rr_card_label_z {
+    color: var(--text-color);
+    font-size: 15px;
+    margin: 0 0 2px 0;
+    line-height: 15px;
+    font-weight: 450;
+  }
+  
+  #rr_small .rr_card_label_z {
+    color: var(--text-color);
+    font-size: 13px;
+    margin: 0 0 2px 0;
+    line-height: 15px;
+    font-weight: 450;
+  }
+  #rr_large .rr_card_value_z {
+    color: var(--text-color);
+    font-size: 24px;
+    line-height: 30px;
+    word-break: break-all;
+    text-align: center;
+    margin: 3px 0 0 0;
+  }
+  
+  #rr_small .rr_card_value_z {
+    color: var(--text-color);
+    font-size: 20px;
+    line-height: 25px;
+    word-break: break-all;
+    text-align: center;
+    margin: 3px 0 0 0;
+  }
+  #rr_large .rr_card_tax {
+    padding: 20px 5px;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border-style: solid;
+    border-width: 0 0 3px 0;
+    border-color: transparent;
+    min-width: 150px;
+    background-color: transparent;
+  }
+  
+  #rr_small .rr_card_tax{
+    padding: 10px 3px;
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border-style: solid;
+    border-width: 0 0 3px 0;
+    border-color: transparent;
+    min-width: 120px;
+    background-color: transparent;
+  }

@@ -29,9 +29,9 @@ export function List(props){
         Cell: props => <div style={{fontSize: 13.5, paddingRight: 15}}>{props.value}</div> },
       { Header: <div style={{textAlign: 'right'}}>{t('customer.visit_total')}</div>, accessor: 'total', customStyle: { width: 120 },
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value ? props?.value : 0 }</div>},
-      { Header: <div style={{textAlign: 'right'}}>{t('customer.total_spent')}</div>, accessor: 'total_spent', customStyle: { width: 150 }, 
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={15} /></div>},
-      { Header: <div style={{textAlign: 'right'} }>{t('customer.total_balance')}</div> , accessor: 'total_balance' , customStyle: { width: 100 },
+      { Header: <div style={{textAlign: 'right'}}>{t('customer.total_spent')}</div>, accessor: 'totalSpent', customStyle: { width: 150 }, 
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>},
+      { Header: <div style={{textAlign: 'right'} }>{t('customer.total_balance')}</div> , accessor: 'totalBalance' , customStyle: { width: 100 },
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value ? props?.value : 0 }</div>},
     ]);
     return () => {};
