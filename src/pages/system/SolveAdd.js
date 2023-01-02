@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -83,6 +82,9 @@ export function SolveAdd(){
   const onClickSave = async () => {
     let data = validateData();
     console.log(data);
+    if(data){
+      setSaved(true);
+    }
     // if(data){
     //   onLoad();
     //   const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
