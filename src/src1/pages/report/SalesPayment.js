@@ -33,16 +33,10 @@ function Screen(props){
     setLoading(true);
     let api = 'Sales/GetSalesByPayments' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
-    console.log(api);
     const response = await dispatch(getList(user, token, api, null, headers));
     console.log(response?.data);
     if(response?.error) setError(response?.error);
     else {
-      // setTotal({
-      //   total: response?.data?.length,
-      //   sales: response?.data?.filter(item => item?.sale?.salesType === 0).length,
-      //   return: response?.data?.filter(item => item?.sale?.salesType === 1).length,
-      // });
       setData(response?.data);
     }
     setLoading(false);

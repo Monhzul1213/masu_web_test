@@ -11,7 +11,6 @@ export function TimeList(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
-  // const [filter, setFilter] = useState('');
   const [sites, setSites] = useState([]);
   const [emps, setEmps] = useState([]);
   const { user, token }  = useSelector(state => state.login);
@@ -51,8 +50,7 @@ export function TimeList(){
       })
       setData(grpData);
     }
-    setLoading(false);
-    // setFilter(query);
+    setLoading(false);  
   }
 
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };

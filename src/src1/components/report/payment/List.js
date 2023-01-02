@@ -11,7 +11,11 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('report.pay_type'), accessor: 'paymentTypeName', Footer: t('report.total')}, 
+      
+      
+      { Header: <div >{t('report.site')}</div>, accessor: 'siteName', customStyle: { width: 200 }, Footer: t('report.total') },
+      { Header: <div >{t('time.t_emp')}</div>, accessor: 'cashierCode', customStyle: { width: 200 }, },
+      { Header: t('report.pay_type'), accessor: 'paymentTypeName'}, 
       { Header: <div style={{textAlign: 'right'}}>{t('report.pay_trans')}</div> , accessor: 'paymentTranscation', customStyle: { width: 200 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value} </div> , 
       Footer: info => {
@@ -52,6 +56,7 @@ export function List(props){
           [info.rows]  )
         return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /></div></>
        } },
+      
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
