@@ -71,7 +71,7 @@ export function SolveAdd(){
     items?.forEach(item => { if(item.fileName) names.push(item.fileName); });
     let lengthValid = names?.length === items?.length;
     let nameValid = names.length === new Set(names).size;
-    if(lengthValid && nameValid){
+    if(status?.value !==4 || (lengthValid && nameValid)){
       let data = {...request, status: status?.value, descr: notes?.value, requestItem: items };
       return data;
     }
