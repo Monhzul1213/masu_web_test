@@ -69,8 +69,10 @@ export function UploadFile(props){
 
   const onChangeHandler = event => {
     const error = checkMimeType(event.target.files[0], types);
-    if(error) message.error(error);
-    else {
+    if(error){
+      message.error(error);
+      document.getElementById('u_file').value = "";
+    } else {
       getBase64(event.target.files[0], str64 => {
         let name = event.target.files[0]?.name;
         let type = event.target.files[0]?.type?.replace(/(.*)\//g, '');
