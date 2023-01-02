@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
+import { zipTypes } from '../../../../helpers';
 import { PaginationTable, Table, UploadFile } from '../../../all';
 
 export function List(props){
@@ -20,7 +21,7 @@ export function List(props){
       },
       {
         Header: t('tax.file'), accessor: 'fileName', isBtn: true,
-        Cell: ({ value, onUpload, row }) => <UploadFile value={value} onUpload={file => onUpload(file, row?.index)} types={['application/zip']} />
+        Cell: ({ value, onUpload, row }) => <UploadFile value={value} onUpload={file => onUpload(file, row?.index)} types={zipTypes} />
       }
     ];
     setColumns(columns);

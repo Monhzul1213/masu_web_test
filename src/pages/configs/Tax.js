@@ -33,7 +33,7 @@ function Card(props){
   }
 
   const onClickAdd = row => {
-    if(row) navigate({ pathname: 'tax_add', search: createSearchParams({ requestId: row?.original?.reqeustId }).toString() });
+    if(row) navigate({ pathname: 'tax_add', search: createSearchParams({ requestId: row?.original?.requestId }).toString() });
     else navigate('tax_add');
   }
 

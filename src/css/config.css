@@ -512,7 +512,7 @@
 }
 
 .ant-select-disabled .ant-select-selection-item {
-  color: var(--text4-color) !important;
+  color: var(--text2-color) !important;
 }
 
 .m_input {
@@ -538,7 +538,7 @@
 
 .m_input:disabled, .m_input_descr:disabled {
   cursor: not-allowed;
-  color: var(--text4-color);
+  color: var(--text-color);
 }
 
 .select_m .ant-select-selection-placeholder {

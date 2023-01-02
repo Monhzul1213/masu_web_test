@@ -129,3 +129,14 @@ export const graphList1 = [
   { value: 'line', label: 'Line' },
   { value: 'pie', label: 'Pie' },
 ];
+
+export const zipTypes = [
+  'application/x-freearc',
+  'application/x-bzip',
+  'application/x-bzip2',
+  'application/gzip',
+  'application/vnd.rar',
+  'application/x-tar',
+  'application/zip',
+  'application/x-7z-compressed',
+]
