@@ -63,7 +63,10 @@ export function SolveAdd(){
         setChecked((request?.isVat + '') === '1');
         setNotes({ value: request?.descr });
         setStatus({ value: request?.status });
-        request?.requestItem?.forEach(item => item.coordinate = item.locationY + '\n' + item.locationX);
+        request?.requestItem?.forEach(item => {
+          item.coordinate = item.locationY + '\n' + item.locationX;
+          if(request?.status === 4 && item.requestFiles && item.requestFiles[0]) item.fileName = item.requestFiles[0].fileName;
+        });
         setItems(request?.requestItem);
       }
     }
@@ -77,11 +80,11 @@ export function SolveAdd(){
     if(status?.value !== 4 || (lengthValid && nameValid)){
       let msVatRequestFiles = items?.map(item => {
         return { 
-          rowStatus: 'U',
+          rowStatus: 'I',
           siteId: item?.siteId,
           terminalId: item?.terminalID,
-          fileName: status?.value === 4 ? item?.fileName : '',
-          fileraw: status?.value === 4 ? item?.fileRaw : {}
+          fileName: item?.fileName ?? '',
+          fileraw: item?.fileRaw ?? {}
         }
       });
       let data = {
@@ -89,7 +92,7 @@ export function SolveAdd(){
         descr: notes?.value,
         status: status?.value,
         rowStatus: 'U',
-        msVatRequestFiles
+        msVatRequestFiles: status?.value === 4 ? msVatRequestFiles : []
       }
       return data;
     }

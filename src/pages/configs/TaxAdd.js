@@ -6,7 +6,7 @@ import { message } from 'antd';
 import { withSize } from 'react-sizeme';
 
 import { getList, sendRequest } from '../../services';
-import { Error1, Overlay, Prompt, ButtonRowCancel } from '../../components/all';
+import { Error1, Overlay, Prompt, ButtonRowCancel, Empty1 } from '../../components/all';
 import { Main, List } from '../../components/config/tax/add';
 import { CardEmpty } from '../../components/invt/inventory/add';
 
@@ -78,6 +78,7 @@ function Screen(props){
         item.coordinate = item.locationY + '\n' + item.locationX;
         item.rowStatus = 'U';
         item.posCount = item.poscount;
+        item.name = item.siteName;
         return item;
       });
       response?.data?.poscount?.forEach(pos => {
@@ -166,7 +167,7 @@ function Screen(props){
   const disabled = request && !show;
   const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, request };
   const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled };
-  const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'add_back' };
+  const emptyProps = { icon: 'MdStorefront', text: 'tax.empty', id: 'add_back' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns', msg: 'tax.cancel_message', noSave: disabled};
 
   return (
@@ -178,7 +179,7 @@ function Screen(props){
           <form style={{ width }}>
             <Main {...mainProps} />
             <div className='gap' />
-            {sites?.length ? <List {...siteProps} /> : <CardEmpty {...siteEmptyProps} />}
+            {sites?.length ? <List {...siteProps} /> : <Empty1 {...emptyProps} />}
           </form>
         </div>
         <div style={{ width }}><ButtonRowCancel {...btnProps} /></div>
