@@ -37,7 +37,7 @@ function Card(props){
     else navigate('tax_add');
   }
 
-  const width = size?.width >= 720 ? 720 : size?.width;
+  const width = size?.width >= 780 ? 780 : size?.width;
   const emptyProps = { icon: 'MdOutlineReceipt', type: 'tax', noDescr: true, onClickAdd };
   const addProps = { type: 'tax', onClickAdd };
   const listProps = { data, onClickAdd };

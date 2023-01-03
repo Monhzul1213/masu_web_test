@@ -163,10 +163,11 @@ function Screen(props){
   }
 
   const width = size?.width >= 690 ? 690 : size?.width;
+  const disabled = request && !show;
   const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, request };
-  const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled: request && !show };
+  const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'add_back' };
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns', msg: 'tax.cancel_message' };
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns', msg: 'tax.cancel_message', noSave: disabled};
 
   return (
     <div className='add_tab' style={{flex: 1}}>

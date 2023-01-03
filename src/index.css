@@ -384,7 +384,7 @@ input[type="file"] {
   font-weight: 500;
   color: var(--text2-color);
   border-color: var(--text3-color);
-  border-width: 0 0 2px 0;
+  border-width: 0 0 1px 0;
   border-style: solid;
   cursor: pointer;
 }
@@ -398,7 +398,7 @@ input[type="file"] {
   font-weight: 500;
   color: var(--link-color);
   border-color: var(--link-color);
-  border-width: 0 0 2px 0;
+  border-width: 0 0 1px 0;
   border-style: solid;
   cursor: pointer;
 }
