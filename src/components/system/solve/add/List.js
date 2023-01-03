@@ -6,7 +6,7 @@ import { zipTypes } from '../../../../helpers';
 import { PaginationTable, Table, UploadFile } from '../../../all';
 
 export function List(props){
-  const { data, setData, setEdited, setError } = props;
+  const { data, setData, setEdited, setError, disabled, status } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -19,15 +19,23 @@ export function List(props){
         Header: t('tax.coordinate'), accessor: 'coordinate', customStyle: { width: 200 },
         Cell: ({ value }) => <div className='co_coord_text'>{value}</div>
       },
-      {
+      // {
+      //   Header: t('tax.file'), accessor: 'fileName', isBtn: true,
+      //   Cell: ({ value, onUpload, row }) => <UploadFile disabled={disabled} value={value} onUpload={file => onUpload(file, row?.index)} types={zipTypes} />
+      // }
+    ];
+    if(disabled && status?.value === 4){
+      columns.push({ Header: t('tax.file'), accessor: 'fileName', Cell: ({ value }) => <div className='cell_file'>{value ?? 'Upload'}</div> });
+    } else if(status?.value === 4){
+      columns.push({
         Header: t('tax.file'), accessor: 'fileName', isBtn: true,
         Cell: ({ value, onUpload, row }) => <UploadFile value={value} onUpload={file => onUpload(file, row?.index)} types={zipTypes} />
-      }
-    ];
+      })
+    }
     setColumns(columns);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, disabled, status?.value]);
 
   const onUpload = (file, rIndex) => {
     setData(old => old.map((row, index) => {

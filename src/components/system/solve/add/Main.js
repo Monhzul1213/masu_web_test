@@ -7,7 +7,7 @@ import { getConstants } from '../../../../services';
 import { Input, CheckBox, Select, DescrInput } from '../../../all';
 
 function Card(props){
-  const { size, setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes } = props;
+  const { size, setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled } = props;
   const { t } = useTranslation();
   const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -36,8 +36,8 @@ function Card(props){
   const nameProps = { value: name, label: t('tax.name'), placeholder: t('tax.name'), inRow: true, disabled: true };
   const checkProps = { checked, label: 'tax.checked', style: { marginTop: 10, flex: 1 }, disabled: true };
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: states, setError, setEdited, s_value: 'valueNum',
-    s_descr: 'valueStr1', onFocus: onFocusStatus, loading, inRow: true };
-  const descrProps = { value: notes, setValue: setNotes, label: t('tax.note'), placeholder: t('tax.note'), inRow: true };
+    s_descr: 'valueStr1', onFocus: onFocusStatus, loading, inRow: true, disabled };
+  const descrProps = { value: notes, setValue: setNotes, label: t('tax.note'), placeholder: t('tax.note'), inRow: true, disabled };
   const style = size?.width > 445 ? { marginBottom: 10 } : { flexFlow: 'column-reverse', marginBottom: 10 }
 
   return (

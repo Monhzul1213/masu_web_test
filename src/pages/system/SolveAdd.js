@@ -23,6 +23,7 @@ export function SolveAdd(){
   const [items, setItems] = useState([]);
   const [request, setRequest] = useState(null);
   const [saved, setSaved] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export function SolveAdd(){
     else {
       let request = response?.data && response?.data[0];
       if(request){
+        setDisabled(request?.status === 0 || request?.status === 4 ? true : false);
         setRequest(request);
         setRegNo({ value: request?.vatPayerNo });
         setName({ value: request?.vatPayerName });
@@ -72,14 +74,14 @@ export function SolveAdd(){
     items?.forEach(item => { if(item.fileName) names.push(item.fileName); });
     let lengthValid = names?.length === items?.length;
     let nameValid = names.length === new Set(names).size;
-    if(status?.value !==4 || (lengthValid && nameValid)){
+    if(status?.value !== 4 || (lengthValid && nameValid)){
       let msVatRequestFiles = items?.map(item => {
         return { 
           rowStatus: 'U',
           siteId: item?.siteId,
           terminalId: item?.terminalID,
-          fileName: item?.fileName ?? '',
-          fileraw: item?.fileRaw ?? {}
+          fileName: status?.value === 4 ? item?.fileName : '',
+          fileraw: status?.value === 4 ? item?.fileRaw : {}
         }
       });
       let data = {
@@ -126,9 +128,9 @@ export function SolveAdd(){
     }
   }
   
-  let mainProps = { setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes };
-  let listProps = { data: items, setData: setItems, setEdited, setError };
-  let btnProps = { onClickCancel, onClickSave, id: 'add_btns' };
+  let mainProps = { setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled };
+  let listProps = { data: items, setData: setItems, setEdited, setError, disabled, status };
+  let btnProps = { onClickCancel, onClickSave, id: 'add_btns', noSave: disabled };
 
   return (
     <Overlay className='i_container' loading={loading}>

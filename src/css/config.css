@@ -521,7 +521,7 @@
   font-size: 14px;
   height: 32px;
   padding-left: 0;
-  background-color:  var(--root-color);
+  background-color: var(--root-color);
 }
 
 .m_input_descr {
@@ -530,6 +530,7 @@
   color: var(--text-color);
   font-size: 14px;
   height: 32px;
+  background-color: var(--root-color);
 }
 
 .m_input:focus, .m_input_descr:focus {
@@ -880,4 +881,10 @@
 .co_coord_close {
   font-size: 18px;
   color: var(--text4-color);
+}
+
+.cell_file {
+  color: var(--link-color);
+  font-size: 14px;
+  font-weight: 500;
 }
