@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
+import { sendRequest, getList } from '../../services';
 import { Overlay, ButtonRow, Error1, Prompt } from '../../components/all';
 import { Item } from '../../components/config/add';
-import { sendRequest } from '../../services';
 
 export function Additional(){
   const { t } = useTranslation();
@@ -14,6 +14,7 @@ export function Additional(){
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState({});
+  const [config, setConfig] = useState(null);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -29,6 +30,35 @@ export function Additional(){
     { title: t('add_menu.barcode1'), sub_title: t('add_menu.barcode2'), checked: checked['barcode'], label: 'barcode' },
   ];
 
+  useEffect(() => {
+    getData();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getData = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Merchant/GetConfig'));
+    if(response?.error) setError(response?.error);
+    else if(response?.data){
+      setConfig(response?.data);
+      let checked = {
+        cashier: response?.data?.useShifts === 'Y',
+        barcode: response?.data?.useBarCodeWeight === 'Y',
+        user: response?.data?.useCustomerDisplay === 'Y',
+        meal: response?.data?.useDiningOption === 'Y',
+        kitchen: response?.data?.useKitchenPrinter === 'Y',
+        balance: response?.data?.useLowStockNotification === 'Y',
+        info: response?.data?.useNegativeStockAlert === 'Y',
+        order: response?.data?.useOpenTicket === 'Y',
+        time: response?.data?.useTimeClock === 'Y',
+      }
+      setChecked(checked);
+    }
+    setLoading(false);
+  }
+
   const onCheck = (label, value) => {
     setChecked({...checked, ...{[label]: value}});
     setError(null);
@@ -36,15 +66,16 @@ export function Additional(){
   }
 
   const onClickCancel = () => {
-    setChecked({});
     setEdited(false);
+    getData();
   }
 
   const onClickSave = async () => {
     setError(null);
     setLoading(true);
     let data = {
-      merchantId: user?.merchantId, useNuatus: '', vatPayerNo: '',
+      merchantId: user?.merchantId, useNuatus: '',
+      vatPayerNo: config?.vatPayerNo ?? '',
       useShifts: checked?.cashier ? 'Y' : 'N',
       useTimeClock: checked?.time ? 'Y' : 'N',
       useOpenTicket: checked?.order ? 'Y' : 'N',
@@ -54,17 +85,16 @@ export function Additional(){
       useLowStockNotification: checked?.balance ? 'Y' : 'N',
       useNegativeStockAlert: checked?.info ? 'Y' : 'N',
       useBarCodeWeight: checked?.barcode ? 'Y' : 'N',
-      createdDate: moment().format('yyyy.MM.DD'),
+      createdDate: config?.createdDate ?? moment().format('yyyy.MM.DD'),
       lastUpdate: moment().format('yyyy.MM.DD'),
     }
-    console.log(data);
     const response = await dispatch(sendRequest(user, token, 'Merchant/Setconfig', data));
-    console.log(response);
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
       setEdited(false);
       message.success(t('add_menu.success_msg'));
+      getData();
     }
   }
 
