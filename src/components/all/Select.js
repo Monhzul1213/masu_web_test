@@ -79,7 +79,7 @@ export function PlainSelect(props){
 
 export function CustomSelect(props){
   const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem,
-    filterOption, setError, setEdited, onSearch, text } = props;
+    filterOption, setError, setEdited, onSearch, text, setData } = props;
   const { t } = useTranslation();
 
   const handleChange = e => {
@@ -88,8 +88,12 @@ export function CustomSelect(props){
     setEdited && setEdited(true);
   }
 
+  const onDropdownVisibleChange = show => {
+    if(!show) setData && setData([]);
+  }
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
-  const empty = t(text?.length >= 3 ? 'page.no_filter' : 'inventory.morethan');
+  const empty = t(text?.length > 3 ? 'page.no_filter' : 'inventory.morethan');
   
   return (
     <div className={classBack}>
@@ -103,6 +107,7 @@ export function CustomSelect(props){
           onChange={handleChange}
           value={value?.value}
           loading={loading}
+          onDropdownVisibleChange={onDropdownVisibleChange}
           onFocus={onFocus}
           notFoundContent={empty}
           placeholder={placeholder}>

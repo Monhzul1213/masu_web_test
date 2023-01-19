@@ -34,7 +34,7 @@ export function ItemSelect(props){
   }, [text]);
 
   const getData = async value => {
-    if(value?.length >= 3){
+    if(value?.length > 3){
       setLoading(true);
       setSearch({ value: null });
       let filter = [{ fieldName: "Name", value }];
@@ -52,7 +52,6 @@ export function ItemSelect(props){
       let item = newItem(invt);
       setData(old => [...old, item]);
       setSearch({ value: null });
-      setItems([]);
     } else {
       setSearch({ value: null, error: t('inventory.already_added') });
     }
@@ -83,7 +82,8 @@ export function ItemSelect(props){
   }
 
   const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
-    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption, onSearch: setText, text };
+    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption, onSearch: setText, text,
+    setData: setItems };
 
   return (
     <Overlay loading={loading}>
