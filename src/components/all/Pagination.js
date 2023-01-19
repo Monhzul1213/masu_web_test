@@ -142,3 +142,59 @@ export function PaginationTable(props){
     </div>
   );
 }
+
+
+export function PaginationList(props){
+  const { pageInfo, getInventory } = props;
+  const [value, setValue] = useState(1);
+  const pageRange = [10, 25, 50, 100];
+  const page = pageInfo?.pageNumber ?? 1;
+  const count = pageInfo?.totalPage ?? 1;
+
+  useEffect(() => {
+    setValue(pageInfo?.pageNumber);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageInfo?.pageNumber]);
+
+  const onClick = pageNumber => getInventory({...pageInfo, pageNumber });
+
+  const onSizeChange = pageSize => getInventory({...pageInfo, pageSize });
+
+  const onChange = e => {
+    let value = parseInt(e.target.value);
+    if(isNaN(value)) setValue('');
+    else setValue(value)
+  }
+
+  const onBlur = () => onClick(value ? value : 1);
+
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter") onClick(value ? value : 1);
+  }
+
+  return (
+    <div className='pg_back'>
+      <button className='pg_btn' disabled={page <= 1} onClick={() => onClick(page - 1)}>
+        <FiChevronLeft className='pg_icon' />
+      </button>
+      <div className='pg_input_back'>
+        <input className='pg_input' value={value} onChange={onChange} onBlur={onBlur} onKeyDown={onKeyDown} />
+        <p className='pg_text'>/ {count}</p>
+      </div>
+      <button className='pg_btn' disabled={page >= count} onClick={() => onClick(page + 1)}>
+        <FiChevronRight className='pg_icon' />
+      </button>
+      <div className='pg_select_back'>
+        <Select
+          className='pg_select'
+          value={pageInfo?.pageSize}
+          onSelect={e => onSizeChange(Number(e))}>
+          {pageRange?.map(item => {
+            return (<Option key={item} value={item}>{item}</Option>)
+          })}
+        </Select>
+      </div>
+    </div>
+  );
+}

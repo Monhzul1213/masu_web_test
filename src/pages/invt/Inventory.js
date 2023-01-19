@@ -20,6 +20,7 @@ export function Inventory(){
   const [filtering, setFiltering] = useState(false);
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [open, setOpen] = useState(false);
+  const [pageInfo, setPageInfo] = useState({ pageNumber: 1, pageSize: 25, totalPage: 1 });
   const [filter, setFilter] = useState([]);
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -34,7 +35,7 @@ export function Inventory(){
 
   const getData = async () => {
     let response = await getCategories();
-    if(response) await getInventory();
+    if(response) await getInventory(pageInfo);
   }
 
   const getCategories = async () => {
@@ -52,10 +53,10 @@ export function Inventory(){
     }
   }
 
-  const setInventory = response => {
+  const setInventory = (response, list, info) => {
     if(response?.error) setError(response?.error);
     else {
-      response?.data?.forEach(item => {
+      list?.forEach(item => {
         let margin = +((item.msInventory.price - item.msInventory.cost) / (item.msInventory.price ? item.msInventory.price : 1) * 100).toFixed(2);
         item.msInventory.margin = (isNaN(margin) ? 0 : margin) + '%';
         item?.msInventoryVariants?.forEach(vart => {
@@ -63,31 +64,38 @@ export function Inventory(){
           vart.margin = (isNaN(margin) ? 0 : margin) + '%';
         });
       });
-      setData(response?.data);
+      setData(list);
+      if(info) setPageInfo(info);
+      const scroll = document.getElementById('paging');
+      if(scroll) scroll.scrollTop = 0;
     }
     setLoading(false);
     setShow(false);
     setChecked(false);
   }
 
-  const getInventory = async () => {
-    setError(null);
-    setLoading(true);
-    setAutoResetExpanded(true);
-    const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
-    setInventory(response);
-  }
-
-  const onSearch = async (filter, isEdit) => {
-    setFilter(filter);
+  const getInventory = async (info, isEdit) => {
     setError(null);
     setLoading(true);
     setAutoResetExpanded(isEdit ? false : true);
-    let response = filter?.length
-      ? await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
-      : await dispatch(getList(user, token, 'Inventory/GetInventory'));
-    setInventory(response);
-    setFiltering(true);
+    let api = 'Inventory/GetInventory?PageNumber=' + info?.pageNumber + '&PageSize=' + info?.pageSize;
+    const response = await dispatch(getList(user, token, api));
+    setInventory(response, response?.data?.inventoryies, response?.data?.pageInfo);
+    setFiltering(false);
+  }
+
+  const onSearch = async (filter, isEdit) => {
+    if(filter?.length){
+      setFilter(filter);
+      setError(null);
+      setLoading(true);
+      setAutoResetExpanded(isEdit ? false : true);
+      let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
+      setInventory(response, response?.data);
+      setFiltering(true);
+      setPageInfo({ pageNumber: 1, pageSize: 25, totalPage: 1 });
+    } else 
+      getInventory(pageInfo, isEdit);
   }
 
   const onClickAdd = row => {
@@ -131,7 +139,8 @@ export function Inventory(){
  
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
-  const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory, autoResetExpanded };
+  const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory,
+    autoResetExpanded, pageInfo, getInventory, filtering };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (

@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useExpanded } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Check, DynamicFAIcon, PaginationTable, TableDetail, Money } from '../../../all';
+import { Check, DynamicFAIcon, PaginationTable, TableDetail, Money, PaginationList } from '../../../all';
 import { EditableCell, SelectableCell } from '../add/EditableCell';
 import { Detail } from './Detail';
 
 export function List(props){
-  const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory, autoResetExpanded, size } = props;
+  const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory, autoResetExpanded,
+    size, pageInfo, getInventory, filtering } = props;
   const [columns, setColumns] = useState([]);
   const { t, i18n } = useTranslation();
 
@@ -90,7 +91,7 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original?.msInventory);
   
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, autoResetExpanded,
+  const tableInstance = useTable({ columns, data, autoResetPage: !filtering, autoResetSortBy: false, autoResetExpanded,
     initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
@@ -98,6 +99,7 @@ export function List(props){
   const maxHeight = size?.width > 780
     ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
+  const pageProps = { pageInfo, getInventory };
 
   return (
     <div>
@@ -106,7 +108,7 @@ export function List(props){
           <TableDetail {...tableProps} />
         </div>
       </div>
-      <PaginationTable {...tableProps} />
+      {filtering ? <PaginationTable {...tableProps} /> : <PaginationList {...pageProps} />}
     </div>
   )
 }
