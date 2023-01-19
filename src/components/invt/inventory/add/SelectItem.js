@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getList } from '../../../../services';
+import { useDebounce } from '../../../../helpers';
+import { sendRequest } from '../../../../services';
 import { CustomSelect, Overlay } from '../../../all';
 const { Option } = Select;
 
@@ -23,8 +24,26 @@ export function ItemSelect(props){
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [text, setText] = useDebounce();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    getData(text);
+    return () => {};
+  }, [text]);
+
+  const getData = async value => {
+    if(value?.length >= 3){
+      setLoading(true);
+      setSearch({ value: null });
+      let filter = [{ fieldName: "Name", value }];
+      let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
+      if(response?.error) setSearch({ value: null, error: response?.error });
+      else setItems(response?.data);
+      setLoading(false);
+    }
+  }
 
   const onSelect = value => {
     let invt = items[value?.value]?.msInventory;
@@ -33,20 +52,21 @@ export function ItemSelect(props){
       let item = newItem(invt);
       setData(old => [...old, item]);
       setSearch({ value: null });
+      setItems([]);
     } else {
       setSearch({ value: null, error: t('inventory.already_added') });
     }
   }
 
   const onFocus = async () => {
-    if(!items?.length){
-      setLoading(true);
-      setSearch({ value: null });
-      const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
-      if(response?.error) setSearch({ value: null, error: response?.error });
-      else setItems(response?.data);
-      setLoading(false);
-    }
+    // if(!items?.length){
+    //   setLoading(true);
+    //   setSearch({ value: null });
+    //   const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
+    //   if(response?.error) setSearch({ value: null, error: response?.error });
+    //   else setItems(response?.data);
+    //   setLoading(false);
+    // }
   }
 
   const renderItem = (item, index) => {
@@ -63,7 +83,7 @@ export function ItemSelect(props){
   }
 
   const selectProps = { value: search, setValue: onSelect, placeholder: t('inventory.search'), data: items,
-    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption };
+    className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption, onSearch: setText, text };
 
   return (
     <Overlay loading={loading}>

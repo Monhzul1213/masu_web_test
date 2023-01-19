@@ -78,7 +78,9 @@ export function PlainSelect(props){
 }
 
 export function CustomSelect(props){
-  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem, filterOption, setError, setEdited } = props;
+  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem,
+    filterOption, setError, setEdited, onSearch, text } = props;
+  const { t } = useTranslation();
 
   const handleChange = e => {
     setValue({ value: e });
@@ -87,6 +89,7 @@ export function CustomSelect(props){
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const empty = t(text?.length >= 3 ? 'page.no_filter' : 'inventory.morethan');
   
   return (
     <div className={classBack}>
@@ -96,10 +99,12 @@ export function CustomSelect(props){
           className={className}
           showSearch
           filterOption={filterOption}
+          onSearch={onSearch}
           onChange={handleChange}
           value={value?.value}
           loading={loading}
           onFocus={onFocus}
+          notFoundContent={empty}
           placeholder={placeholder}>
           {data?.map(renderItem)}
         </AntSelect>
