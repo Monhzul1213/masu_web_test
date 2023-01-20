@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteRequest, sendRequest } from '../../../services'
 import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select } from '../../all';
-import { addrList } from '../../../helpers';
+import { cityList, districtList } from '../../../helpers';
 
 export function Add(props){
   const { visible, selected, closeModal } = props;
@@ -14,9 +14,11 @@ export function Add(props){
   const [address, setAddress] = useState({ value: '' });
   const [phone, setPhone] = useState({ value: '' });
   const [descr, setDescr] = useState({ value: null });
+  const [subDescr, setSubDescr] = useState({ value: null });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
+  const [list, setList] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -26,6 +28,8 @@ export function Add(props){
       setAddress({ value: selected?.address ?? '' });
       setPhone({ value: selected?.phone ?? '' });
       setDescr({ value: selected?.descr ? selected?.descr : null });
+      setSubDescr({ value: selected?.subDescr ? selected?.subDescr : null });
+      setList(districtList?.filter(item => item?.parent?.includes(selected?.descr)));
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +40,7 @@ export function Add(props){
     let isNameValid = name?.value && name?.value?.length >= nameLength;
     let isAddressValid = !address?.value || address?.value?.length >= addressLength;
     let isPhoneValid = !phone?.value || phone?.value?.length >= phoneLength;
-    if(isNameValid && isAddressValid && isPhoneValid && descr?.value){
+    if(isNameValid && isAddressValid && isPhoneValid && descr?.value && subDescr?.value){
       return true;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
@@ -44,6 +48,7 @@ export function Add(props){
       if(!isAddressValid) setAddress({ value: address?.value, error: ' ' + addressLength + t('error.longer_than') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
       if(!descr?.value) setDescr({ value: null, error: t('error.not_empty') });
+      if(!subDescr?.value) setSubDescr({ value: null, error: t('error.not_empty') });
       return false;
     }
   }
@@ -53,7 +58,8 @@ export function Add(props){
     setError(null);
     if(checkValid()){
       setLoading(true);
-      let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value };
+      let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
+        subDescr: subDescr?.value };
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
@@ -85,9 +91,17 @@ export function Add(props){
     }
   }
 
+  const onChangeDescr = value => {
+    setDescr(value);
+    setSubDescr({ value: null });
+    setList(districtList?.filter(item => item?.parent?.includes(value?.value)));
+  }
+
   const nameProps = { value: name, setValue: setName, label: t('shop.name'), placeholder: t('shop.name1'), setError, length: 40 };
-  const descrProps = { value: descr, setValue: setDescr, label: t('shop.location'), placeholder: t('shop.location1'), setError,
-    data: addrList };
+  const cityProps = { value: descr, setValue: onChangeDescr, label: t('shop.city'), placeholder: t('shop.location1'), setError,
+    data: cityList };
+  const districtProps = { value: subDescr, setValue: setSubDescr, label: t('shop.district'), placeholder: t('shop.location1'), setError,
+    data: list };
   const addrProps = { value: address, setValue: setAddress, label: t('shop.addr'), placeholder: t('shop.addr1'), setError, length: 250 };
   const phoneProps = { value: phone, setValue: setPhone, label: t('shop.phone'), placeholder: t('shop.phone1'), setError, length: 20,
     handleEnter: onClickSave };
@@ -103,7 +117,8 @@ export function Add(props){
           <div className='m_scroll'>
             <form onSubmit={onClickSave}>
               <Input {...nameProps} />
-              <Select {...descrProps} />
+              <Select {...cityProps} />
+              <Select {...districtProps} />
               <Input {...addrProps} />
               <Input {...phoneProps} />
             </form>
