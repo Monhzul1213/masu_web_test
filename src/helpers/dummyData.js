@@ -106,6 +106,7 @@ export const zipTypes = [
   'application/x-tar',
   'application/zip',
   'application/x-7z-compressed',
+  'application/x-zip-compressed'
 ];
 
 export const cityList = [
