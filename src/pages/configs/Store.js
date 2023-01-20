@@ -27,7 +27,16 @@ function Card(props){
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Site/GetSite'));
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else {
+      response?.data?.forEach(item => {
+        let address = [];
+        if(item?.descr) address.push(item?.descr);
+        if(item?.subDescr) address.push(item?.subDescr);
+        if(item?.address) address.push(item?.address);
+        item.address_text = address?.join(', ');
+      })
+      setData(response?.data);
+    }
     setLoading(false);
   }
 
