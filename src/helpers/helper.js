@@ -3,7 +3,7 @@ export function getItem(label, key, icon, children, type, disabled) {
 }
 
 export function validateEmail(mail) {
-  let emailRegex = /(^[^@.]+)@([^@.]+)\.{1}(\w{1,9}$)/;
+  let emailRegex = /(^[^@]+)@([^@.]+)\.{1}(\w{1,9}$)/;
   if(mail?.match(emailRegex))
     return true;
   else
@@ -48,3 +48,9 @@ export const urlToFile = async (url, mimeType) => {
   const buf = await res.arrayBuffer();
   return new File([buf], 'imagefile', { type: mimeType });
 };
+
+const numbers = ["99","95","94","85","91","96","90","88","89","86","80","98","93","97","83"];
+
+export function validateNumber(number){
+  return number?.length === 8 && numbers?.includes(number?.substring(0, 2));
+}

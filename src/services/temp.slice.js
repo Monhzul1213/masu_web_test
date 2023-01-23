@@ -205,11 +205,16 @@ export const getList = (user, token, api, setFunction, headers) => async dispatc
   }
 };
 
-export const getService = url => async dispatch => {
+export const getService = api => async dispatch => {
   try {
-    const config = { method: 'get', url };
+    const config = {
+      method: 'POST', url: loginConfig?.url + api,
+      headers: {'Accept': '*/*' }
+    };
     const response = await fetchRetry(config);
-    return Promise.resolve({ error: response?.retdesc, data: response });
+    console.log(response);
+    const error = response?.rettype === 0 ? null : response?.retdesc;
+    return Promise.resolve({ error, data: response });
   } catch (err) {
     console.log(err);
     return Promise.resolve({ error: err?.toString() });
