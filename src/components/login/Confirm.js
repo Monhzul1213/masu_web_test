@@ -5,8 +5,9 @@ import { useDispatch } from 'react-redux';
 import ReactInputMask from 'react-input-mask';
 
 import '../../css/config.css';
+import '../../css/report.css';
 import { getService } from '../../services';
-import { Button, Error } from '../all';
+import { Button, DynamicAIIcon, Error } from '../all';
 
 export function Confirm(props){
   const { visible, number, closeModal } = props;
@@ -41,6 +42,7 @@ export function Confirm(props){
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
       <div className='m_back'>
+        <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={() => closeModal()} />
         <p className='ap_title'>{t('login.confirm')}</p>
         <div className='cfnumber_back'>
           <p className='cfnumber_text'>{number}</p>
@@ -55,6 +57,7 @@ export function Confirm(props){
           value={code}
           placeholder='_ _ _ _ _ _'
           onChange={onChange} />
+        <div className='gap' />
         {error && <Error error={error} />}
         <Button className='l_btn' loading={loading} text={t('login.confirm')} onClick={onClickConfirm} />
       </div>

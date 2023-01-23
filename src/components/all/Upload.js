@@ -33,7 +33,7 @@ export function UploadImage(props){
           setImage64(image);
           setEdited && setEdited(true);
           // let type = info.file.originFileObj?.type?.replace(/(.*)\//g, '');
-          let type = info.file?.originFileObj?.name?.split('.')?.pop();
+          let type = info.file?.originFileObj?.name;//?.split('.')?.pop();
           setImageType(type);
           setLoading(false);
         });
@@ -78,7 +78,7 @@ export function UploadFile(props){
       getBase64(event.target.files[0], str64 => {
         let name = event.target.files[0]?.name;
         // let type = event.target.files[0]?.type?.replace(/(.*)\//g, '');
-        let type = name?.split('.')?.pop();
+        let type = name;//?.split('.')?.pop();
         onUpload({ name, str64, type });
       });
     }
