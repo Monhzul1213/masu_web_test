@@ -278,7 +278,7 @@ export function InventoryAdd(){
     else onSuccess(t('inventory.delete_success'));
   }
 
-  const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
+  const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku, setLoading,
     barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit, vendId, setVendId };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };

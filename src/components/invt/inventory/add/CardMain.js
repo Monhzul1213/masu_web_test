@@ -9,12 +9,11 @@ import { DescrInput, Input, MoneyInput, Radio, Select, UploadImage } from '../..
 
 function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku,
-    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId
-  } = props;
+    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId,
+    setLoading } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [vendors, setVendors] = useState([]);
-  const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -25,29 +24,27 @@ function Card(props){
   }, []);
 
   const getData = async () => {
+    setLoading(true);
     let response = await getVendors();
     if(response) await getCategories();
+    setLoading(false);
   }
 
   const getCategories = async () => {
     if(!categories?.length || categories?.length === 1){
       setError(null);
-      setLoading(true);
       const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
       if(response?.error) setError(response?.error);
       else {
         let data = [...[{categoryId: -1, categoryName: t('inventory.no_category')}], ...response?.data];
         setCategories(data);
       }
-      setLoading(false);
     }
   }
 
   const getVendors = async () => {
     setError(null);
-    setLoading(true);
     const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
-    setLoading(false);
     if(response?.error){
       setError(response?.error);
       return false;
@@ -62,7 +59,7 @@ function Card(props){
 
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true, length: 30 };
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false,
-    data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories, loading };
+    data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories };
   const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setEdited, setError, length: 30 };
   const unitProps = { value: isEach, setValue: setIsEach, label: t('inventory.unit'), data: t('inventory.units'), setEdited, setError };
   const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setEdited, setError,
