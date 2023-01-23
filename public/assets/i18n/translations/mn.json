@@ -166,12 +166,12 @@
     "store": "Дэлгүүрүүд",
     "store_config": "Дэлгүүр бас ПОС тохиргоо",
     "thanks": "Бүртгүүлсэнд баярлалаа",
-    "download": "Download the MASU POS app on Google Play or App Store and start selling today.",
-    "down_window": "Download from",
-    "down_ios": "Download on the",
-    "down_android": "Get it on",
-    "go_to": "Go to the back office to set up your business profile and add items, categories and employees.",
-    "go_btn": "Go to back office"
+    "download": "Та Play Store, App Store-оос MASU POS програмыг татаж аваад өнөөдрөөс ашиглах боломжтой.",
+    "down_window": "Windows үйлдлийн систем",
+    "down_ios": "Android үйлдлийн систем",
+    "down_android": "IOS үйлдлийн систем",
+    "go_to": "Үргэлжлүүлэх товч дарж бизнесийн мэдээллээ оруулж ,бараа менежмент болон Дэлгүүр ПОС-н мэдээллээ оруулаарай",
+    "go_btn": "Үргэлжлүүлэх"
   },
   "system_menu": {
     "additional": "Нэмэлт тохиргоо",
