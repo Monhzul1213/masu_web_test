@@ -12,9 +12,10 @@ export function Drawer(props){
   const onClose = () => setOpen(null);
 
   const renderItem = (item, index) => {
+    let variant = item?.variantName ? (' (' + item?.variantName  + ')') : ''
     return (
       <div key={index} className='dr_item'>
-        <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}</p>
+        <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}</p>
         <p className='dr_item_text2'>{item?.qty}</p>
         <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>
         <p className='dr_item_text4'><Money value={item?.amount} fontSize={13} /></p>
