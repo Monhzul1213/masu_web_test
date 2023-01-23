@@ -57,7 +57,8 @@ export function List(props){
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect);
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.createdDate', desc: true }] }},
+    useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
   const drawerProps = { selected, open, setOpen };
 
