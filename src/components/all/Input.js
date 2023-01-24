@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 import { DynamicAIIcon } from './DynamicIcon';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, maskChar, inRow, length, noBlur } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, maskChar, inRow,
+    length, noBlur, className, classBack } = props;
   const { t } = useTranslation();
 
   const onChange = e => {
@@ -41,10 +42,10 @@ export function Input(props){
 
   return (
     <div style={inRow ? { flex: 1 } : {}}>
-      <div className='select_back' style={backStyle}>
+      <div className={classBack ?? 'select_back'} style={backStyle}>
         {label && <p className='select_lbl' style={style}>{label}</p>}
         <InputMask
-          className='m_input'
+          className={className ?? 'm_input'}
           mask={mask}
           disabled={disabled}
           maskChar={maskChar ?? '-'}

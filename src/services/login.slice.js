@@ -97,6 +97,27 @@ export const apiValidate = mail => async dispatch => {
   }
 };
 
+export const apiRecovery = email => async dispatch => {
+  try {
+    const config = {
+      method: 'POST',
+      url: loginConfig?.url + 'Merchant/Recovery',
+      headers: { email }, 
+    };
+    const response = await fetchRetryLogin(config);
+    console.log('++++++++++++++++++++++=', response);
+    if(!response || response?.rettype || response?.rettype === undefined){
+      return Promise.resolve({ error:
+        response?.retdesc ?? (response?.rettype === undefined ? response?.toString() : 'Алдаа гарлаа.') });
+    } else {
+      return Promise.resolve({ error: null, password: response?.retdata });
+    }
+  } catch (err) {
+    console.log(err);
+    return Promise.resolve({ error: err?.toString() });
+  }
+};
+
 function fetchRetryLogin(config, retries = 5) {
   return axios(config)
     .then(res => {

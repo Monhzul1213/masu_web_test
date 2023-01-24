@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Checkbox } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -50,6 +50,10 @@ export function Login(){
     }
   }
 
+  const onForgot = () => {
+    navigate({ pathname: "/recovery", search: createSearchParams({ email: email?.value }).toString()});
+  }
+
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, handleEnter: handleSubmit };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
@@ -67,7 +71,7 @@ export function Login(){
           <Button {...btnProps} />
           <div className='l_btn_row'>
             <Checkbox {...checkProps}>{t('login.remember')}</Checkbox>
-            <Link className='l_link' to='/forgot_password'>{t('login.forgot')}</Link>
+            <span className='l_link' onClick={onForgot}>{t('login.forgot')}</span>
           </div>
         </form>
         <Social />

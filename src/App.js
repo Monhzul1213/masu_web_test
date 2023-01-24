@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createBrowserHistory } from "history";
 
 import { Header, Menu } from './components/menu';
-import { Loading, Login, SignUp, Confirm, Home, Config } from './pages';
+import { Loading, Login, SignUp, Confirm, Home, Config, Recovery } from './pages';
 import { Category, Inventory, InventoryAdd, Modifier, ModifierAdd } from './pages/invt';
 import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/emp';
 import { Receipt, Review } from './pages/report';
@@ -50,6 +50,7 @@ export function App(){
           <Route path='*' element={<Login />} />
           <Route path='/sign_up' element={<SignUp />} />
           <Route path='/confirm' element={<Confirm />} />
+          <Route path='/recovery' element={<Recovery />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
