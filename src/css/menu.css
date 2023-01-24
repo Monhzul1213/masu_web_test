@@ -249,6 +249,11 @@
   cursor: pointer;
 }
 
+.p_menu_btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
   border: none;
 }

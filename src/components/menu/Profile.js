@@ -12,7 +12,7 @@ export function Profile(props){
   const { collapsed } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const { user } = useSelector(state => state.login);
+  const { user, isOwner } = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ export function Profile(props){
   const menu = () => {
     return (
       <div className='p_menu'>
-        <Button className='p_menu_btn' text={t('profile.account')} onClick={onClickAccount} />
+        <Button className='p_menu_btn' text={t('profile.account')} onClick={onClickAccount} disabled={!isOwner} />
         <Button className='p_menu_btn' text={t('profile.signout')} onClick={onClickSignout} />
       </div>
     );
@@ -46,7 +46,7 @@ export function Profile(props){
         <RiUserSettingsLine className='p_icon' />
         {!collapsed && <div className='p_side'>
           <p className='p_title'>{t('menu.profile')}</p>
-          <p className='p_user'>{user?.mail}</p>
+          <p className='p_user'>{user?.mail?.toLowerCase()}</p>
         </div>}
       </button>
     </Dropdown>

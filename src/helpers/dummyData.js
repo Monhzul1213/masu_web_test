@@ -546,3 +546,8 @@ export const districtList = [
   { parent: 'Хэнтий аймаг', label: 'Хэрлэн', value: 'Хэрлэн' },
   { parent: 'Хэнтий аймаг', label: 'Цэнхэрмандал', value: 'Цэнхэрмандал' },
 ];
+
+export const currencyList = [
+  { label: 'Төгрөг (₮)', value: '₮' },
+  { label: 'Dollar ($)', value: '$' }
+]

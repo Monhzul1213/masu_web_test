@@ -8,6 +8,7 @@ const initialState = {
   user: null,
   webUser: null,
   toRemember: false,
+  isOwner: false,
 };
 
 export const loginSlice = createSlice({
@@ -21,9 +22,13 @@ export const loginSlice = createSlice({
       state.user = action.payload;
       state.webUser = action.payload;
     },
+    setIsOwner: (state, action) => {
+      state.isOwner = action.payload;
+    },
     logout: state => {
       state.user = null;
       state.token = null;
+      state.isOwner = false;
     },
     setLogin: (state, action) => {
       state.toRemember = action.payload?.toRemember;
@@ -64,6 +69,8 @@ export const apiLogin = (mail, password) => async dispatch => {
     if(!response || response?.result){
       return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
     } else {
+      let isOwner = mail?.trim()?.toLowerCase() === response?.msMerchant?.email?.trim()?.toLowerCase();
+      dispatch(setIsOwner(isOwner));
       dispatch(setToken(response?.token));
       dispatch(setUser({ mail, password, merchantId: response?.merchantId, msRole: response?.msRole, msMerchant: response?.msMerchant }));
       return Promise.resolve({ error: null, token: response?.token, viewReport: response?.msRole?.webViewSalesReport === 'Y' });
@@ -103,6 +110,6 @@ function fetchRetryLogin(config, retries = 5) {
     });
 }
 
-export const { setToken, setUser, logout, setLogin } = loginSlice.actions;
+export const { setToken, setUser, logout, setLogin, setIsOwner } = loginSlice.actions;
 
 export const loginReducer = loginSlice.reducer;
