@@ -78,7 +78,7 @@ export function Merchant(){
   let nameProps = { value: name, setValue: setName, label: t('login.business'), placeholder: t('login.business'),
     setError, inRow: true, setEdited, length: 50 };
   let mailProps = { value: mail, setValue: setMail, label: t('employee.mail'), placeholder: t('employee.mail'),
-    setError, setEdited };
+    setError, setEdited, disabled: true };
   let passProps = { value: password, setValue: setPassword, label: t('employee.password'),
     placeholder: t('employee.password'), setError, setEdited, length: 20, disabled: true };
   let currencyProps = { value: currency, setValue: setCurrency, label: t('login.currency'),
