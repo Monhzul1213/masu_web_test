@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dropdown } from 'antd';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { useTranslation } from 'react-i18next';
@@ -9,20 +9,20 @@ import { logout, setIsLoggedIn } from '../../services';
 import { Button } from '../all/Button';
 
 export function Profile(props){
-  const { collapsed, setCollapsed } = props;
+  const { collapsed } = props;
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
   const { user } = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onClickAccount = e => {
-    e?.preventDefault();
-    setCollapsed(true);
+    navigate('/profile');
+    setOpen(false);
   }
 
   const onClickSignout = e => {
     e?.preventDefault();
-    setCollapsed(true);
     dispatch(logout());
     dispatch(setIsLoggedIn(false));
     window.sessionStorage.removeItem('CREDENTIALS_TOKEN');
@@ -41,7 +41,7 @@ export function Profile(props){
   }
   
   return (
-    <Dropdown overlay={menu} trigger='click'>
+    <Dropdown overlay={menu} trigger='click' open={open} onOpenChange={setOpen}>
       <button className='p_btn' onClick={e => e.preventDefault()}>
         <RiUserSettingsLine className='p_icon' />
         {!collapsed && <div className='p_side'>
