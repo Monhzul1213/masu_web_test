@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Drawer as AntDrawer } from 'antd';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +8,18 @@ import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all';
 export function Drawer(props){
   const { selected, open, setOpen } = props;
   const { t } = useTranslation();
+  const [pureAmount, setPureAmount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    if(selected){
+      let pure = (selected?.sale?.totalSalesAmount ?? 0) -
+        (selected?.sale?.totalVatAmount ?? 0) - (selected?.sale?.totalNhatamount ?? 0);
+      setPureAmount(pure);
+      setTotalAmount((selected?.sale?.totalCashAmount ?? 0) + (selected?.sale?.totalNonCashAmount ?? 0));
+    }
+    return () => {};
+  }, [selected]);
 
   const onClose = () => setOpen(null);
 
@@ -58,20 +70,41 @@ export function Drawer(props){
         </div>
         <div style={{padding: '5px 0 5px 0'}}>
           <div className='dr_row'>
-            <p className='dr_row_label' style={{fontWeight: 'bold'}}>{t('report_receipt.t_total')}</p>
-            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalSalesAmount} fontSize={13} /></p>
+            <p className='dr_row_label'>{t('report_receipt.amt')}</p>
+            <p className='dr_row_value'><Money value={selected?.sale?.totalSalesAmount} fontSize={13} /></p>
           </div>
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.discount')}</p>
-            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalDiscountAmount} fontSize={13} /></p>
+            <p className='dr_row_value'><Money value={selected?.sale?.totalDiscountAmount} fontSize={13} /></p>
           </div>
           <div className='dr_row'>
+            <p className='dr_row_label'>{t('report_receipt.pure')}</p>
+            <p className='dr_row_value'><Money value={pureAmount} fontSize={13} /></p>
+          </div>
+          <div className='dr_row'>
+            <p className='dr_row_label'>{t('report_receipt.nhat')}</p>
+            <p className='dr_row_value'><Money value={selected?.sale?.totalNhatamount} fontSize={13} /></p>
+          </div>
+          <div className='dr_row'>
+            <p className='dr_row_label'>{t('report_receipt.vat')}</p>
+            <p className='dr_row_value'><Money value={selected?.sale?.totalVatAmount} fontSize={13} /></p>
+          </div>
+          <div className='dr_row'>
+            <p className='dr_row_label' style={{fontWeight: 'bold'}}>{t('report_receipt.pay')}</p>
+            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalSalesAmount} fontSize={13} /></p>
+          </div>
+          <div className='dr_line' />
+          <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.cash')}</p>
-            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalCashAmount} fontSize={13} /></p>
+            <p className='dr_row_value'><Money value={selected?.sale?.totalCashAmount} fontSize={13} /></p>
           </div>
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.non_cash')}</p>
-            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalNonCashAmount} fontSize={13} /></p>
+            <p className='dr_row_value'><Money value={selected?.sale?.totalNonCashAmount} fontSize={13} /></p>
+          </div>
+          <div className='dr_row'>
+            <p className='dr_row_label' style={{fontWeight: 'bold'}}>{t('report_receipt.paid')}</p>
+            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={totalAmount} fontSize={13} /></p>
           </div>
         </div>
       </div>

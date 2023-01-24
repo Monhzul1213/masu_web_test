@@ -614,3 +614,8 @@
 .rp_list_drop:hover .rp_list_drop_icon {
   color: var(--config-color);
 }
+
+.dr_line {
+  border-top: solid 1px var(--input1-color);
+  margin-bottom: 5px;
+}
