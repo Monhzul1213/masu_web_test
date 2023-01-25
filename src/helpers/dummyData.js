@@ -551,3 +551,11 @@ export const currencyList = [
   { label: 'Төгрөг (₮)', value: '₮' },
   { label: 'Dollar ($)', value: '$' }
 ]
+
+export const topColors = [
+  '#017aff',
+  '#f34971',
+  '#f5c900',
+  '#39c0c8',
+  '#6c47ff'
+];

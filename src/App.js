@@ -9,7 +9,7 @@ import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Config, Recovery } from './pages';
 import { Category, Inventory, InventoryAdd, Modifier, ModifierAdd } from './pages/invt';
 import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/emp';
-import { Receipt, Review } from './pages/report';
+import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
 import { Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
@@ -104,6 +104,7 @@ export function App(){
                 <Route path='/system/request_solve/solve_add' element={<SolveAdd />} />
                 <Route path='/report/report_noat' element={<Taxes />} />
                 <Route path='/profile' element={<Merchant />} />
+                <Route path='/report/report_invtentory' element={<ReportItem />} />
               </Routes>
             </Layout>
           </Layout>
