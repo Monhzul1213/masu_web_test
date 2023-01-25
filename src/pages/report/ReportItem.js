@@ -10,6 +10,7 @@ import { getList } from '../../services';
 import { Empty1, Error1, Overlay } from '../../components/all';
 import { Filter } from '../../components/report/receipt';
 import { Graph, Top } from '../../components/report/item';
+import { topColors } from '../../helpers';
 
 function Screen(props){
   const { size } = props;
@@ -17,10 +18,11 @@ function Screen(props){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [periodData, setPeriodData] = useState(t('report_review.periods'));
-  const [period, setPeriod] = useState('D');
   const [date, setDate] = useState([]);
   const [filter, setFilter] = useState('');
   const [top, setTop] = useState([]);
+  const [graph, setGraph] = useState([]);
+  const [period, setPeriod] = useState('D');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -70,90 +72,48 @@ function Screen(props){
         top[index].totalSalesAmt += item.totalSalesAmt;
       }
     });
-    setTop(top?.sort((a, b) => b.totalNetSalesAmt - a.totalNetSalesAmt)?.slice(0, 5));
+    let topData = top?.sort((a, b) => b.totalNetSalesAmt - a.totalNetSalesAmt)?.slice(0, 5);
+    setTop(topData);
+    return topData;
   }
 
-  const getData = async (query, q2, dates, period2) => {
-    let period1 = dates ? setPeriods(dates) : period2;
-    setError(null);
-    setLoading(true);
-    let api = 'Sales/GetSalesByItem' + (query ?? '') + '&SearchPeriod=' + period1;
-    console.log(api);
-    const response = await dispatch(getList(user, token, api));
-    if(response?.error) setError(response?.error);
-    else {
-      getTop(response?.data);
-      // let sales = 0, refund = 0, discount = 0, net = 0, profit = 0;
-      // let graphData = response?.data && response?.data[0];
-      // let data = response?.data && response?.data[1];
-      // graphData?.forEach(item => {
-      //   sales += item?.totalSalesAmt ?? 0;
-      //   refund += item?.totalReturnAmt ?? 0;
-      //   discount += item?.totalDiscAmt ?? 0;
-      //   net += item?.totalNetSalesAmt ?? 0;
-      //   profit += item?.totalProfitAmt ?? 0;
-      //   if(period1 === 'H') item.label = item.salesDate + ':00';
-      //   else if(period1 === 'D') item.label = moment(item.salesDate)?.format('yyyy.MM.DD');
-      //   else if(period1 === 'W') item.label = item.weekInterval;
-      //   else if(period1 === 'M') item.label = item.salesDate + t('page.month');
-      // });
-      // setTotal({ sales, refund, discount, net, profit });
-      // setData(data ?? []);
-      // setGraphData(graphData?.length ? formatData(graphData, period1, dates ?? date) : []);
-    }
-    setFilter(query);
-    setLoading(false);
+  const getLabel = (period1, item) => {
+    let label = '';
+    if(period1 === 'H') label = item.salesDate + ':00';
+    else if(period1 === 'D') label = item.salesDate;
+    else if(period1 === 'W') label = item.weekInterval;
+    else if(period1 === 'M') label = item.salesDate + t('page.month');
+    return label;
   }
-  
-  let filterProps = { onSearch: getData, size, setError };
-  let card_id = size?.width >= 800 ? 'ri_large' : 'ri_small';
-  let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
 
-  return (
-    <div className='s_container_r'>
-      <Overlay loading={loading}>
-        {error && <Error1 error={error} />}
-        <Filter {...filterProps} />
-        {top?.length ?
-          <div className='ri_card' id={card_id}>
-            <Top data={top} />
-            <Graph />
-          </div>
-          :
-          <Empty1 {...emptyProps} />
+  const getGraph = (data, topData, period1) => {
+    let graphData = [];
+    data?.forEach(item => {
+      let tIndex = topData.findIndex(t => t.invtID === item.invtID);
+      if(tIndex !== -1){
+        topData[tIndex].color = topColors[tIndex];
+        let label = getLabel(period1, item);
+        let gIndex = graphData?.findIndex(g => g.label === label);
+        let cItem = { name: item?.invtName, amt: item?.totalNetSalesAmt, color: topColors[tIndex] };
+        if(gIndex === -1){
+          graphData.push({ label, ['row' + tIndex]: cItem });
+        } else {
+          graphData[gIndex]['row' + tIndex] = cItem;
         }
-        {/* <Graph {...graphProps} /> */}
-        {/* <div className='rp_list'> */}
-          {/* {data?.length ? <List {...listProps} /> : <Empty1 {...emptyProps} />} */}
-        {/* </div> */}
-      </Overlay>
-    </div>
-  );
-}
+      }
+    });
+    return graphData;
+  }
 
-const withSizeHOC = withSize();
-export const ReportItem = withSizeHOC(Screen);
-
-/**
- * 
-  const [tab, setTab] = useState('totalSalesAmt');
-  const [total, setTotal] = useState(null);
-  const [data, setData] = useState(null);
-  const [graphData, setGraphData] = useState(null);
-
-  
-
-  
-   
   const formatData = (data, period, date) => {
     let newData = [];
     let diff = date[1]?.diff(date[0], 'days');
     if(period === 'D' && diff <= 60){
       for (let index = 0; index <= diff; index++) {
-        let salesDate = moment(date[0]).add(index, 'days')?.format('yyyy-MM-DDT00:00:00');
-        let exists = data?.findIndex(res => salesDate === res?.salesDate);
+        let label = moment(date[0]).add(index, 'days')?.format('yyyy.MM.DD');
+        let exists = data?.findIndex(res => label === res?.label);
         if(exists !== -1) newData.push(data[exists]);
-        else newData.push({ salesDate, totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
+        else newData.push({ label });
       }
     } else if(period === 'H'){
       for (let index = 0; index <= 23; index++) {
@@ -175,12 +135,52 @@ export const ReportItem = withSizeHOC(Screen);
     return newData;
   }
 
-  
+  const getData = async (query, q2, dates, period2) => {
+    let period1 = dates ? setPeriods(dates) : period2;
+    setError(null);
+    setLoading(true);
+    let api = 'Sales/GetSalesByItem' + (query ?? '') + '&SearchPeriod=' + period1;
+    const response = await dispatch(getList(user, token, api));
+    if(response?.error) setError(response?.error);
+    else {
+      let top = getTop(response?.data);
+      let graph = getGraph(response?.data, top, period1);
+      setGraph(graph?.length ? formatData(graph, period1, dates ?? date) : []);
+    }
+    setFilter(query);
+    setLoading(false);
+  }
+
   const changePeriod = value => {
     setPeriod(value);
     getData(filter, null, null, value);
   }
+  
+  let filterProps = { onSearch: getData, size, setError };
+  let card_id = size?.width >= 800 ? 'ri_large' : 'ri_small';
+  let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
+  let graphProps = {  bar: top, data: graph, size, period, setPeriod: changePeriod, periodData }
 
-  let graphProps = { tab, setTab, total, data: graphData, size, periodData, period, setPeriod: changePeriod };
-  let listProps = { data, size };
- */
+  return (
+    <div className='s_container_r'>
+      <Overlay loading={loading}>
+        {error && <Error1 error={error} />}
+        <Filter {...filterProps} />
+        {top?.length ?
+          <div className='ri_card' id={card_id}>
+            <Top data={top} />
+            <Graph {...graphProps} />
+          </div>
+          :
+          <Empty1 {...emptyProps} />
+        }
+        {/* <div className='rp_list'> */}
+          {/* {data?.length ? <List {...listProps} /> : <Empty1 {...emptyProps} />} */}
+        {/* </div> */}
+      </Overlay>
+    </div>
+  );
+}
+
+const withSizeHOC = withSize();
+export const ReportItem = withSizeHOC(Screen);

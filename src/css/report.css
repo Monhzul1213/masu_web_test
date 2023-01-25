@@ -641,7 +641,8 @@
 #ri_large .ri_top_back {
   border-right: solid 1px var(--input1-color);
   padding: var(--page-padding);
-  width: 330px;
+  min-width: 330px;
+  max-width: 330px;
 }
 
 #ri_small .ri_top_back {
@@ -705,6 +706,12 @@
 }
 
 .ri_top_value {
-  margin: 0;
+  margin: 0 0 0 10px;
   font-size: 15px;
+  width: 30%;
+  text-align: right;
+}
+
+.ri_graph_back {
+  flex: 1;
 }

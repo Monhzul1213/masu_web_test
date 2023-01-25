@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { topColors } from '../../../helpers';
 import { Money } from '../../all';
 
 export function Top(props){
@@ -9,10 +8,9 @@ export function Top(props){
   const { t } = useTranslation();
 
   const renderItem = (item, index) => {
-    let backgroundColor = topColors && topColors[index];
     return (
       <div key={index} className='ri_top_item'>
-        <div className='ri_top_circle' style={{ backgroundColor }} />
+        <div className='ri_top_circle' style={{ backgroundColor: item.color }} />
         <p className='ri_top_name'>{item?.invtName}</p>
         <p className='ri_top_value'><Money value={item?.totalNetSalesAmt} fontSize={14} /></p>
       </div>
