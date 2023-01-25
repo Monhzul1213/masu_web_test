@@ -7,10 +7,10 @@ import moment from 'moment';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
+import { topColors } from '../../helpers';
 import { Empty1, Error1, Overlay } from '../../components/all';
 import { Filter } from '../../components/report/receipt';
 import { Graph, Top } from '../../components/report/item';
-import { topColors } from '../../helpers';
 
 function Screen(props){
   const { size } = props;
