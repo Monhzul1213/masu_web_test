@@ -603,6 +603,7 @@
 
     ],
     "column": [
+      { "label": "Барааны код", "value": "invtID", "align": "left", "noformat": true },
       { "label": "Ангилал", "value": "categoryName", "align": "left", "noformat": true },
       { "label": "Борлуулалтын дүн", "value": "totalSalesAmt" },
       { "label": "Борлуулалтын тоо", "value": "qty", "noformat": true },
