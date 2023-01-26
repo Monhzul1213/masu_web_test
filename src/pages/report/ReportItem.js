@@ -132,7 +132,7 @@ function Screen(props){
         else newData.push({ weekInterval, totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
         start.add(7, 'days');
       }
-    } else newData = data;
+    } else newData = data?.sort((a, b) => a.label?.localeCompare(b.label));
     return newData;
   }
 
