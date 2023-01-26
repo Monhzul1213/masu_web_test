@@ -5,6 +5,29 @@ import { useTranslation } from "react-i18next";
 import { chartTypes, formatNumber } from "../../../helpers";
 import { AreaStack, BarStack, PieChart, PlainSelect } from "../../all";
 
+const Chart = props => {
+  const { width, type, currency, data, bar } = props;
+  
+  let style = { width, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' };
+
+  const tickFormatter = tick => {
+    if(tick >= 1000) return formatNumber(tick / 1000, 0) + currency;
+    else return formatNumber(tick / 1000, 2) + currency;
+  }
+
+  const tipFormatter = (value, name, props) => {
+    const color = props?.payload?.color;
+    return [<p style={{ margin: 0, color }}>{name + ' : ' + formatNumber(value) + currency}</p>];
+  }
+
+  let chartProps = { style, data, bar, tickFormatter };
+  let pieProps = { style, data: bar, tipFormatter };
+
+  if(type === 'line') return (<AreaStack {...chartProps} />);
+  else if(type === 'pie') return (<PieChart {...pieProps} /> );
+  else return (<BarStack {...chartProps} />);
+}
+
 export function Graph(props) {
   const { bar, data, size, period, setPeriod, periodData } = props;
   const { t } = useTranslation();
@@ -20,31 +43,13 @@ export function Graph(props) {
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
-
-  const tickFormatter = tick => {
-    if(tick >= 1000) return formatNumber(tick / 1000, 0) + currency;
-    else return formatNumber(tick / 1000, 2) + currency;
-  }
-
-  const tipFormatter = (value, name, props) => {
-    const color = props?.payload?.color;
-    return [<p style={{ margin: 0, color }}>{name + ' : ' + formatNumber(value) + currency}</p>];
-  }
-
+  
   let id = size?.width >= 400 ? 'rr_large' : 'rr_small';
-  let style = { width, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' };
-  let chartProps = { style, data, bar, tickFormatter };
-  let pieProps = { style, data: bar, tipFormatter };
-
-  const Chart = () => {
-    if(type === 'line') return (<AreaStack {...chartProps} />);
-    else if(type === 'pie') return (<PieChart {...pieProps} /> );
-    else return (<BarStack {...chartProps} />);
-  }
 
   let typeProps = { value: type, setValue: setType, data: chartTypes, className: 'rr_graph_select', bStyle: { } };
   let periodProps = { value: period, setValue: setPeriod, data: periodData, className: 'rr_graph_select',
     bStyle: { marginLeft: 15 } };
+  let chartProps = { width, type, currency, data, bar };
 
   return (
     <div className='ri_graph_back' id={id}>
@@ -57,7 +62,7 @@ export function Graph(props) {
           <PlainSelect {...periodProps} />
         </div>
       </div>
-      <Chart />
+      <Chart {...chartProps} />
     </div>
   );
 }
