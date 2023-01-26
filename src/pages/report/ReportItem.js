@@ -66,11 +66,14 @@ function Screen(props){
       if(index === -1) top.push(item);
       else {
         top[index].qty += item.qty;
+        top[index].returnQty += item.returnQty;
         top[index].totalDiscAmt += item.totalDiscAmt;
         top[index].totalNetSalesAmt += item.totalNetSalesAmt;
         top[index].totalProfitAmt += item.totalProfitAmt;
         top[index].totalReturnAmt += item.totalReturnAmt;
         top[index].totalSalesAmt += item.totalSalesAmt;
+        top[index].totalCost += item.totalCost;
+        top[index].totalVatAmt += item.totalVatAmt;
       }
     });
     setData(top);

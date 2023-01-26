@@ -612,8 +612,7 @@
       { "label": "Хөнгөлөлт", "value": "totalDiscAmt" },
       { "label": "Өртөг ", "value": "totalCost" },
       { "label": "Нийт ашиг", "value": "totalProfitAmt" },
-      { "label": "Ашиг хувь", "value": "margin", "noformat": true },
-      { "label": "Татвар", "value": "taxes" }
+      { "label": "Татвар", "value": "totalVatAmt" }
     ],
     "t_item": "Бараа",
     "chart" :[
