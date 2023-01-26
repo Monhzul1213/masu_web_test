@@ -1,5 +1,6 @@
 import React from 'react';
-import { BarChart as ReBarChart, AreaChart as ReAreaChart, Bar, Area, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart as ReBarChart, AreaChart as ReAreaChart, Bar, Area, ResponsiveContainer, XAxis, YAxis,
+  CartesianGrid, Tooltip, Legend, PieChart as RePieChart, Pie, Cell } from 'recharts';
 
 export function BarChart(props){
   const { style, className, data, dataKey, tickFormatter, bars, tipFormatter, legendFormatter, hasLegend, xFormatter } = props;
@@ -49,4 +50,30 @@ export function AreaChart(props){
       </ResponsiveContainer>
     </div>
   )
+}
+
+export function PieChart(props){
+  const { data, style, className, tipFormatter } = props;
+
+  return (
+    <div style={style} className={className}>
+      <ResponsiveContainer width="100%" height="100%">
+        <RePieChart width={500} height={360}>
+          <Tooltip formatter={tipFormatter} />
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            labelLine={false}
+            outerRadius={120}
+            fill="#8884d8"
+            dataKey="totalNetSalesAmt">
+            {data.map((entry, index) => (
+              <Cell key={index} fill={entry?.color} name={entry?.invtName} />
+            ))}
+          </Pie>
+        </RePieChart>
+      </ResponsiveContainer>
+    </div>
+  );
 }

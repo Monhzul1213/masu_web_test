@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 import { chartTypes, formatNumber } from "../../../helpers";
-import { AreaStack, BarStack, PlainSelect } from "../../all";
+import { AreaStack, BarStack, PieChart, PlainSelect } from "../../all";
 
 export function Graph(props) {
   const { bar, data, size, period, setPeriod, periodData } = props;
@@ -26,13 +26,19 @@ export function Graph(props) {
     else return formatNumber(tick / 1000, 2) + currency;
   }
 
+  const tipFormatter = (value, name, props) => {
+    const color = props?.payload?.color;
+    return [<p style={{ margin: 0, color }}>{name + ' : ' + formatNumber(value) + currency}</p>];
+  }
+
   let id = size?.width >= 400 ? 'rr_large' : 'rr_small';
   let style = { width, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' };
   let chartProps = { style, data, bar, tickFormatter };
+  let pieProps = { style, data: bar, tipFormatter };
 
   const Chart = () => {
     if(type === 'line') return (<AreaStack {...chartProps} />);
-    else if(type === 'pie') return (<div>pie</div>);
+    else if(type === 'pie') return (<PieChart {...pieProps} /> );
     else return (<BarStack {...chartProps} />);
   }
 
