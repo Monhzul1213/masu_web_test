@@ -95,8 +95,9 @@ function Screen(props){
         let label = getLabel(period1, item);
         let gIndex = graphData?.findIndex(g => g.label === label);
         let cItem = { name: item?.invtName, amt: item?.totalNetSalesAmt, color: topColors[tIndex] };
+        let newItem = { label, row0:{amt:0}, row1:{amt:0}, row2:{amt:0}, row3:{amt:0}, row4:{amt:0} }
         if(gIndex === -1){
-          graphData.push({ label, ['row' + tIndex]: cItem });
+          graphData.push({...newItem, ['row' + tIndex]: cItem });
         } else {
           graphData[gIndex]['row' + tIndex] = cItem;
         }
@@ -113,7 +114,7 @@ function Screen(props){
         let label = moment(date[0]).add(index, 'days')?.format('yyyy.MM.DD');
         let exists = data?.findIndex(res => label === res?.label);
         if(exists !== -1) newData.push(data[exists]);
-        else newData.push({ label });
+        else newData.push({ label, hide: true, row0:{amt:0}, row1:{amt:0}, row2:{amt:0}, row3:{amt:0}, row4:{amt:0} });
       }
     } else if(period === 'H'){
       for (let index = 0; index <= 23; index++) {

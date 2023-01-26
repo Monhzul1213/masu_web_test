@@ -715,3 +715,20 @@
 .ri_graph_back {
   flex: 1;
 }
+
+.ri_tooltip {
+  background-color: var(--root-color);
+  padding: 10px;
+  border: 1px solid var(--input1-color);
+}
+
+.ri_tooltp_lbl {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.ri_tooltip_item {
+  font-size: 14px;
+  margin: 5px 0 0 0;
+}
