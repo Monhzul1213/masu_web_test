@@ -391,3 +391,19 @@ input:-webkit-autofill:active{
   font-size: 14px;
   font-weight: 450;
 }
+
+.cf_btn {
+  background-color: var(--header-color);
+  border-radius: var(--radius);
+  color: var(--root-color);
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  box-shadow: none;
+  height: 30px;
+  width: 160px;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

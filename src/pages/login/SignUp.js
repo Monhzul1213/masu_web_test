@@ -23,6 +23,7 @@ export function SignUp(){
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [expire, setExpire] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -68,7 +69,12 @@ export function SignUp(){
     let response = await dispatch(getService(api));
     setLoading(false);
     if(response?.error) setError(response?.error);
-    else setVisible(true);
+    else {
+      const time = new Date();
+      time.setSeconds(time.getSeconds() + 300);
+      setExpire(time);
+      setVisible(true);
+    }
   }
 
   const login = async () => {
@@ -110,11 +116,11 @@ export function SignUp(){
   const addressProps = { text: t('login.phone'), value: address, setValue: setAddress, setError, handleEnter: checked && handleSubmit };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
-  const confirmProps = { visible, closeModal, number: address?.value };
+  const confirmProps = { visible, closeModal, number: address?.value, expire, email: email?.value };
   
   return (
     <div className='l_container'>
-      <Confirm {...confirmProps} />
+      {visible && <Confirm {...confirmProps} />}
       <div className='l_back'>
         <img className='l_logo' src={login_image} alt='MASU LOGO' />
         <p className='l_text'>{t('login.signup_text')}</p>

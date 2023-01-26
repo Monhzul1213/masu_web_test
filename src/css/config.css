@@ -921,6 +921,15 @@
   margin: 0 0 5px 10px;
 }
 
+.cfcode_input_back {
+  display: flex;
+  flex-flow: row;
+  border-radius: var(--radius);
+  background-color: var(--back-color);
+  align-items: center;
+  padding-right: 5px;
+}
+
 .cfcode_input {
   border-width: 0;
   border-radius: var(--radius);
@@ -935,4 +944,13 @@
 
 .cfcode_input:focus {
   outline: none;
+}
+
+.cf_sec {
+  color: var(--header-color);
+  font-size: 14px;
+  font-weight: 550;
+  margin: 0;
+  width: 90px;
+  text-align: right;
 }

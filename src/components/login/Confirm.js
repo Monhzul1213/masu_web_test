@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useTimer } from 'react-timer-hook';
 import ReactInputMask from 'react-input-mask';
 
 import '../../css/config.css';
@@ -10,12 +11,13 @@ import { getService } from '../../services';
 import { Button, DynamicAIIcon, Error } from '../all';
 
 export function Confirm(props){
-  const { visible, number, closeModal } = props;
+  const { visible, number, email, closeModal, expire } = props;
   const { t } = useTranslation();
   const [code, setCode] = useState('');
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const { seconds, minutes, isRunning, restart } = useTimer({ expiryTimestamp: expire, onExpire: () => {} });
 
   const onKeyDown = e => {
     if(e?.key?.toLowerCase() === "enter") onClickConfirm();
@@ -39,6 +41,20 @@ export function Confirm(props){
     }
   }
 
+  const onClickSend = async () => {
+    setLoading(true);
+    let api = 'Merchant/SentSMS?mobile=' + number + '&email=' + email;
+    console.log(api);
+    let response = await dispatch(getService(api));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      const time = new Date();
+      time.setSeconds(time.getSeconds() + 300);
+      restart(time);
+    }
+  }
+
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
       <div className='m_back'>
@@ -49,14 +65,20 @@ export function Confirm(props){
         </div>
         <p className='cf_msg'>{t('login.confirm_msg')}</p>
         <p className='cfcode_lbl'>{t('login.confirm_code')}</p>
-        <ReactInputMask
-          className='cfcode_input'
-          mask='9 9 9 9 9 9'
-          maskChar='_'
-          onKeyDown={onKeyDown}
-          value={code}
-          placeholder='_ _ _ _ _ _'
-          onChange={onChange} />
+        <div className='cfcode_input_back'>
+          <ReactInputMask
+            className='cfcode_input'
+            mask='9 9 9 9 9 9'
+            maskChar='_'
+            onKeyDown={onKeyDown}
+            value={code}
+            disabled={!isRunning}
+            placeholder='_ _ _ _ _ _'
+            onChange={onChange} />
+          {isRunning
+            ? <p className='cf_sec'>{minutes * 60 + seconds} {t('login.seconds')}</p>
+            : <Button className='cf_btn' text={t('login.resend')} loading={loading} onClick={onClickSend}  />}
+        </div>
         <div className='gap' />
         {error && <Error error={error} />}
         <Button className='l_btn' loading={loading} text={t('login.confirm')} onClick={onClickConfirm} />
