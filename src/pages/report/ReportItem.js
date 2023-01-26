@@ -120,10 +120,10 @@ function Screen(props){
       }
     } else if(period === 'H'){
       for (let index = 0; index <= 23; index++) {
-        let exists = data?.findIndex(res => index === res?.salesDate);
+        let label = index >= 10 ? (index + ':00') : ('0' + index + ':00');
+        let exists = data?.findIndex(res => label === res?.label);
         if(exists !== -1) newData.push(data[exists]);
-        else newData.push({ salesDate: index > 10 ? index : ('0' + index),
-          totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
+        else newData.push({ label, hide: true, row0:{amt:0}, row1:{amt:0}, row2:{amt:0}, row3:{amt:0}, row4:{amt:0} });
       }
     } else if(period === 'W' && diff <= 366){
       let start = moment(date[0]).startOf('isoWeek');

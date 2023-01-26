@@ -73,7 +73,7 @@ function Screen(props){
       for (let index = 0; index <= 23; index++) {
         let exists = data?.findIndex(res => index === res?.salesDate);
         if(exists !== -1) newData.push(data[exists]);
-        else newData.push({ salesDate: index > 10 ? index : ('0' + index),
+        else newData.push({ salesDate: index >= 10 ? index : ('0' + index),
           totalSalesAmt: 0, totalReturnAmt: 0, totalDiscAmt: 0, totalNetSalesAmt: 0, totalProfitAmt: 0 });
       }
     } else if(period === 'W' && diff <= 366){
