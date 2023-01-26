@@ -10,7 +10,7 @@ import { getList } from '../../services';
 import { topColors } from '../../helpers';
 import { Empty1, Error1, Overlay } from '../../components/all';
 import { Filter } from '../../components/report/receipt';
-import { Graph, Top } from '../../components/report/item';
+import { Graph, List, Top } from '../../components/report/item';
 
 function Screen(props){
   const { size } = props;
@@ -22,6 +22,7 @@ function Screen(props){
   const [filter, setFilter] = useState('');
   const [top, setTop] = useState([]);
   const [graph, setGraph] = useState([]);
+  const [data, setData] = useState([]);
   const [period, setPeriod] = useState('D');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ function Screen(props){
         top[index].totalSalesAmt += item.totalSalesAmt;
       }
     });
+    setData(top);
     let topData = top?.sort((a, b) => b.totalNetSalesAmt - a.totalNetSalesAmt)?.slice(0, 5);
     setTop(topData);
     return topData;
@@ -161,6 +163,7 @@ function Screen(props){
   let card_id = size?.width >= 800 ? 'ri_large' : 'ri_small';
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
   let graphProps = {  bar: top, data: graph, size, period, setPeriod: changePeriod, periodData }
+  let listProps = { data, size };
 
   return (
     <div className='s_container_r'>
@@ -175,9 +178,7 @@ function Screen(props){
           :
           <Empty1 {...emptyProps} />
         }
-        {/* <div className='rp_list'> */}
-          {/* {data?.length ? <List {...listProps} /> : <Empty1 {...emptyProps} />} */}
-        {/* </div> */}
+        {data?.length ? <div className='rp_list'><List {...listProps} /></div> : null}
       </Overlay>
     </div>
   );
