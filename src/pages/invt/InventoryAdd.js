@@ -38,6 +38,7 @@ export function InventoryAdd(){
   const [modifiers, setModifiers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const [checked, setChecked] = useState(true);
   const [searchI, setSearchI] = useState({ value: null });
   const [totalI, setTotalI] = useState(0);
@@ -63,6 +64,7 @@ export function InventoryAdd(){
   }, [saved]);
 
   const getData = async () => {
+    setLoaded(true);
     let invtId = searchParams?.get('invtId'), response1 = false;
     let response = await getSites();
     if(response) response1 = await getModifiers();
@@ -73,6 +75,7 @@ export function InventoryAdd(){
       let vendor = searchParams?.get('vendId');
       if(vendor) setVendId({ value: parseInt(vendor) });
     }
+    setLoaded(false);
   }
 
   const getImage = async inventory => {
@@ -90,10 +93,8 @@ export function InventoryAdd(){
 
   const getInventory = async (value, sites1, modifiers1) => {
     setError(null);
-    setLoading(true);
     let data = [{ fieldName: 'InvtID', value }];
     let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', data));
-    setLoading(false);
     let invt = response && response?.data && response?.data[0];
     if(response?.error) setError(response?.error);
     else if(invt) {
@@ -135,9 +136,7 @@ export function InventoryAdd(){
 
   const getSites = async () => {
     setError(null);
-    setLoading(false);
     const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    setLoading(false);
     if(response?.error){
       setError(response?.error);
       return false;
@@ -149,9 +148,7 @@ export function InventoryAdd(){
 
   const getModifiers = async () => {
     setError(null);
-    setLoading(false);
     const response = await dispatch(getList(user, token, 'Inventory/GetModifer'));
-    setLoading(false);
     if(response?.error){
       setError(response?.error);
       return false;
@@ -301,7 +298,7 @@ export function InventoryAdd(){
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 
   return (
-    <Overlay className='i_container' loading={loading}>
+    <Overlay className='i_container' loading={loading || loaded}>
       <Prompt edited={edited} />
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
