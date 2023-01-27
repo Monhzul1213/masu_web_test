@@ -13,14 +13,18 @@ export function Add(props){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [type, setType] = useState(null);
+  const [typeData, setTypeData] = useState(null);
   const [dtl, setDtl] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if(selected){
-      // setType({ value: selected?.paymentTypeId });
-    }
+      setTypeData([{ paymentTypeName: selected?.paymentTypeName, paymentTypeId: selected?.paymentTypeId }]);
+      setType({ value: selected?.paymentTypeId });
+      setDtl(selected?.paymentTypeDtl);
+    } else
+      setTypeData(types);
     // getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,20 +39,25 @@ export function Add(props){
       let dtl2 = dtl?.map(item => {
         if(item?.fieldValue){
           if(item?.fieldType == 'N') item.fieldValue = parseFloat(item.fieldValue);
-          item.rowStatus = selected ? 'U': 'I';
+          return {
+            paymentTypeID: type?.value,
+            fieldName: item?.fieldName,
+            fieldValue: item?.fieldValue,
+            rowStatus: selected ? 'U': 'I'
+          };
         } else {
           notValid = true;
           item.error = t('error.not_empty');
+          return item;
         }
-        return item;
       });
       setDtl(dtl2);
       if(notValid) return false;
-      let paymentType = types?.filter(item => item.paymentTypeId === type?.value)[0];
+      let paymentType = typeData?.filter(item => item.paymentTypeId === type?.value)[0];
       let data = {
         paymentTypeID: paymentType?.paymentTypeId,
         paymentTypeName: paymentType?.paymentTypeName,
-        paymentTypeDtls: dtl,
+        paymentTypeDtls: dtl2,
         rowStatus: selected ? 'U': 'I'
       };
       return data;
@@ -74,7 +83,18 @@ export function Add(props){
   }
 
   const onClickDelete = async () => {
-
+    setLoading(true);
+    let data = {
+      paymentTypeID: selected?.paymentTypeId, paymentTypeName: selected?.paymentTypeName,
+      paymentTypeDtls: [], rowStatus: 'D'
+    };
+    const response = await dispatch(sendRequest(user, token, 'Txn/ModPaymenType', [data]));
+    if(response?.error) setError(response?.error);
+    else {
+      closeModal(true);
+      message.success(t('cashier.delete_success'));
+    }
+    setLoading(false);
   }
 
   const changeType = value => {
@@ -100,13 +120,13 @@ export function Add(props){
     return (<Field {...itemProps} />);
   }
 
+  const disabled = selected ? true : false;
   const typeProps = { value: type, setValue: changeType, label: t('cashier.pay_m'), placeholder: t('cashier.pay_m'),
-    setError, data: types, s_value: 'paymentTypeId', s_descr: 'paymentTypeName' };
+    setError, data: typeData, s_value: 'paymentTypeId', s_descr: 'paymentTypeName', disabled };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, show: selected ? true : false, isModal: true };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
-      {/* {open && <Confirm {...confirmProps} />} */}
       <Overlay loading={loading}>
       <div className='m_back'>
         <ModalTitle icon='TbCreditCard' title={t('cashier.pay_m')} />
@@ -124,22 +144,3 @@ export function Add(props){
     </Modal>
   );
 }
-/*
-export function Add(props){
-  const onDelete = async sure => {
-    setError(null);
-    setOpen(false);
-    if(sure){
-      setLoading(true);
-      let data = [{ siteId: selected?.siteId, terminalId: selected?.terminalId }];
-      const response = await dispatch(deleteRequest(user, token, 'Site/DeletePos', data));
-      console.log(response);
-      if(response?.error) setError(response?.error);
-      else {
-        closeModal(true);
-        message.success(t('pos.delete_success'));
-      }
-      setLoading(false);
-    }
-  }
-*/

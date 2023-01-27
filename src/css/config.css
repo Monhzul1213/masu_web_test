@@ -513,6 +513,7 @@
 
 .ant-select-disabled .ant-select-selection-item {
   color: var(--text2-color) !important;
+  background-color: transparent;
 }
 
 .m_input {
@@ -540,6 +541,7 @@
 .m_input:disabled, .m_input_descr:disabled {
   cursor: not-allowed;
   color: var(--text-color);
+  background-color: transparent;
 }
 
 .select_m .ant-select-selection-placeholder {
@@ -557,6 +559,10 @@
   padding: 0;
   font-size: 14px;
   color: var(--text-color);
+}
+
+.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: transparent !important;
 }
 
 #p_tab_cont {
