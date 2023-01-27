@@ -39,6 +39,8 @@ function Screen(props){
       setData(response?.data?.paymenttype);
       setTypes(response?.data?.paymentsetup);
       setFields(response?.data?.paymentsetupdtl);
+      setShow(false);
+      setChecked(false);
     }
   }
 
@@ -63,7 +65,7 @@ function Screen(props){
   };
 
   const onClickAdd = row => {
-    if(row?.original?.isDefault === 'N'){
+    if(!row || row?.original?.isDefault === 'N'){
       setVisible(true);
       setSelected(row?.original);
     }

@@ -63,7 +63,7 @@ export function Add(props){
     if(data){
       setError(null);
       setLoading(true);
-      const response = await dispatch(sendRequest(user, token, 'Txn/ModPaymenType', data));
+      const response = await dispatch(sendRequest(user, token, 'Txn/ModPaymenType', [data]));
       setLoading(false);
       if(response?.error) setError(response?.error);
       else {
