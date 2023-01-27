@@ -12,6 +12,7 @@ export function CardSite(props){
 
   useEffect(() => {
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 72 };
+    const style1 = { display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 122 };
     let columns = [
       {
         id: 'check', noSort: true, isBtn: true, customStyle: { width: 75 },
@@ -19,6 +20,14 @@ export function CardSite(props){
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       { Header: <div style={{flex: 1}}>{t('inventory.t_site')}</div>, accessor: 'name', isText: true },
+      {
+        id: 'check1', noSort: true, isBtn: true, customStyle: { width: 125 },
+        Header: <div style={style1}>{t('inventory.t_nhat')}</div>,
+        Cell: ({ row, onClickNHAT }) => {
+          let checked = row?.original?.UseNHAT === 'Y';
+          return (<div style={style}><Check checked={checked} onClick={e => onClickNHAT(e, row, checked)} /></div>);
+        }
+      },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_price')}</div>, accessor: 'price', noSort: true, isMoney: true,
         customStyle: { width: 100 }, width: 100 },
     ];
@@ -49,6 +58,15 @@ export function CardSite(props){
     }));
   }
 
+  const onClickNHAT = (e, item, checked) => {
+    e?.preventDefault();
+    setEdited && setEdited(true);
+    setData(old => old.map((row, index) => {
+      if (index === item?.index) return { ...old[item?.index], UseNHAT: checked ? 'N' : 'Y' };
+      return row
+    }));
+  }
+
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     setData(old => old.map((row, index) => {
@@ -64,7 +82,7 @@ export function CardSite(props){
   const defaultColumn = { Cell: EditableCell };
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    updateMyData, onClickCheck }, useSortBy, usePagination, useRowSelect);
+    updateMyData, onClickCheck, onClickNHAT }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
 

@@ -215,9 +215,13 @@ export function InventoryAdd(){
       });
       sites?.forEach(item => {
         if(item?.checked)
-          invsales.push({ siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0), status: 0, rowStatus: item?.rowStatus ?? 'I' });
+          invsales.push({
+            siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0),
+            status: 0, rowStatus: item?.rowStatus ?? 'I', UseNHAT: item?.UseNHAT ?? 'N' });
         else if(item?.rowStatus === 'U')
-          invsales.push({ siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0), status: 0, rowStatus: 'D' });
+          invsales.push({
+            siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0),
+            status: 0, rowStatus: 'D', UseNHAT: item?.UseNHAT ?? 'N' });
       });
       let data = {
         name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value,
