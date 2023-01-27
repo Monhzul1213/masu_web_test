@@ -16,6 +16,7 @@ export function InventoryAdd(){
   const [category, setCategory] = useState({ value: -1 });
   const [descr, setDescr] = useState({ value: '' });
   const [isEach, setIsEach] = useState({ value: 'Y' });
+  const [isService, setIsService] = useState(false);
   const [price, setPrice] = useState({ value: '' });
   const [cost, setCost] = useState({ value: '' });
   const [sku, setSku] = useState({ value: '' });
@@ -102,6 +103,7 @@ export function InventoryAdd(){
       setBuyAgeLimit({ value: invt?.msInventory?.buyAgeLimit ?? 0 })
       setVendId({ value: invt?.msInventory?.vendID })
       setIsEach({ value: invt?.msInventory?.isEach ?? 'Y' });
+      setIsService(invt?.msInventory?.isService === 'Y')
       setDescr({ value: invt?.msInventory?.descr ?? '' });
       setPrice({ value: invt?.msInventory?.price ?? 0 });
       setCost({ value: invt?.msInventory?.cost ?? 0 });
@@ -218,13 +220,15 @@ export function InventoryAdd(){
           invsales.push({ siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0), status: 0, rowStatus: 'D' });
       });
       let data = {
-        name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value, buyAgeLimit: buyAgeLimit?.value,
+        name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value,
+        buyAgeLimit: buyAgeLimit?.value,
         vendID: vendId?.value, vendInvtID: invt?.vendInvtID ?? '', vendUnitID: invt?.vendUnitID ?? '',
         price: parseFloat(price?.value ? price?.value : 0),
         cost: parseFloat(cost?.value ? cost?.value : 0),
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
         UseAllSite: checked ? 'Y' : 'N',
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
+        isService: isService ? 'Y' : 'N',
         rowStatus: invt ? 'U' : 'I',
         invkite, invvar, invmod, invsales
       };
@@ -278,8 +282,10 @@ export function InventoryAdd(){
     else onSuccess(t('inventory.delete_success'));
   }
 
-  const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice, cost, setCost, sku, setSku, setLoading,
-    barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit, vendId, setVendId };
+  const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach,
+    price, setPrice, cost, setCost, sku, setSku, setLoading, barcode, setBarcode, image, setImage, setImage64,
+    setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit, vendId, setVendId,
+    isService, setIsService };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,
