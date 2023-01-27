@@ -4,7 +4,7 @@ import { withSize } from 'react-sizeme';
 
 import { getList } from '../../services';
 import { ButtonRowAddConfirm, Empty, Error1, Overlay } from '../../components/all';
-import { List } from '../../components/config/cashier';
+import { Add, List } from '../../components/config/cashier';
 
 function Screen(props){
   const { size } = props;
@@ -58,17 +58,24 @@ function Screen(props){
     setSelected(row?.original);
   }
 
+  const closeModal = toGet => {
+    setVisible(false);
+    setSelected(null);
+    if(toGet) getData();
+  }
+
   const width = size?.width >= 560 ? 560 : size?.width;
   const id = size?.width > 380 ? 'mo_large' : 'mo_small';
   const addProps = { type: 'cashier', onClickAdd, show, onClickDelete };
   const emptyProps = { icon: 'MdCreditCard', type: 'cashier', onClickAdd, noDescr: true };
   const listProps = { data, setData, setShow, checked, setChecked, onClickAdd };
+  const modalProps = { visible, closeModal, selected, types, fields };
   
   return (
     <div className='store_tab' style={{flex: 1}}>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        {/* {visible && <Add {...modalProps} />} */}
+        {visible && <Add {...modalProps} />}
         {!data?.length ? <Empty {...emptyProps} /> :
           <div className='mo_container' style={{ width }}>
             <div className='ih_header' id={id}>
@@ -115,16 +122,10 @@ function Screen(props){
     getPos(value);
   }
 
-  const closeModal = toGet => {
-    setVisible(false);
-    setItem(null);
-    if(toGet) getPos(site);
-  }
 
   
   const addProps = { type: 'pos', onClickAdd, show, onClickDelete };
   const siteProps = { value: site, setValue: onSelectSite, data: sites1, s_value: 'siteId', s_descr: 'name', className: 'r_select' };
-  const modalProps = { visible, closeModal, selected: item, sites, getSites };
 
   return (
     
