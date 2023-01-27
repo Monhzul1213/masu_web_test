@@ -17,6 +17,15 @@ export function Add(props){
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if(selected){
+      // setType({ value: selected?.paymentTypeId });
+    }
+    // getData();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const onClickCancel = () => closeModal();
 
   const validateData = () => {
@@ -117,33 +126,6 @@ export function Add(props){
 }
 /*
 export function Add(props){
-  useEffect(() => {
-    getData();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getData = async () => {
-    if(!sites?.length) await getSites();
-    if(!types?.length){
-      setLoading(true);
-      const response = await dispatch(getConstants(user, token, 'psTerminal_SystemType', setSystemTypes));
-      if(response?.error) setError(response?.error);
-      setLoading(false);
-    }
-    if(selected){
-      setName({ value: selected?.descr ?? '' });
-      setSite({ value: selected?.siteId ?? '' });
-      setType({ value: selected?.systemType ?? '' });
-    }
-  }
-
-  const onClickSave = async e => {
-    
-  }
-
-  const onClickDelete = () => setOpen(true);
-
   const onDelete = async sure => {
     setError(null);
     setOpen(false);
@@ -160,63 +142,4 @@ export function Add(props){
       setLoading(false);
     }
   }
-
-  const nameProps = { value: name, setValue: setName, label: t('pos.name'), placeholder: t('pos.name1'), setError, length: 40 };
-  const siteProps = { value: site, setValue: setSite, label: t('pos.site'), placeholder: t('pos.site1'), setError,
-    data: sites, s_value: 'siteId', s_descr: 'name' };
-  
-  const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
-
-  
-}
-
-import React, { useState } from 'react';
-import { Modal } from 'antd';
-import { useTranslation } from 'react-i18next';
-
-import { payTypes, payShops } from '../../../helpers/dummyData';
-import { Error, Overlay, ButtonRow, ModalTitle, Select, Input } from '../../all';
-
-export function Add(props){
-  const { visible, closeModal } = props;
-  const { t } = useTranslation();
-  const [type, setType] = useState({ value: null });
-  const [name, setName] = useState({ value: '' });
-  const [shop, setShop] = useState({ value: [] });
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const onClickSave = e => {
-    e?.preventDefault();
-    setError(null);
-    if(type?.value && name?.value && shop?.value?.length){
-      // setLoading(true);
-      setTimeout(() => setLoading(false), 1200);
-    } else {
-      if(!type?.value) setType({ value: null, error: t('error.not_empty') });
-      if(!name?.value) setName({ value: '', error: t('error.not_empty') });
-      if(!shop?.value?.length) setShop({ value: [], error: t('error.not_empty') });
-    }
-  }
-
-  const typeProps = { value: type, setValue: setType, label: t('cashier.pay_type1'), placeholder: t('cashier.pay_type2'),
-    data: payTypes, setError };
-  const nameProps = { value: name, setValue: setName, label: t('cashier.pay_name1'), placeholder: t('cashier.pay_name2'), setError };
-  const shopProps = { value: shop, setValue: setShop, label: t('cashier.pay_shop1'), placeholder: t('cashier.pay_shop2'),
-    data: payShops, setError, mode: 'multiple' };
-
-  return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
-      <Overlay loading={loading}>
-        <div className='m_back'>
-          <Select {...typeProps} />
-          <Input {...nameProps} />
-          <Select {...shopProps} />
-          {error && <Error error={error} id='m_error' />}
-        </div> 
-        <ButtonRow onClickCancel={closeModal} onClickSave={onClickSave} />
-      </Overlay>
-    </Modal>
-  )
-}
 */

@@ -22,7 +22,7 @@ export function List(props){
         }
       },
       { Header: t('pos.t_name'), accessor: 'paymentTypeName' },
-      { Header: t('cashier.category'), accessor: 'detailType' },
+      { Header: t('cashier.category'), accessor: 'detailName' },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

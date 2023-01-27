@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { message } from 'antd';
 import { withSize } from 'react-sizeme';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
-import { getList } from '../../services';
+import { getList, sendRequest } from '../../services';
 import { ButtonRowAddConfirm, Empty, Error1, Overlay } from '../../components/all';
 import { Add, List } from '../../components/config/cashier';
 
 function Screen(props){
   const { size } = props;
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -39,18 +42,24 @@ function Screen(props){
     }
   }
 
-
   const onClickDelete = async () => {
-    // let toDelete = [];
-    // data?.forEach(item => { if(item?.checked) toDelete?.push({ siteId: item?.siteId, terminalId: item?.terminalId }) });
-    // setError(null);
-    // setLoading('loading');
-    // const response = await dispatch(deleteRequest(user, token, 'Site/DeletePos', toDelete));
-    // if(response?.error) {
-    //   setError(response?.error);
-    //   setLoading(false);
-    // }
-    // else getPos(site);
+    let toDelete = [];
+    data?.forEach(item => {
+      if(item.checked)
+        toDelete.push({
+          paymentTypeID: item?.paymentTypeId, paymentTypeName: item?.paymentTypeName,
+          paymentTypeDtls: [], rowStatus: 'D'
+        });
+    });
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(sendRequest(user, token, 'Txn/ModPaymenType', toDelete));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      message.success(t('cashier.delete_success'));
+      getData();
+    }
   };
 
   const onClickAdd = row => {
@@ -93,46 +102,3 @@ function Screen(props){
 
 const withSizeHOC = withSize();
 export const Cashier = withSizeHOC(Screen);
-/*
-comment
-export function Cashier(){
-  const closeModal = () => setVisible(null);
-
-  const onChange = values => {
-    setChecked(values);
-    setShow(values?.length ? true : false);
-  };
-}
-function Screen(props){
-  const { size } = props;
-  const { t } = useTranslation();
-  const [loading, setLoading] = useState(null);
-  const [data, setData] = useState([]);
-  const [filtering, setFiltering] = useState(false);
-  const [showPos, setShowPos] = useState(true);
-  const [visible, setVisible] = useState(false);
-  const [item, setItem] = useState(null);
-  const [show, setShow] = useState(false);
-  const [site, setSite] = useState(-1);
-  const [sites, setSites] = useState([{siteId: -1, name: t('pos.all')}]);
-  const [sites1, setSites1] = useState([]);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  
-  const onSelectSite = value => {
-    setSite(value);
-    getPos(value);
-  }
-
-
-  
-  const addProps = { type: 'pos', onClickAdd, show, onClickDelete };
-  const siteProps = { value: site, setValue: onSelectSite, data: sites1, s_value: 'siteId', s_descr: 'name', className: 'r_select' };
-
-  return (
-    
-  );
-}
-
-
- */
