@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Check, PaginationTable, Table } from '../../all';
+import { Check, CheckBtn, PaginationTable, Table } from '../../all';
 
 export function List(props){
   const { data, setData, setShow, checked, setChecked, onClickAdd } = props;
@@ -15,7 +15,11 @@ export function List(props){
       {
         id: 'check', noSort: true, isBtn: true,
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
-        Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
+        Cell: ({ row, onClickCheck }) => {
+          let disabled = row?.original?.isDefault === 'Y';
+          let cellProps = { checked: row?.original?.checked, onClick: e => onClickCheck(e, row), disabled };
+          return (<div style={style}><CheckBtn {...cellProps} /></div>)
+        }
       },
       { Header: t('pos.t_name'), accessor: 'paymentTypeName' },
       { Header: t('cashier.category'), accessor: 'detailType' },
@@ -25,11 +29,17 @@ export function List(props){
   }, [i18n?.language]);
 
   const onClickCheckAll = () => {
-    setShow(!checked);
-    setChecked(!checked);
+    let count = false;
     setData(old => old.map((row, index) => {
-      return { ...old[index], checked: !checked };
+      let disabled = row?.isDefault === 'Y';
+      if(disabled) return row;
+      else {
+        if(!checked) count = true;
+        return { ...old[index], checked: !checked };
+      }
     }));
+    setShow(count);
+    setChecked(!checked);
   }
 
   const onClickCheck = (e, item) => {

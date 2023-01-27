@@ -54,8 +54,10 @@ function Screen(props){
   };
 
   const onClickAdd = row => {
-    setVisible(true);
-    setSelected(row?.original);
+    if(row?.original?.isDefault === 'N'){
+      setVisible(true);
+      setSelected(row?.original);
+    }
   }
 
   const closeModal = toGet => {
