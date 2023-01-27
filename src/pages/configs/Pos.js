@@ -44,7 +44,7 @@ function Screen(props){
 
   const getPos = async SiteID => {
     setError(null);
-    setLoading('loading');
+    setLoading(true);
     let headers = { SiteID };
     const response = await dispatch(getList(user, token, 'Site/GetPos', null, headers));
     setLoading(false);
@@ -85,7 +85,7 @@ function Screen(props){
     let toDelete = [];
     data?.forEach(item => { if(item?.checked) toDelete?.push({ siteId: item?.siteId, terminalId: item?.terminalId }) });
     setError(null);
-    setLoading('loading');
+    setLoading(true);
     const response = await dispatch(deleteRequest(user, token, 'Site/DeletePos', toDelete));
     if(response?.error) {
       setError(response?.error);
@@ -115,7 +115,7 @@ function Screen(props){
 
   return (
     <div className='store_tab' style={{flex: 1}}>
-      <Overlay loading={loading === 'loading'}>
+      <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {visible && <Add {...modalProps} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { payTypes, payShops } from '../../../helpers/dummyData';
 import { Error, Overlay, ButtonRow, ModalTitle, Select, Input } from '../../all';
 
-export function PayModal(props){
+export function Add(props){
   const { visible, closeModal } = props;
   const { t } = useTranslation();
   const [type, setType] = useState({ value: null });
