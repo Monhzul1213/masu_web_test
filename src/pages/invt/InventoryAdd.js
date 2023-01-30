@@ -120,7 +120,10 @@ export function InventoryAdd(){
       sites1?.forEach(item => {
         let exists = invt?.psSalesPrices?.filter(si => si.siteId === item.siteId)[0];
         item.checked = exists ? true : false;
-        if(exists) item.price = exists.price;
+        if(exists){
+          item.price = exists.price;
+          item.useNhat = exists.useNhat;
+        }
         item.rowStatus = exists ? 'U' : 'I';
       });
       setSites(sites1);
@@ -214,11 +217,11 @@ export function InventoryAdd(){
         if(item?.checked)
           invsales.push({
             siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0),
-            status: 0, rowStatus: item?.rowStatus ?? 'I', UseNHAT: item?.UseNHAT ?? 'N' });
+            status: 0, rowStatus: item?.rowStatus ?? 'I', useNhat: item?.useNhat ?? 'N' });
         else if(item?.rowStatus === 'U')
           invsales.push({
             siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0),
-            status: 0, rowStatus: 'D', UseNHAT: item?.UseNHAT ?? 'N' });
+            status: 0, rowStatus: 'D', useNhat: item?.useNhat ?? 'N' });
       });
       let data = {
         name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value,

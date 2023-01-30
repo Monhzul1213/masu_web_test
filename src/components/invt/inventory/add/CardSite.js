@@ -24,7 +24,7 @@ export function CardSite(props){
         id: 'check1', noSort: true, isBtn: true, customStyle: { width: 125 },
         Header: <div style={style1}>{t('inventory.t_nhat')}</div>,
         Cell: ({ row, onClickNHAT }) => {
-          let checked = row?.original?.UseNHAT === 'Y';
+          let checked = row?.original?.useNhat === 'Y';
           return (<div style={style}><Check checked={checked} onClick={e => onClickNHAT(e, row, checked)} /></div>);
         }
       },
@@ -62,7 +62,7 @@ export function CardSite(props){
     e?.preventDefault();
     setEdited && setEdited(true);
     setData(old => old.map((row, index) => {
-      if (index === item?.index) return { ...old[item?.index], UseNHAT: checked ? 'N' : 'Y' };
+      if (index === item?.index) return { ...old[item?.index], useNhat: checked ? 'N' : 'Y' };
       return row
     }));
   }
