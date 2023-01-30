@@ -64,16 +64,21 @@ export function SignUp(){
   }
 
   const sendSMS = async () => {
-    setLoading(true);
-    let api = 'Merchant/SentSMS?mobile=' + address?.value?.trim() + '&email=' + email?.value?.trim();
-    let response = await dispatch(getService(api));
-    setLoading(false);
-    if(response?.error) setError(response?.error);
-    else {
-      const time = new Date();
-      time.setSeconds(time.getSeconds() + 300);
-      setExpire(time);
+    const diff = expire - new Date();
+    if(expire && diff > 0){
       setVisible(true);
+    } else {
+      setLoading(true);
+      let api = 'Merchant/SentSMS?mobile=' + address?.value?.trim() + '&email=' + email?.value?.trim();
+      let response = await dispatch(getService(api));
+      setLoading(false);
+      if(response?.error) setError(response?.error);
+      else {
+        const time = new Date();
+        time.setSeconds(time.getSeconds() + 300);
+        setExpire(time);
+        setVisible(true);
+      }
     }
   }
 
