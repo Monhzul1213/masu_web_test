@@ -960,3 +960,8 @@
   width: 90px;
   text-align: right;
 }
+
+.do_select {
+  justify-content: flex-end;
+  display: flex;
+}
