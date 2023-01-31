@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import '../../css/menu.css';
 import { getItem } from '../../helpers';
 import { Profile } from './Profile';
+import { Install } from './Install';
 const { Sider } = Layout;
 
 export function Menu(props){
@@ -118,12 +119,18 @@ export function Menu(props){
   return hideMenu ? null : (
     <>
       <Sider {...siderProps}>
-        <Profile {...profileProps} />
-        <AntMenu {...menuProps} />
+        <div className='mi_top'>
+          <Profile {...profileProps} />
+          <AntMenu {...menuProps} />
+        </div>
+        <Install {...profileProps} />
       </Sider>
       <Drawer {...drawerProps}>
-        <Profile {...profileProps} />
-        <AntMenu {...menu1Props} />
+        <div className='mi_top'>
+          <Profile {...profileProps} />
+          <AntMenu {...menu1Props} />
+        </div>
+        <Install {...profileProps} />
       </Drawer>
     </>
   )
