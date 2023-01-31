@@ -346,6 +346,10 @@
   padding: 0 13px;
 }
 
+.mi_btn:hover {
+  cursor: not-allowed;
+}
+
 .mi_icon {
   color: var(--root-color);
   height: 24px;
