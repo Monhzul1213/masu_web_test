@@ -4,8 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withSize } from 'react-sizeme';
+import mime from 'mime';
 
 import { getList, sendRequest } from '../../services';
+import { urlToFile } from '../../helpers';
 import { ButtonRow, Confirm, Empty, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage
   } from '../../components/all';
 
@@ -91,15 +93,15 @@ function Card(props){
   }
 
   const getImage = async data => {
-    if(data?.image){
-      // let type = inventory?.fileRaw?.fileType?.replace('.', '');
-      // setImageType(type ?? '');
-      // let mimeType = mime.getType(type);
-      // let dataPrefix = `data:` + mimeType + `;base64,`;
-      // let attach64 = `${dataPrefix}${inventory?.fileRaw?.fileData}`;
-      // let attachFile = await urlToFile(attach64, mimeType);
-      // setImage64(attach64);
-      // setImage(attachFile);
+    if(data?.fileRaw?.fileData){
+      let type = data?.fileRaw?.fileType?.replace('.', '');
+      setImageType(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${data?.fileRaw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage64(attach64);
+      setImage(attachFile);
     } else {
       setImage(null);
       setImage64(null);
@@ -170,49 +172,6 @@ function Card(props){
     </div>
   );
 }
-/*
-function Card(props){
-  const { size } = props;
-  const [data, setData] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [item, setItem] = useState(null);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    getData();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getData = async () => {
-    setError(null);
-    setLoading(true);
-    const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    if(response?.error) setError(response?.error);
-    else setData(response?.data);
-    setLoading(false);
-  }
-
-  const onClickAdd = row => {
-    setVisible(true);
-    setItem(row?.original);
-  }
-
-  const closeModal = toGet => {
-    setVisible(false);
-    setItem(null);
-    if(toGet) getData();
-  }
-
-  const emptyProps = { icon: 'MdStorefront', type: 'shop', noDescr: true, onClickAdd };
-  const modalProps = { visible, closeModal, selected: item };
-  const addProps = { type: 'shop', onClickAdd };
-  const listProps = { data, onClickAdd };
-
-  return (
-    
-  );
-}
-*/
 const withSizeHOC = withSize();
 export const Document = withSizeHOC(Card);
