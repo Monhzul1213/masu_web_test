@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withSize } from 'react-sizeme';
 
-import { getList } from '../../services';
-import { ButtonRow, Empty, Error1, Input, Overlay, PlainSelect, UploadImage } from '../../components/all';
+import { getList, sendRequest } from '../../services';
+import { ButtonRow, Confirm, Empty, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage
+  } from '../../components/all';
 
 function Card(props){
   const { size } = props;
@@ -14,12 +16,14 @@ function Card(props){
   const [error, setError] = useState(null);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState(null);
+  const [bill, setBill] = useState(null);
   const [image, setImage] = useState(null);
   const [image64, setImage64] = useState('');
   const [imageType, setImageType] = useState('');
   const [header, setHeader] = useState({ value: '' });
   const [footer, setFooter] = useState({ value: '' });
   const [edited, setEdited] = useState(false);
+  const [open, setOpen] = useState(false)
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,30 +55,86 @@ function Card(props){
     }
   }
 
+  const onClickShop = () => navigate('/config/store');
+
+  const changeSite = siteID => {
+    if(edited) setOpen(siteID);
+    else getBill(siteID);
+  }
+
+  const confirm = sure => {
+    if(sure){
+      setEdited(false);
+      getBill(open);
+    }
+    setOpen(false);
+  }
+
   const getBill = async siteID => {
     setSite(siteID);
     const response = await dispatch(getList(user, token, 'Site/GetBill?SiteID=' + siteID));
-    if(response?.error) setError(response?.error);
-    else {
-      
+    console.log(response)
+    if(response?.error){
+      setError(response?.error);
+      setBill(null);
+      setData(null);
+    } else {
+      setData(response?.data && response?.data[0]);
     }
   }
 
-  const onClickShop = () => navigate('/config/store');
+  const setData = data => {
+    setBill(data);
+    getImage(data);
+    setHeader({ value: data?.header ?? '' });
+    setFooter({ value: data?.footer ?? '' });
+  }
 
-  const onClickCancel = async () => {
-
+  const getImage = async data => {
+    if(data?.image){
+      // let type = inventory?.fileRaw?.fileType?.replace('.', '');
+      // setImageType(type ?? '');
+      // let mimeType = mime.getType(type);
+      // let dataPrefix = `data:` + mimeType + `;base64,`;
+      // let attach64 = `${dataPrefix}${inventory?.fileRaw?.fileData}`;
+      // let attachFile = await urlToFile(attach64, mimeType);
+      // setImage64(attach64);
+      // setImage(attachFile);
+    } else {
+      setImage(null);
+      setImage64(null);
+      setImageType(null);
+    }
   }
 
   const onClickSave = async () => {
-    
+    setError(null);
+    setLoading(true);
+    let data = {
+      siteId: site,
+      image: '',
+      header: header?.value,
+      footer: footer?.value,
+      fileRaw: { FileData: image64 ?? '', FileType: imageType ?? '' },
+      rowStatus: bill ? 'U' : 'I'
+    }
+    const response = await dispatch(sendRequest(user, token, 'Site/AddBill', data));
+    console.log(response);
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      setEdited(false);
+      message.success(t('document.success_msg'));
+    }
   }
+
+  const onClickCancel = () => setData(bill);
 
   const width = size?.width >= 720 ? 720 : size?.width;
   const id = size?.width > 420 ? 'mo_large' : 'mo_small';
   const scroll = size?.width > 420 ? 'do_large' : 'do_small';
   const emptyProps = { icon: 'MdOutlineReceiptLong', type: 'document', onClickAdd: onClickShop };
-  const siteProps = { value: site, setValue: getBill, data: sites, s_value: 'siteId', s_descr: 'name',
+  const siteProps = { value: site, setValue: changeSite, data: sites, s_value: 'siteId', s_descr: 'name',
     className: 'do_select' };
   const logoProps = { image, setImage, setImage64, setImageType, setEdited, setError };
   const headerProps = { value: header, setValue: setHeader, label: t('document.header'),
@@ -82,9 +142,12 @@ function Card(props){
   const footerProps = { value: footer, setValue: setFooter, label: t('document.footer'),
     placeholder: t('document.footer'), setEdited, setError, length: 100 };
   const btnProps = { onClickCancel, onClickSave };
+  const confirmProps = { open: open ? true : false, text: 'page.back_confirm', confirm };
 
   return (
     <div className='store_tab' style={{flex: 1}}>
+      <Confirm {...confirmProps} />
+      <Prompt edited={edited} />
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!sites?.length ? <Empty {...emptyProps} /> :
