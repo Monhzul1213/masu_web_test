@@ -27,6 +27,7 @@
   display: flex;
   flex-flow: row;
   border-bottom: 1px solid var(--line-color);
+  border-top: 1px solid var(--line-color);
   padding: var(--page-padding);
   align-items: center;
 }
