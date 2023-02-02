@@ -968,7 +968,7 @@
   font-size: 14px;
   background-color: var(--back-color);
   border-radius: var(--radius);
-  width: 180px;
+  width: 240px;
 }
 
 .do_select .ant-select-selector {

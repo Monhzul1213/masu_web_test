@@ -127,14 +127,15 @@ function Card(props){
     else {
       setEdited(false);
       message.success(t('document.success_msg'));
+      getBill(site);
     }
   }
 
   const onClickCancel = () => setData(bill);
 
   const width = size?.width >= 720 ? 720 : size?.width;
-  const id = size?.width > 420 ? 'mo_large' : 'mo_small';
-  const scroll = size?.width > 420 ? 'do_large' : 'do_small';
+  const id = size?.width > 480 ? 'mo_large' : 'mo_small';
+  const scroll = size?.width > 480 ? 'do_large' : 'do_small';
   const emptyProps = { icon: 'MdOutlineReceiptLong', type: 'document', onClickAdd: onClickShop };
   const siteProps = { value: site, setValue: changeSite, data: sites, s_value: 'siteId', s_descr: 'name',
     className: 'do_select' };
