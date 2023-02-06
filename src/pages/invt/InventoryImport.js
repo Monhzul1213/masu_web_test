@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import '../../css/invt.css';
+import FormatSheet from '../../assets/Baraa_Format.xlsx';
 import { ButtonRowConfirm, Error1, Overlay, UploadDrag } from '../../components/all';
 
 export function InventoryImport(){
@@ -31,7 +32,7 @@ export function InventoryImport(){
         <div className='ma_back'>
           <div className='ii_header'>
             <p className='ii_title'>{t('inventory.import_title')}</p>
-            <a className='ii_link'>{t('inventory.import_link')}</a>
+            <a className='ii_link' href={FormatSheet} download='Baraa_Format.xlsx'>{t('inventory.import_link')}</a>
           </div>
           <UploadDrag {...uploadProps} />
         </div>
