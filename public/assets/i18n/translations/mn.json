@@ -87,6 +87,7 @@
     "/inventory/invt_category": "Категор",
     "/inventory/invt_list": "Барааны жагсаалт",
     "/inventory/invt_list/invt_add": "Бараа нэмэх",
+    "/inventory/invt_list/invt_import": "Бараа бөөнөөр оруулах",
     "/inventory/invt_modi": "Нэмэлт төлбөр",
     "/inventory/invt_modi/modi_add": "Нэмэлт төлбөр үүсгэх",
     "/inventory/invt_discount": "Хөнгөлөлт",
@@ -380,7 +381,9 @@
     "variant_error1": "Хувилбарууд алдаатай байж болохгүй",
     "modifer_all": "Бүх дэлгүүрт худалдаалагдаж байна.",
     "delete_success": "Бараа амжилттай устгагдлаа",
-    "edit_variant": "Хувилбар засах"
+    "edit_variant": "Хувилбар засах",
+    "import_title": "Бараа оруулах",
+    "import_link": "Барааны формат татах"
   },
   "modifier": {
     "title": "Нэмэлт төлбөр",

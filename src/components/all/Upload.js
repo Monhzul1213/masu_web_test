@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Upload, message } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { BiImport } from 'react-icons/bi';
 
 import { checkMimeType } from '../../helpers';
+const { Dragger } = Upload;
 
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
@@ -93,5 +95,55 @@ export function UploadFile(props){
         }
       </label>
     </div>
+  );
+}
+
+export function UploadDrag(props){
+  const { file, setFile } = props;
+  const [loading, setLoading] = useState(false);
+
+  const dummyRequest = ({ onSuccess }) => {
+    setTimeout(() => onSuccess("ok"), 0);
+  };
+
+  const onChange = info => {
+    if(info.file.status === 'uploading'){
+      setLoading(true);
+      return;
+    }
+    const error = null; checkMimeType(info.file);
+    if(error){
+      message.error(error, 10);
+      setLoading(false);
+      setFile(null);
+    } else {
+      if(info.file.status === 'done'){
+        getBase64(info.file.originFileObj, base64 => {
+          setFile({
+            object: info.file.originFileObj,
+            base64,
+            type: info.file.originFileObj?.type?.replace(/(.*)\//g, ''),//or just name??
+            name: info.file.originFileObj?.name
+          });
+          setLoading(false);
+        });
+      }
+    }
+  }
+
+  return (
+    <Dragger
+      name='file'
+      className='upload_drag'
+      multiple={false}
+      maxCount={1}
+      action='https://www.mocky.io/v2/5cc8019d300000980a055e76'
+      customRequest={dummyRequest}
+      onChange={onChange}>
+      <div className='drag_back'>
+        {loading ? <LoadingOutlined className='drag_icon' /> : <BiImport className='drag_icon' />}
+        <p className='drag_text'>{file?.name ?? 'Upload'}</p>
+      </div>
+    </Dragger>
   );
 }
