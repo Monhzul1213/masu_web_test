@@ -7,7 +7,7 @@ import { createBrowserHistory } from "history";
 
 import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Config, Recovery } from './pages';
-import { Category, Inventory, InventoryAdd, Modifier, ModifierAdd } from './pages/invt';
+import { Category, Inventory, InventoryAdd, InventoryImport, Modifier, ModifierAdd } from './pages/invt';
 import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/emp';
 import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
@@ -75,6 +75,7 @@ export function App(){
                 <Route path='/inventory/invt_category' element={<Category />} />
                 <Route path='/inventory/invt_list' element={<Inventory />} />
                 <Route path='/inventory/invt_list/invt_add' element={<InventoryAdd />} />
+                <Route path='/inventory/invt_list/invt_import' element={<InventoryImport />} />
                 <Route path='/inventory/invt_modi' element={<Modifier />} />
                 <Route path='/inventory/invt_modi/modi_add' element={<ModifierAdd />} />
                 <Route path='/employee/emp_list' element={<Employee />} />

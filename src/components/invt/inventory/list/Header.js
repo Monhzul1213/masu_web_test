@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { getList } from '../../../../services';
 import { Button, ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
@@ -18,6 +19,7 @@ export function Header(props){
   const [showSearch, setShowSearch] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onFocusSite = async () => {
     if(!sites?.length || sites?.length === 1){
@@ -63,6 +65,8 @@ export function Header(props){
 
   const onClickSearch = () => setShowSearch(!showSearch);
 
+  const onClickImport = () => navigate('invt_import');
+
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
   const width = showSearch ? 0 : (size?.width > 780 ? 412 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
@@ -77,16 +81,16 @@ export function Header(props){
     label: t('inventory.category'), onFocus: onFocusCategory, loading: loading === 'category', classBack, classLabel, className, bStyle };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
-  const importProps = { className: 'ih_btn', text: t('page.import'), disabled: true };
+  const importProps = { className: 'ih_btn', text: t('page.import'), onClick: onClickImport };
   const exportProps = { className: 'ih_btn', text: t('page.export'), disabled: true };
 
   return (
     <div className='ih_header' id={id}>
       <div className='ih_header1'>
         <ButtonRowAdd {...addProps} />
-        <div className='ih_btn_row' style={{display: 'none'}}>
+        <div className='ih_btn_row'>
           <Button {...importProps} />
-          <Button {...exportProps} />
+          <div style={{ display: 'none' }}><Button {...exportProps} /></div>
         </div>
       </div>
       <div className='ih_header2' style={style}>
