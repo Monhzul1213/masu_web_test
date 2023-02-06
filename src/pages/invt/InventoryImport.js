@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import '../../css/invt.css';
 import FormatSheet from '../../assets/Baraa_Format.xlsx';
@@ -11,7 +12,14 @@ export function InventoryImport(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
+  const user = useSelector(state => state.login.user);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(user?.msRole?.webManageItem !== 'Y') navigate({ pathname: '/' });
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onClickCancel = () => navigate('/inventory/invt_list');
 
