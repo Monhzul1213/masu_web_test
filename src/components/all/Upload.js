@@ -99,7 +99,7 @@ export function UploadFile(props){
 }
 
 export function UploadDrag(props){
-  const { file, setFile } = props;
+  const { file, setFile, types } = props;
   const [loading, setLoading] = useState(false);
 
   const dummyRequest = ({ onSuccess }) => {
@@ -111,7 +111,8 @@ export function UploadDrag(props){
       setLoading(true);
       return;
     }
-    const error = null; checkMimeType(info.file);
+
+    const error = checkMimeType(info.file, types);
     if(error){
       message.error(error, 10);
       setLoading(false);

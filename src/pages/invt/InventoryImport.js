@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import '../../css/invt.css';
 import FormatSheet from '../../assets/Baraa_Format.xlsx';
+import { excelTypes } from '../../helpers';
 import { ButtonRowConfirm, Error1, Overlay, UploadDrag } from '../../components/all';
 
 export function InventoryImport(){
@@ -30,7 +31,7 @@ export function InventoryImport(){
     setLoading(false);
   }
 
-  const uploadProps = { file, setFile };
+  const uploadProps = { file, setFile, types: excelTypes };
   const btnProps = { onClickCancel, onClickSave, show: false, id: 'mo_ac_btns' };
 
   return (
