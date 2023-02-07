@@ -30,11 +30,11 @@ export const tempSlice = createSlice({
   }
 });
 
-export const sendRequest = (user, token, api, data) => async dispatch => {
+export const sendRequest = (user, token, api, data, contentType) => async dispatch => {
   try {
     const config = {
       method: 'POST', url: loginConfig?.url + api,
-      headers: { 'authorization': token, 'Accept': '*/*', 'Content-Type': 'application/json' },
+      headers: { 'authorization': token, 'Accept': '*/*', 'Content-Type': contentType ?? 'application/json' },
       data
     }
     const response = await fetchRetry(config);
@@ -45,7 +45,9 @@ export const sendRequest = (user, token, api, data) => async dispatch => {
       else {
         const configNew = {
           method: 'POST', url: loginConfig?.url + api,
-          headers: { 'authorization': responseLogin?.token ?? token, 'Accept': '*/*', 'Content-Type': 'application/json' },
+          headers: {
+            'authorization': responseLogin?.token ?? token, 'Accept': '*/*',
+            'Content-Type': contentType ?? 'application/json' },
           data
         }
         const responseNew = await fetchRetry(configNew);

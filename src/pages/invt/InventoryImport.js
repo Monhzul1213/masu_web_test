@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import '../../css/invt.css';
 import FormatSheet from '../../assets/Baraa_Format.xlsx';
 import { excelTypes } from '../../helpers';
+import { sendRequest } from '../../services';
 import { ButtonRowConfirm, Error1, Overlay, UploadDrag } from '../../components/all';
 
 export function InventoryImport(){
@@ -13,8 +15,9 @@ export function InventoryImport(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [file, setFile] = useState(null);
-  const user = useSelector(state => state.login.user);
+  const { user, token } = useSelector(state => state.login);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if(user?.msRole?.webManageItem !== 'Y') navigate({ pathname: '/' });
@@ -26,9 +29,20 @@ export function InventoryImport(){
 
   const onClickSave = async () => {
     setError(null);
-    setLoading(true);
-    console.log(file);
-    setLoading(false);
+    if(file){
+      setLoading(true);
+      let formData = new FormData();
+      formData.append('file', file?.object);
+      let response =
+        await dispatch(sendRequest(user, token, 'Inventory/AddInventoryExcel', formData, 'multipart/form-data'));
+      if(response?.error) setError(response?.error);
+      else {
+        message.success(t('inventory.add_success'));
+        setFile(null);
+      }
+      setLoading(false);
+    } else
+      setError(t('inventory.import_error'));
   }
 
   const uploadProps = { file, setFile, types: excelTypes };

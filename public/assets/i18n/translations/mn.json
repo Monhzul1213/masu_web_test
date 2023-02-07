@@ -383,7 +383,8 @@
     "delete_success": "Бараа амжилттай устгагдлаа",
     "edit_variant": "Хувилбар засах",
     "import_title": "Бараа оруулах",
-    "import_link": "Барааны формат татах"
+    "import_link": "Барааны формат татах",
+    "import_error": "Файл оруулна уу"
   },
   "modifier": {
     "title": "Нэмэлт төлбөр",
