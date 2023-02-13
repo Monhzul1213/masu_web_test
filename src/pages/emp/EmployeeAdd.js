@@ -8,7 +8,7 @@ import '../../css/invt.css';
 import { apiLogin, getList, sendRequest } from '../../services';
 import { validateEmail } from '../../helpers';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
-import { CardMain } from '../../components/emp/employee/add';
+import { CardMain, Subscription } from '../../components/emp/employee/add';
 import { CardSite } from '../../components/invt/modifier/add';
 import { CardEmpty } from '../../components/invt/inventory/add';
 
@@ -28,6 +28,7 @@ export function EmployeeAdd(){
   const [saved, setSaved] = useState(false);
   const [selected, setSelected] = useState(null);
   const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -147,22 +148,25 @@ export function EmployeeAdd(){
     }
   }
 
+  const saveData = async data => {
+    onLoad();
+    const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
+    if(response?.error) onError(response?.error, true);
+    else {
+      if(selected && selected?.email?.toLowerCase() === user?.mail?.toLowerCase()){
+        let pass = password?.value ? password?.value : user?.password;
+        const response1 = await dispatch(apiLogin(mail?.value, pass));
+        if(response1?.error) onError(response1?.error, true);
+        else onSuccess(t('employee.add_success'), true);
+      } else 
+        onSuccess(t('employee.add_success'), true);
+    }
+  }
+
   const onClickSave = async () => {
     let data = validateData();
-    if(data){
-      onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
-      if(response?.error) onError(response?.error, true);
-      else {
-        if(selected && selected?.email?.toLowerCase() === user?.mail?.toLowerCase()){
-          let pass = password?.value ? password?.value : user?.password;
-          const response1 = await dispatch(apiLogin(mail?.value, pass));
-          if(response1?.error) onError(response1?.error, true);
-          else onSuccess(t('employee.add_success'), true);
-        } else 
-          onSuccess(t('employee.add_success'), true);
-      }
-    }
+    if(data && selected) saveData(data);
+    else if(data) setVisible(true);
   }
 
   const onClickDelete = async () => {
@@ -178,10 +182,12 @@ export function EmployeeAdd(){
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'ea_back', label: 'employee' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ea_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_btns' };
+  let subProps = { visible, setVisible };
 
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
+      <Subscription {...subProps} />
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>
