@@ -7,7 +7,8 @@ import { Button } from './Button';
 const { Option } = AntSelect;
 
 export function Select(props){
-  const { value, setValue, label, placeholder, data, setError, setEdited, s_value, s_descr, mode, inRow, onFocus, loading, disabled } = props;
+  const { value, setValue, label, placeholder, data, setError, setEdited, s_value, s_descr, mode, inRow, onFocus,
+    loading, disabled, renderRow } = props;
   const { t } = useTranslation();
   
   let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
@@ -43,7 +44,7 @@ export function Select(props){
           maxTagPlaceholder={maxTagPlaceholder}
           // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' style={style} />}
           placeholder={placeholder}>
-          {data?.map(renderItem)}
+          {renderRow ? data?.map(renderRow) : data?.map(renderItem)}
         </AntSelect>
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}

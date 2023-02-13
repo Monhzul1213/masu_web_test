@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Steps } from 'antd';
+import { Modal, Select as AntSelect, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
-import { DynamicAIIcon, DynamicMDIcon, Step } from '../../../all';
-import { formatNumber, subscriptions } from '../../../../helpers';
+import { Select, DynamicAIIcon, DynamicMDIcon, Step } from '../../../all';
+import { banks, formatNumber, subscriptions } from '../../../../helpers';
+const { Option } = AntSelect;
 
 export function Subscription(props){
   const { visible, setVisible } = props;
@@ -89,6 +90,16 @@ function Type(props){
 function Pay(props){
   const { qr, amt } = props;
   const { t } = useTranslation();
+  const [value, setValue] = useState({ value: 'haan' });
+
+  const renderRow = (item, index) => {
+    return (
+      <Option key={index} value={item?.icon}>{item?.bank}</Option>
+    );
+  }
+
+  const bankProps = { value, setValue, data: banks, className: 'es_select', classBack: 'es_select_back',
+    label: t('employee.bank'), renderRow };
   
   return (
     <div className='es_scroll'>
@@ -106,7 +117,7 @@ function Pay(props){
         <div className='c_gap' />
         <div className='es_pay_col2'>
           <p className='es_sub_title'>{t('employee.acct')}</p>
-          
+          <Select {...bankProps} />
         </div>
       </div>
     </div>

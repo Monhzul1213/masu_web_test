@@ -165,8 +165,9 @@ export function EmployeeAdd(){
 
   const onClickSave = async () => {
     let data = validateData();
-    if(data && selected) saveData(data);
-    else if(data) setVisible(true);
+    if(data) saveData(data);
+    // if(data && selected) saveData(data);
+    // else if(data) setVisible(true);
   }
 
   const onClickDelete = async () => {
