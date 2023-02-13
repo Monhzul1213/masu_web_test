@@ -575,4 +575,11 @@ export const excelTypes = [
 export const subscriptions = [
   { amt: 10000, length: 'сар', text: 'Сараар нэг ажилтан', value: 0 },
   { amt: 100000, length: 'жил', text: 'Жилээр нэг ажилтан', value: 1 },
-]
+];
+
+export const banks = [
+  { bank: 'ХААНБАНК', logo: 'haan', acct: '', name: '' },
+  { bank: 'ХХБ', logo: 'tdb', acct: '', name: '' },
+  { bank: 'ХАСБАНК', logo: 'has', acct: '', name: '' },
+  { bank: 'ГОЛОМТБАНК', logo: 'golomt', acct: '', name: '' },
+];

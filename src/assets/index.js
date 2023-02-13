@@ -28,6 +28,11 @@ import icon23 from './masu_icons/23.png';
 import icon24 from './masu_icons/24.png';
 import icon25 from './masu_icons/25.png';
 
+import haan from './banks/haan.png';
+import has from './banks/has.png';
+import tdb from './banks/tdb.png';
+import golomt from './banks/golomt.png';
+
 export { login_image, header_image, logo, placeholder };
 export const icons = [
   icon1, icon2, icon3, icon4, icon5,
@@ -76,3 +81,5 @@ export const icons1 = [
     { icon: icon17, value: 17 },
   ]
 ]
+
+export const bnak_icons = { haan, has, tdb, golomt };
