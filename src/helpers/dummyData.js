@@ -571,3 +571,8 @@ export const excelTypes = [
   'application/x-xls',
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 ];
+
+export const subscriptions = [
+  { amt: 10000, length: 'сар', text: 'Сараар нэг ажилтан', value: 0 },
+  { amt: 100000, length: 'жил', text: 'Жилээр нэг ажилтан', value: 1 },
+]

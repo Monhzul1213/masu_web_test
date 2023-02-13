@@ -397,6 +397,10 @@
   padding: var(--title-padding) var(--title-padding) 5px var(--title-padding);
 }
 
+.m_back2 {
+  padding: var(--title-padding);
+}
+
 .m_scroll {
   max-height: calc(90vh - 105px);
   overflow-y: scroll;
@@ -1003,4 +1007,111 @@
 #do_small {
   max-height: calc(100vh - var(--header-height) - var(--page-padding) * 5 - 64px - 53px);
   overflow: scroll; 
+}
+
+.es_scroll {
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
+.es_title {
+  color: var(--text-color);
+  font-size: 18px;
+  font-weight: 550;
+  margin: 0 0 5px 0;
+}
+
+.es_text {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0 0 5px 0;
+}
+
+.es_types {
+  display: flex;
+  flex-flow: column;
+  margin-top: 5px;
+}
+
+.es_type_btn {
+  display: flex;
+  flex-flow: row;
+  background-color: var(--root-color);
+  border: var(--line-color) 2px solid;
+  margin: 10px 0 5px 0;
+  border-radius: var(--radius);
+  padding: 10px;
+}
+
+#es_type_btn_active {
+  border-color: var(--header-color);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+}
+
+.es_type_side {
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+  align-items: flex-start;
+}
+
+.es_type_title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 2px 0;
+}
+
+.es_type_sub {
+  font-size: 15px;
+}
+
+.es_type_descr {
+  color: var(--text2-color);
+  margin: 0;
+  font-size: 13px;
+  font-weight: 450;
+}
+
+.es_type_icon {
+  font-size: 18px;
+  color: var(--text2-color);
+}
+
+#es_type_btn_active .es_type_icon {
+  color: var(--header-color);
+}
+
+.step_back {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.step_prev {
+  background-color: var(--input-color);
+  border: none;
+  border-radius: var(--radius);
+  padding: 5px 15px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.step_prev:hover {
+  cursor: pointer;
+  color: var(--header-color);
+}
+
+.step_next {
+  background-color: var(--header-color);
+  border: none;
+  border-radius: var(--radius);
+  padding: 5px 15px;
+  color: var(--root-color);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.step_next:hover {
+  cursor: pointer;
+  background-color: var(--logo1-color);
 }
