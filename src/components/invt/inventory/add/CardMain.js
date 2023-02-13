@@ -54,6 +54,12 @@ function Card(props){
     }
   }
 
+  const changeBarcode = value => {
+    let text = value?.value?.replace(/[^0-9]/g, '');
+    if(isNaN(text)) setBarcode({...value, error: 'must_number'});
+    else setBarcode({ value: text });
+  } 
+
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
   const idRow1 = size?.width > 540 ? 'im_unit_row_large' : 'im_unit_row_small';
@@ -69,7 +75,7 @@ function Card(props){
   const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setEdited, setError, inRow: true,
     disabled: isKit };
   const skuProps = { value: sku, setValue: setSku, label: t('inventory.sku'), placeholder: t('inventory.sku'), setEdited, setError, inRow: true, length: 30 };
-  const barcodeProps = { value: barcode, setValue: setBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setEdited, setError,
+  const barcodeProps = { value: barcode, setValue: changeBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setEdited, setError,
     inRow: true, length: 30 };
   const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image' };
   const limitProps = { value: buyAgeLimit, setValue: setBuyAgeLimit, label: t('inventory.limit'), setError, setEdited, data: limitList, inRow: true };
