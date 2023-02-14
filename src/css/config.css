@@ -1187,6 +1187,12 @@
   border: var(--input-color) 1px solid;
 }
 
+#es_row {
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end;
+}
+
 .es_field_back:focus-within {
   border: 1px solid var(--success-color);
 }
@@ -1217,7 +1223,7 @@
 }
 
 .es_select .ant-select-arrow {
-  color: var(--text4-color);
+  color: var(--text2-color);
   font-size: 16px;
   right: 2px;
 }
@@ -1235,4 +1241,21 @@
   height: 24px;
   margin-right: 7px;
   border-radius: var(--radius);
+}
+
+.es_field_value {
+  font-size: 15px;
+  margin: 0;
+  font-weight: 450;
+}
+
+.es_field_copy {
+  color: var(--text2-color);
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.es_field_copy:hover {
+  color: var(--success-color);
+  cursor: pointer;
 }

@@ -7,7 +7,7 @@ import '../../../../css/config.css'
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
 import { qr_holder } from '../../../../assets';
 import { DynamicAIIcon, DynamicMDIcon, Step } from '../../../all';
-import { Select } from './Field';
+import { Field, Select } from './Field';
 
 export function Subscription(props){
   const { visible, setVisible } = props;
@@ -15,6 +15,7 @@ export function Subscription(props){
   const [selected, setSelected] = useState(null);
   const [qr, setQR] = useState('');
   const [amt, setAmt] = useState(0);
+  const [txnNo, setTxnNo] = useState('1');
 
   useEffect(() => {
     setSelected(subscriptions && subscriptions[0]);
@@ -35,7 +36,7 @@ export function Subscription(props){
   }
 
   const typeProps = { selected, onSelect };
-  const payProps = { qr, amt };
+  const payProps = { qr, amt, txnNo };
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
@@ -90,11 +91,17 @@ function Type(props){
 }
 
 function Pay(props){
-  const { qr, amt } = props;
+  const { qr, amt, txnNo } = props;
   const { t } = useTranslation();
-  const [value, setValue] = useState('haan');
+  const [value, setValue] = useState(0);
+  const [selected, setSelected] = useState(banks[0]);
 
-  const bankProps = { value, setValue, data: banks, label: t('employee.bank') };
+  const changeValue = index => {
+    setValue(index);
+    setSelected(banks[index]);
+  }
+
+  const bankProps = { value, setValue: changeValue, data: banks, label: t('employee.bank') };
   
   return (
     <div className='es_scroll'>
@@ -114,6 +121,10 @@ function Pay(props){
         <div className='es_pay_col2'>
           <p className='es_sub_title'>{t('employee.acct')}</p>
           <Select {...bankProps} />
+          <Field label={t('employee.acct_no')} value={selected?.acct} />
+          <Field label={t('employee.receive')} value={selected?.name} />
+          <Field label={t('employee.amt')} value={formatNumber(amt) + '₮'} copy={amt} />
+          <Field label={t('employee.txn_descr')} value={txnNo} />
         </div>
       </div>
     </div>
