@@ -33,7 +33,9 @@ import has from './banks/has.png';
 import tdb from './banks/tdb.png';
 import golomt from './banks/golomt.png';
 
-export { login_image, header_image, logo, placeholder };
+import qr_holder from './qr.png';
+
+export { login_image, header_image, logo, placeholder, qr_holder };
 export const icons = [
   icon1, icon2, icon3, icon4, icon5,
   icon6, icon7, icon8, icon9, icon10,
@@ -82,4 +84,4 @@ export const icons1 = [
   ]
 ]
 
-export const bnak_icons = { haan, has, tdb, golomt };
+export const bank_icons = { haan, has, tdb, golomt };

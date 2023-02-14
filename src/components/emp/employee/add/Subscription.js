@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Select as AntSelect, Steps } from 'antd';
+import { Modal, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
-import { Select, DynamicAIIcon, DynamicMDIcon, Step } from '../../../all';
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
-const { Option } = AntSelect;
+import { qr_holder } from '../../../../assets';
+import { DynamicAIIcon, DynamicMDIcon, Step } from '../../../all';
+import { Select } from './Field';
 
 export function Subscription(props){
   const { visible, setVisible } = props;
@@ -17,6 +18,7 @@ export function Subscription(props){
 
   useEffect(() => {
     setSelected(subscriptions && subscriptions[0]);
+    setAmt(subscriptions && subscriptions[0] && subscriptions[0]?.amt);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -90,16 +92,9 @@ function Type(props){
 function Pay(props){
   const { qr, amt } = props;
   const { t } = useTranslation();
-  const [value, setValue] = useState({ value: 'haan' });
+  const [value, setValue] = useState('haan');
 
-  const renderRow = (item, index) => {
-    return (
-      <Option key={index} value={item?.icon}>{item?.bank}</Option>
-    );
-  }
-
-  const bankProps = { value, setValue, data: banks, className: 'es_select', classBack: 'es_select_back',
-    label: t('employee.bank'), renderRow };
+  const bankProps = { value, setValue, data: banks, label: t('employee.bank') };
   
   return (
     <div className='es_scroll'>
@@ -107,14 +102,15 @@ function Pay(props){
       <div className='es_pay_back'>
         <div className='es_pay_col'>
           <p className='es_sub_title'>{t('employee.qr')}</p>
-          <QRCode
+          <img className='es_qr_holder' src={qr_holder} alt='Logo' />
+          {/* <QRCode
             size={180}
             style={{ margin: '5px 0' }}
-            value={qr} />
+            value={qr} /> */}
           <p className='es_amt_title'>{t('employee.amt')}</p>
           <p className='es_amt'>{formatNumber(amt)}₮</p>
         </div>
-        <div className='c_gap' />
+        <div className='es_gap' />
         <div className='es_pay_col2'>
           <p className='es_sub_title'>{t('employee.acct')}</p>
           <Select {...bankProps} />
