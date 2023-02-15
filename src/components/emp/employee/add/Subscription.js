@@ -13,7 +13,7 @@ import { Field, Select } from './Field';
 import { Step } from './Step';
 
 export function Subscription(props){
-  const { visible, onBack, onDone } = props;
+  const { visible, onBack, onDone, invNo } = props;
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [qr, setQR] = useState('');
@@ -30,6 +30,15 @@ export function Subscription(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if(visible && invNo){
+      setCurrent(1);
+      setTxnNo(invNo);
+    }
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   const onSelect = item => {
     setSelected(item);

@@ -4,11 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { Check, CheckBtn, PaginationTable, Table } from '../../../all';
+import { Subscription } from '../add';
 
 export function List(props){
-  const { data, setData, onClickAdd, setShow, checked, setChecked, size } = props;
+  const { data, setData, onClickAdd, setShow, checked, setChecked, size, onSubscribe } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [invNo, setInvNo] = useState(null);
+  const [emp, setEmp] = useState(null);
   const { user: { mail } } = useSelector(state => state.login);
 
   useEffect(() => {
@@ -28,9 +32,9 @@ export function List(props){
       { Header: t('page.phone'), accessor: 'phone' },
       { Header: t('employee.role'), accessor: 'roleName' },
       { Header: '', accessor: 'status', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
-        Cell: ({ value }) => {
+        Cell: ({ value, row, onClickLink }) => {
           let active = value === 0;
-          return active && (<div className='table_link'>{t('employee.pay')}</div>);
+          return active && (<div className='table_link' onClick={() => onClickLink(row)}>{t('employee.pay')}</div>);
         }
       },
     ]);
@@ -67,17 +71,36 @@ export function List(props){
     }));
   }
 
+  const onClickLink = row => {
+    setVisible(true);
+    setInvNo(row?.original?.invoiceNo);
+    setEmp(row?.original);
+  }
+
   const onRowClick = row => onClickAdd(row?.original);
+
+  const onBack = () => {
+    setVisible(false);
+    setEmp(null);
+    setInvNo(null);
+  }
+
+  const onDone = async () => {
+    onSubscribe(emp);
+    onBack();
+  }
   
   const maxHeight = size?.width > 440
     ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
-    onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
+    onClickCheckAll, checked, onClickCheck, onClickLink }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
+  let subProps = { visible, invNo, onBack, onDone };
   
   return (
     <div>
+      <Subscription {...subProps} />
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />

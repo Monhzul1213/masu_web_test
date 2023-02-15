@@ -64,9 +64,23 @@ export function Employee(){
     }
   }
 
+  const onSubscribe = async selected => {
+    setError(null);
+    setLoading(true);
+    let employeeSites = selected?.empsites?.map(item => {
+      item.rowStatus = 'U';
+      return item;
+    });
+    let data = [{...selected, employeeSites, rowStatus: 'U', status: 1}];
+    let response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else getData(filter);
+  }
+
   const emptyProps = { icon: 'MdOutlinePersonOutline', type: 'employee', onClickAdd, noDescr: true };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData };
-  const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
+  const listProps = { data, setData, onClickAdd, setShow, checked, setChecked, onSubscribe };
 
   return (
     <div className='s_container_i'>
