@@ -35,6 +35,7 @@ export function Subscription(props){
     if(visible && invNo){
       setCurrent(1);
       setTxnNo(invNo);
+      setAmt(emp?.amount)
     } else {
       setTxnNo('');
       setCurrent(0);

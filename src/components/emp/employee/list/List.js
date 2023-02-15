@@ -96,7 +96,7 @@ export function List(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, onClickLink }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
-  let subProps = { visible, invNo, onBack, onDone };
+  let subProps = { visible, invNo, emp, onBack, onDone };
   
   return (
     <div>
