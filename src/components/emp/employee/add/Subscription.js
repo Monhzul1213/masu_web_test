@@ -6,11 +6,12 @@ import QRCode from 'react-qr-code';
 import '../../../../css/config.css'
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
 import { qr_holder } from '../../../../assets';
-import { DynamicAIIcon, DynamicMDIcon, Step } from '../../../all';
+import { DynamicMDIcon } from '../../../all';
 import { Field, Select } from './Field';
+import { Step } from './Step';
 
 export function Subscription(props){
-  const { visible, setVisible } = props;
+  const { visible, onBack } = props;
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [qr, setQR] = useState('');
@@ -24,11 +25,13 @@ export function Subscription(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const closeModal = () => setVisible(false);
-
   const onSelect = item => {
     setSelected(item);
     setAmt(item?.amt);
+  }
+
+  const onNext = () => {
+    setCurrent(1);
   }
 
   const onDone = async () => {
@@ -41,12 +44,11 @@ export function Subscription(props){
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
   ];
-  const stepProps = { current, steps, setCurrent, onDone };
+  const stepProps = { current, steps, onBack, onNext, onDone };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={640}>
       <div className='m_back2'>
-        <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={closeModal} />
         <Steps current={current} items={steps} />
         <div>{steps[current]?.content}</div>
         <div className='gap' />

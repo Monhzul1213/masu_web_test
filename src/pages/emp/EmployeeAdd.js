@@ -165,9 +165,14 @@ export function EmployeeAdd(){
 
   const onClickSave = async () => {
     let data = validateData();
-    if(data) saveData(data);
-    // if(data && selected) saveData(data);
-    // else if(data) setVisible(true);
+    // if(data) saveData(data);
+    if(data && selected) saveData(data);
+    else if(data) setVisible(true);
+  }
+
+  const onBack = async () => {
+    setVisible(false);
+    setSaved(true);
   }
 
   const onClickDelete = async () => {
@@ -183,7 +188,7 @@ export function EmployeeAdd(){
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'ea_back', label: 'employee' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ea_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_btns' };
-  let subProps = { visible, setVisible };
+  let subProps = { visible, onBack };
 
   return (
     <Overlay className='i_container' loading={loading}>
