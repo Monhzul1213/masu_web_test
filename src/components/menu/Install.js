@@ -6,12 +6,10 @@ export function Install(props){
   const { collapsed } = props;
   const { t } = useTranslation();
 
-  const onClick = () => {};
-  
   return (
-    <button className='mi_btn' onClick={onClick}>
+    <a className='mi_btn' href='https://app.masu.mn/files/MasuInstaller.exe' download='MasuInstaller.exe'>
       <AiOutlineAppstore className='mi_icon' />
       {!collapsed && <p className='mi_text'>{t('menu.install')}</p>}
-    </button>
+    </a>
   );
 }

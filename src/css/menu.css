@@ -347,7 +347,7 @@
 }
 
 .mi_btn:hover {
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 .mi_icon {

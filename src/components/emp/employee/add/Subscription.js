@@ -13,7 +13,7 @@ import { Field, Select } from './Field';
 import { Step } from './Step';
 
 export function Subscription(props){
-  const { visible, onBack, onDone, invNo } = props;
+  const { visible, emp, onBack, onDone, invNo } = props;
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [qr, setQR] = useState('');
@@ -35,6 +35,9 @@ export function Subscription(props){
     if(visible && invNo){
       setCurrent(1);
       setTxnNo(invNo);
+    } else {
+      setTxnNo('');
+      setCurrent(0);
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,8 +56,10 @@ export function Subscription(props){
       invoiceType: 'Employee',
       invoiceTime: selected?.value ? 'YEAR' : 'MONTH',
       amount: selected?.amt,
-      rowStatus: 'I'
+      rowStatus: 'I',
+      empCode: emp?.empCode
     }
+    console.log(data);
     let response = await dispatch(sendRequest (user, token, 'Txn/ModInvoice', data));
     setLoading(false);
     if(response?.error) setError(response?.error);

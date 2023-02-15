@@ -203,7 +203,7 @@ export function EmployeeAdd(){
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'ea_back', label: 'employee' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ea_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_btns' };
-  let subProps = { visible, onBack, onDone };
+  let subProps = { visible, emp: selected, onBack, onDone };
 
   return (
     <Overlay className='i_container' loading={loading}>
