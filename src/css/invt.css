@@ -1414,3 +1414,11 @@
 .ant-upload-list {
   display: none !important;
 }
+
+.table_link {
+  color: var(--link-color);
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}

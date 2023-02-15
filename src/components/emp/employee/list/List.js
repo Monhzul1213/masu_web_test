@@ -27,6 +27,12 @@ export function List(props){
       { Header: t('employee.mail'), accessor: 'email' },
       { Header: t('page.phone'), accessor: 'phone' },
       { Header: t('employee.role'), accessor: 'roleName' },
+      { Header: '', accessor: 'status', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
+        Cell: ({ value }) => {
+          let active = value === 0;
+          return active && (<div className='table_link'>{t('employee.pay')}</div>);
+        }
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
