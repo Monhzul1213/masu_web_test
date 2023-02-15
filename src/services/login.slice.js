@@ -72,7 +72,14 @@ export const apiLogin = (mail, password) => async dispatch => {
       let isOwner = mail?.trim()?.toLowerCase() === response?.msMerchant?.email?.trim()?.toLowerCase();
       dispatch(setIsOwner(isOwner));
       dispatch(setToken(response?.token));
-      dispatch(setUser({ mail, password, merchantId: response?.merchantId, msRole: response?.msRole, msMerchant: response?.msMerchant }));
+      dispatch(setUser({
+        mail,
+        password,
+        isAdmin: response?.isAdmin === 'Y',
+        merchantId: response?.merchantId,
+        msRole: response?.msRole,
+        msMerchant: response?.msMerchant
+      }));
       return Promise.resolve({ error: null, token: response?.token, viewReport: response?.msRole?.webViewSalesReport === 'Y' });
     }
   } catch (err) {

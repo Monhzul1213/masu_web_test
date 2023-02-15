@@ -20,7 +20,7 @@ export function Menu(props){
   const [openKeys, setOpenKeys] = useState([]);
   const [hideConfig, setHideConfig] = useState(true);
   const { pathname } = useLocation();
-  const { user: { msRole } } = useSelector(state => state.login);
+  const { user: { msRole, isAdmin } } = useSelector(state => state.login);
   const path = pathname?.split('/') && pathname?.split('/')[1];
   const navigate = useNavigate();
   const hideMenu = pathname?.includes('confirm');
@@ -88,9 +88,9 @@ export function Menu(props){
       getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
-    getItem(t('menu.system'), '/system', <FiTool />, [
+    isAdmin ? getItem(t('menu.system'), '/system', <FiTool />, [
       getItem(t('menu.solve'), '/system/request_solve'),
-    ]),
+    ]) : null,
   ];
 
   const onClick = (e, hide) => {

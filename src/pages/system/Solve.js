@@ -18,9 +18,13 @@ export function Solve(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    // if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
-    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
-    getData(query);
+    if(user?.isAdmin){
+      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') +
+        '&EndDate=' + moment()?.format('yyyy.MM.DD');
+      getData(query);
+    } else 
+      navigate({ pathname: '/' });
+    
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

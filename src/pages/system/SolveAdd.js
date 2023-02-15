@@ -30,8 +30,7 @@ export function SolveAdd(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    // user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : 
-    getData();
+    user?.isAdmin ? getData() : navigate({ pathname: '/' });
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
