@@ -1,22 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
+import { sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
-import { DynamicMDIcon } from '../../../all';
+import { DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Field, Select } from './Field';
 import { Step } from './Step';
 
 export function Subscription(props){
-  const { visible, onBack } = props;
+  const { visible, onBack, onDone } = props;
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [qr, setQR] = useState('');
   const [amt, setAmt] = useState(0);
-  const [txnNo, setTxnNo] = useState('1');
+  const [txnNo, setTxnNo] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const { user, token } = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setSelected(subscriptions && subscriptions[0]);
@@ -30,12 +36,23 @@ export function Subscription(props){
     setAmt(item?.amt);
   }
 
-  const onNext = () => {
-    setCurrent(1);
-  }
-
-  const onDone = async () => {
-
+  const onNext = async () => {
+    setError(null);
+    setLoading(true);
+    let data = {
+      invoiceNo: '',
+      invoiceType: 'Employee',
+      invoiceTime: selected?.value ? 'YEAR' : 'MONTH',
+      amount: selected?.amt,
+      rowStatus: 'I'
+    }
+    let response = await dispatch(sendRequest (user, token, 'Txn/ModInvoice', data));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      setCurrent(1);
+      setTxnNo(response?.data?.invoiceNo);
+    }
   }
 
   const typeProps = { selected, onSelect };
@@ -44,16 +61,17 @@ export function Subscription(props){
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
   ];
-  const stepProps = { current, steps, onBack, onNext, onDone };
+  const stepProps = { current, steps, onBack, onDone, onNext };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={640}>
-      <div className='m_back2'>
+      <Overlay loading={loading} className='m_back2'>
         <Steps current={current} items={steps} />
         <div>{steps[current]?.content}</div>
         <div className='gap' />
+        {error && <Error1 error={error} />}
         <Step {...stepProps} />
-      </div>
+      </Overlay>
     </Modal>
   );
 }

@@ -129,8 +129,11 @@ export function EmployeeAdd(){
         if(item?.checked) employeeSites.push({ siteID: item?.siteId, rowStatus: item?.rowStatus ?? 'I' });
         else if(item?.rowStatus === 'U') employeeSites.push({ siteID: item?.siteId, rowStatus: 'D' });
       });
-      let data = [{ empCode: selected?.empCode ?? -1, empName: name?.value, email: mail?.value, password: password?.value, employeeSites,
-        phone: phone?.value, roleID: role?.value, rowStatus: selected ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N', poS_PIN: pin
+      let data = [{
+        empCode: selected?.empCode ?? -1, empName: name?.value, email: mail?.value,
+        password: password?.value, employeeSites, phone: phone?.value, roleID: role?.value,
+        rowStatus: selected ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N', poS_PIN: pin,
+        status: selected?.status ?? 0
       }];
       return data;
     } else {
@@ -158,21 +161,33 @@ export function EmployeeAdd(){
         const response1 = await dispatch(apiLogin(mail?.value, pass));
         if(response1?.error) onError(response1?.error, true);
         else onSuccess(t('employee.add_success'), true);
-      } else 
+      } else if(selected) {
         onSuccess(t('employee.add_success'), true);
+      } else {
+        setSelected(response?.data && response?.data[0]);
+        setVisible(true);
+      }
     }
   }
 
   const onClickSave = async () => {
     let data = validateData();
-    // if(data) saveData(data);
-    if(data && selected) saveData(data);
-    else if(data) setVisible(true);
+    if(data) saveData(data);
   }
 
   const onBack = async () => {
     setVisible(false);
     setSaved(true);
+  }
+
+  const onDone = () => {
+    setVisible(false);
+    let employeeSites = selected?.employeeSites?.map(item => {
+      item.rowStatus = 'U';
+      return item;
+    });
+    let data = [{...selected, employeeSites, rowStatus: 'U', status: 1}];
+    saveData(data);
   }
 
   const onClickDelete = async () => {
@@ -188,7 +203,7 @@ export function EmployeeAdd(){
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'ea_back', label: 'employee' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ea_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_btns' };
-  let subProps = { visible, onBack };
+  let subProps = { visible, onBack, onDone };
 
   return (
     <Overlay className='i_container' loading={loading}>
