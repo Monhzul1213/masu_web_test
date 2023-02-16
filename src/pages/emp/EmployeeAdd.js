@@ -186,7 +186,7 @@ export function EmployeeAdd(){
       item.rowStatus = 'U';
       return item;
     });
-    let data = [{...selected, employeeSites, rowStatus: 'U', status: 1}];
+    let data = [{...selected, employeeSites, rowStatus: 'U', status: 1, password: ''}];
     saveData(data);
   }
 

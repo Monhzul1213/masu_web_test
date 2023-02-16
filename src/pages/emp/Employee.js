@@ -71,7 +71,7 @@ export function Employee(){
       item.rowStatus = 'U';
       return item;
     });
-    let data = [{...selected, employeeSites, rowStatus: 'U', status: 1}];
+    let data = [{...selected, employeeSites, rowStatus: 'U', status: 1, password: ''}];
     let response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
     setLoading(false);
     if(response?.error) setError(response?.error);
