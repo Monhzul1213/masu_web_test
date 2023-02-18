@@ -38,7 +38,7 @@ export function Add(props){
     if(isTypeValid){
       let dtl2 = dtl?.map(item => {
         if(item?.fieldValue){
-          if(item?.fieldType == 'N') item.fieldValue = parseFloat(item.fieldValue);
+          if(item?.fieldType === 'N') item.fieldValue = parseFloat(item.fieldValue);
           return {
             paymentTypeID: type?.value,
             fieldName: item?.fieldName,

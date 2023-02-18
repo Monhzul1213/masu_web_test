@@ -28,7 +28,7 @@ export function SignUp(){
   const navigate = useNavigate();
 
   const checkValid = () => {
-    let passwordLength = 8, businessLength = 6, addressLength = 8;
+    let passwordLength = 8, businessLength = 6;
     let isValid = email?.value && password?.value && business?.value && address?.value?.trim();
     let isEmailValid = validateEmail(email?.value);
     let isPasswordValid = password?.value?.length >= passwordLength;

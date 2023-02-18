@@ -8,7 +8,6 @@ import { withSize } from 'react-sizeme';
 import { getList, sendRequest } from '../../services';
 import { Error1, Overlay, Prompt, ButtonRowCancel, Empty1 } from '../../components/all';
 import { Main, List } from '../../components/config/tax/add';
-import { CardEmpty } from '../../components/invt/inventory/add';
 
 function Screen(props){
   const { size } = props;

@@ -31,6 +31,7 @@ export function ItemSelect(props){
   useEffect(() => {
     getData(text);
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text]);
 
   const getData = async value => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import QRCode from 'react-qr-code';
+// import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
@@ -39,6 +39,7 @@ export function Subscription(props){
     } else {
       setTxnNo('');
       setCurrent(0);
+      setQR('');
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -126,7 +127,7 @@ function Type(props){
 }
 
 function Pay(props){
-  const { qr, amt, txnNo } = props;
+  const { amt, txnNo } = props;
   const { t } = useTranslation();
   const [value, setValue] = useState(0);
   const [selected, setSelected] = useState(banks[0]);
