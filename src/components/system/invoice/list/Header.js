@@ -35,7 +35,7 @@ export function Header(props){
     if(!states?.length || states?.length === 1){
       setError && setError(null);
       setLoading('status');
-      const response = await dispatch(getConstants(user, token, 'msVATrequest_Status'));
+      const response = await dispatch(getConstants(user, token, 'msInvoice_Status'));
       if(response?.error) setError && setError(response?.error);
       else {
         let data = [...[{valueNum: -1, valueStr1: t('order.all_status')}], ...response?.data];
