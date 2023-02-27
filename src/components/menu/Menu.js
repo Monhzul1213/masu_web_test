@@ -90,6 +90,7 @@ export function Menu(props){
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
     isAdmin ? getItem(t('menu.system'), '/system', <FiTool />, [
       getItem(t('menu.solve'), '/system/request_solve'),
+      getItem(t('menu.invoice'), '/system/invoice'),
     ]) : null,
   ];
 
