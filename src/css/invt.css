@@ -1422,3 +1422,22 @@
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }
+
+.empty_import_btn {
+  box-shadow: none;
+  border: none;
+  background-color: transparent;
+  color: var(--text2-color);
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 5px;
+  padding: 3px 10px;
+  margin-top: 10px;
+  border-radius: var(--radius);
+}
+
+.empty_import_btn:hover {
+  cursor: pointer;
+  color: var(--text-color);
+  background-color: var(--back-color);
+}

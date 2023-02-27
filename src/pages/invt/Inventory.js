@@ -7,7 +7,7 @@ import { message } from 'antd';
 
 import '../../css/invt.css';
 import { deleteMultiRequest, getList, sendRequest } from '../../services';
-import { Confirm, Empty, Empty1, Error1, Overlay } from '../../components/all';
+import { Confirm, Empty2, Empty1, Error1, Overlay } from '../../components/all';
 import { Header, List } from '../../components/invt/inventory/list';
 
 export function Inventory(){
@@ -137,7 +137,9 @@ export function Inventory(){
 
   const onClickDelete = () => setOpen(true);
  
-  const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd };
+  const onClickImport = () => navigate('invt_import');
+
+  const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd, onClickImport };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
   const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory,
     autoResetExpanded, pageInfo, getInventory, filtering };
@@ -148,7 +150,7 @@ export function Inventory(){
       {open && <Confirm {...confirmProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        {!data?.length && !filtering ? <Empty {...emptyProps} /> :
+        {!data?.length && !filtering ? <Empty2 {...emptyProps} /> :
           <SizeMe>{({ size }) => 
             <div className='i_list_cont' id='invt_list'>
               <Header {...headerProps} size={size} />
