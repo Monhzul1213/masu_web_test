@@ -3,38 +3,29 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { PaginationTable, Table } from '../../../all';
+import { Money, PaginationTable, Table } from '../../../all';
 
 export function List(props){
-  return (
-    <div>
-      List
-    </div>
-  );
-}
-
-/**
-export function List(props){
-  const { data, onClickAdd, size } = props;
-  const { t, i18n } = useTranslation();
+  const { onClickAdd, data, size } = props;
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     setColumns([
-      { Header: t('tax.customer'), accessor: 'merchant' },
+      { Header: t('tax.customer'), accessor: 'label1' },
+      { Header: t('invoice.invoice'), accessor: 'invoiceNo' },
       {
-        Header: t('tax.sent_date'), accessor: 'createdDate', customStyle: { minWidth: 120 },
+        Header: t('page.date'), accessor: 'invoiceDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },
-      { Header: t('tax.reg_no'), accessor: 'vatPayerNo' },
-      { Header: t('tax.name'), accessor: 'vatPayerName', customStyle: { minWidth: 120 } },
+      { Header: t('invoice.type'), accessor: 'invoiceType' },
+      { Header: t('invoice.time'), accessor: 'invoiceTime' },
       {
-        Header: t('tax.checked'), accessor: 'isVat', customStyle: { minWidth: 120 },
-        Cell: ({ value }) => <div>{value === '1' ? t('page.yes') : t('page.no')}</div>
+        Header: <div style={{textAlign: 'right'}}>{t('invoice.amount')}</div>, accessor: 'amount', customStyle: { width: 100 },
+        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
       { Header: t('order.status'), accessor: 'statusName' },
-      { Header: t('shop.descr'), accessor: 'descr' },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,11 +37,11 @@ export function List(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
-  
+
   const onRowClick = row => onClickAdd(row?.original);
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'createdDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
 
   return (
@@ -64,4 +55,3 @@ export function List(props){
     </div>
   );
 }
- */

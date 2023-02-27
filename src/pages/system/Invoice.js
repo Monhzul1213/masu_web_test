@@ -34,7 +34,12 @@ export function Invoice(){
     let api = 'Txn/GetInvoice' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else {
+      response?.data?.forEach(item => {
+        item.label1 = (item.Descr ?? '') + '-' + (item.EmpName ?? '') + '-' + (item.Phone ?? '');
+      });
+      setData(response?.data);
+    }
     setLoading(false);
   }
 
