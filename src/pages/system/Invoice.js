@@ -41,7 +41,7 @@ export function Invoice(){
         else if(item?.status === 3) item.row_color = '#4fc879';
         else if(item?.status === 9) item.row_color = '#c0c0c2';
         else item.row_color = '#ffffff';
-        item.label1 = (item.Descr ?? '') + '-' + (item.EmpName ?? '') + '-' + (item.Phone ?? '');
+        item.label1 = (item.descr ?? '') + '-' + (item.empName ?? '') + '-' + (item.phone ?? '');
       });
       setData(response?.data);
     }
