@@ -11,7 +11,7 @@ import { Category, Inventory, InventoryAdd, InventoryImport, Modifier, ModifierA
 import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/emp';
 import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
-import { Invoice, Solve, SolveAdd } from './pages/system';
+import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, DiscountRP, Taxes } from './src1/pages/report';
 import { setIsLoggedIn } from './services';
@@ -107,6 +107,7 @@ export function App(){
                 <Route path='/profile' element={<Merchant />} />
                 <Route path='/report/report_invtentory' element={<ReportItem />} />
                 <Route path='/system/invoice' element={<Invoice />} />
+                <Route path='/system/invoice/invoice_add' element={<InvoiceAdd />} />
               </Routes>
             </Layout>
           </Layout>

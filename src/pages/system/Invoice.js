@@ -50,7 +50,7 @@ export function Invoice(){
 
   const onClickAdd = row => {
     if(row?.status < 3)
-      navigate({ pathname: 'invoice_add', search: createSearchParams({ requestId: row?.invoiceNo }).toString() });
+      navigate({ pathname: 'invoice_add', search: createSearchParams({ invoiceNo: row?.invoiceNo }).toString() });
   }
 
   const headerProps = { setError, onSearch: getData };

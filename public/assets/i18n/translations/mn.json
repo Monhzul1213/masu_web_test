@@ -104,6 +104,7 @@
     "/system/request_solve": "НӨАТ хэвлэх хүсэлт шийдэх",
     "/system/request_solve/solve_add": "НӨАТ хэвлэх хүсэлт шийдэх",
     "/system/invoice": "Төлбөртэй нэмэлт үйлчилгээ тохируулах",
+    "/system/invoice/invoice_add": "Төлбөртэй нэмэлт үйлчилгээ тохируулах",
     "/profile": "Хэрэглэгч"
   },
   "menu": {
