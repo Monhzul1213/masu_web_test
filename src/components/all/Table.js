@@ -29,9 +29,10 @@ export function Table(props){
       </thead>}
       <tbody className='table_body_back' {...getTableBodyProps()}>
         {page.map((row, i) => {
+          let style = row?.original?.row_color ? {backgroundColor: row?.original?.row_color, borderColor: '#fff'} : {};
           prepareRow(row);
           return (
-            <tr className={row?.isSelected ? 'table_row_selected' : 'table_row'}  {...row.getRowProps()}>
+            <tr className={row?.isSelected ? 'table_row_selected' : 'table_row'} style={style} {...row.getRowProps()}>
               {row.cells.map(cell => {
                 let style = cell?.column?.customStyle ?? { };
                 return (

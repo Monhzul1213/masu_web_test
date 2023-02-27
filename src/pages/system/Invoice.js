@@ -36,6 +36,11 @@ export function Invoice(){
     if(response?.error) setError(response?.error);
     else {
       response?.data?.forEach(item => {
+        if(item?.status === 1) item.row_color = '#effd5f';
+        else if(item?.status === 2) item.row_color = '#29c5f6';
+        else if(item?.status === 3) item.row_color = '#4fc879';
+        else if(item?.status === 9) item.row_color = '#c0c0c2';
+        else item.row_color = '#ffffff';
         item.label1 = (item.Descr ?? '') + '-' + (item.EmpName ?? '') + '-' + (item.Phone ?? '');
       });
       setData(response?.data);
@@ -44,7 +49,8 @@ export function Invoice(){
   }
 
   const onClickAdd = row => {
-    navigate({ pathname: 'solve_add', search: createSearchParams({ requestId: row?.requestId }).toString() });
+    if(row?.status < 3)
+      navigate({ pathname: 'invoice_add', search: createSearchParams({ requestId: row?.invoiceNo }).toString() });
   }
 
   const headerProps = { setError, onSearch: getData };
