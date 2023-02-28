@@ -8,29 +8,18 @@ import '../../css/invt.css';
 import '../../css/config.css';
 import { getList, sendRequest } from '../../services';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
-// import { Main, List } from '../../components/system/solve/add';
+import { Main } from '../../components/system/invoice/add';
 
 export function InvoiceAdd(){
-  return (
-    <div>InvoiceAdd</div>
-  );
-}
-/*
-export function SolveAdd(){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
-  const [regNo, setRegNo] = useState({ value: '' });
-  const [name, setName] = useState({ value: '' });
-  const [notes, setNotes] = useState({ value: '' });
-  const [checked, setChecked] = useState(false);
-  const [status, setStatus] = useState({ value: null });
-  const [items, setItems] = useState([]);
-  const [request, setRequest] = useState(null);
   const [saved, setSaved] = useState(false);
-  const [disabled, setDisabled] = useState(false);
+  const [invoice, setInvoice] = useState(null);
   const [searchParams] = useSearchParams();
+  const [approved1, setApproved1] = useState(false);
+  const [approved2, setApproved2] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -45,65 +34,46 @@ export function SolveAdd(){
     if(saved) onClickCancel();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [saved]);
-
-  const onClickCancel = () => navigate('/system/request_solve');
+  }, [saved])
 
   const getData = async () => {
-    let requestId = searchParams?.get('requestId');
+    let invoiceNo = searchParams?.get('invoiceNo');
     setError(null);
     setLoading(true);
-    let api = 'Merchant/VatRequest/GetSolvedRequests?RequestID=' + requestId;
+    // let api = 'Txn/GetInvoice?InvoiceNo=' + invoiceNo;
+    let api = 'Txn/GetInvoice?BeginDate=2023.02.01&EndDate=2023.02.28';
     let response = await dispatch(getList(user, token, api));
-    console.log(response);
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
       let request = response?.data && response?.data[0];
       if(request){
-        setDisabled(request?.status === 0 || request?.status === 4 ? true : false);
-        setRequest(request);
-        setRegNo({ value: request?.vatPayerNo });
-        setName({ value: request?.vatPayerName });
-        setChecked((request?.isVat + '') === '1');
-        setNotes({ value: request?.descr });
-        setStatus({ value: request?.status });
-        request?.requestItem?.forEach(item => {
-          item.coordinate = item.locationY + '\n' + item.locationX;
-          if(request?.status === 4 && item.requestFiles && item.requestFiles[0]) item.fileName = item.requestFiles[0].fileName;
-        });
-        setItems(request?.requestItem);
+        console.log(request);
+        request.label1 = (request.descr ?? '') + '-' + (request.empName ?? '') + '-' + (request.phone ?? '');
+        setApproved1(request?.approvedLevel1 === 'Y');
+        setApproved2(request?.approvedLevel2 === 'Y');
+        setInvoice(request);
       }
     }
   }
+  
+  const onClickCancel = () => navigate('/system/invoice');
 
-  const validateData = () => {
-    let names = [];
-    items?.forEach(item => { if(item.fileName) names.push(item.fileName); });
-    let lengthValid = names?.length === items?.length;
-    let nameValid = names.length === new Set(names).size;
-    if(status?.value !== 4 || (lengthValid && nameValid)){
-      let msVatRequestFiles = items?.map(item => {
-        return { 
-          rowStatus: 'I',
-          siteId: item?.siteId,
-          terminalId: item?.terminalID,
-          fileName: item?.fileName ?? '',
-          fileraw: item?.fileRaw ?? {}
-        }
-      });
-      let data = {
-        requestID: request?.requestId,
-        descr: notes?.value,
-        status: status?.value,
-        rowStatus: 'U',
-        msVatRequestFiles: status?.value === 4 ? msVatRequestFiles : []
-      }
-      return data;
+  const onClickSave = async () => {
+    let data = {
+      invoiceNo: invoice?.invoiceNo,
+      status: invoice?.status,
+      approved_level1: approved1 ? 'Y' : 'N',
+      approved_level2: approved2 ? 'Y' : 'N',
+    };
+    console.log(data);
+    if(data){
+      onLoad();
+      const response = await dispatch(sendRequest(user, token, 'Txn/ModSubscription', data));
+      console.log(response);
+      if(response?.error) onError(response?.error, true);
+      else onSuccess(t('tax.solve_success'), true);
     }
-    else if(!lengthValid) setError(t('tax.file_error'));
-    else if(!nameValid) setError(t('tax.name_error'));
-    return false;
   }
 
   const onLoad = () => {
@@ -124,35 +94,17 @@ export function SolveAdd(){
     setLoading(false);
   }
 
-  const onClickSave = async () => {
-    let data = validateData();
-    console.log(data);
-    if(data){
-      onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Merchant/VatRequestSolve', data));
-      console.log(response);
-      if(response?.error) onError(response?.error, true);
-      else onSuccess(t('tax.solve_success'), true);
-    }
-  }
-  
-  let mainProps = { setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled };
-  let listProps = { data: items, setData: setItems, setEdited, setError, disabled, status };
-  let btnProps = { onClickCancel, onClickSave, id: 'add_btns', noSave: disabled };
+  let mainProps = { setEdited, invoice, approved1, setApproved1, approved2, setApproved2 };
+  let btnProps = { onClickCancel, onClickSave, id: 'add_btns' };
 
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
-        <form>
-          <Main {...mainProps} />
-          <div className='gap' />
-          {items?.length ? <List {...listProps} /> : null}
-        </form>
+        <Main {...mainProps} />
       </div>
       <ButtonRowConfirm {...btnProps} />
     </Overlay>
   );
 }
-*/
