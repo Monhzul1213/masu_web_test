@@ -80,7 +80,12 @@ export const apiLogin = (mail, password) => async dispatch => {
         msRole: response?.msRole,
         msMerchant: response?.msMerchant
       }));
-      return Promise.resolve({ error: null, token: response?.token, viewReport: response?.msRole?.webViewSalesReport === 'Y' });
+      return Promise.resolve({
+        error: null,
+        token: response?.token,
+        viewReport: response?.msRole?.webViewSalesReport === 'Y',
+        isAdmin: response?.isAdmin === 'Y'
+      });
     }
   } catch (err) {
     console.log(err);
