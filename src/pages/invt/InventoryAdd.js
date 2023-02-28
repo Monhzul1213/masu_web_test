@@ -102,7 +102,7 @@ export function InventoryAdd(){
       setName({ value: invt?.msInventory?.name ?? '' });
       setCategory({ value: invt?.msInventory?.categoryId ?? -1 });
       setBuyAgeLimit({ value: invt?.msInventory?.buyAgeLimit ?? 0 })
-      setVendId({ value: invt?.msInventory?.vendID })
+      if(invt?.msInventory?.vendID !== -1) setVendId({ value: invt?.msInventory?.vendID })
       setIsEach({ value: invt?.msInventory?.isEach ?? 'Y' });
       setIsService(invt?.msInventory?.isService === 'Y')
       setDescr({ value: invt?.msInventory?.descr ?? '' });
@@ -180,7 +180,7 @@ export function InventoryAdd(){
     let nameLength = 2;
     let isNameValid = name?.value?.length >= nameLength;
     let invkite = [], invvar = [], invmod = [], invsales = [];
-    if(isNameValid && barcode?.value && vendId?.value){
+    if(isNameValid && barcode?.value){
       if(isKit){
         if(kits?.length){
           kits?.forEach(item => {
@@ -226,7 +226,7 @@ export function InventoryAdd(){
       let data = {
         name: name?.value, categoryID: category?.value, descr: descr?.value, isEach: isEach?.value,
         buyAgeLimit: buyAgeLimit?.value,
-        vendID: vendId?.value, vendInvtID: invt?.vendInvtID ?? '', vendUnitID: invt?.vendUnitID ?? '',
+        vendID: vendId?.value ?? -1, vendInvtID: invt?.vendInvtID ?? '', vendUnitID: invt?.vendUnitID ?? '',
         price: parseFloat(price?.value ? price?.value : 0),
         cost: parseFloat(cost?.value ? cost?.value : 0),
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
@@ -245,7 +245,6 @@ export function InventoryAdd(){
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       else if(!isNameValid) setName({ value: name.value, error: ' ' + nameLength + t('error.longer_than') })
       if(!barcode?.value) setBarcode({ value: '', error: t('error.not_empty') });
-      if(!vendId?.value) setVendId({ value: null, error: t('error.not_empty') });
       return false;
     }
   }
