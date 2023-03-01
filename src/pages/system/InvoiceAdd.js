@@ -40,8 +40,7 @@ export function InvoiceAdd(){
     let invoiceNo = searchParams?.get('invoiceNo');
     setError(null);
     setLoading(true);
-    // let api = 'Txn/GetInvoice?InvoiceNo=' + invoiceNo;
-    let api = 'Txn/GetInvoice?BeginDate=2023.02.01&EndDate=2023.02.28';
+    let api = 'Txn/GetInvoice?InvoiceNo=' + invoiceNo;
     let response = await dispatch(getList(user, token, api));
     setLoading(false);
     if(response?.error) setError(response?.error);
