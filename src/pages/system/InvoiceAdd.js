@@ -20,6 +20,8 @@ export function InvoiceAdd(){
   const [searchParams] = useSearchParams();
   const [approved1, setApproved1] = useState(false);
   const [approved2, setApproved2] = useState(false);
+  const [editable1, setEditable1] = useState(true);
+  const [editable2, setEditable2] = useState(true);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,6 +53,8 @@ export function InvoiceAdd(){
         setApproved1(request?.approvedLevel1 === 'Y');
         setApproved2(request?.approvedLevel2 === 'Y');
         setInvoice(request);
+        setEditable1(user?.Approved_level1 === 'Y');
+        setEditable2(user?.Approved_level2 === 'Y' && request?.approvedLevel1 === 'Y');
       }
     }
   }
@@ -60,9 +64,9 @@ export function InvoiceAdd(){
   const onClickSave = async () => {
     let data = {
       invoiceNo: invoice?.invoiceNo,
-      status: invoice?.status,
-      approved_level1: approved1 ? 'Y' : 'N',
-      approved_level2: approved2 ? 'Y' : 'N',
+      status: editable2 ? 3 : editable1 ? 2 : invoice?.status,
+      approved_level1: editable1 ? (approved1 ? 'Y' : 'N') : invoice?.approvedLevel1,
+      approved_level2: editable2 ? (approved2 ? 'Y' : 'N') : invoice?.approvedLevel2,
     };
     console.log(data);
     if(data){
@@ -92,7 +96,7 @@ export function InvoiceAdd(){
     setLoading(false);
   }
 
-  let mainProps = { setEdited, invoice, approved1, setApproved1, approved2, setApproved2 };
+  let mainProps = { setEdited, invoice, approved1, setApproved1, approved2, setApproved2, editable1, editable2 };
   let btnProps = { onClickCancel, onClickSave, id: 'add_btns' };
 
   return (

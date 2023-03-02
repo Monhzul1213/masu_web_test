@@ -6,7 +6,7 @@ import moment from 'moment';
 import { CheckBox, Field } from '../../../all';
 
 function Card(props){
-  const { size, setEdited, invoice, approved1, setApproved1, approved2, setApproved2 } = props;
+  const { size, setEdited, invoice, approved1, setApproved1, approved2, setApproved2, editable1, editable2  } = props;
   const { t } = useTranslation();
 
   const onChange1 = value => {
@@ -30,8 +30,8 @@ function Card(props){
   const statProps = { value: invoice?.statusName, label: t('order.status'), inRow: true, disabled: true };
   const beginProps = { value: invoice?.beginDate, label: t('invoice.begin'), inRow: true, disabled: true };
   const endProps = { value: invoice?.endDate, label: t('invoice.end'), inRow: true, disabled: true };
-  const app1Props = { checked: approved1, setChecked: onChange1, label: 'invoice.approve1', style: { marginTop: 10, flex: 1 } };
-  const app2Props = { checked: approved2, setChecked: onChange2, label: 'invoice.approve2', style: { marginTop: 10, flex: 1 } };
+  const app1Props = { checked: approved1, setChecked: onChange1, label: 'invoice.approve1', style: { marginTop: 10, flex: 1 }, disabled: !editable1 };
+  const app2Props = { checked: approved2, setChecked: onChange2, label: 'invoice.approve2', style: { marginTop: 10, flex: 1 }, disabled: !editable2 };
   const style = size?.width > 445 ? { marginBottom: 10 } : { flexFlow: 'column', marginBottom: 10 }
 
   return (

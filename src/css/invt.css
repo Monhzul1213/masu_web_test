@@ -529,6 +529,10 @@
   margin: 20px 0 0 0;
 }
 
+#i_check_disabled {
+  cursor: not-allowed;
+}
+
 .i_check_lbl {
   font-size: 14px;
   font-weight: 450;
