@@ -53,8 +53,8 @@ export function InvoiceAdd(){
         setApproved1(request?.approvedLevel1 === 'Y');
         setApproved2(request?.approvedLevel2 === 'Y');
         setInvoice(request);
-        setEditable1(user?.Approved_level1 === 'Y');
-        setEditable2(user?.Approved_level2 === 'Y' && request?.approvedLevel1 === 'Y');
+        setEditable1(user?.approvedLevel1);
+        setEditable2(user?.approvedLevel2 && request?.approvedLevel1 === 'Y');
       }
     }
   }

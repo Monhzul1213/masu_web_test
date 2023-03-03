@@ -76,6 +76,8 @@ export const apiLogin = (mail, password) => async dispatch => {
         mail,
         password,
         isAdmin: response?.isAdmin === 'Y',
+        approvedLevel1: response?.approvedLevel1 === 'Y',
+        approvedLevel2: response?.approvedLevel2 === 'Y',
         merchantId: response?.merchantId,
         msRole: response?.msRole,
         msMerchant: response?.msMerchant
