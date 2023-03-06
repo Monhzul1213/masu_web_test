@@ -7,21 +7,27 @@ import '../../../css/report.css';
 import { Button, PaginationTable, Table, IconSelect, DynamicMDIcon, Money } from '../../all';
 
 export function List(props){
-  const { data } = props;
+  const { data, period } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [columns1, setColumns1] = useState([]);
 
   useEffect(() => {
     changeColumns(['totalSalesAmt', 'totalReturnAmt', 'totalDiscAmt', 'totalNetSalesAmt', 'totalCashAmount',
-      'totalNonCashAmount', 'costOfGoods', 'totalProfitAmt']);
+      'totalNonCashAmount', 'costOfGoods', 'totalProfitAmt'], period);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, period]);
 
-  const changeColumns = value => {
+  const changeColumns = (value, perd) => {
+    let isHour = perd === 'H';
     let columns = [
-      { Header: t('page.date'), accessor: 'salesDate', Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD')}</div>) },
+      {
+        Header: t(isHour ? 'page.time' : 'page.date'), accessor: 'salesDate',
+        Cell: ({ value }) => {
+          return isHour ? (<div>{value}</div>) : (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
+        }
+      },
       { Header: t('order.site'), accessor: 'siteName' }
     ];
     setColumns1(value);

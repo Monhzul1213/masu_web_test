@@ -127,7 +127,7 @@ function Screen(props){
   let filterProps = { onSearch: getData, size, setError };
   let graphProps = { tab, setTab, total, data: graphData, size, periodData, period, setPeriod: changePeriod };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
-  let listProps = { data, size };
+  let listProps = { data, size, period };
 
   return (
     <div className='s_container_r'>
