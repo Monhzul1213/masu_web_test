@@ -17,7 +17,7 @@ import { SalesEmployee, SalesCategory, SalesPayment, DiscountRP, Taxes } from '.
 import { setIsLoggedIn } from './services';
 
 export function App(){
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const loggedIn = useSelector(state => state.temp.loggedIn);
   const user = useSelector(state => state.login.user);
   const dispatch = useDispatch();

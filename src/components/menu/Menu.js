@@ -26,7 +26,7 @@ export function Menu(props){
   const hideMenu = pathname?.includes('confirm');
 
   useEffect(() => {
-    setCollapsed(true);
+    setCollapsed(size?.width > 740 ? false : true);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
