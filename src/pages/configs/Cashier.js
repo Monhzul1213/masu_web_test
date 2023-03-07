@@ -16,6 +16,7 @@ function Screen(props){
   const [data, setData] = useState([]);
   const [types, setTypes] = useState([]);
   const [fields, setFields] = useState([]);
+  const [selects, setSelects] = useState([]);
   const [visible, setVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -39,6 +40,7 @@ function Screen(props){
       setData(response?.data?.paymenttype);
       setTypes(response?.data?.paymentsetup);
       setFields(response?.data?.paymentsetupdtl);
+      setSelects(response?.data?.paymenttypesetupdtlselect);
       setShow(false);
       setChecked(false);
     }
@@ -82,7 +84,7 @@ function Screen(props){
   const addProps = { type: 'cashier', onClickAdd, show, onClickDelete };
   const emptyProps = { icon: 'MdCreditCard', type: 'cashier', onClickAdd, noDescr: true };
   const listProps = { data, setData, setShow, checked, setChecked, onClickAdd };
-  const modalProps = { visible, closeModal, selected, types, fields };
+  const modalProps = { visible, closeModal, selected, types, fields, selects };
   
   return (
     <div className='store_tab' style={{flex: 1}}>

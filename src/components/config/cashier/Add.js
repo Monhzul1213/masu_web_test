@@ -8,7 +8,7 @@ import { ButtonRowConfirm, Error, ModalTitle, Overlay, Select } from '../../all'
 import { Field } from './Field';
 
 export function Add(props){
-  const { visible, selected, closeModal, types, fields } = props;
+  const { visible, selected, closeModal, types, fields, selects } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -39,7 +39,7 @@ export function Add(props){
       let dtl2 = dtl?.map(item => {
         if(item?.fieldValue){
           if(item?.fieldType === 'N') item.fieldValue = parseFloat(item.fieldValue);
-          return {
+          return {...item,
             paymentTypeID: type?.value,
             fieldName: item?.fieldName,
             fieldValue: item?.fieldValue,
@@ -102,7 +102,13 @@ export function Add(props){
     if(value?.value){
       let dtl = [];
       fields?.forEach(item => {
-        if(item.paymentTypeId === value?.value) dtl.push({...item, fieldValue: ''});
+        if(item.paymentTypeId === value?.value){
+          if(item?.fieldType === 'S'){
+            let selectData = selects?.filter(sl => sl.paymentTypeId === item.paymentTypeId && sl.fieldName === item?.fieldName);
+            dtl.push({...item, selectData, fieldValue: null});
+          } else
+            dtl.push({...item, fieldValue: ''});
+        }
       });
       setDtl(dtl);
     }
