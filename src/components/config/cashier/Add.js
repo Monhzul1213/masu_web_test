@@ -22,6 +22,10 @@ export function Add(props){
     if(selected){
       setTypeData([{ paymentTypeName: selected?.paymentTypeName, paymentTypeId: selected?.paymentTypeId }]);
       setType({ value: selected?.paymentTypeId });
+      selected?.paymentTypeDtl?.forEach(item => {
+        if(item.fieldType === 'S')
+          item.selectData = selected?.paymentTypeDtlSelect?.filter(sel => sel.fieldName === item.fieldName);
+      });
       setDtl(selected?.paymentTypeDtl);
     } else
       setTypeData(types);
