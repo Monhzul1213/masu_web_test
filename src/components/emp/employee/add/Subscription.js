@@ -63,12 +63,18 @@ export function Subscription(props){
     }
     console.log(data);
     let response = await dispatch(sendRequest (user, token, 'Txn/ModInvoice', data));
-    setLoading(false);
     if(response?.error) setError(response?.error);
     else {
       setCurrent(1);
       setTxnNo(response?.data?.invoiceNo);
     }
+    // let response1 = await dispatch(qpayLogin());
+    // console.log(response1)
+    // if(response1?.token){
+    //   let response2 = await dispatch(qpayQR(response1?.token, 'MS32', 10));
+    //   console.log(response2)
+    // }
+    setLoading(false);
   }
 
   const typeProps = { selected, onSelect };
