@@ -13,7 +13,7 @@ import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
-import { SalesEmployee, SalesCategory, SalesPayment, DiscountRP, Taxes } from './src1/pages/report';
+import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes } from './src1/pages/report';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -97,8 +97,7 @@ export function App(){
                 <Route path='/report/report_employee' element={<SalesEmployee />} />
                 <Route path='/report/report_category' element={<SalesCategory />} />
                 <Route path='/report/report_payment' element={<SalesPayment />} />
-                {/* <Route path='/report/report_invtentory' element={<SalesItem />} /> */}
-                <Route path='/report/report_payment' element={<SalesPayment />} />
+                <Route path='/report/report_edited' element={<SalesModifier />} />
                 <Route path='/report/report_discount' element={<DiscountRP />} />
                 <Route path='/report/report_sales' element={<Review />} />
                 <Route path='/system/request_solve' element={<Solve />} />

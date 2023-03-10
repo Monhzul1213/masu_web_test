@@ -78,7 +78,7 @@ export function Percent(props){
     }
   }
   const onBlur = () => {
-    let length = value?.value?.replace()?.length;
+    let length = value?.value?.replace(/[-.]/g, '')?.length;
     if(length !== 0 && length !== 4) setValue({ value: value?.value?.replace(/-/g, '0') });
   }
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
@@ -91,7 +91,6 @@ export function Percent(props){
       <div className='cust_back' style={backStyle}>
         {label && <p className='select_lbl' style={style}>{label}</p>}
         <div className='cust_back1'>
-            {/* <DynamicAIIcon className='cus_icon' name={icon} /> */}
             <InputMask
             className='c_input'
             mask={mask}
@@ -102,7 +101,9 @@ export function Percent(props){
             placeholder={placeholder}
             value={value?.value}
             formatChars={formatChars}
-            onChange={onChange} />
+            onChange={onChange} 
+            style={{width: '100%'}}
+            />
         </div>
         
       </div>

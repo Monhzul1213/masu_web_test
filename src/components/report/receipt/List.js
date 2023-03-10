@@ -29,6 +29,10 @@ export function List(props){
         Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 'sale.totalSalesAmount', customStyle: { width: 100 },
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
+      { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.ddtd')}</div>, accessor: 'sale.vatDdtd' ,
+        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
+      },
+      { Header: t('report_receipt.customerID'), accessor: 'sale.vatCustomerId' },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -27,7 +27,7 @@
   background-color: var(--root-color);
   border-radius: var(--radius);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
-  padding:0 var(--page-padding) var(--page-padding) var(--page-padding);
+  padding: var(--page-padding) ;
   max-width: var(--invt-width);
 }
 .ih_search1 {

@@ -89,7 +89,7 @@ export function DiscountAdd(){
   const GetDiscount = async (discountId, site, ) => {
     setError(null);
     setLoading(true);
-    let api = '?discountId=' +discountId
+    let api = '?discountId=' + discountId
     let response = await dispatch(getList(user, token, 'Site/GetDiscount'+ api,   ));
     setLoading(false);
     if(response?.error) setError(response?.error);
@@ -101,19 +101,18 @@ export function DiscountAdd(){
       setName({ value: dis?.discountName ?? '' });
       setIsEach({ value: dis?.discountType.toString() ?? '0' });
       setPrice({ value: dis?.discountValue ?? '' });
-      setPerc({ value: dis?.discountValue ?? ''  });
-      setIsCheck( dis?.isRestrictedAccess==='Y' );
+      setPerc({ value: dis?.discountValue.toString() ?? ''  });
+      setIsCheck( dis?.isRestrictedAccess === 'Y' );
       response?.data?.forEach(item => item.rowStatus = 'U');
       site?.forEach(item => {
         let exists = dis?.sites?.filter(si => si.siteId === item.siteId)[0];
         item.checked = exists; 
         if(exists) item.rowStatus = 'U';
       });
-
       setSites(site);
     }
   }
-  const onClickSave = async () => {
+const onClickSave = async () => {
     let nameLength= 2;
     let price1 = (isEach?.value === '1') ? price?.value : perc?.value
     let isNameValid = name?.value?.trim() && name?.value?.length >= nameLength;
@@ -129,19 +128,19 @@ export function DiscountAdd(){
       discountId: selected ? selected?.discountId : -1,
       discountName: name?.value,
       discountType: isEach?.value,
-      discountValue: (isEach?.value === '1') ? (price?.value) : (perc?.value),
+      discountValue: (isEach?.value === '1') ? price?.value : perc?.value?.replace(/-/g, '0'),
       isRestrictedAccess: isCheck ? 'Y' : 'N',
       rowStatus: selected ? "U": "I",
       discountSite
     }]
       const response = await dispatch(sendRequest(user, token, 'Site/AddDiscount', data));
-      console.log(data)
+      console.log(response.data)
       if(response?.error) onError(response?.error);
       else onSuccess(t('discount.add_success'));
     } 
     else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
-      if(!price1) setPerc({ value: '', error: t('error.not_empty') });
+      if(!price1) setPerc({ value: perc?.value, error: t('error.not_empty') });
       if(!price1) setPrice({ value: '', error: t('error.not_empty') });
       else if(!isNameValid) setName({ value: name?.value, error: ' ' + nameLength + t('error.longer_than') })
     }

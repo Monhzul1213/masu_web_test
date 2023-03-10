@@ -36,6 +36,7 @@ import { withSize } from 'react-sizeme';
     setLoading(true);
     let api = 'Site/GetDiscount' +( query ?? '') ;
     const response = await dispatch(getList(user, token, api));
+    console.log(response)
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoading(false);
