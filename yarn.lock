@@ -3270,7 +3270,7 @@ babel-preset-react-app@^10.0.1:
     babel-plugin-macros "^3.1.0"
     babel-plugin-transform-react-remove-prop-types "^0.4.24"
 
-babel-runtime@^6.11.6:
+babel-runtime@^6.11.6, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha512-ITKNuq2wKlW1fJg9sSW52eepoYgZBggvOAHC0u/CYu/qxQ9EVzThCgR69BnSXLHjy2f7SY5zaQ4yt7H9ZVxY2g==
@@ -8826,6 +8826,14 @@ react-loading-overlay@^1.0.1:
     prop-types "^15.6.2"
     react-transition-group "^2.5.0"
 
+react-open-app@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-open-app/-/react-open-app-1.0.3.tgz#3a2256f7861838d7396bea6b5b50a27e989303ba"
+  integrity sha512-PuWsGp/egwZJOYWkfzru3WObHW1rzz4KSt8eAy42m5dMCEIJY25Zebfh70W8Wo85TkrzY5AwmZJU/N2KB7cSYA==
+  dependencies:
+    babel-runtime "^6.26.0"
+    url-to-deep-link "^1.0.3"
+
 react-qr-code@^2.0.11:
   version "2.0.11"
   resolved "https://registry.yarnpkg.com/react-qr-code/-/react-qr-code-2.0.11.tgz#444c759a2100424972e17135fbe0e32eaffa19e8"
@@ -10333,6 +10341,13 @@ url-parse@^1.5.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+url-to-deep-link@^1.0.3:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/url-to-deep-link/-/url-to-deep-link-1.0.7.tgz#1f6f8396726a28dc4a5fecfdca8091a70e89c0f9"
+  integrity sha512-iW8Qbm1DOuqwmhdRizPwWLmeYMalRUQPJxxxHTLpiwNeAP8IIrujsN2R/PeFYe//AzeMnXFpr3ExdzglOXj5zg==
+  dependencies:
+    babel-runtime "^6.26.0"
 
 use-sync-external-store@^1.0.0:
   version "1.2.0"
