@@ -72,7 +72,6 @@ export function Add(props){
             rowStatus : selected ? "U" : "I",
           }]
       const response = await dispatch(sendRequest(user, token, 'Site/Customer',  data));
-      console.log(data)
       setLoading(false);
       if(response?.error) setError(response?.error);
       else {

@@ -19,9 +19,7 @@ export function List(props){
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      {
-        Header: <div>{t('page.name')}</div>, accessor: 'discountName',
-         },
+      {Header: <div>{t('page.name')}</div>, accessor: 'discountName'},
       { Header: <div style={{textAlign: 'right',}}>{t('discount.amount')}</div> , accessor: 'discountValue', customStyle: { width: 100 }, width: 80,
       Cell: props => props?.row?.original?.discountType === 1 ? <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> 
       : <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}%</div>
