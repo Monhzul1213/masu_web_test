@@ -36,7 +36,7 @@ export function CardMain(props){
   }
 
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('page.name'), setError, inRow: true, setEdited, length: 50 };
-  const mailProps = { value: mail, setValue: setMail, label: t('employee.mail'), placeholder: t('employee.mail'), setError, setEdited };
+  const mailProps = { value: mail, setValue: setMail, label: t('employee.mail'), placeholder: t('employee.mail'), setError, setEdited, disabled: isOwner };
   const passProps = { value: password, setValue: setPassword, label: t('employee.password'), placeholder: t('employee.password'),
     setError, setEdited, length: 20, disabled: selected ? true : false };
   const phonProps = { value: phone, setValue: changePhone, label: t('shop.phone'), placeholder: t('shop.phone'), setError, setEdited, length: 20 };
