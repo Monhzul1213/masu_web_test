@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import '../../../../css/config.css'
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
-import { sendRequest } from '../../../../services';
+import { qpayLogin, qpayQR, sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
 import { DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Field, Select } from './Field';
@@ -32,6 +32,7 @@ export function Subscription(props){
   }, []);
 
   useEffect(() => {
+    setError(null);
     if(visible && invNo){
       setCurrent(1);
       setTxnNo(invNo);
@@ -68,12 +69,7 @@ export function Subscription(props){
       setCurrent(1);
       setTxnNo(response?.data?.invoiceNo);
     }
-    // let response1 = await dispatch(qpayLogin());
-    // console.log(response1)
-    // if(response1?.token){
-    //   let response2 = await dispatch(qpayQR(response1?.token, 'MS32', 10));
-    //   console.log(response2)
-    // }
+   
     setLoading(false);
   }
 
@@ -137,6 +133,25 @@ function Pay(props){
   const { t } = useTranslation();
   const [value, setValue] = useState(0);
   const [selected, setSelected] = useState(banks[0]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    getQR();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getQR = async () => {
+    setLoading(true);
+    let response1 = await dispatch(qpayLogin());
+    console.log(response1);
+    if(response1?.token){
+      let response2 = await dispatch(qpayQR(response1?.token, txnNo, amt));
+      console.log(response2);
+    }
+    setLoading(false);
+  }
 
   const changeValue = index => {
     setValue(index);
@@ -151,11 +166,13 @@ function Pay(props){
       <div className='es_pay_back'>
         <div className='es_pay_col'>
           <p className='es_sub_title'>{t('employee.qr')}</p>
-          <img className='es_qr_holder' src={qr_holder} alt='Logo' />
-          {/* <QRCode
-            size={180}
-            style={{ margin: '5px 0' }}
-            value={qr} /> */}
+          <Overlay loading={loading}>
+            <img className='es_qr_holder' src={qr_holder} alt='Logo' />
+            {/* <QRCode
+              size={180}
+              style={{ margin: '5px 0' }}
+              value={qr} /> */}
+          </Overlay>
           <p className='es_amt_title'>{t('employee.amt')}</p>
           <p className='es_amt'>{formatNumber(amt)}₮</p>
         </div>
