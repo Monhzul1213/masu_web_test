@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-// import QRCode from 'react-qr-code';
+import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
-import { qpayLogin, qpayQR, sendRequest } from '../../../../services';
+import { sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
 import { DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Field, Select } from './Field';
@@ -16,7 +16,6 @@ export function Subscription(props){
   const { visible, emp, onBack, onDone, invNo } = props;
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
-  const [qr, setQR] = useState('');
   const [amt, setAmt] = useState(0);
   const [txnNo, setTxnNo] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,7 +39,6 @@ export function Subscription(props){
     } else {
       setTxnNo('');
       setCurrent(0);
-      setQR('');
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,7 +72,7 @@ export function Subscription(props){
   }
 
   const typeProps = { selected, onSelect };
-  const payProps = { qr, amt, txnNo };
+  const payProps = { amt, txnNo, setError };
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
@@ -129,11 +127,13 @@ function Type(props){
 }
 
 function Pay(props){
-  const { amt, txnNo } = props;
+  const { amt, txnNo, setError } = props;
   const { t } = useTranslation();
   const [value, setValue] = useState(0);
   const [selected, setSelected] = useState(banks[0]);
   const [loading, setLoading] = useState(false);
+  const [qr, setQR] = useState('');
+  const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -143,13 +143,13 @@ function Pay(props){
   }, []);
 
   const getQR = async () => {
+    setError(null);
     setLoading(true);
-    let response1 = await dispatch(qpayLogin());
-    console.log(response1);
-    if(response1?.token){
-      let response2 = await dispatch(qpayQR(response1?.token, txnNo, amt));
-      console.log(response2);
-    }
+    setQR(null);
+    let data = { invoiceNo: txnNo, amount: amt };
+    let response = await dispatch(sendRequest (user, token, 'System/GetQPayQr', data));
+    if(response?.error) setError(response?.error);
+    else setQR(response?.data?.qr_text)
     setLoading(false);
   }
 
@@ -167,11 +167,13 @@ function Pay(props){
         <div className='es_pay_col'>
           <p className='es_sub_title'>{t('employee.qr')}</p>
           <Overlay loading={loading}>
-            <img className='es_qr_holder' src={qr_holder} alt='Logo' />
-            {/* <QRCode
-              size={180}
-              style={{ margin: '5px 0' }}
-              value={qr} /> */}
+            {!qr
+              ? <img className='es_qr_holder' src={qr_holder} alt='Logo' />
+              : <QRCode
+                  size={180}
+                  style={{ margin: '5px 0' }}
+                  value={qr} />
+            }
           </Overlay>
           <p className='es_amt_title'>{t('employee.amt')}</p>
           <p className='es_amt'>{formatNumber(amt)}₮</p>
