@@ -39,13 +39,13 @@ export function Install(props){
       window.location = scheme;
     } else {
       setTimeout(function () {
-        if(new Date().valueOf() - now > 1500) return;
+        if(new Date().valueOf() - now > 2800) return;
           const link = document.createElement('a');
           link.href = url;
           document.body.appendChild(link);
           link.click();
           link.parentNode.removeChild(link);
-        }, 1200);
+        }, 2000);
       window.location = scheme;
     }
     return;
