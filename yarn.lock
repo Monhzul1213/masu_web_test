@@ -4121,6 +4121,19 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
 
+custom-protocol-check@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/custom-protocol-check/-/custom-protocol-check-1.4.0.tgz#87b579f6519d48adf55f539d774f7e026bae35e7"
+  integrity sha512-eMTyp8AKnE5eo+mKNqG3743eb5ZND5LhBgf9F8BN2tVdhSBnOCHH7me7iTcv0BUDhUW2dBQiHWLWMy776yZW1A==
+
+custom-protocol-handler@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/custom-protocol-handler/-/custom-protocol-handler-3.0.1.tgz#c787dba6617479ef547a83ee7d66c3c2fe080f6f"
+  integrity sha512-ztQ3mDw7PNQ1bi587a8n53ZSXANFCXmqypwSG2e9NfUSMAhuu3en6qNhfD/SLvQBJhkkZspwX3fKoxFn0qWc4Q==
+  dependencies:
+    p-catch-if "^1.0.2"
+    p-try "^2.0.0"
+
 d3-array@2, d3-array@^2.3.0:
   version "2.12.1"
   resolved "https://registry.yarnpkg.com/d3-array/-/d3-array-2.12.1.tgz#e20b41aafcdffdf5d50928004ececf815a465e81"
@@ -5921,6 +5934,11 @@ is-docker@^2.0.0, is-docker@^2.1.1:
   resolved "https://registry.yarnpkg.com/is-docker/-/is-docker-2.2.1.tgz#33eeabe23cfe86f14bde4408a02c0cfb853acdaa"
   integrity sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==
 
+is-error-constructor@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-error-constructor/-/is-error-constructor-1.0.1.tgz#4ea48863614dca5b69ec1d6f50ed26982f5e7192"
+  integrity sha512-41CuabKpeXlCZSTn5Jrab3X5Kpum92FPjAC19h+psqDu1dcdZVroRCSg8pBwMDyDGlOr4TvbQDBJ2vn72XKFJw==
+
 is-extglob@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/is-extglob/-/is-extglob-2.1.1.tgz#a88c02535791f02ed37c76a1b9ea9773c833f8c2"
@@ -7401,6 +7419,13 @@ optionator@^0.9.1:
     prelude-ls "^1.2.1"
     type-check "^0.4.0"
     word-wrap "^1.2.3"
+
+p-catch-if@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/p-catch-if/-/p-catch-if-1.0.2.tgz#b05d59fd9963724a77bcad4c1420c3dd591ce89a"
+  integrity sha512-Nk6373YjPRnkRs+6cKwLIIa1L3bYtTc0rphC/2twzKSMFruLXxQ1UnTI8RZg4fpf/tdgFX4eMzrII5br06Qpuw==
+  dependencies:
+    is-error-constructor "^1.0.0"
 
 p-limit@^2.0.0, p-limit@^2.2.0:
   version "2.3.0"
