@@ -38,17 +38,19 @@ export function Install(props){
         }, 1200);
       window.location = scheme;
     } else {
-      setTimeout(function () {
-        if(new Date().valueOf() - now > 2800) return;
-          const link = document.createElement('a');
-          link.href = url;
-          document.body.appendChild(link);
-          link.click();
-          link.parentNode.removeChild(link);
-        }, 2000);
-      window.location = scheme;
+      checkCustomProtocol(scheme, url, 1600)
     }
-    return;
+  }
+
+  function checkCustomProtocol(inProtocol, inInstalLink, inTimeOut){
+    var timeout = inTimeOut;
+    window.addEventListener('blur',function(e) {
+      window.clearTimeout(timeout);
+    });
+    timeout = window.setTimeout(function() {
+      window.location = inInstalLink;
+    }, inTimeOut);
+    window.location = inProtocol;
   }
 
   return (
