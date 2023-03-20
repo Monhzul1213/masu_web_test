@@ -780,3 +780,39 @@
   font-size: 20px;
   font-weight: 600;
 }
+
+.rw_card_row2 {
+  display: flex;
+  flex-flow: row;
+  margin-top: 3px;
+  align-items: center;
+}
+
+.rw_card_col {
+  flex: 1;
+}
+
+.rw_card_type {
+  display: flex;
+  flex-flow: row;
+  flex: 1;
+  align-items: center;
+}
+
+.rw_card_icon {
+  font-size: 18px;
+  color: var(--text4-color);
+  opacity: 0.9;
+}
+
+.rw_card_cash {
+  margin: 0 0 0 5px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2-color);
+}
+
+.rw_card_progress .ant-progress-text {
+  font-size: 12px;
+  font-weight: 550;
+}

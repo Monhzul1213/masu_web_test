@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Progress } from 'antd';
+import { FaMoneyBillAlt } from 'react-icons/fa';
+import { BsFillCreditCard2FrontFill } from 'react-icons/bs';
 
 import { colors } from '../../../helpers';
 import { Money } from '../../all';
@@ -32,6 +35,19 @@ export function Card(props){
           <p className='rw_card_count' style={{ color }}>{item?.salesCount}</p>
         </div>
         <p className='rw_card_amt'><Money value={item?.salesAmount} fontSize={18} /></p>
+        <div className='rw_card_row2'>
+          <div className='rw_card_col'>
+            <div className='rw_card_type'>
+              <FaMoneyBillAlt className='rw_card_icon' style={{ color }} />
+              <p className='rw_card_cash'><Money value={item?.cashAmount} fontSize={11} /> </p>
+            </div>
+            <div className='rw_card_type'>
+              <BsFillCreditCard2FrontFill className='rw_card_icon' style={{ color }} />
+              <p className='rw_card_cash'><Money value={item?.nonCashAmount} fontSize={11} /> </p>
+            </div>
+          </div>
+          <Progress className='rw_card_progress' percent={item?.salesPercent} width={50} strokeWidth={10} strokeColor={color} type="circle" />
+        </div>
       </div>
     );
   }
