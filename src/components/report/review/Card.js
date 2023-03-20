@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Popover } from 'antd';
 
 import { colors } from '../../../helpers';
 import { Money } from '../../all';
@@ -24,26 +23,16 @@ export function Card(props){
     return (wid - 30 - (num - 1) * 10) / num;
   }
 
-  const Pop = ({ item }) => {
-    return (
-      <div>
-        {item?.siteName}
-      </div>
-    );
-  }
-
   const renderCard = (item, index) => {
     let color = colors && colors[index % 6 + 2];
     return (
-      <Popover key={index} content={<Pop item={item} />} placement='bottom'>
-        <div className='rw_card' style={{ width }}>
-          <div className='rw_card_row'>
-            <p className='rw_card_name'>{item?.siteName}</p>
-            <p className='rw_card_count' style={{ color }}>{item?.salesCount}</p>
-          </div>
-          <p className='rw_card_amt'><Money value={item?.salesAmount} fontSize={18} /></p>
+      <div className='rw_card' key={index} style={{ width }}>
+        <div className='rw_card_row'>
+          <p className='rw_card_name'>{item?.siteName}</p>
+          <p className='rw_card_count' style={{ color }}>{item?.salesCount}</p>
         </div>
-      </Popover>
+        <p className='rw_card_amt'><Money value={item?.salesAmount} fontSize={18} /></p>
+      </div>
     );
   }
 
