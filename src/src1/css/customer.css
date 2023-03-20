@@ -269,4 +269,13 @@
   bottom: -10px;
   max-width: 412;
 }
-
+.rp_list_search_back_s {
+  position: absolute;
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  right: 0;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  border-radius: var(--radius);
+}

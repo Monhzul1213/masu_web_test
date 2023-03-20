@@ -71,11 +71,15 @@ export function Drawer(props){
         <div style={{padding: '5px 0 5px 0'}}>
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.amt')}</p>
-            <p className='dr_row_value'><Money value={selected?.sale?.totalSalesAmount} fontSize={13} /></p>
+            <p className='dr_row_value'><Money value={selected?.sale?.totalAmount} fontSize={13} /></p>
           </div>
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.discount')}</p>
             <p className='dr_row_value'><Money value={selected?.sale?.totalDiscountAmount} fontSize={13} /></p>
+          </div>
+          <div className='dr_row'>
+            <p className='dr_row_label' style={{fontWeight: 'bold'}}>{t('report_receipt.pay')}</p>
+            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalSalesAmount} fontSize={13} /></p>
           </div>
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.pure')}</p>
@@ -88,10 +92,6 @@ export function Drawer(props){
           <div className='dr_row'>
             <p className='dr_row_label'>{t('report_receipt.vat')}</p>
             <p className='dr_row_value'><Money value={selected?.sale?.totalVatAmount} fontSize={13} /></p>
-          </div>
-          <div className='dr_row'>
-            <p className='dr_row_label' style={{fontWeight: 'bold'}}>{t('report_receipt.pay')}</p>
-            <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={selected?.sale?.totalSalesAmount} fontSize={13} /></p>
           </div>
           <div className='dr_line' />
           <div className='dr_row'>

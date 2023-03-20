@@ -91,6 +91,7 @@ export function Menu(props){
     isAdmin ? getItem(t('menu.system'), '/system', <FiTool />, [
       getItem(t('menu.solve'), '/system/request_solve'),
       getItem(t('menu.invoice'), '/system/invoice'),
+      getItem(t('menu.info'), '/system/info'),
     ]) : null,
   ];
 

@@ -14,6 +14,7 @@ import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes } from './src1/pages/report';
+import { Info } from './src1/pages/system';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -107,6 +108,7 @@ export function App(){
                 <Route path='/report/report_invtentory' element={<ReportItem />} />
                 <Route path='/system/invoice' element={<Invoice />} />
                 <Route path='/system/invoice/invoice_add' element={<InvoiceAdd />} />
+                <Route path='/system/info' element={<Info />} />
               </Routes>
             </Layout>
           </Layout>

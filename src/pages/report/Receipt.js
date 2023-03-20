@@ -42,7 +42,7 @@ function Screen(props){
     if(response?.error) setError(response?.error);
     else {
       let salesQty = 0, returnQty = 0, salesAmt = 0, returnAmt = 0;
-      response?.data?.forEach(item => {
+      response?.data?.salesResp.forEach(item => {
         if(item?.sale?.salesType === 0){
           salesQty += 1;
           salesAmt += (item?.sale?.totalSalesAmount ?? 0);
@@ -52,14 +52,14 @@ function Screen(props){
         }
       });
       setTotal({
-        totalQty: response?.data?.length,
+        totalQty: response?.data?.salesResp?.length,
         totalAmt: salesAmt - returnAmt,
         salesQty, returnQty, salesAmt, returnAmt
       });
-      setData(response?.data);
+      setData(response?.data?.salesResp);
       tab === -1
-        ? setFilteredData(response?.data)
-        : setFilteredData(response?.data?.filter(item => item?.sale?.salesType === tab));
+        ? setFilteredData(response?.data?.salesResp)
+        : setFilteredData(response?.data?.salesResp?.filter(item => item?.sale?.salesType === tab));
     }
     setLoading(false);
     setFilter(query);
