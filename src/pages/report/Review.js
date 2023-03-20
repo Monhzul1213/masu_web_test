@@ -6,10 +6,11 @@ import { withSize } from 'react-sizeme';
 import moment from 'moment';
 
 import '../../css/invt.css';
+import '../../css/report.css';
 import { getList } from '../../services';
 import { Empty1, Error1, Overlay } from '../../components/all';
 import { Filter } from '../../components/report/receipt';
-import { Graph, List } from '../../components/report/review';
+import { Card, Graph, List } from '../../components/report/review';
 
 function Screen(props){
   const { size } = props;
@@ -23,6 +24,7 @@ function Screen(props){
   const [data, setData] = useState(null);
   const [date, setDate] = useState([]);
   const [graphData, setGraphData] = useState(null);
+  const [cardData, setCardData] = useState([]);
   const [periodData, setPeriodData] = useState(t('report_review.periods'));
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -115,6 +117,7 @@ function Screen(props){
       setTotal({ sales, refund, discount, net, profit });
       setData(data ?? []);
       setGraphData(graphData?.length ? formatData(graphData, period1, dates ?? date) : []);
+      setCardData(response?.data && response?.data[2]);
     }
     setLoading(false);
     setFilter(query);
@@ -129,12 +132,14 @@ function Screen(props){
   let graphProps = { tab, setTab, total, data: graphData, size, periodData, period, setPeriod: changePeriod };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
   let listProps = { data, size, period };
+  let cardProps = { data: cardData, size };
 
   return (
     <div className='s_container_r'>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
+        <Card {...cardProps} />
         <Graph {...graphProps} />
         <div className='rp_list'>
           {data?.length ? <List {...listProps} /> : <Empty1 {...emptyProps} />}

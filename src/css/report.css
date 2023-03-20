@@ -732,3 +732,51 @@
   font-size: 14px;
   margin: 5px 0 0 0;
 }
+
+.rw_card_back {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+  margin-right: -10px;
+  max-width: 1270px;
+}
+
+.rw_card {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  margin-right: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  padding: 10px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+}
+
+.rw_card_row {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  margin-bottom: 3px;
+}
+
+.rw_card_name {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text2-color);
+  flex: 1;
+  margin-right: 5px;
+}
+
+.rw_card_count {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.rw_card_amt {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
