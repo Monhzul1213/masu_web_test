@@ -758,7 +758,6 @@
   display: flex;
   flex-flow: row;
   justify-content: space-between;
-  margin-bottom: 3px;
 }
 
 .rw_card_name {
@@ -784,7 +783,6 @@
 .rw_card_row2 {
   display: flex;
   flex-flow: row;
-  margin-top: 3px;
   align-items: center;
 }
 
@@ -814,5 +812,5 @@
 
 .rw_card_progress .ant-progress-text {
   font-size: 11px;
-  font-weight: 550;
+  font-weight: 650;
 }
