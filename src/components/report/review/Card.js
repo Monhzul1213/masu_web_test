@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Progress } from 'antd';
-import { FaRegMoneyBillAlt, FaRegCreditCard } from 'react-icons/fa';
+import { FaRegMoneyBillAlt, FaRegCreditCard, FaShoppingBasket } from 'react-icons/fa';
 
 import { getColor } from '../../../helpers';
 import { Money } from '../../all';
@@ -31,7 +31,10 @@ export function Card(props){
       <div className='rw_card' key={index} style={{ width }}>
         <div className='rw_card_row'>
           <p className='rw_card_name'>{item?.siteName}</p>
-          <p className='rw_card_count' style={{ color }}>{item?.salesCount}</p>
+          <div className='rw_card_row2'>
+            <FaShoppingBasket className='rw_card_basket' style={{ color }} />
+            <p className='rw_card_count' style={{ color }}> {item?.salesCount}</p>
+          </div>
         </div>
         <p className='rw_card_amt'><Money value={item?.salesAmount} fontSize={18} /></p>
         <div className='rw_card_row2'>
