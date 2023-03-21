@@ -46,7 +46,8 @@ export function Card(props){
               <p className='rw_card_cash'><Money value={item?.nonCashAmount} fontSize={11} /> </p>
             </div>
           </div>
-          <Progress className='rw_card_progress' percent={item?.salesPercent} width={50} strokeWidth={10} strokeColor={color} type="circle" />
+          <Progress className='rw_card_progress' percent={item?.salesPercent?.toFixed(1)} width={55}
+            strokeWidth={10} strokeColor={color} type="circle" />
         </div>
       </div>
     );
