@@ -117,7 +117,7 @@ function Screen(props){
       setTotal({ sales, refund, discount, net, profit });
       setData(data ?? []);
       setGraphData(graphData?.length ? formatData(graphData, period1, dates ?? date) : []);
-      setCardData(response?.data && response?.data[2]);
+      setCardData(response?.data && response?.data[2]?.sort((a, b) => b.salesPercent - a.salesPercent));
     }
     setLoading(false);
     setFilter(query);

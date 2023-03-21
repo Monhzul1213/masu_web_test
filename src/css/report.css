@@ -798,9 +798,8 @@
 }
 
 .rw_card_icon {
-  font-size: 18px;
+  font-size: 20px;
   color: var(--text4-color);
-  opacity: 0.9;
 }
 
 .rw_card_cash {

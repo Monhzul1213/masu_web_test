@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Progress } from 'antd';
-import { FaMoneyBillAlt } from 'react-icons/fa';
-import { BsFillCreditCard2FrontFill } from 'react-icons/bs';
+import { FaRegMoneyBillAlt, FaRegCreditCard } from 'react-icons/fa';
 
-import { colors } from '../../../helpers';
+import { getColor } from '../../../helpers';
 import { Money } from '../../all';
 
 export function Card(props){
@@ -27,7 +26,7 @@ export function Card(props){
   }
 
   const renderCard = (item, index) => {
-    let color = colors && colors[index % 6 + 2];
+    let color = getColor(1 - (index / data?.length))
     return (
       <div className='rw_card' key={index} style={{ width }}>
         <div className='rw_card_row'>
@@ -38,11 +37,11 @@ export function Card(props){
         <div className='rw_card_row2'>
           <div className='rw_card_col'>
             <div className='rw_card_type'>
-              <FaMoneyBillAlt className='rw_card_icon' style={{ color }} />
+              <FaRegMoneyBillAlt className='rw_card_icon' style={{ color }} />
               <p className='rw_card_cash'><Money value={item?.cashAmount} fontSize={11} /> </p>
             </div>
             <div className='rw_card_type'>
-              <BsFillCreditCard2FrontFill className='rw_card_icon' style={{ color }} />
+              <FaRegCreditCard className='rw_card_icon' style={{ color }} />
               <p className='rw_card_cash'><Money value={item?.nonCashAmount} fontSize={11} /> </p>
             </div>
           </div>
