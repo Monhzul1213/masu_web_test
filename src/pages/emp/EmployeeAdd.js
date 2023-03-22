@@ -208,7 +208,7 @@ export function EmployeeAdd(){
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
-      <Subscription {...subProps} />
+      {visible && <Subscription {...subProps} />}
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>

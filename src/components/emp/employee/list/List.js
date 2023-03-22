@@ -7,7 +7,7 @@ import { Check, CheckBtn, PaginationTable, Table } from '../../../all';
 import { Subscription } from '../add';
 
 export function List(props){
-  const { data, setData, onClickAdd, setShow, checked, setChecked, size, onSubscribe } = props;
+  const { data, setData, onClickAdd, setShow, checked, setChecked, size, onSubscribe, getData } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -84,6 +84,11 @@ export function List(props){
     setEmp(null);
     setInvNo(null);
   }
+  
+  const onPay = () => {
+    onBack();
+    getData && getData();
+  }
 
   const onDone = async () => {
     onSubscribe(emp);
@@ -96,11 +101,11 @@ export function List(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, onClickLink }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
-  let subProps = { visible, invNo, emp, onBack, onDone };
+  let subProps = { visible, invNo, emp, onBack, onDone, onPay };
   
   return (
     <div>
-      <Subscription {...subProps} />
+      {visible && <Subscription {...subProps} />}
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />

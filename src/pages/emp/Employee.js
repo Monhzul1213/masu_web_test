@@ -80,7 +80,7 @@ export function Employee(){
 
   const emptyProps = { icon: 'MdOutlinePersonOutline', type: 'employee', onClickAdd, noDescr: true };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData };
-  const listProps = { data, setData, onClickAdd, setShow, checked, setChecked, onSubscribe };
+  const listProps = { data, setData, onClickAdd, setShow, checked, setChecked, onSubscribe, getData: () => getData(filter) };
 
   return (
     <div className='s_container_i'>

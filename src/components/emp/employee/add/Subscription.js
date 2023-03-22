@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Steps } from 'antd';
+import { message, Modal, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
-import { sendRequest } from '../../../../services';
+import { getList, sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
 import { DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Field, Select } from './Field';
 import { Step } from './Step';
 
 export function Subscription(props){
-  const { visible, emp, onBack, onDone, invNo } = props;
+  const { visible, emp, onBack, onDone, onPay, invNo } = props;
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [amt, setAmt] = useState(0);
@@ -72,7 +72,7 @@ export function Subscription(props){
   }
 
   const typeProps = { selected, onSelect };
-  const payProps = { amt, txnNo, setError };
+  const payProps = { amt, txnNo, setError, onPay, onBack };
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
@@ -127,7 +127,7 @@ function Type(props){
 }
 
 function Pay(props){
-  const { amt, txnNo, setError } = props;
+  const { amt, txnNo, setError, onPay, onBack } = props;
   const { t } = useTranslation();
   const [value, setValue] = useState(0);
   const [selected, setSelected] = useState(banks[0]);
@@ -141,6 +141,26 @@ function Pay(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    const intervalCall = setInterval(() => checkInvoice(), 10000);
+    return () => clearInterval(intervalCall);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const checkInvoice = async () => {
+    let api = 'Txn/GetInvoice?InvoiceNo=' + txnNo;
+    console.log('Checking invoice', api);
+    let response = await dispatch(getList(user, token, api));
+    if(!response?.error){
+      let invoice = response?.data && response?.data[0]?.status;
+      if(invoice === 3){
+        message.success(t('employee.success_pay'));
+        if(onPay) onPay()
+        else onBack();
+      }
+    }
+  };
 
   const getQR = async () => {
     setError(null);
