@@ -530,6 +530,10 @@
   background-color: var(--root-color);
 }
 
+#m_input_password {
+  -webkit-text-security: circle;
+}
+
 .m_input_descr {
   padding-left: 0;
   border: none;

@@ -208,7 +208,7 @@ export function InputPassword(props){
           onBlur={onBlur}
           placeholder={placeholder}
           value={editable ? value?.value : '********'}
-          type={visible ? 'text' : 'password'}
+          id={visible ? null : 'm_input_password'}
           onChange={onChange} />
       </div>
       {editable
