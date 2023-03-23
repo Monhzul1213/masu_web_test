@@ -4,10 +4,11 @@ import { useTable, usePagination, useSortBy } from 'react-table';
 import moment from 'moment';
 
 import '../../../css/report.css';
-import { Button, PaginationTable, Table, IconSelect, DynamicMDIcon, Money } from '../../all';
+import { PaginationTable, Table, IconSelect, DynamicMDIcon, Money } from '../../all';
+import { ExportExcel } from '../../../helpers';
 
 export function List(props){
-  const { data, period } = props;
+  const { data, period, excelName } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [columns1, setColumns1] = useState([]);
@@ -24,11 +25,12 @@ export function List(props){
     let columns = [
       {
         Header: t(isHour ? 'page.time' : 'page.date'), accessor: 'salesDate',
+        exLabel: t(isHour ? 'page.time' : 'page.date'),
         Cell: ({ value }) => {
           return isHour ? (<div>{value}</div>) : (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
         }
       },
-      { Header: t('order.site'), accessor: 'siteName' }
+      { Header: t('order.site'), accessor: 'siteName', exLabel: t('order.site') }
     ];
     setColumns1(value);
     t('report_review.columns')?.forEach(item => {
@@ -36,6 +38,7 @@ export function List(props){
       if(exists){
         columns.push({
           Header: <div style={{textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
+          exLabel: item?.label,
           Cell: props => (
             <div style={{textAlign: 'right', paddingRight: 15}}>
               {item?.value === 'margin' ? (+(props?.value)?.toFixed(2) + '%') : <Money value={props?.value} fontSize={14} />}
@@ -50,7 +53,6 @@ export function List(props){
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination);
   const tableProps = { tableInstance };
-  const exportProps = { className: 'rp_list_select', text: t('page.export'), disabled: true };
   const columnProps = { value: columns1, setValue: changeColumns, data: t('report_review.columns'), className: 'rp_list_drop',
     Icon: () => <DynamicMDIcon name='MdOutlineViewColumn' className='rp_list_drop_icon' />,
     dropdownStyle: { minWidth: 200 }, dropdownAlign: { offset: [-165, 5] } };
@@ -58,7 +60,7 @@ export function List(props){
   return (
     <div>
       <div className='rp_list_filter'>
-        <Button {...exportProps} />
+        <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
         <IconSelect {...columnProps} />
       </div>
       <div style={{overflowX: 'scroll'}}>

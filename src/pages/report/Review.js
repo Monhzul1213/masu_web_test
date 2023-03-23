@@ -26,6 +26,7 @@ function Screen(props){
   const [graphData, setGraphData] = useState(null);
   const [cardData, setCardData] = useState([]);
   const [periodData, setPeriodData] = useState(t('report_review.periods'));
+  const [excelName, setExcelName] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ function Screen(props){
     }
     setPeriod(newPeriod);
     setDate(dates);
+    setExcelName(t('header./report/report_sales') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
     return newPeriod;
   }
    
@@ -131,7 +133,7 @@ function Screen(props){
   let filterProps = { onSearch: getData, size, setError };
   let graphProps = { tab, setTab, total, data: graphData, size, periodData, period, setPeriod: changePeriod };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
-  let listProps = { data, size, period };
+  let listProps = { data, size, period, excelName };
   let cardProps = { data: cardData, size };
 
   return (
