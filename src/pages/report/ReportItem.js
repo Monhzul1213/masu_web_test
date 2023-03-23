@@ -24,6 +24,7 @@ function Screen(props){
   const [graph, setGraph] = useState([]);
   const [data, setData] = useState([]);
   const [period, setPeriod] = useState('D');
+  const [excelName, setExcelName] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ function Screen(props){
     }
     setPeriod(newPeriod);
     setDate(dates);
+    setExcelName(t('header./report/report_invtentory') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
     return newPeriod;
   }
 
@@ -166,7 +168,7 @@ function Screen(props){
   let card_id = size?.width >= 800 ? 'ri_large' : 'ri_small';
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
   let graphProps = {  bar: top, data: graph, size, period, setPeriod: changePeriod, periodData }
-  let listProps = { data, size };
+  let listProps = { data, size, excelName };
 
   return (
     <div className='s_container_r'>
