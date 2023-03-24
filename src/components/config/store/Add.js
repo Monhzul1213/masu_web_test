@@ -57,9 +57,10 @@ export function Add(props){
     e?.preventDefault();
     setError(null);
     if(checkValid()){
+      let districtCode = cityList?.filter(ct => ct.value === descr?.value)[0]?.districtCode;
       setLoading(true);
       let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
-        subDescr: subDescr?.value };
+        subDescr: subDescr?.value, districtCode };
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
