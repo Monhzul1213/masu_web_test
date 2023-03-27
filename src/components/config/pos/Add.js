@@ -50,7 +50,7 @@ export function Add(props){
       setLoading(true);
       let data1 = { descr: name?.value, systemType: type?.value, currentDate: moment().format('yyyy.MM.DD') };
       let data2 = selected 
-        ? { siteId: site?.value, terminalId: selected?.terminalId, lastUpdate: moment().format('yyyy.MM.DD') }
+        ? { siteId: site?.value, terminalId: selected?.terminalId, lastUpdate: moment().format('yyyy.MM.DD'), status: 1 }
         : { siteID: site?.value };
       let data = {...data1, ...data2};
       console.log(data);

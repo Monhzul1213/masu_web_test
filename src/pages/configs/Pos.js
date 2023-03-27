@@ -61,6 +61,7 @@ function Screen(props){
   const getSites = async () => {
     setError(null);
     setLoading(true);
+    setShow(false);
     const response = await dispatch(getList(user, token, 'Site/GetSite'));
     setLoading(false);
     if(response?.error) {
