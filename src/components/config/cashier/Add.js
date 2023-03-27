@@ -20,7 +20,7 @@ export function Add(props){
 
   useEffect(() => {
     if(selected){
-      setTypeData([{ paymentTypeName: selected?.paymentTypeName, paymentTypeId: selected?.paymentTypeId }]);
+      setTypeData([{ paymentTypeName: selected?.paymentTypeName, paymentTypeId: selected?.paymentTypeId, detailType: selected?.detailType }]);
       setType({ value: selected?.paymentTypeId });
       selected?.paymentTypeDtl?.forEach(item => {
         if(item.fieldType === 'S')
@@ -61,6 +61,7 @@ export function Add(props){
       let data = {
         paymentTypeID: paymentType?.paymentTypeId,
         paymentTypeName: paymentType?.paymentTypeName,
+        detailType: paymentType?.detailType,
         paymentTypeDtls: dtl2,
         rowStatus: selected ? 'U': 'I'
       };
@@ -89,7 +90,7 @@ export function Add(props){
   const onClickDelete = async () => {
     setLoading(true);
     let data = {
-      paymentTypeID: selected?.paymentTypeId, paymentTypeName: selected?.paymentTypeName,
+      paymentTypeID: selected?.paymentTypeId, paymentTypeName: selected?.paymentTypeName, detailType: selected?.detailType,
       paymentTypeDtls: [], rowStatus: 'D'
     };
     const response = await dispatch(sendRequest(user, token, 'Txn/ModPaymenType', [data]));

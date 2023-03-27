@@ -51,7 +51,7 @@ function Screen(props){
     data?.forEach(item => {
       if(item.checked)
         toDelete.push({
-          paymentTypeID: item?.paymentTypeId, paymentTypeName: item?.paymentTypeName,
+          paymentTypeID: item?.paymentTypeId, paymentTypeName: item?.paymentTypeName, detailType: item?.detailType,
           paymentTypeDtls: [], rowStatus: 'D'
         });
     });
