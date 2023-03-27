@@ -451,9 +451,13 @@
     "code": "Харилцагчийн код",
     "desc": "Тодорхойлолт",
     "add_success": "Харилцагч амжилттай бүртгэгдлээ",
-    "delete_success": "Харилцагчыг амжилттай устгалаа"
+    "delete_success": "Харилцагчыг амжилттай устгалаа",
+    "create": "Тооцоо үүсгэсэн: ",
+    "close": "Тооцоо хаасан: ",
+    "balance": "Тооцооны үлдэгдэл: "
   },
   "supplier":{
+    "close":"Хаах",
     "contact":"Төлөөлөгч",
     "first_visit":" Анх нэвтэрсэн",
     "last_visit":"Сүүлд нэвтэрсэн",
@@ -581,7 +585,19 @@
     "vat": "НӨАТ",
     "nhat": "НХАТ",
     "pay": "Төлөх",
-    "paid": "Төлсөн"
+    "paid": "Төлсөн",
+    "columns": [
+      
+      { "label": "Нийт дүн", "value": "sale.totalAmount" },
+      { "label": "Хөнгөлөлт", "value": "sale.totalDiscountAmount" },
+      { "label": "Төлөх дүн", "value": "sale.totalSalesAmount" },
+      { "label": "Бэлэн мөнгө", "value": "sale.totalCashAmount" },
+      { "label": "Бэлэн бус", "value": "sale.totalNonCashAmount" },
+      { "label": "Нэмэлт төлбөр", "value": "sale.useModifier" },
+      { "label": "НӨАТ", "value": "sale.totalVatAmount" },
+      { "label": "НХАТ", "value": "sale.totalNhatamount" },
+      { "label": "Харилцагч", "value": "sale.vatCustomerId" }
+    ]
   },
   "report": {
     "name": "Нэр",
@@ -785,13 +801,15 @@
     "approve2": "Төлбөр төлөгдөн эсэх"
   },
   "system": {
-    "site_qty": "Дэлгүүр тоо",
-    "pos_qty": "Пос тоо",
-    "emp_qty": "Ажилтан тоо",
-    "sub_amount": "Төлбөртэй нэмэлт үйлчилгээний дүн",
-    "sub_qty": "Төлбөртэй нэмэлт үйлчилгээний тоо",
+    "site_qty": "Дэлгүүр",
+    "pos_qty": "Пос",
+    "emp_qty": "Ажилтан",
+    "sub_amount": "Subscription дүн",
+    "sub_qty": "Subscription тоо",
     "sales_qty": "Борлуулалтын тоо",
-    "sales_amt": "Борлуулалтын дүн"
+    "sales_amt": "Борлуулалтын дүн",
+    "noat": "НӨАТ төлөгч?",
+    "cus_trans": "Харилцагчийн гүйлгээ"
   },
   "version": "9"
 }

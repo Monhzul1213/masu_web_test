@@ -40,7 +40,7 @@ export function Filter(props){
     if(time) query += '&BeginTime=' + time[0] + '&EndTime=' + time[1]
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
-    onSearch && onSearch(query, filter1);
+    onSearch && onSearch(query, filter1, date);
   }
 
   const onFocusSite = async () => {

@@ -29,6 +29,17 @@ export function ButtonRow1(props){
     </div>
   )
 }
+export function ButtonRow2(props){
+  const { t } = useTranslation();
+  const { onClickCancel, onClickDelete,  show, text1,  } = props;
+
+  return (
+    <div className='a_btn_row'>
+      {show && <DynamicBSIcon className='a_btn_delete' name='BsTrash' onClick={onClickDelete} />}
+      <Button className='a_btn' text={t(text1 ?? 'supplier.close')} onClick={onClickCancel} />
+    </div>
+  )
+}
 
 export function ButtonRowAdd(props){
   const { t } = useTranslation();

@@ -13,8 +13,9 @@ export function Customer(props){
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
+  // const [data1, setData1] = useState([]);
   const [loaded, setLoaded] = useState(0);
-  const [custId] = useState( -1 );
+  const [custId] = useState( -1);
   const [item, setItem] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -42,7 +43,7 @@ export function Customer(props){
     const response = await dispatch(getList(user, token, 'Site/GetCustomer', null, headers));
     console.log(response)
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else setData(response?.data)
     setLoaded(loaded + 1);
     setLoading(false);
     setShow(false)
@@ -57,7 +58,6 @@ export function Customer(props){
       let toDelete = [];
       data?.forEach(item => {
         if(item.checked){
-          console.log(item)
           item.rowStatus = 'D';
           toDelete.push(item);
         }
@@ -85,6 +85,7 @@ export function Customer(props){
     setItem(null);
     if(toGet) getData();
   }
+  
   const onSearch = async( name , isEdit)=> {
     setFilter(name);
     setError(null);
@@ -105,7 +106,7 @@ export function Customer(props){
   const modalProps = { visible, closeModal, selected: item, onSearch, filter, data, };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch ,};
-  const listProps = { data, onClickAdd, setData , loaded, setShow,  autoResetExpanded, checked, setChecked  };
+  const listProps = { data,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked  };
   return (
     <div className='s_container_z'>
       {visible && <Add {...modalProps} />}

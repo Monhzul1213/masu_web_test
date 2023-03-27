@@ -12,7 +12,7 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('tax.customer'), accessor: 'customer' },
+      { Header: t('tax.customer'), accessor: 'customer' , customStyle: { width: 300 }},
       {
         Header: <div style={{textAlign: 'right'}}>{t('system.site_qty')}</div>, accessor: 'siteQty', customStyle: { width: 100 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
@@ -41,7 +41,7 @@ export function List(props){
         Header: <div style={{textAlign: 'right'}}>{t('system.sales_qty')}</div>, accessor: 'salesQty', customStyle: { width: 100 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
-      { Header: t('tax.checked'), accessor: '' },
+      { Header: t('system.noat'), accessor: '' },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

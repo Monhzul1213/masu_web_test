@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { PaginationTable, Table , Money} from '../../../components/all/all_m';
+import { Header } from './Header';
 
 export function List(props){
-  const { data} = props;
+  const { data, excelName} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
     setColumns([
-      { Header: t('report.discount'), accessor: 'name',
-    },
-      { Header: <div style={{textAlign: 'right'}}>{t('report.disApplied')}</div>, accessor: 'discountsapplied' ,
+      { Header: t('report.discount'), accessor: 'name', exLabel: t('report.discount')},
+      { Header: <div style={{textAlign: 'right'}}>{t('report.disApplied')}</div>, accessor: 'discountsapplied' , 
+      exLabel:t('report.disApplied'), 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>},
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('report.disAmt')}</div>, accessor: 'amountdiscounted',
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
-      },
+      { Header: <div style={{textAlign: 'right'}}>{t('report.disAmt')}</div>, accessor: 'amountdiscounted',
+      exLabel: t('report.disAmt'),
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,9 +31,11 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
       }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
+  const filterProps = {columns, data, excelName };
 
   return (
     <div>
+      <Header {...filterProps} />
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />

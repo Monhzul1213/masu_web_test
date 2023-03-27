@@ -279,3 +279,21 @@
   align-items: center;
   border-radius: var(--radius);
 }
+.sub_row {
+  width: 250px;  
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  margin: 0 0 5px 0;
+}
+
+.sub_row_label, .sub_row_value {
+  color: var(--text-color);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  margin: 0;
+}
+.sub_title{
+  margin: 10px 0 0 10px;
+}

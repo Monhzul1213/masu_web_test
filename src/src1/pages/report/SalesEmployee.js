@@ -3,17 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
-
+import { useTranslation } from 'react-i18next';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../components/all/all_m';
-import {Filter, Header, List } from '../../components/report/employee'
+import {Filter, List } from '../../components/report/employee'
 function Screen(props){
   const { size } = props;
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState('');
   const [filter1, setFilter1] = useState('');
+  const [excelName, setExcelName] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,14 +23,15 @@ function Screen(props){
   useEffect(() => {
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
     else {
+      let dates = [moment()?.startOf('month'), moment()];
       let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
-      getData(query);
+      getData(query, null, dates);
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async (query, query1) => {
+  const getData = async (query, query1, dates) => {
     setError(null);
     setLoading(true);
     let api = 'Sales/GetSalesByEmployee' + (query ?? '') + (query1 ?? '');
@@ -43,12 +46,14 @@ function Screen(props){
     setLoading(false);
     setFilter(query);
     setFilter1(query1 ?? '');
+    if(dates) setExcelName(t('header./report/report_employee') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
+
   }
 
 
 
   let filterProps = { onSearch: getData, size, setError, filter, filter1 };
-  let cardProps = { data, size,  loading };
+  let cardProps = { data, size,  loading, excelName };
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
   return (
@@ -57,7 +62,6 @@ function Screen(props){
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
         <div className='rp_list'>
-          <Header {...filterProps} />
           {data?.length ? <List {...cardProps} /> : <Empty1 {...emptyProps} />}
         </div>
       </Overlay>

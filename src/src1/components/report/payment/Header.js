@@ -1,18 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { ExportExcel } from '../../../../helpers';
 import '../../../../css/report.css';
-import { Button } from '../../../components/all/all_m';
 
-export function Header(){
+export function Header(props){
   const { t } = useTranslation();
+  const {  columns, data, excelName } = props;
 
 
-  const exportProps = { text: t('page.export'), className: 'rp_list_select', disabled: true };
   
   return (
     <div className='ih_btn_row_z' >
-      <Button {...exportProps}  />
+      <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
     </div>
   );
 }

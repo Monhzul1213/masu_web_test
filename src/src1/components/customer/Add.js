@@ -6,6 +6,7 @@ import {  validateEmail } from '../../../helpers';
 import { sendRequest } from '../../../services';
 import { ButtonRow, ModalTitle, Overlay, Error, Confirm ,} from '../all/all_m';
 import { Input } from '../all/all_m';
+
 export function Add(props){
   const { visible, selected, closeModal, onSearch, filter} = props;
   const { t } = useTranslation();
@@ -34,22 +35,23 @@ export function Add(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const checkValid = () => {
     let phoneLength = 8 ;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
     let isEmailValid = validateEmail(email?.value?.trim());
-    if( isEmailValid  && custName?.value?.trim() && isPhoneValid
-    &&custCode?.value?.trim()){
+    if(custName?.value?.trim() && isPhoneValid){
       return true;
     } else {
-      if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
-      else if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
+      // if(email?.value?.trim() === '') setEmail({ value: '', error: '' });
       if(!custName?.value?.trim()) setCustName({ value: '', error: t('error.not_empty') });
       if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
-      if(!custCode?.value?.trim()) setCustCode({ value: '', error: t('error.not_empty') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
+      if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
+
     }
   }
+
   const onClickSave = async e => {
     e?.preventDefault();
     setError(null);
@@ -87,6 +89,7 @@ export function Add(props){
     if(isNaN(text)) setPhone({ value: value?.value, error: 'must_number'});
     else setPhone({ value: (text) });
   } 
+
   const onClickDelete = () => setOpen(true);
 
   const onDelete = async sure => {
@@ -150,8 +153,6 @@ export function Add(props){
             </form>
           </div>
           {error && <Error error={error} id = 'm_error' />}
-
-          
         </div>
         <ButtonRow {...btnProps} />
       </Overlay>
