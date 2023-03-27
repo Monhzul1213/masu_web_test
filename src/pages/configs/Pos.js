@@ -45,6 +45,7 @@ function Screen(props){
   const getPos = async SiteID => {
     setError(null);
     setLoading(true);
+    setShow(false);
     let headers = { SiteID };
     const response = await dispatch(getList(user, token, 'Site/GetPos', null, headers));
     setLoading(false);
@@ -61,7 +62,6 @@ function Screen(props){
   const getSites = async () => {
     setError(null);
     setLoading(true);
-    setShow(false);
     const response = await dispatch(getList(user, token, 'Site/GetSite'));
     setLoading(false);
     if(response?.error) {
