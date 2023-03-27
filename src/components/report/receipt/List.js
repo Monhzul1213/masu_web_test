@@ -16,14 +16,11 @@ export function List(props){
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
 
-
   useEffect(() => {
     changeColumns(['sale.totalAmount', 'sale.totalDiscountAmount', 'sale.totalSalesAmount', 'sale.totalCashAmount', 'sale.totalNonCashAmount'], period);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language, period]);
-
-
 
   const changeColumns = (value) => {
     let columns = [
@@ -39,7 +36,6 @@ export function List(props){
       { Header: t('pos.title'), accessor: 'sale.terminalDescr', exLabel: t('pos.title') },
       { Header: t('time.t_emp'), accessor: 'sale.cashierName', exLabel: t('time.t_emp') },
       { Header: t('report_receipt.t_type'), accessor: 'sale.salesTypeName', exLabel: t('report_receipt.t_type') },
-
     ];
     setColumns1(value);
     t('report_receipt.columns')?.forEach(item => {

@@ -587,7 +587,6 @@
     "pay": "Төлөх",
     "paid": "Төлсөн",
     "columns": [
-      
       { "label": "Нийт дүн", "value": "sale.totalAmount" },
       { "label": "Хөнгөлөлт", "value": "sale.totalDiscountAmount" },
       { "label": "Төлөх дүн", "value": "sale.totalSalesAmount" },
