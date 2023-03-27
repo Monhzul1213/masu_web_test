@@ -89,7 +89,7 @@ const tableInstance = useTable( { columns, data, autoResetPage: false, autoReset
 
   return (
     <div >
-      {/* <Transaction {...subProps} /> */}
+      <Transaction {...subProps} />
       <div style={{overflowX: 'scroll'}} >
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 720}}>
               <Table {...tableProps} />

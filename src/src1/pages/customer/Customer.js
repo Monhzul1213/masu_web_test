@@ -13,7 +13,7 @@ export function Customer(props){
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
-  // const [data1, setData1] = useState([]);
+  const [data1, setData1] = useState([]);
   const [loaded, setLoaded] = useState(0);
   const [custId] = useState( -1);
   const [item, setItem] = useState(null);
@@ -41,9 +41,13 @@ export function Customer(props){
     setLoading(true);
     let headers = { custId};
     const response = await dispatch(getList(user, token, 'Site/GetCustomer', null, headers));
-    console.log(response)
+    console.log(response?.data)
     if(response?.error) setError(response?.error);
-    else setData(response?.data)
+    else {
+      setData(response?.data?.customers)
+      setData1(response?.data?.totalamt)
+
+    }
     setLoaded(loaded + 1);
     setLoading(false);
     setShow(false)
@@ -106,7 +110,7 @@ export function Customer(props){
   const modalProps = { visible, closeModal, selected: item, onSearch, filter, data, };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch ,};
-  const listProps = { data,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked  };
+  const listProps = { data, data1,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked  };
   return (
     <div className='s_container_z'>
       {visible && <Add {...modalProps} />}

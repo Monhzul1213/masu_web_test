@@ -13,15 +13,15 @@ export function TranList(props){
   useEffect(() => {
     // const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
-      { Header: t('page.date'), accessor: 'txnLists.salesDate', 
+      { Header: t('page.date'), accessor: 'salesDate', 
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
       } },
-      { Header: t('report_receipt.dr_site'), accessor: 'txnLists.siteId',
+      { Header: t('report_receipt.dr_site'), accessor: 'siteName',
         Cell: props => <div >{props.value}</div>},
-      { Header: t('system.emp_qty'), accessor: 'txnLists.custName',
+      { Header: t('system.emp_qty'), accessor: 'custName',
         Cell: props => <div >{props.value}</div>},
-      { Header: t('discount.type'), accessor: 'txnType',
+      { Header: t('discount.type'), accessor: 'txnTypeName',
         Cell: props => <div >{props.value}</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('discount.amount')}</div>, accessor: 'txnAmount',
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>},
@@ -41,6 +41,20 @@ export function TranList(props){
 
   return (
     <div >
+      {/* <div className='sub_title'>
+          <div className='sub_row'>
+            <p className='sub_row_label'>{t('customer.create')}</p>
+            <p className='sub_row_value'><Money value={"selected?.totalCashAmount"} fontSize={13} /> </p>
+          </div>
+          <div className='sub_row'>
+            <p className='sub_row_label'>{t('customer.close')}</p>
+            <p className='sub_row_value'><Money value={"selected?.totalCashAmount"} fontSize={13} /></p>
+          </div>
+          <div className='sub_row'>
+            <p className='sub_row_label'>{t('customer.balance')}</p>
+            <p className='sub_row_value'><Money value={selected?.arBalance} fontSize={13} /></p>
+          </div>
+        </div> */}
       <div style={{overflowX: 'scroll'}} >
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 720}}>
               <Table {...tableProps} />

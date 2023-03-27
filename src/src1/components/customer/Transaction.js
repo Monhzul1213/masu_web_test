@@ -13,50 +13,65 @@ export function Transaction(props){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [data1, setData1] = useState([]);
+
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(visible) 
-    getData()
+    if(visible){
+      let query = '?custId=' + selected?.custId
+      getData(query)
+    }
+    
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
+  const renderItem = (item) => {
+    return (  
+      <div className='sub_row'>
+        <p className='sub_row_value'>
+          {item?.txnType === 'D' ? t('customer.create') : t('customer.close') }
+          <Money value={item?.txnType === 'D' ? item?.amount : (item?.amount)} fontSize={13} />
+        </p>
+        {/* <p className='sub_row_value'>{t('customer.close')}<Money value={item?.txnType === 'C' ? item?.amount : 0} fontSize={13} /></p> */}
+      </div>
+   
+      
+    )
+  }
 
-  const getData = async query => {
+  const getData = async (query) => {
     setError(null);
     setLoading(true);
     let api = 'Site/GetCustomerTxn' + (query ?? '')
     const response = await dispatch(getList(user, token, api));
-    console.log(api)
+    console.log(response?.data)
     if(response?.error) setError(response?.error);
-    else setData(response?.data)
+    else {
+      setData(response?.data?.txnLists)
+      setData1(response?.data?.totalAmounts)
+
+    }
     setLoading(false);
   }
 
 
   const btnProps = { onClickCancel: () => closeModal(), type: 'submit'};
-  const listProps = { data};
+  const listProps = { data, selected};
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={770}>
       <Overlay loading={loading} className='m_back2'>
-      <div className='es_scroll'>
+      <div className=''>
         <p className='es_title'>{t('system.cus_trans')}</p>
         <div className='sub_title'>
-          <div className='sub_row'>
-            <p className='sub_row_label'>{t('customer.create')}</p>
-            <p className='sub_row_value'>{"selected?.ar"} </p>
-          </div>
-          <div className='sub_row'>
-            <p className='sub_row_label'>{t('customer.close')}</p>
-            <p className='sub_row_value'><Money value={"selected?.totalCashAmount"} fontSize={13} /></p>
-          </div>
-          <div className='sub_row'>
-            <p className='sub_row_label'>{t('customer.balance')}</p>
-            <p className='sub_row_value'><Money value={selected?.arBalance} fontSize={13} /></p>
-          </div>
+              {data1?.map(renderItem)}
+            <div className='sub_row'>
+              <p className='sub_row_label'>{t('customer.balance')}</p>
+              <p className='sub_row_value'><Money value={selected?.arBalance} fontSize={13} /></p>
+            </div>
         </div>
         <TranList {...listProps}/>
       </div>

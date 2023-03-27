@@ -280,10 +280,10 @@
   border-radius: var(--radius);
 }
 .sub_row {
-  width: 250px;  
+  /* width: 250px;   */
   display: flex;
   flex-flow: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin: 0 0 5px 0;
 }
 
