@@ -11,20 +11,17 @@ export function TranList(props){
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
-    // const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       { Header: t('page.date'), accessor: 'salesDate', 
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
       } },
-      { Header: t('report_receipt.dr_site'), accessor: 'siteName',
-        Cell: props => <div >{props.value}</div>},
-      { Header: t('system.emp_qty'), accessor: 'custName',
-        Cell: props => <div >{props.value}</div>},
-      { Header: t('discount.type'), accessor: 'txnTypeName',
-        Cell: props => <div >{props.value}</div>},
+      { Header: t('report_receipt.dr_site'), accessor: 'siteName'},
+      { Header: t('customer.t_name'), accessor: 'custName' },
+      { Header: t('discount.type'), accessor: 'txnTypeName'},
       { Header: <div style={{textAlign: 'right'}}>{t('discount.amount')}</div>, accessor: 'txnAmount',
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>},
+      { Header: t('shop.descr'), accessor: 'descr'}
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -32,29 +29,15 @@ export function TranList(props){
 
  
 
-  const maxHeight = size?.width > 780
+  const maxHeight = size?.width > 380
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
-  : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
-  const tableInstance = useTable( { columns, data, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 25 },
+  : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 210px - 10px - 37px)';
+  const tableInstance = useTable( { columns, data, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 25 , sortBy: [{ id: 'salesDate', desc: true }]},
   }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
 
   return (
     <div >
-      {/* <div className='sub_title'>
-          <div className='sub_row'>
-            <p className='sub_row_label'>{t('customer.create')}</p>
-            <p className='sub_row_value'><Money value={"selected?.totalCashAmount"} fontSize={13} /> </p>
-          </div>
-          <div className='sub_row'>
-            <p className='sub_row_label'>{t('customer.close')}</p>
-            <p className='sub_row_value'><Money value={"selected?.totalCashAmount"} fontSize={13} /></p>
-          </div>
-          <div className='sub_row'>
-            <p className='sub_row_label'>{t('customer.balance')}</p>
-            <p className='sub_row_value'><Money value={selected?.arBalance} fontSize={13} /></p>
-          </div>
-        </div> */}
       <div style={{overflowX: 'scroll'}} >
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 720}}>
               <Table {...tableProps} />

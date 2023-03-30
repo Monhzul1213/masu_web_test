@@ -37,6 +37,7 @@ export function List(props){
           return active && (<div className='table_link' onClick={() => onClickLink(row)}>{t('employee.pay')}</div>);
         }
       },
+      { Header: t('order.status'), accessor: 'statusName' }
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

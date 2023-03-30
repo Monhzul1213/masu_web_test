@@ -19,6 +19,7 @@ export function Drawer(props){
       setTotalAmount((selected?.sale?.totalCashAmount ?? 0) + (selected?.sale?.totalNonCashAmount ?? 0));
     }
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   const onClose = () => setOpen(null);
@@ -27,7 +28,9 @@ export function Drawer(props){
     let variant = item?.variantName ? (' (' + item?.variantName  + ')') : ''
     return (
       <div key={index} className='dr_item'>
-        <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}</p>
+        <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}
+        <br/>{item?.serviceCode !== 0 ? ( t('time.t_emp')+ ':' + item?.empName ) : ''}
+        </p>
         <p className='dr_item_text2'>{item?.qty}</p>
         <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>
         <p className='dr_item_text4'><Money value={item?.amount} fontSize={13} /></p>
@@ -67,6 +70,7 @@ export function Drawer(props){
         </div>
         <div className='dr_list'>
           {selected?.saleitem?.map(renderItem)}
+          {/* {selected?.saleitem?.serviceCode !== 0 ? (t('time.t_emp') + ':' + (selected?.sale?.cashierName)) : ''} */}
         </div>
         <div style={{padding: '5px 0 5px 0'}}>
           <div className='dr_row'>

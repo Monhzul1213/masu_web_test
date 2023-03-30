@@ -35,8 +35,7 @@ export function List(props){
         Cell: props => <div >{props.value}</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode',
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value }</div>},
-      { Header: t('customer.desc'), accessor: 'note',
-        Cell: props => <div >{props.value}</div>},
+      { Header: t('customer.desc'), accessor: 'note'},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

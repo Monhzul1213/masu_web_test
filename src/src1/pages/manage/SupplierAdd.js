@@ -55,7 +55,7 @@ export function SupplierAdd(){
     if(vendId || vendId === 0) {GetVend(vendId)} ;
   }
   const getImage = async inventory => {
-    // console.log(inventory?.fileraw?.fileData)
+    console.log(inventory)
     if(inventory?.fileraw?.fileData){
       let type = inventory?.fileraw?.fileType?.replace('.', '');
       setImageType(type ?? '');
@@ -72,11 +72,11 @@ export function SupplierAdd(){
     setLoading(true);
     let api = '?vendId=' + vendId;
     let response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'+ api,   ));
+    console.log(response?.data)
     setLoading(false);
     let vend = response && response?.data && response?.data[0];
     if(response?.error) setError(response?.error)
     else if(vend){
-      console.log(vend)
       setSelected(vend)
       setItem(response?.data);
       setAddress({ value: vend?.address1 ?? '' });
