@@ -57,7 +57,7 @@ export const apiRegister = data => async dispatch => {
   }
 }
 
-export const apiLogin = (mail, password) => async dispatch => {
+export const apiLogin = (mail, password, fromAd) => async dispatch => {
   try {
     const config = {
       method: 'POST',
@@ -70,19 +70,21 @@ export const apiLogin = (mail, password) => async dispatch => {
     if(!response || response?.result){
       return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
     } else {
-      let isOwner = mail?.trim()?.toLowerCase() === response?.msMerchant?.email?.trim()?.toLowerCase();
-      dispatch(setIsOwner(isOwner));
-      dispatch(setToken(response?.token));
-      dispatch(setUser({
-        mail,
-        password,
-        isAdmin: response?.isAdmin === 'Y',
-        approvedLevel1: response?.approvedLevel1 === 'Y',
-        approvedLevel2: response?.approvedLevel2 === 'Y',
-        merchantId: response?.merchantId,
-        msRole: response?.msRole,
-        msMerchant: response?.msMerchant
-      }));
+      if(!fromAd){
+        let isOwner = mail?.trim()?.toLowerCase() === response?.msMerchant?.email?.trim()?.toLowerCase();
+        dispatch(setIsOwner(isOwner));
+        dispatch(setToken(response?.token));
+        dispatch(setUser({
+          mail,
+          password,
+          isAdmin: response?.isAdmin === 'Y',
+          approvedLevel1: response?.approvedLevel1 === 'Y',
+          approvedLevel2: response?.approvedLevel2 === 'Y',
+          merchantId: response?.merchantId,
+          msRole: response?.msRole,
+          msMerchant: response?.msMerchant
+        }));
+      }
       return Promise.resolve({
         error: null,
         token: response?.token,
