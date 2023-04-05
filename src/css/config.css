@@ -879,11 +879,21 @@
   font-weight: 550;
   color: var(--root-color);
   padding: 0 20px;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .co_check_btn:hover {
   cursor: pointer;
   background-color: var(--config-color);
+}
+
+.co_check_btn:disabled {
+  cursor: not-allowed;
+  background-color: var(--config-b-color);
+  opacity: 0.8;
 }
 
 .co_coord {

@@ -5,19 +5,21 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import '../../css/invt.css';
-import { apiLogin, sendRequest } from '../../services';
+import { apiLogin, getService, sendRequest } from '../../services';
 import { currencyList, validateEmail } from '../../helpers';
-import { ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Prompt, Select } from '../../components/all';
+import { Button, ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Prompt, Select } from '../../components/all';
 
 export function Merchant(){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [name, setName] = useState({ value: '' });
   const [mail, setMail] = useState({ value: '' });
   const [password, setPassword] = useState({ value: '' });
   const [currency, setCurrency] = useState({ value: '₮' });
+  const [partner, setPartner] = useState({ value: '', error: null });
   const { user, token, isOwner } = useSelector(state => state.login);
   const merchant = user?.msMerchant;
   const navigate = useNavigate();
@@ -29,10 +31,12 @@ export function Merchant(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const setData = () => {
+  const setData = async () => {
+    setError(null);
     setName({ value: merchant?.descr });
     setMail({ value: merchant?.email });
     setCurrency({ value: merchant?.currency ? merchant?.currency : '₮' });
+    if(merchant?.partnerCode) handlePartner(null, merchant?.partnerCode);
   }
 
   const onClickCancel = () => {
@@ -44,8 +48,9 @@ export function Merchant(){
     let isEmailValid = validateEmail(mail?.value);
     let isPasswordValid = !password?.value || (password?.value?.length >= passwordLength);
     let isBusinessValid = name?.value?.length >= businessLength;
-    if(isBusinessValid && isEmailValid && isPasswordValid){
-      let data = { email: mail?.value, password: password?.value, descr: name?.value, currency: currency?.value };
+    let isPartnerValid = (partner?.value && partner?.name) || (!partner?.value && !partner?.name) ? true : false;
+    if(isBusinessValid && isEmailValid && isPasswordValid && isPartnerValid){
+      let data = { email: mail?.value, password: password?.value, descr: name?.value, currency: currency?.value, partnerCode: partner?.value ?? '' };
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
@@ -74,6 +79,20 @@ export function Merchant(){
       }
     }
   }
+
+  const handlePartner = async (e, value) => {
+    e?.preventDefault();
+    setLoading1(true);
+    let api = 'Merchant/GetPartner?partnercode=' + (value ?? partner?.value);
+    let response = await dispatch(getService(api, 'GET'));
+    if(response?.error) setError(response?.error);
+    else {
+      let name = response?.data?.retdata?.partner?.partnerName ?? '';
+      if(value) setPartner({ value, name });
+      else setPartner({...partner, name });
+    }
+    setLoading1(false);
+  }
   
   let nameProps = { value: name, setValue: setName, label: t('login.business'), placeholder: t('login.business'),
     setError, inRow: true, setEdited, length: 50 };
@@ -84,6 +103,11 @@ export function Merchant(){
   let currencyProps = { value: currency, setValue: setCurrency, label: t('login.currency'),
     placeholder: t('login.currency'), setError, setEdited, data: currencyList };
   let btnProps = { onClickCancel, onClickSave, id: 'emp_ac_btns' };
+  let partnerProps = { label: t('login.partner'), placeholder: t('login.partner'), value: partner, setValue: setPartner, setError,
+    handleEnter: handlePartner, inRow: true, noBlur: true };
+  let partnerBtnProps = { className: 'co_check_btn', text: t('tax.check'), onClick: handlePartner, disabled: partner?.value ? false : true,
+    loading: loading1 };
+  let partnerNameProps = { label: t('login.partner_name'), placeholder: t('login.partner_name'), value: { value: partner?.name ?? '' }, disabled: true };
   
   return (
     <Overlay className='i_container' loading={loading}>
@@ -96,6 +120,12 @@ export function Merchant(){
             <Input {...mailProps} />
             <InputPassword {...passProps} />
             <Select {...currencyProps} />
+            <div id='im_input_row_large' style={{ flexFlow: 'row', alignItems: 'flex-end' }}>
+              <Input {...partnerProps} />
+              <div className='im_gap' />
+              <Button {...partnerBtnProps} />
+            </div>
+            <Input {...partnerNameProps} />
           </div>
         </form>
       </div>
