@@ -55,6 +55,8 @@ input:-webkit-autofill:active{
   max-width: var(--back-width);
   width: var(--back-width);
   margin: 10px 10px 60px 10px;
+  overflow-y: scroll;
+  max-height: calc(100vh - 100px);
 }
 
 .l_logo {
@@ -166,12 +168,12 @@ input:-webkit-autofill:active{
   margin: 30px 0 10px 0;
 }
 
-.l_btn:hover {
+.l_btn:hover, .l_partner_btn:hover {
   cursor: pointer;
   background-color: var(--main-color);
 }
 
-.l_btn:disabled {
+.l_btn:disabled, .l_partner_btn:disabled {
   background-color: var(--logo1-color_dis);
   cursor: not-allowed;
 }
@@ -406,4 +408,40 @@ input:-webkit-autofill:active{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.l_partner_row {
+  display: flex;
+  flex-flow: row;
+}
+
+#l_partner {
+  flex: 1;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.l_partner_btn {
+  border: none;
+  box-shadow: none;
+  background-color: var(--logo1-color);
+  height: 36px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--root-color);
+  min-width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 28px;
+}
+
+#l_select {
+  border-bottom: 2px solid var(--text4-color);
+}
+
+#l_select:focus-within {
+  border-bottom: 2px solid var(--success-color);
 }

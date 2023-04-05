@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { DynamicAIIcon } from './DynamicIcon';
 
 export function FloatingInput(props){
-  const { text, value, setValue, setError, handleEnter } = props;
+  const { text, value, setValue, setError, handleEnter, id, disabled } = props;
 
   const onChange = e => {
     setValue({ value: e.target.value });
@@ -11,7 +11,7 @@ export function FloatingInput(props){
   }
 
   const onBlur = () => {
-    setValue({ value: value?.value?.trim(), error: value?.error });
+    !id && setValue({ value: value?.value?.trim(), error: value?.error });
   }
 
   const onKeyDown = e => {
@@ -30,13 +30,13 @@ export function FloatingInput(props){
 
   const style = value?.error ? { borderColor: '#e41051' } : {};
   const style1 = value?.error ? { color: '#e41051' } : {};
-  const inputProps = { className: 'f_input_back', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text };
+  const inputProps = { className: 'f_input_back', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text, disabled };
 
   return (
-    <div className='f_input_container'>
+    <div className='f_input_container' id={id}>
       <label className='f_input_label' style={style1}>{text}</label>
       <input {...inputProps} />
-      {value?.error && <p className='f_input_error'>{text} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{id ? '' : text} {value?.error}</p>}
     </div>
   )
 }

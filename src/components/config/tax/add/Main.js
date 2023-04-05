@@ -42,7 +42,7 @@ function Card(props){
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
   const noProps = { value: regNo, setValue: changeNo, label: t('tax.reg_no'), placeholder: t('tax.reg_no'), setError, setEdited, handleEnter,
     inRow: true, noBlur: true, disabled };
-  const btnProps = { className: 'co_check_btn', text: t('tax.check'), onClick: handleEnter};
+  const btnProps = { className: 'co_check_btn', text: t('tax.check'), onClick: handleEnter };
   const nameProps = { value: name, setValue: setName, label: t('tax.name'), placeholder: t('tax.name'), inRow: true, disabled: true };
   const checkProps = { checked, setChecked, label: 'tax.checked', style: { marginTop: 0 }, disabled: true };
   const descrProps = { value: notes, setValue: setNotes, label: t('tax.note'), placeholder: t('tax.note'), disabled: true, inRow: true };

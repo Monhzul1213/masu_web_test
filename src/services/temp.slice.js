@@ -207,10 +207,10 @@ export const getList = (user, token, api, setFunction, headers) => async dispatc
   }
 };
 
-export const getService = api => async dispatch => {
+export const getService = (api, method) => async dispatch => {
   try {
     const config = {
-      method: 'POST', url: loginConfig?.url + api,
+      method: method ?? 'POST', url: loginConfig?.url + api,
       headers: {'Accept': '*/*' }
     };
     const response = await fetchRetry(config);
