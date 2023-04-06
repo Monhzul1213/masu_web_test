@@ -120,10 +120,15 @@ export function SignUp(){
     if(sure) login();
   }
 
+  const changePhone = value => {
+    let text = value?.value?.replace(/[^0-9]/g, '');
+    setAddress({ value: text });
+  }
+
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
   const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError };
-  const addressProps = { text: t('login.phone'), value: address, setValue: setAddress, setError };//handleEnter: checked && handleSubmit
+  const addressProps = { text: t('login.phone'), value: address, setValue: changePhone, setError };//handleEnter: checked && handleSubmit
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
   const confirmProps = { visible, closeModal, number: address?.value, expire, email: email?.value };
