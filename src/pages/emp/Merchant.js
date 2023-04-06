@@ -58,6 +58,7 @@ export function Merchant(){
       if(!mail?.value) setMail({ value: '', error: t('error.not_empty') });
       else if(!isEmailValid) setMail({ value: mail?.value, error: t('error.be_right') });
       if(!isPasswordValid) setPassword({ value: password?.value, error: ' ' + passwordLength + t('error.longer_than') });
+      if(!isPartnerValid) setPartner({...partner, error: t('error.be_right') })
       return false;
     }
   }
@@ -89,7 +90,7 @@ export function Merchant(){
     else {
       let name = response?.data?.retdata?.partner?.partnerName ?? '';
       if(value) setPartner({ value, name });
-      else setPartner({...partner, name });
+      else setPartner({...partner, name, error: null });
     }
     setLoading1(false);
   }

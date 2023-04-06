@@ -41,7 +41,10 @@
     "seconds": "сек",
     "resend": "Дахин илгээх",
     "partner": "Партнер код",
-    "partner_name": "Партнер нэр"
+    "partner_name": "Партнер нэр",
+    "is_partner": "Партнер эсэх?",
+    "partner_error": "Партнераа оруулна уу!",
+    "close": "Хаах"
   },
   "error": {
     "not_empty": " хоосон байж болохгүй",

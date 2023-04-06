@@ -2,16 +2,16 @@ import React, { useState } from 'react';
 import { Checkbox } from 'antd';
 import { Link, useNavigate, createSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import emailjs from '@emailjs/browser';
 
 import '../../css/login.css';
 import '../../css/config.css';
 import { login_image } from '../../assets';
-import { cityList, config, districtList, validateEmail, validateNumber } from '../../helpers';
-import { apiLogin, apiRegister, getService, setIsLoggedIn, setLogin, setSystemTypes } from '../../services';
-import { Button, FloatingInput, FloatingPassword, Error, Select } from '../../components/all';
-import { Copyright } from '../../components/login';
+import { config, validateEmail, validateNumber } from '../../helpers';
+import { apiLogin, apiRegister, getService, setIsLoggedIn, setLogin } from '../../services';
+import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
+import { Copyright, Partner } from '../../components/login';
 import { Confirm } from '../../components/login/Confirm';
 
 export function SignUp(){
@@ -24,27 +24,10 @@ export function SignUp(){
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [loading1, setLoading1] = useState(false);
-  const [loading2, setLoading2] = useState(false);
   const [visible, setVisible] = useState(false);
   const [expire, setExpire] = useState(null);
-  const [descr, setDescr] = useState({ value: null });
-  const [subDescr, setSubDescr] = useState({ value: null });
-  const [list, setList] = useState([]);
-  const [type, setType] = useState({ value: null });
-  const types = useSelector(state => state.temp.systemTypes);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const onFocus = async () => {
-    if(!types?.length){
-      setLoading2(true);
-      let api = 'Merchant/GetPartner?partnercode=test';
-      let response = await dispatch(getService(api, 'GET'));
-      if(response?.data?.retdata?.postype) dispatch(setSystemTypes(response?.data?.retdata?.postype));
-      setLoading2(false);
-    }
-  }
 
   const checkValid = () => {
     let passwordLength = 8, businessLength = 6;
@@ -53,7 +36,8 @@ export function SignUp(){
     let isPasswordValid = password?.value?.length >= passwordLength;
     let isBusinessValid = business?.value?.length >= businessLength;
     let isAddressValid = validateNumber(address?.value?.trim());
-    if(isValid && isEmailValid && isPasswordValid && isBusinessValid && isAddressValid){
+    let isPartnerValid = (partner?.value && partner?.name) || (!partner?.value && !partner?.name) ? true : false;
+    if(isValid && isEmailValid && isPasswordValid && isBusinessValid && isAddressValid && isPartnerValid){
       return true;
     } else {
       if(!email?.value) setEmail({ value: '', error: t('error.not_empty') });
@@ -64,6 +48,7 @@ export function SignUp(){
       else if(!isBusinessValid) setBusiness({ value: business?.value, error: ' ' + businessLength + t('error.longer_than') });
       if(!address?.value?.trim()) setAddress({ value: '', error: t('error.not_empty') });
       else if(!isAddressValid) setAddress({ value: address?.value?.trim(), error: t('error.be_right') });
+      if(!isPartnerValid) setPartner({...partner, error: t('login.partner') + ' ' + t('error.be_right') })
       return false;
     }
   }
@@ -103,7 +88,8 @@ export function SignUp(){
 
   const login = async () => {
     setLoading(true);
-    let data = { mail: email?.value, password: password?.value, descr: business?.value, address: address?.value?.trim() };
+    let data = { mail: email?.value, password: password?.value, descr: business?.value, address: address?.value?.trim(), partnerCode: partner?.value ?? '' };
+    console.log(data);
     const response = await dispatch(apiRegister(data));
     console.log(response);
     if(response?.error) setError(response?.error);
@@ -134,43 +120,15 @@ export function SignUp(){
     if(sure) login();
   }
 
-  const handlePartner = async e => {
-    e?.preventDefault();
-    setLoading1(true);
-    let api = 'Merchant/GetPartner?partnercode=' + partner?.value;
-    let response = await dispatch(getService(api, 'GET'));
-    if(response?.error) setPartner({...partner, error: response?.error });
-    else {
-      let name = response?.data?.retdata?.partner?.partnerName ?? '';
-      setPartner({...partner, name });
-    }
-    setLoading1(false);
-  }
-
-  const onChangeDescr = value => {
-    setDescr(value);
-    setSubDescr({ value: null });
-    setList(districtList?.filter(item => item?.parent?.includes(value?.value)));
-  }
-
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
   const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError };
   const addressProps = { text: t('login.phone'), value: address, setValue: setAddress, setError };//handleEnter: checked && handleSubmit
-  const partnerProps = { text: t('login.partner'), value: partner, setValue: setPartner, setError, handleEnter: handlePartner, id: 'l_partner' };
-  const partnerBtnProps = { className: 'l_partner_btn', text: t('tax.check'), onClick: handlePartner, disabled: partner?.value ? false : true,
-    loading: loading1 };
-  const partnerNameProps = { text: t('login.partner_name'), value: { value: partner?.name ?? '' }, disabled: true };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
   const confirmProps = { visible, closeModal, number: address?.value, expire, email: email?.value };
-  const cityProps = { value: descr, setValue: onChangeDescr, label: t('shop.city'), placeholder: t('shop.location1'), setError,
-    data: cityList, id: 'l_select' };
-  const districtProps = { value: subDescr, setValue: setSubDescr, label: t('shop.district'), placeholder: t('shop.location1'), setError,
-    data: list, id: 'l_select' };
-  const typeProps = { value: type, setValue: setType, label: t('pos.type'), placeholder: t('pos.type1'), setError,
-    data: types, s_value: 'valueNum', s_descr: 'valueStr1', id: 'l_select', onFocus, loading: loading2 };
-  
+  const partProps = { partner, setPartner };
+
   return (
     <div className='l_container'>
       {visible && <Confirm {...confirmProps} />}
@@ -182,14 +140,7 @@ export function SignUp(){
           <FloatingPassword {...passProps} />
           <FloatingInput {...businessProps} />
           <FloatingInput {...addressProps} />
-          <div className='l_partner_row'>
-            <FloatingInput {...partnerProps} />
-            <Button {...partnerBtnProps} />
-          </div>
-          <FloatingInput {...partnerNameProps} />
-          <Select {...cityProps} />
-          <Select {...districtProps} />
-          <Select {...typeProps} />
+          <Partner {...partProps} />
           <div className='co_gap' />
           <div className='co_gap' />
           <div className='l_check_row'>
