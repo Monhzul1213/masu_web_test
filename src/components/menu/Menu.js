@@ -27,6 +27,7 @@ export function Menu(props){
 
   useEffect(() => {
     setCollapsed(size?.width > 740 ? false : true);
+    if(isAdmin) setOpenKeys(["system", "/system"]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
