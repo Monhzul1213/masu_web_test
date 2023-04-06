@@ -152,9 +152,9 @@ export function SignUp(){
             <Checkbox {...checkProps} />
             <p className='l_term'>
               {t('login.sign_accept1')}
-              <a className='l_term_link' href='/'>{t('login.sign_accept2')}</a>
+              <a className='l_term_link' target='_blank' href='https://masu.mn/terms-conditions/'>{t('login.sign_accept2')}</a>
               {t('login.sign_accept3')}
-              <a className='l_term_link' href='/'>{t('login.sign_accept4')}</a>
+              <a className='l_term_link' target='_blank' href='https://masu.mn/privacy-policy/'>{t('login.sign_accept4')}</a>
               {t('login.sign_accept5')}
             </p>
           </div>
