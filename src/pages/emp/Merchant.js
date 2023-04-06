@@ -7,12 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../../css/invt.css';
 import { apiLogin, getService, sendRequest } from '../../services';
 import { currencyList, validateEmail } from '../../helpers';
-import { Button, ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Prompt, Select } from '../../components/all';
+import { ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Prompt, Select } from '../../components/all';
 
 export function Merchant(){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [loading1, setLoading1] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [name, setName] = useState({ value: '' });
@@ -83,7 +82,7 @@ export function Merchant(){
 
   const handlePartner = async (e, value) => {
     e?.preventDefault();
-    setLoading1(true);
+    // setLoading1(true);
     let api = 'Merchant/GetPartner?partnercode=' + (value ?? partner?.value);
     let response = await dispatch(getService(api, 'GET'));
     if(response?.error) setError(response?.error);
@@ -92,7 +91,7 @@ export function Merchant(){
       if(value) setPartner({ value, name });
       else setPartner({...partner, name, error: null });
     }
-    setLoading1(false);
+    // setLoading1(false);
   }
   
   let nameProps = { value: name, setValue: setName, label: t('login.business'), placeholder: t('login.business'),
@@ -105,9 +104,7 @@ export function Merchant(){
     placeholder: t('login.currency'), setError, setEdited, data: currencyList };
   let btnProps = { onClickCancel, onClickSave, id: 'emp_ac_btns' };
   let partnerProps = { label: t('login.partner'), placeholder: t('login.partner'), value: partner, setValue: setPartner, setError,
-    handleEnter: handlePartner, inRow: true, noBlur: true };
-  let partnerBtnProps = { className: 'co_check_btn', text: t('tax.check'), onClick: handlePartner, disabled: partner?.value ? false : true,
-    loading: loading1 };
+    handleEnter: handlePartner, inRow: true, noBlur: true, disabled: true };
   let partnerNameProps = { label: t('login.partner_name'), placeholder: t('login.partner_name'), value: { value: partner?.name ?? '' }, disabled: true };
   
   return (
@@ -123,8 +120,8 @@ export function Merchant(){
             <Select {...currencyProps} />
             <div id='im_input_row_large' style={{ flexFlow: 'row', alignItems: 'flex-end' }}>
               <Input {...partnerProps} />
-              <div className='im_gap' />
-              <Button {...partnerBtnProps} />
+              {/* <div className='im_gap' />
+              <Button {...partnerBtnProps} /> */}
             </div>
             <Input {...partnerNameProps} />
           </div>
