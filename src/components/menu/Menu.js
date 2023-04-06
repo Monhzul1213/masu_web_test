@@ -46,7 +46,14 @@ export function Menu(props){
     zIndex: 1000
   };
 
-  const items = [
+  const items = isAdmin ? [
+    getItem(t('menu.system'), '/system', <FiTool />, [
+      getItem(t('menu.solve'), '/system/request_solve'),
+      getItem(t('menu.invoice'), '/system/invoice'),
+      getItem(t('menu.info'), '/system/info'),
+      getItem(t('menu.advert'), '/system/advert'),
+    ])
+  ] : [
     getItem(t('menu.report'), '/report', <BsClipboardData />, [
       getItem(t('menu.report_sales'), '/report/report_sales', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_invtentory'), '/report/report_invtentory', null, null, null, msRole?.webViewSalesReport !== 'Y'),
@@ -88,12 +95,6 @@ export function Menu(props){
       getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
-    isAdmin ? getItem(t('menu.system'), '/system', <FiTool />, [
-      getItem(t('menu.solve'), '/system/request_solve'),
-      getItem(t('menu.invoice'), '/system/invoice'),
-      getItem(t('menu.info'), '/system/info'),
-      getItem(t('menu.advert'), '/system/advert'),
-    ]) : null,
   ];
 
   const onClick = (e, hide) => {
