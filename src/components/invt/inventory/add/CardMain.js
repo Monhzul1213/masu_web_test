@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
-import { limitList } from '../../../../helpers';
 
+import { limitList } from '../../../../helpers';
 import { getList } from '../../../../services';
-import { CheckBox, DescrInput, Input, MoneyInput, Radio, Select, UploadImage } from '../../../all';
+import { CheckBox, DescrInput, DynamicBSIcon, Input, MoneyInput, Radio, Select, UploadImage, IconButton } from '../../../all';
+import { Add as AddCategory } from '../../category';
 
 function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice,
@@ -14,6 +15,7 @@ function Card(props){
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [vendors, setVendors] = useState([]);
+  const [categoryVisible, setCategoryVisible] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -30,14 +32,15 @@ function Card(props){
     setLoading(false);
   }
 
-  const getCategories = async () => {
-    if(!categories?.length || categories?.length === 1){
+  const getCategories = async (toGet, id) => {
+    if(!categories?.length || categories?.length === 1 || toGet){
       setError(null);
       const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
       if(response?.error) setError(response?.error);
       else {
         let data = [...[{categoryId: -1, categoryName: t('inventory.no_category')}], ...response?.data];
         setCategories(data);
+        if(id) setCategory({ value: id });
       }
     }
   }
@@ -59,6 +62,16 @@ function Card(props){
     if(isNaN(text)) setBarcode({...value, error: 'must_number'});
     else setBarcode({ value: text });
   } 
+
+  const onClickCategory = e => {
+    e?.preventDefault();
+    setCategoryVisible(true);
+  }
+
+  const closeCategory = (saved, id) => {
+    setCategoryVisible(false);
+    getCategories(saved, id);
+  }
 
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
@@ -85,10 +98,14 @@ function Card(props){
   
   return (
     <div className='ia_back' id={id}>
+      <AddCategory visible={categoryVisible} closeModal={closeCategory} />
       <div className='ia_image_row'>
         <div style={{flex: 1}}>
           <Input {...nameProps} />
-          <Select {...categoryProps} />
+          <div id='im_unit_row_large'>
+            <div style={{flex: 1}}><Select {...categoryProps} /></div>
+            <IconButton className='im_add_btn' onClick={onClickCategory} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
+          </div>
           <div id={idRow1}>
             <Radio {...unitProps} />
             <div className='im_gap' />

@@ -39,7 +39,7 @@ export function Select(props){
           filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
           onChange={handleChange}
           value={value?.value}
-          onFocus={onFocus}
+          onFocus={() => onFocus && onFocus()}
           maxTagCount={0}
           maxTagPlaceholder={maxTagPlaceholder}
           // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' style={style} />}

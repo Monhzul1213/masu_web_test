@@ -60,7 +60,7 @@ export function Add(props){
       const response = await dispatch(sendRequest(user, token, api, data));
       if(response?.error) setError(response?.error);
       else {
-        closeModal(true);
+        closeModal(true, response?.data?.categoryId);
         message.success(t('category.add_success'));
       }
       setLoading(false);

@@ -1445,3 +1445,26 @@
   color: var(--text-color);
   background-color: var(--back-color);
 }
+
+.im_add_btn {
+  background-color: var(--config-b-color);
+  border: none;
+  box-shadow: none;
+  height: 36px;
+  width: 36px;
+  border-radius: var(--radius);
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.im_add_btn:hover {
+  cursor: pointer;
+  background-color: var(--config-color);
+}
+
+.im_add_btn_icon {
+  font-size: 16px;
+  color: var(--root-color);
+}
