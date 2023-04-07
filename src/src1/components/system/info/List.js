@@ -3,7 +3,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
 import { Money, PaginationTable, Table } from '../../all/all_m';
-
+import moment from 'moment';
 export function List(props){
   const { data, size } = props;
   const [columns, setColumns] = useState([]);
@@ -12,6 +12,10 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('system.id')}</div>, accessor: 'merchantID', customStyle: { width: 100 },
+        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
+      },
       { Header: t('tax.customer'), accessor: 'customer' , customStyle: { width: 300 }},
       {
         Header: <div style={{textAlign: 'right'}}>{t('system.site_qty')}</div>, accessor: 'siteQty', customStyle: { width: 100 },
@@ -42,6 +46,9 @@ export function List(props){
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       { Header: t('system.noat'), accessor: '' },
+      { Header: t('system.date'), accessor: 'createdDate', customStyle: { minWidth: 120 },
+        Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -57,7 +64,7 @@ export function List(props){
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, hasTotal: true , total: data?.length };
 
   return (
     <div>

@@ -53,6 +53,7 @@ export function Menu(props){
       getItem(t('menu.invoice'), '/system/invoice'),
       getItem(t('menu.info'), '/system/info'),
       getItem(t('menu.advert'), '/system/advert'),
+      getItem(t('menu.noti'), '/system/notification'),
     ])
   ] : [
     getItem(t('menu.report'), '/report', <BsClipboardData />, [

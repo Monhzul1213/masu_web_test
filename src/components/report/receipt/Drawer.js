@@ -29,7 +29,7 @@ export function Drawer(props){
     return (
       <div key={index} className='dr_item'>
         <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}
-        <br/>{item?.serviceCode !== 0 ? ( t('time.t_emp')+ ':' + item?.empName ) : ''}
+        <br/>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('time.t_emp')+ ':' + item?.empName ) : ''}
         </p>
         <p className='dr_item_text2'>{item?.qty}</p>
         <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>

@@ -7,7 +7,7 @@ import {  getList, sendRequest } from '../../../services';
 import '../../css/discount.css';
 import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
 import { Add , } from '../../components/suppliers';
-import {  validateEmail, urlToFile } from '../../../helpers';
+import { urlToFile } from '../../../helpers';
 import mime from 'mime';
 import '../../../css/invt.css';
 
@@ -118,12 +118,12 @@ export function SupplierAdd(){
   const checkValid = () => {
     let phoneLength = 8 ;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
-    let isEmailValid = validateEmail(email?.value?.trim());
-    if( isEmailValid  && name?.value?.trim() && isPhoneValid ){
+    // let isEmailValid = validateEmail(email?.value?.trim());
+    if( name?.value?.trim() && isPhoneValid ){
       return true;
     } else {
-      if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
-      else if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
+      // if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
+      // else if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       // if(!image) setImage({ value: '', error: t('error.not_empty') });
       if(!vendCode?.value?.trim()) setVendCode({ value: '', error: t('error.not_empty') });

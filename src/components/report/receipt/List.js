@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import moment from 'moment';
 
-import { PaginationTable, Table, Money, IconSelect, DynamicMDIcon } from '../../all';
+import { PaginationTable, Table, Money } from '../../all';
 import { Drawer } from './Drawer';
 import { Header } from './Header';
 
@@ -81,18 +81,13 @@ export function List(props){
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
   const drawerProps = { selected, open, setOpen };
-  const filterProps = { onSearch: getData, size, filter, columns, data, excelName };
-  const columnProps = { value: columns1, setValue: changeColumns, data: t('report_receipt.columns'), className: 'rp_list_drop',
-    Icon: () => <DynamicMDIcon name='MdOutlineViewColumn' className='rp_list_drop_icon' />,
-    dropdownStyle: { minWidth: 200 }, dropdownAlign: { offset: [-165, 5] } };
+  const filterProps = { onSearch: getData, size, filter, columns, data1 : data, excelName, 
+  value: columns1, setValue: changeColumns, data: t('report_receipt.columns'), className: 'rp_list_drop' };
 
   return (
     <div>
       <Drawer {...drawerProps} />
-      <div className='rp_list_filter'>
-        <Header {...filterProps} />        
-        <IconSelect {...columnProps} />
-      </div>
+      <Header {...filterProps} />        
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />

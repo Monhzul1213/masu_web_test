@@ -21,13 +21,14 @@ export function List(props){
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('advert.name'), accessor: 'adsName' },
+      {id : 'notifcationType',  Header: t('noti.type'), accessor: d => { return d.notifcationType === 'ALL' ? 'Бүх хэрэглэгч' : 'Сонгосон хэрэглэгч' } },
       { Header: t('invoice.begin'), accessor: 'beginDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },      
       { Header: t('invoice.end'), accessor: 'endDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },
+      { Header: t('noti.subject'), accessor: 'subject' },
       { id: 'status', Header: t('order.status'),  accessor: d => { return d.status === 0 ? 'Идэвхгүй' : 'Идэвхтэй' }},
     ]);
     return () => {};
@@ -66,12 +67,12 @@ export function List(props){
   }
 
   const onRowClick = row => {
-    navigate({ pathname: 'advert_add', search: createSearchParams({ adsId: row?.original?.adsId}).toString() });
+    navigate({ pathname: 'noti_add', search: createSearchParams({ notifcationId: row?.original?.notifcationId}).toString() });
   }
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'endDate', desc: true }] }, 
     onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick ,  hasTotal: true , total: data?.length };
+  const tableProps = { tableInstance, onRowClick,  hasTotal: true , total: data?.length };
 
   return (
     <div>

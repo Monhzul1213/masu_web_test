@@ -14,7 +14,7 @@ import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes } from './src1/pages/report';
-import { Info, Advert, AdvertAdd } from './src1/pages/system';
+import { Info, Advert, AdvertAdd, NotiAdd, Notification } from './src1/pages/system';
 import { setIsLoggedIn } from './services';
 
 export function App(){
@@ -111,6 +111,8 @@ export function App(){
                 <Route path='/system/info' element={<Info />} />
                 <Route path='/system/advert' element={<Advert />} />
                 <Route path='/system/advert/advert_add' element={<AdvertAdd />} />
+                <Route path='/system/notification' element={<Notification />} />
+                <Route path='/system/notification/noti_add' element={<NotiAdd />} />
               </Routes>
             </Layout>
           </Layout>

@@ -70,8 +70,9 @@ export function Transaction(props){
                 {data1?.map(renderItem)}
             </div>           
             <div className='sub_row'>
-              <p className='sub_row_label'>{t('customer.balance')}</p>
-              <p className='sub_row_value'><Money value={selected?.arBalance} fontSize={13} /></p>
+              <p className='sub_row_value'>{t('customer.balance')}
+              <Money value={selected?.arBalance} fontSize={13} />
+              </p> 
             </div>
         </div>
         <TranList {...listProps}/>

@@ -583,3 +583,8 @@ export const banks = [
   { label: 'Хас банк', bank: 'ХАСБАНК', logo: 'has', acct: '5005573920', name: 'МасуПОС ххк' },
   { label: 'Голомт банк', bank: 'ГОЛОМТБАНК', logo: 'golomt', acct: '1605231423', name: 'МасуПОС ххк' },
 ];
+
+export const types = [
+  { label: "Бүх хэрэглэгч", value: "ALL" },
+  { label: "Сонгосон хэрэглэгч", value: "MERCHANT" }
+];
