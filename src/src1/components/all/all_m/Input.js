@@ -11,7 +11,7 @@ export function Input(props){
       ? setValue({ value: value?.value, error: '' + length + t('error.shorter_than') })
       : setValue({ value: e.target.value });
     e?.target?.value?.length < length1 
-      ? setValue({ error: '' + length1 + t('error.longer_than') })
+      ? setValue({ error: '' + length1 + t('error.longer_than'), value: e.target.value })
       : setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);

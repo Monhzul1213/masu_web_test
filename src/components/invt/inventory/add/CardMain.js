@@ -7,6 +7,7 @@ import { limitList } from '../../../../helpers';
 import { getList } from '../../../../services';
 import { CheckBox, DescrInput, DynamicBSIcon, Input, MoneyInput, Radio, Select, UploadImage, IconButton } from '../../../all';
 import { Add as AddCategory } from '../../category';
+import { Add as AddVendor } from '../../../management/vendor';
 
 function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice,
@@ -16,6 +17,7 @@ function Card(props){
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [vendors, setVendors] = useState([]);
   const [categoryVisible, setCategoryVisible] = useState(false);
+  const [vendorVisible, setVendorVisible] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -45,7 +47,7 @@ function Card(props){
     }
   }
 
-  const getVendors = async () => {
+  const getVendors = async id => {
     setError(null);
     const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
     if(response?.error){
@@ -53,6 +55,7 @@ function Card(props){
       return false;
     } else {
       setVendors(response?.data);
+      if(id) setVendId({ value: id });
       return true;
     }
   }
@@ -71,6 +74,16 @@ function Card(props){
   const closeCategory = (saved, id) => {
     setCategoryVisible(false);
     getCategories(saved, id);
+  }
+
+  const onClickVendor = e => {
+    e?.preventDefault();
+    setVendorVisible(true);
+  }
+
+  const closeVendor = (saved, id) => {
+    setVendorVisible(false);
+    if(saved) getVendors(id);
   }
 
   const id = size?.width > 480 ? 'im_large' : 'im_small';
@@ -98,7 +111,8 @@ function Card(props){
   
   return (
     <div className='ia_back' id={id}>
-      <AddCategory visible={categoryVisible} closeModal={closeCategory} />
+      {categoryVisible && <AddCategory visible={categoryVisible} closeModal={closeCategory} />}
+      {vendorVisible && <AddVendor visible={vendorVisible} closeModal={closeVendor} />}
       <div className='ia_image_row'>
         <div style={{flex: 1}}>
           <Input {...nameProps} />
@@ -129,7 +143,10 @@ function Card(props){
       <div id={idRow}>
         <Select {...limitProps} />
         <div className='im_gap' />
-        <Select {...vendProps} />
+        <div className='im_vend_row'>
+          <Select {...vendProps} />
+          <IconButton className='im_add_btn' onClick={onClickVendor} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
+        </div>
       </div>
     </div>
   );

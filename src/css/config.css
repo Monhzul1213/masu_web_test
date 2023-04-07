@@ -402,7 +402,7 @@
 }
 
 .m_scroll {
-  max-height: calc(90vh - 105px);
+  max-height: calc(90vh - 125px);
   overflow-y: scroll;
   overflow-x: hidden;
 }
