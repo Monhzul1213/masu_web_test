@@ -49,7 +49,7 @@ export function Card(props){
             </div>
           </div>
           <Progress className='rw_card_progress' percent={+item?.salesPercent?.toFixed(1)} width={55}
-            strokeWidth={8} strokeColor={color} type="circle" />
+            strokeWidth={8} strokeColor={color} type="circle" format={(percent) => `${percent}%`} />
         </div>
       </div>
     );
