@@ -5,6 +5,7 @@ import { SizeMe } from 'react-sizeme';
 import { useSelector, useDispatch } from 'react-redux';
 import { createBrowserHistory } from "history";
 
+import { setIsLoggedIn } from './services';
 import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Config, Recovery } from './pages';
 import { Category, Inventory, InventoryAdd, InventoryImport, Modifier, ModifierAdd } from './pages/invt';
@@ -15,7 +16,7 @@ import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification } from './src1/pages/system';
-import { setIsLoggedIn } from './services';
+import { PartnerSignUp } from './pages/partner';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -52,6 +53,7 @@ export function App(){
           <Route path='/sign_up' element={<SignUp />} />
           <Route path='/confirm' element={<Confirm />} />
           <Route path='/recovery' element={<Recovery />} />
+          <Route path='/partner_sign_up' element={<PartnerSignUp />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
