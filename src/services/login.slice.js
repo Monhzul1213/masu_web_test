@@ -37,11 +37,11 @@ export const loginSlice = createSlice({
   }
 });
 
-export const apiRegister = data => async dispatch => {
+export const apiRegister = (data, url) => async dispatch => {
   try {
     const config = {
       method: 'POST',
-      url: loginConfig?.url + 'Merchant/register',
+      url: loginConfig?.url + (url ?? 'Merchant/register'),
       headers: { 'Content-Type': 'application/json', 'Accept': '*/*' }, 
       data
     };

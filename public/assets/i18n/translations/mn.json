@@ -44,7 +44,10 @@
     "partner_name": "Партнер нэр",
     "is_partner": "Партнер эсэх?",
     "partner_error": "Партнераа оруулна уу!",
-    "close": "Хаах"
+    "close": "Хаах",
+    "partner_signup": "Партнер бүртгүүлэх",
+    "partner_address": "Хаяг",
+    "partner_password": "Нууц үг"
   },
   "error": {
     "not_empty": " хоосон байж болохгүй",

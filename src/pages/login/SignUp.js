@@ -140,7 +140,7 @@ export function SignUp(){
       <div className='l_back'>
         <img className='l_logo' src={login_image} alt='MASU LOGO' />
         <p className='l_text'>{t('login.signup_text')}</p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete='off'>
           <FloatingInput {...emailProps} />
           <FloatingPassword {...passProps} />
           <FloatingInput {...businessProps} />

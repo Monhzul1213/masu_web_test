@@ -54,8 +54,8 @@ export function Login(){
     navigate({ pathname: "/recovery", search: createSearchParams({ email: email?.value }).toString()});
   }
 
-  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
-  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, handleEnter: handleSubmit };
+  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, isLogin: true };
+  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, isLogin: true, handleEnter: handleSubmit };
   const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.login') };
   
