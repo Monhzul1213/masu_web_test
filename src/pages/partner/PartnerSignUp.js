@@ -98,7 +98,7 @@ export function PartnerSignUp(){
         dispatch(setPartnerLogin({ toPartnerRemember: true }));
         dispatch(setIsLoggedIn(true));
         window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
-        navigate({ pathname: '/' });
+        navigate({ pathname: '/partner' });
       }
     }
     setLoading(false);

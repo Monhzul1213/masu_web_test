@@ -31,6 +31,7 @@ export const loginSlice = createSlice({
       state.user = action.payload;
       state.partnerUser = action.payload;
       state.isPartner = true;
+      state.isOwner = false;
     },
     setIsOwner: (state, action) => {
       state.isOwner = action.payload;

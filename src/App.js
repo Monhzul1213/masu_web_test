@@ -16,12 +16,12 @@ import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification } from './src1/pages/system';
-import { PartnerLogin, PartnerSignUp } from './pages/partner';
+import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
+  const { user, isPartner } = useSelector(state => state.login);
   const loggedIn = useSelector(state => state.temp.loggedIn);
-  const user = useSelector(state => state.login.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -61,6 +61,28 @@ export function App(){
   );
 
   const menuProps = { collapsed, setCollapsed };
+
+  if(loggedIn && user && isPartner) return (
+    <HistoryRouter history={createBrowserHistory()}>
+      <Suspense fallback={<Loading />}>
+        <Layout style={{minHeight: '100vh'}}>
+          <Header {...menuProps} />
+          <SizeMe>{({ size }) => 
+          <Layout>
+            <Menu {...menuProps} size={size} />
+            <Layout>
+              <Routes>
+                <Route path='/' element={<Partner />} />
+                <Route path='*' element={<Partner />} />
+                <Route path='/partner' element={<Partner />} />
+              </Routes>
+            </Layout>
+          </Layout>
+          }</SizeMe>
+        </Layout>
+      </Suspense>
+    </HistoryRouter>
+  );
   
   return (
     <HistoryRouter history={createBrowserHistory()}>

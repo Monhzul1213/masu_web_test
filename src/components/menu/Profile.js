@@ -12,7 +12,7 @@ export function Profile(props){
   const { collapsed } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const { user, isOwner } = useSelector(state => state.login);
+  const { user, isOwner, isPartner } = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ export function Profile(props){
     window.sessionStorage.removeItem('CREDENTIALS_TOKEN');
     window.localStorage.setItem('CREDENTIALS_FLUSH', Date.now().toString());
     window.localStorage.removeItem('CREDENTIALS_FLUSH');
-    navigate('/');
+    navigate(isPartner ? 'partner_sign_in' : '/');
   }
 
   const menu = () => {
