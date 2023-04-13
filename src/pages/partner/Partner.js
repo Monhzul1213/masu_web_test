@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SizeMe } from 'react-sizeme';
+import moment from 'moment';
 
 import '../../css/invt.css';
-import { Error1, Overlay } from '../../components/all';
-import { Header } from '../../components/partner';
+import { Empty1, Error1, Overlay } from '../../components/all';
+import { Header, List } from '../../components/partner';
 
 export function Partner(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') +
+      '&EndDate=' + moment()?.format('yyyy.MM.DD');
+    getData(query);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getData = async query => {
     setError(null);
@@ -32,6 +42,8 @@ export function Partner(){
   }
 
   const headerProps = { setError, onSearch: getData };
+  const emptyProps = { icon: 'MdReceipt', type: 'time', noDescr: true };
+  const listProps = { data, setData };
 
   return (
     <div className='s_container_i'>
@@ -40,57 +52,10 @@ export function Partner(){
         <SizeMe>{({ size }) => 
           <div className='i_list_cont' id='solve_list'>
             <Header {...headerProps} size={size} />
-      {/*
             {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
-      */}
           </div>
         }</SizeMe>
       </Overlay>
     </div>
   );
 }
-
-/**
-comment
-import React, { useState, useEffect } from 'react';
-import { SizeMe } from 'react-sizeme';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, createSearchParams } from 'react-router-dom';
-import moment from 'moment';
-
-import { getList } from '../../services';
-import { Empty1, Error1, Overlay } from '../../components/all';
-import { Header, List } from '../../components/system/invoice/list';
-
-export function Invoice(){
-  const [data, setData] = useState([]);
-  const { user, token }  = useSelector(state => state.login);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if(user?.isAdmin){
-      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') +
-        '&EndDate=' + moment()?.format('yyyy.MM.DD');
-      getData(query);
-    } else 
-      navigate({ pathname: '/' });
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  
-
-  const onClickAdd = row => {
-    if(row?.status < 3)
-      navigate({ pathname: 'invoice_add', search: createSearchParams({ invoiceNo: row?.invoiceNo }).toString() });
-  }
-
-  const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
-  const listProps = { data, setData, onClickAdd };
-
-  return (
-    
-  );
-}
- */
