@@ -125,7 +125,7 @@ export function PartnerSignUp(){
         </form>
         <div className='l_center_row'>
           <p className='l_link_text'>{t('login.go_login')}</p>
-          <Link className='l_link' to='/partner_login'>{t('login.login')}</Link>
+          <Link className='l_link' to='/partner_sign_in'>{t('login.login')}</Link>
         </div>
       </div>
       <Copyright />

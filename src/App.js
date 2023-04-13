@@ -16,7 +16,7 @@ import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification } from './src1/pages/system';
-import { PartnerSignUp } from './pages/partner';
+import { PartnerLogin, PartnerSignUp } from './pages/partner';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -54,6 +54,7 @@ export function App(){
           <Route path='/confirm' element={<Confirm />} />
           <Route path='/recovery' element={<Recovery />} />
           <Route path='/partner_sign_up' element={<PartnerSignUp />} />
+          <Route path='/partner_sign_in' element={<PartnerLogin />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
