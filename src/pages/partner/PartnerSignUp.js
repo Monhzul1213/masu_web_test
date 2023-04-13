@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
 import '../../css/login.css';
-import { apiRegister, getService } from '../../services';
+import '../../css/config.css';
+import { apiRegister, getService, partnerLogin, setIsLoggedIn, setPartnerLogin } from '../../services';
 import { validateEmail, validateNumber } from '../../helpers';
 import { login_image } from '../../assets';
 import { Button, Error, FloatingInput, FloatingPassword } from '../../components/all';
@@ -23,6 +24,7 @@ export function PartnerSignUp(){
   const [expire, setExpire] = useState(null);
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const sendSMS = async () => {
     const diff = expire - new Date();
@@ -90,10 +92,14 @@ export function PartnerSignUp(){
     console.log(response);
     if(response?.error) setError(response?.error);
     else {
-    //   dispatch(setLogin({ toRemember: true }));
-    //   dispatch(setIsLoggedIn(true));
-    //   window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
-    //   navigate({ pathname: '/config', search: createSearchParams({ mode: 'is_first' }).toString() });
+      const response2 = await dispatch(partnerLogin(data?.partnerCode, data?.password));
+      if(response2?.error) setError(response2?.error);
+      else {
+        dispatch(setPartnerLogin({ toPartnerRemember: true }));
+        dispatch(setIsLoggedIn(true));
+        window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
+        navigate({ pathname: '/' });
+      }
     }
     setLoading(false);
   }

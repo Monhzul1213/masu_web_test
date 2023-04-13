@@ -10,6 +10,9 @@ const initialState = {
   webUser: null,
   toRemember: false,
   isOwner: false,
+  partnerUser: null,
+  toPartnerRemember: false,
+  isPartner: false,
 };
 
 export const loginSlice = createSlice({
@@ -22,6 +25,12 @@ export const loginSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload;
       state.webUser = action.payload;
+      state.isPartner = false;
+    },
+    setPartnerUser: (state, action) => {
+      state.user = action.payload;
+      state.partnerUser = action.payload;
+      state.isPartner = true;
     },
     setIsOwner: (state, action) => {
       state.isOwner = action.payload;
@@ -33,6 +42,9 @@ export const loginSlice = createSlice({
     },
     setLogin: (state, action) => {
       state.toRemember = action.payload?.toRemember;
+    },
+    setPartnerLogin: (state, action) => {
+      state.toPartnerRemember = action.payload?.toPartnerRemember;
     },
   }
 });
@@ -155,6 +167,30 @@ export const qpayLogin = () => async dispatch => {
   }
 };
 
+export const partnerLogin = (partnerCode, password) => async dispatch => {
+  try {
+    const config = {
+      method: 'POST',
+      url: loginConfig?.url + 'Merchant/LoginPartner',
+      headers: { 'Content-Type': 'application/json', 'Accept': '*/*' }, 
+      data: { partnerCode, password }
+    };
+    const response = await fetchRetryLogin(config);
+    console.log('++++++++++++++++++++++=', response);
+    if(!response || response?.result){
+      return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
+    } else {
+      dispatch(setToken(response?.token));
+      let user = {...response?.retdata, password };
+      dispatch(setPartnerUser(user));
+      return Promise.resolve({ error: null, token: response?.token });
+    }
+  } catch (err) {
+    console.log(err);
+    return Promise.resolve({ error: err?.toString() });
+  }
+};
+
 function fetchRetryLogin(config, retries = 5) {
   return axios(config)
     .then(res => {
@@ -216,6 +252,6 @@ function fetchRetrySend(config, retries = 0) {
     });
 }
 
-export const { setToken, setUser, logout, setLogin, setIsOwner } = loginSlice.actions;
+export const { setToken, setUser, logout, setLogin, setIsOwner, setPartnerUser, setPartnerLogin } = loginSlice.actions;
 
 export const loginReducer = loginSlice.reducer;
