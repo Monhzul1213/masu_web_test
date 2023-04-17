@@ -19,7 +19,7 @@ export function Header(props){
   }, [size?.width]);
 
   const onHide = () => {
-    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    let query = '&BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     onSearch(query);
   }
 

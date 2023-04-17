@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { SizeMe } from 'react-sizeme';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import '../../css/invt.css';
+import { getPartnerList } from '../../services';
 import { Empty1, Error1, Overlay } from '../../components/all';
 import { Header, List } from '../../components/partner';
 
@@ -10,9 +12,11 @@ export function Partner(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const { user, token } = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') +
+    let query = '&BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') +
       '&EndDate=' + moment()?.format('yyyy.MM.DD');
     getData(query);
     return () => {};
@@ -22,22 +26,10 @@ export function Partner(){
   const getData = async query => {
     setError(null);
     setLoading(true);
-    // comment
-    console.log(query)
-    // let api = 'Txn/GetInvoice' + (query ?? '');
-    // const response = await dispatch(getList(user, token, api));
-    // if(response?.error) setError(response?.error);
-    // else {
-    //   response?.data?.forEach(item => {
-    //     if(item?.status === 1) item.row_color = '#effd5f';
-    //     else if(item?.status === 2) item.row_color = '#6ad6f7';
-    //     else if(item?.status === 3) item.row_color = '#69db91';
-    //     else if(item?.status === 9) item.row_color = '#c0c0c2';
-    //     else item.row_color = '#ffffff';
-    //     item.label1 = (item.descr ?? '') + '-' + (item.empName ?? '') + '-' + (item.phone ?? '');
-    //   });
-    //   setData(response?.data);
-    // }
+    let api = 'Merchant/getPartnerInfo?PartnerCode=' + (user?.partnerCode ?? '') + (query ?? '');
+    const response = await dispatch(getPartnerList(user, token, api));
+    if(response?.error) setError(response?.error);
+    else setData(response?.data);
     setLoading(false);
   }
 

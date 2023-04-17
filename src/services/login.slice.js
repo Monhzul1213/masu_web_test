@@ -153,7 +153,6 @@ export const qpayLogin = () => async dispatch => {
     const token = `TEST_MERCHANT:123456`;
     const encodedToken = Buffer.from(token).toString('base64');
     const session_url = 'https://merchant.qpay.mn/v2/auth/token';
-    console.log(token, encodedToken, session_url);
 
     const config = { method: 'POST', url: session_url, headers: { 'Authorization': 'Basic '+ encodedToken }};
     const response = await fetchRetryLogin(config);
@@ -181,10 +180,10 @@ export const partnerLogin = (partnerCode, password) => async dispatch => {
     if(!response || response?.result){
       return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
     } else {
-      dispatch(setToken(response?.token));
-      let user = {...response?.retdata, password };
+      dispatch(setToken(response?.retdata?.token));
+      let user = {...response?.retdata?.user, password };
       dispatch(setPartnerUser(user));
-      return Promise.resolve({ error: null, token: response?.token });
+      return Promise.resolve({ error: null, token: response?.retdata?.token });
     }
   } catch (err) {
     console.log(err);
