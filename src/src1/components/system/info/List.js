@@ -63,7 +63,7 @@ export function List(props){
 
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'merchantID', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, hasTotal: true , total: data?.length };
 
   return (
