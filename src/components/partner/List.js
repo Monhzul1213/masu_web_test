@@ -13,20 +13,20 @@ export function List(props){
   useEffect(() => {
     setColumns([
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.id')}</div>, accessor: 'merchantId', customStyle: { width: 90 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.id')}</div>, accessor: 'merchantId', customStyle3: { width: 90 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
-      { Header: t('tax.customer'), accessor: 'customer' , customStyle2: { width: 300 }},
+      { Header: t('tax.customer'), accessor: 'merchantDescr' , customStyle2: { width: 300 }},
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.sub_qty')}</div>, accessor: 'subsciption_Count', customStyle: { width: 150 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.sub_qty')}</div>, accessor: 'subsciption_Count', customStyle3: { width: 150 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.sub_amount')}</div>, accessor: 'subsciption_Amount', customStyle: { width: 150 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.sub_amount')}</div>, accessor: 'subsciption_Amount', customStyle3: { width: 150 },
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('login.partner_amt')}</div>, accessor: 'partner_Amount', customStyle: { width: 150 },
+        Header: <div style={{textAlign: 'right'}}>{t('login.partner_amt')}</div>, accessor: 'partner_Amount', customStyle3: { width: 150 },
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
     ]);
