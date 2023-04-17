@@ -23,11 +23,11 @@ export function List(props){
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('system.sub_amount')}</div>, accessor: 'subsciption_Amount', customStyle3: { width: 150 },
-        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
+        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} currency='₮' /></div>)
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('login.partner_amt')}</div>, accessor: 'partner_Amount', customStyle3: { width: 150 },
-        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
+        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} currency='₮' /></div>)
       },
     ]);
     return () => {};
