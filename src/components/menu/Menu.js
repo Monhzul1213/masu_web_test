@@ -132,14 +132,14 @@ export function Menu(props){
           <Profile {...profileProps} />
           <AntMenu {...menuProps} />
         </div>
-        <Install {...profileProps} />
+        {!isPartner && <Install {...profileProps} />}
       </Sider>
       <Drawer {...drawerProps}>
         <div className='mi_top'>
           <Profile {...profileProps} />
           <AntMenu {...menu1Props} />
         </div>
-        <Install {...profileProps} />
+        {!isPartner && <Install {...profileProps} />}
       </Drawer>
     </>
   )
