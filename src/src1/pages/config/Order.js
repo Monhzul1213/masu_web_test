@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { withSize } from 'react-sizeme';
 import { getList, sendRequest } from '../../../services';
 import { Confirm, Empty, Error1, Overlay, Prompt } from '../../../components/all';
-import { CardVariant } from '../../components/config/CardVariant';
+import { CardVariant , Message } from '../../components/config';
 
 function Card(props){
   const { size } = props;
@@ -116,6 +116,7 @@ function Card(props){
   const onClickCancel = () => setVariants(variants);
 
   const emptyProps = { icon: 'MdOutlineReceiptLong', type: 'orders', onClickAdd: onClickShop };
+  const msgProps = { icon: 'BsGear', type: 'orders' };
   const confirmProps = { open: open ? true : false, text: 'page.back_confirm', confirm };
   const variantProps = { data: variants, setData: setVariants, setEdited, setDVariants,
     search: searchV, setSearch: setSearchV, disabled: disabledV, setDisabled: setDisabledV, 
@@ -131,8 +132,7 @@ function Card(props){
         {error && <Error1 error={error} />}
           {!sites?.length ? <Empty {...emptyProps} /> : <CardVariant {...variantProps} /> }
       </Overlay>
-      : message.info(t('orders.msg'))  }
-
+      : <Message {...msgProps} /> }
     </div> 
   </>
   );

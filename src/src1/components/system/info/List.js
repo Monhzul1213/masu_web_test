@@ -45,7 +45,7 @@ export function List(props){
         Header: <div style={{textAlign: 'right'}}>{t('system.sales_qty')}</div>, accessor: 'salesQty', customStyle: { width: 100 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
-      { Header: t('system.noat'), accessor: '' },
+      { Header: t('system.noat'), accessor: 'useNuatus' },
       { Header: t('system.date'), accessor: 'createdDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },

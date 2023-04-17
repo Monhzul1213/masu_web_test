@@ -27,7 +27,7 @@ export function AppModal(props){
   }
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={500}>
       <div className='m_back'>
         <p className='ap_title'>{t('config.thanks')}</p>
         <p className='ap_text'>{t('config.download')}</p>
