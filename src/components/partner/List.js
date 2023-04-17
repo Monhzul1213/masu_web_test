@@ -1,60 +1,48 @@
-import React from 'react';
-
-export function List(props){
-  return (
-    <div>
-      List
-    </div>
-  );
-}
-
-/**
-comment
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment';
+import { useTable, usePagination, useSortBy } from 'react-table';
 
-import { Money, PaginationTable, Table } from '../../../all';
+import { Money, PaginationTable, Table } from '../all';
 
 export function List(props){
-  const { onClickAdd, data, size } = props;
+  const { data } = props;
+  const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
-  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     setColumns([
-      { Header: t('tax.customer'), accessor: 'label1' },
-      { Header: t('invoice.invoice'), accessor: 'invoiceNo' },
       {
-        Header: t('page.date'), accessor: 'invoiceDate', customStyle: { minWidth: 120 },
-        Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
+        Header: <div style={{textAlign: 'right'}}>{t('system.id')}</div>, accessor: 'merchantId', customStyle: { width: 90 },
+        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
-      { Header: t('invoice.type'), accessor: 'invoiceType' },
-      { Header: t('invoice.time'), accessor: 'invoiceTime' },
+      { Header: t('tax.customer'), accessor: 'customer' , customStyle2: { width: 300 }},
       {
-        Header: <div style={{textAlign: 'right'}}>{t('invoice.amount')}</div>, accessor: 'amount', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.sub_qty')}</div>, accessor: 'subsciption_Count', customStyle: { width: 150 },
+        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('system.sub_amount')}</div>, accessor: 'subsciption_Amount', customStyle: { width: 150 },
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
-      { Header: t('order.status'), accessor: 'statusName' },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('login.partner_amt')}</div>, accessor: 'partner_Amount', customStyle: { width: 150 },
+        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
   useEffect(() => {
-    if(size?.width >= 660) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)');
-    else setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 110px - 10px - 37px)');
+    setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)');
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size?.width]);
-
-  const onRowClick = row => onClickAdd(row?.original);
+  }, []);
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick };
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination);
+  const tableProps = { tableInstance };
 
   return (
     <div>
@@ -67,4 +55,3 @@ export function List(props){
     </div>
   );
 }
- */
