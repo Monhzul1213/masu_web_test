@@ -111,7 +111,7 @@ export function PartnerSignUp(){
   const addressProps = { text: t('login.partner_address'), value: address, setValue: setAddress, setError };
   const passProps = { text: t('login.partner_password'), value: password, setValue: setPassword, setError, handleEnter: handleSubmit };
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup') };
-  const confirmProps = { visible, closeModal, number: phone?.value, expire, email: mail?.value };
+  const confirmProps = { visible, closeModal, number: phone?.value, expire, email: mail?.value, fromPartner: true };
 
   return (
     <div className='l_container'>

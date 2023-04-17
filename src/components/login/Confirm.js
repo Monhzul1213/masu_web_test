@@ -11,7 +11,7 @@ import { getService } from '../../services';
 import { Button, DynamicAIIcon, Error } from '../all';
 
 export function Confirm(props){
-  const { visible, number, email, closeModal, expire } = props;
+  const { visible, number, email, closeModal, expire, fromPartner } = props;
   const { t } = useTranslation();
   const [code, setCode] = useState('');
   const [error, setError] = useState(null);
@@ -43,7 +43,7 @@ export function Confirm(props){
 
   const onClickSend = async () => {
     setLoading(true);
-    let api = 'Merchant/SentSMS?mobile=' + number + '&email=' + email;
+    let api = 'Merchant/SentSMS?mobile=' + number + '&email=' + email + (fromPartner ? '&RegisterType=Partner' : '');
     console.log(api);
     let response = await dispatch(getService(api));
     setLoading(false);
