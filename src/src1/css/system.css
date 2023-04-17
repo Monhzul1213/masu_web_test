@@ -39,3 +39,7 @@
   border-bottom: 1px solid var(--text4-color);
   padding: 3px 0;
 }
+#solve_list_z {
+  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
+  max-width: 1200px;
+}

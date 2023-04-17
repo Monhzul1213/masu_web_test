@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-
+import { ExportExcel } from '../../../../helpers';
 import { getList } from '../../../../services';
-import { Button, MultiSelect, PlainRange } from '../../../components/all/all_m';
+import { MultiSelect, PlainRange } from '../../../components/all/all_m';
 
 export function Header(props){
-  const { setError, onSearch, sites, emps, setSites, setEmps, size } = props;
+  const { setError, onSearch, sites, emps, setSites, setEmps, size, data, columns, excelName , filter1 } = props;
   const { t } = useTranslation();
   const [site, setSite] = useState([]);
   const [emp, setEmp] = useState([]);
@@ -64,7 +64,7 @@ export function Header(props){
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCodes=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteIDs=' + item);
-    onSearch(query)
+    onSearch && onSearch(query, filter1, date);
   }
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
   const classBack = 'th_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
@@ -78,13 +78,11 @@ export function Header(props){
     label: t('employee.title'), onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp')};
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide,
     className: 'rh_date_z' , };
-    const exportProps = { text: t('page.export'), className: 'rp_list_select', disabled: true };
 
   return (
     <div className='ih_header' id={id}  >
-        <div className='ih_btn_row_z' //style={{display: 'none'}} 
-        >
-          <Button {...exportProps} />
+        <div className='ih_btn_row_z' >
+          <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
         </div>
         <div className={classH}>
             <PlainRange {...dateProps} />

@@ -35,6 +35,7 @@ export function Info(){
     setLoading(true);
     let api = 'Merchant/GetMerchants' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
+    console.log(response)
     if(response?.error) setError(response?.error);
     setData(response?.data);
     setLoading(false);
@@ -52,7 +53,7 @@ export function Info(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
-          <div className='i_list_cont' id='solve_list'>
+          <div className='i_list_cont' id='solve_list_z'>
             <Header {...headerProps} size={size} />
             {!data?.length && filtering ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
           </div>

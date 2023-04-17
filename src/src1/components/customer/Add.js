@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import {  validateEmail } from '../../../helpers';
 import { sendRequest } from '../../../services';
-import { ButtonRow, ModalTitle, Overlay, Error, Confirm ,} from '../all/all_m';
-import { Input } from '../all/all_m';
+import { ButtonRow, ModalTitle, Overlay, Error, Confirm } from '../all/all_m';
+import { Input } from '../../../components/all';
 
 export function Add(props){
   const { visible, selected, closeModal, onSearch, filter} = props;
@@ -127,7 +127,7 @@ export function Add(props){
  
   const maxheight= 'calc(90vh - 105px )';
   const nameProps = { value: custName, setValue: setCustName, label: t('page.name'), placeholder: t('customer.name'), setError, length: 64 , length1: 2 };
-  const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, };
+  const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, length: 8 };
   const mailProps = { value: email, setValue: setEmail, label: t('page.email'), placeholder: t('customer.email'), setError, length: 100};
   const codeProps = { value: custCode, setValue: setCustCode, label: t('page.code'), placeholder: t('customer.code'), setError,  };
   const descrProps = { value: note, setValue: setNote, label: t('customer.desc'), placeholder: t('customer.desc'), setError , length: 255, length1:10};

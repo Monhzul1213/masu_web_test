@@ -97,6 +97,7 @@ export function Menu(props){
       getItem(t('system_menu.document'), '/config/document', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.store'), '/config/store', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.order_location'), '/config/order', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
   ];

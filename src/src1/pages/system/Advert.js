@@ -50,13 +50,11 @@ export function Advert(){
   const onClickDelete = async () => {
     let toDelete = [];
     data?.forEach(item => {
-      console.log(item.checked)
       if(item.checked) toDelete.push({...item, rowStatus: 'D', image : {}});
     });
     setError(null);
     setLoading(true);
     let response = await dispatch(sendRequest(user, token, 'Site/ModAdvertisement', toDelete));
-    console.log(response)
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {

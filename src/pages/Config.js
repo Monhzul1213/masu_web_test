@@ -6,6 +6,7 @@ import '../css/config.css';
 import '../css/invt.css';
 import { Card, AppModal } from '../components/config';
 import { Additional, Type, Cashier, Tax, Store, Pos, Document, TaxAdd } from './configs';
+import { Order } from '../src1/pages/config/Order';
 
 export function Config(props){
   const { size, collapsed } = props;
@@ -55,6 +56,7 @@ export function Config(props){
         <Route path='document' element={<Document />} />
         <Route path='pos' element={<Pos />} />
         <Route path='store' element={<Store />} />
+        <Route path='order' element={<Order />} />
       </Routes>
     </div>
   )

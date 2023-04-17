@@ -168,7 +168,7 @@ export function NotiAdd(){
   }
   
   const mainProps = { setError, subject, setSubject, setText, text , beginDate, setBeginDate, endDate, setEndDate, 
- status, setStatus, type, setType };
+    status, setStatus, type, setType };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
   const invtProps = { data: kits, setData: setKits, setError, setEdited,
     search: searchI, setSearch: setSearchI , setDKits };

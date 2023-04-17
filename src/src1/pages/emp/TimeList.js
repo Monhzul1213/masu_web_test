@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getList, } from '../../../services';
-import { Empty1, Error1, Overlay } from '../../../components/all';
+import { Error1, Overlay } from '../../../components/all';
 import { SizeMe } from 'react-sizeme';
 import '../../css/time.css'
-import { Header, List } from '../../components/emp/timelist';
+import { List } from '../../components/emp/timelist';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
+
 export function TimeList(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [sites, setSites] = useState([]);
   const [emps, setEmps] = useState([]);
+  const [excelName, setExcelName] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,17 +24,18 @@ export function TimeList(){
   useEffect(() => {
     if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
     else {
+      let dates = [moment()?.startOf('month'), moment()];
       let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
-      getData(query);
+      getData(query, null , dates);
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async query => {
+  const getData = async (query, query1 , dates) => {
     setError(null);
     setLoading(true);
-    let api = 'Employee/TimeCard/GetTimeCard' + (query ?? '');
+    let api = 'Employee/TimeCard/GetTimeCard' + (query ?? '') + (query1 ?? '');
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     else {
@@ -49,13 +54,12 @@ export function TimeList(){
         }
       })
       setData(grpData);
+      if(dates) setExcelName(t('header./employee/shift_list') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
     }
     setLoading(false);  
   }
 
-  const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
-  const headerProps = {  setError, onSearch: getData, sites, setSites, emps, setEmps };
-  const listProps = { data, };
+  const listProps = { data, excelName, setError, onSearch: getData, sites, setSites, emps, setEmps };
 
   return (
     <div className='s_container_i'>
@@ -63,8 +67,7 @@ export function TimeList(){
         {error && <Error1 error={error} />}
           <SizeMe>{({ size }) => 
               <div className='i_list_cont_zz' id='invt_list_zz'>
-                <Header {...headerProps} size={size} />
-                {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
+                <List {...listProps} size={size} /> 
               </div>
           }</SizeMe>
       </Overlay>

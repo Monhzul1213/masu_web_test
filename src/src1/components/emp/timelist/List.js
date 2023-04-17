@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { PaginationTable, Table } from '../../../components/all/all_m';
+import { PaginationTable, Table, Empty1 } from '../../../components/all/all_m';
+import { Header } from './Header';
+// import { ExportExcel } from '../../../../helpers';
 
 export function List(props){
-  const { data} = props;
+  const { data, excelName, setError, onSearch, sites, setSites, emps, setEmps, size} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
     setColumns([
-      { Header: t('time.t_emp'), accessor: 'empName',
-    },
-      { Header: t('time.t_site'), accessor: 'siteName' },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('time.t_total')}</div>, accessor: 'totalHours',
+      { Header: t('time.t_emp'), accessor: 'empName', exLabel:t('time.t_emp') },
+      { Header: t('time.t_site'), accessor: 'siteName', exLabel:t('time.t_site')  },
+      { Header: <div style={{textAlign: 'right'}}>{t('time.t_total')}</div>, accessor: 'totalHours', exLabel: t('time.t_total'), 
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value ? props.value : 0}</div>,
       },
     ]);
@@ -30,15 +30,22 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
       }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
+  const filterProps = {columns, data, excelName, setError, onSearch , sites, setSites, emps, setEmps , size };
+  const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
   return (
-    <div>
-      <div style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
-        </div>
-      </div>
-      <PaginationTable {...tableProps} />
+    <div  >
+      <Header {...filterProps} />
+      {!data?.length ? <Empty1 {...emptyProps} /> : 
+      <>
+        <div style={{overflowX: 'scroll'}}>
+          <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+            <Table {...tableProps} />
+          </div>
+        </div>     
+        <PaginationTable {...tableProps} />
+       </>
+      }
     </div>
   );
 }

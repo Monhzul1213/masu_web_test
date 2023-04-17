@@ -23,6 +23,7 @@ export function Card(){
   const items1 = [
     getItem(t('system_menu.store'), 'store'),
     getItem(t('system_menu.pos'), 'pos'),
+    getItem(t('system_menu.order_location'), 'order')
   ];
 
   const onClick = e => navigate(e?.key);
