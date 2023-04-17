@@ -276,6 +276,11 @@
   background-color: var(--config-t-color);
 }
 
+.t_item_subscribe:disabled {
+  cursor: not-allowed;
+  background-color: var(--root-color);
+}
+
 .t_line {
   background-color: var(--text3-color);
   height: 1px;

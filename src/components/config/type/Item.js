@@ -17,7 +17,7 @@ export function Item1(props){
           <p className='a_item_sub_title'>{item?.day} {free}</p>
         </div>
         <div className='t_btn_back'>
-          <button className='t_item_subscribe'>{subscribe}</button>
+          <button className='t_item_subscribe' disabled={true}>{subscribe}</button>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@ export function Item2(props){
           <p className='a_item_sub_title' id='t_sub'>{item?.sub_title}</p>
         </div>
         <div className='t_btn_back'>
-          <button className='t_item_subscribe' onClick={e => onClick(e, item?.type)}>{item?.btn}</button>
+          <button className='t_item_subscribe' disabled={true} onClick={e => onClick(e, item?.type)}>{item?.btn}</button>
         </div>
       </div>
     </div>
