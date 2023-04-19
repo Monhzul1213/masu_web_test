@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-
 import { Money, PaginationTable, Table } from '../../all/all_m';
 import moment from 'moment';
 export function List(props){
@@ -13,41 +12,47 @@ export function List(props){
   useEffect(() => {
     setColumns([
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.id')}</div>, accessor: 'merchantID', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.id')}</div>, accessor: 'merchantID',
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       { Header: t('tax.customer'), accessor: 'customer' , customStyle: { width: 300 }},
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.site_qty')}</div>, accessor: 'siteQty', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.site_qty')}</div>, accessor: 'siteQty', customStyle: { width: 80 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.pos_qty')}</div>, accessor: 'terminalQty', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.pos_qty')}</div>, accessor: 'terminalQty', customStyle: { width: 80 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.emp_qty')}</div>, accessor: 'empQty', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.emp_qty')}</div>, accessor: 'empQty', customStyle: { width: 80 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.sub_qty')}</div>, accessor: 'subQty', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.sub_qty')}</div>, accessor: 'subQty', customStyle: { width: 80 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.sub_amount')}</div>, accessor: 'subAmount', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.sub_amount')}</div>, accessor: 'subAmount', customStyle: { width: 80 },
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.sales_amt')}</div>, accessor: 'totalSales', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.sales_amt')}</div>, accessor: 'totalSales', customStyle: { width: 80 },
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.sales_qty')}</div>, accessor: 'salesQty', customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('system.sales_qty')}</div>, accessor: 'salesQty', customStyle: { width: 80 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
-      { Header: t('system.noat'), accessor: 'useNuatus' },
-      { Header: t('system.date'), accessor: 'createdDate', customStyle: { minWidth: 120 },
+      { Header: t('system.noat'), accessor: 'useNuatus' ,
+      Cell: props => (<div >{props?.value === 'Y' ? t('page.yes'): t('page.no')}</div>)
+      },
+      { Header: t('system.date'), accessor: 'createdDate', customStyle: { minWidth: 80 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('system.partner')}</div>, accessor: 'partnerCode', customStyle: { width: 80 },
+        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
     ]);
     return () => {};

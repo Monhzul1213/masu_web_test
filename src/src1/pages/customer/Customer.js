@@ -108,6 +108,7 @@ export function Customer(props){
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch ,};
   const listProps = { data,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked  };
+  
   return (
     <div className='s_container_z'>
       {visible && <Add {...modalProps} />}
@@ -116,7 +117,7 @@ export function Customer(props){
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <SizeMe>{({ size }) => 
-          <div className='i_list_cont_z' id='invt_list_z'>
+          <div className='i_list_cont_z' id='solve_list_z'>
             <Header {...headerProps} size={size} />
             {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
           </div>

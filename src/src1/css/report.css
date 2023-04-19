@@ -21,12 +21,14 @@
   flex-flow: column;
   position: relative;
 }
+
 .table_footer_text{
     border-top: 1px solid var(--text4-color);
     color: var(--text-color);
     font-size: 15px;
     font-weight: 550;
     padding: 15px 0;
+    position: sticky;
   }
 
   .rr_card_back_z {

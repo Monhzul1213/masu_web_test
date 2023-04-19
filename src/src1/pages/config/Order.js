@@ -78,7 +78,6 @@ function Card(props){
   const getBill = async siteID => {
     setSite(siteID);
     const response = await dispatch(getList(user, token, 'Site/GetTicketBin?SiteID=' + siteID));
-    console.log(response)
     if(response?.error){
       setError(response?.error);
       setVariants(null);
@@ -97,10 +96,9 @@ function Card(props){
       })
       dvariants?.forEach(it => data?.push({...it, rowStatus: 'D'}));
     }
-    if(data){    
+    if(data){   
     setError(null);
     setLoading(true);
-    console.log(data)
     const response = await dispatch(sendRequest(user, token, 'Site/ModTicketBin', data));
     setLoading(false);
     if(response?.error) setError(response?.error);
@@ -113,7 +111,7 @@ function Card(props){
   }
  
 
-  const onClickCancel = () => setVariants(variants);
+  const onClickCancel = () => getData()
 
   const emptyProps = { icon: 'MdOutlineReceiptLong', type: 'orders', onClickAdd: onClickShop };
   const msgProps = { icon: 'BsGear', type: 'orders' };

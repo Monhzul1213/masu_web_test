@@ -54,6 +54,7 @@ export function Menu(props){
       getItem(t('menu.solve'), '/system/request_solve'),
       getItem(t('menu.invoice'), '/system/invoice'),
       getItem(t('menu.info'), '/system/info'),
+      getItem(t('menu.system_partner'), '/system/partner'),
       getItem(t('menu.advert'), '/system/advert'),
       getItem(t('menu.noti'), '/system/notification'),
     ])

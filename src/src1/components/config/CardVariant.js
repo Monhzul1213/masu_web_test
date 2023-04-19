@@ -47,7 +47,6 @@ export function CardVariant(props){
   }
 
   const onClickDelete = row => {
-    // console.log(row?.original)
     if(row?.original?.ticketBinId ) setDVariants(old => [...old, row?.original]);
     if(row?.original?.error){
       setDisabled(false);
@@ -85,7 +84,7 @@ export function CardVariant(props){
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     updateMyData, onClickDelete, disabled }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  const addProps = { value: search, setValue: setSearch, placeholder: t('orders.add_location'), handleEnter, inRow: true, length: 30 };
+  const addProps = { value: search, setValue: setSearch, placeholder: t('orders.add_location'), handleEnter, inRow: true, length: 300 };
   const id = size?.width > 480 ? 'mo_large' : 'mo_small';
   const siteProps = { value: site, setValue: changeSite, data: sites, s_value: 'siteId', s_descr: 'name',
     className: 'do_select' };

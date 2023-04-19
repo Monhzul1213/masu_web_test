@@ -327,6 +327,16 @@
 .sub_title{
   margin: 10px 0 0 10px;
 }
+.rp_list_filter_zz {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  margin-left: -5px;
+  margin-top: 5px;
+}
+
 .rp_list_filter_z {
   display: flex;
   flex-flow: row;

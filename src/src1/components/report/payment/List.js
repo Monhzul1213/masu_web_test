@@ -11,14 +11,12 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      
-      
-      { Header: <div >{t('report.site')}</div>, accessor: 'siteName', customStyle: { width: 200 },
+      { Header: <div >{t('report.site')}</div>, accessor: 'siteName', customStyle: { width: 250 },
        Footer: t('report.total'), exLabel: t('report.site') },
       { Header: <div >{t('time.t_emp')}</div>, accessor: 'cashierCode', customStyle: { width: 200 },  exLabel: t('time.t_emp') },
-      { Header: t('report.pay_type'), accessor: 'paymentTypeName' , exLabel: t('report.pay_type') }, 
+      { Header: t('report.pay_type'), accessor: 'paymentTypeName' , exLabel: t('report.pay_type') , customStyle: { width: 250 } }, 
       { Header: <div style={{textAlign: 'right'}}>{t('report.pay_trans')}</div> , accessor: 'paymentTranscation', 
-      customStyle: { width: 200 }, exLabel: t('report.pay_trans'),
+      customStyle: { width: 100 }, exLabel: t('report.pay_trans'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value} </div> , 
       Footer: info => {
         const total = React.useMemo(() =>
@@ -27,7 +25,7 @@ export function List(props){
         return <> <div style={{textAlign: 'right', paddingRight: 15}}>{total}</div></>
        } },
       { Header: <div style={{textAlign: 'right'}}>{t('report.pay_amt')}</div>, accessor: 'paymentAmount',
-      customStyle: { width: 200 }, exLabel: t('report.pay_amt'),
+      customStyle: { width: 150 }, exLabel: t('report.pay_amt'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={15} /></div> , 
       Footer: info => {
         const total = React.useMemo(() =>
@@ -45,7 +43,7 @@ export function List(props){
         return <><div style={{textAlign: 'right', paddingRight: 15}}>{total}</div></>
        } },
       { Header: <div style={{textAlign: 'right'}}>{t('report.refund_amt')}</div>, accessor: 'refundAmount', 
-      customStyle: { width: 200 }, exLabel: t('report.refund_amt'),
+      customStyle: { width: 120 }, exLabel: t('report.refund_amt'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={15} /></div> ,  
       Footer: info => {
         const total = React.useMemo(() =>
@@ -54,7 +52,7 @@ export function List(props){
         return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={15} /></div> </>
        }},
       { Header: <div style={{textAlign: 'right'}}>{t('report.net_sales')}</div>, accessor: 'netAmount', 
-      customStyle: { width: 200 }, exLabel: t('report.net_sales'),
+      customStyle: { width: 150 }, exLabel: t('report.net_sales'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={15} /></div> , 
       Footer: info => {
         const total = React.useMemo(() =>

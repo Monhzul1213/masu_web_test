@@ -41,5 +41,13 @@
 }
 #solve_list_z {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: 1200px;
+  max-width: 1300px;
+}
+.info_check{
+  color: var(--success-color);
+  font-size: 15px;
+}
+#dis_list {
+  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
+  max-width: 1000px;
 }

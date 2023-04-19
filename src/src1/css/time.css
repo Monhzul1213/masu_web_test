@@ -26,5 +26,6 @@
   }
   #invt_list_zz {
     padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
+    max-width: 1000px;
   }
  

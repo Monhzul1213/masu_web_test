@@ -46,7 +46,7 @@ export function List(props){
 
   return (
     <div>
-      <div className='rp_list_filter'>
+      <div className='rp_list_filter_z'>
         <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
         <IconDropdown {...columnProps} />
       </div>

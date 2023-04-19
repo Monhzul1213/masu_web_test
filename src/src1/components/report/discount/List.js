@@ -11,12 +11,12 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('report.discount'), accessor: 'name', exLabel: t('report.discount')},
+      { Header: t('report.discount'), accessor: 'name', exLabel: t('report.discount'), customStyle: { width: 300 },},
       { Header: <div style={{textAlign: 'right'}}>{t('report.disApplied')}</div>, accessor: 'discountsapplied' , 
-      exLabel:t('report.disApplied'), 
+      exLabel:t('report.disApplied'), customStyle: { width: 200 },
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('report.disAmt')}</div>, accessor: 'amountdiscounted',
-      exLabel: t('report.disAmt'),
+      exLabel: t('report.disAmt'), customStyle: { width: 200 },
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,},
     ]);
     return () => {};

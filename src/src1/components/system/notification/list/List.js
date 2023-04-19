@@ -70,7 +70,7 @@ export function List(props){
     navigate({ pathname: 'noti_add', search: createSearchParams({ notifcationId: row?.original?.notifcationId}).toString() });
   }
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'endDate', desc: true }] }, 
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginDate', desc: true }] }, 
     onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick,  hasTotal: true , total: data?.length };
 

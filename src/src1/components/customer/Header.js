@@ -26,7 +26,7 @@ export function Header(props){
 
 
   return (
-    <div className='rp_list_filter'  >  
+    <div className='rp_list_filter_zz'  >  
       <div className='ih_header1'>
         <ButtonRowAdd {...addProps} />
         <div className='ih_btn_row_z'  style={{display: 'none'}}>

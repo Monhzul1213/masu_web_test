@@ -75,7 +75,7 @@ export function Suppliers(props){
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
            <SizeMe>{({ size }) => 
-           <div className='i_list_cont_z' id='invt_list_z'>
+           <div className='i_list_cont_z' id='solve_list'>
              <Header {...headerProps} size={size} />
              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
            </div>

@@ -22,7 +22,7 @@ export function Header(props){
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, onSearch, width: width1, className: 'rp_list_search_back' };
 
   return (
-    <div className='rp_list_filter'>  
+    <div className='rp_list_filter_zz'>  
       <ButtonRowAddConfirm {...addProps} />
       <div className='rp_list_filter_icon' style={style}><DynamicAIIcon {...searchProps} /></div>
       <Search {...inputProps} />
