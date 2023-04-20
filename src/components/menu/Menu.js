@@ -104,7 +104,8 @@ export function Menu(props){
   ];
 
   const onClick = (e, hide) => {
-    navigate(e?.key);
+    if(e?.key === '/help') window.open("https://help.masu.mn");
+    else navigate(e?.key);
     if(hide) setCollapsed(true);
   }
 
