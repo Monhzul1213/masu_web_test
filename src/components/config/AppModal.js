@@ -33,7 +33,7 @@ export function AppModal(props){
   }
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={600}>
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={570}>
       <div className='m_back'>
         <p className='ap_title'>{t('config.thanks')}</p>
         <div className='app_scroll'>

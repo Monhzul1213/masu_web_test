@@ -635,7 +635,7 @@
 
 .ap_icon {
   color: var(--root-color);
-  font-size: 28px;
+  font-size: 26px;
 }
 
 .ap_side {
@@ -656,7 +656,7 @@
 .ap_btn_text2 {
   color: var(--root-color);
   font-size: 14px;
-  font-weight: 650;
+  font-weight: 600;
   margin: 0;
   text-align: left;
 }
