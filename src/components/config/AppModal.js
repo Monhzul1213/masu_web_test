@@ -26,14 +26,14 @@ export function AppModal(props){
 
   const onClick = type => {
     let url = '';
-    if(type === 'Windows Store') url = "https://app.masu.mn/files/MasuInstaller.exe";
-    else if(type === 'Google Play') url = "https://play.google.com/store/apps/details?id=com.masupos";
+    if(type === 'Windows') url = "https://app.masu.mn/files/MasuInstaller.exe";
+    else if(type === 'Play Store') url = "https://play.google.com/store/apps/details?id=com.masupos";
     else if(type === 'App Store') url = "https://apps.apple.com/mn/app/masupos/id1671694304";
     window.open(url);
   }
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={570}>
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={520}>
       <div className='m_back'>
         <p className='ap_title'>{t('config.thanks')}</p>
         <div className='app_scroll'>
@@ -42,8 +42,8 @@ export function AppModal(props){
           <div style={{padding: 5}} />
           <p className='ap_text'>{t('config.install')}</p>
           <div className='ap_row'>
-            <Download icon='FaWindows' text1={t('config.down_window')} text2='Windows Store' onClick={onClick} />
-            <Download icon='FaGooglePlay' text1={t('config.down_ios')} text2='Google Play' onClick={onClick} />
+            <Download icon='FaWindows' text1={t('config.down_window')} text2='Windows' onClick={onClick} />
+            <Download icon='FaGooglePlay' text1={t('config.down_ios')} text2='Play Store' onClick={onClick} />
             <Download icon='FaApple' text1={t('config.down_android')} text2='App Store' onClick={onClick} />
           </div>
           <div className='ap_row'>

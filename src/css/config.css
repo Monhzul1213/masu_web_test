@@ -1279,7 +1279,7 @@
   cursor: not-allowed
 }
 
-@media only screen and (min-width: 620px) { /* desktop */
+@media only screen and (min-width: 540px) { /* desktop */
   .ap_row {
     display: flex;
     flex-flow: row;
@@ -1301,7 +1301,7 @@
   }
 }
 
-@media only screen and (max-width: 620px) { /* desktop */
+@media only screen and (max-width: 540px) { /* desktop */
   .ap_row {
     display: flex;
     flex-flow: column;
