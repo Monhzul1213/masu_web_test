@@ -30,6 +30,7 @@
     "react-i18next": "^11.18.6",
     "react-icons": "^4.4.0",
     "react-input-mask": "^2.0.4",
+    "react-lite-youtube-embed": "^2.3.52",
     "react-loading-overlay": "^1.0.1",
     "react-open-app": "^1.0.3",
     "react-qr-code": "^2.0.11",
