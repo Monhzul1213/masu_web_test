@@ -46,6 +46,7 @@ export function Info(props){
       <Label label={t('bill.date')} value={date} />
       {isRefund ? <Label label={t('bill.refund')} value={'#' + header?.sourceNo} /> : null}
       {header?.custId ? <Label label={t('bill.customer')} value={header?.custId + ' - ' + (header?.custName ?? '')} /> : null}
+      <div className='bl_gap' />
     </div>
   );
 }
