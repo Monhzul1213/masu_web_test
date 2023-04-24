@@ -28,12 +28,13 @@ export function Drawer(props){
     let variant = item?.variantName ? (' (' + item?.variantName  + ')') : ''
     return (
       <div key={index} className='dr_item'>
-        <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}
-        <br/>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('time.t_emp')+ ':' + item?.empName ) : ''}
-        </p>
-        <p className='dr_item_text2'>{item?.qty}</p>
-        <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>
-        <p className='dr_item_text4'><Money value={item?.amount} fontSize={13} /></p>
+        <div key={index} className='dr_item_row'>
+          <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}</p>
+          <p className='dr_item_text2'>{item?.qty}</p>
+          <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>
+          <p className='dr_item_text4'><Money value={item?.amount} fontSize={13} /></p>
+        </div>
+        <p className='dr_item_text'>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('report_receipt.t_emp')+ ': ' + item?.empName ) : ''}</p>
       </div>
     )
   }

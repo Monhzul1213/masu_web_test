@@ -410,9 +410,18 @@
 }
 
 .dr_item {
+  padding-bottom: 5px;
+}
+
+.dr_item_row {
   display: flex;
   flex-flow: row;
-  padding-bottom: 5px;
+}
+
+.dr_item_text {
+  color: var(--text-color);
+  font-size: 14px;
+  margin: 0;
 }
 
 .dr_item_text1 {

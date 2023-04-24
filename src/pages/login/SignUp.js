@@ -3,12 +3,11 @@ import { Checkbox } from 'antd';
 import { Link, useNavigate, createSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import emailjs from '@emailjs/browser';
 
 import '../../css/login.css';
 import '../../css/config.css';
 import { login_image } from '../../assets';
-import { config, validateEmail, validateNumber } from '../../helpers';
+import { validateEmail, validateNumber } from '../../helpers';
 import { apiLogin, apiRegister, getService, setIsLoggedIn, setLogin } from '../../services';
 import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
 import { Copyright, Partner } from '../../components/login';
@@ -53,19 +52,19 @@ export function SignUp(){
     }
   }
 
-  const sendEmail = async to => {
-    const link = config?.domain + '/confirm?mail=' + to;
-    const templateParams = { to, link };
-    return emailjs.send('service_k7osau8','template_3dlaawl', templateParams, 'q2YX3XN0cT2C8g_Ni')
-      .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
-        return Promise.resolve(true);
-      }, (err) => {
-        console.log(err);
-        return Promise.resolve(true);
-      }
-    );
-  }
+  // const sendEmail = async to => {
+  //   const link = config?.domain + '/confirm?mail=' + to;
+  //   const templateParams = { to, link };
+  //   return emailjs.send('service_k7osau8','template_3dlaawl', templateParams, 'q2YX3XN0cT2C8g_Ni')
+  //     .then((response) => {
+  //       console.log('SUCCESS!', response.status, response.text);
+  //       return Promise.resolve(true);
+  //     }, (err) => {
+  //       console.log(err);
+  //       return Promise.resolve(true);
+  //     }
+  //   );
+  // }
 
   const sendSMS = async () => {
     const diff = expire - new Date();
@@ -94,7 +93,7 @@ export function SignUp(){
     console.log(response);
     if(response?.error) setError(response?.error);
     else {
-      await sendEmail(data?.mail);
+      // await sendEmail(data?.mail);
       const response2 = await dispatch(apiLogin(data?.mail, data?.password));
       if(response2?.error) setError(response2?.error);
       else {
