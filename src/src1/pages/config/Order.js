@@ -5,14 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withSize } from 'react-sizeme';
 import { getList, sendRequest } from '../../../services';
-import { Confirm, Empty, Error1, Overlay, Prompt } from '../../../components/all';
+import { Confirm, Empty, Overlay, Prompt } from '../../../components/all';
 import { CardVariant , Message } from '../../components/config';
+import { Error1 } from '../../components/all/all_m';
 
 function Card(props){
   const { size } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [error1, setError1] = useState(null);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState(null);
   const [edited, setEdited] = useState(false);
@@ -82,7 +84,7 @@ function Card(props){
       setError(response?.error);
       setVariants(null);
     } else {
-      response?.data?.forEach(item => item.rowStatus = 'U');
+      // response?.data?.forEach(item => item.rowStatus = 'U');
       setVariants(response?.data);
       getConfig();
     }
@@ -92,11 +94,15 @@ function Card(props){
     let data = []
     if(variants?.length ){
       variants.forEach(item => {
-        data.push({...item, siteID : item?.siteId ? item?.siteId : site} ) 
+        data.push({...item, siteID : item?.siteId ? item?.siteId : site, 
+          ticketBinID: item?.ticketBinId ? item?.ticketBinId: -1, rowStatus : item?.ticketBinId ? 'U': 'I'} ) 
       })
       dvariants?.forEach(it => data?.push({...it, rowStatus: 'D'}));
-    }
-    if(data){   
+    } 
+    // if(searchV?.value !== ''){
+    //     setError(t('orders.error'))
+    // } else 
+    if (data){   
     setError(null);
     setLoading(true);
     const response = await dispatch(sendRequest(user, token, 'Site/ModTicketBin', data));
@@ -121,18 +127,16 @@ function Card(props){
     size , site , changeSite , sites , onClickCancel, onClickSave };
 
   return (
-    <>
-    <div className='store_tab' style={{flex: 1}}>
-      <Confirm {...confirmProps} />
-      <Prompt edited={edited} />
-      {checked ?
-      <Overlay loading={loading}>
-        {error && <Error1 error={error} />}
-          {!sites?.length ? <Empty {...emptyProps} /> : <CardVariant {...variantProps} /> }
-      </Overlay>
-      : <Message {...msgProps} /> }
-    </div> 
-  </>
+      <div className='store_tab' style={{flex: 1}}>
+        <Confirm {...confirmProps} />
+        <Prompt edited={edited} />
+        {checked ?
+        <Overlay loading={loading}>
+          {error && <Error1 error={error} />}
+            {!sites?.length ? <Empty {...emptyProps} /> : <CardVariant {...variantProps} /> }
+        </Overlay>
+        : <Message {...msgProps} />}
+      </div> 
   );
 }
 

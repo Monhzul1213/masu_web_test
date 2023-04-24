@@ -588,3 +588,9 @@ export const types = [
   { label: "Бүх хэрэглэгч", value: "ALL" },
   { label: "Сонгосон хэрэглэгч", value: "MERCHANT" }
 ];
+
+export const status = [
+  { label: "Захиалганд байгаа", value: "0" },
+  { label: "Захиалга биелсэн", value: "1" },
+  { label: "Хүчингүй болсон захиалга", value: "9" }
+];

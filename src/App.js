@@ -14,7 +14,7 @@ import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
-import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes } from './src1/pages/report';
+import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
 import { Bill } from './pages/lone';
@@ -143,6 +143,8 @@ export function App(){
                 <Route path='/system/notification/noti_add' element={<NotiAdd />} />
                 <Route path='/system/partner' element={<PartnerInfo />} />
                 <Route path='/bill' element={<Bill />} />
+                <Route path='/report/report_order' element={<SalesOrder />} />
+                <Route path='/report/terms' element={<Terms />} />
               </Routes>
             </Layout>
           </Layout>

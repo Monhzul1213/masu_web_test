@@ -16,9 +16,9 @@ export function TranList(props){
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
       } },
-      { Header: t('report_receipt.dr_site'), accessor: 'siteName'},
-      { Header: t('customer.t_name'), accessor: 'custName' },
-      { Header: t('discount.type'), accessor: 'txnTypeName'},
+      { Header: t('report_receipt.dr_site'), accessor: 'siteName', customStyle: {width: 180}},
+      { Header: t('customer.t_name'), accessor: 'custName',  },
+      { Header: t('discount.type'), accessor: 'txnTypeName', customStyle: {width: 150}},
       { Header: <div style={{textAlign: 'right'}}>{t('discount.amount')}</div>, accessor: 'txnAmount',
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>},
       { Header: t('shop.descr'), accessor: 'descr'}

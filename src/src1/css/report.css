@@ -140,3 +140,27 @@
     min-width: 120px;
     background-color: transparent;
   }
+
+  .rp_h_back2 .rp_select_back2 {
+    width: 234px;
+  }
+
+  .rp_select_back2{
+    background-color: var(--root-color);
+    height: 36px;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 5px rgba(0,0,0,.15);
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    width: 180px;
+  }
+  #rp_card_large .rp_card_icon_z {
+    color: var(--root-color);
+    font-size: 20px;
+  }
+  
+  #rp_card_small .rp_card_icon_z {
+    color: var(--root-color);
+    font-size: 18px;
+  }

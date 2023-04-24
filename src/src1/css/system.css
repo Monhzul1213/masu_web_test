@@ -51,3 +51,31 @@
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
   max-width: 1000px;
 }
+
+.dd {
+  display: flex;
+  flex-flow: column;
+}
+.z_item_sub_title {
+  /* background-color: var(--root-color); */
+  color: var(--text2-color);
+  font-size: 14px;
+  margin-left: 10px;
+  margin-top: 10px;
+  /* width: 600px; */
+}
+
+.order_sub{
+  display: flex;
+  flex-flow: row;
+  background-color: var(--root-color);
+  max-width: 620px;
+  border-radius: var(--radius);
+  margin-top: 10px;
+}
+.order_info {
+  color: var(--text2-color);
+  font-size: 22px;
+  margin-top: 20px;
+  margin-left: 10px;
+}

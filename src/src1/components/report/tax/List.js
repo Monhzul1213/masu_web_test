@@ -15,7 +15,7 @@ export function List(props){
     setColumns([
       { Header: <div >{t('report.site')}</div>, accessor: 'siteName', customStyle: { width: 250 }, exLabel: t('report.site')  },
       { Header: <div >{t('report.date')}</div>, accessor: 'salesDate' , customStyle: { width: 150 }, exLabel: t('report.date'), 
-      Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD HH:mm')}</div>)},
+      Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)},
       { Header: <div style={{textAlign: 'right'}}>{t('report.total_sales')}</div> , accessor: 'totalSalesAmount', exLabel: t('report.total_sales'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> , customStyle: { width: 150 }},
       { Header: <div style={{textAlign: 'right'}}>{t('report.refund')}</div>, accessor: 'totalReturnAmount' , exLabel: t('report.refund'),

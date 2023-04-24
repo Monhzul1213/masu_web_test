@@ -70,6 +70,8 @@ export function Menu(props){
       getItem(t('menu.report_discount'), '/report/report_discount', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_noat'), '/report/report_noat', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_cashier'), '/report/report_cashier', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.report_order'), '/report/report_order', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.terms'), '/report/terms', null, null, null, msRole?.webViewSalesReport !== 'Y'),
     ]),
     getItem(t('menu.inventory'), '/inventory', <BsInboxes />, [
       getItem(t('menu.invt_list'), '/inventory/invt_list', null, null, null, msRole?.webManageItem !== 'Y'),

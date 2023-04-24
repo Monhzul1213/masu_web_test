@@ -75,6 +75,8 @@
     "/report/report_discount": "Хөнгөлөлт",
     "/report/report_noat": "НӨАТ-н тайлан",
     "/report/report_cashier": "Касс хүлээлцэх",
+    "/report/report_order": "Борлуулалтын захиалга",
+    "/report/terms": "Үйлчилгээний дэлгэрэнгүй",
     "/inventory": "Бараа",
     "/management": "Барааны менежмент",
     "/management/suppliers": "Нийлүүлэгч",
@@ -164,7 +166,9 @@
     "advert": "Сурталчилгаа",
     "noti": "Мэдэгдэл",
     "order": "Захиалга",
-    "system_partner" : "Партнерийн мэдээлэл"
+    "system_partner" : "Партнерийн мэдээлэл",
+    "report_order": "Борлуулалтын захиалга",
+    "terms": "Үйлчилгээний дэлгэрэнгүй"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
@@ -565,6 +569,8 @@
     "select_emp": "Ажилтан сонгох",
     "all_emp": "Бүх ажилтан",
     "some_emp": " ажилтан",
+    "all_status": "Бүх төлөв",
+    "some_status": " төлөв",
     "select_date": "Огноо сонгох",
     "edit": "Тохиргоо засах",
     "date1": "Огноо: Эхлэх",
@@ -673,7 +679,6 @@
       { "label": "Нийт ашиг", "value": "totalProfitAmt" },  
       { "label": "Ашиг хувь", "value": "margin" },
       { "label": "Татвар", "value": "taxes" }
-
     ],
     "column1": [
       { "label": "Огноо", "value": "SalesDate" },
@@ -698,11 +703,27 @@
       { "label": "Татвар", "value": "totalVatAmt" }
     ],
     "t_item": "Бараа",
-    "chart" :[
-      { "label": "BAR", "value" : "bar" },
-      { "label": "LINE", "value" : "line" },
-      { "label": "PIE", "value" : "pie" }
-    ]
+    "c_title1" : "Захиалганд байгаа",
+    "c_title2" : "Захиалга биелсэн",
+    "c_title3" : "Хүчингүй болсон захиалга",
+    "columns1": [
+      { "label": "Нийт дүн", "value": "totalAmount" },
+      { "label": "Хөнгөлөлт", "value": "totalDiscountAmount" },
+      { "label": "Төлөх дүн", "value": "totalSalesAmount" },
+      { "label": "Бэлэн мөнгө", "value": "totalCashAmount" },
+      { "label": "Бэлэн бус", "value": "totalNonCashAmount" },
+      { "label": "Тэмдэглэл", "value": "descr" }
+    ],
+    "salesNo" : "#",
+    "siteName" : "Салбар",
+    "pos" : "ПОС",
+    "type" : "Төрөл",
+    "price1" : "Үнэ",
+    "qty1" : "Тоо",
+    "amount" : "Нийт дүн",
+    "descr" : "Тэмдэглэл",
+    "empName" : "Ажилтан",
+    "invtName" : "Бараа"
   },
   
   "report_review": {
@@ -896,7 +917,8 @@
     "select_customer" : "Хэрэглэгч сонгох ",
     "add_success": "Мэдэгдэл амжилттай бүртгэгдлээ.",
     "delete_success": "Мэдэгдэл амжилттай устгагдлаа.",
-    "address": "Хаяг"
+    "address": "Хаяг",
+    "service": "Илгээх эсэх?"
   },
   "orders" : {
     "add_location" : "Байршил нэмэх",
@@ -907,7 +929,9 @@
     "descr": "Захиалга авах байршил бүртгэхийн тулд дэлгүүр нэмнэ үү",
     "add": "Дэлгүүр нэмэх",
     "variant_error" :"Байршлын нэр давхардаж байна",
-    "msg":  "Тохиргоо-Нэмэлт тохиргоо-Захиалга авах  тохиргоог ашиглана уу!"
+    "msg":  "Тохиргоо-Нэмэлт тохиргоо-Захиалга авах  тохиргоог ашиглана уу!",
+    "error" : "Та ширээ бүртгэж байгаа үед ENTER товч дарсны дараагаар оруулсан мэдээллээ хадгалах боломжтой.",
+    "status" : "Төлөв"
   },
   "bill": {
     "sales": "Борлуулалт",

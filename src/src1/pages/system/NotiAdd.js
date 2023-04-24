@@ -32,6 +32,8 @@ export function NotiAdd(){
   const [kits, setKits] = useState([]);
   const [searchI, setSearchI] = useState({ value: null });
   const [dkits, setDKits] = useState([]);
+  const [isService, setIsService] = useState(false);
+
 
   useEffect(() => {
     user?.isAdmin ? getData() : navigate({ pathname: '/' });
@@ -168,7 +170,7 @@ export function NotiAdd(){
   }
   
   const mainProps = { setError, subject, setSubject, setText, text , beginDate, setBeginDate, endDate, setEndDate, 
-    status, setStatus, type, setType };
+    status, setStatus, type, setType , isService, setIsService};
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
   const invtProps = { data: kits, setData: setKits, setError, setEdited,
     search: searchI, setSearch: setSearchI , setDKits };
