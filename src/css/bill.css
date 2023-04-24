@@ -22,3 +22,48 @@
   margin: 0 auto;
   color: var(--line-color);
 }
+
+.bl_title {
+  margin: 0 0 10px 0;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.bl_row {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.bl_icon_row {
+  display: flex;
+  flex-flow: row;
+  margin-bottom: 5px;
+  align-items: center;
+  flex: 1;
+}
+
+.bl_icon {
+  font-size: 20px;
+  margin-right: 3px;
+}
+
+.bl_icon_value {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  flex: 1;
+}
+
+.bl_label {
+  font-size: 14px;
+  margin: 0;
+  width: 100px;
+}
+
+.bl_value {
+  font-size: 14px;
+  margin: 0;
+  flex: 1;
+}

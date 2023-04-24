@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
+import { Info } from '../../components/lone/bill';
 
 export function Bill(){
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ export function Bill(){
     let api = 'Sales/GetSalesBill?data=' + encodeURIComponent(billno);
     let response = await dispatch(getService(api, 'GET'));
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else setData(response?.data?.retdata);
     setLoading(false);
   }
 
@@ -36,6 +37,7 @@ export function Bill(){
       <div className='bl_back'>
         {!data ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
           <div>
+            <Info header={data?.sales} />
           </div>
         }
       </div>
