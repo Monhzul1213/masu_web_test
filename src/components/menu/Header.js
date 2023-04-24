@@ -11,7 +11,7 @@ export function Header(props){
   const { pathname } = useLocation();
   const { i18n, t } = useTranslation();
   const [title, setTitle] = useState('Home');
-  const hideMenu = pathname?.includes('confirm');
+  const hideMenu = pathname?.includes('confirm') || pathname?.includes('bill') || pathname?.includes('Bill');
 
   useEffect(() => {
     i18n.exists('header.' + pathname) ? setTitle('header.' + pathname) : setTitle('header./');

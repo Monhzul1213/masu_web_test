@@ -23,7 +23,7 @@ export function Menu(props){
   const { user: { msRole, isAdmin }, isPartner } = useSelector(state => state.login);
   const path = pathname?.split('/') && pathname?.split('/')[1];
   const navigate = useNavigate();
-  const hideMenu = pathname?.includes('confirm');
+  const hideMenu = pathname?.includes('confirm') || pathname?.includes('bill') || pathname?.includes('Bill');
 
   useEffect(() => {
     setCollapsed(size?.width > 740 ? false : true);

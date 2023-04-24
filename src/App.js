@@ -17,6 +17,7 @@ import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } fro
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
+import { Bill } from './pages/lone';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -55,6 +56,7 @@ export function App(){
           <Route path='/recovery' element={<Recovery />} />
           <Route path='/partner_sign_up' element={<PartnerSignUp />} />
           <Route path='/partner_sign_in' element={<PartnerLogin />} />
+          <Route path='/bill' element={<Bill />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
@@ -75,6 +77,7 @@ export function App(){
                 <Route path='/' element={<Partner />} />
                 <Route path='*' element={<Partner />} />
                 <Route path='/partner' element={<Partner />} />
+                <Route path='/bill' element={<Bill />} />
               </Routes>
             </Layout>
           </Layout>
@@ -139,6 +142,7 @@ export function App(){
                 <Route path='/system/notification' element={<Notification />} />
                 <Route path='/system/notification/noti_add' element={<NotiAdd />} />
                 <Route path='/system/partner' element={<PartnerInfo />} />
+                <Route path='/bill' element={<Bill />} />
               </Routes>
             </Layout>
           </Layout>
