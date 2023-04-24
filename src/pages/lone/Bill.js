@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
-import { Header, Info } from '../../components/lone/bill';
+import { Header, Info, Items } from '../../components/lone/bill';
 
 export function Bill(){
   const [loading, setLoading] = useState(false);
@@ -39,6 +39,7 @@ export function Bill(){
           <div>
             <Info header={data?.sales} />
             <Header />
+            {/* <Items detail={data?.salesitem} /> */}
           </div>
         }
       </div>

@@ -111,3 +111,7 @@
   width: 25%;
   text-align: right;
 }
+
+.bl_item:not(:last-child) {
+  border-bottom: 1px solid var(--line-color);
+}
