@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
+import '../../css/bill.css';
 import { getService } from '../../services';
-import { Error1, Overlay } from '../../components/all';
+import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
 
 export function Bill(){
   const [loading, setLoading] = useState(false);
@@ -30,8 +31,14 @@ export function Bill(){
   }
 
   return (
-    <Overlay className='i_container' loading={!loading}>
+    <Overlay loading={loading}>
       {error && <Error1 error={error} />}
+      <div className='bl_back'>
+        {!data ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
+          <div>
+          </div>
+        }
+      </div>
     </Overlay>
   )
 }
