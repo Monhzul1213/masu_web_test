@@ -409,8 +409,14 @@
   border-bottom: solid 1px var(--input1-color);
 }
 
+.dr_item1 {
+  padding-bottom: 5px;
+}
+
 .dr_item {
   padding-bottom: 5px;
+  display: flex;
+  flex-flow: row;
 }
 
 .dr_item_row {

@@ -27,7 +27,7 @@ export function Drawer(props){
   const renderItem = (item, index) => {
     let variant = item?.variantName ? (' (' + item?.variantName  + ')') : ''
     return (
-      <div key={index} className='dr_item'>
+      <div key={index} className='dr_item1'>
         <div key={index} className='dr_item_row'>
           <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}</p>
           <p className='dr_item_text2'>{item?.qty}</p>
