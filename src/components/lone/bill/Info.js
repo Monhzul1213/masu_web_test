@@ -41,11 +41,11 @@ export function Info(props){
       </div>
       <Label label={t('bill.receipt_no')} value={header?.salesNo} />
       <Label label={t('bill.site')} value={header?.siteName} />
-      <Label label={t('bill.address')} value={header?.siteAddress} />
+      <Label label={t('bill.address')} value={header?.address} />
       <Label label={t('bill.phone')} value={header?.sitePhone} />
       <Label label={t('bill.date')} value={date} />
       {isRefund ? <Label label={t('bill.refund')} value={'#' + header?.sourceNo} /> : null}
-      {header?.custId ? <Label label={t('bill.customer')} value={header?.custId + ' - ' + (header?.custName ?? '')} /> : null}
+      {header?.custId ? <Label label={t('bill.customer')} value={(header?.custName ?? '') + ' - ' + (header?.custPhone ?? '')} /> : null}
       <div className='bl_gap' />
     </div>
   );

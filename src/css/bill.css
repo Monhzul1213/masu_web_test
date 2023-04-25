@@ -148,3 +148,16 @@
 #bl_total_bold > p {
   font-weight: 600;
 }
+
+.bl_qr_back {
+  display: flex;
+  flex-flow: row;
+}
+
+.bl_qr {
+  flex: 1;
+}
+
+.bl_qr_col {
+  flex: 1;
+}

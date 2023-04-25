@@ -5,12 +5,13 @@ import { useSearchParams } from 'react-router-dom';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
-import { Header, Info, Items, Total } from '../../components/lone/bill';
+import { Header, Info, Items, QR, Total } from '../../components/lone/bill';
 
 export function Bill(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
+  const [header, setHeader] = useState(null);
+  const [detail, setDetail] = useState(null);
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
 
@@ -28,9 +29,10 @@ export function Bill(){
     let response = await dispatch(getService(api, 'GET'));
     if(response?.error) setError(response?.error);
     else {
-      let header = response?.data?.retdata?.sales;
+      let header = response?.data?.retdata?.sales && response?.data?.retdata?.sales[0];
       if(header) header.pureAmount = (header.totalSalesAmount ?? 0) - (header.totalVatAmount ?? 0) - (header.totalNhatamount ?? 0);
-      setData(response?.data?.retdata);
+      setHeader(header);
+      setDetail(response?.data?.retdata?.salesitem);
     }
     setLoading(false);
   }
@@ -39,12 +41,13 @@ export function Bill(){
     <Overlay loading={loading}>
       <div className='bl_back'>
         {error && <Error1 error={error} />}
-        {!data ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
+        {!header ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
           <div>
-            <Info header={data?.sales} />
+            <Info header={header} />
             <Header />
-            <Items detail={data?.salesitem} />
-            <Total header={data?.sales} />
+            <Items detail={detail} />
+            <Total header={header} />
+            <QR header={header} />
           </div>
         }
       </div>
