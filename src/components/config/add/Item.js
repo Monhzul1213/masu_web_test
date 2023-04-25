@@ -12,7 +12,7 @@ export function Item(props){
         <p className='a_item_title'>{item?.title}</p>
         <p className='a_item_sub_title'>{item?.sub_title}<button className='a_item_more'>{more}</button></p>
       </div>
-      <Switch className='a_item_check' checked={item?.checked} onChange={onChange} />
+      <Switch className='a_item_check' checked={item?.checked} onChange={onChange} disabled={item?.disabled} />
     </div>
   )
 }

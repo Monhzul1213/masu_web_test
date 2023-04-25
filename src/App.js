@@ -18,6 +18,7 @@ import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, 
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
 import { Bill } from './pages/lone';
+import { Integration } from './pages/integration';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -145,6 +146,7 @@ export function App(){
                 <Route path='/bill' element={<Bill />} />
                 <Route path='/report/report_order' element={<SalesOrder />} />
                 <Route path='/report/terms' element={<Terms />} />
+                <Route path='/integration' element={<Integration />} />
               </Routes>
             </Layout>
           </Layout>

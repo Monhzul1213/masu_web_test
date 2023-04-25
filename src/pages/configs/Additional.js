@@ -17,17 +17,18 @@ export function Additional(){
   const [config, setConfig] = useState(null);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const disabled = true;
 
   const items = [
-    { title: t('add_menu.cashier1'), sub_title: t('add_menu.cashier2'), checked: checked['cashier'], label: 'cashier' },
-    { title: t('add_menu.time1'), sub_title: t('add_menu.time2'), checked: checked['time'], label: 'time' },
     { title: t('add_menu.order1'), sub_title: t('add_menu.order2'), checked: checked['order'], label: 'order' },
-    { title: t('add_menu.kitchen1'), sub_title: t('add_menu.kitchen2'), checked: checked['kitchen'], label: 'kitchen' },
-    { title: t('add_menu.user1'), sub_title: t('add_menu.user2'), checked: checked['user'], label: 'user' },
-    { title: t('add_menu.meal1'), sub_title: t('add_menu.meal2'), checked: checked['meal'], label: 'meal' },
-    { title: t('add_menu.balance1'), sub_title: t('add_menu.balance2'), checked: checked['balance'], label: 'balance' },
-    { title: t('add_menu.info1'), sub_title: t('add_menu.info2'), checked: checked['info'], label: 'info' },
-    { title: t('add_menu.barcode1'), sub_title: t('add_menu.barcode2'), checked: checked['barcode'], label: 'barcode' },
+    // { title: t('add_menu.cashier1'), sub_title: t('add_menu.cashier2'), checked: checked['cashier'], label: 'cashier', disabled },
+    { title: t('add_menu.time1'), sub_title: t('add_menu.time2'), checked: checked['time'], label: 'time', disabled },
+    { title: t('add_menu.kitchen1'), sub_title: t('add_menu.kitchen2'), checked: checked['kitchen'], label: 'kitchen', disabled },
+    { title: t('add_menu.user1'), sub_title: t('add_menu.user2'), checked: checked['user'], label: 'user', disabled },
+    { title: t('add_menu.meal1'), sub_title: t('add_menu.meal2'), checked: checked['meal'], label: 'meal', disabled },
+    { title: t('add_menu.balance1'), sub_title: t('add_menu.balance2'), checked: checked['balance'], label: 'balance', disabled },
+    { title: t('add_menu.info1'), sub_title: t('add_menu.info2'), checked: checked['info'], label: 'info', disabled },
+    { title: t('add_menu.barcode1'), sub_title: t('add_menu.barcode2'), checked: checked['barcode'], label: 'barcode', disabled },
   ];
 
   useEffect(() => {
