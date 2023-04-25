@@ -32,7 +32,7 @@ export function Total(props){
       <div className='bl_gap' />
       <Label label={t('bill.cash')} value={header?.totalCashAmount} />
       <Label label={t('bill.noncash')} value={header?.totalNonCashAmount} />
-      <Label label={t('bill.paid')} value={header?.totalSalesAmount} id='bl_total_bold' />
+      <Label label={t('bill.paid')} value={header?.paidAmount} id='bl_total_bold' />
       <div className='bl_gap' />
       <div className='bl_dash' />
       <div className='bl_gap' />

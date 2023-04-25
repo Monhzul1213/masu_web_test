@@ -10,7 +10,7 @@
   width: 480px;
   max-height: calc(100vh - 30px);
   overflow: scroll;
-  min-height: 60vh;
+  min-height: 40vh;
   display: flex;
   flex-flow: column;
 }
@@ -152,12 +152,24 @@
 .bl_qr_back {
   display: flex;
   flex-flow: row;
-}
-
-.bl_qr {
-  flex: 1;
+  margin-top: 5px;
 }
 
 .bl_qr_col {
   flex: 1;
+  margin-left: 10px;
+}
+
+.bl_qr_label {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 16px;
+}
+
+.bl_qr_value {
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  flex: 1;
+  word-break: break-word;
 }

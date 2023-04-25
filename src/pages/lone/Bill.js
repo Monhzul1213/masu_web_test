@@ -31,6 +31,7 @@ export function Bill(){
     else {
       let header = response?.data?.retdata?.sales && response?.data?.retdata?.sales[0];
       if(header) header.pureAmount = (header.totalSalesAmount ?? 0) - (header.totalVatAmount ?? 0) - (header.totalNhatamount ?? 0);
+      if(header) header.paidAmount = (header.totalCashAmount ?? 0) + (header.totalNonCashAmount ?? 0);
       setHeader(header);
       setDetail(response?.data?.retdata?.salesitem);
     }
