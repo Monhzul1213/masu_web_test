@@ -87,27 +87,27 @@
 
 .bl_header1 {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   width: 45%;
 }
 
 .bl_header2 {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   width: 18%;
   text-align: center;
 }
 
 .bl_header3 {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   width: 12%;
   text-align: center;
 }
 
 .bl_header4 {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   width: 25%;
   text-align: right;
 }
@@ -129,7 +129,22 @@
 
 .bl_item_descr {
   margin: 0 0 5px 0;
-  font-size: 12px;
-  line-height: 13px;
+  font-size: 13px;
+  line-height: 14px;
   color: var(--text2-color);
+}
+
+.bl_total_row {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
+.bl_total_text {
+  font-size: 14px;
+  margin: 0;
+}
+
+#bl_total_bold > p {
+  font-weight: 600;
 }

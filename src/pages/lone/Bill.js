@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
-import { Header, Info, Items } from '../../components/lone/bill';
+import { Header, Info, Items, Total } from '../../components/lone/bill';
 
 export function Bill(){
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,11 @@ export function Bill(){
     let api = 'Sales/GetSalesBill?data=' + encodeURIComponent(billno);
     let response = await dispatch(getService(api, 'GET'));
     if(response?.error) setError(response?.error);
-    else setData(response?.data?.retdata);
+    else {
+      let header = response?.data?.retdata?.sales;
+      if(header) header.pureAmount = (header.totalSalesAmount ?? 0) - (header.totalVatAmount ?? 0) - (header.totalNhatamount ?? 0);
+      setData(response?.data?.retdata);
+    }
     setLoading(false);
   }
 
@@ -40,6 +44,7 @@ export function Bill(){
             <Info header={data?.sales} />
             <Header />
             <Items detail={data?.salesitem} />
+            <Total header={data?.sales} />
           </div>
         }
       </div>
