@@ -39,7 +39,7 @@ export function Bill(){
           <div>
             <Info header={data?.sales} />
             <Header />
-            {/* <Items detail={data?.salesitem} /> */}
+            <Items detail={data?.salesitem} />
           </div>
         }
       </div>

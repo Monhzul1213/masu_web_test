@@ -115,3 +115,21 @@
 .bl_item:not(:last-child) {
   border-bottom: 1px solid var(--line-color);
 }
+
+.bl_item:last-child {
+  border-bottom: 1px dashed var(--text-color);
+  padding-bottom: 2px;
+}
+
+.bl_item_row {
+  display: flex;
+  flex-flow: row;
+  margin: 5px 0 1px 0;
+}
+
+.bl_item_descr {
+  margin: 0 0 5px 0;
+  font-size: 12px;
+  line-height: 13px;
+  color: var(--text2-color);
+}
