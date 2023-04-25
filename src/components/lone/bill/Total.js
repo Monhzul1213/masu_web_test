@@ -9,7 +9,7 @@ const Label = props => {
   return (
     <div className='bl_total_row' id={id}>
       <p className='bl_total_text'>{label}</p>
-      <p className='bl_total_text'><Money value={value} fontSize={13} /></p>
+      <p className='bl_total_text'><Money value={value} fontSize={13} currency='₮' /></p>
     </div>
   );
 }

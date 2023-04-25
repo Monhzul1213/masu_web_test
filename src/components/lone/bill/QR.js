@@ -21,7 +21,7 @@ export function QR(props){
 
   return header?.vatQr ? (
     <div className='bl_qr_back'>
-      <QRCode size={180} value={header?.vatQr} />
+      <QRCode size={160} value={header?.vatQr} />
       <div className='bl_qr_col'>
         <Label label={t('bill.ddtd')} value={header?.vatDdtd} />
         {header?.vatCustomerId
@@ -29,7 +29,7 @@ export function QR(props){
           : <Label label={t('bill.lottery')} value={header?.vatLotteryNo} />}
         {header?.vatCustomerId
           ? <Label label={t('bill.company_name')} value={header?.vatCustomerName} />
-          : <Label label={t('bill.sales_total')} value={<Money value={header?.paidAmount} fontSize={13} />} />}
+          : <Label label={t('bill.sales_total')} value={<Money value={header?.paidAmount} fontSize={13} currency='₮' />} />}
       </div>
     </div>
   ) : null;
