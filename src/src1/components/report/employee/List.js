@@ -45,7 +45,7 @@ export function List(props){
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance,  };
+  const tableProps = { tableInstance, hasTotal: true , total: data?.length  };
   const filterProps = {columns, data, excelName };
 
   return (

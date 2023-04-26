@@ -4,14 +4,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
 import { getList } from '../../../../services';
-import { DynamicAIIcon, MonthRange, MultiSelect, TimeRange } from '../../all/all_m';
+import { DynamicAIIcon, MonthRange, MultiSelect } from '../../all/all_m';
 
 export function Filter(props){
   const { setError, size, onSearch, filter1 } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [date, setDate] = useState([moment().startOf('month'), moment().startOf('month')]);
-  const [time, setTime] = useState(null);
+  const [date, setDate] = useState([moment(), moment()]);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState([]);
   const [emps, setEmps] = useState([]);
@@ -37,7 +36,6 @@ export function Filter(props){
 
   const onHide = () => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
-    if(time) query += '&BeginTime=' + time[0] + '&EndTime=' + time[1]
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
     onSearch && onSearch(query, filter1, date);
@@ -72,7 +70,6 @@ export function Filter(props){
   }
 
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
-  const timeProps = { value: time, setValue: setTime, onHide, classBack: 'rp_time_back', label: t('report_receipt.all_day') };
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
   const maxEmp = emp?.length === emps?.length ? t('time.all_emp') : (emp?.length + t('time.some_emp'));
   const siteProps = { value: site, setValue: setSite, data: sites, s_value: 'siteId', s_descr: 'name', onHide,
@@ -88,7 +85,6 @@ export function Filter(props){
     <div className={classH}>
       <div className='rp_h_row1'>
         <MonthRange {...dateProps} />
-        <TimeRange {...timeProps} />
       </div>
       <div className='rp_h_row2'>
         <MultiSelect {...siteProps} />

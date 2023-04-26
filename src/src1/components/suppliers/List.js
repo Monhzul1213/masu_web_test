@@ -66,7 +66,7 @@ export function List(props){
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   const tableInstance = useTable( { columns, data, autoResetPage: false, autoResetExpanded, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick };
+  const tableProps = { tableInstance, onRowClick ,  hasTotal: true , total: data?.length  };
 
   return (
     <div >

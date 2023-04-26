@@ -24,8 +24,8 @@ function Screen(props){
   useEffect(() => {
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
     else {
-      let dates = [moment()?.startOf('month'), moment()];
-      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
+      let dates = [moment(), moment()];
+      let query = '?BeginDate=' + moment()?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
       getData(query, null, dates);
     }
     return () => {};
@@ -38,7 +38,7 @@ function Screen(props){
     let api = 'Sales/GetSalesService' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response);
+    console.log(api);
     if(response?.error) setError(response?.error);
     else {
       setData(response?.data);
@@ -55,7 +55,7 @@ function Screen(props){
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
   return (
-    <div className='s_container_r'>
+    <div className='s_container_z'>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />

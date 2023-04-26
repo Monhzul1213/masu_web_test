@@ -30,8 +30,8 @@ function Screen(props){
   useEffect(() => {
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
     else {
-      let dates = [moment()?.startOf('month'), moment()];
-      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
+      let dates = [moment(), moment()];
+      let query = '?BeginDate=' + moment()?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
       getData(query, null, dates);
     }
     return () => {};
@@ -47,8 +47,6 @@ function Screen(props){
     console.log(response?.data)
     if(response?.error) setError(response?.error);
     else {
-      // setData(response?.data)
-      // setTotal(response?.data?.cardview)
       let salesQty = 0, returnQty = 0, salesAmt = 0, returnAmt = 0, totalQty = 0, totalAmt = 0;
       response?.data?.cardview.forEach(item => {
         if(item?.status === 1){
@@ -66,10 +64,7 @@ function Screen(props){
       setTotal({totalQty, totalAmt, salesQty, returnQty, salesAmt, returnAmt});
       setData(response?.data);      
       setData1(response?.data?.item);
-      if(tab === 0){
-        setFilteredData(response?.data?.list?.filter(item => item?.status === tab));
-      }
-      
+      setFilteredData(response?.data?.list?.filter(item => item?.status === tab));      
     }
     setLoading(false);
     setFilter(query);
@@ -79,9 +74,7 @@ function Screen(props){
 
   const onChangeTab = value => {
     setTab(value);
-    if(tab === 0){
-      setFilteredData(data?.list?.filter(item => item?.status === value));
-    }
+    setFilteredData(data?.list?.filter(item => item?.status === value));
   } 
 
   let filterProps = { onSearch: getData, size, setError, filter, filter1 };

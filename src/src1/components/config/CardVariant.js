@@ -80,20 +80,6 @@ export function CardVariant(props){
     }
   }
 
-  // const handleEnterj = e => {
-  //   e?.preventDefault();
-  //   let variantName = search?.value?.trim();
-  //   if(variantName){
-  //     let exists = data?.findIndex(d => d.variantName?.toLowerCase() === variantName?.toLowerCase());
-  //     if(exists === -1){
-  //       let item = { variantName, price: price?.value ?? 0, cost: cost?.value ?? 0, sku: '', barCode: '' };//InvtID, MerchantID
-  //       setData(old => [...old, item]);
-  //       setSearch({ value: '' });
-  //       setEdited && setEdited(true);
-  //     } else setSearch({ value: search?.value?.trim(), error: t('inventory.variant_error') });
-  //   }
-  // }
-
   const width = size?.width >= 420 ? 620 : size?.width;
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };

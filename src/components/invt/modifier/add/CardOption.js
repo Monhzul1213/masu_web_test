@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { DynamicBSIcon, Input, PaginationTable, Table } from '../../../all';
+import { DynamicBSIcon, Input, PaginationTable, Table, DynamicAIIcon } from '../../../all';
 import { EditableCell } from '../../inventory/add/EditableCell';
 
 function Card(props){
@@ -107,6 +107,10 @@ function Card(props){
       <Input {...addProps} />
       <div style={{padding: 5}} />
       <PaginationTable {...tableProps} />
+      <div  className='order_sub1'>
+        <DynamicAIIcon name='AiOutlineInfoCircle' className='order_info'  />
+        <p className='z_item_sub_title'>{t('orders.error2')}</p>
+      </div> 
     </div>
   )
 }

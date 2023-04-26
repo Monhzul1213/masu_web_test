@@ -79,3 +79,11 @@
   margin-top: 20px;
   margin-left: 10px;
 }
+.order_sub1{
+  display: flex;
+  flex-flow: row;
+  background-color: var(--root-color);
+  max-width: var(--invt-width);
+  border-radius: var(--radius);
+  margin-top: 10px;
+}

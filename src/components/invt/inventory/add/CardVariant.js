@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Table, PaginationTable, Input, DynamicBSIcon } from '../../../all';
+import { Table, PaginationTable, Input, DynamicBSIcon, DynamicAIIcon } from '../../../all';
 import { EditableCell } from './EditableCell';
 
 export function CardVariant(props){
@@ -95,15 +95,21 @@ export function CardVariant(props){
   const addProps = { value: search, setValue: setSearch, placeholder: t('inventory.add_variant'), handleEnter, inRow: true, length: 30 };
 
   return (
-    <div className='ia_back'>
-      <p className='ac_title'>{t('inventory.variant')}</p>
-      <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
-        <Table {...tableProps} />
+    <>
+      <div className='ia_back'>
+        <p className='ac_title'>{t('inventory.variant')}</p>
+        <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+          <Table {...tableProps} />
+        </div>
+        <div style={{padding: 2}} />
+        <Input {...addProps} />
+        <div style={{padding: 5}} />
+        <PaginationTable {...tableProps} />
       </div>
-      <div style={{padding: 2}} />
-      <Input {...addProps} />
-      <div style={{padding: 5}} />
-      <PaginationTable {...tableProps} />
-    </div>
+      <div  className='order_sub1'>
+        <DynamicAIIcon name='AiOutlineInfoCircle' className='order_info'  />
+        <p className='z_item_sub_title'>{t('orders.error1')}</p>
+      </div>  
+    </>
   );
 }

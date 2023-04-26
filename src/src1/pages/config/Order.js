@@ -14,7 +14,6 @@ function Card(props){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [error1, setError1] = useState(null);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState(null);
   const [edited, setEdited] = useState(false);

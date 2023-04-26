@@ -590,7 +590,7 @@ export const types = [
 ];
 
 export const status = [
-  { label: "Захиалганд байгаа", value: "0" },
-  { label: "Захиалга биелсэн", value: "1" },
-  { label: "Хүчингүй болсон захиалга", value: "9" }
+  { statusName: "Захиалганд байгаа", status: 0 },
+  { statusName: "Захиалга биелсэн", status: 1 },
+  { statusName: "Хүчингүй болсон захиалга", status: 9 }
 ];

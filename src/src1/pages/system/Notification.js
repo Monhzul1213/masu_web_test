@@ -39,7 +39,14 @@ export function Notification(){
     const response = await dispatch(getList(user, token, api));
     console.log(response?.data)
     if(response?.error) setError(response?.error);
-    else { setData(response?.data?.header)}
+    else { 
+      let grpData =[];
+      response?.data?.header.forEach(item => {
+        if(item?.status !== 0){
+          grpData.push(item)
+        } 
+        setData(grpData)
+      })}
     setShow(false);
     setChecked(false);
     setLoading(false);

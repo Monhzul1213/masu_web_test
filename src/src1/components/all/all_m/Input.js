@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 export function Input(props){
   const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, length, length1 } = props;
-    const { t } = useTranslation();
+  const { t } = useTranslation();
+    
   const onChange = e => {
     e?.target?.value?.length > length 
       ? setValue({ value: value?.value, error: '' + length + t('error.shorter_than') })

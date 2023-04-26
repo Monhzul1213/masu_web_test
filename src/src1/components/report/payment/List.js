@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import {  FooterTable, Money } from '../../all/all_m';
+import {  FooterTable, Money, PaginationTable } from '../../all/all_m';
 import { formatNumber } from '../../../../helpers';
 import { Header } from './Header';
 export function List(props){
-  const { data, excelName} = props;
+  const { data, excelName, size} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [maxHeight, setMaxHeight] = useState('300px');
+
+  useEffect(() => {
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 70px )');
+    else if(size?.width < 920 && size?.width >= 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 70px)');
+    else if(size?.width < 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 137px)');
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size?.width]);
 
   useEffect(() => {
     setColumns([
@@ -69,11 +80,11 @@ export function List(props){
   
 
 
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
+  // const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   const tableInstance = useTable({ columns, data,  autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
       }, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName };
 
   return (
@@ -84,6 +95,7 @@ export function List(props){
           <FooterTable {...tableProps} />
         </div>
       </div>
+      <PaginationTable {...tableProps} />
     </div>
   );
 }

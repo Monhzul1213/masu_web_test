@@ -89,7 +89,7 @@ export function FooterTable(props){
         {footerGroups.map(group => (
           <tr {...group.getFooterGroupProps()}>
             {group.headers.map(column => (
-              <td className='table_footer_text' {...column.getFooterProps()}>{column.render('Footer')}</td>
+              <th className='table_footer_text' {...column.getFooterProps()}>{column.render('Footer')}</th>
             ))}
           </tr>
         ))}

@@ -9,7 +9,6 @@ export function List(props){
   const { data, excelName} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [maxHeight, ] = useState('300px');
 
   useEffect(() => {
     setColumns([
@@ -35,10 +34,10 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 160px)';
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance,  };
+  const tableProps = { tableInstance, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName };
 
   return (
