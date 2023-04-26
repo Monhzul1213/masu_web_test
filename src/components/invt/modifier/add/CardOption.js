@@ -97,7 +97,7 @@ function Card(props){
   const addProps = { value: search, setValue: setSearch, placeholder: t('modifier.new'), handleEnter, inRow: true, length: 20 };
 
   return (
-    <div className='ma_back'>
+    <div className='ma_back1'>
       <Input {...nameProps} />
       <div style={{padding: 7}} />
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
