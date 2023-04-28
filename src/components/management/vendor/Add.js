@@ -17,8 +17,6 @@ export function Add(props){
   const [image64, setImage64] = useState('');
   const [imageType, setImageType] = useState('');
   const [name, setName] = useState({ value: '' });
-  const [vendCode, setVendCode] = useState({ value: '' });
-  const [contact, setContact] = useState({ value: '' });
   const [address, setAddress] = useState({ value: '' });
   const [phone, setPhone] = useState({ value: '' });
   const [email, setEmail] = useState({ value: '' });
@@ -35,13 +33,13 @@ export function Add(props){
       let data = [ {
         vendId: -1,
         vendName: name?.value?.trim(),
-        contact: contact?.value?.trim(),
+        contact: '',//contact?.value?.trim(),
         email: email?.value?.trim(),
         phone: phone?.value?.trim(),
         webSite: web?.value?.trim(),
         address1: address?.value?.trim(),
         address2: address1?.value?.trim(),
-        vendCode: vendCode?.value?.trim(),
+        vendCode: '',// vendCode?.value?.trim(),
         note: note?.value?.trim(),
         rowStatus: "I",
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
@@ -66,7 +64,6 @@ export function Add(props){
     } else {
       if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
-      if(!vendCode?.value?.trim()) setVendCode({ value: '', error: t('error.not_empty') });
       if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
       return false;
@@ -81,8 +78,6 @@ export function Add(props){
 
   const imageProps = { image, setImage, setImage64, setImageType, setError, className: 'im_add_image' };
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('supplier.name'), setError, length1: 2 };
-  const codeProps = { value: vendCode, setValue: setVendCode, label: t('supplier.vendCode'), placeholder: t('supplier.vendCode'), setError };
-  const contProps = { value: contact, setValue: setContact, label: t('supplier.contact'), placeholder: t('supplier.contact'), setError, length: 100 };
   const mailProps = { value: email, setValue: setEmail, label: t('page.email'), placeholder: t('supplier.email'), setError, length: 100 };
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('supplier.phone'), setError };
   const webProps = { value: web, setValue: setWeb, label: t('supplier.web'), placeholder: t('supplier.web'), setError, length: 100 };
@@ -101,8 +96,6 @@ export function Add(props){
           <div className='m_scroll' id='im_small'>
             <UploadImage {...imageProps} />
             <Input {...nameProps}  />
-            <Input {...codeProps}  />
-            <Input {...contProps} />
             <Input {...mailProps} />
             <Input {...phoneProps} />
             <Input {...webProps} />
