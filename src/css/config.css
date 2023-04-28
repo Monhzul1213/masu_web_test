@@ -564,6 +564,10 @@
   background-color: transparent;
 }
 
+#m_input_descr1 {
+  height: 60px;
+}
+
 .select_m .ant-select-selection-placeholder {
   left: 0;
 }

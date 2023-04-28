@@ -61,7 +61,7 @@ export function Input(props){
 }
 
 export function DescrInput(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, inRow, length } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, inRow, length, id } = props;
   const { t } = useTranslation();
 
   const onChange = e => {
@@ -84,6 +84,7 @@ export function DescrInput(props){
       <div className='select_back' style={backStyle}>
         <p className='select_lbl' style={style}>{label}</p>
         <textarea
+          id={id}
           className='m_input_descr'
           disabled={disabled}
           placeholder={placeholder}

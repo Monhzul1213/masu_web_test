@@ -93,7 +93,7 @@ function Card(props){
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true, length: 30 };
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false,
     data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories };
-  const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setEdited, setError, length: 30 };
+  const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setEdited, setError, length: 500 };
   const unitProps = { value: isEach, setValue: setIsEach, label: t('inventory.unit'), data: t('inventory.units'),
     setEdited, setError, inRow: false };
   const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setEdited, setError,
@@ -129,7 +129,7 @@ function Card(props){
         <div className='gap' />
         <UploadImage {...imageProps} />
       </div>
-      <DescrInput {...descrProps} />
+      <DescrInput {...descrProps} id='m_input_descr1' />
       <div id={idRow}>
         <MoneyInput {...priceProps} />
         <div className='im_gap' />
