@@ -57,7 +57,7 @@ function Screen(props){
       });
       setTotal({
         totalQty: response?.data?.salesResp?.length,
-        totalAmt: salesAmt - returnAmt,
+        totalAmt: salesAmt + returnAmt,
         salesQty, returnQty, salesAmt, returnAmt
       });
       setData(response?.data?.salesResp);
