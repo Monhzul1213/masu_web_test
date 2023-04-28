@@ -1505,3 +1505,14 @@
 .im_add_image .ant-upload.ant-upload-select-picture-card:hover {
   border-color: var(--config-color);
 }
+
+.sp_check_row {
+  display: flex;
+  flex-flow: row;
+  padding-top: 10px;
+}
+
+#sp_check_btn {
+  margin-top: 25px;
+  margin-left: 10px;
+}

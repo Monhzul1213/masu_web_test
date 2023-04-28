@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { validateEmail } from '../../../helpers';
 import { sendRequest } from '../../../services';
-import { ButtonRow, Error, ModalTitle, Overlay } from '../../all';
+import { ButtonRow, CheckBox, Error, ModalTitle, Overlay } from '../../all';
 import { Input, UploadImage } from '../../../src1/components/all/all_m';
+import { Check } from './Check';
 
 export function Add(props){
   const { visible, closeModal } = props;
@@ -23,6 +24,9 @@ export function Add(props){
   const [web, setWeb] = useState({ value: '' });
   const [address1, setAddress1] = useState({ value: '' });
   const [note, setNote] = useState({ value: '' });
+  const [isOTC, setIsOTC] = useState(false);
+  const [cust, setCust] = useState({ value: '' });
+  const [rep, setRep] = useState({ value: '' });
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -87,15 +91,21 @@ export function Add(props){
     length: 100, length1: 6 };
   const descrProps = { value: note, setValue: setNote, label: t('supplier.desc'), placeholder: t('supplier.desc'), setError, length: 255, length1: 10 };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: false };
+  const otcProps = { label: t('supplier.is_otc'), checked: isOTC, setChecked: setIsOTC };
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={420}>
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='TbCar' title={t('supplier.add')} />
           <div className='m_scroll' id='im_small'>
             <UploadImage {...imageProps} />
             <Input {...nameProps}  />
+            <CheckBox {...otcProps} />
+            
+            <Check label='cust' value={cust} setValue={setCust} disabled={!isOTC} />
+            <Check label='rep' value={rep} setValue={setRep} disabled={!isOTC} />
+
             <Input {...mailProps} />
             <Input {...phoneProps} />
             <Input {...webProps} />
