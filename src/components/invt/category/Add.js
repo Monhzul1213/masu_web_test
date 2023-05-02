@@ -80,7 +80,6 @@ export function Add(props){
       setLoading(true);
       const response = await dispatch(deleteRequest(user, token, 'Inventory/DeleteCategory/' + selected?.categoryId));
       setLoading(false);
-      console.log(response);
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);

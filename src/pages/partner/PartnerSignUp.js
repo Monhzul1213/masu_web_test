@@ -87,9 +87,7 @@ export function PartnerSignUp(){
       partnerCode: code?.value, partnerName: name?.value, email: mail?.value,
       phone: phone?.value, address: address?.value, password: password?.value?.trim()
     };
-    console.log(data);
     const response = await dispatch(apiRegister(data, 'Merchant/RegisterPartner'));
-    console.log(response);
     if(response?.error) setError(response?.error);
     else {
       const response2 = await dispatch(partnerLogin(data?.partnerCode, data?.password));

@@ -31,7 +31,6 @@ export function Confirm(props){
   const onClickConfirm = async () => {
     setLoading(true);
     let api = 'Merchant/Validate/Phone?mobile=' + number + '&regnum=' + code?.replace(/[ _]/g, '');
-    console.log(api);
     let response = await dispatch(getService(api));
     setLoading(false);
     if(response?.error) setError(response?.error);
@@ -44,7 +43,6 @@ export function Confirm(props){
   const onClickSend = async () => {
     setLoading(true);
     let api = 'Merchant/SentSMS?mobile=' + number + '&email=' + email + (fromPartner ? '&RegisterType=Partner' : '');
-    console.log(api);
     let response = await dispatch(getService(api));
     setLoading(false);
     if(response?.error) setError(response?.error);

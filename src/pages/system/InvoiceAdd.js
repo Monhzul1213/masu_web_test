@@ -68,11 +68,9 @@ export function InvoiceAdd(){
       approved_level1: editable1 ? (approved1 ? 'Y' : 'N') : invoice?.approvedLevel1,
       approved_level2: editable2 ? (approved2 ? 'Y' : 'N') : invoice?.approvedLevel2,
     };
-    console.log(data);
     if(data){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/ModSubscription', data));
-      console.log(response);
       if(response?.error) onError(response?.error, true);
       else onSuccess(t('tax.solve_success'), true);
     }

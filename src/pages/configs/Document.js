@@ -75,7 +75,6 @@ function Card(props){
   const getBill = async siteID => {
     setSite(siteID);
     const response = await dispatch(getList(user, token, 'Site/GetBill?SiteID=' + siteID));
-    console.log(response)
     if(response?.error){
       setError(response?.error);
       setBill(null);
@@ -121,7 +120,6 @@ function Card(props){
       rowStatus: bill ? 'U' : 'I'
     }
     const response = await dispatch(sendRequest(user, token, 'Site/AddBill', data));
-    console.log(response);
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {

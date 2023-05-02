@@ -79,7 +79,6 @@ export const apiLogin = (mail, password, fromAd) => async dispatch => {
       data: { mail, password }
     };
     const response = await fetchRetryLogin(config);
-    console.log('++++++++++++++++++++++=', response);
     if(!response || response?.result){
       return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
     } else {
@@ -119,7 +118,6 @@ export const apiValidate = mail => async dispatch => {
       headers: { 'Accept': '*/*' }, 
     };
     const response = await fetchRetryLogin(config);
-    console.log('++++++++++++++++++++++=', response);
     return Promise.resolve({ response });
   } catch (err) {
     console.log(err);
@@ -135,7 +133,6 @@ export const apiRecovery = email => async dispatch => {
       headers: { email }, 
     };
     const response = await fetchRetryLogin(config);
-    console.log('++++++++++++++++++++++=', response);
     if(!response || response?.rettype || response?.rettype === undefined){
       return Promise.resolve({ error:
         response?.retdesc ?? (response?.rettype === undefined ? response?.toString() : 'Алдаа гарлаа.') });
@@ -156,7 +153,6 @@ export const qpayLogin = () => async dispatch => {
 
     const config = { method: 'POST', url: session_url, headers: { 'Authorization': 'Basic '+ encodedToken }};
     const response = await fetchRetryLogin(config);
-    console.log('++++++++++++++++++++++=', response);
     if(!response || response?.error_code){
       return Promise.resolve({ error: response?.description ?? 'Алдаа гарлаа.' });
     } else {
@@ -176,7 +172,6 @@ export const partnerLogin = (partnerCode, password) => async dispatch => {
       data: { partnerCode, password }
     };
     const response = await fetchRetryLogin(config);
-    console.log('++++++++++++++++++++++=', response);
     if(!response || response?.result){
       return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
     } else {
@@ -222,9 +217,7 @@ export const qpayQR = (token, invoiceNo, amount) => async dispatch => {
       withCredentials: true,
       data
     };
-    console.log(config);
     const response = await fetchRetrySend(config);
-    console.log('----------', response);
    if(response?.error_code && response?.error_code !== 200){
       return Promise.resolve({ error: response?.description, error_code: response?.error_code });
     } else  {
@@ -236,9 +229,6 @@ export const qpayQR = (token, invoiceNo, amount) => async dispatch => {
 }
 
 function fetchRetrySend(config, retries = 0) {
-  // const headers = { 'Authorization': 'Bearer ' + token, "Content-Type": "application/json", Accept: "application/json" };
-  // const headers = { 'Authorization': 'Bearer ' + token, "Content-Type": "application/json" };
-  // console.log(url, data, headers)
   return axios(config)
     .then(res => {
       return res?.data;

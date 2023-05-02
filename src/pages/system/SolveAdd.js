@@ -49,7 +49,6 @@ export function SolveAdd(){
     setLoading(true);
     let api = 'Merchant/VatRequest/GetSolvedRequests?RequestID=' + requestId;
     let response = await dispatch(getList(user, token, api));
-    console.log(response);
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
@@ -120,11 +119,9 @@ export function SolveAdd(){
 
   const onClickSave = async () => {
     let data = validateData();
-    console.log(data);
     if(data){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Merchant/VatRequestSolve', data));
-      console.log(response);
       if(response?.error) onError(response?.error, true);
       else onSuccess(t('tax.solve_success'), true);
     }

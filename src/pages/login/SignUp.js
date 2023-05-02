@@ -57,10 +57,8 @@ export function SignUp(){
   //   const templateParams = { to, link };
   //   return emailjs.send('service_k7osau8','template_3dlaawl', templateParams, 'q2YX3XN0cT2C8g_Ni')
   //     .then((response) => {
-  //       console.log('SUCCESS!', response.status, response.text);
   //       return Promise.resolve(true);
   //     }, (err) => {
-  //       console.log(err);
   //       return Promise.resolve(true);
   //     }
   //   );
@@ -88,9 +86,7 @@ export function SignUp(){
   const login = async () => {
     setLoading(true);
     let data = { mail: email?.value, password: password?.value, descr: business?.value, address: address?.value?.trim(), partnerCode: partner?.value ?? '' };
-    console.log(data);
     const response = await dispatch(apiRegister(data));
-    console.log(response);
     if(response?.error) setError(response?.error);
     else {
       // await sendEmail(data?.mail);

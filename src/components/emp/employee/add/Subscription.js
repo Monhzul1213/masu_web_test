@@ -60,7 +60,6 @@ export function Subscription(props){
       rowStatus: 'I',
       empCode: emp?.empCode
     }
-    console.log(data);
     let response = await dispatch(sendRequest (user, token, 'Txn/ModInvoice', data));
     if(response?.error) setError(response?.error);
     else {
@@ -150,7 +149,6 @@ function Pay(props){
 
   const checkInvoice = async () => {
     let api = 'Txn/GetInvoice?InvoiceNo=' + txnNo;
-    console.log('Checking invoice', api);
     let response = await dispatch(getList(user, token, api));
     if(!response?.error){
       let invoice = response?.data && response?.data[0]?.status;

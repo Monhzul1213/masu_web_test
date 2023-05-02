@@ -53,10 +53,8 @@ export function Add(props){
         ? { siteId: site?.value, terminalId: selected?.terminalId, lastUpdate: moment().format('yyyy.MM.DD'), status: 1 }
         : { siteID: site?.value };
       let data = {...data1, ...data2};
-      console.log(data);
       let api = selected ? 'Site/UpdatePos' : 'Site/AddPos';
       const response = await dispatch(sendRequest(user, token, api, data));
-      console.log(response);
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);
@@ -80,7 +78,6 @@ export function Add(props){
       setLoading(true);
       let data = [{ siteId: selected?.siteId, terminalId: selected?.terminalId }];
       const response = await dispatch(deleteRequest(user, token, 'Site/DeletePos', data));
-      console.log(response);
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);

@@ -44,8 +44,8 @@ export function Slide(props){
           justifyContent: 'center',
           alignContent: 'center'
         }}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}>
+        onSlideChange={() => {}}
+        onSwiper={() => {}}>
         {ads?.map(renderItem)}
       </Swiper>
     </div>

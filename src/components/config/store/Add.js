@@ -82,7 +82,6 @@ export function Add(props){
     if(sure){
       setLoading(true);
       const response = await dispatch(deleteRequest(user, token, 'Site/DeleteSite/' + selected?.siteId));
-      console.log(response);
       if(response?.error) setError(response?.error);
       else {
         closeModal(true);
