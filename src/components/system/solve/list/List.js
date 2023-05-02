@@ -24,7 +24,7 @@ export function List(props){
         Header: t('tax.checked'), accessor: 'isVat', customStyle: { minWidth: 120 },
         Cell: ({ value }) => <div>{value === '1' ? t('page.yes') : t('page.no')}</div>
       },
-      { Header: t('order.status'), accessor: 'statusName' },
+      { Header: t('order.status'), accessor: 'statusName', customStyle: { minWidth: 130 } },
       { Header: t('shop.descr'), accessor: 'descr' },
     ]);
     return () => {};

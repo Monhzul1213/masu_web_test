@@ -35,7 +35,14 @@ export function Solve(){
     let api = 'Merchant/VatRequest/GetSolvedRequests' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else {
+      response?.data?.forEach(item => {
+        if(item?.status === 1) item.row_color = '#effd5f';
+        else if(item?.status === 4) item.row_color = '#69db91';
+        else item.row_color = '#ffffff';
+      });
+      setData(response?.data);
+    }
     setLoading(false);
   }
 
