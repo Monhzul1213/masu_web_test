@@ -87,7 +87,7 @@
 .table_sort {
   display: flex;
   flex-flow: column;
-  margin-left: 5px;
+  margin-left: 3px;
 }
 
 .table_sort_icon {
