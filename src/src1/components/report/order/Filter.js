@@ -66,7 +66,6 @@ export function Filter(props){
       if(response?.error) setError && setError(response?.error);
       else {
         setEmps(response?.data);
-        console.log(response?.data)
         setEmp(response?.data?.map(item => item.empCode));
       }
       setLoading(false);

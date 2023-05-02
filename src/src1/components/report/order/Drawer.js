@@ -29,19 +29,6 @@ export function Drawer(props){
     return (
       <>
      {item?.salesNo === selected?.salesNo ? 
-    //  <div key={index} className='dr_item1'>
-    //   <div></div>
-    //     <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}
-    //     {/* <br/>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('time.t_emp')+ ':' + item?.empName , t('report.descr')+ ':' + item?.serviceDescr ) : ''} */}
-    //     </p>
-    //     <p className='dr_item_text2'>{item?.qty}</p>
-    //     <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>
-    //     <p className='dr_item_text4'><Money value={item?.amount} fontSize={13} /></p>
-    //     <p className='dr_item_text'>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('report_receipt.t_emp')+ ': ' + item?.empName ) : ''}</p>
-
-    //     <p className='dr_item_text'>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('report_receipt.t_emp')+ ': ' + item?.serviceName ) : ''}</p>
-    //     <p className='dr_item_text'>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('report.descr')+ ': ' + item?.serviceDescr ) : ''}</p>
-    //   </div> 
       <div key={index} className='dr_items'>
         <div key={index} className='dr_item_row_z'>
           <p className='dr_item_text1'>{item?.invtName ?? item?.invtId}{variant}</p>
@@ -91,15 +78,6 @@ export function Drawer(props){
         </div>
         <div className='dr_list'>
           {data1?.map(renderItem)}
-          {/* <div  className='dr_item'>
-        <p className='dr_item_text1'>{selected?.item?.invtName ?? selected?.item?.invtId}
-        <br/>{(selected?.serviceCode !== 0 && selected?.serviceCode !==null) ? ( t('time.t_emp')+ ':' + selected?.empName ) : ''}
-        </p>
-        <p className='dr_item_text2'>{selected?.item?.qty}</p>
-        <p className='dr_item_text3'><Money value={selected?.item?.price} fontSize={13} /></p>
-        <p className='dr_item_text4'><Money value={selected?.item?.amount} fontSize={13} /></p>
-      </div> */}
-          {/* {selected?.saleitem?.serviceCode !== 0 ? (t('time.t_emp') + ':' + (selected?.sale?.cashierName)) : ''} */}
         </div>
         <div style={{padding: '5px 0 5px 0'}}>
           <div className='dr_row'>

@@ -48,7 +48,6 @@ export function CardVariant(props){
   }
 
   const onClickDelete = row => {
-    console.log(row?.original)
     if(row?.original?.ticketBinId ) setDVariants(old => [...old, row?.original]);
     if(row?.original?.error){
       setDisabled(false);
@@ -81,7 +80,7 @@ export function CardVariant(props){
   }
 
   const width = size?.width >= 420 ? 620 : size?.width;
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
+  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height) - 70px)';
   const defaultColumn = { Cell: EditableCell };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     updateMyData, onClickDelete, disabled }, useSortBy, usePagination, useRowSelect);

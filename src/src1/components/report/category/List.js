@@ -4,10 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { ExportExcel } from '../../../../helpers';
 import { PaginationTable, Table, IconDropdown, DynamicMDIcon , Money} from '../../../components/all/all_m';
 export function List(props){
-  const { data, excelName } = props;
+  const { data, excelName, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [columns1, setColumns1] = useState([]);
+  const [maxHeight, setMaxHeight] = useState('300px');
 
   useEffect(() => {
     changeColumns(['totalSalesAmt','totalReturnAmt', 'totalNetSalesAmt',  'totalProfitAmt', 'taxes' ]);
@@ -35,10 +36,20 @@ export function List(props){
     setColumns(columns);
   }
 
+  useEffect(() => {
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 90px)');
+    else if(size?.width < 920 && size?.width >= 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 70px)');
+    else if(size?.width < 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 137px)');
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size?.width]);
+
   const columnProps = { value: columns1, setValue: changeColumns, data: t('report.columns'), className: 'rp_list_drop',
     Icon: () => <DynamicMDIcon name='MdOutlineViewColumn' className='rp_list_drop_icon' />,
     dropdownStyle: { minWidth: 200 }, dropdownAlign: { offset: [-165, 5] } };
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
+  // const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   const tableInstance = useTable({ columns,data,  autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
       }, useSortBy, usePagination, useRowSelect);

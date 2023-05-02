@@ -95,7 +95,6 @@ export function DiscountAdd(){
     if(response?.error) setError(response?.error);
     else {
       let dis = response && response?.data && response?.data[0];
-      console.log(response?.data[0])
       setSelected(dis)
       setItem(response?.data);
       setName({ value: dis?.discountName ?? '' });
@@ -134,7 +133,6 @@ const onClickSave = async () => {
       discountSite
     }]
       const response = await dispatch(sendRequest(user, token, 'Site/AddDiscount', data));
-      console.log(response.data)
       if(response?.error) onError(response?.error);
       else onSuccess(t('discount.add_success'));
     } 
@@ -152,8 +150,8 @@ const onClickSave = async () => {
     const response = await dispatch(sendRequest(user, token, 'Site/AddDiscount', data));
     if(response?.error) onError(response?.error, true);
     else onSuccess(t('employee.delete_success'), true);
-    console.log(data)
   }
+  
   const mainProps = { setError, name, setName, isEach, setIsEach, price, setPrice, perc, setPerc, setEdited,  setIsCheck, isCheck };
   const siteProps = {  data: sites, setData: setSites, setEdited, checked, setChecked  };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'mo_ac_btn_z'  };

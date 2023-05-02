@@ -8,6 +8,7 @@ import { message } from 'antd';
 import { SizeMe } from 'react-sizeme';
 import { useNavigate } from 'react-router-dom';
 import '../../css/supplier.css'
+
 export function Suppliers(props){
   const { t } = useTranslation();
   const [data, setData] = useState([]);
@@ -35,11 +36,32 @@ export function Suppliers(props){
   const onClickDelete = async () => {
     let toDelete = [];
     data?.forEach(item => {
-      if(item.checked) toDelete.push({...item, rowStatus: 'D', image: {} });
+      if(item.checked) toDelete.push( {
+        vendId: item.vendId ,
+        vendName: item?.vendName,
+        email: item?.email,
+        contact : '',
+        vendCode :  item?.vendCode,
+        phone: '',
+        webSite: '',
+        address1: '',
+        address2: '',
+        city: "",
+        region: "",
+        postalCode: "",
+        country: "",
+        note: '',
+        rowStatus: "D",
+        useOtcorder: 'N',
+        vendorCustId: '',
+        vendorCustName: "string",
+        vendSalesRepId: "",
+        vendSalesRepName: "string",
+        image: { },
+      });
     });
     setError(null);
     setLoading(true);
-    console.log(toDelete)
     let response = await dispatch(sendRequest(user, token, 'Merchant/vendor', toDelete));
     setLoading(false);
     if(response?.error) setError(response?.error);
@@ -69,19 +91,19 @@ export function Suppliers(props){
   const emptyProps = { icon: 'TbCar', type: 'supplier', noDescr: true, onClickAdd , isTb: true,  };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData ,};
   const listProps = { data, onClickAdd, setData , loaded, setShow, checked, setChecked  };
+
   return (
     <div className='s_container_z'>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
            <SizeMe>{({ size }) => 
-           <div className='i_list_cont_z' id='solve_list'>
+           <div className='i_list_cont_z' id='supp_list_z'>
              <Header {...headerProps} size={size} />
              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
            </div>
          }</SizeMe>
         }      
-
         </Overlay>
     </div>
   );

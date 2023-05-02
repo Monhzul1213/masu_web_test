@@ -37,7 +37,6 @@ export function Notification(){
     setLoading(true);
     let api = 'System/GetNotification' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
-    console.log(response?.data)
     if(response?.error) setError(response?.error);
     else { 
       let grpData =[];
@@ -46,7 +45,8 @@ export function Notification(){
           grpData.push(item)
         } 
         setData(grpData)
-      })}
+      })
+    }
     setShow(false);
     setChecked(false);
     setLoading(false);
@@ -64,6 +64,7 @@ export function Notification(){
         text: item?.text,
         status: item?.status,
         rowStatus:'D',
+        isSendMail: item?.isSendMail ? 'Y' : 'N',
         notifItem: []});
     });    
     setError(null);

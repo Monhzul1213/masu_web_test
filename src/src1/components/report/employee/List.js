@@ -5,10 +5,10 @@ import { PaginationTable, Table , Money} from '../../all/all_m';
 import { Header } from './Header';
 
 export function List(props){
-  const { data, excelName} = props;
+  const { data, excelName, size} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [maxHeight, ] = useState('300px');
+  const [maxHeight, setMaxHeight ] = useState('300px');
 
   useEffect(() => {
     setColumns([
@@ -40,7 +40,15 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
-
+  useEffect(() => {
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 90px)');
+    else if(size?.width < 920 && size?.width >= 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 70px)');
+    else if(size?.width < 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 137px)');
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size?.width]);
 
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,

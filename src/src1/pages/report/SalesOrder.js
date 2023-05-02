@@ -44,7 +44,6 @@ function Screen(props){
     let api = 'Sales/GetSalesHold' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response?.data)
     if(response?.error) setError(response?.error);
     else {
       let salesQty = 0, returnQty = 0, salesAmt = 0, returnAmt = 0, totalQty = 0, totalAmt = 0;

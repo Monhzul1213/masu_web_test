@@ -4,7 +4,7 @@ import CurrencyInput from 'react-currency-input-field';
 import { useTranslation } from 'react-i18next';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, length, length1 } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, id, length, length1 } = props;
   const { t } = useTranslation();
     
   const onChange = e => {
@@ -36,8 +36,8 @@ export function Input(props){
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
   return (
-    <div style={inRow ? { flex: 1 } : {}}>
-      <div className='cust_back' style={backStyle}>
+    <div style={inRow ? { flex: 1 } : {}} id={id}>
+      <div className='cust_back' style={backStyle} >
         {label && <p className='select_lbl' style={style}>{label}</p>}
             <InputMask
             className='c_input'
@@ -49,7 +49,6 @@ export function Input(props){
             value={value?.value}
             onChange={onChange} 
             />
-        
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
     </div>

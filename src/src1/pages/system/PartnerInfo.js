@@ -35,7 +35,6 @@ export function PartnerInfo(){
     setLoading(true);
     let api = 'Merchant/GetPartnerList' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
-    console.log(response)
     if(response?.error) setError(response?.error);
     setData(response?.data);
     setLoading(false);

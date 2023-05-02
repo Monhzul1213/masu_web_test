@@ -40,7 +40,6 @@ export function Customer(props){
     setLoading(true);
     let headers = { custId};
     const response = await dispatch(getList(user, token, 'Site/GetCustomer', null, headers));
-    console.log(response?.data)
     if(response?.error) setError(response?.error);
     else {
       setData(response?.data?.customers)

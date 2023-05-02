@@ -10,8 +10,8 @@ import { getList, sendRequest } from '../../../services';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all/all_m';
 import { Main , CardInvt} from '../../components/system/notification/add';
 
-
 export function NotiAdd(){
+  const { t } = useTranslation();
   const [subject, setSubject] = useState({ value: '' });
   const [text, setText] = useState({ value: '' });
   const [beginDate, setBeginDate] = useState({ value: moment() });
@@ -24,7 +24,6 @@ export function NotiAdd(){
   const [saved, setSaved] = useState(false);
   const [edited, setEdited] = useState(false);
   const { user, token }  = useSelector(state => state.login);
-  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selected, setSelected ] = useState(null);
@@ -32,7 +31,7 @@ export function NotiAdd(){
   const [kits, setKits] = useState([]);
   const [searchI, setSearchI] = useState({ value: null });
   const [dkits, setDKits] = useState([]);
-  const [isService, setIsService] = useState(false);
+  const [isSendMail, setIsSendMail] = useState(false);
 
 
   useEffect(() => {
@@ -59,7 +58,6 @@ export function NotiAdd(){
     setLoading(true);
     let api = '?notificationId=' + notificationId;
     let response = await dispatch(getList(user, token, 'System/GetNotification' + api,   ));
-    // console.log(response?.data)
     setLoading(false);
     if(response?.error) setError(response?.error)
     else {    
@@ -73,6 +71,7 @@ export function NotiAdd(){
       setEndDate ({ value: moment(notif?.endDate, 'yyyy.MM.DD') })
       setText({ value: notif?.text ?? ''}); 
       setStatus({ value: notif?.status ?? 0  })
+      setIsSendMail(notif?.isSendMail === 'Y' )
       getKits(ads1)
     }
   }
@@ -131,6 +130,7 @@ export function NotiAdd(){
         text: text?.value,
         status: status?.value,
         rowStatus: selected ? 'U' : 'I',
+        isSendMail: isSendMail ? 'Y' : 'N',
         notifItem
       }]
       return data;
@@ -146,7 +146,6 @@ export function NotiAdd(){
     if(data){
       onLoad();
       setLoading(true);
-      console.log(data)
       const response = await dispatch(sendRequest(user, token, 'System/ModNotification', data));
       if(response?.error) onError(response?.error);
       else onSuccess(t('noti.add_success'));  
@@ -163,6 +162,7 @@ export function NotiAdd(){
       text: text?.value,
       status: status?.value,
       rowStatus:'D',
+      isSendMail: isSendMail ? 'Y' : 'N',
       notifItem: [] }]; 
     const response = await dispatch(sendRequest(user, token, 'System/ModNotification', data));
     if(response?.error) onError(response?.error, true);
@@ -170,7 +170,7 @@ export function NotiAdd(){
   }
   
   const mainProps = { setError, subject, setSubject, setText, text , beginDate, setBeginDate, endDate, setEndDate, 
-    status, setStatus, type, setType , isService, setIsService};
+    status, setStatus, type, setType , isSendMail, setIsSendMail};
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
   const invtProps = { data: kits, setData: setKits, setError, setEdited,
     search: searchI, setSearch: setSearchI , setDKits };

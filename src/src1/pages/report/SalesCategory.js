@@ -38,9 +38,7 @@ function Screen(props){
     setLoading(true);
     let api = 'Sales/GetSalesByCategory' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
-    console.log(api);
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response?.data);
     if(response?.error) setError(response?.error);
     else {
       setData(response?.data);

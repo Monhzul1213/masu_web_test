@@ -56,7 +56,6 @@ export function List(props){
     setData(old => old.map((row, index) => {
       if(index === item?.index){
         if(!row?.checked) count = true;
-         console.log(row)
         return { ...old[item?.index], checked: !row?.checked };
       } else {
         if(row?.checked) count = true;

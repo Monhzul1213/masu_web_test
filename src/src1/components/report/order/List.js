@@ -15,7 +15,7 @@ export function List(props){
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 117px - 38px - 39px)');
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 117px - 38px - 60px)');
     else if(size?.width < 920 && size?.width >= 720)
       setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 117px - 38px - 39px)');
     else if(size?.width < 720)

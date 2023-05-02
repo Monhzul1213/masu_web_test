@@ -57,7 +57,6 @@ export function AdvertAdd(){
     setLoading(true);
     let api = '?AdsId=' + adsId;
     let response = await dispatch(getList(user, token, 'Site/GetAdvertisement' + api,   ));
-    console.log(response?.data)
     setLoading(false);
     if(response?.error) setError(response?.error)
     else {    
@@ -134,7 +133,6 @@ export function AdvertAdd(){
         rowStatus: selected ? 'U' : 'I'
       }]
       const response = await dispatch(sendRequest(user, token, 'Site/ModAdvertisement', data));
-      console.log(response?.data);
       if(response?.error) onError(response?.error);
       else onSuccess(t('advert.add_success'));  
     } 

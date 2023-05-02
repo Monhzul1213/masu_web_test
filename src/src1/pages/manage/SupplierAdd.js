@@ -6,39 +6,39 @@ import { message } from 'antd';
 import {  getList, sendRequest } from '../../../services';
 import '../../css/discount.css';
 import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
-import { Add , } from '../../components/suppliers';
+import { Add  } from '../../components/suppliers';
 import { urlToFile } from '../../../helpers';
 import mime from 'mime';
 import '../../../css/invt.css';
 
 export function SupplierAdd(){
     const [name, setName] = useState({ value: '' });
-    const [vendCode, setVendCode] = useState({ value: '' });
     const [address, setAddress] = useState({ value: '' });
     const [phone, setPhone] = useState({ value: '' });
     const [email, setEmail] = useState({ value: '' });
-    const [contact, setContact] = useState({ value: '' });
     const [web, setWeb] = useState({ value: '' });
     const [address1, setAddress1] = useState({ value: '' });
     const [note, setNote] = useState({ value: '' });
     const [image, setImage] = useState(null);
     const [image64, setImage64] = useState('');
     const [imageType, setImageType] = useState('');
-  const [error, setError] = useState(null);
-  const [item, setItem] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [edited, setEdited] = useState(false);
-  const { user, token }  = useSelector(state => state.login);
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [selected, setSelected ] = useState(null);
-  const [searchParams] = useSearchParams();
+    const [checked, setChecked] = useState(false);
+    const [customer, setCustomer] = useState({ value: '' });
+    const [contact, setContact] = useState({ value: '' });
+    const [error, setError] = useState(null);
+    const [item, setItem] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [saved, setSaved] = useState(false);
+    const [edited, setEdited] = useState(false);
+    const { user, token }  = useSelector(state => state.login);
+    const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [selected, setSelected ] = useState(null);
+    const [searchParams] = useSearchParams();
 
   useEffect(() => {
     user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : getData();
-    
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -55,7 +55,6 @@ export function SupplierAdd(){
     if(vendId || vendId === 0) {GetVend(vendId)} ;
   }
   const getImage = async inventory => {
-    console.log(inventory)
     if(inventory?.fileraw?.fileData){
       let type = inventory?.fileraw?.fileType?.replace('.', '');
       setImageType(type ?? '');
@@ -72,22 +71,20 @@ export function SupplierAdd(){
     setLoading(true);
     let api = '?vendId=' + vendId;
     let response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'+ api,   ));
-    console.log(response?.data)
     setLoading(false);
     let vend = response && response?.data && response?.data[0];
+    console.log(vend)
     if(response?.error) setError(response?.error)
     else if(vend){
       setSelected(vend)
       setItem(response?.data);
       setAddress({ value: vend?.address1 ?? '' });
       setAddress1({ value: vend?.address2 ?? ''});
-      setContact({ value: vend?.contact ?? '' });
       setEmail({ value: vend?.email ?? ''  });
       setNote({ value: vend?.note ?? ''  });
       setPhone({ value: vend?.phone ?? ''  });
       setWeb({ value: vend?.webSite ?? ''  });
       setName({ value: vend?.vendName ?? ''  });
-      setVendCode({ value: vend?.vendCode ?? ''  }); 
       getImage(vend);
       response?.data?.forEach(item => item.rowStatus = 'U');
     }
@@ -122,11 +119,7 @@ export function SupplierAdd(){
     if( name?.value?.trim() && isPhoneValid ){
       return true;
     } else {
-      // if(!email?.value?.trim()) setEmail({ value: '', error: t('error.not_empty') });
-      // else if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
-      // if(!image) setImage({ value: '', error: t('error.not_empty') });
-      if(!vendCode?.value?.trim()) setVendCode({ value: '', error: t('error.not_empty') });
       if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
     }
@@ -139,23 +132,27 @@ export function SupplierAdd(){
       let data = [ {
         vendId: selected ? selected?.vendId : -1,
         vendName: name?.value?.trim(),
-        contact: contact?.value?.trim(),
         email: email?.value?.trim(),
+        contact : '',
+        vendCode : selected ? selected?.vendId : -1,
         phone: phone?.value?.trim(),
         webSite: web?.value?.trim(),
         address1: address?.value?.trim(),
         address2: address1?.value?.trim(),
         city: "",
         region: "",
-        vendCode: vendCode?.value?.trim(),
         postalCode: "",
         country: "",
         note: note?.value?.trim(),
         rowStatus: selected ? "U" : "I",
+        useOtcorder: checked ? 'Y' : 'N',
+        vendorCustId: customer?.value,
+        vendorCustName: "string",
+        vendSalesRepId: contact?.value,
+        vendSalesRepName: "string",
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
       }]
-      const response = await dispatch(sendRequest(user, token, 'Merchant/vendor',  data));
-      console.log(response)
+      const response = await dispatch(sendRequest(user, token, 'Merchant/vendor', data));
       if(response?.error) onError(response?.error);
       else onSuccess(t('supplier.add_success'));  
     } 
@@ -163,16 +160,38 @@ export function SupplierAdd(){
 
   const onClickDelete = async () => {
     onLoad();
-    let data = [{...selected, rowStatus: 'D', image : {}}];
+    let data = [ {
+      vendId: selected ? selected?.vendId : -1,
+      vendName: name?.value?.trim(),
+      email: email?.value?.trim(),
+      contact : '',
+      vendCode : selected ? selected?.vendId : -1,
+      phone: phone?.value?.trim(),
+      webSite: web?.value?.trim(),
+      address1: address?.value?.trim(),
+      address2: address1?.value?.trim(),
+      city: "",
+      region: "",
+      postalCode: "",
+      country: "",
+      note: note?.value?.trim(),
+      rowStatus: "D",
+      useOtcorder: checked ? 'Y' : 'N',
+      vendorCustId: customer?.value,
+      vendorCustName: "string",
+      vendSalesRepId: contact?.value,
+      vendSalesRepName: "string",
+      image: {  },
+    }];
     const response = await dispatch(sendRequest(user, token, 'Merchant/vendor', data));
     if(response?.error) onError(response?.error, true);
     else onSuccess(t('employee.delete_success'), true);
-    console.log(data)
   }
   
-  const mainProps = { setError, name, setName, contact, setContact, phone, setPhone, email, setEmail,
-     setEdited, address, setAddress, address1, setAddress1, web, setWeb, note, setNote, setVendCode, vendCode , image, setImage, setImage64, image64, setImageType,};
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
+  const mainProps = { setError, name, setName, phone, setPhone, email, setEmail,
+     setEdited, address, setAddress, address1, setAddress1, web, setWeb, note, setNote,
+     image, setImage, setImage64, image64, setImageType, checked, setChecked, customer, setCustomer, contact, setContact};
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp_z' };
 
   return (
     <Overlay className='i_container' loading={loading}>

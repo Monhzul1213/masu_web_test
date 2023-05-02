@@ -7,11 +7,21 @@ import { useNavigate, createSearchParams } from 'react-router-dom';
 
 
 export function List(props){
-  const {  data, setData, loaded, setShow, autoResetExpanded, checked, setChecked} = props;
+  const { data, setData, loaded, setShow, autoResetExpanded, checked, setChecked, size} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const navigate = useNavigate();
+  const [maxHeight, setMaxHeight] = useState('300px');
 
+  useEffect(() => {
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 90px)');
+    else if(size?.width < 920 && size?.width >= 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 90px)');
+    else if(size?.width < 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 137px)');
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size?.width]);
 
 
   useEffect(() => {
@@ -63,7 +73,6 @@ export function List(props){
     navigate({ pathname: 'supp_add', search: createSearchParams({ vendId: row?.original?.vendId }).toString() });
   }
 
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
   const tableInstance = useTable( { columns, data, autoResetPage: false, autoResetExpanded, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick ,  hasTotal: true , total: data?.length  };

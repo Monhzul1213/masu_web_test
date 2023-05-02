@@ -6,9 +6,10 @@ import moment from 'moment';
 import { Header } from './Header';
 
 export function List(props){
-  const { data, excelName} = props;
+  const { data, excelName, size} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [maxHeight, setMaxHeight ] = useState('300px');
 
   useEffect(() => {
     setColumns([
@@ -29,12 +30,16 @@ export function List(props){
   }, [i18n?.language]);
 
   useEffect(() => {
-    // setSelected(null);
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 117px - 38px - 39px)');
+    else if(size?.width < 920 && size?.width >= 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 117px - 38px - 39px)');
+    else if(size?.width < 720)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)');
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [size?.width]);
 
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 160px)';
+
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, hasTotal: true , total: data?.length };

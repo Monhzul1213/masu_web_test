@@ -7,7 +7,7 @@ import { Input, CheckBox } from '../../../../../components/all';
 
  function Card(props){
   const {setEdited,size,  setError, subject, setSubject, text, setText, setBeginDate, beginDate,
-    endDate, setEndDate, status, setStatus, type, setType, isService, setIsService} = props;
+    endDate, setEndDate, status, setStatus, type, setType, isSendMail, setIsSendMail} = props;
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -33,7 +33,7 @@ import { Input, CheckBox } from '../../../../../components/all';
   const endProps = { value: endDate, setValue: setEndDate, label: t('invoice.end'), inRow: true,};
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: t('advert.types'), setError, setEdited };
   const merchProps = { value: type, setValue: setType, label: t('noti.type'), setError, setEdited, inRow: false, data: types};
-  const serviceProps = { label: t('noti.sent'), checked: isService, setChecked: setIsService };
+  const serviceProps = { label: t('noti.sent'), checked: isSendMail, setChecked: setIsSendMail };
 
   return (
     <div className='ac_back_sys' id={id}>

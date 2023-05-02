@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input , UploadImage} from '../all/all_m';
+import { Input , UploadImage } from '../all/all_m';
 import { withSize } from 'react-sizeme';
-
+// import { Check } from './Check';
 
  function Card(props){
-  const {setEdited, setError, name, setName, vendCode, setVendCode, contact, setContact, phone, setPhone, email, setEmail,
-     address, setAddress, address1, setAddress1, web, setWeb, note, setNote, image, setImage,size,  setImage64, setImageType} = props;
+  const {setEdited, setError, name, setName, phone, setPhone, email, setEmail,
+     address, setAddress, address1, setAddress1, web, setWeb, note, setNote, image,
+     setImage,size,  setImage64, setImageType, //checked, setChecked, customer, setCustomer, contact, setContact
+    } = props;
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -19,26 +21,30 @@ import { withSize } from 'react-sizeme';
     if(isNaN(text)) setPhone({ value: value?.value, error: 'must_number'});
     else setPhone({ value: (text) });
   } 
+
   const id = size?.width > 480 ? 'im_large' : 'im_small';
 
-  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('supplier.name'), setError,length1:2, setEdited,};
-  const codeProps = { value: vendCode, setValue: setVendCode, label: t('supplier.vendCode'), placeholder: t('supplier.vendCode'), setError, setEdited,};
+  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('supplier.name'), setError,length1:2, setEdited, id: 'l_partner'};
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('supplier.phone'), setError ,setEdited };
   const mailProps = { value: email, setValue: setEmail, label: t('page.email'), placeholder: t('supplier.email'), setError, length: 100,setEdited};
-  const contProps = { value: contact, setValue: setContact, label: t('supplier.contact'), placeholder: t('supplier.contact'), setError, length: 100,setEdited};
   const webProps = { value: web, setValue: setWeb, label: t('supplier.web'), placeholder: t('supplier.web'), setError, length: 100,setEdited};
   const address1Props = { value: address1, setValue: setAddress1, label: t('supplier.address2'), placeholder: t('supplier.address2'), setError, length: 100, length1: 6, setEdited};
   const descrProps = { value: note, setValue: setNote, label: t('supplier.desc'), placeholder: t('supplier.desc'), setError , length: 255, length1:10,setEdited};
   const addressProps = {  value: address, setValue: setAddress,label: t('supplier.address1'), placeholder: t('supplier.address1'), setError, length: 192, length1: 6,setEdited };
   const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image_z' };
+  // const serviceProps = { label: t('supplier.check'), checked, setChecked };
+  // const checkProps = { checked, customer, setCustomer, contact, setContact }
 
   return (
-    <div className='ac_back_z' id={id}>
+    <div className='ac_back_cz' id={id}>
       <form>
             <UploadImage {...imageProps} />
-            <Input {...nameProps}  />
-            <Input {...codeProps}  />
-            <Input {...contProps} />
+            {/* <div className = "im_unit_row_z"> */}
+              <Input {...nameProps}  />
+              {/* <div className='im_gap' /> */}
+              {/* <CheckBox {...serviceProps} /> */}
+            {/* </div> */}
+            {/* <Check {...checkProps}/> */}
             <Input {...mailProps} />
             <Input {...phoneProps} />
             <Input {...webProps} />

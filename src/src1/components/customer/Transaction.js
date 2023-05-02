@@ -43,7 +43,6 @@ export function Transaction(props){
     setLoading(true);
     let api = 'Site/GetCustomerTxn' + (query ?? '')
     const response = await dispatch(getList(user, token, api));
-    console.log(response?.data)
     if(response?.error) setError(response?.error);
     else {
       setData(response?.data?.txnLists)
