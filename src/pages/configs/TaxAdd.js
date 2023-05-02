@@ -23,6 +23,7 @@ function Screen(props){
   const [show, setShow] = useState(false);
   const [saved, setSaved] = useState(false);
   const [request, setRequest] = useState(null);
+  const [valid, setValid] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -46,16 +47,27 @@ function Screen(props){
     else getSites();
   }
 
+  const setSiteData = data => {
+    let error = [];
+    data?.forEach(item => {
+      if(!item.district) item.district = item.descr ?? '';
+      if(!item.district) error.push(item.name);
+    });
+    if(error?.length){
+      setError(error?.join(', ') + t('tax.code_error'));
+      setValid(false);
+    } else
+      setValid(true);
+    setSites(data);
+  }
+
   const getSites = async () => {
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest?ReqeustId=-2'));
     setLoading(false);
     if(response?.error) setError(response?.error);
-    else {
-      response?.data?.poscount?.forEach(item => item.district = item.descr ?? '');
-      setSites(response?.data?.poscount);
-    }
+    else setSiteData(response?.data?.poscount);
   }
 
   const getRequest = async requestId => {
@@ -88,7 +100,8 @@ function Screen(props){
           items[index].name = pos.name;
         }
       });
-      setSites(items);
+      setSiteData(items);
+      // setSites(items);
     }
   }
 
@@ -167,7 +180,7 @@ function Screen(props){
   const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, request };
   const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled };
   const emptyProps = { icon: 'MdStorefront', text: 'tax.empty', id: 'add_back' };
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns', msg: 'tax.cancel_message', noSave: disabled};
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns', msg: 'tax.cancel_message', noSave: disabled || !valid };
 
   return (
     <div className='add_tab' style={{flex: 1}}>
