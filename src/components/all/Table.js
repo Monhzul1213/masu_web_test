@@ -18,8 +18,7 @@ export function Table(props){
               return (
                 <th className='table_header_text' {...column.getHeaderProps(column.getSortByToggleProps())} style={style}>
                   <div className='table_header_cell'>
-                    {/* <span style={{flex: 1}}>{column.render('Header')}</span> */}
-                    <span>{column.render('Header')}</span>
+                    <span style={{flex: 1}}>{column.render('Header')}</span>
                     {!column?.noSort && <Sort data={column} />}
                   </div>
                 </th>
