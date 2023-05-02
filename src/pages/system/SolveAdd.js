@@ -74,7 +74,7 @@ export function SolveAdd(){
   const validateData = () => {
     let names = [];
     items?.forEach(item => { if(item.fileName) names.push(item.fileName); });
-    let lengthValid = names?.length === items?.length;
+    let lengthValid = true;// names?.length === items?.length;
     let nameValid = names.length === new Set(names).size;
     if(status?.value !== 4 || (lengthValid && nameValid)){
       let msVatRequestFiles = items?.map(item => {
@@ -95,7 +95,7 @@ export function SolveAdd(){
       }
       return data;
     }
-    else if(!lengthValid) setError(t('tax.file_error'));
+    // else if(!lengthValid) setError(t('tax.file_error'));
     else if(!nameValid) setError(t('tax.name_error'));
     return false;
   }
