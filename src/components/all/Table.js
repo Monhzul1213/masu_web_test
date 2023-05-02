@@ -15,10 +15,11 @@ export function Table(props){
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => {
               let style = column?.customStyle ?? { };
+              let style1 = column?.isSorted ? { color: '#8cc748', flex: 1 } : { flex: 1};
               return (
                 <th className='table_header_text' {...column.getHeaderProps(column.getSortByToggleProps())} style={style}>
                   <div className='table_header_cell'>
-                    <span style={{flex: 1}}>{column.render('Header')}</span>
+                    <span style={style1}>{column.render('Header')}</span>
                     {!column?.noSort && <Sort data={column} />}
                   </div>
                 </th>
@@ -62,11 +63,12 @@ export function TableRow(props){
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => {
               let style = column?.customStyle ?? { };
+              let style1 = column?.isSorted ? { color: '#8cc748', flex: 1 } : { flex: 1};
               return (
                 <th className={scrolling ? 'table_header_text1' : 'table_header_text'}
                   {...column.getHeaderProps(column.getSortByToggleProps())} style={style}>
                   <div className='table_header_cell'>
-                    <span style={{flex: 1}}>{column.render('Header')}</span>
+                    <span style={style1}>{column.render('Header')}</span>
                     {!column?.noSort && <Sort data={column} />}
                   </div>
                 </th>
@@ -109,10 +111,11 @@ export function TableDetail(props){
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => {
               let style = column?.customStyle ?? { };
+              let style1 = column?.isSorted ? { color: '#8cc748', flex: 1 } : { flex: 1};
               return (
                 <th className='table_header_text' {...column.getHeaderProps(column.getSortByToggleProps())} style={style}>
                   <div className='table_header_cell'>
-                    <span style={{flex: 1}}>{column.render('Header')}</span>
+                    <span style={style1}>{column.render('Header')}</span>
                     {!column?.noSort && <Sort data={column} />}
                   </div>
                 </th>
