@@ -32,6 +32,10 @@
   z-index: 1;
 }
 
+.table_header_text:hover {
+  background-color: var(--input-color);
+}
+
 .table_header_text1 {
   color: var(--text2-color);
   text-align: left;
