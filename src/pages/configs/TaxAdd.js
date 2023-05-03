@@ -54,7 +54,7 @@ function Screen(props){
       if(!item.district) error.push(item.name);
     });
     if(error?.length){
-      setError(error?.join(', ') + t('tax.code_error'));
+      setError(t('tax.code_error') + " (" + error?.join(', ') + ")");
       setValid(false);
     } else
       setValid(true);
