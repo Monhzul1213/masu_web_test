@@ -55,7 +55,8 @@ function Card(props){
     setAdds(adds?.filter((item, index) => index !== row?.index));
   }
   
-  const onClick = () => {
+  const onClick = e => {
+    e?.preventDefault();
     setAdds(old => [...old, { addCostName: '', addCostAmount: 0, orderAdditionalId: -1, rowStatus: 'I' }]);
   }
 
