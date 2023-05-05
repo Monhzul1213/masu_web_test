@@ -15,7 +15,7 @@ export function Check(props){
     setTimeout(() => setLoading(false), 400);
   }
 
-  return (
+  return !disabled && (
     <div>
       <div className='sp_check_row'>
         <Input
@@ -32,7 +32,9 @@ export function Check(props){
           className='co_check_btn'
           text={t('tax.check')}
           onClick={handleCheck}
-          disabled={disabled}
+          // comment
+          // disabled={disabled}
+          disabled={true}
           loading={loading} />
       </div>
       <Input

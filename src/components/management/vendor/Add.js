@@ -48,10 +48,10 @@ export function Add(props){
         rowStatus: "I",
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
         city: "", region: "", postalCode: "", country: "",
-        useOtcorder: "",
-        vendorCustId: "",
+        useOtcorder: isOTC ? 'Y' : 'N',
+        vendorCustId: isOTC ? cust?.value : "",
         vendorCustName: "",
-        vendSalesRepId: "",
+        vendSalesRepId: isOTC ? rep?.value : "",
         vendSalesRepName: "",
       }]
       const response = await dispatch(sendRequest(user, token, 'Merchant/vendor', data));
@@ -68,12 +68,16 @@ export function Add(props){
     let phoneLength = 8;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
     let isEmailValid = !email?.value?.trim() || validateEmail(email?.value?.trim());
-    if(isEmailValid && name?.value?.trim() && isPhoneValid){
+    let isCustValid = isOTC ? cust?.value?.trim() : true;
+    let isRepValid = isOTC ? rep?.value?.trim() : true;
+    if(isEmailValid && name?.value?.trim() && isPhoneValid && isCustValid && isRepValid){
       return true;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
+      if(!isCustValid) setCust({ value: phone?.value, error: t('error.not_empty') });
+      if(!isRepValid) setRep({ value: phone?.value, error: t('error.not_empty') });
       return false;
     }
   }
@@ -105,10 +109,10 @@ export function Add(props){
           <div className='m_scroll' id='im_small'>
             <UploadImage {...imageProps} />
             <Input {...nameProps}  />
-            {/* <CheckBox {...otcProps} /> */}
+            <CheckBox {...otcProps} />
             
-            {/* <Check label='cust' value={cust} setValue={setCust} disabled={!isOTC} /> */}
-            {/* <Check label='rep' value={rep} setValue={setRep} disabled={!isOTC} /> */}
+            <Check label='cust' value={cust} setValue={setCust} disabled={!isOTC} />
+            <Check label='rep' value={rep} setValue={setRep} disabled={!isOTC} />
 
             <Input {...mailProps} />
             <Input {...phoneProps} />
