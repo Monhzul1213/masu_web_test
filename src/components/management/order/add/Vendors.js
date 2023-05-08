@@ -55,8 +55,11 @@ export function Vendors(props){
   }, [size?.width]);
 
   const onClick = item => {
-    let pathname = searchParams?.get('next')
-    navigate({ pathname, search: createSearchParams({ vendId: item?.vendId }).toString() });
+    let pathname = searchParams?.get('next');
+    navigate({ pathname, search: createSearchParams({
+      vendId: item?.vendId, useOtcorder: item?.useOtcorder,
+      vendSalesRepId: item?.vendSalesRepId, vendorCustId: item?.vendorCustId
+    }).toString() });
   }
 
   const renderItem = (item, index) => {

@@ -21,6 +21,7 @@ export function OrderAdd(){
   const [orderDate, setOrderDate] = useState({ value: moment() });
   const [reqDate, setReqDate] = useState({ value: null });
   const [notes, setNotes] = useState({ value: '' });
+  const [payType, setPayType] = useState({ value: null });
   const [items, setItems] = useState([]);
   const [dItems, setDItems] = useState([]);
   const [adds, setAdds] = useState([]);
@@ -187,7 +188,7 @@ export function OrderAdd(){
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading,
-    order, editing };
+    order, editing, payType, setPayType, total: total1 + total2 };
   let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',

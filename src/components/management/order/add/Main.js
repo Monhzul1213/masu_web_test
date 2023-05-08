@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
 
 import { getList } from '../../../../services';
-import { Date, DescrInput, Select } from '../../../all';
+import { Date, DescrInput, MoneyInput, Select } from '../../../all';
 
 function Card(props){
   const { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, size,
-    setLoading, order, editing } = props;
+    setLoading, order, editing, payType, setPayType, total } = props;
   const { t } = useTranslation();
   const [vendors, setVendors] = useState([]);
   const [sites, setSites] = useState([]);
+  const [isOTC, setIsOTC] = useState(false);
+  const [otcInfo, setOtcInfo] = useState(null);
+  const [otcPayments, setOtcPayments] = useState([]);
+  const [otcDates, setOtcDates] = useState([]);
+  const [discount, setDiscount] = useState(0);
   const { user, token }  = useSelector(state => state.login);
+  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,7 +43,9 @@ function Card(props){
 
   const getData = async () => {
     let response = await getLists('Merchant/vendor/getvendor', setVendors);
-    if(response) await getLists('Site/GetSite', setSites);
+    let response1 = true;
+    if(response) response1 = await getLists('Site/GetSite', setSites);
+    if(response1) await getOTC();
   }
 
   const getLists = async (api, setData) => {
@@ -53,6 +62,40 @@ function Card(props){
     }
   }
 
+  const getOTC = async () => {
+    let useOtcorder = searchParams?.get('useOtcorder');
+    if(useOtcorder === 'Y'){
+      setLoading(true);
+      setIsOTC(true);
+      let vendSalesRepId = searchParams?.get('vendSalesRepId');
+      let vendorCustId = searchParams?.get('vendorCustId');
+      let api = 'Txn/GetVendorOTC?VendiID=' + vendId?.value + '&VendorCustID=' + vendorCustId + '&VendSalesRepID=' + vendSalesRepId;
+      let response = await dispatch(getList(user, token, api));
+      setLoading(false);
+      if(response?.error) setError(response?.error);
+      else {
+        let info = response?.data?.info && response?.data?.info[0];
+        let dates = info?.requestDates?.split(',')?.map(i => { return { label: i, value: i }});
+        let payments = response?.data?.paymenttype;
+        setOtcInfo(info);
+        setOtcPayments(payments);
+        setOtcDates(dates);
+        setPayType({ value: payments && payments[0]?.paymentTypeID})
+        let discount = (payments && payments[0]?.discountPercent) ?? 0;
+        setDiscount(discount / 100);
+        setReqDate(dates && dates[0]);
+      }
+    } else {
+      setIsOTC(false);
+    }
+  }
+
+  const changeType = value => {
+    let disPercent = (otcPayments?.filter(i => i.paymentTypeID === value?.value)[0]?.discountPercent) ?? 0;
+    setPayType(value);
+    setDiscount(disPercent / 100);
+  }
+
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
 
@@ -63,6 +106,10 @@ function Card(props){
   const dateProps = { value: orderDate, setValue: setOrderDate, label: t('order.date'), setError, setEdited, inRow: true };
   const reqProps = { value: reqDate, setValue: setReqDate, label: t('order.req'), placeholder: t('order.req'), setError, setEdited,
     allowClear: true, inRow: true };
+  const reqOtcProps = { value: reqDate, setValue: setReqDate, label: t('order.req'), placeholder: t('order.req'), data: otcDates, setError, setEdited,
+    inRow: true };
+  const payProps = { value: payType, setValue: changeType, label: t('order.payment'), placeholder: t('order.payment'), data: otcPayments, setError, setEdited,
+    s_value: 'paymentTypeID', s_descr: 'paymentTypeName', inRow: true };
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100 };
 
   return (
@@ -76,8 +123,27 @@ function Card(props){
       <div id={idRow}>
         <Date {...dateProps} />
         <div className='im_gap' />
-        <Date {...reqProps} />
+        {isOTC ? <Select {...reqOtcProps} /> : <Date {...reqProps} />}
       </div>
+      {!isOTC ? null :
+        <>
+          <div id={idRow}>
+            <MoneyInput label={t('order.ar_amount')} value={{ value: otcInfo?.arAmount ?? 0}} disabled={true} inRow={true} />
+            <div className='im_gap' />
+            <Select {...payProps} />
+          </div>
+          <div id={idRow}>
+            <MoneyInput label={t('order.total')} value={{ value: total}} disabled={true} inRow={true} />
+            <div className='im_gap' />
+            <MoneyInput label={t('order.discount')} value={{ value: total * discount }} disabled={true} inRow={true} />
+          </div>
+          <div id={idRow}>
+            <MoneyInput label={t('order.to_pay')} value={{ value: total - (total * discount) }} disabled={true} inRow={true} />
+            <div className='im_gap' />
+            <div style={{flex: 1}} />
+          </div>
+        </>
+      }
       <DescrInput {...descrProps} />
     </div>
   );
