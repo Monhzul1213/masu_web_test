@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 
 export const EditableCell = props => {
-  const { value: initialValue, row, column: { id, isText, width, autoFocus, length }, updateMyData, cellID } = props;
+  const { value: initialValue, row, column: { id, isText, width, autoFocus }, updateMyData, cellID } = props;
   const [value, setValue] = useState(initialValue);
 
   const onBlur = e => {

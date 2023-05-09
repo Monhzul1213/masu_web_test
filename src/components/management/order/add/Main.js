@@ -42,34 +42,42 @@ function Card(props){
   }, [order]);
 
   const getData = async () => {
-    let response = await getLists('Merchant/vendor/getvendor', setVendors);
-    let response1 = true;
-    if(response) response1 = await getLists('Site/GetSite', setSites);
-    if(response1) await getOTC();
+    let response = await getSites();
+    if(response) await getVendors();
   }
 
-  const getLists = async (api, setData) => {
+  const getSites = async () => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, api));
+    const response = await dispatch(getList(user, token, 'Site/GetSite'));
     setLoading(false);
     if(response?.error){
       setError(response?.error);
       return false;
     } else {
-      setData(response?.data);
+      setSites(response?.data);
       return true;
     }
   }
 
-  const getOTC = async () => {
-    let useOtcorder = searchParams?.get('useOtcorder');
-    if(useOtcorder === 'Y'){
+  const getVendors = async () => {
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      setVendors(response?.data);
+      let vendorId = searchParams?.get('vendId');
+      let vendor = response?.data?.filter(d => d?.vendId === parseInt(vendorId))[0];
+      getOTC(vendor);
+    }
+  }
+
+  const getOTC = async vendor => {
+    if(vendor?.useOtcorder === 'Y'){
       setLoading(true);
       setIsOTC(true);
-      let vendSalesRepId = searchParams?.get('vendSalesRepId');
-      let vendorCustId = searchParams?.get('vendorCustId');
-      let api = 'Txn/GetVendorOTC?VendiID=' + vendId?.value + '&VendorCustID=' + vendorCustId + '&VendSalesRepID=' + vendSalesRepId;
+      let api = 'Txn/GetVendorOTC?VendiID=' + vendor?.vendId + '&VendorCustID=' + vendor?.vendorCustId + '&VendSalesRepID=' + vendor?.vendSalesRepId;
       let response = await dispatch(getList(user, token, api));
       setLoading(false);
       if(response?.error) setError(response?.error);
