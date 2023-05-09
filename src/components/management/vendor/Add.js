@@ -50,9 +50,9 @@ export function Add(props){
         city: "", region: "", postalCode: "", country: "",
         useOtcorder: isOTC ? 'Y' : 'N',
         vendorCustId: isOTC ? cust?.value : "",
-        vendorCustName: "",
+        vendorCustName: isOTC ? cust?.name : "",
         vendSalesRepId: isOTC ? rep?.value : "",
-        vendSalesRepName: "",
+        vendSalesRepName: isOTC ? rep?.name : "",
       }]
       const response = await dispatch(sendRequest(user, token, 'Merchant/vendor', data));
       setLoading(false);
