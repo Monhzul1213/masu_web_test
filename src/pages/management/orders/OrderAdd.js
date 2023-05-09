@@ -98,7 +98,7 @@ export function OrderAdd(){
       let items = response?.data?.map(item => {
         let invt = item?.msInventory;
         return { orderItemId: -1, invtId: invt?.invtId, name: invt?.name, orderQty: 0, totalCost: 0, cost: invt?.cost, siteQty: 0, transitQty: 0,
-          invtCode: '', rowStatus: 'I', sku: invt?.sku };
+          invtCode: '', rowStatus: 'I', sku: invt?.sku, batchQty: invt?.batchQty ? invt?.batchQty : 1, baseQty: 0 };
       });
       setItems(items);
       onSuccess();

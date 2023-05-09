@@ -19,15 +19,23 @@ function Card(props){
         Header: t('inventory.title'), accessor: 'name',
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true },
       { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />) },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', isText: true,
         customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'transitQty', isText: true,
         customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', isText: true,
+        customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', isMoney: true,
-        customStyle: { width: 120, paddingRight: 18 }, width: 100 },//, autoFocus: true
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_base')}</div>, accessor: 'baseQty', isText: true,
+        customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
+        // customStyle: { width: 120, paddingRight: 18 }, width: 100
+      },//, autoFocus: true
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', isText: true, customStyle: { width: 100 },
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
@@ -46,11 +54,11 @@ function Card(props){
     let total = 0;
     setItems(old => old.map((row, index) => {
       if(index === rowIndex){
-        let totalCost = columnId === 'cost'
-          ? old[rowIndex]?.orderQty * parseFloat(value ? value : 0)
-          : old[rowIndex]?.cost * parseFloat(value ? value : 0);
+        let orderQty = parseFloat(value ? value : 0);
+        let baseQty = orderQty * old[rowIndex]?.batchQty;
+        let totalCost = baseQty * old[rowIndex]?.cost;
         total += totalCost;
-        return { ...old[rowIndex], [columnId]: parseFloat(value ? value : 0), totalCost, error: null };
+        return { ...old[rowIndex], orderQty, baseQty, totalCost, error: null };
       } else {
         total += row.totalCost;
         return row;
@@ -71,7 +79,7 @@ function Card(props){
   
   const newItem = invt => {
     return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0,
-      invtCode: '', rowStatus: 'I', sku: invt?.sku };
+      invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, baseQty: 0 };
   }
 
   const filterFunction = useCallback((rows, ids, query) => {
