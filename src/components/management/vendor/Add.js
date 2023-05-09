@@ -68,16 +68,18 @@ export function Add(props){
     let phoneLength = 8;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
     let isEmailValid = !email?.value?.trim() || validateEmail(email?.value?.trim());
-    let isCustValid = isOTC ? cust?.value?.trim() : true;
-    let isRepValid = isOTC ? rep?.value?.trim() : true;
+    let isCustValid = isOTC ? (cust?.value?.trim() && cust?.name?.trim()) : true;
+    let isRepValid = isOTC ? (rep?.value?.trim() && rep?.name?.trim()) : true;
     if(isEmailValid && name?.value?.trim() && isPhoneValid && isCustValid && isRepValid){
       return true;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
-      if(!isCustValid) setCust({ value: phone?.value, error: t('error.not_empty') });
-      if(!isRepValid) setRep({ value: phone?.value, error: t('error.not_empty') });
+      if(!isCustValid && !cust?.value?.trim()) setCust({...cust, error: t('error.not_empty') });
+      else if(!isCustValid && !cust?.name?.trim()) setCust({...cust, error1: t('error.not_empty') });
+      if(!isRepValid && !rep?.value?.trim()) setRep({...rep, error: t('error.not_empty') });
+      else if(!isRepValid && !rep?.name?.trim()) setRep({...rep, error1: t('error.not_empty') });
       return false;
     }
   }
@@ -111,8 +113,8 @@ export function Add(props){
             <Input {...nameProps}  />
             <CheckBox {...otcProps} />
             
-            <Check label='cust' value={cust} setValue={setCust} disabled={!isOTC} />
-            <Check label='rep' value={rep} setValue={setRep} disabled={!isOTC} />
+            <Check label='cust' value={cust} setValue={setCust} disabled={!isOTC} api='GetCustName?CustID=' />
+            <Check label='rep' value={rep} setValue={setRep} disabled={!isOTC} api='GetSrName?SalesRepID=' />
 
             <Input {...mailProps} />
             <Input {...phoneProps} />

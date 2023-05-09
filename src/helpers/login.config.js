@@ -7,6 +7,8 @@ export const config = { // production
   url: 'https://app.masu.mn:8082/',
   // url: 'http://192.168.11.232:8181/',
   domain: 'https://app.masu.mn',
+  otc: 'http://test-sales.apu.mn:3031/',
+  // otc: 'http://192.168.1.106:3434/',
 }
 
 // export const config = { // test
