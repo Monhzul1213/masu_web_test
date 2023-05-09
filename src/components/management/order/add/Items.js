@@ -4,9 +4,9 @@ import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter } fro
 import { withSize } from 'react-sizeme';
 
 import { PaginationTable, Table, DynamicBSIcon, Money } from '../../../all';
-import { EditableCell } from '../../../invt/inventory/add/EditableCell';
 import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { Search } from './Search';
+import { EditableCell } from './EditableCell';
 
 function Card(props){
   const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch } = props;
@@ -79,7 +79,8 @@ function Card(props){
   
   const newItem = invt => {
     return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0,
-      invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, baseQty: 0 };
+      invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, baseQty: 0,
+      allowDecimal: invt?.isEach === 'N' };
   }
 
   const filterFunction = useCallback((rows, ids, query) => {

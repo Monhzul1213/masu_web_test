@@ -5,7 +5,7 @@
 
 export const config = { // production
   url: 'https://app.masu.mn:8082/',
-  // url: 'http://192.168.1.232:8181/',
+  // url: 'http://192.168.11.232:8181/',
   domain: 'https://app.masu.mn',
 }
 
