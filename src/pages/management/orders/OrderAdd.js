@@ -10,10 +10,12 @@ import '../../../css/order.css';
 import { sendRequest } from '../../../services';
 import { Error1, Overlay, Prompt } from '../../../components/all';
 import { Main, Items, Additional, ButtonRow } from '../../../components/management/order/add';
+import { add } from '../../../helpers';
 
 export function OrderAdd(){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [loading1, setLoading1] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [vendId, setVendId] = useState({ value: null });
@@ -33,6 +35,9 @@ export function OrderAdd(){
   const [searchParams] = useSearchParams();
   const [saved, setSaved] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [isOTC, setIsOTC] = useState(false);
+  const [otcInfo, setOtcInfo] = useState(null);
+  const [totals, setTotals] = useState({ discount: 0, to_pay: 0 });
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -98,7 +103,7 @@ export function OrderAdd(){
       let items = response?.data?.map(item => {
         let invt = item?.msInventory;
         return { orderItemId: -1, invtId: invt?.invtId, name: invt?.name, orderQty: 0, totalCost: 0, cost: invt?.cost, siteQty: 0, transitQty: 0,
-          invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, baseQty: 0,
+          invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, orderTotalQty: 0,
           allowDecimal: invt?.isEach === 'N' };
       });
       setItems(items);
@@ -114,7 +119,7 @@ export function OrderAdd(){
 
   const validateData = status => {
     let isSiteValid = siteId?.value || siteId?.value === 0;
-    let isDateValid = !reqDate?.value || reqDate?.value?.isAfter(orderDate?.value);
+    let isDateValid = !reqDate?.value || (isOTC ? true : reqDate?.value?.isAfter(orderDate?.value));
     let length = items?.filter(item => item?.orderQty)?.length;
     if(isSiteValid && isDateValid && length){
       let orderNo = editing ? order?.orderNo : '', orderItems = [], addValid = true;
@@ -145,14 +150,19 @@ export function OrderAdd(){
       let data = {
         orderNo, vendId: vendId?.value, siteId: siteId?.value, status, notes: notes?.value,
         orderDate: orderDate?.value?.format('yyyy.MM.DD'),
-        reqDate: reqDate?.value ? reqDate?.value?.format('yyyy.MM.DD') : '',
+        reqDate: reqDate?.value ? (isOTC ? reqDate?.value : reqDate?.value?.format('yyyy.MM.DD')) : '',
         rowStatus: editing ? 'U' : 'I',
+        arAmount: otcInfo?.arAmount ?? 0,
+        totalAmount: add(total1, total2),
+        discountAmount: totals?.discount ?? 0,
+        orderAmount: totals?.to_pay ?? 0,
+        orderPayment: payType?.value ?? 0,
         orderItems, orderCosts
       };
       return data;
     } else {
       if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
-      if(reqDate?.value && reqDate?.value?.isBefore(orderDate?.value)) setReqDate({ value: reqDate?.value, error: t('error.order_date') });
+      if(reqDate?.value && (isOTC ? false : reqDate?.value?.isBefore(orderDate?.value))) setReqDate({ value: reqDate?.value, error: t('error.order_date') });
       if(!length) setSearch({ value: null, error: t('order.items_error') });
       return false;
     }
@@ -188,15 +198,15 @@ export function OrderAdd(){
     }
   }
 
-  let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading,
-    order, editing, payType, setPayType, total: total1 + total2 };
+  let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading: setLoading1,
+    order, editing, payType, setPayType, total: add(total1, total2), isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals };
   let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
     hide: editing && order?.status === 1 };
 
   return (
-    <Overlay className='i_container' loading={loading}>
+    <Overlay className='i_container' loading={loading || loading1}>
       <Prompt edited={edited} />
       {error && <Error1 error={error} />}
       <div className='i_scroll'>

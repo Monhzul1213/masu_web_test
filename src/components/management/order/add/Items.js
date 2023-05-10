@@ -30,7 +30,7 @@ function Card(props){
         customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_base')}</div>, accessor: 'baseQty', isText: true,
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_base')}</div>, accessor: 'orderTotalQty', isText: true,
         customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
@@ -56,16 +56,19 @@ function Card(props){
     setItems(old => old.map((row, index) => {
       if(index === rowIndex){
         let orderQty = parseFloat(value ? value : 0);
-        let baseQty = divide(orderQty, old[rowIndex]?.batchQty, true);
-        let totalCost = divide(baseQty, old[rowIndex]?.cost, true);
+        let orderTotalQty = divide(orderQty, old[rowIndex]?.batchQty, true);
+        let totalCost = divide(orderTotalQty, old[rowIndex]?.cost, true);
         total = add(total, totalCost);
-        return { ...old[rowIndex], orderQty, baseQty, totalCost, error: null };
+        setTotal(total);
+        return { ...old[rowIndex], orderQty, orderTotalQty, totalCost, error: null };
       } else {
         total = add(total, row.totalCost);
+        setTotal(total);
         return row;
       }
     }));
     setTotal(total);
+    // comment
     setEdited && setEdited(true);
     setSearch({ value: null });
   }
@@ -80,7 +83,7 @@ function Card(props){
   
   const newItem = invt => {
     return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0,
-      invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, baseQty: 0,
+      invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, orderTotalQty: 0,
       allowDecimal: invt?.isEach === 'N' };
   }
 

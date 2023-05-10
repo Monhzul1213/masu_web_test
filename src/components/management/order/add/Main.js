@@ -11,16 +11,13 @@ import { Date, DescrInput, MoneyInput, Select } from '../../../all';
 
 function Card(props){
   const { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, size,
-    setLoading, order, editing, payType, setPayType, total } = props;
+    setLoading, order, editing, payType, setPayType, total, isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals } = props;
   const { t } = useTranslation();
   const [vendors, setVendors] = useState([]);
   const [sites, setSites] = useState([]);
-  const [isOTC, setIsOTC] = useState(false);
-  const [otcInfo, setOtcInfo] = useState(null);
   const [otcPayments, setOtcPayments] = useState([]);
   const [otcDates, setOtcDates] = useState([]);
   const [discount, setDiscount] = useState(0);
-  const [totals, setTotals] = useState({ discount: 0, to_pay: 0 });
   const { user, token }  = useSelector(state => state.login);
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
@@ -73,23 +70,21 @@ function Card(props){
   const getVendors = async () => {
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
-    setLoading(false);
     if(response?.error) setError(response?.error);
     else {
       setVendors(response?.data);
       let vendorId = searchParams?.get('vendId');
       let vendor = response?.data?.filter(d => d?.vendId === parseInt(vendorId))[0];
-      getOTC(vendor);
+      await getOTC(vendor);
     }
+    setLoading(false);
   }
 
   const getOTC = async vendor => {
     if(vendor?.useOtcorder === 'Y'){
-      setLoading(true);
       setIsOTC(true);
       let api = 'Txn/GetVendorOTC?VendiID=' + vendor?.vendId + '&VendorCustID=' + vendor?.vendorCustId + '&VendSalesRepID=' + vendor?.vendSalesRepId;
       let response = await dispatch(getList(user, token, api));
-      setLoading(false);
       if(response?.error) setError(response?.error);
       else {
         let info = response?.data?.info && response?.data?.info[0];
