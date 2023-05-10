@@ -14,7 +14,6 @@ export const EditableCell = props => {
   const suffix = user?.msMerchant?.currency ?? '';
 
   const onChange = e => {
-    // setValue(e.target.value)
     e?.target?.value?.length > length 
       ? setValue(value)
       : setValue(e.target.value);

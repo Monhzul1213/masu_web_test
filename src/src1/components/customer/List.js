@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
-import { Check, PaginationTable, Money , Table} from '../all/all_m';
+import { Check, PaginationTable, Money, Table } from '../all/all_m';
 import { Transaction } from './Transaction';
 
 

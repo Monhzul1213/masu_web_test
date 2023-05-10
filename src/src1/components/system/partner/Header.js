@@ -8,8 +8,6 @@ export function Header(props){
   const { t } = useTranslation();
   const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [classH, setClassH] = useState('th_header1');
-  // const [search, setSearch] = useState('');
-  // const [showSearch, setShowSearch] = useState(false);
 
   useEffect(() => {
     if(size?.width >= 870) setClassH('th_header1');

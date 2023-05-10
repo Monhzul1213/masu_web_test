@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
 import '../../../css/report.css';
 import { ExportExcel2 } from '../../../../helpers';
 

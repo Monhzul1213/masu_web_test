@@ -3,7 +3,6 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { PaginationTable, Table, Empty1 } from '../../../components/all/all_m';
 import { Header } from './Header';
-// import { ExportExcel } from '../../../../helpers';
 
 export function List(props){
   const { data, excelName, setError, onSearch, sites, setSites, emps, setEmps, size} = props;

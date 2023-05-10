@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import {  validateEmail } from '../../../helpers';
+import { validateEmail } from '../../../helpers';
 import { sendRequest } from '../../../services';
 import { ButtonRow, ModalTitle, Overlay, Error, Confirm } from '../all/all_m';
 import { Input } from '../../../components/all';
@@ -43,7 +43,6 @@ export function Add(props){
     if(custName?.value?.trim() && isPhoneValid){
       return true;
     } else {
-      // if(email?.value?.trim() === '') setEmail({ value: '', error: '' });
       if(!custName?.value?.trim()) setCustName({ value: '', error: t('error.not_empty') });
       if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
@@ -98,8 +97,7 @@ export function Add(props){
     if(sure){
       setLoading(true);
       let data = 
-        [
-          {
+        [{
             custID: selected?.custId,
             merchantID: user?.merchantId,
             custCode: selected?.custCode,
@@ -113,8 +111,7 @@ export function Add(props){
             country: "",
             note: selected?.note,
             rowStatus : "D"
-          }
-        ];
+        }];
       const response = await dispatch(sendRequest(user, token, 'Site/Customer', data));
       if(response?.error) setError(response?.error);
       else {

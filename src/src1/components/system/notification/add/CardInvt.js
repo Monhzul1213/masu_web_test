@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
-
 import { PaginationTable, Table, DynamicBSIcon } from '../../../all/all_m';
 import { ItemSelect, SelectItem } from './SelectItem';
 

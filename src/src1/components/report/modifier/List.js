@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon , Money} from '../../all/all_m';
+import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon, Money } from '../../all/all_m';
+
 export function List(props){
   const { data} = props;
   const { t, i18n } = useTranslation();

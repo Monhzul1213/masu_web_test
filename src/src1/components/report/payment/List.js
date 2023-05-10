@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import {  FooterTable, Money, PaginationTable } from '../../all/all_m';
+import { FooterTable, Money, PaginationTable } from '../../all/all_m';
 import { formatNumber } from '../../../../helpers';
 import { Header } from './Header';
+
 export function List(props){
   const { data, excelName, size} = props;
   const { t, i18n } = useTranslation();

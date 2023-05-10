@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { getList } from '../../../services';
 import '../../../css/config.css'
-import { Error, Overlay , Money} from '../all/all_m';
+import { Error, Overlay , Money } from '../all/all_m';
 import { TranList } from './TranList';
 
 export function Transaction(props){

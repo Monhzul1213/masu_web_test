@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { PlainRange , DynamicAIIcon} from '../../../../components/all';
+import { PlainRange , DynamicAIIcon } from '../../../../components/all';
 import { Search } from './Search';
+
 export function Header(props){
   const { onSearch, size , show, data , filter} = props;
   const { t } = useTranslation();

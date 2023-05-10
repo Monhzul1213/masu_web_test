@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import '../../css/customer.css'
 import { SizeMe } from 'react-sizeme';
-import { Empty, Overlay, Error1 , Confirm, Empty1} from '../../components/all/all_m';
-import { Add, List , Header} from '../../components/customer';
-import { getList , sendRequest} from '../../../services';
+import { Empty, Overlay, Error1 , Confirm, Empty1 } from '../../components/all/all_m';
+import { Add, List, Header } from '../../components/customer';
+import { getList , sendRequest } from '../../../services';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';

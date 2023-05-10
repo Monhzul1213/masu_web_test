@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { PaginationTable, Table , Money} from '../../all/all_m';
+import { PaginationTable, Table , Money } from '../../all/all_m';
 import moment from 'moment';
 import { Header } from './Header';
 

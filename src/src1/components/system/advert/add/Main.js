@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input , UploadImage, Date, Radio} from '../../../all/all_m';
+import { Input , UploadImage, Date, Radio } from '../../../all/all_m';
 import { withSize } from 'react-sizeme';
-
 
  function Card(props){
   const {setEdited, setError, name, setName, link, setLink, setBeginDate, beginDate,

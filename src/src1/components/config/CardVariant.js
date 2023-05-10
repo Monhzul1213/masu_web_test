@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
-import { Table, PaginationTable, Input, DynamicBSIcon , PlainSelect , ButtonRow} from '../../../components/all';
+import { Table, PaginationTable, Input, DynamicBSIcon , PlainSelect , ButtonRow } from '../../../components/all';
 import { DynamicAIIcon } from '../all/all_m';
 import { EditableCell } from './EditableCell';
 

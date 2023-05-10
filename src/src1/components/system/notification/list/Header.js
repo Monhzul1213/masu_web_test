@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-
 import { PlainRange, PlainSelect, ButtonRowAddConfirm } from '../../../all/all_m';
 
 export function Header(props){

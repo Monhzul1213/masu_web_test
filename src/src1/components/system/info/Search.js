@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-
 import { DynamicAIIcon } from '../../all/all_m';
 
 export function Search(props){

@@ -10,6 +10,7 @@ import { Add  } from '../../components/suppliers';
 import { urlToFile } from '../../../helpers';
 import mime from 'mime';
 import '../../../css/invt.css';
+import { validateEmail } from '../../../helpers';
 
 export function SupplierAdd(){
     const [name, setName] = useState({ value: '' });
@@ -22,9 +23,9 @@ export function SupplierAdd(){
     const [image, setImage] = useState(null);
     const [image64, setImage64] = useState('');
     const [imageType, setImageType] = useState('');
-    const [checked, setChecked] = useState(false);
+    const [isOTC, setIsOTC] = useState(false);
     const [customer, setCustomer] = useState({ value: '' });
-    const [contact, setContact] = useState({ value: '' });
+    const [rep, setRep] = useState({ value: '' });
     const [error, setError] = useState(null);
     const [item, setItem] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -66,6 +67,7 @@ export function SupplierAdd(){
       setImage(attachFile);
     }
   }
+
   const GetVend = async (vendId ) => {
     setError(null);
     setLoading(true);
@@ -73,7 +75,6 @@ export function SupplierAdd(){
     let response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'+ api,   ));
     setLoading(false);
     let vend = response && response?.data && response?.data[0];
-    console.log(vend)
     if(response?.error) setError(response?.error)
     else if(vend){
       setSelected(vend)
@@ -85,6 +86,9 @@ export function SupplierAdd(){
       setPhone({ value: vend?.phone ?? ''  });
       setWeb({ value: vend?.webSite ?? ''  });
       setName({ value: vend?.vendName ?? ''  });
+      setCustomer({ value: vend?.vendorCustId ?? ''})
+      setRep({ value: vend?.vendSalesRepId ?? ''})
+      setIsOTC( vend?.useOtcorder === 'Y')
       getImage(vend);
       response?.data?.forEach(item => item.rowStatus = 'U');
     }
@@ -94,14 +98,12 @@ export function SupplierAdd(){
     setError(null);
     setLoading(true);
     setEdited(false);
-
   }
 
   const onError = err => {
     setError(err);
     setLoading(false);
     setEdited(true);
-
   }
 
   const onSuccess = msg => {
@@ -113,17 +115,23 @@ export function SupplierAdd(){
   const onClickCancel = () =>  navigate('/management/suppliers');
  
   const checkValid = () => {
-    let phoneLength = 8 ;
+    let phoneLength = 8;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
-    // let isEmailValid = validateEmail(email?.value?.trim());
-    if( name?.value?.trim() && isPhoneValid ){
+    let isEmailValid = !email?.value?.trim() || validateEmail(email?.value?.trim());
+    if(isEmailValid && name?.value?.trim() && isPhoneValid && customer?.value?.trim() && rep?.value?.trim() && customer?.name?.trim()  && rep?.name?.trim()){
       return true;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
-      if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
+      if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
+      if(!customer?.value?.trim()) setCustomer({ value: customer?.value, error: t('error.not_empty') });
+      if(!customer?.name?.trim()) setCustomer({ value: customer?.name, error1: t('error.not_empty') });
+      if(!rep?.value?.trim()) setRep({ value: rep?.value, error: t('error.not_empty') });
+      if(!rep?.name?.trim()) setRep({ value: rep?.name, error1: t('error.not_empty') });
+      return false;
     }
   }
+
   const onClickSave = async e => {
     e?.preventDefault();
     if(checkValid()){
@@ -137,20 +145,16 @@ export function SupplierAdd(){
         vendCode : selected ? selected?.vendId : -1,
         phone: phone?.value?.trim(),
         webSite: web?.value?.trim(),
-        address1: address?.value?.trim(),
-        address2: address1?.value?.trim(),
-        city: "",
-        region: "",
-        postalCode: "",
-        country: "",
+        address1: address?.value?.trim(), address2: address1?.value?.trim(),
+        image: { FileData: image64 ?? '', FileType: imageType ?? '' },
+        city: "", region: "", postalCode: "", country: "",
         note: note?.value?.trim(),
         rowStatus: selected ? "U" : "I",
-        useOtcorder: checked ? 'Y' : 'N',
-        vendorCustId: customer?.value,
-        vendorCustName: "string",
-        vendSalesRepId: contact?.value,
-        vendSalesRepName: "string",
-        image: { FileData: image64 ?? '', FileType: imageType ?? '' },
+        useOtcorder: isOTC ? 'Y' : 'N',
+        vendorCustId: isOTC ? customer?.value : "",
+        vendorCustName: customer?.name ? customer?.name : "",
+        vendSalesRepId: isOTC ? rep?.value : "",
+        vendSalesRepName: rep?.name ? rep?.name : "",
       }]
       const response = await dispatch(sendRequest(user, token, 'Merchant/vendor', data));
       if(response?.error) onError(response?.error);
@@ -168,18 +172,14 @@ export function SupplierAdd(){
       vendCode : selected ? selected?.vendId : -1,
       phone: phone?.value?.trim(),
       webSite: web?.value?.trim(),
-      address1: address?.value?.trim(),
-      address2: address1?.value?.trim(),
-      city: "",
-      region: "",
-      postalCode: "",
-      country: "",
+      address1: address?.value?.trim(), address2: address1?.value?.trim(),
+      city: "", region: "", postalCode: "", country: "",
       note: note?.value?.trim(),
       rowStatus: "D",
-      useOtcorder: checked ? 'Y' : 'N',
+      useOtcorder: isOTC ? 'Y' : 'N',
       vendorCustId: customer?.value,
       vendorCustName: "string",
-      vendSalesRepId: contact?.value,
+      vendSalesRepId: rep?.value,
       vendSalesRepName: "string",
       image: {  },
     }];
@@ -188,9 +188,8 @@ export function SupplierAdd(){
     else onSuccess(t('employee.delete_success'), true);
   }
   
-  const mainProps = { setError, name, setName, phone, setPhone, email, setEmail,
-     setEdited, address, setAddress, address1, setAddress1, web, setWeb, note, setNote,
-     image, setImage, setImage64, image64, setImageType, checked, setChecked, customer, setCustomer, contact, setContact};
+  const mainProps = { setError, name, setName, phone, setPhone, email, setEmail, setEdited, address, setAddress, address1, setAddress1, 
+    web, setWeb, note, setNote, image, setImage, setImage64, image64, setImageType, isOTC, setIsOTC, customer, setCustomer, rep, setRep };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp_z' };
 
   return (

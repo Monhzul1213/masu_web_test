@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Drawer as AntDrawer } from 'antd';
 import { useTranslation } from 'react-i18next';
-
 import '../../../../css/report.css';
 import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all/all_m';
 

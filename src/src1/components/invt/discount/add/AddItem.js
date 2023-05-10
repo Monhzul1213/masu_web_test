@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch } from 'antd';
 
 export function AddItem(props){
-  const { label , label1, value, setValue} = props;
+  const { label , label1, value, setValue } = props;
 
 
   return (

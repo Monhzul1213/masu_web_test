@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import {  ButtonRowAddConfirm, PlainSelect } from '../../../components/all/all_m';
+import { ButtonRowAddConfirm, PlainSelect } from '../../../components/all/all_m';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { getList } from '../../../../services';
 
 export function Header(props){
   const { onClickAdd, onClickDelete, show, onSearch, setError, size  } = props;
-  
   const { t } = useTranslation();
   const [site, setSite] = useState(-1);
   const [sites, setSites] = useState([{siteId: -1, name: t('pos.all')}]);

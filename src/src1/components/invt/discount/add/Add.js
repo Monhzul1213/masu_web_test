@@ -1,22 +1,17 @@
-
-
-import React, {  useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AddItem } from './AddItem';
-import {  Input,  Radio, MoneyInput, Percent, } from '../../../all/all_m';
+import { Input,  Radio, MoneyInput, Percent } from '../../../all/all_m';
+
 export function Add(props){
   const { name, setName, setError,setIsEach, setEdited, isEach,
-     perc, setPerc, price, setPrice, isCheck, setIsCheck } = props;
+          perc, setPerc, price, setPrice, isCheck, setIsCheck } = props;
   const { t } = useTranslation();
-
 
   useEffect(() => {
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
- 
-
 
   const nameProps = { value: name, setValue: setName, label: t('discount.name'), placeholder: t('discount.name'), setError, inRow: true, setEdited, length: 20 };
   const valueProps = { value: price, setValue: setPrice, label: t('discount.amount'), placeholder: t('discount.amount'), setError, setEdited };

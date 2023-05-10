@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { ExportExcel } from '../../../../helpers';
-import { PaginationTable, Table, IconDropdown, DynamicMDIcon , Money} from '../../../components/all/all_m';
+import { PaginationTable, Table, IconDropdown, DynamicMDIcon , Money } from '../../../components/all/all_m';
+
 export function List(props){
   const { data, excelName, size } = props;
   const { t, i18n } = useTranslation();

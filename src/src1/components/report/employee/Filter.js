@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
-
 import { getList } from '../../../../services';
 import { DynamicAIIcon, MonthRange, MultiSelect, TimeRange } from '../../../components/all/all_m';
 

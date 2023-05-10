@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {  CardNote, Date, Radio, Selects} from '../../../all/all_m';
+import { CardNote, Date, Radio, Selects } from '../../../all/all_m';
 import { withSize } from 'react-sizeme';
-import {types} from '../../../../../helpers'
+import { types } from '../../../../../helpers'
 import { Input, CheckBox } from '../../../../../components/all';
 
  function Card(props){
