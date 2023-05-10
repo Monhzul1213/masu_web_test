@@ -80,6 +80,7 @@ export function OrderAdd(){
         if(!editing) item.orderItemId = -1;
         item.name = item?.invtName;
         total1 += item?.totalCost ?? 0;
+        item.allowDecimal = item?.isEach === 'N'
       });
       order?.poOrderAddCosts?.forEach(item => {
         item.rowStatus = editing ? 'U' : 'I';

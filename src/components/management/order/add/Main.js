@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
 
@@ -19,14 +18,13 @@ function Card(props){
   const [otcDates, setOtcDates] = useState([]);
   const [discount, setDiscount] = useState(0);
   const { user, token }  = useSelector(state => state.login);
-  const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getData();
+    if(vendId?.value) getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [vendId?.value]);
 
   useEffect(() => {
     let disc = divide(divide(discount, total, true), 100);
@@ -40,7 +38,7 @@ function Card(props){
     if(order){
       setVendId({ value: order?.vendId });
       setSiteId({ value: order?.siteId });
-      setOrderDate({ value: moment(order?.orderDate, 'yyyy.MM.DD') });
+      setOrderDate({ value: moment(order?.orderDate) });
       if(order?.reqDate) setReqDate({ value: moment(order?.reqDate, 'yyyy.MM.DD') });
       setNotes({ value: order?.notes });
     }
@@ -73,8 +71,7 @@ function Card(props){
     if(response?.error) setError(response?.error);
     else {
       setVendors(response?.data);
-      let vendorId = searchParams?.get('vendId');
-      let vendor = response?.data?.filter(d => d?.vendId === parseInt(vendorId))[0];
+      let vendor = response?.data?.filter(d => d?.vendId === vendId?.value)[0];
       await getOTC(vendor);
     }
     setLoading(false);
@@ -89,14 +86,22 @@ function Card(props){
       else {
         let info = response?.data?.info && response?.data?.info[0];
         let dates = info?.requestDates?.split(',')?.map(i => { return { label: i, value: i }});
-        let payments = response?.data?.paymenttype;
+        let payments = response?.data?.paymenttype ?? [];
         setOtcInfo(info);
         setOtcPayments(payments);
         setOtcDates(dates);
-        setPayType({ value: payments && payments[0]?.paymentTypeID});
-        let discount = (payments && payments[0]?.discountPercent) ?? 0;
-        setDiscount(discount);
-        setReqDate(dates && dates[0]);
+        if(order){
+          setReqDate({ value: order?.reqDate });
+          let payID = parseInt(order?.orderPayment ? order?.orderPayment : 0);
+          let discount = payments?.filter(p => p.paymentTypeID === payID)[0]?.discountPercent;
+          setDiscount(discount);
+          setPayType({ value: payID });
+        } else {
+          setPayType({ value: payments && payments[0]?.paymentTypeID });
+          let discount = (payments && payments[0]?.discountPercent) ?? 0;
+          setDiscount(discount);
+          setReqDate(dates && dates[0]);
+        }
       }
     } else {
       setIsOTC(false);
