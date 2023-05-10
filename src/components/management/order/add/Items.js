@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter } from 'react-table';
 import { withSize } from 'react-sizeme';
 
+import { add, divide } from '../../../../helpers';
 import { PaginationTable, Table, DynamicBSIcon, Money } from '../../../all';
 import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { Search } from './Search';
@@ -55,12 +56,12 @@ function Card(props){
     setItems(old => old.map((row, index) => {
       if(index === rowIndex){
         let orderQty = parseFloat(value ? value : 0);
-        let baseQty = orderQty * old[rowIndex]?.batchQty;
-        let totalCost = baseQty * old[rowIndex]?.cost;
-        total += totalCost;
+        let baseQty = divide(orderQty, old[rowIndex]?.batchQty, true);
+        let totalCost = divide(baseQty, old[rowIndex]?.cost, true);
+        total = add(total, totalCost);
         return { ...old[rowIndex], orderQty, baseQty, totalCost, error: null };
       } else {
-        total += row.totalCost;
+        total = add(total, row.totalCost);
         return row;
       }
     }));
@@ -71,7 +72,7 @@ function Card(props){
 
   const onClickDelete = row => {
     if(row?.original?.orderItemId !== -1) setDItems(old => [...old, row?.original]);
-    let newTotal = total - (row?.original?.totalCost ?? 0);
+    let newTotal = add(total, (row?.original?.totalCost ?? 0), true);
     setTotal(newTotal);
     setItems(items?.filter(item => item?.invtId !== row?.original?.invtId));
     setSearch({ value: null });
