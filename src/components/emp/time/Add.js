@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import { sendRequest } from '../../../services';
-import { ButtonRowConfirm, Date, Error, ModalTitle, Overlay, Select, Time } from '../../all';
+import { add, divide } from '../../../helpers';
+import { ButtonRowConfirm, Date, Error, Input, ModalTitle, Overlay, Select } from '../../all';
 
 export function Add(props){
   const { visible, closeModal, selected, sites, emps } = props;
@@ -16,10 +17,8 @@ export function Add(props){
   const [site, setSite] = useState({ value: null });
   const [date1, setDate1] = useState({ value: moment() });
   const [date2, setDate2] = useState({ value: moment() });
-  const [time1, setTime1] = useState({ value: '' });
-  const [time2, setTime2] = useState({ value: '' });
+  const [time, setTime] = useState({ value: '' });
   const [total, setTotal] = useState(0);
-  const [disabled, setDisabled] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -27,11 +26,14 @@ export function Add(props){
     if(selected){
       setName({ value: selected?.empCode });
       setSite({ value: selected?.siteId });
-      setDate1({ value: moment(selected?.beginDate, 'yyyy.MM.DD') });
-      setDate2({ value: moment(selected?.endDate, 'yyyy.MM.DD') });
-      setTime1({ value: selected?.beginTime });
-      setTime2({ value: selected?.endTime });
+      let date1 = moment(selected?.beginDate, 'yyyy.MM.DD');
+      let date2 = moment(selected?.endDate, 'yyyy.MM.DD');
+      setDate1({ value: date1 });
+      setDate2({ value: date2 });
+      let diff = date2.diff(date1, 'days');
       setTotal(selected?.totalHours);
+      let time = divide(selected?.totalHours, add(diff, 1));
+      setTime({ value: time + '' });
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,8 +50,6 @@ export function Add(props){
         siteId: site?.value,
         beginDate: date1?.value?.format('yyyy.MM.DD'),
         endDate: date2?.value?.format('yyyy.MM.DD'),
-        beginTime: time1?.value?.replace(/-/g, '0'),
-        endTime: time2?.value?.replace(/-/g, '0'),
         totalHours: isDateValid,
         rowStatus: selected ? 'U' : 'I'
       }];
@@ -57,8 +57,6 @@ export function Add(props){
     } else {
       if(!(name?.value || name?.value === 0)) setName({ value: name?.value, error: t('error.not_empty') });
       if(!(site?.value || site?.value === 0)) setSite({ value: site?.value, error: t('error.not_empty') });
-      if(!time1?.value) setTime1({ value: time1?.value, error: t('error.not_empty') })
-      if(!time2?.value) setTime2({ value: time2?.value, error: t('error.not_empty') })
       return false;
     }
   }
@@ -105,44 +103,25 @@ export function Add(props){
   const checkDate = (d1, d2) => {
     let dt1 = moment(d1?.value?.format('yyyy.MM.DD'), 'yyyy.MM.DD');
     let dt2 = moment(d2?.value?.format('yyyy.MM.DD'), 'yyyy.MM.DD');
-    let duration = moment.duration(dt2.diff(dt1));
-    let hours = +(duration?.asHours()?.toFixed(2));
-    if(hours >= 0){
-      setDate2({ value: d2?.value });
-      setDisabled(false);
-      return checkTime(d1, d2, time1, time2);
-    } else {
+    let diff = dt2.diff(dt1, 'days');
+    if(diff < 0){
       setDate2({ value: d2?.value, error: t('error.date_early') });
-      setDisabled(true);
       setTotal(0);
       return false;
+    } else {
+      let hours = parseFloat(time?.value ? time?.value : 0);
+      let total = divide(hours, add(diff, 1), true);
+      setTotal(total);
+      return total;
     }
   }
 
-  const onChangeTime1 = value => {
-    checkTime(date1, date2, value, time2);
-  }
-
-  const onChangeTime2 = value => {
-    checkTime(date1, date2, time1, value);
-  }
-
-  const checkTime = (d1, d2, t1, t2) => {
-    if(t1?.value && t2?.value){
-      const dt1 = moment(d1?.value?.format('yyyy.MM.DD') + ' ' + t1?.value, 'yyyy.MM.DD HH:mm:ss');
-      const dt2 = moment(d2?.value?.format('yyyy.MM.DD') + ' ' + t2?.value, 'yyyy.MM.DD HH:mm:ss');
-      let duration = moment.duration(dt2.diff(dt1));
-      let hours = +(duration?.asHours()?.toFixed(2));
-      if(hours >= 0){
-        setTotal(hours);
-        setTime2({ value: t2?.value });
-        return hours;
-      } else {
-        setTime2({ value: t2?.value, error: t('error.time_early') });
-        setTotal(0);
-        return false;
-      }
-    } else return false;
+  const changeTime = value => {
+    let text = value?.value?.split(".", 2).join(".").replace(/[^0-9.]/g, "");
+    let hours = parseFloat(text ? text : 0);
+    let diff = date2?.value?.diff(date1?.value, 'days');
+    setTotal(divide(hours, add(diff, 1), true));
+    setTime({ value: text });
   }
 
   const nameProps = { value: name, setValue: setName, label: t('employee.title'), placeholder: t('time.select_emp'), 
@@ -152,9 +131,8 @@ export function Add(props){
   const disabledDate = d => !d || d.isAfter(moment().add(1, 'day').format('yyyy-MM-DD'));
   const date1Props = { value: date1, setValue: onChangeDate1, label: t('time.date1'), inRow: true, disabledDate };
   const date2Props = { value: date2, setValue: onChangeDate2, label: t('time.date2'), inRow: true, disabledDate };
-  const time1Props = { value: time1, setValue: setTime1, label: t('time.time1'), inRow: true, onTime: onChangeTime1, disabled };
-  const time2Props = { value: time2, setValue: setTime2, label: t('time.time2'), inRow: true, onTime: onChangeTime2, disabled, handleEnter: onClickSave };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete, isModal: true };
+  const timeProps = { value: time, setValue: changeTime, label: t('time.time'), placeholder: t('time.time'), setError, length: 20 };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={440}>
@@ -170,11 +148,7 @@ export function Add(props){
                 <div className='gap' />
                 <Date {...date2Props} />
               </div>
-              <div className='ac_row' style={{marginTop: 20}}>
-                <Time {...time1Props} />
-                <div className='gap' />
-                <Time {...time2Props} />
-              </div>
+              <Input {...timeProps} />
               <p className='m_footer'>{t('time.total')}: {total}</p>
             </form>
             {error && <Error error={error} id='m_error' />}
