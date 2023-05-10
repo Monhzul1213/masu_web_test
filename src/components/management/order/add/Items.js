@@ -16,7 +16,7 @@ function Card(props){
   useEffect(() => {
     setColumns([
       {
-        Header: t('inventory.title'), accessor: 'name',
+        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 },
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
       { Header: t('inventory.barcode'), accessor: 'barCode', isText: true },
