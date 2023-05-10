@@ -6,10 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { icons1 } from '../../../assets';
 import { sendRequest, deleteRequest, getConstants, setCategoryClass } from '../../../services';
-import { ButtonRow, Error, Input, ModalTitle, Overlay, Confirm, Select } from '../../all';
+import { ButtonRow, Error, Input, ModalTitle, Overlay, Confirm, Select, CheckBox } from '../../all';
 
 export function Add(props){
-  const { visible, closeModal, selected } = props;
+  const { visible, closeModal, selected, useConfig } = props;
   const { t } = useTranslation();
   const [name, setName] = useState({ value: '' });
   const [icon, setIcon] = useState(null);
@@ -17,6 +17,7 @@ export function Add(props){
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [useKitchen, setUseKitchen] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const { categoryClass }  = useSelector(state => state.temp);
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ export function Add(props){
   const getData = async () => {
     setError(null);
     setName({ value: selected?.categoryName ?? '' });
+    setUseKitchen(selected?.useKitchenPrinter === 'Y');
     const hasClass = selected?.class || selected?.class === 0;
     setClass1({ value: hasClass ? selected?.class : 1 });
     setIcon(hasClass ? selected?.icon : 1);
@@ -53,9 +55,10 @@ export function Add(props){
     let isNameValid = name?.value?.length >= nameLength;
     if(isNameValid && icon){
       setLoading(true);
+      let useKitchenPrinter = useKitchen ? 'Y' : 'N';
       let data = selected
-        ? { categoryId: selected?.categoryId, categoryName: name?.value, color: 0, icon, class: class1?.value }
-        : { merchantID: user?.merchantId, categoryName: name?.value, color: 0, icon, class: class1?.value  };
+        ? { categoryId: selected?.categoryId, categoryName: name?.value, color: 0, icon, class: class1?.value, useKitchenPrinter }
+        : { merchantID: user?.merchantId, categoryName: name?.value, color: 0, icon, class: class1?.value, useKitchenPrinter  };
       let api = selected ? 'Inventory/UpdateCategory' : 'Inventory/AddCategory';
       const response = await dispatch(sendRequest(user, token, api, data));
       if(response?.error) setError(response?.error);
@@ -108,6 +111,7 @@ export function Add(props){
   const nameProps = { value: name, setValue: setName, label: t('category.name'), placeholder: t('category.name'), setError, length: 20 };
   const classProps = { value: class1, setValue: onChangeClass, label: t('category.class'), placeholder: t('category.class'), setError,
     data: categoryClass, s_value: 'valueNum', s_descr: 'valueStr1' };
+  const kitchenProps = { label: t('category.use_kitchen'), checked: useKitchen, setChecked: setUseKitchen };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   
   return (
@@ -124,6 +128,7 @@ export function Add(props){
                 {icons1[class1?.value]?.map((item, index) => renderItem(item, index, size?.width))}
               </div>
             }</SizeMe>
+            {useConfig && <CheckBox {...kitchenProps} />}
             {error && <Error error={error} id='m_error' />}
           </div>
         </div>

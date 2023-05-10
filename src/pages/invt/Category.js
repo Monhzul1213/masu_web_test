@@ -16,6 +16,7 @@ export function Category(){
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState(false);
   const [selected, setSelected] = useState({});
+  const [useConfig, setUseConfig] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,10 +33,16 @@ export function Category(){
     const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
     if(response?.error) setError(response?.error);
     else setData(response?.data);
+    await getConfig();
     setLoading(false);
     setShow(false);
     setChecked(false);
     setSelected({});
+  }
+
+  const getConfig = async () => {
+    const response = await dispatch(getList(user, token, 'Merchant/GetConfig'));
+    setUseConfig(response?.data?.useKitchenPrinter === 'Y');
   }
 
   const onDelete = async toDelete => {
@@ -60,7 +67,7 @@ export function Category(){
     if(toGet) getData();
   }
 
-  const addProps = { visible, closeModal, selected: item };
+  const addProps = { visible, closeModal, selected: item, useConfig };
   const emptyProps = { icon: 'MdOutlineCategory', type: 'category', onClickAdd };
   const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
 
