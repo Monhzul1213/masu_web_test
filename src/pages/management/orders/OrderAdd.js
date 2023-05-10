@@ -119,7 +119,7 @@ export function OrderAdd(){
 
   const validateData = status => {
     let isSiteValid = siteId?.value || siteId?.value === 0;
-    let isDateValid = !reqDate?.value || (isOTC ? true : reqDate?.value?.isAfter(orderDate?.value));
+    let isDateValid = reqDate?.value && (isOTC ? true : reqDate?.value?.isAfter(orderDate?.value));
     let length = items?.filter(item => item?.orderQty)?.length;
     if(isSiteValid && isDateValid && length){
       let orderNo = editing ? order?.orderNo : '', orderItems = [], addValid = true;
@@ -162,7 +162,8 @@ export function OrderAdd(){
       return data;
     } else {
       if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
-      if(reqDate?.value && (isOTC ? false : reqDate?.value?.isBefore(orderDate?.value))) setReqDate({ value: reqDate?.value, error: t('error.order_date') });
+      if(!reqDate?.value) setReqDate({ value: reqDate?.value, error: t('error.not_empty') });
+      else if(reqDate?.value && (isOTC ? false : reqDate?.value?.isBefore(orderDate?.value))) setReqDate({ value: reqDate?.value, error: t('error.order_date') });
       if(!length) setSearch({ value: null, error: t('order.items_error') });
       return false;
     }
