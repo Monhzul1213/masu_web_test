@@ -68,8 +68,8 @@ export function Add(props){
     let phoneLength = 8;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
     let isEmailValid = !email?.value?.trim() || validateEmail(email?.value?.trim());
-    let isCustValid = isOTC ? (cust?.value?.trim() && cust?.name?.trim()) : true;
-    let isRepValid = isOTC ? (rep?.value?.trim() && rep?.name?.trim()) : true;
+    let isCustValid = isOTC ? cust?.value?.trim() : true;
+    let isRepValid = isOTC ? rep?.value?.trim() : true;
     if(isEmailValid && name?.value?.trim() && isPhoneValid && isCustValid && isRepValid){
       return true;
     } else {
@@ -77,9 +77,7 @@ export function Add(props){
       if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
       if(!isCustValid && !cust?.value?.trim()) setCust({...cust, error: t('error.not_empty') });
-      else if(!isCustValid && !cust?.name?.trim()) setCust({...cust, error1: t('error.not_empty') });
       if(!isRepValid && !rep?.value?.trim()) setRep({...rep, error: t('error.not_empty') });
-      else if(!isRepValid && !rep?.name?.trim()) setRep({...rep, error1: t('error.not_empty') });
       return false;
     }
   }
