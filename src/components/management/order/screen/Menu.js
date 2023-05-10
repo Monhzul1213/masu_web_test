@@ -3,20 +3,17 @@ import { MdChevronLeft } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// import { usePDF } from '@react-pdf/renderer';
 import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 
 import { sendRequest } from '../../../../services';
 import { IconButton, Button, ButtonConfirm, Dropdown } from '../../../all';
-// import { PDF } from './PDF';
 import { PDF1 } from './PDF1';
 
 export function Menu(props){
   const { order, items, adds, onLoad, onDone, getData, size } = props;
   const { t } = useTranslation();
   const [data, setData] = useState([]);
-  // const [instance] = usePDF({ document: <PDF /> });
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -82,10 +79,6 @@ export function Menu(props){
 
   const onPressExport = () => {
     html2canvas(document.getElementById('order_pdf')).then(function(canvas) {
-      // const imgData = canvas.toDataURL('image/png');
-      // const pdf = new jsPDF('p', 'mm', 'a4', true);
-      // pdf.addImage(imgData, 'JPEG', 0, 0);
-      // pdf.save('order_' + order?.orderNo + '.pdf');
       const imgWidth = 208, pageHeight = 295;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight, position = 0;
@@ -100,13 +93,6 @@ export function Menu(props){
       }
       pdf.save('order_' + order?.orderNo + '.pdf');
     });
-    // if(instance?.blob){
-    //   const fileURL = window.URL.createObjectURL(instance?.blob);
-    //   let alink = document.createElement('a');
-    //   alink.href = fileURL;
-    //   alink.download = 'order_' + order?.orderNo + '.pdf';
-    //   alink.click();
-    // }
   }
 
   const onPressReceive = () => {};//DISABLED FOR NOW

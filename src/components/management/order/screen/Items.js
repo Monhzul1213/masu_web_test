@@ -16,6 +16,7 @@ export function Items(props){
         Header: t('inventory.title'), accessor: 'name', noSort: true,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
+      { Header: t('inventory.barcode'), accessor: 'barCode', noSort: true },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', noSort: true,
         Cell: ({ value }) => <div style={{textAlign: 'right'}}>{value}</div>

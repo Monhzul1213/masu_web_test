@@ -89,7 +89,7 @@ export function OrderScreen(){
             <Info {...menuProps} size={size} />
             <Items {...listProps} size={size} />
             {adds?.length ? <Additional {...addProps} size={size} /> : null}
-            <Footer total={order?.total} />
+            <Footer total={order} />
           </div>}
         </div>
       }</SizeMe>

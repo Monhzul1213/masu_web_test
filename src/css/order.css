@@ -378,12 +378,16 @@
   margin: 0;
 }
 
+.ps_footer_back {
+  padding: 10px var(--page-padding) 0 var(--page-padding);
+}
+
 .ps_footer {
   display: flex;
   flex-flow: row;
   align-items: center;
   justify-content: flex-end;
-  padding: var(--page-padding) var(--page-padding) 0 var(--page-padding);
+  margin-top: 5px;
 }
 
 .ps_footer_label {
@@ -397,6 +401,7 @@
   font-weight: 550;
   margin: 0 0 0 30px;
   text-align: right;
+  min-width: 100px;
 }
 
 .a4_back {
