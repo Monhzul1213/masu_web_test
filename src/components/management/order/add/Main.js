@@ -84,7 +84,7 @@ function Card(props){
       if(response?.error) setError(response?.error);
       else {
         let info = response?.data?.info && response?.data?.info[0];
-        let dates = info?.requestDates?.split(',')?.map(i => { return { label: i, value: i }});
+        let dates = info?.requestDates?.split(',')?.sort((a, b) => a?.localeCompare(b))?.map(i => { return { label: i, value: i }});
         let payments = response?.data?.paymenttype ?? [];
         setOtcInfo(info);
         setOtcPayments(payments);
