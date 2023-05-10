@@ -19,13 +19,17 @@ export const EditableCell = props => {
       updateMyData(row?.index, id, value, e);
   }
 
+  const onFocus = e => {
+    if(e?.target?.value === '0') setValue('');
+  }
+
   useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
   
   const style = { textAlign: 'right', width };
   const qtyProps = { className: 'ed_input', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,
-    disableGroupSeparators: true, style, onKeyDown, autoFocus, id: cellID };
+    disableGroupSeparators: true, style, onKeyDown, autoFocus, id: cellID, onFocus };
 
   return isText
     ? (<p className='ed_text'>{value}</p>)
