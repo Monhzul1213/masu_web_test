@@ -6,6 +6,7 @@ import { withSize } from 'react-sizeme';
 import moment from 'moment';
 
 import { getList } from '../../../../services';
+import { add, divide } from '../../../../helpers';
 import { Date, DescrInput, MoneyInput, Select } from '../../../all';
 
 function Card(props){
@@ -19,6 +20,7 @@ function Card(props){
   const [otcPayments, setOtcPayments] = useState([]);
   const [otcDates, setOtcDates] = useState([]);
   const [discount, setDiscount] = useState(0);
+  const [totals, setTotals] = useState({ discount: 0, to_pay: 0 });
   const { user, token }  = useSelector(state => state.login);
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
@@ -28,6 +30,14 @@ function Card(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    let disc = divide(divide(discount, total, true), 100);
+    let to_pay = add(total, disc, true);
+    setTotals({ discount: disc, to_pay });
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [total, discount]);
 
   useEffect(() => {
     if(order){
@@ -88,9 +98,9 @@ function Card(props){
         setOtcInfo(info);
         setOtcPayments(payments);
         setOtcDates(dates);
-        setPayType({ value: payments && payments[0]?.paymentTypeID})
+        setPayType({ value: payments && payments[0]?.paymentTypeID});
         let discount = (payments && payments[0]?.discountPercent) ?? 0;
-        setDiscount(discount / 100);
+        setDiscount(discount);
         setReqDate(dates && dates[0]);
       }
     } else {
@@ -101,7 +111,7 @@ function Card(props){
   const changeType = value => {
     let disPercent = (otcPayments?.filter(i => i.paymentTypeID === value?.value)[0]?.discountPercent) ?? 0;
     setPayType(value);
-    setDiscount(disPercent / 100);
+    setDiscount(disPercent);
   }
 
   const id = size?.width > 480 ? 'im_large' : 'im_small';
@@ -143,10 +153,10 @@ function Card(props){
           <div id={idRow}>
             <MoneyInput label={t('order.total')} value={{ value: total}} disabled={true} inRow={true} />
             <div className='im_gap' />
-            <MoneyInput label={t('order.discount')} value={{ value: total * discount }} disabled={true} inRow={true} />
+            <MoneyInput label={t('order.discount')} value={{ value: totals?.discount }} disabled={true} inRow={true} />
           </div>
           <div id={idRow}>
-            <MoneyInput label={t('order.to_pay')} value={{ value: total - (total * discount) }} disabled={true} inRow={true} />
+            <MoneyInput label={t('order.to_pay')} value={{ value: totals?.to_pay }} disabled={true} inRow={true} />
             <div className='im_gap' />
             <div style={{flex: 1}} />
           </div>
