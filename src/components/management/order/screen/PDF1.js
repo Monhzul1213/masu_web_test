@@ -49,7 +49,7 @@ export function PDF1(props){
           return (
           <div key={'i' + index} className='po_pdf_table_row'>
               <p className='po_pdf_table_row_text' style={{width: '40%', textAlign: 'left'}}>{item?.invtName}</p>
-              <p className='po_pdf_table_row_text' style={{width: '15%'}}>{item?.orderQty}</p>
+              <p className='po_pdf_table_row_text' style={{width: '15%'}}>{item?.orderTotalQty}</p>
               <p className='po_pdf_table_row_text' style={{width: '20%'}}><Money value={item?.cost} fontSize={14} /> </p>
               <p className='po_pdf_table_row_text' style={{width: '25%'}}><Money value={item?.totalCost} fontSize={14} /></p>
             </div>

@@ -158,7 +158,7 @@ export function PDF(){
           return (
           <View key={'i' + index} style={styles.table_row}>
               <Text style={styles.table_row_text1}>{item?.invtName}</Text>
-              <Text style={styles.table_row_text2}>{item?.orderQty}</Text>
+              <Text style={styles.table_row_text2}>{item?.orderTotalQty}</Text>
               <Text style={styles.table_row_text3}>{formatNumber(item?.cost)}{suffix}</Text>
               <Text style={styles.table_row_text4}>{formatNumber(item?.totalCost)}{suffix}</Text>
             </View>

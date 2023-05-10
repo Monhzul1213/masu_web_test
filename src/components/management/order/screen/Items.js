@@ -17,7 +17,15 @@ export function Items(props){
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
       {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', noSort: true,
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}>{value}</div>
+      },
+      {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_qty1')}</div>, accessor: 'orderQty', noSort: true,
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}>{value}</div>
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_base1')}</div>, accessor: 'orderTotalQty', noSort: true,
         Cell: ({ value }) => <div style={{textAlign: 'right'}}>{value}</div>
       },
       {
