@@ -38,6 +38,7 @@ export function OrderAdd(){
   const [isOTC, setIsOTC] = useState(false);
   const [otcInfo, setOtcInfo] = useState(null);
   const [totals, setTotals] = useState({ discount: 0, to_pay: 0 });
+  const [discount, setDiscount] = useState(0);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -158,6 +159,7 @@ export function OrderAdd(){
         discountAmount: totals?.discount ?? 0,
         orderAmount: totals?.to_pay ?? 0,
         orderPayment: payType?.value ?? 0,
+        discountPercent: discount,
         orderItems, orderCosts
       };
       return data;
@@ -201,7 +203,7 @@ export function OrderAdd(){
   }
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading: setLoading1,
-    order, editing, payType, setPayType, total: add(total1, total2), isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals };
+    order, editing, payType, setPayType, total: add(total1, total2), isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals, discount, setDiscount };
   let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',

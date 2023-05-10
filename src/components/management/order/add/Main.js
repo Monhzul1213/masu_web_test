@@ -10,13 +10,12 @@ import { Date, DescrInput, MoneyInput, Select } from '../../../all';
 
 function Card(props){
   const { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, size,
-    setLoading, order, editing, payType, setPayType, total, isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals } = props;
+    setLoading, order, editing, payType, setPayType, total, isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals, discount, setDiscount } = props;
   const { t } = useTranslation();
   const [vendors, setVendors] = useState([]);
   const [sites, setSites] = useState([]);
   const [otcPayments, setOtcPayments] = useState([]);
   const [otcDates, setOtcDates] = useState([]);
-  const [discount, setDiscount] = useState(0);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 

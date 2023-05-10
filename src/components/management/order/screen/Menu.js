@@ -30,7 +30,7 @@ export function Menu(props){
     if(order?.status === 1) data.push({ label: t('order.cancel'), onClick: onPressCancel, confirmText: t('order.cancel_confirm') });
     if(order?.status === 0) data.push({ label: t('order.delete'), onClick: onPressDelete, confirmText: t('order.delete_confirm') });
     if(size?.width < 510){
-      data.unshift({ label: t('order.send'), onClick: onPressSend, disabled: true });
+      data.unshift({ label: t('order.send'), onClick: onPressSend });
       if(order?.status === 1 || order?.status === 1) data.unshift({ label: t('order.edit'), onClick: onPressEdit });
       if(order?.status === 1) data.unshift({ label: t('order.receive'), onClick: onPressReceive, disabled: true });
       if(order?.status === 0) data.unshift({ label: t('order.approve'), onClick: onPressApprove, confirmText: t('order.approve_confirm') });
@@ -110,16 +110,32 @@ export function Menu(props){
   }
 
   const onPressReceive = () => {};//DISABLED FOR NOW
-  const onPressSend = () => {};//DISABLED FOR NOW
   const onPressPrint = () => {};//DISABLED FOR NOW
-
+  
+  const onPressSend = async () => {
+    const data = {
+      orderNo: order?.orderNo,
+      custRegNo: order?.custRegNo ?? '',
+      reqDate: order?.reqDate,
+    }
+    onLoad();
+    const response = await dispatch(sendRequest(user, token, 'Txn/SendOrderOTC', data));
+    if(response?.error){
+      onDone(true, response?.error);
+      return false;
+    } else {
+      onDone(false, t('order.send_success'));
+      return true;
+    }
+  };
+  
   const id = size?.width >= 510 ? 'ps_large' : 'ps_small';
 
   const backProps = { className: 'ps_back_btn', text: t('order.back'), icon: <MdChevronLeft className='ps_back_icon' />, onClick };
   const approveProps = { className: 'ps_btn', text: t('order.approve'), onClick: onPressApprove, confirmText: t('order.approve_confirm') };
   const receiveProps = { className: 'ps_btn', text: t('order.receive'), onClick: onPressReceive, disabled: true };
   const editProps = { className: 'ps_btn', text: t('order.edit'), onClick: onPressEdit };
-  const sendProps = { className: 'ps_btn', text: t('order.send'), onClick: onPressSend, disabled: true };
+  const sendProps = { className: 'ps_btn', text: t('order.send'), onClick: onPressSend };
   const menuProps = { className: 'ps_dropdown', label: t('order.more'), data };
 
   return (
