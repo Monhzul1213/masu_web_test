@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
-import { Header, Info } from '../../components/lone/order';
+import { Header, Info, Items } from '../../components/lone/order';
 
 export function Order(){
   const [loading, setLoading] = useState(false);
@@ -43,8 +43,8 @@ export function Order(){
           <div>
             <Info header={header} />
             <Header />
-            {/*
             <Items detail={detail} />
+            {/*
             <Total header={header} />
             <QR header={header} /> */}
           </div>
