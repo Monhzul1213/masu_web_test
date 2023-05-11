@@ -276,12 +276,16 @@
   text-align: right;
 }
 
+.bo_footer_back {
+  margin-bottom: 40px;
+}
+
 .bo_footer {
   display: flex;
   flex-flow: row;
   justify-content: end;
   border-left: 1px solid transparent; 
-  border-right: 1px solid var(--text-color); 
+  border-right: 1px solid var(--text-color);
 }
 
 .bo_footer0 {
@@ -306,4 +310,11 @@
   width: 20%;
   text-align: right;
   border-bottom: 1px solid var(--text-color);
+}
+
+.bo_sign {
+  white-space: pre;
+  font-size: 14px;
+  margin: 0 0 10px 0;
+  text-align: right;
 }
