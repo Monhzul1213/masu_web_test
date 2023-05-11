@@ -984,5 +984,25 @@
     "company_regno": "Байгууллагын №",
     "company_name": "Байгууллагын нэр"
   },
+  "order_bill": {
+    "powered": "Powered by Masu.mn",
+    "title": "Худалдан авалтын захиалга",
+    "ordered": "Захиалагч",
+    "reg_no": "Регистер №",
+    "employee": "Ажилтан",
+    "date": "Огноо",
+    "req_date": "Захиалга хүлээн авах",
+    "descr": "Тайлбар",
+    "vendor": "Нийлүүлэгч",
+    "receive":"Хүлээн авах",
+    "t_invt": "Бараа",
+    "t_barcode": "Баркод",
+    "t_qty": "Тоо",
+    "t_price": "Үнэ",
+    "t_total": "Нийт дүн",
+    "received": "Хүлээн авсан",
+    "given": "Хүлээлгэн өгсөн",
+    "checked": "Шалгасан Нябо"
+  },
   "version": "10"
 }

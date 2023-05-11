@@ -34,6 +34,7 @@
     "react-loading-overlay": "^1.0.1",
     "react-open-app": "^1.0.3",
     "react-qr-code": "^2.0.11",
+    "react-qrcode-logo": "^2.9.0",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.2",
     "react-router-prompt": "^0.3.0",
