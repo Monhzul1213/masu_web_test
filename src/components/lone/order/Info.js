@@ -28,6 +28,21 @@ export function Info(props){
           logoWidth={48}
           logoHeight={16} />
       </div>
+      <div className='bo_row'>
+        <div className='bo_col'>
+          <p className='bo_label'>{t('order_bill.vendor')}:</p>
+          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
+          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
+          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
+        </div>
+        <div className='bl_gap' />
+        <div className='bo_col'>
+          <p className='bo_label'>{t('order_bill.receive')}:</p>
+          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
+          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
+          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
+        </div>
+      </div>
     </div>
   );
 }
