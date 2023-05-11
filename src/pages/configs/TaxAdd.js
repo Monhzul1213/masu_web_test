@@ -77,7 +77,7 @@ function Screen(props){
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      let request = response?.data?.vatrequest && response?.data?.vatrequest[0];
+      let request = response?.data?.vatrequest;
       setRegNo({ value: request?.vatPayerNo });
       setName({ value: request?.vatPayerName });
       setChecked((request?.isVat + '') === '1');
