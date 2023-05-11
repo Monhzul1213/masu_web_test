@@ -173,3 +173,46 @@
   flex: 1;
   word-break: break-word;
 }
+
+#bo_back {
+  padding: 15px 30px;
+  width: 640px;
+}
+
+.bo_header {
+  margin-bottom: 20px;
+}
+
+.bo_powered {
+  font-weight: 500;
+  margin: 0 0 20px 0;
+  font-size: 13px;
+  text-align: right;
+}
+
+.bo_no {
+  font-weight: 700;
+  font-size: 20px;
+  margin: 0 0 25px 0;
+}
+
+.bo_row {
+  display: flex;
+  flex-flow: row;
+  margin-bottom: 20px;
+}
+
+.bo_col {
+  flex: 1;
+}
+
+.bo_label {
+  font-weight: 550;
+  font-size: 14px;
+  margin: 0 0 10px 0;
+}
+
+.bo_value {
+  font-weight: normal;
+  margin-left: 3px;
+}
