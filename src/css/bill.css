@@ -179,7 +179,7 @@
   width: 640px;
 }
 
-.bo_header {
+.bo_info {
   margin-bottom: 20px;
 }
 
@@ -220,4 +220,40 @@
 .bo_value2 {
   font-size: 14px;
   margin: 0 0 5px 0;
+}
+
+.bo_header {
+  display: flex;
+  flex-flow: row;
+  border: 1px solid var(--text-color);
+}
+
+.bo_header > p {
+  font-size: 14px;
+  margin: 0;
+  padding: 2px 5px;
+}
+
+.bo_header1 {
+  width: 35%;
+  border-right: 1px solid var(--text-color);
+}
+
+.bo_header2 {
+  width: 18%;
+  border-right: 1px solid var(--text-color);
+}
+
+.bo_header3 {
+  width: 12%;
+  border-right: 1px solid var(--text-color);
+}
+
+.bo_header4 {
+  width: 15%;
+  border-right: 1px solid var(--text-color);
+}
+
+.bo_header5 {
+  width: 20%;
 }

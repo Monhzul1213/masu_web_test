@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
-import { Info } from '../../components/lone/order';
+import { Header, Info } from '../../components/lone/order';
 
 export function Order(){
   const [loading, setLoading] = useState(false);
@@ -42,8 +42,8 @@ export function Order(){
         {!header ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
           <div>
             <Info header={header} />
-            {/*
             <Header />
+            {/*
             <Items detail={detail} />
             <Total header={header} />
             <QR header={header} /> */}

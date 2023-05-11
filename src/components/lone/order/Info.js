@@ -8,7 +8,7 @@ export function Info(props){
   const { t } = useTranslation();
 
   return (
-    <div className='bo_header'>
+    <div className='bo_info'>
       <p className='bo_powered'>{t('order_bill.powered')}</p>
       <p className='bo_no'>{t('order_bill.title')}: #{header?.orderNo}</p>
       <div className='bo_row'>
