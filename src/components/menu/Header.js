@@ -11,13 +11,16 @@ export function Header(props){
   const { pathname } = useLocation();
   const { i18n, t } = useTranslation();
   const [title, setTitle] = useState('Home');
-  const hideMenu = pathname?.includes('confirm') || pathname?.includes('bill') || pathname?.includes('Bill');
+  const [hideMenu, setHideMenu] = useState(false);
 
   useEffect(() => {
     i18n.exists('header.' + pathname) ? setTitle('header.' + pathname) : setTitle('header./');
+    let pathname1 = pathname?.toLowerCase();
+    let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order'));
+    setHideMenu(hideMenu);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [pathname]);
 
   const onClick = () => setCollapsed(!collapsed);
 

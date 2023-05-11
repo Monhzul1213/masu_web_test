@@ -23,7 +23,15 @@ export function Menu(props){
   const { user: { msRole, isAdmin }, isPartner } = useSelector(state => state.login);
   const path = pathname?.split('/') && pathname?.split('/')[1];
   const navigate = useNavigate();
-  const hideMenu = pathname?.includes('confirm') || pathname?.includes('bill') || pathname?.includes('Bill');
+  const [hideMenu, setHideMenu] = useState(false);
+
+  useEffect(() => {
+    let pathname1 = pathname?.toLowerCase();
+    let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order'));
+    setHideMenu(hideMenu);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
 
   useEffect(() => {
     setCollapsed(size?.width > 740 ? false : true);
