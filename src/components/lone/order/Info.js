@@ -14,8 +14,8 @@ export function Info(props){
       <div className='bo_row'>
         <div className='bo_col'>
           <p className='bo_label'>{t('order_bill.ordered')}: <span className='bo_value'>{header?.merchantName}</span></p>
-          <p className='bo_label'>{t('order_bill.reg_no')}: <span className='bo_value'>{header?.custRegNo}</span></p>
-          <p className='bo_label'>{t('order_bill.employee')}: <span className='bo_value'>{header?.orderEmpName}</span></p>
+          <p className='bo_label'>{t('order_bill.reg_no')}: <span className='bo_value'>{header?.merchantRegNo}</span></p>
+          <p className='bo_label'>{t('order_bill.employee')}: <span className='bo_value'>{header?.orderEmpName} - {header?.orderEmpPhone}</span></p>
           <p className='bo_label'>{t('order_bill.date')}: <span className='bo_value'>{moment(header?.orderDate).format('yyyy.MM.DD')}</span></p>
           <p className='bo_label'>{t('order_bill.req_date')}: <span className='bo_value'>{header?.reqDate}</span></p>
           {header?.notes ? <p className='bo_label'>{t('order_bill.descr')}: <span className='bo_value'>{header?.notes}</span></p> : null}
@@ -32,15 +32,15 @@ export function Info(props){
         <div className='bo_col'>
           <p className='bo_label'>{t('order_bill.vendor')}:</p>
           {header?.vendName ? <p className='bo_value2'>{header?.vendName}</p> : null}
-          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
-          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
+          {header?.vendAddress ? <p className='bo_value2'>{header?.vendAddress}</p> : null}
+          {header?.vendPhone ? <p className='bo_value2'>{header?.vendPhone}</p> : null}
         </div>
         <div className='bl_gap' />
         <div className='bo_col'>
           <p className='bo_label'>{t('order_bill.receive')}:</p>
           {header?.siteName ? <p className='bo_value2'>{header?.siteName}</p> : null}
-          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
-          {header?.name ? <p className='bo_value2'>{header?.name1}</p> : null}
+          {header?.siteAddress ? <p className='bo_value2'>{header?.siteAddress}</p> : null}
+          {header?.sitePhone ? <p className='bo_value2'>{header?.sitePhone}</p> : null}
         </div>
       </div>
     </div>

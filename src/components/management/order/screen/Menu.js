@@ -7,6 +7,7 @@ import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 
 import { sendRequest } from '../../../../services';
+import { config, encrypt } from '../../../../helpers';
 import { IconButton, Button, ButtonConfirm, Dropdown } from '../../../all';
 import { PDF1 } from './PDF1';
 
@@ -99,10 +100,14 @@ export function Menu(props){
   const onPressPrint = () => {};//DISABLED FOR NOW
   
   const onPressSend = async () => {
+    let msg = order?.merchantId + '-' + order?.orderNo + '-' + order?.vendId;
+    let code = encrypt(msg);
+    let url = config?.domain + '/Order?orderno=' + encodeURIComponent(code);
     const data = {
       orderNo: order?.orderNo,
       custRegNo: order?.custRegNo ?? '',
       reqDate: order?.reqDate,
+      url
     }
     onLoad();
     const response = await dispatch(sendRequest(user, token, 'Txn/SendOrderOTC', data));
