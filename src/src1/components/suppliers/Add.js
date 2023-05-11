@@ -30,22 +30,26 @@ import { useSelector, useDispatch } from 'react-redux';
 
   const handleCust = async ( e) => {
     e?.preventDefault();
-    setLoading(true)
-    let api = 'GetCustName?CustID=' + customer?.value ;
-    const response = await dispatch(getOTC(user, token, api));
-    setLoading(false)
-    if(response?.error) setCustomer({error1: response?.error})
-    else setCustomer({value: customer?.value, name: response?.data ? response?.data : '' })
+    if(customer?.value){
+      setLoading(true)
+      let api = 'GetCustName?CustID=' + customer?.value ;
+      const response = await dispatch(getOTC(user, token, api));
+      if(response?.error) setCustomer({error1: response?.error})
+      else setCustomer({value: customer?.value, name: response?.data ? response?.data : '' })
+      setLoading(false)
+    }
   }
 
   const handleRep = async ( e) => {
     e?.preventDefault();
+    if(customer?.value){
     setLoaded(true)
     let api = 'GetSrName?SalesRepID=' + rep?.value ;
     const response = await dispatch(getOTC(user, token, api));
-    setLoaded(false)
     if(response?.error) setRep({error1: response?.error})
     else setRep({value: rep?.value, name: response?.data ? response?.data : '' })
+    setLoaded(false)
+    }
   }
 
   const id = size?.width > 480 ? 'im_large' : 'im_small';

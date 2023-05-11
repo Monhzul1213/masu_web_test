@@ -86,8 +86,8 @@ export function SupplierAdd(){
       setPhone({ value: vend?.phone ?? ''  });
       setWeb({ value: vend?.webSite ?? ''  });
       setName({ value: vend?.vendName ?? ''  });
-      setCustomer({ value: vend?.vendorCustId ?? ''})
-      setRep({ value: vend?.vendSalesRepId ?? ''})
+      setCustomer({ value: vend?.vendorCustId ?? '' , name : vend?.vendorCustName ?? ''})
+      setRep({ value: vend?.vendSalesRepId ?? '', name : vend?.vendSalesRepName ?? ''})
       setIsOTC( vend?.useOtcorder === 'Y')
       getImage(vend);
       response?.data?.forEach(item => item.rowStatus = 'U');
@@ -118,21 +118,22 @@ export function SupplierAdd(){
     let phoneLength = 8;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
     let isEmailValid = !email?.value?.trim() || validateEmail(email?.value?.trim());
-    if(isEmailValid && name?.value?.trim() && isPhoneValid && customer?.value?.trim() && rep?.value?.trim() && customer?.name?.trim()  && rep?.name?.trim()){
+    let isCustValid = isOTC ? customer?.value?.trim() : true;
+    let isRepValid = isOTC ? rep?.value?.trim() : true;
+    if(isEmailValid && name?.value?.trim() && isPhoneValid && isCustValid && isRepValid){
       return true;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
-      if(!customer?.value?.trim()) setCustomer({ value: customer?.value, error: t('error.not_empty') });
-      if(!customer?.name?.trim()) setCustomer({ value: customer?.name, error1: t('error.not_empty') });
-      if(!rep?.value?.trim()) setRep({ value: rep?.value, error: t('error.not_empty') });
-      if(!rep?.name?.trim()) setRep({ value: rep?.name, error1: t('error.not_empty') });
+      if(!isCustValid && !customer?.value?.trim()) setCustomer({...customer, error: t('error.not_empty') });
+      if(!isRepValid && !rep?.value?.trim()) setRep({...rep, error: t('error.not_empty') });
       return false;
     }
   }
 
   const onClickSave = async e => {
+    console.log(isOTC)
     e?.preventDefault();
     if(checkValid()){
       onLoad();
@@ -181,7 +182,7 @@ export function SupplierAdd(){
       vendorCustName: "string",
       vendSalesRepId: rep?.value,
       vendSalesRepName: "string",
-      image: {  },
+      image: { },
     }];
     const response = await dispatch(sendRequest(user, token, 'Merchant/vendor', data));
     if(response?.error) onError(response?.error, true);
