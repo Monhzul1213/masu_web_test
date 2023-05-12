@@ -14,6 +14,8 @@ export function List(props){
     let columns = [
       { Header: t('inventory.t_site'), accessor: 'siteName' },
       { Header: t('tax.location'), accessor: 'district' },
+      { Header: t('login.addr3'), accessor: 'khoroo' },
+      { Header: t('login.partner_address'), accessor: 'address' },
       { Header: t('pos.title'), accessor: 'descr' },
       {
         Header: t('tax.coordinate'), accessor: 'coordinate', customStyle: { width: 200 },

@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
+import mime from 'mime';
 
+import { urlToFile } from '../../helpers';
 import '../../css/invt.css';
 import '../../css/config.css';
 import { getList, sendRequest } from '../../services';
@@ -24,6 +26,9 @@ export function SolveAdd(){
   const [request, setRequest] = useState(null);
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [image, setImage] = useState(null);
+  const [image64, setImage64] = useState('');
+  const [imageType, setImageType] = useState('');
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -43,6 +48,19 @@ export function SolveAdd(){
 
   const onClickCancel = () => navigate('/system/request_solve');
 
+  const getImage = async image => {
+    if(image?.fileRaw?.fileData){
+      let type = image?.fileRaw?.fileType?.replace('');
+      setImageType(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${image?.fileRaw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage64(attach64);
+      setImage(attachFile);
+    }
+  }
+
   const getData = async () => {
     let requestId = searchParams?.get('requestId');
     setError(null);
@@ -52,7 +70,7 @@ export function SolveAdd(){
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      let request = response?.data && response?.data[0];
+      let request = response?.data;
       if(request){
         setDisabled(request?.status === 0 || request?.status === 4 ? true : false);
         setRequest(request);
@@ -67,6 +85,7 @@ export function SolveAdd(){
         });
         setItems(request?.requestItem);
       }
+      getImage(request)
     }
   }
 
@@ -127,7 +146,8 @@ export function SolveAdd(){
     }
   }
   
-  let mainProps = { setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled };
+  let mainProps = { setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled, setImage, 
+                    image, image64, setImage64, setImageType, imageType };
   let listProps = { data: items, setData: setItems, setEdited, setError, disabled, status };
   let btnProps = { onClickCancel, onClickSave, id: 'add_btns', noSave: disabled };
 

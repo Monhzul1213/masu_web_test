@@ -13,6 +13,7 @@ export function Solve(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [filter,  setFilter] =   useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,13 +45,14 @@ export function Solve(){
       setData(response?.data);
     }
     setLoading(false);
+    setFilter(query ?? '');
   }
 
   const onClickAdd = row => {
     navigate({ pathname: 'solve_add', search: createSearchParams({ requestId: row?.requestId }).toString() });
   }
   
-  const headerProps = { setError, onSearch: getData };
+  const headerProps = { setError, onSearch: getData, filter, data };
   const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
   const listProps = { data, setData, onClickAdd };
 

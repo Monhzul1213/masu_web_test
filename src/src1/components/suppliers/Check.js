@@ -18,7 +18,8 @@ export function Check(props){
           inRow={true}
           disabled={disabled}
           label={t('supplier.' + label + '_code')}
-          placeholder={t('supplier.' + label + '_code')} />
+          // placeholder={t('supplier.' + label + '_code')} 
+          />
         <div className='im_gap' />
         <Button
           id='sp_check_btn'
@@ -32,7 +33,8 @@ export function Check(props){
         value={{ value: value?.name ?? '', error: value?.error1 }}
         disabled={true}
         label={t('supplier.' + label + '_name')}
-        placeholder={t('supplier.' + label + '_name')} />
+        // placeholder={t('supplier.' + label + '_name')}
+         />
     </div>
   );
 }

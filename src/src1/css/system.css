@@ -105,35 +105,83 @@
   /* margin: 0 2px 2px 2px; */
 }
 
-#im_large .im_images {
-  width: 200px;
-  height: 200px;
-  margin: 10px 0 0 10px;
+.select_lbl_z {
+  color: var(--text2-color);
+  font-size: 13px;
+  font-weight: 450;
+  margin: 0 0 3px 10px;
+}
+#im_large .add_image { 
+  margin-left: 10px;
+  max-width: 150px;
 }
 
-#im_small .im_images {
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-}
-#im_large .im_images .ant-upload.ant-upload-select-picture-card {
-  width: 200px;
-  height: 230px;
-  overflow: hidden;
-  border-color: var(--line-color);
-  background-color: var(--back-color);
-  align-self: center;
+#im_small .add_image { 
+  margin-left: 20px;
+  max-width: 230px;
 }
 
-#im_small .im_images .ant-upload.ant-upload-select-picture-card {
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  border-color: var(--line-color);
-  background-color: var(--back-color);
-  align-self: center;
+.ant-image-preview-operations{
+    display: none;
+}
+#im_large .image_z{
+  /* position: relative; */
+  width: 160px;
+  height: 180px;  
+  padding: 0 12px 0 0;
+}
+#im_small .image_z{
+  position: relative;
+  width: 175px;
+  height: 180px;
+  padding-right: 10px;
+}
+.image_z:hover{
+  cursor: pointer;
+}
+.ant-image{
+  width: 160px;
+  height: 180px;
 }
 
-#im_large .im_images .ant-upload.ant-upload-select-picture-card:hover, #im_small .im_images .ant-upload.ant-upload-select-picture-card:hover {
-  border-color: var(--config-color);
+#im_large .upload_back{
+  max-width: 170px;
+  border: 1px dashed var(--text2-color);
+  border-radius: var(--radius);
+  background-color: #f0f2f5;
+}
+
+#im_small .upload_back{
+  width: 170px;
+  border: 1px dashed var(--text2-color);
+  border-radius: var(--radius);
+  background-color: #f0f2f5;
+}
+.ant-image-mask{
+  display: none;
+}
+.ant-image-preview-img{
+  width: 35%;
+  height: 90%;
+}
+
+#ih_large .ih_header4 {
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+#ih_small .ih_header4 {
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+.upload_icon_z{
+  width: 70px;
+  height: 70px;
+  color: var(--text4-color);
+  margin: 40px 35px;
 }

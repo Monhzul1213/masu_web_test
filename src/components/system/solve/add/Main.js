@@ -5,9 +5,10 @@ import { withSize } from 'react-sizeme';
 
 import { getConstants } from '../../../../services';
 import { Input, CheckBox, Select, DescrInput } from '../../../all';
+import { UploadImage } from './Upload';
 
 function Card(props){
-  const { size, setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled } = props;
+  const { size, setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled, image } = props;
   const { t } = useTranslation();
   const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,20 +40,29 @@ function Card(props){
     s_descr: 'valueStr1', onFocus: onFocusStatus, loading, inRow: true, disabled };
   const descrProps = { value: notes, setValue: setNotes, label: t('tax.note'), placeholder: t('tax.note'), inRow: true, disabled };
   const style = size?.width > 445 ? { marginBottom: 10 } : { flexFlow: 'column-reverse', marginBottom: 10 }
+  const imageProps = { image, setEdited, setError, size };
 
   return (
     <div className='add_back' id={id}>
-      <div id={idRow} style={{ marginTop: 0 }}>
-        <Input {...noProps} />
-        <div className='im_gap' />
-        <Input {...nameProps} />
+      <div className='ia_image_row'>
+        <div style={{flex: 1}}>
+          <div id={idRow} style={{ marginTop: 0 }}>
+            <Input {...noProps} />
+            <div className='im_gap' />
+            <Input {...nameProps} />
+          </div>
+          <div id={idRow} style={style}>
+            <Select {...statusProps} />
+            <div className='im_gap' />
+            <CheckBox {...checkProps} />
+          </div>
+          <DescrInput {...descrProps} />
+        </div>
+      <div className='add_image'>
+          <p className='select_lbl_z'>{t('tax.label')}</p>
+          <UploadImage {...imageProps} />
       </div>
-      <div id={idRow} style={style}>
-        <Select {...statusProps} />
-        <div className='im_gap' />
-        <CheckBox {...checkProps} />
       </div>
-      <DescrInput {...descrProps} />
     </div>
   );
 }

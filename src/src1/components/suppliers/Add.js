@@ -60,7 +60,7 @@ import { useSelector, useDispatch } from 'react-redux';
   const webProps = { value: web, setValue: setWeb, label: t('supplier.web'), placeholder: t('supplier.web'), setError, length: 100,setEdited};
   const address1Props = { value: address1, setValue: setAddress1, label: t('supplier.address2'), placeholder: t('supplier.address2'), setError, length: 100, length1: 6, setEdited};
   const descrProps = { value: note, setValue: setNote, label: t('supplier.desc'), placeholder: t('supplier.desc'), setError , length: 255, length1:10,setEdited};
-  const addressProps = {  value: address, setValue: setAddress,label: t('supplier.address1'), placeholder: t('supplier.address1'), setError, length: 192, length1: 6,setEdited };
+  const addressProps = { value: address, setValue: setAddress,label: t('supplier.address1'), placeholder: t('supplier.address1'), setError, length: 192, length1: 6,setEdited };
   const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image_z' };
   const otcProps = { label: t('supplier.is_otc'), checked: isOTC, setChecked: setIsOTC };
 

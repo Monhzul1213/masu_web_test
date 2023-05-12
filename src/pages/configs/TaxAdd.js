@@ -4,7 +4,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 import { withSize } from 'react-sizeme';
+import mime from 'mime';
 
+import { urlToFile } from '../../helpers';
 import { getList, sendRequest } from '../../services';
 import { Error1, Overlay, Prompt, ButtonRowCancel, Empty1 } from '../../components/all';
 import { Main, List } from '../../components/config/tax/add';
@@ -24,6 +26,9 @@ function Screen(props){
   const [saved, setSaved] = useState(false);
   const [request, setRequest] = useState(null);
   const [valid, setValid] = useState(false);
+  const [image, setImage] = useState(null);
+  const [image64, setImage64] = useState('');
+  const [imageType, setImageType] = useState('');
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -70,6 +75,19 @@ function Screen(props){
     else setSiteData(response?.data?.poscount);
   }
 
+  const getImage = async image => {
+    if(image?.fileRaw?.fileData){
+      let type = image?.fileRaw?.fileType?.replace('');
+      setImageType(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${image?.fileRaw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage64(attach64);
+      setImage(attachFile);
+    }
+  }
+
   const getRequest = async requestId => {
     setError(null);
     setLoading(true);
@@ -101,6 +119,7 @@ function Screen(props){
         }
       });
       setSiteData(items);
+      getImage(request)
       // setSites(items);
     }
   }
@@ -144,6 +163,7 @@ function Screen(props){
         vatPayerNo: regNo?.value, vatPayerName: name?.value, isVat: checked ? 1 : 0,
         vatPayerPhone: '', status: 1, descr: notes?.value,
         rowStatus: request ? 'U' : 'I',
+        image: { FileData: image64 ?? '', FileType: imageType ?? '' },
         vatRequestItem
       };
       return data;
@@ -177,7 +197,8 @@ function Screen(props){
 
   const width = size?.width >= 690 ? 690 : size?.width;
   const disabled = request && !show;
-  const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, request };
+  const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, 
+    request, image, setImage, setImage64, setImageType };
   const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled };
   const emptyProps = { icon: 'MdStorefront', text: 'tax.empty', id: 'add_back' };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns', msg: 'tax.cancel_message', noSave: disabled || !valid };

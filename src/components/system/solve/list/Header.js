@@ -4,15 +4,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
 import { getConstants } from '../../../../services';
-import { PlainRange, PlainSelect } from '../../../all';
+import { PlainRange, PlainSelect, DynamicAIIcon } from '../../../all';
+import { SearchInput } from '../../../invt/inventory/list/SearchInput';
 
 export function Header(props){
-  const { setError, onSearch, size } = props;
+  const { setError, onSearch, size, filter, data } = props;
   const { t } = useTranslation();
   const [status, setStatus] = useState(-1);
   const [states, setStates] = useState([{valueNum: -1, valueStr1: t('order.all_status')}]);
   const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
   const [classH, setClassH] = useState('th_header1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -48,6 +51,8 @@ export function Header(props){
   const onHide = () => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(status !== -1) query += '&Status=' + status;
+    if(search?.length !== 0) data?.forEach(item => { query += '&Descr=' + item });
+    onSearch && onSearch(query, filter, date );
     onSearch(query);
   }
 
@@ -57,8 +62,20 @@ export function Header(props){
     if(value !== -1) query += '&Status=' + value;
     onSearch(query)
   }
+  
+  const handleEnter = value => {
+    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    if(status !== -1) query += '&Status=' + status;
+    query += (value ? ('&Descr=' + value) : '');
+    onSearch && onSearch( query , filter);
+  }
+
+  const onClickSearch = () => setShowSearch(!showSearch);
 
   const id = size?.width > 870 ? 'ih_large' : 'ih_small';
+  const width = showSearch ? 0 : (size?.width > 780 ? 412 : (size?.width - 30));
+  const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
+  const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
 
   const classBack = 'th_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide,
@@ -66,15 +83,21 @@ export function Header(props){
   const bStyle = { maxWidth: size?.width > 780 ? 180 : ((size?.width - 52) / 2) };
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'valueNum', s_descr: 'valueStr1',
     label: t('order.status'), onFocus: onFocusStatus, loading: loading === 'status', classBack, classLabel, className, bStyle };
+  const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
+  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
 
   return (
     <div className='ih_header' id={id} style={{paddingTop: 0}}>
       <div className={classH} style={{marginTop: 0}}>
         <PlainRange {...dateProps} />
-        <div className='th_header_s'>
+        <div className='th_header1'>
           <PlainSelect {...statProps} />
         </div>
       </div>
+      <div className='ih_header4' style= {style} >
+        <DynamicAIIcon {...searchProps} />
+      </div>
+      <SearchInput {...inputProps} />
     </div>
   );
 }

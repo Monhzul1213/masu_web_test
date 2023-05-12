@@ -4,10 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
 
 import { getList } from '../../../../services';
-import { Input, Button, CheckBox, DescrInput } from '../../../all';
+import { Input, Button, CheckBox, DescrInput, UploadImage } from '../../../all';
 
 function Card(props){
-  const { size, setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, request  } = props;
+  const { size, setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes,
+          setNotes, request, image, setImage, setImage64, setImageType  } = props;
   const { t } = useTranslation();
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -46,20 +47,29 @@ function Card(props){
   const nameProps = { value: name, setValue: setName, label: t('tax.name'), placeholder: t('tax.name'), inRow: true, disabled: true };
   const checkProps = { checked, setChecked, label: 'tax.checked', style: { marginTop: 0 }, disabled: true };
   const descrProps = { value: notes, setValue: setNotes, label: t('tax.note'), placeholder: t('tax.note'), disabled: true, inRow: true };
-  
+  const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image' };
+
   return (
     <div className='add_back' id={id}>
-      <div id={idRow} style={{marginTop: 0, flexFlow: 'row', alignItems: 'flex-end'}}>
-        <Input {...noProps} />
-        {!disabled && <div className='im_gap' />}
-        {!disabled && <Button {...btnProps} />}
+      <div className='ia_image_row'>
+      <div style={{flex: 1}}>
+        <div id={idRow} style={{marginTop: 0, flexFlow: 'row', alignItems: 'flex-end'}}>
+          <Input {...noProps} />
+          {!disabled && <div className='im_gap' />}
+          {!disabled && <Button {...btnProps} />}
+        </div>
+        <div id={idRow} style={{flexFlow: 'column', marginTop: 15, marginBottom: 10}}>
+          <Input {...nameProps} />
+          <div className='im_gap' />
+          <CheckBox {...checkProps} />
+        </div>
+        <DescrInput {...descrProps} />
+        </div>
+        <div>
+          <p className='select_lbl_z'>{t('tax.label')}</p>
+          <UploadImage {...imageProps}/>
+        </div>
       </div>
-      <div id={idRow} style={{flexFlow: 'column', marginTop: 15, marginBottom: 10}}>
-        <Input {...nameProps} />
-        <div className='im_gap' />
-        <CheckBox {...checkProps} />
-      </div>
-      <DescrInput {...descrProps} />
     </div>
   );
 }
