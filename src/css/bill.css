@@ -174,9 +174,20 @@
   word-break: break-word;
 }
 
-#bo_back {
+.bo_back {
+  background-color: var(--root-color);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  margin: 15px;
   padding: 15px 30px;
+  border-radius: 2px;
+  max-width: calc(100% - 30px);
   width: 640px;
+  min-width: 600px;
+  max-height: calc(100vh - 30px);
+  overflow: scroll;
+  min-height: 40vh;
+  display: flex;
+  flex-flow: column;
 }
 
 .bo_info {
