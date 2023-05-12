@@ -352,3 +352,9 @@
   margin: 15px 0;
   overflow: scroll;
 }
+
+@media print {
+  .bo_pdf_btn {
+    display: none;
+  }
+}

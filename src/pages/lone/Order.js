@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -10,6 +11,7 @@ import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
 import { Footer, Header, Info, Items, Sign } from '../../components/lone/order';
 
 export function Order(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
@@ -71,7 +73,7 @@ export function Order(){
         }
       </div>
     </Overlay>
-    <button className='bo_pdf_btn' onClick={onPressExport}>PDF</button>
+    <button className='bo_pdf_btn' onClick={onPressExport}>{t('order.pdf')}</button>
     </>
   )
 }
