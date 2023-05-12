@@ -133,7 +133,6 @@ export function SupplierAdd(){
   }
 
   const onClickSave = async e => {
-    console.log(isOTC)
     e?.preventDefault();
     if(checkValid()){
       onLoad();
