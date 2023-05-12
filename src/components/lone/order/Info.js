@@ -21,12 +21,12 @@ export function Info(props){
           {header?.notes ? <p className='bo_label'>{t('order_bill.descr')}: <span className='bo_value'>{header?.notes}</span></p> : null}
         </div>
         <QRCode
-          value="https://github.com/gcoro/react-qrcode-logo"
-          logoImage={require('../../../assets/logo.png')}
+          value={header?.orderNo}
+          // logoImage={require('../../../assets/logo.png')}
           size={135}
-          fgColor='#6f0ad2'
-          logoWidth={48}
-          logoHeight={16} />
+          fgColor='#1d1d27'
+          logoWidth={40}
+          logoHeight={40} />
       </div>
       <div className='bo_row'>
         <div className='bo_col'>

@@ -2,8 +2,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Money } from '../../all';
-
 export function Sign(){
   const { t } = useTranslation();
 
