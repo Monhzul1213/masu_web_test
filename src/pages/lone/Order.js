@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 import '../../css/bill.css';
 import { getService } from '../../services';
@@ -35,9 +37,28 @@ export function Order(){
     setLoading(false);
   }
 
+  const onPressExport = () => {
+    html2canvas(document.getElementById('order_bo_pdf')).then(function(canvas) {
+      const imgWidth = 208, pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight, position = 0;
+      heightLeft -= pageHeight;
+      const pdf = new jsPDF('p', 'mm');
+      pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
+        heightLeft -= pageHeight;
+      }
+      pdf.save('order_' + header?.orderNo + '.pdf');
+    });
+  }
+
   return (
-    <Overlay loading={loading}>
-      <div className='bo_back'>
+    <>
+    <Overlay loading={loading} className='bo_cont'>
+      <div className='bo_back' id='order_bo_pdf'>
         {error && <Error1 error={error} />}
         {!header ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
           <div>
@@ -50,5 +71,7 @@ export function Order(){
         }
       </div>
     </Overlay>
+    <button className='bo_pdf_btn' onClick={onPressExport}>PDF</button>
+    </>
   )
 }

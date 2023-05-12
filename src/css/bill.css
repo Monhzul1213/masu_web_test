@@ -177,13 +177,13 @@
 .bo_back {
   background-color: var(--root-color);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
-  margin: 15px;
+  margin: 2px 15px;
   padding: 15px 30px;
   border-radius: 2px;
   max-width: calc(100% - 30px);
   width: 640px;
   min-width: 600px;
-  max-height: calc(100vh - 30px);
+  /* max-height: calc(100vh - 30px); */
   overflow: scroll;
   min-height: 40vh;
   display: flex;
@@ -328,4 +328,27 @@
   font-size: 14px;
   margin: 0 0 10px 0;
   text-align: right;
+}
+
+.bo_pdf_btn {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--input1-color);
+  padding: 5px 20px;
+  color: var(--text-color);
+  bottom: 15px;
+  right: 15px;
+  position: absolute;
+}
+
+.bo_pdf_btn:hover {
+  cursor: pointer;
+  color: var(--logo1-color);
+}
+
+.bo_cont {
+  position: relative;
+  max-height: calc(100vh - 30px);
+  margin: 15px 0;
+  overflow: scroll;
 }
