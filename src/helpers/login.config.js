@@ -9,7 +9,7 @@ export const config = { // production
   url1: 'http://test-sales.apu.mn:3031/',
   otc: 'http://test-sales.apu.mn:3031/',
   // url: 'http://192.168.1.232:8181/',
-  // domain: 'http://192.168.1.227:8085',
+  // domain: 'http://192.168.1.227:8087',
   // url1: 'http://192.168.1.106:3434/',
   // otc: 'http://192.168.1.106:3434/',
 }
