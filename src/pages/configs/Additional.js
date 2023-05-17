@@ -21,7 +21,7 @@ export function Additional(){
 
   const items = [
     { title: t('add_menu.order1'), sub_title: t('add_menu.order2'), checked: checked['order'], label: 'order' },
-    // { title: t('add_menu.cashier1'), sub_title: t('add_menu.cashier2'), checked: checked['cashier'], label: 'cashier', disabled },
+    { title: t('add_menu.cashier1'), sub_title: t('add_menu.cashier2'), checked: checked['cashier'], label: 'cashier' },
     { title: t('add_menu.time1'), sub_title: t('add_menu.time2'), checked: checked['time'], label: 'time', disabled },
     { title: t('add_menu.kitchen1'), sub_title: t('add_menu.kitchen2'), checked: checked['kitchen'], label: 'kitchen' },
     { title: t('add_menu.user1'), sub_title: t('add_menu.user2'), checked: checked['user'], label: 'user', disabled },
