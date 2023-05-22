@@ -77,8 +77,8 @@ export function Menu(props){
       getItem(t('menu.report_edited'), '/report/report_edited', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_discount'), '/report/report_discount', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_noat'), '/report/report_noat', null, null, null, msRole?.webViewSalesReport !== 'Y'),
-      // getItem(t('menu.report_cashier'), '/report/report_cashier', null, null, null, msRole?.webViewSalesReport !== 'Y'),
-      getItem(t('menu.report_order'), '/report/report_order', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.report_cashier'), '/report/report_cashier', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.report_order'), '/report/report_orList', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.terms'), '/report/terms', null, null, null, msRole?.webViewSalesReport !== 'Y'),
     ]),
     getItem(t('menu.inventory'), '/inventory', <BsInboxes />, [
@@ -108,7 +108,7 @@ export function Menu(props){
       getItem(t('system_menu.document'), '/config/document', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.store'), '/config/store', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
-      getItem(t('system_menu.order_location'), '/config/order', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.order_location'), '/config/location', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
   ];

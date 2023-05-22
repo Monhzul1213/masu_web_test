@@ -56,7 +56,7 @@ export function Config(props){
         <Route path='document' element={<Document />} />
         <Route path='pos' element={<Pos />} />
         <Route path='store' element={<Store />} />
-        <Route path='order' element={<Order />} />
+        <Route path='location' element={<Order />} />
       </Routes>
     </div>
   )

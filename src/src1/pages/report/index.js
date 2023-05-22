@@ -5,4 +5,5 @@ export * from './SalesModifier';
 export * from './DiscountRP';
 export * from './Taxes';
 export * from './SalesOrder';
-export * from './Terms'
+export * from './Terms';
+export * from './Cashier'

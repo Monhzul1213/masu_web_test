@@ -582,6 +582,9 @@
     "select_emp": "Ажилтан сонгох",
     "all_emp": "Бүх ажилтан",
     "some_emp": " ажилтан",
+    "all_pos": "Бүх пос",
+    "some_pos": " пос",
+    "select_pos": "Пос сонгох",
     "all_status": "Бүх төлөв",
     "some_status": " төлөв",
     "select_date": "Огноо сонгох",
@@ -736,7 +739,13 @@
     "amount" : "Нийт дүн",
     "descr" : "Тэмдэглэл",
     "empName" : "Ажилтан",
-    "invtName" : "Үйлчилгээ"
+    "invtName" : "Үйлчилгээ",
+    "beginDate" : "Эхэлсэн цаг",
+    "closedDate" : "Хаасан цаг",
+    "beginBalance" : "Эхний үлдэгдэл",
+    "closedBalance" : "Тушаасан",
+    "sales_amt" : "Борлуулалт/Бэлэн/",
+    "diff" : "Зөрүү"
   },
   
   "report_review": {

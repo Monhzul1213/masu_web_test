@@ -51,6 +51,10 @@
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
   max-width: 1000px;
 }
+#dis_list1 {
+  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
+  max-width: 1200px;
+}
 
 .dd {
   display: flex;
@@ -125,10 +129,10 @@
     display: none;
 }
 #im_large .image_z{
-  /* position: relative; */
+  position: relative;
   width: 160px;
   height: 180px;  
-  padding: 0 12px 0 0;
+  padding: 0 12px 5px 1px;
 }
 #im_small .image_z{
   position: relative;
@@ -162,7 +166,7 @@
 }
 .ant-image-preview-img{
   width: 35%;
-  height: 90%;
+  height: 90%
 }
 
 #ih_large .ih_header4 {

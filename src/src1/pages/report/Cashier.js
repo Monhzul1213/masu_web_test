@@ -6,8 +6,8 @@ import moment from 'moment';
 
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../components/all/all_m';
-import { Filter } from '../../components/report/employee'
-import { List} from '../../components/report/discount'
+import { Filter } from '../../components/report/cashier'
+import { List } from '../../components/report/cashier'
 import { useTranslation } from 'react-i18next';
 
 function Screen(props){
@@ -37,15 +37,16 @@ function Screen(props){
   const getData = async (query, query1 , dates) => {
     setError(null);
     setLoading(true);
-    let api = 'Sales/GetSalesDiscount' + (query ?? '') + (query1 ?? '');
+    let api = 'Site/GetPosInfo' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
+    console.log(response)
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoading(false);
     setFilter(query);
     setFilter1(query1 ?? '');
-    if(dates) setExcelName(t('header./report/report_discount') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
+    if(dates) setExcelName(t('header./report/report_cashier') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
   }
 
 
@@ -59,7 +60,7 @@ function Screen(props){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
-        <div className='rp_list' id='dis_list'>
+        <div className='rp_list' id='dis_list1'>
           {data?.length ? <List {...cardProps} /> : <Empty1 {...emptyProps} />}
         </div>
       </Overlay>
@@ -68,4 +69,4 @@ function Screen(props){
 }
 
 const withSizeHOC = withSize();
-export const DiscountRP = withSizeHOC(Screen);
+export const Cashier = withSizeHOC(Screen);
