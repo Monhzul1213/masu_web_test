@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { sendRequest } from '../../../services';
-import { ButtonRowConfirm, Error, ModalTitle, Overlay, Select } from '../../all';
+import { ButtonRowConfirm, CheckBox, Error, ModalTitle, Overlay, Select } from '../../all';
 import { Field } from './Field';
 
 export function Add(props){
@@ -15,6 +15,7 @@ export function Add(props){
   const [type, setType] = useState(null);
   const [typeData, setTypeData] = useState(null);
   const [dtl, setDtl] = useState([]);
+  const [isActive, setIsActive] = useState(true);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -27,6 +28,7 @@ export function Add(props){
           item.selectData = selected?.paymentTypeDtlSelect?.filter(sel => sel.fieldName === item.fieldName);
       });
       setDtl(selected?.paymentTypeDtl);
+      setIsActive(selected?.status === 1);
     } else
       setTypeData(types);
     // getData();
@@ -63,7 +65,8 @@ export function Add(props){
         paymentTypeName: paymentType?.paymentTypeName,
         detailType: paymentType?.detailType,
         paymentTypeDtls: dtl2,
-        rowStatus: selected ? 'U': 'I'
+        rowStatus: selected ? 'U': 'I',
+        status: isActive ? 1 : 0
       };
       return data;
     } else {
@@ -91,7 +94,7 @@ export function Add(props){
     setLoading(true);
     let data = {
       paymentTypeID: selected?.paymentTypeId, paymentTypeName: selected?.paymentTypeName, detailType: selected?.detailType,
-      paymentTypeDtls: [], rowStatus: 'D'
+      paymentTypeDtls: [], rowStatus: 'D', status: 0
     };
     const response = await dispatch(sendRequest(user, token, 'Txn/ModPaymenType', [data]));
     if(response?.error) setError(response?.error);
@@ -134,6 +137,7 @@ export function Add(props){
   const disabled = selected ? true : false;
   const typeProps = { value: type, setValue: changeType, label: t('cashier.pay_m'), placeholder: t('cashier.pay_m'),
     setError, data: typeData, s_value: 'paymentTypeId', s_descr: 'paymentTypeName', disabled };
+  const statusProps = { label: t('cashier.status'), checked: isActive, setChecked: setIsActive }
   const btnProps = { onClickCancel, onClickSave, onClickDelete, show: selected ? true : false, isModal: true };
 
   return (
@@ -146,6 +150,7 @@ export function Add(props){
               <Select {...typeProps} />
               {dtl?.map(renderField)}
               <div style={{padding: 1}} />
+              <CheckBox {...statusProps} />
             </form>
             {error && <Error error={error} id='m_error' />}
           </div>
