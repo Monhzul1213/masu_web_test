@@ -24,11 +24,12 @@ export function List(props){
       { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'), customStyle: { width: 120 },},
       { Header: t('report.beginDate'), accessor: 'openDate', exLabel: t('report.beginDate'), 
       Cell: ({ value }) => {
-        return (<div>{moment(value)?.format('yyyy.MM.DD hh:mm:ss')}</div>)
+        return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD hh:mm:ss') : ''}</div>)
       }},
       { Header: t('report.closedDate'), accessor: 'closeDate', exLabel: t('report.closedDate'),
       Cell: ({ value }) => {
-        return (<div>{moment(value)?.format('yyyy.MM.DD hh:mm:ss')}</div>)
+        // console.log(value)
+        return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD hh:mm:ss') : ''}</div>)
       }},
       { Header: <div style={{textAlign: 'right'}}>{t('report.beginBalance')}</div>, accessor: 'beginBalance',
       exLabel: t('report.beginBalance'), customStyle: { width: 150 },

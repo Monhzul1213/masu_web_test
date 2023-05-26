@@ -14,7 +14,6 @@ export function Customer(props){
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
   const [loaded, setLoaded] = useState(0);
-  const [custId] = useState( -1);
   const [item, setItem] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -38,7 +37,7 @@ export function Customer(props){
   const getData = async () => {
     setError(null);
     setLoading(true);
-    let headers = { custId};
+    let headers = {CustID: -1};
     const response = await dispatch(getList(user, token, 'Site/GetCustomer', null, headers));
     if(response?.error) setError(response?.error);
     else {
@@ -91,7 +90,7 @@ export function Customer(props){
     setError(null);
     setLoading(true);
     setAutoResetExpanded(isEdit ? false : true);
-    let headers = { custId};
+    let headers = { CustID: -1};
     let response = name
       ? await dispatch(getList(user, token, 'Site/GetCustomer/' + name ))
       : await dispatch(getList(user, token, 'Site/GetCustomer',null,  headers));

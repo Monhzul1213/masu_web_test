@@ -40,7 +40,6 @@ function Screen(props){
     let api = 'Site/GetPosInfo' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response)
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoading(false);

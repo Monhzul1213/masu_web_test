@@ -48,7 +48,7 @@ export function TimeList(){
         }
         else {
           grpData[index].totalHours += element.totalHours 
-          grpData[index].siteCount +=  (grpData[index].siteId=== element.siteId) ? 0 :  1 ;
+          grpData[index].siteCount +=  (grpData[index].siteId === element.siteId) ? 0 :  1 ;
           grpData[index].siteName = grpData[index].siteCount=== 1 ? grpData[index].siteName :  grpData[index].siteCount + ' дэлгүүр' 
         
         }
