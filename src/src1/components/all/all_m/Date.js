@@ -209,31 +209,30 @@ export function PlainRange(props){
       </div>
     );
   }
+
   export function Date(props){
-    const { inRow, value, setValue, label, setError, className, disabled, disabledDate, setEdited, allowClear, placeholder } = props;
+    const { inRow, value, setValue, label, className, disabled, classBack, placeholder, onHide} = props;
   
-    const handleChange = e => {
-      setValue({ value: e });
-      setError && setError(null);
-      setEdited && setEdited(true);
+  
+    const onOpenChange = show => {
+      if(!show) onHide();
     }
-  
-    const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
-    const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
-  
+    
     return (
       <div style={inRow ? { flex: 1 } : {}}>
-        <div className='select_back' style={backStyle}>
-          <p className='select_lbl' style={style}>{label}</p>
+        <div className={classBack}>
+          {label && <p className='ih_select_lbl'>{label}</p>}
           <DatePicker
-            className={className ?? 'm_date'}
-            value={value?.value}
+            className={className}
+            value={value}
             disabled={disabled}
             format='yyyy.MM.DD'
+            onOpenChange={onOpenChange}
             placeholder={placeholder ?? ''}
-            allowClear={allowClear ?? false}
-            disabledDate={disabledDate}
-            onChange={handleChange} />
+            suffixIcon={null}
+            allowClear={false}
+            onChange={setValue} 
+            />
         </div>
         {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
       </div>

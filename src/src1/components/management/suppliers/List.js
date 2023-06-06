@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
-import { Check, PaginationTable } from '../all/all_m';
-import { Table } from '../all/all_m';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
+import { Check, PaginationTable, Table } from '../../all/all_m';
 
 export function List(props){
   const { data, setData, loaded, setShow, autoResetExpanded, checked, setChecked, size} = props;

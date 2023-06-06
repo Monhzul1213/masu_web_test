@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input , UploadImage, CheckBox } from '../all/all_m';
 import { withSize } from 'react-sizeme';
-import { Check } from './Check';
-import { getOTC } from '../../../services';
 import { useSelector, useDispatch } from 'react-redux';
+
+import { Input , UploadImage, CheckBox } from '../../all/all_m';
+import { Check } from './Check';
+import { getOTC } from '../../../../services';
 
  function Card(props){
   const {setEdited, setError, name, setName, phone, setPhone, email, setEmail,

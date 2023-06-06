@@ -45,7 +45,6 @@ function Screen(props){
     setFilter(query);
     setFilter1(query1 ?? '');
     if(dates) setExcelName(t('header./report/report_employee') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
-
   }
 
 

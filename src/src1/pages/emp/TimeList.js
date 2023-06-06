@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getList, } from '../../../services';
-import { Error1, Overlay } from '../../../components/all';
 import { SizeMe } from 'react-sizeme';
-import '../../css/time.css'
-import { List } from '../../components/emp/timelist';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+
+import { getList } from '../../../services';
+import { Error1, Overlay } from '../../../components/all';
+import '../../css/time.css'
+import { List } from '../../components/emp/timelist';
+
 
 export function TimeList(){
   const { t } = useTranslation();

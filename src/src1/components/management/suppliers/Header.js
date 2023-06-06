@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ButtonRowAddConfirm, DynamicAIIcon } from '../../components/all/all_m';
-import { Search } from '../customer/Search';
+
+import { ButtonRowAddConfirm, DynamicAIIcon } from '../../../components/all/all_m';
+import { Search } from '../../customer/Search';
 
 export function Header(props){
   const { onClickAdd, onClickDelete, show, onSearch, size } = props;

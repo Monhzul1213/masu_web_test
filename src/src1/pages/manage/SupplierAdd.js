@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams  } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
-import {  getList, sendRequest } from '../../../services';
-import '../../css/discount.css';
-import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
-import { Add  } from '../../components/suppliers';
-import { urlToFile } from '../../../helpers';
 import mime from 'mime';
+
+import {  getList, sendRequest } from '../../../services';
+import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
+import { Add } from '../../components/management/suppliers';
+import { urlToFile, validateEmail } from '../../../helpers';
 import '../../../css/invt.css';
-import { validateEmail } from '../../../helpers';
+import '../../css/discount.css';
+
 
 export function SupplierAdd(){
     const [name, setName] = useState({ value: '' });

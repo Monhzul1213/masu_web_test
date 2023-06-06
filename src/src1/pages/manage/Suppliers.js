@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Empty, Overlay, Error1 , Empty1} from '../../components/all/all_m';
-import {  List , Header} from '../../components/suppliers';
-import { getList, sendRequest } from '../../../services';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 import { SizeMe } from 'react-sizeme';
 import { useNavigate } from 'react-router-dom';
+
+import { Empty, Overlay, Error1 , Empty1} from '../../components/all/all_m';
+import { List , Header} from '../../components/management/suppliers';
+import { getList, sendRequest } from '../../../services';
 import '../../css/supplier.css'
 
 export function Suppliers(props){

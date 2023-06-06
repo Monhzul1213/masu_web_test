@@ -26,7 +26,7 @@ export function List(props){
     let columns = [
       { Header: t('report_receipt.t_no'), accessor: 'sale.salesNo', exLabel: t('report_receipt.t_no') },
       {
-        Header: t('page.date'), accessor: 'sale.createdDate',
+        Header: t('page.date'), accessor: 'sale.salesDate',
         exLabel: t('page.date'),
         Cell: ({ value }) => {
           return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
@@ -46,7 +46,7 @@ export function List(props){
           exLabel: item?.label,
           Cell: props => (
             <div style={{textAlign: 'right', paddingRight: 15}}>
-             {item?.value === 'sale.vatCustomerId' ? props?.value : <Money value={props?.value} fontSize={14} />}
+             {item?.value === 'sale.vatCustomerId' ? props?.value : (item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD') : <Money value={props?.value} fontSize={14} />)}
             </div>)
         });
       }
@@ -77,7 +77,7 @@ export function List(props){
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.createdDate', desc: true }] }},
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesDate', desc: true }] }},
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
   const drawerProps = { selected, open, setOpen };

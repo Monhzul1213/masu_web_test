@@ -13,7 +13,7 @@ import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/em
 import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
-import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd } from './src1/pages';
+import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, InvtTxn } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
@@ -151,6 +151,8 @@ export function App(){
                 <Route path='/report/terms' element={<Terms />} />
                 <Route path='/integration' element={<Integration />} />
                 <Route path='/report/report_cashier' element={<Cashier />} />
+                <Route path='/management/invt_remainder' element={<Remain />} />
+                <Route path='/management/invt_txn' element={<InvtTxn />} />
               </Routes>
             </Layout>
           </Layout>

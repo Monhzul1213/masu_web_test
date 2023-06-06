@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Drawer as AntDrawer } from 'antd';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 import '../../../css/report.css';
 import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all';
@@ -63,6 +64,7 @@ export function Drawer(props){
         <Field icon='RiDeviceLine' label='report_receipt.pos' value={selected?.sale?.terminalDescr} />
         <Field icon='RiStore2Line' label='report_receipt.dr_site' value={selected?.sale?.siteName} />
         <Field icon='RiBillLine' label='report_receipt.dr_no' value={selected?.sale?.salesNo} />
+        <Field icon='RiCalendarLine' label='system.date' value={moment(selected?.sale?.createdDate)?.format('yyyy.MM.DD')} />
         <div className='dr_header'>
           <p className='dr_header_text1'>{t('report_receipt.invt')}</p>
           <p className='dr_header_text2'>{t('report_receipt.qty')}</p>
@@ -71,7 +73,6 @@ export function Drawer(props){
         </div>
         <div className='dr_list'>
           {selected?.saleitem?.map(renderItem)}
-          {/* {selected?.saleitem?.serviceCode !== 0 ? (t('time.t_emp') + ':' + (selected?.sale?.cashierName)) : ''} */}
         </div>
         <div style={{padding: '5px 0 5px 0'}}>
           <div className='dr_row'>

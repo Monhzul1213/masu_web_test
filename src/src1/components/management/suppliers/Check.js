@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Input } from '../all/all_m';
+import { Button, Input } from '../../all/all_m';
 
 export function Check(props){
   const { label, value, setValue, disabled, handleCheck, loading } = props;

@@ -85,6 +85,8 @@
     "/management/order_list/order_add": "Худалдан авалтын захиалга нэмэх",
     "/management/order_list/order_vendors": "Нийлүүлэгч сонгох",
     "/management/order_list/order": "Худалдан авалтын захиалгын дэлгэрэнгүй",
+    "/management/invt_remainder": "Барааны үлдэгдэл",
+    "/management/invt_txn": "Барааны гүйлгээний лавлагаа",
     "/employee": "Ажилтан",
     "/employee/emp_list": "Ажилтны жагсаалт",
     "/employee/emp_list/emp_add": "Ажилтан нэмэх",
@@ -169,7 +171,9 @@
     "order": "Захиалга",
     "system_partner" : "Партнерийн мэдээлэл",
     "report_order": "Борлуулалтын захиалга",
-    "terms": "Үйлчилгээний дэлгэрэнгүй"
+    "terms": "Үйлчилгээний дэлгэрэнгүй",
+    "invt_remainder": "Барааны үлдэгдэл",
+    "invt_txn": "Барааны гүйлгээний лавлагаа"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
@@ -577,6 +581,12 @@
     "select_emp": "Ажилтан сонгох",
     "all_emp": "Бүх ажилтан",
     "some_emp": " ажилтан",
+    "all_supp": "Бүх нийлүүлэгч",
+    "some_supp": " нийлүүлэгч",
+    "select_supp": "Нийлүүлэгч сонгох",
+    "all_constant": "Бүх төрөл",
+    "some_constant": " төрөл",
+    "select_constant": "Гүйлгээний төрөл сонгох",
     "all_pos": "Бүх пос",
     "some_pos": " пос",
     "select_pos": "Пос сонгох",
@@ -638,6 +648,7 @@
       { "label": "Нэмэлт төлбөр", "value": "sale.useModifier" },
       { "label": "НӨАТ", "value": "sale.totalVatAmount" },
       { "label": "НХАТ", "value": "sale.totalNhatamount" },
+      { "label": "Үүсгэсэн огноо", "value": "sale.createdDate" },
       { "label": "Харилцагч", "value": "sale.vatCustomerId" }
     ]
   },
@@ -682,6 +693,8 @@
     "nhat" : "НХАТ",
     "date" : "Огноо",
     "site" : "Дэлгүүр",
+    "constant" : "Гүйлгээний төрөл",
+    "expireDate": "Дуусах хугацаа",
     "columns": [
       { "label": "Борлуулалтын дүн", "value": "totalSalesAmt" },
       { "label": "Борлуулалтын тоо", "value": "qty" },
@@ -961,7 +974,9 @@
     "error" : "Та ширээ бүртгэж байгаа үед ENTER товч дарсны дараагаар оруулсан мэдээллээ хадгалах боломжтой.",
     "error1" : "Та хувилбар бүртгэж байгаа үед ENTER товч дарсны дараагаар оруулсан мэдээллээ хадгалах боломжтой.",
     "error2" : "Та сонголт бүртгэж байгаа үед ENTER товч дарсны дараагаар оруулсан мэдээллээ хадгалах боломжтой.",
-    "select_status" : "Төлөв сонгох"
+    "select_status" : "Төлөв сонгох",
+    "cost" : "Нэгж өртөг",
+    "totalCost" : "Нийт өртөг"
   },
   "bill": {
     "sales": "Борлуулалт",
