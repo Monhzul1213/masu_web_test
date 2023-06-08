@@ -81,7 +81,7 @@
     "/management": "Барааны менежмент",
     "/management/suppliers": "Нийлүүлэгч",
     "/management/suppliers/supp_add": "Нийлүүлэгч нэмэх",
-    "/management/order_list": "Худалдан авалтын захиалга",
+    "/management/order_list": "Худалдан авалт / Орлого",
     "/management/order_list/order_add": "Худалдан авалтын захиалга нэмэх",
     "/management/order_list/order_vendors": "Нийлүүлэгч сонгох",
     "/management/order_list/order": "Худалдан авалтын захиалгын дэлгэрэнгүй",
@@ -146,7 +146,7 @@
     "inventory": "Бараа",
     "management": "Барааны менежмент",
     "suppliers": "Нийлүүлэгч",
-    "order_list": "Худалдан авалтын захиалга",
+    "order_list": "Худалдан авалт / Орлого",
     "employee": "Ажилтан",
     "customer": "Харилцагч",
     "partner": "Партнер",
@@ -783,7 +783,7 @@
     ]
   },
   "order": {
-    "title": "Худалдан авалтын захиалга",
+    "title": "Худалдан авалт / Орлого",
     "add": "Захиалга нэмэх",
     "vend": "Нийлүүлэгч",
     "site": "Дэлгүүр",
