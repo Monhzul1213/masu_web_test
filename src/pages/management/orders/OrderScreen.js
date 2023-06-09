@@ -47,11 +47,9 @@ export function OrderScreen(){
       else {
         let order = response?.data && response?.data[0];
         if(order){
-          let total = 0, totalQty = 0, transitQty = 0;
+          let total = 0;
           order?.poOrderItems?.forEach(poItem => {
             total += poItem.totalCost ?? 0;
-            totalQty += poItem.orderQty ?? 0;
-            transitQty += poItem.transitQty ?? 0;
             poItem.rowStatus = 'U';
           });
           order?.poOrderAddCosts?.forEach(addItem => {
@@ -59,9 +57,7 @@ export function OrderScreen(){
             addItem.rowStatus = 'U';
           });
           order.poOrder.total = total;
-          order.poOrder.totalQty = totalQty;
-          order.poOrder.transitQty = transitQty;
-          order.poOrder.percent = parseFloat((transitQty * 100 / totalQty)?.toFixed(2));
+          order.poOrder.percent = parseFloat(((order.poOrder.receivedTotalQty ?? 0) * 100 / (order.poOrder.totalQty ?? 0))?.toFixed(2));
           setOrder(order?.poOrder);
           sessionStorage.setItem('order', JSON.stringify(order));
           setItems(order?.poOrderItems);
@@ -74,7 +70,7 @@ export function OrderScreen(){
 
   const menuProps = { order, items, adds, onLoad, onDone, getData };
   const emptyProps = { text: '', icon: 'MdOutlineArticle' };
-  const listProps = { data: items };
+  const listProps = { data: items, order };
   const addProps = { data: adds };
 
   return (

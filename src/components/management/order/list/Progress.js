@@ -13,7 +13,7 @@ export function Progress(props){
         showInfo={false}
         strokeColor={pending ? '#4BAF4F' : '#b0b0b0'}
         trailColor='#f2f2f2' />
-      <p className='po_percent'>{order?.transitQty} of {order?.totalQty}</p>
+      <p className='po_percent'>{order?.receivedTotalQty} of {order?.totalQty}</p>
     </div>
   )
 }

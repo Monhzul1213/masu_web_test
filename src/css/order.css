@@ -363,7 +363,7 @@
 }
 
 .ps_list_back {
-  padding: var(--page-padding) var(--page-padding) 10px var(--page-padding);
+  margin: var(--page-padding) var(--page-padding) 10px var(--page-padding);
   border-bottom: solid 1px var(--input1-color);
 }
 
@@ -379,7 +379,7 @@
 }
 
 .ps_footer_back {
-  padding: 10px var(--page-padding) 0 var(--page-padding);
+  padding: 5px var(--page-padding) 0 var(--page-padding);
 }
 
 .ps_footer {

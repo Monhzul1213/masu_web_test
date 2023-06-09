@@ -6,7 +6,7 @@ import { Money, TableRow } from '../../../all';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 
 export function Items(props){
-  const { data } = props;
+  const { data, order } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -27,15 +27,27 @@ export function Items(props){
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_base1')}</div>, accessor: 'orderTotalQty', noSort: true,
-        Cell: ({ value }) => <div style={{textAlign: 'right'}}>{value}</div>
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}>{value}</div>,
+        Footer: <div style={{textAlign: 'right'}}>{order?.totalQty}</div>,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', noSort: true,
         Cell: ({ value }) => <div style={{textAlign: 'right'}}><Money value={value} fontSize={14} /></div>
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', noSort: true,
-        Cell: ({ value }) => <div style={{textAlign: 'right'}}><Money value={value} fontSize={14} /></div>
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_total_order')}</div>, accessor: 'totalCost', noSort: true,
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}><Money value={value} fontSize={14} /></div>,
+        Footer: <div style={{textAlign: 'right'}}><Money value={order?.total} fontSize={14} /></div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_base_receipt')}</div>, accessor: 'receivedQty', noSort: true,
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}>{value}</div>,
+        Footer: <div style={{textAlign: 'right'}}>{order?.receivedTotalQty}</div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_total_receipt')}</div>, accessor: 'receivedTotalCost', noSort: true,
+        Cell: ({ value }) => <div style={{textAlign: 'right'}}><Money value={value} fontSize={14} /></div>,
+        Footer: <div style={{textAlign: 'right'}}><Money value={order?.receivedTotalCost} fontSize={14} /></div>,
       },
     ]);
     return () => {};
@@ -43,12 +55,14 @@ export function Items(props){
   }, [i18n?.language]);
 
   const tableInstance = useTable({ columns, data }, useSortBy);
-  const tableProps = { tableInstance, scrolling: true };
-  
+  const tableProps = { tableInstance, scrolling: true, hasFooter: true };
+
   return (
-    <div className='ps_list_back'>
-      <p className='ps_title'>{t('inventory.title')}</p>
-      <TableRow {...tableProps} />
+    <div className='ps_list_back' style={{overflowX: 'scroll'}}>
+      <div style={{minWidth: 720}}>
+        <p className='ps_title'>{t('inventory.title')}</p>
+        <TableRow {...tableProps} />
+      </div>
     </div>
   );
 }

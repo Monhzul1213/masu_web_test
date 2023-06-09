@@ -52,9 +52,9 @@ export function Table(props){
 }
 
 export function TableRow(props){
-  const { tableInstance, onRowClick, noHeader, scrolling } = props;
+  const { tableInstance, onRowClick, noHeader, scrolling, hasFooter } = props;
 
-  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } = tableInstance;
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows, footerGroups } = tableInstance;
 
   return (
     <table className='table_back' {...getTableProps()}>
@@ -95,6 +95,15 @@ export function TableRow(props){
           );
         })}
       </tbody>
+      {hasFooter && <tfoot>
+        {footerGroups.map(group => (
+          <tr {...group.getFooterGroupProps()}>
+            {group.headers.map(column => (
+              <th className='table_footer_text_o' {...column.getFooterProps()}>{column.render('Footer')}</th>
+            ))}
+          </tr>
+        ))}
+      </tfoot>}
     </table>
   );
 }
