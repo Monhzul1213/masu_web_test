@@ -42,3 +42,20 @@ export function CheckBox(props){
     </div>
   );
 }
+
+export function CheckBox1(props){
+  const { label, checked, setChecked, style, disabled, onHide } = props;
+  const { t } = useTranslation();
+
+  const onClick = () => {
+    setChecked(!checked);
+    if(!checked) onHide()
+  }
+
+  return (
+    <div className='i_check_row' style={style} id ='is_check1'>
+      <Check checked={checked} onClick={onClick} disabled={disabled} />
+      <p className='i_check_lbl'>{t(label)}</p>
+    </div>
+  );
+}

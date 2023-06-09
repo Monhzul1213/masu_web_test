@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CardNote, Date, Radio, Selects } from '../../../all/all_m';
 import { withSize } from 'react-sizeme';
+
 import { types } from '../../../../../helpers'
-import { Input, CheckBox } from '../../../../../components/all';
+import { Input, CheckBox, Date } from '../../../../../components/all';
+import { CardNote, Radio, Selects } from '../../../all/all_m';
 
  function Card(props){
   const {setEdited,size,  setError, subject, setSubject, text, setText, setBeginDate, beginDate,

@@ -50,7 +50,7 @@ export function Remain(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
           <SizeMe>{({ size }) => 
-              <div className='i_list_cont_zz' id='invt_list_zz'>
+              <div className='i_list_cont_zz' id='invt_list_z'>
                 <List {...listProps} size={size} /> 
               </div>
           }</SizeMe>

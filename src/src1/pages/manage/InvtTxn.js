@@ -50,7 +50,7 @@ export function InvtTxn(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
           <SizeMe>{({ size }) => 
-              <div className='i_list_cont_zz' id='invt_list_z'>
+              <div className='i_list_cont_zz' id='invt_list_z1'>
                 <List {...listProps} size={size} /> 
               </div>
           }</SizeMe>

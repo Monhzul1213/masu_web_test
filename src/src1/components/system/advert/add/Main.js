@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input , UploadImage, Date, Radio } from '../../../all/all_m';
+import { Input , UploadImage, Radio } from '../../../all/all_m';
 import { withSize } from 'react-sizeme';
+import { Date } from '../../../../../components/all';
 
  function Card(props){
   const {setEdited, setError, name, setName, link, setLink, setBeginDate, beginDate,
@@ -18,8 +19,8 @@ import { withSize } from 'react-sizeme';
   const nameProps = { value: name, setValue: setName, label: t('advert.name'), placeholder: t('advert.name'), setError, setEdited,};
   const codeProps = { value: link, setValue: setLink, label: t('advert.link'), placeholder: t('advert.link'), setError, setEdited,};
   const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image_z' };
-  const beginProps = { value: beginDate, setValue: setBeginDate, label: t('invoice.begin'), inRow: true, };
-  const endProps = { value: endDate, setValue: setEndDate, label: t('invoice.end'), inRow: true,};
+  const beginProps = { value: beginDate, setValue: setBeginDate, label: t('invoice.begin'), inRow: true };
+  const endProps = { value: endDate, setValue: setEndDate, label: t('invoice.end'), inRow: true };
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: t('advert.types'), setError, setEdited };
 
   return (

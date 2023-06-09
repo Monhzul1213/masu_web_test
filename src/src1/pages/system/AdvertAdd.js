@@ -4,13 +4,14 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 import  moment  from 'moment';
+import mime from 'mime';
+
 import '../../../css/invt.css';
 import '../../../css/config.css';
 import { getList, sendRequest } from '../../../services';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all/all_m';
 import { Main } from '../../components/system/advert/add';
 import { urlToFile } from '../../../helpers';
-import mime from 'mime';
 
 export function AdvertAdd(){
   const [name, setName] = useState({ value: '' });

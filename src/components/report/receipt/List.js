@@ -32,7 +32,7 @@ export function List(props){
           return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
         }
       },
-      { Header: t('time.t_site'), accessor: 'sale.siteName', exLabel: t('time.t_site') },
+      { Header: t('time.t_site'), accessor: 'sale.siteName', exLabel: t('time.t_site'), customStyle : {width: 200} },
       { Header: t('pos.title'), accessor: 'sale.terminalDescr', exLabel: t('pos.title') },
       { Header: t('time.t_emp'), accessor: 'sale.cashierName', exLabel: t('time.t_emp') },
       { Header: t('report_receipt.t_type'), accessor: 'sale.salesTypeName', exLabel: t('report_receipt.t_type') },
@@ -42,11 +42,12 @@ export function List(props){
       let exists = value?.findIndex(val => val === item?.value) !== -1;
       if(exists){
         columns.push({
-          Header: <div style={{textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
+          Header: <div style={item?.value === 'sale.createdDate' ? {textAlign: 'left'} : {textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
           exLabel: item?.label,
           Cell: props => (
+            item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD hh:mm:ss') :
             <div style={{textAlign: 'right', paddingRight: 15}}>
-             {item?.value === 'sale.vatCustomerId' ? props?.value : (item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD') : <Money value={props?.value} fontSize={14} />)}
+             {item?.value === 'sale.vatCustomerId' ? props?.value : ( <Money value={props?.value} fontSize={14} />)}
             </div>)
         });
       }
