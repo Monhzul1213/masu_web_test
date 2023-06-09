@@ -7,6 +7,7 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
 import { Error1, Overlay, Prompt } from '../../../components/all';
+import { Main } from '../../../components/management/order/receipt';
 
 export function OrderReceipt(){
   const [loading, setLoading] = useState(false);
@@ -67,6 +68,8 @@ export function OrderReceipt(){
     if(isError) setError(msg);
     else if(msg) message.success(msg);
   }
+
+  let mainProps = { header };
   
   return (
     <Overlay className='i_container' loading={loading}>
@@ -74,8 +77,8 @@ export function OrderReceipt(){
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>
-          {/*
           <Main {...mainProps} />
+          {/*
           <div className='gap' />
           <div className='po_back' id='po_back_invt'>
             <Items {...itemsProps} />
