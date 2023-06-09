@@ -11,7 +11,7 @@ import { Loading, Login, SignUp, Confirm, Home, Config, Recovery } from './pages
 import { Category, Inventory, InventoryAdd, InventoryImport, Modifier, ModifierAdd } from './pages/invt';
 import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/emp';
 import { Receipt, ReportItem, Review } from './pages/report';
-import { Order, OrderAdd, OrderVendors, OrderScreen } from './pages/management';
+import { Order, OrderAdd, OrderVendors, OrderScreen, OrderReceipt } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, InvtTxn } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
@@ -125,6 +125,7 @@ export function App(){
                 <Route path='/management/order_list/order_add' element={<OrderAdd />} />
                 <Route path='/management/order_list/order_vendors' element={<OrderVendors />} />
                 <Route path='/management/order_list/order' element={<OrderScreen />} />
+                <Route path='/management/order_list/order_receipt' element={<OrderReceipt />} />
                 <Route path='/report/report_document' element={<Receipt />} />
                 <Route path='/report/report_employee' element={<SalesEmployee />} />
                 <Route path='/report/report_category' element={<SalesCategory />} />

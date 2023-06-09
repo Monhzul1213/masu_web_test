@@ -85,6 +85,7 @@
     "/management/order_list/order_add": "Худалдан авалтын захиалга нэмэх",
     "/management/order_list/order_vendors": "Нийлүүлэгч сонгох",
     "/management/order_list/order": "Худалдан авалтын захиалгын дэлгэрэнгүй",
+    "/management/order_list/order_receipt": "Худалдан авалтын захиалгаас орлого авах",
     "/management/invt_remainder": "Барааны үлдэгдэл",
     "/management/invt_txn": "Барааны гүйлгээний лавлагаа",
     "/employee": "Ажилтан",
