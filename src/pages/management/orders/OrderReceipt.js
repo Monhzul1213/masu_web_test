@@ -7,7 +7,7 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
 import { Error1, Overlay, Prompt } from '../../../components/all';
-import { Items, Main } from '../../../components/management/order/receipt';
+import { Footer, Items, Main } from '../../../components/management/order/receipt';
 
 export function OrderReceipt(){
   const [loading, setLoading] = useState(false);
@@ -15,6 +15,8 @@ export function OrderReceipt(){
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
   const [detail, setDetail] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [disabled, setDisabled] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -35,25 +37,9 @@ export function OrderReceipt(){
       else {
         let order = response?.data && response?.data[0];
         setHeader(order?.poOrder);
+        order?.poOrderItems?.map(i => i.allowDecimal = i?.isEach === 'N');
         setDetail(order?.poOrderItems);
         onDone();
-      //   if(order){
-      //     let total = 0;
-      //     order?.poOrderItems?.forEach(poItem => {
-      //       total += poItem.totalCost ?? 0;
-      //       poItem.rowStatus = 'U';
-      //     });
-      //     order?.poOrderAddCosts?.forEach(addItem => {
-      //       total += addItem.addCostAmount ?? 0;
-      //       addItem.rowStatus = 'U';
-      //     });
-      //     order.poOrder.total = total;
-      //     order.poOrder.percent = parseFloat(((order.poOrder.receivedTotalQty ?? 0) * 100 / (order.poOrder.totalQty ?? 0))?.toFixed(2));
-      //     setOrder(order?.poOrder);
-      //     sessionStorage.setItem('order', JSON.stringify(order));
-      //     setItems(order?.poOrderItems);
-      //     setAdds(order?.poOrderAddCosts);
-      //   }
       }
     }
   }
@@ -70,7 +56,8 @@ export function OrderReceipt(){
   }
 
   let mainProps = { header };
-  let itemsProps = { detail };
+  let itemsProps = { detail, setDetail, setEdited, setTotal, disabled, setDisabled };
+  let footerProps = { total };
   
   return (
     <Overlay className='i_container' loading={loading}>
@@ -82,6 +69,7 @@ export function OrderReceipt(){
           <div className='gap' />
           <div className='po_back' id='po_back_invt'>
             <Items {...itemsProps} />
+            <Footer {...footerProps} />
           </div>
         </form>
       </div>

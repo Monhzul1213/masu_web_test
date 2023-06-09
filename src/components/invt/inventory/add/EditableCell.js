@@ -33,6 +33,10 @@ export const EditableCell = props => {
       updateMyData(row?.index, id, value, e);
   }
 
+  const onFocus = e => {
+    if(e?.target?.value === '0') setValue('');
+  }
+
   useEffect(() => {
     setValue(initialValue)
   }, [initialValue])
@@ -41,11 +45,11 @@ export const EditableCell = props => {
   const style = {...{ textAlign: 'right', width }, ...errorStyle};
   const style1 = {...{ width }, ...errorStyle};
   const moneyProps = { className: 'ed_input', suffix, allowNegativeValue: false, decimalsLimit: 4, value, maxLength: 15, onValueChange, onBlur, style,
-    onKeyDown, autoFocus, disabled: notEditable, id: cellID };
+    onKeyDown, autoFocus, disabled: notEditable, id: cellID, onFocus };
   const textProps = { className: 'ed_input', value, onChange, onBlur, onKeyDown, autoFocus, style: width ? style1 : errorStyle,
-    disabled: notEditable, id: cellID };
+    disabled: notEditable, id: cellID, onFocus };
   const qtyProps = { className: 'ed_input', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,
-    disableGroupSeparators: true, style, onKeyDown, autoFocus, disabled: notEditable, id: cellID };
+    disableGroupSeparators: true, style, onKeyDown, autoFocus, disabled: notEditable, id: cellID, onFocus };
 
   return isText
     ? (<p className='ed_text'>{value}</p>)

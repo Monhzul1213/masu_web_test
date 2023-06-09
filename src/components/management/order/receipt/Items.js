@@ -3,24 +3,22 @@ import { withSize } from 'react-sizeme';
 import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
+import { add, divide } from '../../../../helpers';
+import { Error1, Money, PaginationTable, Table } from '../../../all';
 import { Search } from '../add/Search';
-import { Money, PaginationTable, Table } from '../../../all';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
 
 function Card(props){
-  const { detail, size } = props;
+  const { detail, setDetail, setEdited, setTotal, disabled, setDisabled, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Нэгж өртөг - poOrderItem.Cost - Тоон утга өөрчлөх боломжтой 
-    // Орлого авах тоо - Тоо оруулах талбар байна Max: Захиалсан нийт тоо
-    // Орлогын дүн - Орлого авах тоо * Нэгж өртөг
-
     setColumns([
       {
-        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 },
+        Header: t('inventory.title'), accessor: 'invtName', customStyle: { minWidth: 150 },
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
       { Header: t('inventory.barcode'), accessor: 'barCode', },
@@ -49,35 +47,39 @@ function Card(props){
   }, [i18n?.language]);
 
   const filterFunction = useCallback((rows, ids, query) => {
-    return rows.filter(row => row.values['name']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['sku']?.includes(query));
+    return rows.filter(row => row.values['invtName']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['sku']?.includes(query));
   }, []);
 
   const updateMyData = (rowIndex, columnId, value, e) => {
-    // e?.preventDefault();
-    // let total = 0;
-    // setItems(old => old.map((row, index) => {
-    //   if(index === rowIndex){
-    //     let orderQty = parseFloat(value ? value : 0);
-    //     let orderTotalQty = divide(orderQty, old[rowIndex]?.batchQty, true);
-    //     let totalCost = divide(orderTotalQty, old[rowIndex]?.cost, true);
-    //     total = add(total, totalCost);
-    //     setTotal(total);
-    //     return { ...old[rowIndex], orderQty, orderTotalQty, totalCost, error: null };
-    //   } else {
-    //     total = add(total, row.totalCost);
-    //     setTotal(total);
-    //     return row;
-    //   }
-    // }));
-    // setTotal(total);
-    // // comment
-    // setEdited && setEdited(true);
-    // setSearch({ value: null });
+    e?.preventDefault();
+    let total = 0;
+    setDetail(old => old.map((row, index) => {
+      if(index === rowIndex){
+        let receivedQty = columnId === 'receivedQty' ? parseFloat(value ? value : 0) : old[rowIndex]?.receivedQty;
+        if(receivedQty <= old[rowIndex]?.orderTotalQty){
+          let cost = columnId === 'cost' ? parseFloat(value ? value : 0) : old[rowIndex]?.cost;
+          let receivedTotalCost = divide(receivedQty, cost, true);
+          total = add(total, receivedTotalCost);
+          setTotal(total);
+          setError(null);
+          setDisabled(false);
+          return { ...old[rowIndex], receivedQty, cost, receivedTotalCost, error: null };
+        } else
+          setDisabled(true);
+          setError(t('order.order_error'));
+          return { ...old[rowIndex], receivedQty, error: 'receivedQty' };
+      } else {
+        total = add(total, row.receivedTotalCost);
+        setTotal(total);
+        return row;
+      }
+    }));
+    setTotal(total);
+    setEdited && setEdited(true);
   }
 
-  const defaultColumn = { Cell: EditableCell };
   const tableInstance = useTable({ columns, data: detail, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData },
+    initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, disabled },
     useGlobalFilter, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
@@ -88,6 +90,7 @@ function Card(props){
   return (
     <div className='po_back_invt1' style={{border: 'none'}}>
       <Search {...searchProps} />
+      {error && <Error1 error={error} />}
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />
       </div>
@@ -101,19 +104,3 @@ function Card(props){
 
 const withSizeHOC = withSize();
 export const Items = withSizeHOC(Card);
-
-/**
-import { useTranslation } from 'react-i18next';
-import { withSize } from 'react-sizeme';
-
-import { add, divide } from '../../../../helpers';
-import { PaginationTable, Table, DynamicBSIcon, Money } from '../../../all';
-import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
-import { EditableCell } from './EditableCell';
-
-function Card(props){
-  const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch } = props;
-
- 
-
- */
