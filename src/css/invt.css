@@ -324,6 +324,7 @@
   margin: 10px 0 var(--page-padding) 0;
   display: flex;
   flex-flow: row;
+  flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
   max-width: calc(var(--invt-width));
@@ -333,7 +334,7 @@
   border: none;
   box-shadow: none;
   background-color: var(--root-color);
-  height: var(--t-btn-height);
+  min-height: var(--t-btn-height);
   border-radius: var(--radius);
   font-size: 15px;
   font-weight: 450;

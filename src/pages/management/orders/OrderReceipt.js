@@ -23,6 +23,7 @@ export function OrderReceipt(){
   const [total, setTotal] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [deletable, setDeletable] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ export function OrderReceipt(){
         setTotal({ total, discount, left });
         order?.poOrderItems?.map(i => i.allowDecimal = i?.isEach === 'N');
         setDetail(order?.poOrderItems);
+        setDeletable(order?.poOrder?.status === 1 && order?.poOrder?.receiptNo);
         onDone();
       }
     }
@@ -88,8 +90,8 @@ export function OrderReceipt(){
       navigate({ pathname: '/management/order_list/order', search: createSearchParams({ orderNo: header?.orderNo }).toString() })
   }
 
-  const validateData = status => {
-    if(!disabled){
+  const validateData = (status, deleting) => {
+    if(!disabled || deleting){
       let inReceipt = {
         receiptNo: parseInt(header?.receiptNo ? header?.receiptNo : 0),
         orderNo: parseInt(header?.orderNo),
@@ -99,7 +101,7 @@ export function OrderReceipt(){
         siteID: header?.siteId,
         status,
         descr: header?.notes,
-        rowStatus: header?.receiptNo ? 'U' : 'I'
+        rowStatus: deleting ? 'D' : header?.receiptNo ? 'U' : 'I'
       };
       let inReceiptItems = [];
       detail?.map(item => {
@@ -116,7 +118,7 @@ export function OrderReceipt(){
             totalAmount: parseFloat(item?.receivedTotalCost ? item?.receivedTotalCost : 0),
             notes: '',
             expireDate: moment().toISOString(),
-            rowStatus: item?.receiptItemID ? 'U' : 'I'
+            rowStatus: deleting ? 'D' : item?.receiptItemID ? 'U' : 'I'
           };
           inReceiptItems?.push(newItem);
         }
@@ -124,8 +126,6 @@ export function OrderReceipt(){
       return { inReceipt, inReceiptItems };
     } else
       return null;
-
-      
   }
 
   const onClickSave = async status => {
@@ -134,13 +134,24 @@ export function OrderReceipt(){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/ModReceiptPO', data));
       if(response?.error) onError(response?.error, true);
-      else onSuccess(t('order.add_success'), header?.orderNo);
+      else onSuccess(t('order.order_success'), header?.orderNo);
+    }
+  }
+  
+  const onClickDelete = async () => {
+    let data = validateData(0, true);
+    if(data){
+      onLoad();
+      const response = await dispatch(sendRequest(user, token, 'Txn/ModReceiptPO', data));
+      if(response?.error) onError(response?.error, true);
+      else onSuccess(t('order.order_delete_success'), header?.orderNo);
     }
   }
 
   let mainProps = { header };
   let itemsProps = { header, detail, setDetail, setEdited, total, setTotal, disabled, setDisabled };
-  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns' };
+  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
+    text3: 'order.receipt_save', deletable, onClickDelete };
   
   return (
     <Overlay className='i_container' loading={loading}>
