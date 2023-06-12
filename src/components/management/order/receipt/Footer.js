@@ -8,7 +8,7 @@ export function Footer(props){
   const { t } = useTranslation();
 
   return (
-    <div className='ps_footer_back' style={{paddingRight: 0}}>
+    <div className='ps_footer_back'>
       <div className='ps_footer'>
         <p className='ps_footer_label'>{t('order.f_total')}</p>
         <p className='ps_footer_value'><Money value={total} fontSize={13} /></p>

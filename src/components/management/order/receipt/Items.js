@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next';
 
 import { add, divide } from '../../../../helpers';
 import { Error1, Money, PaginationTable, Table } from '../../../all';
-import { Search } from '../add/Search';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
 import { Footer } from './Footer';
+import { Search } from './Search';
 
 function Card(props){
   const { detail, setDetail, setEdited, total, setTotal, disabled, setDisabled, size } = props;
@@ -79,12 +79,29 @@ function Card(props){
     setEdited && setEdited(true);
   }
 
+  const onClickAll = e => {
+    e?.preventDefault();
+    let total1 = 0;
+    setDetail(old => old.map((row, index) => {
+      row.receivedQty = row.orderTotalQty;
+      row.receivedTotalCost = divide(row.receivedQty, row.cost, true);
+      row.error = null;
+      total1 = add(total1, row.receivedTotalCost);
+      setTotal(total1);
+      return row;
+    }));
+    setError(null);
+    setTotal(total1);
+    setDisabled(false);
+    setEdited && setEdited(true);
+  }
+
   const tableInstance = useTable({ columns, data: detail, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, disabled },
     useGlobalFilter, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
-  const searchProps = { handleEnter: setGlobalFilter, size };
+  const searchProps = { handleEnter: setGlobalFilter, size, onClickAll };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const footerProps = { total };
