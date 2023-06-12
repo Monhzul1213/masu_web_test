@@ -11,7 +11,7 @@ import { Footer } from './Footer';
 import { Search } from './Search';
 
 function Card(props){
-  const { detail, setDetail, setEdited, total, setTotal, disabled, setDisabled, size } = props;
+  const { header, detail, setDetail, setEdited, total, setTotal, disabled, setDisabled, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [error, setError] = useState(null);
@@ -61,7 +61,6 @@ function Card(props){
           let cost = columnId === 'cost' ? parseFloat(value ? value : 0) : old[rowIndex]?.cost;
           let receivedTotalCost = divide(receivedQty, cost, true);
           total = add(total, receivedTotalCost);
-          setTotal({ total });
           setError(null);
           setDisabled(false);
           return { ...old[rowIndex], receivedQty, cost, receivedTotalCost, error: null };
@@ -71,11 +70,12 @@ function Card(props){
           return { ...old[rowIndex], receivedQty, error: 'receivedQty' };
       } else {
         total = add(total, row.receivedTotalCost);
-        setTotal({ total });
         return row;
       }
     }));
-    setTotal({ total });
+    let discount = divide(divide(total, 100), header?.discountPercent, true);
+    let left = add(total, discount, true);
+    setTotal({ total, discount, left });
     setEdited && setEdited(true);
   }
 
@@ -87,11 +87,12 @@ function Card(props){
       row.receivedTotalCost = divide(row.receivedQty, row.cost, true);
       row.error = null;
       total1 = add(total1, row.receivedTotalCost);
-      setTotal({ total: total1 });
       return row;
     }));
     setError(null);
-    setTotal({ total: total1 });
+    let discount = divide(divide(total1, 100), header?.discountPercent, true);
+    let left = add(total1, discount, true);
+    setTotal({ total: total1, discount, left });
     setDisabled(false);
     setEdited && setEdited(true);
   }

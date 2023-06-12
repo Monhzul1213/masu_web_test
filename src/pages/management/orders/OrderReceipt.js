@@ -8,6 +8,7 @@ import moment from 'moment';
 import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
+import { add, divide } from '../../../helpers';
 import { Error1, Overlay, Prompt } from '../../../components/all';
 import { Items, Main } from '../../../components/management/order/receipt';
 import { ButtonRow } from '../../../components/management/order/add';
@@ -48,7 +49,10 @@ export function OrderReceipt(){
       else {
         let order = response?.data && response?.data[0];
         setHeader(order?.poOrder);
-        setTotal({ total: order?.poOrder?.receivedTotalCost });
+        let total = order?.poOrder?.receivedTotalCost;
+        let discount = divide(divide(total, 100), order?.poOrder?.discountPercent, true);
+        let left = add(total, discount, true);
+        setTotal({ total, discount, left });
         order?.poOrderItems?.map(i => i.allowDecimal = i?.isEach === 'N');
         setDetail(order?.poOrderItems);
         onDone();
@@ -135,7 +139,7 @@ export function OrderReceipt(){
   }
 
   let mainProps = { header };
-  let itemsProps = { detail, setDetail, setEdited, total, setTotal, disabled, setDisabled };
+  let itemsProps = { header, detail, setDetail, setEdited, total, setTotal, disabled, setDisabled };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns' };
   
   return (
