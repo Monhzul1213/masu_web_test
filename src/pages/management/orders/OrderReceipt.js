@@ -19,7 +19,7 @@ export function OrderReceipt(){
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
   const [detail, setDetail] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [total, setTotal] = useState(null);
   const [disabled, setDisabled] = useState(false);
   const [saved, setSaved] = useState(false);
   const [searchParams] = useSearchParams();
@@ -48,6 +48,7 @@ export function OrderReceipt(){
       else {
         let order = response?.data && response?.data[0];
         setHeader(order?.poOrder);
+        setTotal({ total: order?.poOrder?.receivedTotalCost });
         order?.poOrderItems?.map(i => i.allowDecimal = i?.isEach === 'N');
         setDetail(order?.poOrderItems);
         onDone();

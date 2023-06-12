@@ -61,7 +61,7 @@ function Card(props){
           let cost = columnId === 'cost' ? parseFloat(value ? value : 0) : old[rowIndex]?.cost;
           let receivedTotalCost = divide(receivedQty, cost, true);
           total = add(total, receivedTotalCost);
-          setTotal(total);
+          setTotal({ total });
           setError(null);
           setDisabled(false);
           return { ...old[rowIndex], receivedQty, cost, receivedTotalCost, error: null };
@@ -71,11 +71,11 @@ function Card(props){
           return { ...old[rowIndex], receivedQty, error: 'receivedQty' };
       } else {
         total = add(total, row.receivedTotalCost);
-        setTotal(total);
+        setTotal({ total });
         return row;
       }
     }));
-    setTotal(total);
+    setTotal({ total });
     setEdited && setEdited(true);
   }
 
@@ -87,11 +87,11 @@ function Card(props){
       row.receivedTotalCost = divide(row.receivedQty, row.cost, true);
       row.error = null;
       total1 = add(total1, row.receivedTotalCost);
-      setTotal(total1);
+      setTotal({ total: total1 });
       return row;
     }));
     setError(null);
-    setTotal(total1);
+    setTotal({ total: total1 });
     setDisabled(false);
     setEdited && setEdited(true);
   }

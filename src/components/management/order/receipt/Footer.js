@@ -11,7 +11,7 @@ export function Footer(props){
     <div className='ps_footer_back'>
       <div className='ps_footer'>
         <p className='ps_footer_label'>{t('order.f_total')}</p>
-        <p className='ps_footer_value'><Money value={total} fontSize={13} /></p>
+        <p className='ps_footer_value'><Money value={total?.total} fontSize={13} /></p>
       </div>
      {/* {total?.discountAmount ? <div className='ps_footer'>
         <p className='ps_footer_label'>{t('order.discount')}</p>
