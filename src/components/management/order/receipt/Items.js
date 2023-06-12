@@ -8,9 +8,10 @@ import { Error1, Money, PaginationTable, Table } from '../../../all';
 import { Search } from '../add/Search';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
+import { Footer } from './Footer';
 
 function Card(props){
-  const { detail, setDetail, setEdited, setTotal, disabled, setDisabled, size } = props;
+  const { detail, setDetail, setEdited, total, setTotal, disabled, setDisabled, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [error, setError] = useState(null);
@@ -86,9 +87,10 @@ function Card(props){
   const searchProps = { handleEnter: setGlobalFilter, size };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
+  const footerProps = { total };
 
   return (
-    <div className='po_back_invt1' style={{border: 'none'}}>
+    <div className='po_back_invt1' style={{border: 'none', paddingBottom: 0}}>
       <Search {...searchProps} />
       {error && <Error1 error={error} />}
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
@@ -96,7 +98,7 @@ function Card(props){
       </div>
       <div className={classPage}>
         <PaginationTable {...tableProps} />
-        <div />
+        <Footer {...footerProps} />
       </div>
     </div>
   );

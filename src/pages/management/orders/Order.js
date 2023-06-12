@@ -30,17 +30,13 @@ export function Order(){
     if(response?.error) setError(response?.error);
     else {
       response?.data?.forEach(item => {
-        let total = 0, totalQty = 0, transitQty = 0;
+        let total = 0;
         item?.poOrderItems?.forEach(poItem => {
           total += poItem.totalCost ?? 0;
-          totalQty += poItem.orderQty ?? 0;
-          transitQty += poItem.transitQty ?? 0;
         });
         item?.poOrderAddCosts?.forEach(addItem => total += addItem.addCostAmount ?? 0);
         item.poOrder.total = total;
-        item.poOrder.totalQty = totalQty;
-        item.poOrder.transitQty = transitQty;
-        item.poOrder.percent = parseFloat((transitQty * 100 / totalQty)?.toFixed(2));
+        item.poOrder.percent = parseFloat(((item.poOrder.receivedTotalQty ?? 0) * 100 / (item.poOrder.totalQty ?? 0))?.toFixed(2));
       });
       setData(response?.data);
     }
