@@ -41,7 +41,11 @@ export function List(props){
         }
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_total2')}</div>, accessor: 'poOrder.total',
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_total_order1')}</div>, accessor: 'poOrder.total',//orderAmount, orderPayment???
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_total_receipt')}</div>, accessor: 'poOrder.receivedTotalCost',
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>
       },
     ]);
