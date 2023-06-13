@@ -10,7 +10,7 @@ import { Date, DescrInput, MoneyInput, Select } from '../../../all';
 
 function Card(props){
   const { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, size,
-    setLoading, order, editing, payType, setPayType, total, isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals, discount, setDiscount } = props;
+    setLoading, order, editing, payType, setPayType, total, isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals, discount, setDiscount, getItems } = props;
   const { t } = useTranslation();
   const [vendors, setVendors] = useState([]);
   const [sites, setSites] = useState([]);
@@ -113,12 +113,17 @@ function Card(props){
     setDiscount(disPercent);
   }
 
+  const changeSiteId = value => {
+    setSiteId(value);
+    getItems(vendId?.value, value?.value);
+  }
+
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
 
   const vendProps = { value: vendId, setValue: setVendId, label: t('order.vend'), placeholder: t('order.vend'), data: vendors, setError, setEdited,
     s_value: 'vendId', s_descr: 'vendName', inRow: true, disabled: true };
-  const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
+  const siteProps = { value: siteId, setValue: changeSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true };
   const dateProps = { value: orderDate, setValue: setOrderDate, label: t('order.date'), setError, setEdited, inRow: true };
   const reqProps = { value: reqDate, setValue: setReqDate, label: t('order.req'), placeholder: t('order.req'), setError, setEdited,
