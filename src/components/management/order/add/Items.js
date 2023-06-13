@@ -24,7 +24,7 @@ function Card(props){
       { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />) },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', isText: true,
         customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'transitQty', isText: true,
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'siteOrderQty', isText: true,
         customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', isText: true,
         customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
@@ -82,7 +82,8 @@ function Card(props){
   }
   
   const newItem = invt => {
-    return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost, siteQty: 0, transitQty: 0,
+    return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost,
+      siteQty: invt?.siteQty, siteOrderQty: invt?.siteOrderQty,
       invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, orderTotalQty: 0,
       allowDecimal: invt?.isEach === 'N' };
   }

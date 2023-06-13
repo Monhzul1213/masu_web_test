@@ -104,9 +104,9 @@ export function OrderAdd(){
     else {
       let items = response?.data?.map(item => {
         let invt = item?.msInventory;
-        return { orderItemId: -1, invtId: invt?.invtId, name: invt?.name, orderQty: 0, totalCost: 0, cost: invt?.cost, siteQty: 0, transitQty: 0,
-          invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, orderTotalQty: 0,
-          allowDecimal: invt?.isEach === 'N' };
+        return { orderItemId: -1, invtId: invt?.invtId, name: invt?.name, orderQty: 0, totalCost: 0, cost: invt?.cost, siteQty: invt?.siteQty,
+          siteOrderQty: invt?.siteOrderQty, invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1,
+          orderTotalQty: 0, allowDecimal: invt?.isEach === 'N' };
       });
       setItems(items);
       onSuccess();
