@@ -24,6 +24,7 @@ export function OrderReceipt(){
   const [disabled, setDisabled] = useState(false);
   const [saved, setSaved] = useState(false);
   const [deletable, setDeletable] = useState(false);
+  const [notes, setNotes] = useState({ value: '' });
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -57,6 +58,7 @@ export function OrderReceipt(){
         order?.poOrderItems?.map(i => i.allowDecimal = i?.isEach === 'N');
         setDetail(order?.poOrderItems);
         setDeletable(order?.poOrder?.status === 1 && order?.poOrder?.receiptNo);
+        setNotes({ value: order?.poOrder?.notes ?? '' });
         onDone();
       }
     }
@@ -100,7 +102,7 @@ export function OrderReceipt(){
         vendID: header?.vendId,
         siteID: header?.siteId,
         status,
-        descr: header?.notes,
+        descr: notes?.value,
         rowStatus: deleting ? 'D' : header?.receiptNo ? 'U' : 'I'
       };
       let inReceiptItems = [];
@@ -148,7 +150,7 @@ export function OrderReceipt(){
     }
   }
 
-  let mainProps = { header };
+  let mainProps = { header, notes, setNotes, setEdited };
   let itemsProps = { header, detail, setDetail, setEdited, total, setTotal, disabled, setDisabled };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
     text3: 'order.receipt_save', deletable, onClickDelete };
