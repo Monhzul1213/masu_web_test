@@ -6,12 +6,13 @@ import CurrencyInput from 'react-currency-input-field';
 const { Option } = Select;
 
 export const EditableCell = props => {
-  const { value: initialValue, row, column: { id, isText, isMoney, isQty, width, autoFocus, length }, updateMyData, disabled, cellID } = props;
+  const { value: initialValue, row, column: { id, isText, isMoney, isQty, width, minWidth, autoFocus, length }, updateMyData, disabled, cellID } = props;
   const [value, setValue] = useState(initialValue);
   const hasError = row?.original?.error === id;
   const notEditable = disabled && !hasError;
   const user = useSelector(state => state.login?.user);
   const suffix = user?.msMerchant?.currency ?? '';
+  const width1 = minWidth ? (minWidth - 18) : width;
 
   const onChange = e => {
     // setValue(e.target.value)
@@ -42,8 +43,8 @@ export const EditableCell = props => {
   }, [initialValue])
   
   const errorStyle = hasError ? { borderColor: '#e41051' } : {};
-  const style = {...{ textAlign: 'right', width }, ...errorStyle};
-  const style1 = {...{ width }, ...errorStyle};
+  const style = {...{ textAlign: 'right', width: width1 }, ...errorStyle};
+  const style1 = {...{ width: width1 }, ...errorStyle};
   const moneyProps = { className: 'ed_input', suffix, allowNegativeValue: false, decimalsLimit: 4, value, maxLength: 15, onValueChange, onBlur, style,
     onKeyDown, autoFocus, disabled: notEditable, id: cellID, onFocus };
   const textProps = { className: 'ed_input', value, onChange, onBlur, onKeyDown, autoFocus, style: width ? style1 : errorStyle,

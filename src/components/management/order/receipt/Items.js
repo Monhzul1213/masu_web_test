@@ -1,10 +1,10 @@
- import React, { useState, useEffect, useCallback } from 'react';
+ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { withSize } from 'react-sizeme';
-import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter, useBlockLayout, useResizeColumns } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
 import { add, divide } from '../../../../helpers';
-import { Error1, Money, PaginationTable, Table } from '../../../all';
+import { Error1, Money, PaginationTable, TableResize } from '../../../all';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { EditableCell } from '../../../invt/inventory/add/EditableCell';
 import { Footer } from './Footer';
@@ -19,28 +19,32 @@ function Card(props){
   useEffect(() => {
     setColumns([
       {
-        Header: t('inventory.title'), accessor: 'invtName', customStyle: { minWidth: 150 },
+        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
-      { Header: t('inventory.barcode'), accessor: 'barCode', },
-      { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />) },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, customStyle: { width: 80} },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, customStyle: { width: 80} },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_base1')}</div>, accessor: 'orderTotalQty',
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90 },
+      // { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />) },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', width: 105, minWidth: 90,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', width: 125, minWidth: 90,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>
+      },
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_base1')}</div>, accessor: 'orderTotalQty', width: 160, minWidth: 90,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, customStyle: { width: 100} },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_total_order')}</div>, accessor: 'totalCost',
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_total_order')}</div>, accessor: 'totalCost', width: 140, minWidth: 120,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>, customStyle: { width: 100} },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_base_receipt')}</div>, accessor: 'receivedQty', customStyle: { width: 100 }, width: 80,
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_base_receipt')}</div>, accessor: 'receivedQty', width: 120, minWidth: 120, maxWidth: 120,
         Cell: props => <EditableCell {...props} />, isQty: true
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_cost_unit')}</div>, accessor: 'cost', customStyle: { width: 100 }, width: 80,
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_cost_unit')}</div>, accessor: 'cost', width: 120, minWidth: 120, maxWidth: 120,
         Cell: props => <EditableCell {...props} />, isMoney: true
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_total_receipt')}</div>, accessor: 'receivedTotalCost',
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_total_receipt')}</div>, accessor: 'receivedTotalCost', width: 130, minWidth: 120,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>, customStyle: { width: 100} },
     ]);
     return () => {};
@@ -48,7 +52,7 @@ function Card(props){
   }, [i18n?.language]);
 
   const filterFunction = useCallback((rows, ids, query) => {
-    return rows.filter(row => row.values['invtName']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['sku']?.includes(query));
+    return rows.filter(row => row.values['invtName']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['barCode']?.includes(query));
   }, []);
 
   const updateMyData = (rowIndex, columnId, value, e) => {
@@ -97,9 +101,10 @@ function Card(props){
     setEdited && setEdited(true);
   }
 
-  const tableInstance = useTable({ columns, data: detail, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data: detail, defaultColumn, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, disabled },
-    useGlobalFilter, useSortBy, usePagination, useRowSelect);
+    useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size, onClickAll };
@@ -112,7 +117,7 @@ function Card(props){
       <Search {...searchProps} />
       {error && <Error1 error={error} />}
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
-        <Table {...tableProps} />
+        <TableResize {...tableProps} />
       </div>
       <div className={classPage}>
         <PaginationTable {...tableProps} />
