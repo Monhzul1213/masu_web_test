@@ -175,7 +175,7 @@ export function TableResize(props){
             {headerGroup.headers.map(column => (
               <th className="table_header_text_resize" id={column.isResizing ? 'resizing_th' : ''} {...column.getHeaderProps()}>
                 <div className='table_header_cell' {...column.getSortByToggleProps()}>
-                  <span style={{flex: 1}}>{column.render("Header")}</span>
+                  <span style={{flex: 1}} className='table_header_cell_resize'>{column.render("Header")}</span>
                   {!column?.noSort && <Sort data={column} />}
                 </div>
                 <div {...column.getResizerProps()} className='resizer' id={column.isResizing ? 'resizing' : ''} />

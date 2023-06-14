@@ -52,7 +52,7 @@
   z-index: 1;
 }
 
-.table_header_text:hover, .table_row_resize:hover {
+.table_header_text:hover, .table_row_resize1:hover {
   background-color: var(--input-color);
 }
 
@@ -69,6 +69,13 @@
   display: flex;
   flex-flow: row;
   align-items: center;
+}
+
+.table_header_cell_resize {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 5px;
 }
 
 .table_back th, .table_back_resize th {
@@ -138,6 +145,10 @@
 
 .ed_text {
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 5px;
 }
 
 .ed_input {

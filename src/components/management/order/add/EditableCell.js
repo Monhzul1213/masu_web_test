@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 
 export const EditableCell = props => {
-  const { value: initialValue, row, column: { id, isText, width, autoFocus }, updateMyData, cellID } = props;
+  const { value: initialValue, row, column: { id, isText, width, minWidth, autoFocus, isResize }, updateMyData, cellID } = props;
   const [value, setValue] = useState(initialValue);
 
   const onBlur = e => {
@@ -27,7 +27,7 @@ export const EditableCell = props => {
     setValue(initialValue)
   }, [initialValue])
   
-  const style = { textAlign: 'right', width };
+  const style = { textAlign: 'right', width: minWidth ? (minWidth - 18) : width };
   const qtyProps = { className: 'ed_input', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,
     disableGroupSeparators: true, style, onKeyDown, autoFocus, id: cellID, onFocus };
 

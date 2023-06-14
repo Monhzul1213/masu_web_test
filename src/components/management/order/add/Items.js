@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter, useBlockLayout, useResizeColumns } from 'react-table';
 import { withSize } from 'react-sizeme';
 
 import { add, divide } from '../../../../helpers';
-import { PaginationTable, Table, DynamicBSIcon, Money } from '../../../all';
+import { PaginationTable, DynamicBSIcon, Money, TableResize } from '../../../all';
 import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { Search } from './Search';
 import { EditableCell } from './EditableCell';
@@ -17,31 +17,39 @@ function Card(props){
   useEffect(() => {
     setColumns([
       {
-        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 },
+        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
-      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true },
-      { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />) },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', isText: true,
-        customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'siteOrderQty', isText: true,
-        customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', isText: true,
-        customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true,
-        customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_base')}</div>, accessor: 'orderTotalQty', isText: true,
-        customStyle: { width: 100, paddingRight: 18, textAlign: 'right' }, width: 80 },
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90 },
+      // { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />), width: 0 },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
-        // customStyle: { width: 120, paddingRight: 18 }, width: 100
-      },//, autoFocus: true
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', width: 100, minWidth: 90,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
+      },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', isText: true, customStyle: { width: 100 },
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'siteOrderQty', width: 120, minWidth: 90,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', width: 105, minWidth: 90,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true,
+        Cell: props => <EditableCell {...props} />, width: 130, minWidth: 130, maxWidth: 130 },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_base')}</div>, accessor: 'orderTotalQty', width: 160, minWidth: 90,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', width: 120, minWidth: 90,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
       },
-      { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', width: 130, minWidth: 120,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
+      },
+      { id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
         Cell: ({ row, onClickDelete }) =>
           (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
       },
@@ -89,16 +97,16 @@ function Card(props){
   }
 
   const filterFunction = useCallback((rows, ids, query) => {
-    return rows.filter(row => row.values['name']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['sku']?.includes(query));
+    return rows.filter(row => row.values['name']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['barCode']?.includes(query));
   }, []);
 
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const defaultColumn = { Cell: EditableCell };
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const selectProps = { search, setSearch, data: items, setData: setItems, newItem };
   const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, onClickDelete },
-    useGlobalFilter, useSortBy, usePagination, useRowSelect);
+    useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size };
@@ -107,7 +115,7 @@ function Card(props){
     <div className='po_back_invt1'>
       <Search {...searchProps} />
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
-        <Table {...tableProps} />
+        <TableResize {...tableProps} />
       </div>
       <ItemSelect {...selectProps} />
       <div className={classPage}>
