@@ -117,8 +117,8 @@ export function Header(props){
 
   const onClickSearch = () => setShowSearch(!showSearch);
 
-  const width = showSearch ? 0 : (size?.width > 980 ? 320 : (size?.width - 30));
-  const width1 = !showSearch ? 0 : (size?.width > 980 ? 320 : (size?.width - 30));
+  const width = showSearch ? 0 : (size?.width > 780 ? 320 : (size?.width - 30));
+  const width1 = !showSearch ? 0 : (size?.width > 470 ? 320 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const id = size?.width > 1080 ? 'ih_large' : 'ih_small';
   const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
@@ -134,7 +134,7 @@ export function Header(props){
     classBack, classLabel, className ,
     label: t('supplier.title'), onFocus: onFocusSupplier, loading: loading === 'suppliers', maxTag: maxSupp, placeholder: t('time.select_supp')};
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide,
-    className: 'mn_date' };
+    className: 'mn_date', classBack: 'mn_date1' };
   const empProps = { value: emp, setValue: setEmp, data: emps, s_value: 'empCode', s_descr: 'empName',  onHide,
     label: t('employee.title'), onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp'), 
     classBack, classLabel, className};
@@ -147,8 +147,8 @@ export function Header(props){
   return (
     <div className='ih_header' id={id}>
         <div className={classH} >
+            <Date {...dateProps} />
             <div className='mn_header2' >
-                <Date {...dateProps} />
                 <MultiSelect {...siteProps} />
                 <MultiSelect {...empProps} />
             </div>  

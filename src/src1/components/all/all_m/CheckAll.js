@@ -49,7 +49,7 @@ export function CheckBox1(props){
 
   const onClick = () => {
     setChecked(!checked);
-    if(!checked) onHide()
+    onHide()
   }
 
   return (

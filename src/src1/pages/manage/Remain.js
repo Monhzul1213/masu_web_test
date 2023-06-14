@@ -32,7 +32,7 @@ export function Remain(){
   const getData = async (query, query1 ) => {
     setError(null);
     setLoading(true);
-    let api = 'Txn/GetHandQty' + (query ?? '') + (query1 ?? '');
+    let api = 'Txn/GetHandQty' + (query ?? '' ) + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
     if(response?.error) setError(response?.error);

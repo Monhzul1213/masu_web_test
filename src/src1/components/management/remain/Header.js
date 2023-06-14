@@ -29,8 +29,8 @@ export function Header(props){
   }, []);
 
   useEffect(() => {
-    if(size?.width >= 970) setClassH('th_header_mn1');
-    else if(size?.width < 970 && size?.width >= 660) setClassH('th_header_mn2');
+    if(size?.width >= 870) setClassH('th_header_mn1');
+    else if(size?.width < 870 && size?.width >= 760) setClassH('th_header_mn2');
     else setClassH('');
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,20 +69,27 @@ export function Header(props){
   }
 
   const onHide = value => {
-    let query = '?Begin=' ;
     let q = 'Y'
+    let query = '?='
+    // let query = !isDtl ? '?IsDtl=' + q : '?IsDtl=' + q1;
     if(supplier?.length !== suppliers?.length) supplier?.forEach(item => query += '&VendID=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
-    if(!isDtl) query += '&IsDtl=' + q 
     query += (value ? ('&InvtName=' + value) : '');
+    query += (isDtl ? ('&IsDtl=' + q) : '');
+    onSearch && onSearch(query, filter1);
+  }
+
+  const onHide1 = value => {
+    let q = 'Y', q1 = 'N'
+    let query = !isDtl ? '?IsDtl=' + q : '?IsDtl=' + q1;
     onSearch && onSearch(query, filter1);
   }
 
   const onClickSearch = () => setShowSearch(!showSearch);
 
-  const width = showSearch ? 0 : (size?.width > 780 ? 412 : (size?.width - 30));
-  const width1 = !showSearch ? 0 : (size?.width > 470 ? 320 : (size?.width - 30));
-  const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
+  const width = showSearch ? 0 : (size?.width > 780 ? 1312 : (size?.width - 30));
+  const width1 = !showSearch ? 0 : (size?.width > 470 ? 370 : (size?.width - 30));
+  const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in', marginTop: 10 };
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
   const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
@@ -96,7 +103,7 @@ export function Header(props){
     label: t('supplier.title'), onFocus: onFocusSupplier, loading: loading === 'suppliers', maxTag: maxSupp, placeholder: t('time.select_supp')};
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
-  const dtlProps = { label: t('manage.is_dtl'), checked: isDtl, setChecked: setIsDtl, onHide };
+  const dtlProps = { label: t('manage.is_dtl'), checked: isDtl, setChecked: setIsDtl, onHide: onHide1 };
 
 
   return (
@@ -105,14 +112,17 @@ export function Header(props){
           <div className='mn_header2'>
               <MultiSelect {...siteProps} />
               <MultiSelect {...suppProps} />
-              <CheckBox1 {...dtlProps} />
+            
           </div>
         </div>
         <div className='th_header_mn3' style={style}>
-          <div className='ih_btn_row' >
+          <div className='is_dtl'>
+            <CheckBox1 {...dtlProps} /> 
+          </div>
+          <div className='ih_btn_row_mn' >
             <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
+            <DynamicAIIcon {...searchProps} />
           </div>    
-          <DynamicAIIcon {...searchProps} />
         </div>    
         <SearchInput {...inputProps} />
     </div>    

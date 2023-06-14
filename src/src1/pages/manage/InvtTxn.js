@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SizeMe } from 'react-sizeme';
+import moment from 'moment';
 
 import { getList } from '../../../services';
 import { Error1, Overlay } from '../../../components/all';
@@ -23,7 +24,9 @@ export function InvtTxn(){
   useEffect(() => {
     if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
     else {
-      getData();   
+      let dates = [moment(), moment()];
+      let query = '?BeginDate=' + moment()?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
+      getData(query, null, dates);   
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

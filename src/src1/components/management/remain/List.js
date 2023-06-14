@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { PaginationTable, FooterTable, Empty1, Money } from '../../../components/all/all_m';
+import { PaginationTable, Empty1, Money, TableResize } from '../../../components/all/all_m';
 import { Header } from './Header';
 import { formatNumber } from '../../../../helpers';
 
@@ -17,11 +17,11 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total'), customStyle: { width: 180} },
-      { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), customStyle: { width: 220}  },
-      { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), customStyle: { width: 120}  },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', exLabel: t('order.t_qty'), customStyle: { width: 150}, 
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value ? props.value : 0}</div>,
+      { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total'), width: 210, minWidth: 110 },
+      { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), width: 220, minWidth: 110 },
+      { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), width: 150, minWidth: 110  },
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', exLabel: t('order.t_qty'), width: 140, minWidth: 110, 
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.orderQty + sum, 0),
@@ -29,8 +29,8 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>
           }
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'qty', exLabel: t('order.t_stock'), customStyle: { width: 150}, 
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value ? props.value : 0}</div>,
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'qty', exLabel: t('order.t_stock'), width: 130, minWidth: 80, 
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.qty + sum, 0),
@@ -38,10 +38,10 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>
           }
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('orders.cost')}</div>, accessor: 'cost', exLabel: t('orders.cost'), customStyle: { width: 150},
+      { Header: <div style={{textAlign: 'right'}}>{t('orders.cost')}</div>, accessor: 'cost', exLabel: t('orders.cost'), width: 150, minWidth: 110,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('orders.totalCost')}</div>, accessor: 'totalCost', exLabel: t('orders.totalCost'), customStyle: { width: 150},
+      { Header: <div style={{textAlign: 'right'}}>{t('orders.totalCost')}</div>, accessor: 'totalCost', exLabel: t('orders.totalCost'), width: 160, minWidth: 110,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
         Footer: info => {
           const total = React.useMemo(() =>
@@ -50,7 +50,7 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /></div></>
           }
       },
-      { Header: t('supplier.title'), accessor: 'vendName', exLabel:t('supplier.title') , customStyle: { width: 150} },
+      { Header: t('supplier.title'), accessor: 'vendName', exLabel:t('supplier.title') , width: 200, minWidth: 110 },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,21 +58,21 @@ export function List(props){
 
   useEffect(() => {
     setColumns1([
-      { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total'), customStyle: { width: 200} },
-      { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), customStyle: { width: 180}  },
-      { Header: t('manage.costType'), accessor: 'costTypeName', exLabel:t('manage.costType'), customStyle: { width: 120}  },
-      { Header: t('manage.costNo'), accessor: 'costNo', exLabel:t('manage.costNo'), customStyle: { width: 120}  },
-      { Header: t('manage.costDate'), accessor: 'costDate', exLabel: t('manage.costDate'), customStyle: { width: 80 },
+      { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total'), width: 140, minWidth: 80, },
+      { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), width: 140, minWidth: 80,  },
+      { Header: t('manage.costType'), accessor: 'costTypeName', exLabel:t('manage.costType'), width: 90, minWidth: 80,  },
+      { Header: t('manage.costNo'), accessor: 'costNo', exLabel:t('manage.costNo'), width: 90, minWidth: 80,  },
+      { Header: t('manage.costDate'), accessor: 'costDate', exLabel: t('manage.costDate'), width: 120, minWidth: 80,
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
       }
       },
-      { Header: t('report.expireDate'), accessor: 'costExpireDate', exLabel: t('report.expireDate'), customStyle: { width: 150 },
+      { Header: t('report.expireDate'), accessor: 'costExpireDate', exLabel: t('report.expireDate'), width: 150, minWidth: 80,
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
       }
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', exLabel: t('inventory.t_qty'), 
+      { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', exLabel: t('inventory.t_qty'), width: 90, minWidth: 70,
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
       Footer: info => {
         const total = React.useMemo(() =>
@@ -81,10 +81,10 @@ export function List(props){
         return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>
         }
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('orders.cost')}</div>, accessor: 'cost', exLabel: t('orders.cost'), 
+      { Header: <div style={{textAlign: 'right'}}>{t('orders.cost')}</div>, accessor: 'cost', exLabel: t('orders.cost'), width: 110, minWidth: 80,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('orders.totalCost')}</div>, accessor: 'totalCost', exLabel: t('orders.totalCost'), 
+      { Header: <div style={{textAlign: 'right'}}>{t('orders.totalCost')}</div>, accessor: 'totalCost', exLabel: t('orders.totalCost'), width: 150, minWidth: 80,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
         Footer: info => {
         const total = React.useMemo(() =>
@@ -93,11 +93,11 @@ export function List(props){
         return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /></div></>
         }
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('report.price')}</div>, accessor: 'amount', exLabel: t('report.price'), customStyle: { width: 120 },
+      { Header: <div style={{textAlign: 'right'}}>{t('report.price')}</div>, accessor: 'amount', exLabel: t('report.price'),width: 90, minWidth: 80,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
       },
       { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 'totalAmount', 
-      exLabel: t('report_receipt.t_total'), customStyle: { width: 120 },
+      exLabel: t('report_receipt.t_total'), width: 90, minWidth: 80,
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
       Footer: info => {
         const total = React.useMemo(() =>
@@ -106,7 +106,7 @@ export function List(props){
         return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /> </div></>
         }
       },
-      { Header: t('supplier.title'), accessor: 'vendName', exLabel:t('supplier.title') , customStyle: { width: 120} }
+      { Header: t('supplier.title'), accessor: 'vendName', exLabel:t('supplier.title') , width: 130, minWidth: 80 }
       ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -122,9 +122,10 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
-  const tableInstance = useTable({ columns : (!isDtl ? columns : columns1), data, autoResetPage: false, autoResetSortBy: false,
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns : (!isDtl ? columns : columns1), data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [isDtl ? { id: 'invtName', desc: true } : { id: 'costDate', desc: true }] },}, 
-    useSortBy, usePagination, useRowSelect);
+    useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const filterProps = {columns, data, excelName, setError, onSearch , size, isDtl, setIsDtl };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
@@ -135,8 +136,8 @@ export function List(props){
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <>
         <div style={{overflowX: 'scroll'}}>
-          <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-            <FooterTable {...tableProps} />
+          <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+            <TableResize {...tableProps} />
           </div>
         </div>     
         <PaginationTable {...tableProps} />
