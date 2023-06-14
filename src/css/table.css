@@ -219,3 +219,16 @@
 #resizing_th {
   user-select: none;
 }
+
+.po_progress_back {
+  background-color: var(--back-color);
+  height: 8px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+.po_progress {
+  height: 8px;
+  border-radius: 10px;
+}

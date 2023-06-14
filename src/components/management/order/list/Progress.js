@@ -1,5 +1,4 @@
 import React from 'react';
-import { Progress as AntProgress } from 'antd';
 
 export function Progress(props){
   const { order, width } = props;
@@ -7,12 +6,10 @@ export function Progress(props){
   const pending = order?.status === 0 || order?.status === 1;
 
   return (
-    <div style={{width, marginTop: -5}}>
-      <AntProgress
-        percent={order?.percent}
-        showInfo={false}
-        strokeColor={pending ? '#4BAF4F' : '#b0b0b0'}
-        trailColor='#f2f2f2' />
+    <div style={{ width }}>
+      <div className='po_progress_back' style={{ width }}>
+        <div className='po_progress' style={{ backgroundColor: pending ? '#4BAF4F' : '#b0b0b0', width: width * order?.percent / 100 }} />
+      </div>
       <p className='po_percent'>{order?.receivedTotalQty} of {order?.totalQty}</p>
     </div>
   )
