@@ -1,6 +1,6 @@
 @import './color.css';
 
-.table_back {
+.table_back, .table_back_resize {
   width: 100%;
 }
 
@@ -10,6 +10,16 @@
     font-size: 15px;
     padding: 10px 0;
   }
+
+  .table_cell_text_resize {
+    color: var(--text-color);
+    font-size: 15px;
+    padding: 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 5px;
+  }
 }
 
 @media only screen and (min-height: 700px) { /* desktop */
@@ -17,10 +27,20 @@
     color: var(--text-color);
     font-size: 15px;
     padding: var(--page-padding) 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 5px;
+  }
+
+  .table_cell_text_resize {
+    color: var(--text-color);
+    font-size: 15px;
+    padding: var(--page-padding) 0;
   }
 }
 
-.table_header_text {
+.table_header_text, .table_header_text_resize {
   color: var(--text2-color);
   text-align: left;
   padding: var(--page-padding) 0;
@@ -32,7 +52,7 @@
   z-index: 1;
 }
 
-.table_header_text:hover {
+.table_header_text:hover, .table_row_resize:hover {
   background-color: var(--input-color);
 }
 
@@ -51,7 +71,7 @@
   align-items: center;
 }
 
-.table_back th {
+.table_back th, .table_back_resize th {
   border-bottom: solid 1px var(--text4-color);
 }
 
@@ -76,16 +96,20 @@
   padding: var(--page-padding) 0;
 }
 
-.table_back {
+.table_back, .table_back_resize {
   border-collapse: separate;
   border-spacing: 0;
 }
 
-.table_back tbody > tr:not(:first-child) > td {
+.table_back tbody > tr:not(:first-child) > td, .table_back_resize tbody > tr:not(:first-child) > td {
   border-top: 1px solid var(--line-color);
 }
 
 .table_back th:not(:last-child), .table_back tr > td:not(:last-child) {
+  padding-right: 10px;
+}
+
+.table_back_resize th, .table_back tr > td {
   padding-right: 10px;
 }
 
@@ -175,4 +199,23 @@
 
 #hide_border {
   border-color: var(--root-color);
+}
+
+.resizer {
+  display: inline-block;
+  background: var(--input-color);
+  width: 2px;
+  height: calc(100% - 20px);
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  z-index: 1;
+}
+
+.resizer:hover, #resizing {
+  background-color: var(--config-b-color);
+}
+
+#resizing_th {
+  user-select: none;
 }

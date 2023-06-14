@@ -161,3 +161,45 @@ export function TableDetail(props){
     </table>
   );
 }
+
+export function TableResize(props){
+  const { tableInstance, onRowClick } = props;
+
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } = tableInstance;
+
+  return (
+    <table {...getTableProps()} className="table_back_resize">
+      <thead style={{ position: "sticky", top: 0, alignSelf: "flex-start", zIndex: 1}}>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th className="table_header_text_resize" id={column.isResizing ? 'resizing_th' : ''} {...column.getHeaderProps()}>
+                <div className='table_header_cell' {...column.getSortByToggleProps()}>
+                  <span style={{flex: 1}}>{column.render("Header")}</span>
+                  {!column?.noSort && <Sort data={column} />}
+                </div>
+                <div {...column.getResizerProps()} className='resizer' id={column.isResizing ? 'resizing' : ''} />
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody className='table_body_back' {...getTableBodyProps()} style={{ position: "relative", zIndex: 0 }}>
+        {page.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr className='table_row_resize' {...row.getRowProps()}>
+              {row.cells.map(cell => {
+                return (
+                  <td className='table_cell_text_resize' {...cell.getCellProps()} onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
+                    {cell.render('Cell')}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}
