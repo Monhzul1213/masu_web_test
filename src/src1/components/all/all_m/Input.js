@@ -4,16 +4,17 @@ import CurrencyInput from 'react-currency-input-field';
 import { useTranslation } from 'react-i18next';
 
 export function Input(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, id, length, length1 } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, id, length } = props;
   const { t } = useTranslation();
     
   const onChange = e => {
-    e?.target?.value?.length > length 
-      ? setValue({ value: value?.value, error: '' + length + t('error.shorter_than') })
-      : setValue({ value: e.target.value });
-    e?.target?.value?.length < length1 
-      ? setValue({ error: '' + length1 + t('error.longer_than'), value: e.target.value })
-      : setValue({ value: e.target.value });
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+    else if(e?.target?.value?.length > length)
+      setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);
   }
@@ -192,9 +193,17 @@ export function MoneyInput(props){
 }
 
 export function Input1(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, length } = props;
+  const { t } = useTranslation();
+
   const onChange = e => {
-    setValue({ value: e.target.value });
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+    else if(e?.target?.value?.length > length)
+      setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);
   }

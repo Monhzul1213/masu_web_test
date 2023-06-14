@@ -90,7 +90,7 @@ export function Header(props){
     <div className='ih_header' id={id} style={{paddingTop: 0}}>
       <div className={classH} style={{marginTop: 0}}>
         <PlainRange {...dateProps} />
-        <div className='th_header1'>
+        <div className='th_header_s'>
           <PlainSelect {...statProps} />
         </div>
       </div>
