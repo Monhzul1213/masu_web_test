@@ -15,10 +15,10 @@ export const EditableCell = props => {
   const width1 = minWidth ? (minWidth - 18) : width;
 
   const onChange = e => {
-    // setValue(e.target.value)
-    e?.target?.value?.length > length 
-      ? setValue(value)
-      : setValue(e.target.value);
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid) setValue(value);
+    else if(e?.target?.value?.length > length) setValue(value);
+    else setValue(e.target.value);
   }
 
   const onBlur = e => {
