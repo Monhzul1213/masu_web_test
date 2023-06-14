@@ -203,3 +203,54 @@ export function TableResize(props){
     </table>
   );
 }
+
+export function TableRowResize(props){
+  const { tableInstance, onRowClick, hasFooter } = props;
+
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows, footerGroups } = tableInstance;
+
+  return (
+    <table {...getTableProps()} className="table_back_resize">
+      <thead style={{ position: "sticky", top: 0, alignSelf: "flex-start", zIndex: 1}}>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => (
+              <th className="table_header_text_resize" id={column.isResizing ? 'resizing_th' : ''} {...column.getHeaderProps()}>
+                <div className='table_header_cell' {...column.getSortByToggleProps()}>
+                  <span style={{flex: 1}}>{column.render("Header")}</span>
+                  {!column?.noSort && <Sort data={column} />}
+                </div>
+                <div {...column.getResizerProps()} className='resizer' id={column.isResizing ? 'resizing' : ''} />
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody className='table_body_back' {...getTableBodyProps()} style={{ position: "relative", zIndex: 0 }}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr className='table_row_resize' {...row.getRowProps()}>
+              {row.cells.map(cell => {
+                return (
+                  <td className='table_cell_text_resize' {...cell.getCellProps()} onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
+                    {cell.render('Cell')}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+      {hasFooter && <tfoot>
+        {footerGroups.map(group => (
+          <tr {...group.getFooterGroupProps()}>
+            {group.headers.map(column => (
+              <th className='table_footer_text_o' {...column.getFooterProps()}>{column.render('Footer')}</th>
+            ))}
+          </tr>
+        ))}
+      </tfoot>}
+    </table>
+  );
+}

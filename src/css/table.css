@@ -18,7 +18,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-right: 5px;
+    padding-right: 5px;
   }
 }
 
@@ -27,10 +27,6 @@
     color: var(--text-color);
     font-size: 15px;
     padding: var(--page-padding) 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 5px;
   }
 
   .table_cell_text_resize {
@@ -40,7 +36,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-right: 5px;
+    padding-right: 5px;
   }
 }
 
