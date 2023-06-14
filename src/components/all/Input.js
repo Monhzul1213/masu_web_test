@@ -12,9 +12,13 @@ export function Input(props){
   const { t } = useTranslation();
 
   const onChange = e => {
-    e?.target?.value?.length > length 
-      ? setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
-      : setValue({ value: e.target.value });
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+    else if(e?.target?.value?.length > length)
+      setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);
   }
@@ -65,9 +69,13 @@ export function DescrInput(props){
   const { t } = useTranslation();
 
   const onChange = e => {
-    e?.target?.value?.length > length 
-      ? setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
-      : setValue({ value: e.target.value });
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+    else if(e?.target?.value?.length > length)
+      setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);
   }
@@ -160,9 +168,13 @@ export function InputPassword(props){
   }, [disabled]);
 
   const onChange = e => {
-    e?.target?.value?.length > length 
-      ? setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
-      : setValue({ value: e.target.value });
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+    else if(e?.target?.value?.length > length)
+      setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);
   }
