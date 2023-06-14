@@ -116,7 +116,7 @@ function Card(props){
     <div className='po_back_invt1' style={{border: 'none', paddingBottom: 0}}>
       <Search {...searchProps} />
       {error && <Error1 error={error} />}
-      <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+      <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight}}>
         <TableResize {...tableProps} />
       </div>
       <div className={classPage}>

@@ -59,7 +59,7 @@ export function Items(props){
   const tableProps = { tableInstance, scrolling: true, hasFooter: true };
 
   return (
-    <div className='ps_list_back' style={{overflowX: 'scroll'}}>
+    <div className='ps_list_back' id='table_scroll' style={{overflowX: 'scroll'}}>
       <div style={{minWidth: 720}}>
         <p className='ps_title'>{t('inventory.title')}</p>
         <TableRowResize {...tableProps} />

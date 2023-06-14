@@ -114,7 +114,7 @@ function Card(props){
   return (
     <div className='po_back_invt1'>
       <Search {...searchProps} />
-      <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+      <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight}}>
         <TableResize {...tableProps} />
       </div>
       <ItemSelect {...selectProps} />
