@@ -89,6 +89,7 @@
     "/management/order_list/order_receipt": "Худалдан авалтын захиалгаас орлого авах",
     "/management/invt_remainder": "Барааны үлдэгдэл",
     "/management/invt_txn": "Бараа гүйлгээ",
+    "/management/adjust": "Тохируулга",
     "/employee": "Ажилтан",
     "/employee/emp_list": "Ажилтны жагсаалт",
     "/employee/emp_list/emp_add": "Ажилтан нэмэх",
@@ -175,7 +176,8 @@
     "report_order": "Борлуулалтын захиалга",
     "terms": "Үйлчилгээний дэлгэрэнгүй",
     "invt_remainder": "Барааны үлдэгдэл",
-    "invt_txn": "Бараа гүйлгээ"
+    "invt_txn": "Бараа гүйлгээ",
+    "adjust": "Тохируулга"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
