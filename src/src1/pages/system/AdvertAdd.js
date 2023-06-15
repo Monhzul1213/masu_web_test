@@ -111,10 +111,13 @@ export function AdvertAdd(){
   const onClickCancel = () =>  navigate('/system/advert');
  
   const checkValid = () => {
-    if( name?.value?.trim()  ){
+    let nameLength = 2;
+    let isNameValid = !name?.value?.trim() || name?.value?.length >= nameLength;
+    if( isNameValid ){
       return true;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(!isNameValid) setName({ value: name?.value, error: ' ' + nameLength + t('error.longer_than') });
     }
   }
   const onClickSave = async e => {

@@ -116,17 +116,24 @@ export function SupplierAdd(){
   const onClickCancel = () =>  navigate('/management/suppliers');
  
   const checkValid = () => {
-    let phoneLength = 8;
+    let phoneLength = 8, nameLength = 2, noteLength = 10, addressLength = 8;
     let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
+    let isNameValid = !name?.value?.trim() || name?.value?.length >= nameLength;
+    let isNoteValid = note?.value?.length >= noteLength;
+    let isAddressValid = address?.value?.length >= addressLength || address1?.value?.length >= addressLength;
     let isEmailValid = !email?.value?.trim() || validateEmail(email?.value?.trim());
     let isCustValid = isOTC ? customer?.value?.trim() : true;
     let isRepValid = isOTC ? rep?.value?.trim() : true;
-    if(isEmailValid && name?.value?.trim() && isPhoneValid && isCustValid && isRepValid){
+    if(isEmailValid && isNameValid && isPhoneValid && isCustValid && isRepValid && isNoteValid && isAddressValid){
       return true;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       if(!isEmailValid) setEmail({ value: email?.value?.trim(), error: t('error.be_right') });
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
+      if(!isNameValid) setName({ value: name?.value, error: ' ' + nameLength + t('error.longer_than') });
+      if(!isNoteValid) setNote({ value: note?.value, error: ' ' + noteLength + t('error.longer_than') });
+      if(!isAddressValid) setAddress({ value: address?.value, error: ' ' + addressLength + t('error.longer_than') });
+      if(!isAddressValid) setAddress1({ value: address1?.value, error: ' ' + addressLength + t('error.longer_than') });
       if(!isCustValid && !customer?.value?.trim()) setCustomer({...customer, error: t('error.not_empty') });
       if(!isRepValid && !rep?.value?.trim()) setRep({...rep, error: t('error.not_empty') });
       return false;

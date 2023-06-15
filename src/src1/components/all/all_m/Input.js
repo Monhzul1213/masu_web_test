@@ -33,6 +33,10 @@ export function Input(props){
     }
   }
 
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
+  }
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
@@ -45,6 +49,7 @@ export function Input(props){
             mask={mask}
             disabled={disabled}
             maskChar='-'
+            onBlur={onBlur}
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             value={value?.value}
@@ -117,11 +122,19 @@ export function DescrInput(props){
   const { t } = useTranslation();
 
   const onChange = e => {
-    e?.target?.value?.length > length 
-      ? setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
-      : setValue({ value: e.target.value });
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
+    else if(e?.target?.value?.length > length)
+      setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
     setError && setError(null);
     setEdited && setEdited(true);
+  }
+
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
@@ -135,10 +148,11 @@ export function DescrInput(props){
           className='m_input_descr'
           disabled={disabled}
           placeholder={placeholder}
+          onBlur={onBlur}
           value={value?.value}
           onChange={onChange} />
       </div>
-      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
     </div>
   );
 }
@@ -222,6 +236,10 @@ export function Input1(props){
     }
   }
 
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
+  }
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
@@ -236,6 +254,7 @@ export function Input1(props){
             disabled={disabled}
             maskChar='-'
             onKeyDown={onKeyDown}
+            onBlur={onBlur}
             placeholder={placeholder}
             value={value?.value}
             onChange={onChange} />

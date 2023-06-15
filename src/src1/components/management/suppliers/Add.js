@@ -55,13 +55,13 @@ import { getOTC } from '../../../../services';
 
   const id = size?.width > 480 ? 'im_large' : 'im_small';
 
-  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('supplier.name'), setError,length1:2, setEdited, id: 'l_partner'};
+  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('supplier.name'), setError, setEdited, id: 'l_partner'};
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('supplier.phone'), setError ,setEdited };
   const mailProps = { value: email, setValue: setEmail, label: t('page.email'), placeholder: t('supplier.email'), setError, length: 100,setEdited};
   const webProps = { value: web, setValue: setWeb, label: t('supplier.web'), placeholder: t('supplier.web'), setError, length: 100,setEdited};
-  const address1Props = { value: address1, setValue: setAddress1, label: t('supplier.address2'), placeholder: t('supplier.address2'), setError, length: 100, length1: 6, setEdited};
-  const descrProps = { value: note, setValue: setNote, label: t('supplier.desc'), placeholder: t('supplier.desc'), setError , length: 255, length1:10,setEdited};
-  const addressProps = { value: address, setValue: setAddress,label: t('supplier.address1'), placeholder: t('supplier.address1'), setError, length: 192, length1: 6,setEdited };
+  const address1Props = { value: address1, setValue: setAddress1, label: t('supplier.address2'), placeholder: t('supplier.address2'), setError, length: 100, setEdited};
+  const descrProps = { value: note, setValue: setNote, label: t('supplier.desc'), placeholder: t('supplier.desc'), setError , length: 255, setEdited};
+  const addressProps = { value: address, setValue: setAddress,label: t('supplier.address1'), placeholder: t('supplier.address1'), setError, length: 192, setEdited };
   const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image_z' };
   const otcProps = { label: t('supplier.is_otc'), checked: isOTC, setChecked: setIsOTC };
 
