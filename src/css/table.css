@@ -40,6 +40,10 @@
   }
 }
 
+.table_row:hover, .table_row_resize:hover {
+  background-color: var(--input-color);
+}
+
 .table_header_text, .table_header_text_resize {
   color: var(--text2-color);
   text-align: left;
@@ -159,6 +163,7 @@ tfoot > tr > th {
   border: none;
   border-bottom: solid 1px #d2d2d2;
   border-radius: 0;
+  background-color: transparent;
 }
 
 .ed_input:focus, #hide_border:focus {
@@ -191,7 +196,7 @@ tfoot > tr > th {
   border: none;
   color: var(--text-color);
   font-size: 14px;
-  background-color: var(--root-color);
+  background-color: transparent;
   padding: 0;
 }
 
@@ -219,7 +224,7 @@ tfoot > tr > th {
 .resizer {
   display: inline-block;
   background: var(--input-color);
-  width: 2px;
+  width: 1px;
   height: calc(100% - 20px);
   position: absolute;
   right: 5px;

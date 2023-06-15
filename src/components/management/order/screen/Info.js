@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 export function Info(props){
   const { order, size } = props;
@@ -18,7 +19,7 @@ export function Info(props){
 
   return (
     <div className='ps_info_back' id={id}>
-      <Field label='date' value={order?.orderDate} />
+      <Field label='date' value={moment(order?.orderDate).format('yyyy.MM.DD')} />
       {order?.reqDate ? <Field label='req' value={order?.reqDate} /> : null}
       <Field label='created' value={order?.createdUserName} />
       <div className='ps_col_back'>
