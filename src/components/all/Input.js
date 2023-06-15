@@ -38,7 +38,7 @@ export function Input(props){
   }
 
   const onBlur = () => {
-    !noBlur && setValue({ value: value?.value?.trim(), error: value?.error });
+    !noBlur && setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
@@ -81,7 +81,7 @@ export function DescrInput(props){
   }
 
   const onBlur = () => {
-    setValue({ value: value?.value?.trim(), error: value?.error });
+    setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
@@ -194,7 +194,7 @@ export function InputPassword(props){
   }
 
   const onBlur = () => {
-    setValue({ value: value?.value?.trim(), error: value?.error });
+    setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
   }
 
   const onClick = e => {
