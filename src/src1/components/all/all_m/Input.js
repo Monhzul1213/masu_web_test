@@ -10,7 +10,7 @@ export function Input(props){
   const onChange = e => {
     let notValid = e?.target?.value?.includes("'");
     if(notValid)
-      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
     else if(e?.target?.value?.length > length)
       setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
     else 
@@ -51,7 +51,7 @@ export function Input(props){
             onChange={onChange} 
             />
       </div>
-      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
     </div>
   );
 }
@@ -199,7 +199,7 @@ export function Input1(props){
   const onChange = e => {
     let notValid = e?.target?.value?.includes("'");
     if(notValid)
-      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
     else if(e?.target?.value?.length > length)
       setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
     else 
@@ -242,7 +242,7 @@ export function Input1(props){
         </div>
         
       </div>
-      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
     </div>
   );
 }

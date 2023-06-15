@@ -14,7 +14,7 @@ export function Input(props){
   const onChange = e => {
     let notValid = e?.target?.value?.includes("'");
     if(notValid)
-      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
     else if(e?.target?.value?.length > length)
       setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
     else 
@@ -59,7 +59,7 @@ export function Input(props){
           value={value?.value}
           onChange={onChange} />
       </div>
-      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
     </div>
   );
 }
@@ -71,7 +71,7 @@ export function DescrInput(props){
   const onChange = e => {
     let notValid = e?.target?.value?.includes("'");
     if(notValid)
-      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
     else if(e?.target?.value?.length > length)
       setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
     else 
@@ -100,7 +100,7 @@ export function DescrInput(props){
           onBlur={onBlur}
           onChange={onChange} />
       </div>
-      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
     </div>
   );
 }
@@ -170,7 +170,7 @@ export function InputPassword(props){
   const onChange = e => {
     let notValid = e?.target?.value?.includes("'");
     if(notValid)
-      setValue({ value: value?.value, error: ' ' + t('error.valid_character') })
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
     else if(e?.target?.value?.length > length)
       setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
     else 
@@ -228,7 +228,7 @@ export function InputPassword(props){
         ? <DynamicAIIcon className='m_input_show' name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
         : <DynamicAIIcon className='m_input_show' name='AiOutlineLock' onClick={onClickLock} />
       }
-      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
     </div>
   );
 }
