@@ -33,7 +33,7 @@ export function Adjust(){
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Txn/GetAdjust' + (query ?? '')));
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else setData(response?.data?.adjfinal);
     setLoading(false);
   }
 
