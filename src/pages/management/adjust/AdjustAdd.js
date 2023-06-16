@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Error1, Overlay, Prompt } from '../../../components/all';
-import { Main, List } from '../../../components/management/adjust/add';
+import { Main, List, ButtonRow } from '../../../components/management/adjust/add';
 
 export function AdjustAdd(){
   const [loading, setLoading] = useState(false);
@@ -13,9 +14,35 @@ export function AdjustAdd(){
   const [notes, setNotes] = useState({ value: '' });
   const [search, setSearch] = useState({ value: null });
   const [dItems, setDItems] = useState([]);
+  const navigate = useNavigate();
+
+  const onClickCancel = () => navigate({ pathname: '/management/adjust' });
+
+  const onClickSave = async status => {
+    // comment
+    // let data = validateData(status);
+    // if(data){
+    //   onLoad();
+    //   const response = await dispatch(sendRequest(user, token, 'Txn/Order', data));
+    //   if(response?.error) onError(response?.error, true);
+    //   else onSuccess(t('order.add_success'), response?.data?.orderNo);
+    // }
+  }
+
+  const onClickDelete = async () => {
+    // comment
+    // let data = validateData(0, true);
+    // if(data){
+    //   onLoad();
+    //   const response = await dispatch(sendRequest(user, token, 'Txn/ModReceiptPO', data));
+    //   if(response?.error) onError(response?.error, true);
+    //   else onSuccess(t('order.order_delete_success'), header?.orderNo);
+    // }
+  }
 
   let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes };
   let listProps = { detail, setDetail, search, setSearch, siteId, setEdited, setDItems };
+  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), onClickDelete, header };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -30,7 +57,7 @@ export function AdjustAdd(){
           </div>
         </form>
       </div>
-      {/* <ButtonRow {...btnProps} /> */}
+      <ButtonRow {...btnProps} />
     </Overlay>
   );
 }
@@ -223,22 +250,13 @@ export function OrderAdd(){
     setLoading(false);
   }
 
-  const onClickSave = async status => {
-    let data = validateData(status);
-    if(data){
-      onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Txn/Order', data));
-      if(response?.error) onError(response?.error, true);
-      else onSuccess(t('order.add_success'), response?.data?.orderNo);
-    }
-  }
+  
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading: setLoading1,
     order, editing, payType, setPayType, total: add(total1, total2), isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals, discount, setDiscount, getItems };
   let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
-  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
-    hide: editing && order?.status === 1 };
+  
 
   return (
     
