@@ -19,7 +19,7 @@ import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo } from './s
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
 import { Bill, Order as OrderBill } from './pages/lone';
 import { Integration } from './pages/integration';
-import { Adjust } from './pages/management/adjust';
+import { Adjust, AdjustAdd } from './pages/management/adjust';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -156,6 +156,7 @@ export function App(){
                 <Route path='/management/invt_remainder' element={<Remain />} />
                 <Route path='/management/invt_txn' element={<InvtTxn />} />
                 <Route path='/management/adjust' element={<Adjust />} />
+                <Route path='/management/adjust/adjust_add' element={<AdjustAdd />} />
               </Routes>
             </Layout>
           </Layout>

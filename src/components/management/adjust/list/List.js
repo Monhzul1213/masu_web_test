@@ -1,24 +1,10 @@
-import React from 'react';
-
-export function List(props){
-  const { } = props;
-
-  return (
-    <div>
-      List
-    </div>
-  );
-}
-
-/**
- * import React, { useState, useEffect, useMemo } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useBlockLayout, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-import { PaginationTable, Money, TableResize } from '../../../all';
-import { Progress } from './Progress';
+import { Money, PaginationTable, TableResize } from '../../../all';
 
 export function List(props){
   const { data, size } = props;
@@ -29,39 +15,27 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('order.t_no'), accessor: 'poOrder.orderNo', width: 115, minWidth: 110 },
+      { Header: t('adjust.t_no'), accessor: 'adjustNo', width: 130, minWidth: 80 },
       {
-        Header: t('order.date'), accessor: 'poOrder.orderDate', width: 145, minWidth: 140,
+        Header: t('adjust.t_date'), accessor: 'txnDate', width: 105, minWidth: 100,
         Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD')}</div>
       },
-      { Header: t('order.vend'), accessor: 'poOrder.vendName', width: 130, minWidth: 100 },
-      { Header: t('order.site'), accessor: 'poOrder.siteName', width: 150, minWidth: 80 },
+      { Header: t('adjust.t_site'), accessor: 'siteName', width: 140, minWidth: 90 },
       {
-        Header: t('order.status'), accessor: 'poOrder.statusName', width: 140, minWidth: 60,
+        Header: t('adjust.t_status'), accessor: 'statusName', width: 150, minWidth: 80,
         Cell: ({ value, row }) => {
-          let status = row?.original?.poOrder?.status;
-          let color = status === 0 ? 'var(--danger-color)' : status === 1 ? 'var(--text-color)' : 'var(--text2-color)';
+          let status = row?.original?.status;
+          let color = status !== 1 ? 'var(--text-color)' : 'var(--text2-color)';
           return <span style={{ color }}>{value}</span>
         }
       },
+      { Header: t('adjust.t_emp'), accessor: 'txnEmpNme', width: 120, minWidth: 100 },
       {
-        Header: t('order.t_received'), accessor: 'poOrder.percent', customStyle: { paddingTop: 0, paddingBottom: 0 }, width: 150, minWidth: 150,
-        Cell: props => <Progress order={props?.row?.original?.poOrder} width={130} />
+        Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_qty')}</div>, accessor: 'totalQty',
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 110, minWidth: 100,
       },
       {
-        Header: t('order.req'), accessor: 'poOrder.reqDate', width: 140, minWidth: 137,
-        Cell: ({ value, row }) => {
-          let expired = moment().add(-1, 'day').isAfter(moment(value, 'yyyy.MM.DD'));
-          let danger = expired && (row?.original?.poOrder?.status === 0 || row?.original?.poOrder?.status === 1);
-          return <div style={{ color: danger ? 'var(--danger-color)' : 'var(--text-color)' }}>{value}</div>
-        }
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_total_order1')}</div>, accessor: 'poOrder.total',//orderAmount, orderPayment???
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>, width: 140, minWidth: 140,
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_total_receipt')}</div>, accessor: 'poOrder.receivedTotalCost',
+        Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost',
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>, width: 140, minWidth: 140,
       },
     ]);
@@ -78,13 +52,15 @@ export function List(props){
   }, [size?.width]);
 
   const onRowClick = row => {
-    navigate({ pathname: 'order', search: createSearchParams({ orderNo: row?.original?.poOrder?.orderNo }).toString() });
+    navigate({ pathname: 'adjust_add', search: createSearchParams({ adjustNo: row?.original?.adjustNo }).toString() });
   }
 
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'poOrder.orderNo', desc: true }] }}, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'adjustNo', desc: true }] }},
+    useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };
+
 
   return (
     <div>
@@ -95,6 +71,5 @@ export function List(props){
       </div>
       <PaginationTable {...tableProps} />
     </div>
-  )
+  );
 }
- */

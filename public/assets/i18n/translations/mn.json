@@ -90,6 +90,7 @@
     "/management/invt_remainder": "Барааны үлдэгдэл",
     "/management/invt_txn": "Бараа гүйлгээ",
     "/management/adjust": "Тохируулга",
+    "/management/adjust/adjust_add": "Тохируулга хийх",
     "/employee": "Ажилтан",
     "/employee/emp_list": "Ажилтны жагсаалт",
     "/employee/emp_list/emp_add": "Ажилтан нэмэх",
@@ -1048,7 +1049,14 @@
     "costDate": "Огноо"
   },
   "adjust": {
-    "add": "Тохируулга хийх"
+    "add": "Тохируулга хийх",
+    "t_no": "Тохируулга №",
+    "t_date": "Огноо",
+    "t_site": "Салбар",
+    "t_status": "Төлөв",
+    "t_emp": "Ажилтан",
+    "t_total_qty": "Нийт тоо",
+    "t_total_cost": "Нийт өртөг"
   },
   "version": "11"
 }

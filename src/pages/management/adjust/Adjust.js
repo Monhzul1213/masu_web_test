@@ -37,11 +37,7 @@ export function Adjust(){
     setLoading(false);
   }
 
-  const onClickAdd = row => {
-    // comment
-    // add, edit, screen
-    // navigate({ pathname: '/management/order_list/order_vendors', search: createSearchParams({ next: '/management/order_list/order_add' }).toString() });
-  }
+  const onClickAdd = () => navigate('/management/adjust/adjust_add');
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
