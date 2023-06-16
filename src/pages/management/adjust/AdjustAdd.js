@@ -12,9 +12,10 @@ export function AdjustAdd(){
   const [siteId, setSiteId] = useState({ value: null });
   const [notes, setNotes] = useState({ value: '' });
   const [search, setSearch] = useState({ value: null });
+  const [dItems, setDItems] = useState([]);
 
   let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes };
-  let listProps = { detail, setDetail, search, setSearch, siteId };
+  let listProps = { detail, setDetail, search, setSearch, siteId, setEdited, setDItems };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -57,7 +58,6 @@ export function OrderAdd(){
   const [reqDate, setReqDate] = useState({ value: null });
   const [payType, setPayType] = useState({ value: null });
   const [items, setItems] = useState([]);
-  const [dItems, setDItems] = useState([]);
   const [adds, setAdds] = useState([]);
   const [dAdds, setDAdds] = useState([]);
   const [total1, setTotal1] = useState(0);

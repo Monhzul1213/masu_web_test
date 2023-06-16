@@ -3,6 +3,7 @@ import { withSize } from 'react-sizeme';
 import { useBlockLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
+import { add, divide } from '../../../../helpers';
 import { DynamicBSIcon, Money, PaginationTable, TableResize } from '../../../all';
 import { Search } from '../../order/add/Search';
 import { ItemSelect } from './SelectItem';
@@ -12,7 +13,7 @@ import { EditableCell as EditableCellQty } from '../../order/add/EditableCell';
 import { EditableCell } from './EditableCell';
 
 function Card(props){
-  const { size, detail, setDetail, search, setSearch, siteId } = props;
+  const { size, detail, setDetail, search, setSearch, siteId, setEdited, setDItems } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [types] = useState([{ label: 'Орлого', value: 'RC' }, { label: 'Зарлага', value: 'II' }])
@@ -62,43 +63,34 @@ function Card(props){
   }, []);
 
   const updateMyData = (rowIndex, columnId, value, e) => {
-    // comment
-    // e?.preventDefault();
-    // let total = 0;
-    // setItems(old => old.map((row, index) => {
-    //   if(index === rowIndex){
-    //     let orderQty = parseFloat(value ? value : 0);
-    //     let orderTotalQty = divide(orderQty, old[rowIndex]?.batchQty, true);
-    //     let totalCost = divide(orderTotalQty, old[rowIndex]?.cost, true);
-    //     total = add(total, totalCost);
-    //     setTotal(total);
-    //     return { ...old[rowIndex], orderQty, orderTotalQty, totalCost, error: null };
-    //   } else {
-    //     total = add(total, row.totalCost);
-    //     setTotal(total);
-    //     return row;
-    //   }
-    // }));
-    // setTotal(total);
-    // // comment
-    // setEdited && setEdited(true);
-    // setSearch({ value: null });
+    e?.preventDefault();
+    setDetail(old => old.map((row, index) => {
+      if(index === rowIndex){
+        let itemType = columnId === 'itemType' ? value : old[rowIndex]?.itemType;
+        let qty = columnId === 'qty' ? parseFloat(value ? value : 0) : old[rowIndex]?.qty;
+        let leftQty = add(qty, old[rowIndex]?.siteQty);
+        let cost = columnId === 'itemType' ? old[rowIndex]?.origCost : columnId === 'cost' ? parseFloat(value ? value : 0) : old[rowIndex]?.cost;
+        let totalCost = divide(qty, cost, true);
+        return { ...old[rowIndex], itemType, qty, leftQty, cost, totalCost };
+      } else {
+        return row;
+      }
+    }));
+    setEdited && setEdited(true);
+    setSearch({ value: null });
   }
 
   const onClickDelete = row => {
-    // comment
-    // if(row?.original?.orderItemId !== -1) setDItems(old => [...old, row?.original]);
-    // let newTotal = add(total, (row?.original?.totalCost ?? 0), true);
-    // setTotal(newTotal);
-    // setItems(items?.filter(item => item?.invtId !== row?.original?.invtId));
-    // setSearch({ value: null });
+    if(row?.original?.adjustItemID !== 0) setDItems(old => [...old, row?.original]);
+    setDetail(detail?.filter(item => item?.invtId !== row?.original?.invtId));
+    setSearch({ value: null });
   }
 
   const newItem = invt => {
     return {
       name: invt.name, invtId: invt.invtId, invtID: invt.invtId, sku: invt?.sku, barCode: invt?.barCode, allowDecimal: invt?.isEach === 'N',
       itemType: 'II', siteQty: invt?.siteQty, qty: 0, cost: invt.cost, origCost: invt.cost, leftQty: invt?.siteQty, totalCost: 0,
-      adjustItemID: 0, sourceItemID: 0, amount: 0, totalAmount: 0, notes: '', rowStatus: 'I'
+      adjustItemID: 0, sourceItemID: 0, amount: 0, totalAmount: 0, notes: '', rowStatus: 'I',
     };
   }
 
