@@ -11,9 +11,10 @@ export function AdjustAdd(){
   const [detail, setDetail] = useState([]);
   const [siteId, setSiteId] = useState({ value: null });
   const [notes, setNotes] = useState({ value: '' });
+  const [search, setSearch] = useState({ value: null });
 
   let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes };
-  let listProps = { data: detail };
+  let listProps = { detail, setDetail, search, setSearch, siteId };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -62,7 +63,6 @@ export function OrderAdd(){
   const [total1, setTotal1] = useState(0);
   const [total2, setTotal2] = useState(0);
   const [order, setOrder] = useState(null);
-  const [search, setSearch] = useState({ value: null });
   const [searchParams] = useSearchParams();
   const [saved, setSaved] = useState(false);
   const [editing, setEditing] = useState(null);
