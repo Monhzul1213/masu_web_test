@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 
 import { Error1, Overlay, Prompt } from '../../../components/all';
-import { Main } from '../../../components/management/adjust/add';
+import { Main, List } from '../../../components/management/adjust/add';
 
 export function AdjustAdd(){
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
+  const [detail, setDetail] = useState([]);
   const [siteId, setSiteId] = useState({ value: null });
   const [notes, setNotes] = useState({ value: '' });
 
-  let mainProps = { setError, setEdited, header, siteId, setSiteId, notes, setNotes };
+  let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes };
+  let listProps = { data: detail };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -20,13 +22,10 @@ export function AdjustAdd(){
       <div className='i_scroll'>
         <form>
           <Main {...mainProps} />
-      {/*
           <div className='gap' />
           <div className='po_back' id='po_back_invt'>
-            <Items {...itemsProps} />
-            <Additional {...addProps} />
+            <List {...listProps} />
           </div>
-       */}
         </form>
       </div>
       {/* <ButtonRow {...btnProps} /> */}
