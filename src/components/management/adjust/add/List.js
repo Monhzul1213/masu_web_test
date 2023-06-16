@@ -1,14 +1,61 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { withSize } from 'react-sizeme';
 import { useBlockLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table';
+import { useTranslation } from 'react-i18next';
 
-import { PaginationTable, TableResize } from '../../../all';
-import { ItemSelect } from '../../../invt/inventory/add/SelectItem';
+import { DynamicBSIcon, Money, PaginationTable, TableResize } from '../../../all';
 import { Search } from '../../order/add/Search';
+import { ItemSelect } from './SelectItem';
+import { SelectItem } from '../../../invt/inventory/add/SelectItem';
+import { SelectableCell } from '../../../invt/inventory/add/EditableCell';
+import { EditableCell as EditableCellQty } from '../../order/add/EditableCell';
+import { EditableCell } from './EditableCell';
 
 function Card(props){
   const { size, detail, setDetail, search, setSearch, siteId } = props;
+  const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [types] = useState([{ label: 'Орлого', value: 'RC' }, { label: 'Зарлага', value: 'II' }])
+
+  useEffect(() => {
+    setColumns([
+      {
+        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
+        Cell: ({ row }) => (<SelectItem item={row?.original} />)
+      },
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90 },
+      {
+        Header: t('adjust.t_type'), accessor: 'itemType', isBtn: true, width: 120, minWidth: 90,
+        Cell: props => <SelectableCell {...props} data={types} />
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', width: 100, minWidth: 90,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty1')}</div>, accessor: 'qty', isQty: true,
+        Cell: props => <EditableCellQty {...props} />, width: 130, minWidth: 130, maxWidth: 130
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost',
+        Cell: props => <EditableCell {...props} />, width: 130, minWidth: 130, maxWidth: 130
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', width: 130, minWidth: 120,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('adjust.t_left')}</div>, accessor: 'leftQty', width: 150, minWidth: 80,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
+      },
+      { id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+        Cell: ({ row, onClickDelete }) =>
+          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+      },
+    ]);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n?.language]);
 
   const filterFunction = useCallback((rows, ids, query) => {
     return rows.filter(row => row.values['name']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['barCode']?.includes(query));
@@ -48,26 +95,10 @@ function Card(props){
   }
 
   const newItem = invt => {
-    /**
-     * "adjustItemID": 2,
-      "itemType": "RC",
-      "sourceItemID": 0,
-      "invtID": 60003,
-      "qty": 5,
-      "cost": 58000,
-      "totalCost": 290000,
-      "amount": 58000,
-      "totalAmount": 290000,
-      "notes": "",
-      "rowStatus": "U"
-     */
-      // БарааБарааныэхний 3 тэмдэгтээрхайж “НэгбараанымэдээллавахService-с” мөрнэмнэinAdjustItem.ItemTypeТөрөлComboBox байнаБаркод@BarCode- ЗөвхөнхаруулнаҮлдэгдэл@SiteQty - ЗөвхөнхаруулнаinAdjustItem.QtyТооЭерэгтоонутгаоруулнаinAdjustItem.CostӨртөг@Cost - inAdjustItem.ItemType = ‘RC’ үедЭерэгтоонутгаоруулнаinAdjustItem.ItemType = ‘II’ үед READONLYТооцсонүлдэгдэл
     return {
-      name: invt.name, invtId: invt.invtId, sku: invt?.sku
-      // adjustItemID: -1,, , orderQty: 0, totalCost: 0, cost: invt.cost,
-      // siteQty: invt?.siteQty, siteOrderQty: invt?.siteOrderQty,
-      // invtCode: '', rowStatus: 'I',, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, orderTotalQty: 0,
-      // allowDecimal: invt?.isEach === 'N'
+      name: invt.name, invtId: invt.invtId, invtID: invt.invtId, sku: invt?.sku, barCode: invt?.barCode, allowDecimal: invt?.isEach === 'N',
+      itemType: 'II', siteQty: invt?.siteQty, qty: 0, cost: invt.cost, origCost: invt.cost, leftQty: invt?.siteQty, totalCost: 0,
+      adjustItemID: 0, sourceItemID: 0, amount: 0, totalAmount: 0, notes: '', rowStatus: 'I'
     };
   }
 
@@ -79,7 +110,7 @@ function Card(props){
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, disabled: true };
+  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId };
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
 
   return (
@@ -99,79 +130,3 @@ function Card(props){
 
 const withSizeHOC = withSize();
 export const List = withSizeHOC(Card);
-
-/**
- * import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter, useBlockLayout, useResizeColumns } from 'react-table';
-import { withSize } from 'react-sizeme';
-
-import { add, divide } from '../../../../helpers';
-import { PaginationTable, DynamicBSIcon, Money, TableResize } from '../../../all';
-import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
-import { Search } from './Search';
-import { EditableCell } from './EditableCell';
-
-function Card(props){
-  const { items, setItems, setDItems, size, setEdited, total, setTotal } = props;
-  const { t, i18n } = useTranslation();
-
-  useEffect(() => {
-    setColumns([
-      {
-        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
-        Cell: ({ row }) => (<SelectItem item={row?.original} />)
-      },
-      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90 },
-      // { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />), width: 0 },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', width: 100, minWidth: 90,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_incoming')}</div>, accessor: 'siteOrderQty', width: 120, minWidth: 90,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', width: 105, minWidth: 90,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true,
-        Cell: props => <EditableCell {...props} />, width: 130, minWidth: 130, maxWidth: 130 },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_base')}</div>, accessor: 'orderTotalQty', width: 160, minWidth: 90,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', width: 120, minWidth: 90,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', width: 130, minWidth: 120,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
-      },
-      { id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
-        Cell: ({ row, onClickDelete }) =>
-          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      },
-    ]);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
-
-  
-  
-  
-
-  
-
-  
-  
-  return (
-    
-  );
-}
-
-
- */
