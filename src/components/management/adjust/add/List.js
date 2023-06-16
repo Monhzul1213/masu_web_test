@@ -71,7 +71,7 @@ function Card(props){
         let leftQty = add(qty, old[rowIndex]?.siteQty);
         let cost = columnId === 'itemType' ? old[rowIndex]?.origCost : columnId === 'cost' ? parseFloat(value ? value : 0) : old[rowIndex]?.cost;
         let totalCost = divide(qty, cost, true);
-        return { ...old[rowIndex], itemType, qty, leftQty, cost, totalCost };
+        return { ...old[rowIndex], itemType, qty, leftQty, cost, totalCost, amount: qty, totalAmount: totalCost };
       } else {
         return row;
       }
