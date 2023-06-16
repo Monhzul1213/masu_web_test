@@ -7,8 +7,11 @@ export function AdjustAdd(){
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
+  const [header, setHeader] = useState(null);
+  const [siteId, setSiteId] = useState({ value: null });
+  const [notes, setNotes] = useState({ value: '' });
 
-  let mainProps = { setError, setEdited };
+  let mainProps = { setError, setEdited, header, siteId, setSiteId, notes, setNotes };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -50,10 +53,8 @@ export function OrderAdd(){
   const { t } = useTranslation();
   const [loading1, setLoading1] = useState(false);
   const [vendId, setVendId] = useState({ value: null });
-  const [siteId, setSiteId] = useState({ value: null });
   const [orderDate, setOrderDate] = useState({ value: moment() });
   const [reqDate, setReqDate] = useState({ value: null });
-  const [notes, setNotes] = useState({ value: '' });
   const [payType, setPayType] = useState({ value: null });
   const [items, setItems] = useState([]);
   const [dItems, setDItems] = useState([]);
