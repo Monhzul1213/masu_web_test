@@ -16,6 +16,7 @@ export function AdjustAdd(){
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
   const [detail, setDetail] = useState([]);
+  const [items, setItems] = useState([]);
   const [siteId, setSiteId] = useState({ value: null });
   const [notes, setNotes] = useState({ value: '' });
   const [search, setSearch] = useState({ value: null });
@@ -56,11 +57,12 @@ export function AdjustAdd(){
           item.sourceItemID = item.sourceItemId;
           item.origCost = item.cost;
           item.rowStatus = 'U';
-          item.name = item.InvtName;
+          item.name = item.invtName;
           item.allowDecimal = item?.isEach === 'N';
           item.leftQty = add(item.siteQty, item.qty);
         });
         setDetail(response?.data?.inAdjustitem);
+        setItems(response?.data?.inAdjustitem);
         onSuccess();
       }
     }
@@ -94,21 +96,20 @@ export function AdjustAdd(){
     let data = validateData(status);
     if(data){
       onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Txn/ModAdjust', data, null, 'GET'));
+      const response = await dispatch(sendRequest(user, token, 'Txn/ModAdjust', data));
       if(response?.error) onError(response?.error, true);
       else onSuccess(t('adjust.add_success'));
     }
   }
 
   const onClickDelete = async () => {
-    // comment
-    // let data = validateData(0, true);
-    // if(data){
-    //   onLoad();
-    //   const response = await dispatch(sendRequest(user, token, 'Txn/ModReceiptPO', data));
-    //   if(response?.error) onError(response?.error, true);
-    //   else onSuccess(t('order.order_delete_success'), header?.orderNo);
-    // }
+    let inAdjust = {...header, rowStatus: 'D'};
+    let inAdjustItems = items?.map(item => { return {...item, rowStatus: 'D'}});
+    let data = { inAdjust, inAdjustItems };
+    onLoad();
+    const response = await dispatch(sendRequest(user, token, 'Txn/ModAdjust', data));
+    if(response?.error) onError(response?.error, true);
+    else onSuccess(t('adjust.delete_success'));
   }
 
   const onLoad = () => {
