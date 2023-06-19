@@ -160,3 +160,7 @@
   flex-flow: row;
   margin-left: 40px;
 }
+.th_select_back1 {
+  margin-right: 15px;
+  width: 180px;
+}

@@ -91,7 +91,8 @@ export function Menu(props){
       getItem(t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.order_list'), '/management/order_list', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_remainder'), '/management/invt_remainder', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.invt_txn'), '/management/invt_txn', null, null, null, msRole?.webManageItem !== 'Y')
+      getItem(t('menu.invt_txn'), '/management/invt_txn', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(t('menu.transfer'), '/management/transfer', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
     getItem(t('menu.employee'), '/employee', <RiContactsLine />, [
       getItem(t('menu.emp_list'), '/employee/emp_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
