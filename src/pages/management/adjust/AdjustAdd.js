@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { message } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { sendRequest } from '../../../services';
 import { Error1, Overlay, Prompt } from '../../../components/all';
 import { Main, List, ButtonRow } from '../../../components/management/adjust/add';
 
 export function AdjustAdd(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
@@ -14,19 +19,50 @@ export function AdjustAdd(){
   const [notes, setNotes] = useState({ value: '' });
   const [search, setSearch] = useState({ value: null });
   const [dItems, setDItems] = useState([]);
+  const [saved, setSaved] = useState(false);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(saved) onClickCancel();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saved]);
+
 
   const onClickCancel = () => navigate({ pathname: '/management/adjust' });
 
+  const validateData = status => {
+    let isSiteValid = siteId?.value || siteId?.value === 0;
+    let length = detail?.filter(item => item?.qty)?.length;
+    if(isSiteValid && length){
+      let adjustNo = header?.adjustNo ?? 0;
+      let inAdjust = { adjustNo, orderNo: 0, siteID: siteId?.value, status, descr: notes?.value, rowStatus: adjustNo ? 'U' : 'I' };
+      let inAdjustItems = [];
+      detail?.forEach(item => {
+        if(item?.qty){
+          item.adjustNo = adjustNo;
+          inAdjustItems.push(item);
+        }
+      })
+      dItems?.forEach(it => inAdjustItems?.push({...it, rowStatus: 'D'}));
+      return { inAdjust, inAdjustItems };
+    } else {
+      if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
+      if(!length) setSearch({ value: null, error: t('adjust.items_error') });
+      return false;
+    }
+  }
+
   const onClickSave = async status => {
-    // comment
-    // let data = validateData(status);
-    // if(data){
-    //   onLoad();
-    //   const response = await dispatch(sendRequest(user, token, 'Txn/Order', data));
-    //   if(response?.error) onError(response?.error, true);
-    //   else onSuccess(t('order.add_success'), response?.data?.orderNo);
-    // }
+    let data = validateData(status);
+    if(data){
+      onLoad();
+      const response = await dispatch(sendRequest(user, token, 'Txn/ModAdjust', data, null, 'GET'));
+      if(response?.error) onError(response?.error, true);
+      else onSuccess(t('adjust.add_success'));
+    }
   }
 
   const onClickDelete = async () => {
@@ -39,6 +75,27 @@ export function AdjustAdd(){
     //   else onSuccess(t('order.order_delete_success'), header?.orderNo);
     // }
   }
+
+  const onLoad = () => {
+    setError(null);
+    setLoading(true);
+    setEdited(false);
+  }
+
+  const onError = (err, edited) => {
+    setError(err);
+    setEdited(edited);
+    setLoading(false);
+  }
+
+  const onSuccess = msg => {
+    if(msg){
+      message.success(msg);
+      setSaved(true);
+    }
+    setLoading(false);
+  }
+
 
   let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes };
   let listProps = { detail, setDetail, search, setSearch, siteId, setEdited, setDItems };
@@ -91,14 +148,12 @@ export function OrderAdd(){
   const [total2, setTotal2] = useState(0);
   const [order, setOrder] = useState(null);
   const [searchParams] = useSearchParams();
-  const [saved, setSaved] = useState(false);
   const [editing, setEditing] = useState(null);
   const [isOTC, setIsOTC] = useState(false);
   const [otcInfo, setOtcInfo] = useState(null);
   const [totals, setTotals] = useState({ discount: 0, to_pay: 0 });
   const [discount, setDiscount] = useState(0);
-  const { user, token }  = useSelector(state => state.login);
-  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -107,11 +162,7 @@ export function OrderAdd(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if(saved) navigate({ pathname: '/management/order_list/order', search: createSearchParams({ orderNo: saved }).toString() });
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [saved]);
+  
 
   const getData = async () => {
     let vendor = searchParams?.get('vendId');
@@ -177,79 +228,9 @@ export function OrderAdd(){
       : navigate('/management/order_list');
   }
 
-  const validateData = status => {
-    let isSiteValid = siteId?.value || siteId?.value === 0;
-    let isDateValid = reqDate?.value && (isOTC ? true : reqDate?.value?.isAfter(orderDate?.value));
-    let length = items?.filter(item => item?.orderQty)?.length;
-    if(isSiteValid && isDateValid && length){
-      let orderNo = editing ? order?.orderNo : '', orderItems = [], addValid = true;
-      items?.forEach(item => {
-        if(item?.orderQty){
-          item.orderNo = orderNo;
-          delete item['error'];
-          orderItems.push(item);
-        }
-      })
-      dItems?.forEach(it => orderItems?.push({...it, rowStatus: 'D'}));
+  
 
-      let orderCosts = adds?.map(item => {
-        if(item?.addCostAmount && item?.addCostName){
-          item.orderNo = orderNo;
-          delete item['error'];
-        } else {
-          addValid = false;
-          item.error = item?.addCostName ? 'addCostAmount' : 'addCostName'
-        }
-        return item;
-      })
-      if(!addValid){
-        setAdds(orderCosts);
-        return false;
-      }
-      dAdds?.forEach(it => orderCosts?.push({...it, rowStatus: 'D'}));
-      let data = {
-        orderNo, vendId: vendId?.value, siteId: siteId?.value, status, notes: notes?.value,
-        orderDate: orderDate?.value?.format('yyyy.MM.DD'),
-        reqDate: reqDate?.value ? (isOTC ? reqDate?.value : reqDate?.value?.format('yyyy.MM.DD')) : '',
-        rowStatus: editing ? 'U' : 'I',
-        arAmount: otcInfo?.arAmount ?? 0,
-        totalAmount: add(total1, total2),
-        discountAmount: totals?.discount ?? 0,
-        orderAmount: totals?.to_pay ?? 0,
-        orderPayment: payType?.value ?? 0,
-        discountPercent: discount,
-        orderItems, orderCosts
-      };
-      return data;
-    } else {
-      if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
-      if(!reqDate?.value) setReqDate({ value: reqDate?.value, error: t('error.not_empty') });
-      else if(reqDate?.value && (isOTC ? false : reqDate?.value?.isBefore(orderDate?.value))) setReqDate({ value: reqDate?.value, error: t('error.order_date') });
-      if(!length) setSearch({ value: null, error: t('order.items_error') });
-      return false;
-    }
-  }
-
-  const onLoad = () => {
-    setError(null);
-    setLoading(true);
-    setEdited(false);
-  }
-
-  const onError = (err, edited) => {
-    setError(err);
-    setEdited(edited);
-    setLoading(false);
-  }
-
-  const onSuccess = (msg, orderNo) => {
-    if(msg){
-      message.success(msg);
-      setSaved(orderNo);
-    }
-    setLoading(false);
-  }
-
+  
   
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading: setLoading1,
