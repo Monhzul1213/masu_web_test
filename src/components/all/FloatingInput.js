@@ -8,15 +8,18 @@ export function FloatingInput(props){
   const { text, value, setValue, setError, handleEnter, id, disabled, length, isLogin } = props;
 
   const onChange = e => {
-    setValue({ value: e.target.value });
-    e?.target?.value?.length > length
-      ? setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
-      : setValue({ value: e.target.value });
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
+    else if(e?.target?.value?.length > length)
+      setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
     setError && setError(null);
   }
 
   const onBlur = () => {
-    !id && setValue({ value: value?.value?.trim(), error: value?.error });
+    !id && setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
   }
 
   const onKeyDown = e => {
@@ -41,17 +44,22 @@ export function FloatingInput(props){
     <div className='f_input_container' id={id}>
       <label className='f_input_label' style={style1}>{text}</label>
       <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
-      {value?.error && <p className='f_input_error'>{id ? '' : text} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{value?.noLabel || id ? '' : text} {value?.error}</p>}
     </div>
   )
 }
 
 export function FloatingPassword(props){
   const { text, value, setValue, setError, handleEnter, isLogin } = props;
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
   const onChange = e => {
-    setValue({ value: e.target.value });
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
+    else 
+      setValue({ value: e.target.value });
     setError && setError(null);
   }
 
@@ -75,7 +83,7 @@ export function FloatingPassword(props){
   }
 
   const onBlur = () => {
-    setValue({ value: value?.value?.trim(), error: value?.error });
+    setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
   }
 
   const style = value?.error ? { borderColor: '#e41051' } : {};
@@ -88,7 +96,7 @@ export function FloatingPassword(props){
       <label className='f_input_label' style={style1}>{text}</label>
       <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
       <DynamicAIIcon className='f_input_show' name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
-      {value?.error && <p className='f_input_error'>{text} {value?.error}</p>}
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : text} {value?.error}</p>}
     </div>
   )
 }
