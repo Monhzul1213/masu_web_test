@@ -32,6 +32,6 @@ export const EditableCell = props => {
     disableGroupSeparators: true, style, onKeyDown, autoFocus, id: cellID, onFocus };
 
   return isText
-    ? (<p className='ed_text'>{value}</p>)
+    ? (<p className='ed_text' style={{textAlign: 'right', paddingRight: 15}}>{value}</p>)
     : (<CurrencyInput {...qtyProps} />)
 }

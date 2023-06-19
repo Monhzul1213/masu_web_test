@@ -13,13 +13,13 @@ import { EditableCell as EditableCellQty } from '../../order/add/EditableCell';
 import { EditableCell } from './EditableCell';
 
 function Card(props){
-  const { size, detail, setDetail, search, setSearch, siteId, setEdited, setDItems } = props;
+  const { size, detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [types] = useState([{ label: 'Орлого', value: 'RC' }, { label: 'Зарлага', value: 'II' }])
 
   useEffect(() => {
-    setColumns([
+    let columns = [
       {
         Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
@@ -27,36 +27,39 @@ function Card(props){
       { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90 },
       {
         Header: t('adjust.t_type'), accessor: 'itemType', isBtn: true, width: 120, minWidth: 90,
-        Cell: props => <SelectableCell {...props} data={types} />
+        Cell: props => <SelectableCell {...props} data={types} disabled={!editable} />
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', width: 100, minWidth: 90,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty1')}</div>, accessor: 'qty', isQty: true,
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty1')}</div>, accessor: 'qty', isText: !editable,
         Cell: props => <EditableCellQty {...props} />, width: 130, minWidth: 130, maxWidth: 130
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost',
-        Cell: props => <EditableCell {...props} />, width: 130, minWidth: 130, maxWidth: 130
+        Cell: props => <EditableCell {...props} />, width: 130, minWidth: 130, maxWidth: 130, editable
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', width: 130, minWidth: 120,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={15} /></div>,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={15} /></div>,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_left')}</div>, accessor: 'leftQty', width: 150, minWidth: 80,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
       },
-      { id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+    ];
+    if(editable)
+      columns.push({
+        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
         Cell: ({ row, onClickDelete }) =>
           (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      },
-    ]);
+      });
+    setColumns(columns);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, editable]);
 
   const filterFunction = useCallback((rows, ids, query) => {
     return rows.filter(row => row.values['name']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['barCode']?.includes(query));
@@ -111,7 +114,7 @@ function Card(props){
       <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight}}>
         <TableResize {...tableProps} />
       </div>
-      <ItemSelect {...selectProps} />
+      {editable && <ItemSelect {...selectProps} />}
       <div className={classPage}>
         <PaginationTable {...tableProps} />
         <div />

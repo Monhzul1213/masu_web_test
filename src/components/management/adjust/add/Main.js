@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -6,13 +6,19 @@ import { getList } from '../../../../services';
 import { DescrInput, Select } from '../../../all';
 
 export function Main(props){
-  const { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes } = props;
+  const { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes, editable } = props;
   const { t } = useTranslation();
   const [sites, setSites] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const disabled = detail?.length ? true : false;
+
+  useEffect(() => {
+    if(header) onFocusSite();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [header]);
 
   const onFocusSite = async () => {
     if(!sites?.length){
@@ -27,7 +33,7 @@ export function Main(props){
 
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusSite, loading, disabled };
-  const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100 };
+  const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
 
   return (
     <div className='po_back'>
