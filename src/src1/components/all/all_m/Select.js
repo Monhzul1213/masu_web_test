@@ -78,7 +78,7 @@ export function PlainSelect(props){
 
 export function CustomSelect(props){
   const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem,
-    filterOption, setError, setEdited, onSearch, text, setData } = props;
+    filterOption, setError, setEdited, onSearch, text, setData, disabled } = props;
   const { t } = useTranslation();
 
   const handleChange = e => {
@@ -109,7 +109,8 @@ export function CustomSelect(props){
           onDropdownVisibleChange={onDropdownVisibleChange}
           onFocus={onFocus}
           notFoundContent={empty}
-          placeholder={placeholder}>
+          placeholder={placeholder}
+          disabled={disabled}>
           {data?.map(renderItem)}
         </AntSelect>
       </div>

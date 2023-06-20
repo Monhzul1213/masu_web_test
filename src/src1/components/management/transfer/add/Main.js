@@ -1,44 +1,66 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Input , UploadImage, Radio } from '../../../all/all_m';
-import { withSize } from 'react-sizeme';
-import { Date } from '../../../../../components/all';
+import { useDispatch, useSelector } from 'react-redux';
 
- function Card(props){
-  const {setEdited, setError, name, setName, link, setLink, setBeginDate, beginDate,
-    endDate, setEndDate, image, setImage,size,  setImage64, setImageType, status, setStatus} = props;
+import { getList } from '../../../../../services';
+import { DescrInput, Select } from '../../../../../components/all';
+
+export function Main(props){
+  const { setError, setEdited, header, detail, toSiteId, setToSiteId, fromSiteId, setFromSiteId, notes, setNotes, editable } = props;
   const { t } = useTranslation();
+  const [fromSites, setFromSites] = useState([]);
+  const [toSites, setToSites] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
+  const disabled = detail?.length ? true : false;
 
   useEffect(() => {
+    if(header){
+      onFocusFromSite() 
+      onFocusToSite();
+    } 
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [header]);
 
-  const id = size?.width > 480 ? 'im_large' : 'im_small';
+  const onFocusFromSite = async () => {
+    if(!fromSites?.length){
+      setError(null);
+      setLoading(true);
+      const response = await dispatch(getList(user, token, 'Site/GetSite'));
+      setLoading(false);
+      if(response?.error) setError(response?.error);
+      else setFromSites(response?.data);
+    }
+  }
 
-  const nameProps = { value: name, setValue: setName, label: t('advert.name'), placeholder: t('advert.name'), setError, setEdited,};
-  const codeProps = { value: link, setValue: setLink, label: t('advert.link'), placeholder: t('advert.link'), setError, setEdited,};
-  const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image_z' };
-  const beginProps = { value: beginDate, setValue: setBeginDate, label: t('invoice.begin'), inRow: true };
-  const endProps = { value: endDate, setValue: setEndDate, label: t('invoice.end'), inRow: true };
-  const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: t('advert.types'), setError, setEdited };
+  const onFocusToSite = async () => {
+    if(!toSites?.length){
+      setError(null);
+      setLoading(true);
+      const response = await dispatch(getList(user, token, 'Site/GetSite'));
+      setLoading(false);
+      if(response?.error) setError(response?.error);
+      else setToSites(response?.data);
+    }
+  }
+
+  const fromSiteProps = { value: fromSiteId, setValue: setFromSiteId, label: t('transfer.from_site'), placeholder: t('order.site'), data: fromSites, setError, setEdited,
+    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusFromSite, loading, disabled };
+  const toSiteProps = { value: toSiteId, setValue: setToSiteId, label: t('transfer.to_site'), placeholder: t('order.site'), data: fromSites, setError, setEdited,
+    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusToSite, loading, disabled };
+  const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
 
   return (
-    <div className='ac_back_z' id={id}>
-      <form>
-            <UploadImage {...imageProps} />
-            <Input {...nameProps}  />
-            <div className='ac_row' style={{marginTop: 20}}>
-              <Date {...beginProps} />
-              <div className='gap' />
-              <Date {...endProps} />
-            </div>
-            <Input {...codeProps}  />
-            <Radio {...statusProps}/> 
-        </form>
+    <div className='tr_back'>
+      {header?.transferNo ? <p className='ps_header_no' style={{marginBottom: 10}}>{header?.transferNo}</p> : null}
+      <div className='ac_row' style={{marginTop: 0}}>
+          <Select {...fromSiteProps} />
+          <div className='gap' />
+          <Select {...toSiteProps} />
+        </div>
+      <DescrInput {...descrProps} />
     </div>
-    
-  )
+  );
 }
-const withSizeHOC = withSize();
-export const Main = withSizeHOC(Card);

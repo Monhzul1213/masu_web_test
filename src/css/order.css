@@ -21,6 +21,10 @@
   padding: var(--page-padding) var(--page-padding) 0 var(--page-padding);
 }
 
+.po_back_invt3 {
+  padding: 0 var(--page-padding);
+}
+
 .po_add_btn {
   border: none;
   display: flex;

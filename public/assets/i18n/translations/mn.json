@@ -89,6 +89,8 @@
     "/management/order_list/order_receipt": "Худалдан авалтын захиалгаас орлого авах",
     "/management/invt_remainder": "Барааны үлдэгдэл",
     "/management/invt_txn": "Бараа гүйлгээ",
+    "/management/adjust": "Тохируулга",
+    "/management/adjust/adjust_add": "Тохируулга хийх",
     "/management/transfer": "Хөдөлгөөн",
     "/management/transfer_add": "Хөдөлгөөн хийх",
     "/employee": "Ажилтан",
@@ -178,6 +180,7 @@
     "terms": "Үйлчилгээний дэлгэрэнгүй",
     "invt_remainder": "Барааны үлдэгдэл",
     "invt_txn": "Бараа гүйлгээ",
+    "adjust": "Тохируулга",
     "transfer": "Хөдөлгөөн"
   },
   "page": {
@@ -1048,12 +1051,32 @@
     "costNo" : "Гүйлгээ #",
     "costDate": "Огноо"
   },
+  "adjust": {
+    "add": "Тохируулга хийх",
+    "t_no": "Тохируулга №",
+    "t_date": "Огноо",
+    "t_site": "Салбар",
+    "t_status": "Төлөв",
+    "t_emp": "Ажилтан",
+    "t_total_qty": "Нийт тоо",
+    "t_total_cost": "Нийт өртөг",
+    "warning_item": "Дэлгүүр сонгоно уу",
+    "t_type": "Төрөл",
+    "t_left": "Тооцсон үлдэгдэл",
+    "items_error": "Тохируулгад дор хаяж нэг барааг оруулна уу",
+    "add_success": "Тохируулга амжилттай хийлээ.",
+    "delete_success": "Тохируулга амжилттай устгагдлаа."
+  },
   "transfer":{
+    "t_no": "Хөдөлгөөн №",
     "edit": "Хөдөлгөөн засах",
     "title": "Хөдөлгөөн",
     "add": "Хөдөлгөөн хийх",
     "from_site": "Салбар хаанаас",
-    "to_site": "Салбар хаашаа"
+    "to_site": "Салбар хаашаа",
+    "items_error": "Хөдөлгөөнд дор хаяж нэг барааг оруулна уу",
+    "add_success": "Хөдөлгөөн амжилттай хийлээ.",
+    "delete_success": "Хөдөлгөөн амжилттай устгагдлаа."
   },
   "version": "11"
 }

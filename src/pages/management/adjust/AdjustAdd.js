@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getList, sendRequest } from '../../../services';
 import { add } from '../../../helpers';
 import { Error1, Overlay, Prompt } from '../../../components/all';
-import { Main, List, ButtonRow } from '../../components/management/transfer/add';
+import { Main, List, ButtonRow } from '../../../components/management/adjust/add';
 
-export function TransferAdd(){
+export function AdjustAdd(){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
@@ -17,8 +17,7 @@ export function TransferAdd(){
   const [header, setHeader] = useState(null);
   const [detail, setDetail] = useState([]);
   const [items, setItems] = useState([]);
-  const [toSiteId, setToSiteId] = useState({ value: null });
-  const [fromSiteId, setFromSiteId] = useState({ value: null });
+  const [siteId, setSiteId] = useState({ value: null });
   const [notes, setNotes] = useState({ value: '' });
   const [search, setSearch] = useState({ value: null });
   const [dItems, setDItems] = useState([]);
@@ -42,51 +41,53 @@ export function TransferAdd(){
   }, []);
 
   const getData = async () => {
-    let transferNo = searchParams?.get('transferNo');
-    if(transferNo){
+    let adjustNo = searchParams?.get('adjustNo');
+    if(adjustNo){
       onLoad();
-      const response = await dispatch(getList(user, token, 'Txn/GetTransfer?TransferNo=' + transferNo));
+      const response = await dispatch(getList(user, token, 'Txn/GetAdjust?AdjustNo=' + adjustNo));
       if(response?.error) onError(response?.error, false);
       else {
-        let header = response?.data?.inTransfer && response?.data?.inTransfer[0];
+        let header = response?.data?.adjfinal && response?.data?.adjfinal[0];
         setHeader(header);
         setEditable(header?.status !== 1);
-        setFromSiteId({ value: header?.fromSiteId });
-        setToSiteId({ value: header?.toSiteId });
+        setSiteId({ value: header?.siteId });
         setNotes({ value: header?.descr });
-        response?.data?.inTransferItem?.forEach(item => {
-          item.transferItemID = item.transferItemId;
+        response?.data?.inAdjustitem?.map(item => {
+          item.adjustItemID = item.adjustItemId;
+          item.sourceItemID = item.sourceItemId;
+          item.origCost = item.cost;
           item.rowStatus = 'U';
           item.name = item.invtName;
+          item.allowDecimal = item?.isEach === 'N';
           item.leftQty = add(item.siteQty, item.qty);
         });
-        setDetail(response?.data?.inTransferItem);
-        setItems(response?.data?.inTransferItem);
+        setDetail(response?.data?.inAdjustitem);
+        setItems(response?.data?.inAdjustitem);
         onSuccess();
       }
     }
   }
 
-  const onClickCancel = () => navigate({ pathname: '/management/transfer' });
+  const onClickCancel = () => navigate({ pathname: '/management/adjust' });
 
   const validateData = status => {
-    let isSiteValid = fromSiteId?.value || fromSiteId?.value === 0;
+    let isSiteValid = siteId?.value || siteId?.value === 0;
     let length = detail?.filter(item => item?.qty)?.length;
     if(isSiteValid && length){
-      let transferNo = header?.transferNo ?? 0;
-      let inTransfer = { fromSiteID: fromSiteId?.value, toSiteID: toSiteId?.value, status, descr: notes?.value, rowStatus: transferNo ? 'U' : 'I' };
-      let inTransferItem = [];
+      let adjustNo = header?.adjustNo ?? 0;
+      let inAdjust = { adjustNo, orderNo: 0, siteID: siteId?.value, status, descr: notes?.value, rowStatus: adjustNo ? 'U' : 'I' };
+      let inAdjustItems = [];
       detail?.forEach(item => {
         if(item?.qty){
-          // item.transferItemID = transferNo;
-          inTransferItem.push(item);
+          item.adjustNo = adjustNo;
+          inAdjustItems.push(item);
         }
       })
-      dItems?.forEach(it => inTransferItem?.push({...it, rowStatus: 'D'}));
-      return { inTransfer, inTransferItem };
+      dItems?.forEach(it => inAdjustItems?.push({...it, rowStatus: 'D'}));
+      return { inAdjust, inAdjustItems };
     } else {
-      if(!(fromSiteId?.value || fromSiteId?.value === 0)) setFromSiteId({ value: fromSiteId?.value, error: t('error.not_empty') });
-      if(!length) setSearch({ value: null, error: t('transfer.items_error') });
+      if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
+      if(!length) setSearch({ value: null, error: t('adjust.items_error') });
       return false;
     }
   }
@@ -95,21 +96,20 @@ export function TransferAdd(){
     let data = validateData(status);
     if(data){
       onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Txn/ModTransfer', data));
-      console.log(data)
+      const response = await dispatch(sendRequest(user, token, 'Txn/ModAdjust', data));
       if(response?.error) onError(response?.error, true);
-      else onSuccess(t('transfer.add_success'));
+      else onSuccess(t('adjust.add_success'));
     }
   }
 
   const onClickDelete = async () => {
-    let inTransfer = {...header, rowStatus: 'D'};
-    let inTransferItem = items?.map(item => { return {...item, rowStatus: 'D'}});
-    let data = { inTransfer, inTransferItem };
+    let inAdjust = {...header, rowStatus: 'D'};
+    let inAdjustItems = items?.map(item => { return {...item, rowStatus: 'D'}});
+    let data = { inAdjust, inAdjustItems };
     onLoad();
-    const response = await dispatch(sendRequest(user, token, 'Txn/ModTransfer', data));
+    const response = await dispatch(sendRequest(user, token, 'Txn/ModAdjust', data));
     if(response?.error) onError(response?.error, true);
-    else onSuccess(t('transfer.delete_success'));
+    else onSuccess(t('adjust.delete_success'));
   }
 
   const onLoad = () => {
@@ -133,8 +133,8 @@ export function TransferAdd(){
   }
 
 
-  let mainProps = { setError, setEdited, header, detail, fromSiteId, setFromSiteId, toSiteId, setToSiteId, notes, setNotes, editable };
-  let listProps = { detail, setDetail, search, setSearch, fromSiteId, toSiteId, setEdited, setDItems, editable };
+  let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes, editable };
+  let listProps = { detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), onClickDelete, header };
 
   return (
@@ -145,7 +145,7 @@ export function TransferAdd(){
         <form>
           <Main {...mainProps} />
           <div className='gap' />
-          <div className='tr_back' id='po_back_invt'>
+          <div className='po_back' id='po_back_invt'>
             <List {...listProps} />
           </div>
         </form>

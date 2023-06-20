@@ -4,8 +4,7 @@ import { useBlockLayout, usePagination, useResizeColumns, useRowSelect, useSortB
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-import { Money, PaginationTable } from '../../../all/all_m';
-import { TableResize } from '../../../../../components/all';
+import { Money, PaginationTable, TableResize } from '../../../all';
 
 export function List(props){
   const { data, size } = props;
@@ -16,29 +15,28 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('transfer.t_no'), accessor: 'transferNo', width: 130, minWidth: 80 },
+      { Header: t('adjust.t_no'), accessor: 'adjustNo', width: 130, minWidth: 80 },
       {
-        Header: t('adjust.t_date'), accessor: 'txnDate', width: 120, minWidth: 100,
+        Header: t('adjust.t_date'), accessor: 'txnDate', width: 105, minWidth: 100,
         Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD')}</div>
       },
-      { Header: t('transfer.from_site'), accessor: 'fromSiteName', width: 200, minWidth: 90 },
-      { Header: t('transfer.to_site'), accessor: 'toSiteName', width: 200, minWidth: 90 },
+      { Header: t('adjust.t_site'), accessor: 'siteName', width: 140, minWidth: 90 },
       {
-        Header: t('adjust.t_status'), accessor: 'statusName', width: 160, minWidth: 80,
+        Header: t('adjust.t_status'), accessor: 'statusName', width: 150, minWidth: 80,
         Cell: ({ value, row }) => {
           let status = row?.original?.status;
           let color = status !== 1 ? 'var(--text-color)' : 'var(--text2-color)';
           return <span style={{ color }}>{value}</span>
         }
       },
-      { Header: t('adjust.t_emp'), accessor: 'txnEmpName', width: 140, minWidth: 100 },
+      { Header: t('adjust.t_emp'), accessor: 'txnEmpNme', width: 120, minWidth: 100 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_qty')}</div>, accessor: 'totalQty',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 120, minWidth: 100,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 110, minWidth: 100,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>, width: 150, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>, width: 140, minWidth: 140,
       },
     ]);
     return () => {};
@@ -54,12 +52,12 @@ export function List(props){
   }, [size?.width]);
 
   const onRowClick = row => {
-    navigate({ pathname: 'transfer_add', search: createSearchParams({ transferNo: row?.original?.transferNo }).toString() });
+    navigate({ pathname: 'adjust_add', search: createSearchParams({ adjustNo: row?.original?.adjustNo }).toString() });
   }
 
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'transferNo', desc: true }] }},
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'adjustNo', desc: true }] }},
     useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };
 

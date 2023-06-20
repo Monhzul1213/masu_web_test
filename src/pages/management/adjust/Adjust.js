@@ -8,9 +8,9 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Filter, List } from '../../components/management/transfer/list';
+import { Filter, List } from '../../../components/management/adjust/list';
 
-export function Transfer(){
+export function Adjust(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -31,14 +31,13 @@ export function Transfer(){
   const onSearch = async query => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Txn/GetTransfer' + (query ?? '')));
-    console.log(response)
+    const response = await dispatch(getList(user, token, 'Txn/GetAdjust' + (query ?? '')));
     if(response?.error) setError(response?.error);
-    else setData(response?.data?.inTransfer);
+    else setData(response?.data?.adjfinal);
     setLoading(false);
   }
 
-  const onClickAdd = () => navigate('/management/transfer/transfer_add');
+  const onClickAdd = () => navigate('/management/adjust/adjust_add');
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
