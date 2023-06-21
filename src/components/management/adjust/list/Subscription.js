@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Steps } from 'antd';
+import { message, Modal, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
-import { divide, formatNumber, siteSubscriptions } from '../../../../helpers';
+import { banks, divide, formatNumber, siteSubscriptions } from '../../../../helpers';
+import { getList, sendRequest } from '../../../../services';
+import { qr_holder } from '../../../../assets';
 import { Check, DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Step } from '../../../emp/employee/add/Step';
+import { Select, Field } from '../../../emp/employee/add/Field';
 
 export function Subscription(props){
-  const { visible, setVisible, sites, setSites } = props;
+  const { visible, setVisible, sites, setSites, onDone } = props;
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [current, setCurrent] = useState(0);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
   const [amt, setAmt] = useState(0);
+  const [txnNo, setTxnNo] = useState('');
+  const { user, token } = useSelector(state => state.login);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,26 +43,46 @@ export function Subscription(props){
       setAmt(amt);
       setSelected(item);
     }
+    setError(null);
   }
 
-  const typeProps = { selected, onSelect, amt, sites, setSites, setAmt };
-  const payProps = { };
+  const typeProps = { selected, onSelect, amt, sites, setSites, setAmt, setError };
+  const payProps = { amt, txnNo, onDone, setError };
 
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
   ];
 
-  const onBack = () => {};
-  const onDone = () => {};
-  const onNext = () => {};
+  const onNext = async () => {
+    let checked = sites?.filter(i => i.checked)?.length;
+    if(checked){
+      setError(null);
+      setLoading(true);
+      let siteID = [];
+      sites?.map(item => { if(item?.checked) siteID?.push(item?.siteId); });
+      let data = { invoicetime: selected?.length, invoiceAmount: amt, siteID }
+      let response = await dispatch(sendRequest(user, token, 'Txn/ModSiteInvoice', data));
+      if(response?.error) setError(response?.error);
+      else {
+        if(selected?.value === 2){
+          onDone();
+        } else {
+          setCurrent(1);
+          setTxnNo(response?.data?.invoiceNo);
+        }
+      }
+      setLoading(false);
+    } else
+      setError(t('adjust.select_site'));
+  }
   const onClose = () => {
     setSites([]);
     setVisible(false);
     navigate(-1);
   }
 
-  const stepProps = { current, steps, onBack, onDone, onNext };
+  const stepProps = { current, steps, onBack: onClose, onDone, onNext };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={640}>
@@ -70,7 +99,7 @@ export function Subscription(props){
 }
 
 function Type(props){
-  const { selected, onSelect, amt, sites, setSites, setAmt } = props;
+  const { selected, onSelect, amt, sites, setSites, setAmt, setError } = props;
   const { t } = useTranslation();
 
   const renderItem = (item, index) => {
@@ -97,6 +126,7 @@ function Type(props){
     setSites(newSites);
     let amt = divide(newSites?.filter(i => i.checked)?.length, selected?.amt, true);
     setAmt(amt);
+    setError(null);
   }
 
   const renderSite = (item, index) => {
@@ -114,6 +144,7 @@ function Type(props){
       <div className='es_types'>
         {siteSubscriptions?.map(renderItem)}
       </div>
+      <p className='ss_site_title'>{t('adjust.select_site')}</p>
       <div className='ss_sites'>
         {sites?.map(renderSite)}
       </div>
@@ -123,82 +154,15 @@ function Type(props){
 }
 
 function Pay(props){
-  const { } = props;
-  
-  return (
-    <div>
-      Pay
-    </div>
-  );
-}
-/**
-comment
-import { message, Modal, Steps } from 'antd';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import QRCode from 'react-qr-code';
-
-import { banks, formatNumber, subscriptions } from '../../../../helpers';
-import { getList, sendRequest } from '../../../../services';
-import { qr_holder } from '../../../../assets';
-import { DynamicMDIcon, Error1, Overlay } from '../../../all';
-import { Field, Select } from './Field';
-import { Step } from './Step';
-
-export function Subscription(props){
-  const { visible, emp, onBack, onDone, onPay, invNo } = props;
-  const [txnNo, setTxnNo] = useState('');
-  const { user, token } = useSelector(state => state.login);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    setError(null);
-    if(visible && invNo){
-      setCurrent(1);
-      setTxnNo(invNo);
-      setAmt(emp?.amount)
-    } else {
-      setTxnNo('');
-      setCurrent(0);
-    }
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
-
-  const onNext = async () => {
-    setError(null);
-    setLoading(true);
-    let data = {
-      invoiceNo: '',
-      invoiceType: 'Employee',
-      invoiceTime: selected?.value ? 'YEAR' : 'MONTH',
-      amount: selected?.amt,
-      rowStatus: 'I',
-      empCode: emp?.empCode
-    }
-    let response = await dispatch(sendRequest (user, token, 'Txn/ModInvoice', data));
-    if(response?.error) setError(response?.error);
-    else {
-      setCurrent(1);
-      setTxnNo(response?.data?.invoiceNo);
-    }
-   
-    setLoading(false);
-  }
-
-  const payProps = { amt, txnNo, setError, onPay, onBack };
-}
-
-function Pay(props){
-  const { amt, txnNo, setError, onPay, onBack } = props;
+  const { amt, txnNo, onDone, setError } = props;
   const { t } = useTranslation();
-  const [value, setValue] = useState(0);
-  const [selected, setSelected] = useState(banks[0]);
   const [loading, setLoading] = useState(false);
   const [qr, setQR] = useState('');
+  const [value, setValue] = useState(0);
+  const [selected, setSelected] = useState(banks[0]);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     getQR();
     return () => {};
@@ -218,8 +182,7 @@ function Pay(props){
       let invoice = response?.data && response?.data[0]?.status;
       if(invoice === 3){
         message.success(t('employee.success_pay'));
-        if(onPay) onPay()
-        else onBack();
+        onDone();
       }
     }
   };
@@ -229,7 +192,7 @@ function Pay(props){
     setLoading(true);
     setQR(null);
     let data = { invoiceNo: txnNo, amount: amt };
-    let response = await dispatch(sendRequest (user, token, 'System/GetQPayQr', data));
+    let response = await dispatch(sendRequest(user, token, 'System/GetQPayQr', data));
     if(response?.error) setError(response?.error);
     else setQR(response?.data?.qr_text)
     setLoading(false);
@@ -239,9 +202,9 @@ function Pay(props){
     setValue(index);
     setSelected(banks[index]);
   }
-
-  const bankProps = { value, setValue: changeValue, data: banks, label: t('employee.bank') };
   
+  const bankProps = { value, setValue: changeValue, data: banks, label: t('employee.bank') };
+
   return (
     <div className='es_scroll'>
       <p className='es_title'>{t('employee.pay')}</p>
@@ -273,4 +236,3 @@ function Pay(props){
     </div>
   );
 }
- */

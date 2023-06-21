@@ -596,7 +596,7 @@ export const status = [
 ];
 
 export const siteSubscriptions = [
-  { amt: 25000, length: 'сар', text: 'Сараар нэг салбар', value: 0, label: "25,000₮/салбар" },
-  { amt: 250000, length: 'жил', text: 'Жилээр нэг салбар', value: 1, label: "250,000₮/салбар" },
-  { amt: 0, length: 'жил', text: '14 хоног үнэгүй', value: 2, label: "Туршилт хийх" },
+  { amt: 25000, length: 'MONTH', text: 'Сараар нэг салбар', value: 0, label: "25,000₮/салбар" },
+  { amt: 250000, length: 'YEAR', text: 'Жилээр нэг салбар', value: 1, label: "250,000₮/салбар" },
+  { amt: 0, length: 'TRIAL', text: '14 хоног үнэгүй', value: 2, label: "Туршилт хийх" },
 ];

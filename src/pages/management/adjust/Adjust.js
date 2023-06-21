@@ -34,7 +34,7 @@ export function Adjust(){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Txn/GetAdjust' + (query ?? '')));
-    if(response?.code === 100){
+    if(response?.code === 1000){
       setVisible(true);
       setSites(response?.data);
     }
@@ -43,11 +43,18 @@ export function Adjust(){
     setLoading(false);
   }
 
+  const onDone = async () => {
+    setVisible(false);
+    setSites([]);
+    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
+    onSearch(query);
+  }
+
   const onClickAdd = () => navigate('/management/adjust/adjust_add');
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
-  const subProps = { visible, setVisible, sites, setSites };
+  const subProps = { visible, setVisible, sites, setSites, onDone };
 
   return (
     <div className='s_container_i'>

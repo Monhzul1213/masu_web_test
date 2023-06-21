@@ -528,7 +528,6 @@
 }
 
 .ss_sites {
-  margin-top: 10px;
   overflow-y: scroll;
   max-height: 360px;
   display: flex;
@@ -552,4 +551,10 @@
 .ss_site_text {
   margin: 0 0 0 10px;
   font-size: 15px;
+}
+
+.ss_site_title {
+  margin: 10px 0 0 10px;
+  font-size: 15px;
+  font-weight: 500;
 }
