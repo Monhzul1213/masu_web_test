@@ -517,3 +517,39 @@
   background-color: var(--config-color);
   cursor: pointer;
 }
+
+.ss_amt {
+  position: absolute;
+  bottom: 20px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  left: 25px;
+}
+
+.ss_sites {
+  margin-top: 10px;
+  overflow-y: scroll;
+  max-height: 360px;
+  display: flex;
+  flex-flow: column;
+}
+
+.ss_site_btn {
+  display: flex;
+  flex-flow: row;
+  background-color: var(--root-color);
+  border: none;
+  max-width: 360px;
+  align-items: center;
+  padding: 10px 5px;
+}
+
+.ss_site_btn:not(:first-child) {
+  border-top: var(--line-color) 1px solid;
+}
+
+.ss_site_text {
+  margin: 0 0 0 10px;
+  font-size: 15px;
+}
