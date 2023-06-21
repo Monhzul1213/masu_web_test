@@ -46,9 +46,9 @@ export function Main(props){
     }
   }
 
-  const fromSiteProps = { value: fromSiteId, setValue: setFromSiteId, label: t('transfer.from_site'), placeholder: t('order.site'), data: fromSites, setError, setEdited,
+  const fromSiteProps = { value: fromSiteId, setValue: setFromSiteId, label: t('transfer.from_site'), placeholder: t('report_receipt.dr_site'), data: fromSites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusFromSite, loading, disabled };
-  const toSiteProps = { value: toSiteId, setValue: setToSiteId, label: t('transfer.to_site'), placeholder: t('order.site'), data: fromSites, setError, setEdited,
+  const toSiteProps = { value: toSiteId, setValue: setToSiteId, label: t('transfer.to_site'), placeholder: t('report_receipt.dr_site'), data: fromSites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusToSite, loading, disabled };
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
 

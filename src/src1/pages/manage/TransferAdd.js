@@ -55,6 +55,7 @@ export function TransferAdd(){
         setToSiteId({ value: header?.toSiteId });
         setNotes({ value: header?.descr });
         response?.data?.inTransferItem?.forEach(item => {
+          console.log(item)
           item.transferItemID = item.transferItemId;
           item.rowStatus = 'U';
           item.name = item.invtName;

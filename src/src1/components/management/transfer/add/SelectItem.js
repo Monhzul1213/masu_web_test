@@ -62,7 +62,7 @@ export function ItemSelect(props){
     return option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option?.sku?.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
 
-  const selectProps = { value: search, setValue: onSelect, placeholder: disabled ? t('adjust.warning_item') : t('inventory.search'), data: items,
+  const selectProps = { value: search, setValue: onSelect, placeholder: disabled ? t('transfer.warning_item') : t('inventory.search'), data: items,
     className: 'kit_select', classBack: 'kit_search', renderItem, filterOption, onSearch: setText, text, setData: setItems, disabled };
 
   return (

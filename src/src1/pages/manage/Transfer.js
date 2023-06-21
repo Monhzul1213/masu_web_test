@@ -38,7 +38,7 @@ export function Transfer(){
     setLoading(false);
   }
 
-  const onClickAdd = () => navigate('/management/transfer/transfer_add');
+  const onClickAdd = () => navigate('transfer_add');
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
