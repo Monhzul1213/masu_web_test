@@ -55,7 +55,6 @@ export function TransferAdd(){
         setToSiteId({ value: header?.toSiteId });
         setNotes({ value: header?.descr });
         response?.data?.inTransferItem?.forEach(item => {
-          console.log(item)
           item.transferItemID = item.transferItemId;
           item.rowStatus = 'U';
           item.name = item.invtName;
@@ -97,7 +96,6 @@ export function TransferAdd(){
     if(data){
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/ModTransfer', data));
-      console.log(data)
       if(response?.error) onError(response?.error, true);
       else onSuccess(t('transfer.add_success'));
     }

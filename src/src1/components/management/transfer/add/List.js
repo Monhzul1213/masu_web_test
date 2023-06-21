@@ -73,7 +73,6 @@ function Card(props){
   }
 
   const newItem = invt => {
-    console.log(invt)
     return {
       name: invt.name, invtId: invt.invtId, sku: invt?.sku, barCode: invt?.barCode,
       siteQty: invt?.siteQty, qty: 0, cost: invt.cost, leftQty: invt?.siteQty, totalCost: 0,

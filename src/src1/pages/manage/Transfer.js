@@ -32,7 +32,6 @@ export function Transfer(){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Txn/GetTransfer' + (query ?? '')));
-    console.log(response)
     if(response?.error) setError(response?.error);
     else setData(response?.data?.inTransfer);
     setLoading(false);
