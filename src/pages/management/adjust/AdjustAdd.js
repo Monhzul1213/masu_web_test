@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getList, sendRequest } from '../../../services';
 import { add } from '../../../helpers';
-import { Error1, Overlay, Prompt } from '../../../components/all';
+import { Confirm, Error1, Overlay, Prompt } from '../../../components/all';
 import { Main, List, ButtonRow } from '../../../components/management/adjust/add';
+import { Subscription } from '../../../components/management/adjust/list';
 
 export function AdjustAdd(){
   const { t } = useTranslation();
@@ -23,6 +24,10 @@ export function AdjustAdd(){
   const [dItems, setDItems] = useState([]);
   const [saved, setSaved] = useState(false);
   const [editable, setEditable] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [sites, setSites] = useState([]);
+  const [status, setStatus] = useState(0);
+  const [open, setOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -95,9 +100,15 @@ export function AdjustAdd(){
   const onClickSave = async status => {
     let data = validateData(status);
     if(data){
+      setStatus(status);
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/ModAdjust', data));
-      if(response?.error) onError(response?.error, true);
+      if(response?.code === 1001){
+        onError(response?.error, true);
+        setOpen(true);
+        setSites(response?.data);
+      }
+      else if(response?.error) onError(response?.error, true);
       else onSuccess(t('adjust.add_success'));
     }
   }
@@ -132,14 +143,28 @@ export function AdjustAdd(){
     setLoading(false);
   }
 
+  const onDone = async () => {
+    setVisible(false);
+    setSites([]);
+    onClickSave(status);
+  }
+
+  const confirm = sure => {
+    setOpen(false);
+    if(sure) setVisible(true);
+  }
 
   let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes, editable };
   let listProps = { detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), onClickDelete, header };
+  let subProps = { visible, setVisible, sites, setSites, onDone, noTrial: true, noBack: true };
+  let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
 
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
+      <Confirm {...confirmProps} />
+      {visible && <Subscription {...subProps} />}
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>

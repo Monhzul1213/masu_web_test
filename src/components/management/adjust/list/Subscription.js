@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
-import { banks, divide, formatNumber, siteSubscriptions } from '../../../../helpers';
+import { banks, divide, formatNumber, siteSubscriptions, siteSubscriptions1 } from '../../../../helpers';
 import { getList, sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
 import { Check, DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../all';
@@ -14,7 +14,7 @@ import { Step } from '../../../emp/employee/add/Step';
 import { Select, Field } from '../../../emp/employee/add/Field';
 
 export function Subscription(props){
-  const { visible, setVisible, sites, setSites, onDone } = props;
+  const { visible, setVisible, sites, setSites, onDone, noTrial, noBack } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -22,12 +22,14 @@ export function Subscription(props){
   const [selected, setSelected] = useState(null);
   const [amt, setAmt] = useState(0);
   const [txnNo, setTxnNo] = useState('');
+  const [data, setData] = useState([]);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     setSelected(siteSubscriptions && siteSubscriptions[0]);
+    setData(noTrial ? siteSubscriptions1 : siteSubscriptions);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -46,7 +48,7 @@ export function Subscription(props){
     setError(null);
   }
 
-  const typeProps = { selected, onSelect, amt, sites, setSites, setAmt, setError };
+  const typeProps = { selected, onSelect, amt, sites, setSites, setAmt, setError, data };
   const payProps = { amt, txnNo, onDone, setError };
 
   const steps = [
@@ -79,7 +81,7 @@ export function Subscription(props){
   const onClose = () => {
     setSites([]);
     setVisible(false);
-    navigate(-1);
+    if(!noBack) navigate(-1);
   }
 
   const stepProps = { current, steps, onBack: onClose, onDone, onNext };
@@ -99,7 +101,7 @@ export function Subscription(props){
 }
 
 function Type(props){
-  const { selected, onSelect, amt, sites, setSites, setAmt, setError } = props;
+  const { selected, onSelect, amt, sites, setSites, setAmt, setError, data } = props;
   const { t } = useTranslation();
 
   const renderItem = (item, index) => {
@@ -142,7 +144,7 @@ function Type(props){
     <div className='es_scroll'>
       <p className='es_title'>{t('adjust.subscription')}</p>
       <div className='es_types'>
-        {siteSubscriptions?.map(renderItem)}
+        {data?.map(renderItem)}
       </div>
       <p className='ss_site_title'>{t('adjust.select_site')}</p>
       <div className='ss_sites'>

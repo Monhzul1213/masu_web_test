@@ -53,12 +53,12 @@ export const sendRequest = (user, token, api, data, contentType) => async dispat
         if(responseNew?.rettype === 0){
           return Promise.resolve({ error: null, data: responseNew?.retdata });
         } else
-          return Promise.resolve({ error: responseNew?.retdesc ?? responseNew?.message ?? 'Алдаа гарлаа.' });
+          return Promise.resolve({ error: responseNew?.retdesc ?? responseNew?.message ?? 'Алдаа гарлаа.', code: responseNew?.rettype, data: responseNew?.retdata });
       }
     } else if(response?.rettype === 0){
       return Promise.resolve({ error: null, data: response?.retdata });
     }
-    return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.' });
+    return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.', code: response?.rettype, data: response?.retdata });
   } catch (err) {
     console.log(err);
     return Promise.resolve({ error: err?.toString() });
