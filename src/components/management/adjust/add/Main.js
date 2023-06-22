@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { MdChevronLeft } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { getList } from '../../../../services';
-import { DescrInput, Select } from '../../../all';
+import { DescrInput, IconButton, Select } from '../../../all';
 
 export function Main(props){
   const { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes, editable } = props;
@@ -12,6 +14,7 @@ export function Main(props){
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const disabled = detail?.length ? true : false;
 
   useEffect(() => {
@@ -31,15 +34,26 @@ export function Main(props){
     }
   }
 
+  const onClickBack = e => {
+    e?.preventDefault();
+    navigate('/management/adjust');
+  }
+
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusSite, loading, disabled };
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
+  const backProps = { className: 'ps_back_btn', text: t('adjust.back'), icon: <MdChevronLeft className='ps_back_icon' />, onClick: onClickBack };
 
   return (
-    <div className='po_back'>
-      {header?.adjustNo ? <p className='ps_header_no' style={{marginBottom: 10}}>{header?.adjustNo}</p> : null}
-      <div style={{marginTop: 0}}><Select {...siteProps} /></div>
-      <DescrInput {...descrProps} />
+    <div className='ad_back'>
+      <div className='ps_menu_back'>
+        <IconButton {...backProps} />
+      </div>
+      <div className='ad_main'>
+        {header?.adjustNo ? <p className='ps_header_no' style={{marginBottom: 10}}>{header?.adjustNo}</p> : null}
+        <div style={{marginTop: 0}}><Select {...siteProps} /></div>
+        <DescrInput {...descrProps} />
+      </div>
     </div>
   );
 }
