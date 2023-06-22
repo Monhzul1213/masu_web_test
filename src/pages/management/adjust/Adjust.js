@@ -35,6 +35,9 @@ export function Adjust(){
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Txn/GetAdjust' + (query ?? '')));
     if(response?.code === 1000){
+      // comment
+      // isNew or isExpired
+      // || response?.code === 1001
       setVisible(true);
       setSites(response?.data);
     }
