@@ -570,3 +570,8 @@
 .ad_main {
   padding: var(--page-padding);
 }
+
+.ad_row {
+  display: flex;
+  flex-flow: row;
+}

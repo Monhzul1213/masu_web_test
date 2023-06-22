@@ -41,7 +41,7 @@ export function Main(props){
 
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusSite, loading, disabled };
-  const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
+  const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable, inRow: true };
   const backProps = { className: 'ps_back_btn', text: t('adjust.back'), icon: <MdChevronLeft className='ps_back_icon' />, onClick: onClickBack };
 
   return (
@@ -51,8 +51,11 @@ export function Main(props){
       </div>
       <div className='ad_main'>
         {header?.adjustNo ? <p className='ps_header_no' style={{marginBottom: 10}}>{header?.adjustNo}</p> : null}
-        <div style={{marginTop: 0}}><Select {...siteProps} /></div>
-        <DescrInput {...descrProps} />
+        <div className='ad_row'>
+          <div style={{marginTop: 0, flex: 1}}><Select {...siteProps} /></div>
+           <div className='gap' />
+          <DescrInput {...descrProps} />
+        </div>
       </div>
     </div>
   );
