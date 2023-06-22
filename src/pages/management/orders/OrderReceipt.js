@@ -28,7 +28,7 @@ export function OrderReceipt(){
   const [notes, setNotes] = useState({ value: '' });
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState([]);
-  const [status, setStatus] = useState(0);
+  const [status1, setStatus] = useState(0);
   const [open, setOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
@@ -164,11 +164,12 @@ export function OrderReceipt(){
   const onDone1 = async () => {
     setVisible(false);
     setSites([]);
-    onClickSave(status);
+    // onClickSave(status1);
   }
 
   const confirm = sure => {
     setOpen(false);
+    setError(null);
     if(sure) setVisible(true);
   }
 
