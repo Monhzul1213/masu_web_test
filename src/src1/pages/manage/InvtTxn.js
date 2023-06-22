@@ -9,6 +9,7 @@ import { getList } from '../../../services';
 import { Error1, Overlay } from '../../../components/all';
 import '../../css/management.css'
 import { List } from '../../components/management/txn';
+import { divide } from '../../../helpers';
 
 
 export function InvtTxn(){
@@ -40,6 +41,9 @@ export function InvtTxn(){
     const response = await dispatch(getList(user, token, api, null, headers));
     if(response?.error) setError(response?.error);
     else {
+      response?.data.forEach((item, a) => {
+        item.qty_sign = divide(item.qty, item.sign, a)
+      })
       setData(response?.data);
       setExcelName(t('header./management/invt_txn'));
     }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { getList } from '../../../services';
 import '../../../css/config.css'
 import { Error, Overlay , Money } from '../all/all_m';

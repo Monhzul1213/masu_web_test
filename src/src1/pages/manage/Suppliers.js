@@ -5,8 +5,8 @@ import { message } from 'antd';
 import { SizeMe } from 'react-sizeme';
 import { useNavigate } from 'react-router-dom';
 
-import { Empty, Overlay, Error1 , Empty1} from '../../components/all/all_m';
-import { List , Header} from '../../components/management/suppliers';
+import { Empty, Overlay, Error1, Empty1 } from '../../components/all/all_m';
+import { List, Header } from '../../components/management/suppliers';
 import { getList, sendRequest } from '../../../services';
 import '../../css/supplier.css'
 

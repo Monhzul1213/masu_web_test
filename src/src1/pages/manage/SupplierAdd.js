@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useSearchParams  } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 import mime from 'mime';
 
 import {  getList, sendRequest } from '../../../services';
-import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
+import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all/all_m';
 import { Add } from '../../components/management/suppliers';
 import { urlToFile, validateEmail } from '../../../helpers';
 import '../../../css/invt.css';

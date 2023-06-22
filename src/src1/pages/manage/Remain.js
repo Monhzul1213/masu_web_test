@@ -22,9 +22,7 @@ export function Remain(){
 
   useEffect(() => {
     if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
-    else {
-      getData();
-    }
+    else { getData() }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

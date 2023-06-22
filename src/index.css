@@ -430,7 +430,7 @@ input[type="file"] {
   font-size: 32px;
   font-weight: 700;
   background: -webkit-linear-gradient(270deg, rgba(62,50,120,1) 0%, rgba(158,49,235,1) 100%);
-  -webkit-background-clip: text;
+  /* -webkit-background-clip: text; */
   -webkit-text-fill-color: transparent;
   opacity: 0.6;
 }

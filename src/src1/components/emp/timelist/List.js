@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
+
 import { PaginationTable, Table, Empty1 } from '../../../components/all/all_m';
 import { Header } from './Header';
 
