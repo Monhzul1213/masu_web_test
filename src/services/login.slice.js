@@ -94,7 +94,8 @@ export const apiLogin = (mail, password, fromAd) => async dispatch => {
           approvedLevel2: response?.approvedLevel2 === 'Y',
           merchantId: response?.merchantId,
           msRole: response?.msRole,
-          msMerchant: response?.msMerchant
+          msMerchant: response?.msMerchant,
+          useInventoryManagement: response?.useInventoryManagement === 'Y',
         }));
       }
       return Promise.resolve({

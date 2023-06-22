@@ -55,7 +55,7 @@ function Card(props){
   const emptyProps = { icon: 'MdStorefront', type: 'shop', noDescr: true, onClickAdd };
   const modalProps = { visible, closeModal, selected: item };
   const addProps = { type: 'shop', onClickAdd };
-  const listProps = { data, onClickAdd };
+  const listProps = { data, onClickAdd, getData };
 
   return (
     <div className='store_tab' style={{flex: 1}}>
