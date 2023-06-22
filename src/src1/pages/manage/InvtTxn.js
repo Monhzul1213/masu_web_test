@@ -42,7 +42,7 @@ export function InvtTxn(){
     if(response?.error) setError(response?.error);
     else {
       response?.data.forEach((item, a) => {
-        item.qty_sign = divide(item.qty, item.sign, a)
+        item.signQty = divide(item.qty, item.sign, a)
       })
       setData(response?.data);
       setExcelName(t('header./management/invt_txn'));
