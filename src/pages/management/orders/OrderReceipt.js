@@ -9,9 +9,10 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { sendRequest } from '../../../services';
 import { add, divide } from '../../../helpers';
-import { Error1, Overlay, Prompt } from '../../../components/all';
+import { Confirm, Error1, Overlay, Prompt } from '../../../components/all';
 import { Items, Main } from '../../../components/management/order/receipt';
 import { ButtonRow } from '../../../components/management/order/add';
+import { Subscription } from '../../../components/management/adjust/list';
 
 export function OrderReceipt(){
   const { t } = useTranslation();
@@ -25,6 +26,10 @@ export function OrderReceipt(){
   const [saved, setSaved] = useState(false);
   const [deletable, setDeletable] = useState(false);
   const [notes, setNotes] = useState({ value: '' });
+  const [visible, setVisible] = useState(false);
+  const [sites, setSites] = useState([]);
+  const [status, setStatus] = useState(0);
+  const [open, setOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -133,9 +138,15 @@ export function OrderReceipt(){
   const onClickSave = async status => {
     let data = validateData(status);
     if(data){
+      setStatus(status);
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/ModReceiptPO', data));
-      if(response?.error) onError(response?.error, true);
+      if(response?.code === 1001){
+        onError(response?.error, true);
+        setOpen(true);
+        setSites(response?.data);
+      }
+      else if(response?.error) onError(response?.error, true);
       else onSuccess(t('order.order_success'), header?.orderNo);
     }
   }
@@ -150,14 +161,29 @@ export function OrderReceipt(){
     }
   }
 
+  const onDone1 = async () => {
+    setVisible(false);
+    setSites([]);
+    onClickSave(status);
+  }
+
+  const confirm = sure => {
+    setOpen(false);
+    if(sure) setVisible(true);
+  }
+
   let mainProps = { header, notes, setNotes, setEdited };
   let itemsProps = { header, detail, setDetail, setEdited, total, setTotal, disabled, setDisabled };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
     text3: 'order.receipt_save', deletable, onClickDelete };
+  let subProps = { visible, setVisible, sites, setSites, onDone: onDone1, noTrial: true, noBack: true };
+  let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
   
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
+      <Confirm {...confirmProps} />
+      {visible && <Subscription {...subProps} />}
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>
