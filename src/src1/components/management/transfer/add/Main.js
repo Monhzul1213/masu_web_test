@@ -14,7 +14,6 @@ export function Main(props){
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const disabled = detail?.length ? true : false;
-  const disabled1 = toSiteId?.value ? true : false;
 
   useEffect(() => {
     if(header){
@@ -26,7 +25,6 @@ export function Main(props){
   }, [header]);
 
   const onFocusFromSite = async () => {
-    if(!fromSites?.length){
       setError(null);
       setLoading(true);
       const response = await dispatch(getList(user, token, 'Site/GetSite'));
@@ -42,12 +40,9 @@ export function Main(props){
         )
         setFromSites(fromsite);
       }
-      // setFromSites(response?.data);
-    }
   }
 
   const onFocusToSite = async () => {
-    if(!toSites?.length){
       setError(null);
       setLoading(true);
       const response = await dispatch(getList(user, token, 'Site/GetSite'));
@@ -63,11 +58,10 @@ export function Main(props){
         )
         setToSites(tosite);
       }
-    }
   }
 
   const fromSiteProps = { value: fromSiteId, setValue: setFromSiteId, label: t('transfer.from_site'), placeholder: t('report_receipt.dr_site'), data: fromSites, setError, setEdited,
-    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusFromSite, loading, disabled: disabled1 };
+    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusFromSite, loading, disabled };
   const toSiteProps = { value: toSiteId, setValue: setToSiteId, label: t('transfer.to_site'), placeholder: t('report_receipt.dr_site'), data: toSites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusToSite, loading, disabled };
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };

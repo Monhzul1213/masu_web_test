@@ -49,14 +49,8 @@ export function Filter(props){
       setLoading('fromSite');
       const response = await dispatch(getList(user, token, 'Site/GetSite'));
       if(response?.error) setError && setError(response?.error);
-      else {
-        let tsite= []
-        response?.data.forEach(item =>{
-          if(item?.siteId !== fromSite){
-            tsite.push(item)
-          }
-          })        
-        let data = [...[{siteId: -1, name: t('pos.all')}], ...tsite];
+      else {       
+        let data = [...[{siteId: -1, name: t('pos.all')}], ...response?.data];
         setToSites(data);      
       }
         setLoading(null);
