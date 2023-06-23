@@ -8,12 +8,14 @@ import '../../../css/order.css';
 import '../../../css/invt.css';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Filter, List } from '../../../components/management/adjust/list';
+import { Filter, List, Subscription } from '../../../components/management/adjust/list';
 
 export function Adjust(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [sites, setSites] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,18 +34,34 @@ export function Adjust(){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Txn/GetAdjust' + (query ?? '')));
-    if(response?.error) setError(response?.error);
+    if(response?.code === 1000){
+      // comment
+      // isNew or isExpired
+      // || response?.code === 1001
+      setVisible(true);
+      setSites(response?.data);
+    }
+    else if(response?.error) setError(response?.error);
     else setData(response?.data?.adjfinal);
     setLoading(false);
+  }
+
+  const onDone = async () => {
+    setVisible(false);
+    setSites([]);
+    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
+    onSearch(query);
   }
 
   const onClickAdd = () => navigate('/management/adjust/adjust_add');
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
+  const subProps = { visible, setVisible, sites, setSites, onDone };
 
   return (
     <div className='s_container_i'>
+      {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 

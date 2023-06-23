@@ -53,10 +53,10 @@ function Card(props){
 
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
-    setDetail(old => old.map((row, index) => {
+    setDetail(old => old.map((row, index, a) => {
       if(index === rowIndex){
         let qty = columnId === 'qty' ? parseFloat(value ? value : 0) : old[rowIndex]?.qty;
-        let leftQty = add(qty, old[rowIndex]?.siteQty);
+        let leftQty = add(old[rowIndex]?.siteQty, qty, a );
         return { ...old[rowIndex], qty, leftQty };
       } else {
         return row;

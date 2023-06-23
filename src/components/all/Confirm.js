@@ -7,13 +7,14 @@ import { ButtonRow } from './ButtonRow';
 import { Button } from './Button';
 
 export function Confirm(props){
-  const { open, text, confirm } = props;
+  const { open, text, confirm, text1 } = props;
   const { t } = useTranslation();
 
   return (
     <Modal title={null} footer={null} closable={false} open={open} centered={true} width={360}>
       <div className='m_back'>
         <p className='m_title' id='m_confirm'>{t('page.confirm')}</p>
+        {text1 ? <p className='m_descr'>{text1}</p> : ''}
         <p className='m_descr'>{t(text)}</p>
       </div>
       <ButtonRow onClickCancel={() => confirm(false)} onClickSave={() => confirm(true)} text1='page.no' text2='page.yes' />

@@ -72,7 +72,7 @@ export function Filter(props){
   const addProps = { type: 'adjust', onClickAdd, show: false };
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide: () => onHide(site, status), className: 'rh_date' };
   const classBack = 'th_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
-  const bStyle = { maxWidth: size?.width > 780 ? 180 : ((size?.width - 52) / 2) };
+  const bStyle = { maxWidth: size?.width > 780 ? 180 : (((size?.width ?? 200) - 52) / 2) };
   const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name',
     label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'site', classBack, classLabel, className, bStyle };
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'valueNum', s_descr: 'valueStr1',

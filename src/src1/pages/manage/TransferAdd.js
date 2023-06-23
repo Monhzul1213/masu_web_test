@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getList, sendRequest } from '../../../services';
 import { add } from '../../../helpers';
-import { Error1, Overlay, Prompt } from '../../../components/all';
+import { Error1, Overlay, Prompt, Confirm } from '../../../components/all';
 import { Main, List, ButtonRow } from '../../components/management/transfer/add';
+import { Subscription } from '../../../components/management/adjust/list';
 
 export function TransferAdd(){
   const { t } = useTranslation();
@@ -24,6 +25,10 @@ export function TransferAdd(){
   const [dItems, setDItems] = useState([]);
   const [saved, setSaved] = useState(false);
   const [editable, setEditable] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [sites, setSites] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [status1, setStatus] = useState(0);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -54,11 +59,11 @@ export function TransferAdd(){
         setFromSiteId({ value: header?.fromSiteId });
         setToSiteId({ value: header?.toSiteId });
         setNotes({ value: header?.descr });
-        response?.data?.inTransferItem?.forEach(item => {
+        response?.data?.inTransferItem?.forEach((item) => {
           item.transferItemID = item.transferItemId;
           item.rowStatus = 'U';
           item.name = item.invtName;
-          item.leftQty = add(item.siteQty, item.qty);
+          item.leftQty = add(item.siteQty, item.qty, item);
         });
         setDetail(response?.data?.inTransferItem);
         setItems(response?.data?.inTransferItem);
@@ -70,11 +75,12 @@ export function TransferAdd(){
   const onClickCancel = () => navigate({ pathname: '/management/transfer' });
 
   const validateData = status => {
-    let isSiteValid = fromSiteId?.value || fromSiteId?.value === 0;
+    let isFromSiteValid = fromSiteId?.value || fromSiteId?.value === 0;
+    let isToSiteValid = toSiteId?.value || toSiteId?.value === 0;
     let length = detail?.filter(item => item?.qty)?.length;
-    if(isSiteValid && length){
+    if(isFromSiteValid && length && isToSiteValid){
       let transferNo = header?.transferNo ?? 0;
-      let inTransfer = { fromSiteID: fromSiteId?.value, toSiteID: toSiteId?.value, status, descr: notes?.value, rowStatus: transferNo ? 'U' : 'I' };
+      let inTransfer = { transferNo, fromSiteID: fromSiteId?.value, toSiteID: toSiteId?.value, status, descr: notes?.value, rowStatus: transferNo ? 'U' : 'I' };
       let inTransferItem = [];
       detail?.forEach(item => {
         if(item?.qty){
@@ -86,6 +92,7 @@ export function TransferAdd(){
       return { inTransfer, inTransferItem };
     } else {
       if(!(fromSiteId?.value || fromSiteId?.value === 0)) setFromSiteId({ value: fromSiteId?.value, error: t('error.not_empty') });
+      if(!(toSiteId?.value || toSiteId?.value === 0)) setToSiteId({ value: toSiteId?.value, error: t('error.not_empty') });
       if(!length) setSearch({ value: null, error: t('transfer.items_error') });
       return false;
     }
@@ -94,9 +101,15 @@ export function TransferAdd(){
   const onClickSave = async status => {
     let data = validateData(status);
     if(data){
+      setStatus(status);
       onLoad();
       const response = await dispatch(sendRequest(user, token, 'Txn/ModTransfer', data));
-      if(response?.error) onError(response?.error, true);
+      if(response?.code === 1001){
+        onError(response?.error, true);
+        setOpen(true);
+        setSites(response?.data);
+      }
+      else if(response?.error) onError(response?.error, true);
       else onSuccess(t('transfer.add_success'));
     }
   }
@@ -131,14 +144,29 @@ export function TransferAdd(){
     setLoading(false);
   }
 
+  const onDone = async () => {
+    setVisible(false);
+    setSites([]);
+    // onClickSave(status1);
+  }
+
+  const confirm = sure => {
+    setOpen(false);
+    setError(null);
+    if(sure) setVisible(true);
+  }
 
   let mainProps = { setError, setEdited, header, detail, fromSiteId, setFromSiteId, toSiteId, setToSiteId, notes, setNotes, editable };
   let listProps = { detail, setDetail, search, setSearch, fromSiteId, toSiteId, setEdited, setDItems, editable };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), onClickDelete, header };
+  let subProps = { visible, setVisible, sites, setSites, onDone, noTrial: true, noBack: true };
+  let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
 
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
+      <Confirm {...confirmProps} />
+      {visible && <Subscription {...subProps} />}
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>

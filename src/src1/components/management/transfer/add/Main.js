@@ -14,6 +14,7 @@ export function Main(props){
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const disabled = detail?.length ? true : false;
+  const disabled1 = toSiteId?.value ? true : false;
 
   useEffect(() => {
     if(header){
@@ -31,7 +32,17 @@ export function Main(props){
       const response = await dispatch(getList(user, token, 'Site/GetSite'));
       setLoading(false);
       if(response?.error) setError(response?.error);
-      else setFromSites(response?.data);
+      else {
+        let fromsite= []
+        response?.data.forEach(item =>{
+          if(item?.siteId !== toSiteId?.value){
+            fromsite.push(item)
+          }
+          }
+        )
+        setFromSites(fromsite);
+      }
+      // setFromSites(response?.data);
     }
   }
 
@@ -42,13 +53,22 @@ export function Main(props){
       const response = await dispatch(getList(user, token, 'Site/GetSite'));
       setLoading(false);
       if(response?.error) setError(response?.error);
-      else setToSites(response?.data);
+      else {
+        let tosite= []
+        response?.data.forEach(item =>{
+          if(item?.siteId !== fromSiteId?.value){
+            tosite.push(item)
+          }
+          }
+        )
+        setToSites(tosite);
+      }
     }
   }
 
   const fromSiteProps = { value: fromSiteId, setValue: setFromSiteId, label: t('transfer.from_site'), placeholder: t('report_receipt.dr_site'), data: fromSites, setError, setEdited,
-    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusFromSite, loading, disabled };
-  const toSiteProps = { value: toSiteId, setValue: setToSiteId, label: t('transfer.to_site'), placeholder: t('report_receipt.dr_site'), data: fromSites, setError, setEdited,
+    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusFromSite, loading, disabled: disabled1 };
+  const toSiteProps = { value: toSiteId, setValue: setToSiteId, label: t('transfer.to_site'), placeholder: t('report_receipt.dr_site'), data: toSites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusToSite, loading, disabled };
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
 
