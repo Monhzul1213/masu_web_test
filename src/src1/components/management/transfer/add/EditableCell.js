@@ -1,37 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import CurrencyInput from 'react-currency-input-field';
 
 export const EditableCell = props => {
-  const { value: initialValue, row, column: { id, minWidth, editable }, updateMyData } = props;
+  const { value: initialValue, row, column: { id, isText, width, minWidth, autoFocus }, updateMyData, cellID } = props;
   const [value, setValue] = useState(initialValue);
-  const user = useSelector(state => state.login?.user);
-  const suffix = user?.msMerchant?.currency ?? '';
-  const width = minWidth - 18;
-  const disabled = row?.original?.itemType === 'II' || !editable;
 
-  const onBlur = e => updateMyData(row?.index, id, value, e)
-  const onValueChange = e => setValue(e);
-  const onKeyDown = e => {
-    if(e?.key?.toLowerCase() === "enter") updateMyData(row?.index, id, value, e);
+  const onBlur = e => {
+    updateMyData(row?.index, id, value, e)
   }
+
+  const onValueChange = e => {
+    if(row?.original?.siteQty >= e){
+      let amt = e?.split(".", row?.original?.allowDecimal ? 0  : 1).join(".").replace(/[-, ]/g, "");
+      setValue(amt);
+    }
+    else setValue(0)
+  }
+
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter")
+      updateMyData(row?.index, id, value, e);
+  }
+
   const onFocus = e => {
     if(e?.target?.value === '0') setValue('');
   }
 
   useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+    setValue(initialValue)
+  }, [initialValue])
+  
+  const style = { textAlign: 'right', width: minWidth ? (minWidth - 18) : width };
+  const qtyProps = { className: 'ed_input', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,
+    disableGroupSeparators: true, style, onKeyDown, autoFocus, id: cellID, onFocus };
 
-  const style = { textAlign: 'right', width };
-  const moneyProps = { style, suffix, value, disabled, onValueChange, onBlur, onFocus, onKeyDown };
-
-  return (
-    <CurrencyInput
-      {...moneyProps}
-      className='ed_input'
-      allowNegativeValue={false}
-      decimalsLimit={4}
-      maxLength={15} />
-  );
+  return isText
+    ? (<p className='ed_text' style={{textAlign: 'right', paddingRight: 15}}>{value}</p>)
+    : (<CurrencyInput {...qtyProps} />)
 }

@@ -8,7 +8,7 @@ import { DynamicBSIcon, PaginationTable } from '../../../all/all_m';
 import { Search } from '../../../../../components/management/order/add/Search';
 import { ItemSelect } from './SelectItem';
 import { SelectItem } from '../../../../../components/invt/inventory/add/SelectItem';
-import { EditableCell as EditableCellQty } from '../../../../../components/management/order/add/EditableCell';
+import { EditableCell as EditableCellQty } from './EditableCell';
 import { TableResize } from '../../../../../components/all';
 
 function Card(props){
@@ -21,7 +21,7 @@ function Card(props){
       {
         Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 200 }, width: 200, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
-      },
+      }, 
       { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 140, minWidth: 90 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', width: 120, minWidth: 90,
@@ -29,7 +29,7 @@ function Card(props){
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_qty1')}</div>, accessor: 'qty', isText: !editable,
-        Cell: props => <EditableCellQty {...props} />, width: 130, minWidth: 130, maxWidth: 130
+        Cell: props => <EditableCellQty {...props} />, width: 130, minWidth: 130, maxWidth: 130,
       },  
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_left')}</div>, accessor: 'leftQty', width: 180, minWidth: 80,
