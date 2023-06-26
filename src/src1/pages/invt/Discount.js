@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import {   Empty, Empty1, Error1, Overlay } from '../../components/all/all_m';
+import { Empty, Empty1, Error1, Overlay } from '../../components/all/all_m';
 import { List, Header } from '../../components/invt/discount';
-import { useDispatch, useSelector, } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getList, sendRequest } from '../../../services';
 import { message } from 'antd';
 import { withSize } from 'react-sizeme';

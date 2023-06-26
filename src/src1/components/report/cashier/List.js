@@ -28,7 +28,6 @@ export function List(props){
       }},
       { Header: t('report.closedDate'), accessor: 'closeDate', exLabel: t('report.closedDate'),
       Cell: ({ value }) => {
-        // console.log(value)
         return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD hh:mm:ss') : ''}</div>)
       }},
       { Header: <div style={{textAlign: 'right'}}>{t('report.beginBalance')}</div>, accessor: 'beginBalance',

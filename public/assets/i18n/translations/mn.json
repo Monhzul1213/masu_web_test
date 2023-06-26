@@ -91,6 +91,8 @@
     "/management/invt_txn": "Бараа гүйлгээ",
     "/management/adjust": "Тохируулга",
     "/management/adjust/adjust_add": "Тохируулга хийх",
+    "/management/transfer": "Хөдөлгөөн",
+    "/management/transfer_add": "Хөдөлгөөн хийх",
     "/employee": "Ажилтан",
     "/employee/emp_list": "Ажилтны жагсаалт",
     "/employee/emp_list/emp_add": "Ажилтан нэмэх",
@@ -178,7 +180,8 @@
     "terms": "Үйлчилгээний дэлгэрэнгүй",
     "invt_remainder": "Барааны үлдэгдэл",
     "invt_txn": "Бараа гүйлгээ",
-    "adjust": "Тохируулга"
+    "adjust": "Тохируулга",
+    "transfer": "Хөдөлгөөн"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
@@ -1071,5 +1074,17 @@
     "confirm_pay": "Төлбөр төлөх дэлгэц руу шилжих үү?",
     "back": "Тохируулгууд"
   },
-  "version": "11"
+  "transfer":{
+    "t_no": "Хөдөлгөөн №",
+    "edit": "Хөдөлгөөн засах",
+    "title": "Хөдөлгөөн",
+    "add": "Хөдөлгөөн хийх",
+    "from_site": "Салбар хаанаас",
+    "to_site": "Салбар хаашаа",
+    "items_error": "Хөдөлгөөнд дор хаяж нэг барааг оруулна уу",
+    "add_success": "Хөдөлгөөн амжилттай хийлээ.",
+    "delete_success": "Хөдөлгөөн амжилттай устгагдлаа.",
+    "warning_item": "Салбар сонгоно уу"
+  },
+  "version": "12"
 }

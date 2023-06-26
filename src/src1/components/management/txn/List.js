@@ -24,11 +24,11 @@ export function List(props){
       }
       },
       { Header: t('manage.costType'), accessor: 'txnTypeName', exLabel:t('report.constant'), width: 90, minWidth: 80  },
-      { Header: <div style={{textAlign: 'right'}}>{t('report.qty1')}</div>, accessor: 'qty', exLabel: t('report.qty1'), width: 90, minWidth: 60,
+      { Header: <div style={{textAlign: 'right'}}>{t('report.qty1')}</div>, accessor: 'signQty', exLabel: t('report.qty1'), width: 90, minWidth: 60,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
         Footer: info => {
           const total = React.useMemo(() =>
-            info.rows.reduce((sum, row) => row.values.qty + sum, 0),
+            info.rows.reduce((sum, row) => row.values.signQty + sum, 0),
             [info.rows]  )
           return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>
           }
