@@ -64,12 +64,12 @@ export function List(props){
       { Header: t('manage.costNo'), accessor: 'costNo', exLabel:t('manage.costNo'), width: 90, minWidth: 80,  },
       { Header: t('manage.costDate'), accessor: 'costDate', exLabel: t('manage.costDate'), width: 120, minWidth: 80,
       Cell: ({ value }) => {
-        return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
+        return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>)
       }
       },
       { Header: t('report.expireDate'), accessor: 'costExpireDate', exLabel: t('report.expireDate'), width: 150, minWidth: 80,
       Cell: ({ value }) => {
-        return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
+        return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>)
       }
       },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', exLabel: t('inventory.t_qty'), width: 90, minWidth: 70,

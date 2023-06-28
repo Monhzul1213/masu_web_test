@@ -38,6 +38,11 @@ export function List(props){
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost',
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>, width: 140, minWidth: 140,
       },
+      {
+        Header: t('adjust.t_created'), accessor: 'createdDate', width: 140, minWidth: 100,
+        Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD HH:mm')}</div>
+      },
+      { Header: t('adjust.t_descr'), accessor: 'descr', width: 195, minWidth: 100 },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

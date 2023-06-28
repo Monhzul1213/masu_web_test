@@ -20,7 +20,7 @@ export function List(props){
       { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), width: 110, minWidth: 80 },
       { Header: t('page.date'), accessor: 'txnDate', exLabel: t('page.date'), width: 90, minWidth: 80,
       Cell: ({ value }) => {
-        return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
+        return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>)
       }
       },
       { Header: t('manage.costType'), accessor: 'txnTypeName', exLabel:t('report.constant'), width: 90, minWidth: 80  },
@@ -60,7 +60,7 @@ export function List(props){
       },
       { Header: t('report.expireDate'), accessor: 'expireDate', exLabel: t('report.expireDate'), width: 130, minWidth: 130,
       Cell: ({ value }) => {
-        return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
+        return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>)
       }
       },
       { Header: t('supplier.title'), accessor: 'vendName', exLabel:t('supplier.title') , width: 140, minWidth: 110 },

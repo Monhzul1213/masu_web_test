@@ -13,8 +13,8 @@ export function List(props){
   useEffect(() => {
     setColumns([
       {
-        Header: <div style={{textAlign: 'right'}}>{t('system.partnerCode')}</div>, accessor: 'partnerCode', customStyle: {width: 120},
-        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
+        Header: <div>{t('system.partnerCode')}</div>, accessor: 'partnerCode', customStyle: {width: 120},
+        Cell: props => (<div >{props?.value}</div>)
       },
       { Header: t('system.partner_name'), accessor: 'partnerName' },
       {

@@ -48,6 +48,9 @@ export function List(props){
       { Header: t('system.noat'), accessor: 'useNuatus' ,
       Cell: props => (<div >{props?.value === 'Y' ? t('page.yes'): t('page.no')}</div>)
       },
+      { Header: t('system.invt_management'), accessor: 'useInventoryManagement' ,
+      Cell: props => (<div >{props?.value === 'Y' ? t('page.yes'): t('page.no')}</div>)
+      },
       { Header: t('system.date'), accessor: 'createdDate', customStyle: { minWidth: 80 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },
