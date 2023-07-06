@@ -19,7 +19,8 @@ export function List(props){
       { Header: t('transfer.t_no'), accessor: 'transferNo', width: 130, minWidth: 80 },
       {
         Header: t('adjust.t_date'), accessor: 'txnDate', width: 120, minWidth: 100,
-        Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD')}</div>
+        Cell: ({ value }) => <div style={{}}>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>
+
       },
       { Header: t('transfer.from_site'), accessor: 'fromSiteName', width: 200, minWidth: 90 },
       { Header: t('transfer.to_site'), accessor: 'toSiteName', width: 200, minWidth: 90 },

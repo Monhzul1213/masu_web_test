@@ -921,7 +921,8 @@
     "partner_name":"Нэр",
     "merchant": "Хэрэглэгчийн тоо",
     "partner_amt": "Партнерийн дүн",
-    "createdDate": "Бүртгэсэн огноо"
+    "createdDate": "Бүртгэсэн огноо",
+    "invt_management": "Бараа менежмент"
   },
   "advert":{
     "t_name":"Харилцагч нэр",
