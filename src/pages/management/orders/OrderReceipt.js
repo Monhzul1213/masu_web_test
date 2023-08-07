@@ -130,7 +130,11 @@ export function OrderReceipt(){
           inReceiptItems?.push(newItem);
         }
       });
-      return { inReceipt, inReceiptItems };
+      if(inReceiptItems?.length === 0){
+        setError(t('order.receipt_error'));
+        return null;    
+      } else 
+        return { inReceipt, inReceiptItems };
     } else
       return null;
   }
@@ -174,7 +178,7 @@ export function OrderReceipt(){
   }
 
   let mainProps = { header, notes, setNotes, setEdited };
-  let itemsProps = { header, detail, setDetail, setEdited, total, setTotal, disabled, setDisabled };
+  let itemsProps = { header, detail, setDetail, setEdited, setErrorMain: setError, total, setTotal, disabled, setDisabled };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
     text3: 'order.receipt_save', deletable, onClickDelete };
   let subProps = { visible, setVisible, sites, setSites, onDone: onDone1, noTrial: true, noBack: true };

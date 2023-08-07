@@ -11,7 +11,7 @@ import { Footer } from './Footer';
 import { Search } from './Search';
 
 function Card(props){
-  const { header, detail, setDetail, setEdited, total, setTotal, disabled, setDisabled, size } = props;
+  const { header, detail, setDetail, setEdited, setErrorMain, total, setTotal, disabled, setDisabled, size } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [error, setError] = useState(null);
@@ -81,6 +81,7 @@ function Card(props){
     let left = add(total, discount, true);
     setTotal({ total, discount, left });
     setEdited && setEdited(true);
+    setErrorMain && setErrorMain(null);
   }
 
   const onClickAll = e => {
@@ -99,6 +100,7 @@ function Card(props){
     setTotal({ total: total1, discount, left });
     setDisabled(false);
     setEdited && setEdited(true);
+    setErrorMain && setErrorMain(null);
   }
 
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
