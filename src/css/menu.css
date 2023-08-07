@@ -362,3 +362,13 @@
   font-weight: 550;
   font-size: 14px;
 }
+
+/* .ant-menu>.ant-menu-item-divider {
+  margin-left: 59px;
+  margin-right: 10px;
+} */
+
+.ant-menu-item-divider {
+  border-color: var(--input1-color);
+  border-width: 1px 0 0;
+}
