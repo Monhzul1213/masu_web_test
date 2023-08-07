@@ -26,13 +26,15 @@
   .table_cell_text1 {
     color: var(--text-color);
     font-size: 15px;
-    padding: var(--page-padding) 0;
+    padding: 10px 0;
+    /* padding: var(--page-padding) 0; */
   }
 
   .table_cell_text_resize {
     color: var(--text-color);
     font-size: 15px;
-    padding: var(--page-padding) 0;
+    padding: 10px 0;
+    /* padding: var(--page-padding) 0; */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
