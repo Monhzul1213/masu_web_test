@@ -67,7 +67,7 @@ export function InvtTxn(){
     onSearch(query);
   }
 
-  const listProps = { data, excelName, setError, onSearch };
+  const listProps = { data, excelName, setError, onSearch, setData };
   const subProps = { visible, setVisible, sites, setSites, onDone };
 
   return (

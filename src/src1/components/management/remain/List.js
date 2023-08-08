@@ -8,7 +8,7 @@ import { Header } from './Header';
 import { formatNumber } from '../../../../helpers';
 
 export function List(props){
-  const { data, excelName, setError, onSearch, size} = props;
+  const { data, excelName, setError, onSearch, size, setData} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [columns1, setColumns1] = useState([]);
@@ -127,7 +127,7 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [isDtl ? { id: 'invtName', desc: true } : { id: 'costDate', desc: true }] },}, 
     useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
-  const filterProps = {columns, data, excelName, setError, onSearch , size, isDtl, setIsDtl };
+  const filterProps = { columns, data, setData, excelName, setError, onSearch , size, isDtl, setIsDtl };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
   return (

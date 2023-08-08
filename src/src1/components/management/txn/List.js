@@ -8,14 +8,16 @@ import { Header } from './Header';
 import { formatNumber } from '../../../../helpers';
 
 export function List(props){
-  const { data, excelName, setError, onSearch, size} = props;
+  const { data, setData, excelName, setError, onSearch, size} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
 
   useEffect(() => {
     setColumns([
-      { Header: t('system_menu.store'), accessor: 'siteName', exLabel:t('system_menu.store'), Footer: t('report.total'), width: 130, minWidth: 110 },
+      { Header: t('manage.txnId'), accessor: 'txnCostId', exLabel:t('menu.inventory'), Footer: t('report.total'), width: 110, minWidth: 90  },
+      { Header: t('manage.t_no'), accessor: 'txnNo', exLabel:t('menu.inventory'), width: 130, minWidth: 110  },
+      { Header: t('system_menu.store'), accessor: 'siteName', exLabel:t('system_menu.store'), width: 130, minWidth: 110 },
       { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), width: 130, minWidth: 110  },
       { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), width: 110, minWidth: 80 },
       { Header: t('page.date'), accessor: 'txnDate', exLabel: t('page.date'), width: 90, minWidth: 80,
@@ -92,7 +94,7 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'createdDate', desc: true }] },
       }, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
-  const filterProps = {columns, data, excelName, setError, onSearch , size };
+  const filterProps = {columns, data, setData, excelName, setError, onSearch , size,  };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
   return (

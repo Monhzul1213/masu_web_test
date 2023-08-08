@@ -4,11 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { ExportExcel } from '../../../../helpers';
 import { getList } from '../../../../services';
-import { MultiSelect, DynamicAIIcon, CheckBox1 } from '../../../components/all/all_m';
+import { MultiSelect, DynamicAIIcon, CheckBox1, DynamicMDIcon } from '../../../components/all/all_m';
 import { SearchInput } from './SearchInput';
 
 export function Header(props){
-  const { setError, onSearch, size, data, columns, excelName , filter1, isDtl, setIsDtl } = props;
+  const { setError, onSearch, size, data, setData, columns, excelName , filter1, isDtl, setIsDtl } = props;
   const { t } = useTranslation();
   const [site, setSite] = useState([]);
   const [sites, setSites] = useState([]);
@@ -87,6 +87,18 @@ export function Header(props){
 
   const onClickSearch = () => setShowSearch(!showSearch);
 
+  const onClickRefresh = async () => {
+    setLoading(true);
+    let api = 'Txn/GetHandQty';
+    let headers = { merchantid: user?.merchantId };
+    const response = await dispatch(getList(user, token, api, null, headers));
+    // if(response?.error) setError(response?.error);
+    // else {
+      setData(response?.data);
+    // }
+    setLoading(false);  
+  }
+
   const width = showSearch ? 0 : (size?.width > 780 ? 1312 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 370 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in', marginTop: 10 };
@@ -102,26 +114,27 @@ export function Header(props){
     classBack, classLabel, className ,
     label: t('supplier.title'), onFocus: onFocusSupplier, loading: loading === 'suppliers', maxTag: maxSupp, placeholder: t('time.select_supp')};
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
+  const refreshProps = { className: 'ih_refresh', name: 'MdRefresh', onClick: onClickRefresh };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
   const dtlProps = { label: t('manage.is_dtl'), checked: isDtl, setChecked: setIsDtl, onHide: onHide1 };
 
 
   return (
-    <div className='ih_header' id={id}>
+    <div className='ih_header' id={id} style={{paddingTop: 0}}>
         <div className={classH} >
           <div className='mn_header2'>
               <MultiSelect {...siteProps} />
               <MultiSelect {...suppProps} />
-            
+              <div className='is_dtl'>
+               <CheckBox1 {...dtlProps} /> 
+              </div>
           </div>
         </div>
         <div className='th_header_mn3' style={style}>
-          <div className='is_dtl'>
-            <CheckBox1 {...dtlProps} /> 
-          </div>
           <div className='ih_btn_row_mn' >
             <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
             <DynamicAIIcon {...searchProps} />
+            <DynamicMDIcon {...refreshProps} />
           </div>    
         </div>    
         <SearchInput {...inputProps} />

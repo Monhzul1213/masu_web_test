@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import moment from 'moment';
 
-import { PaginationTable, TableResize, Money } from '../../all';
+import { PaginationTable, TableResize, Money, DynamicBSIcon } from '../../all';
 import { Drawer } from './Drawer';
 import { Header } from './Header';
 
@@ -49,8 +49,11 @@ export function List(props){
           Cell: props => (
             item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD hh:mm:ss') :
             <div style={{textAlign: 'right', paddingRight: 15}}>
-             {item?.value === 'sale.vatCustomerId' ? props?.value : ( <Money value={props?.value} fontSize={14} />)}
-            </div>)
+             {item?.value === 'sale.vatCustomerId' ? props?.value : 
+              item?.value === 'sale.status' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> : <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> ): 
+              item?.value === 'sale.vatDdtd' ? props?.value: ( <Money value={props?.value} fontSize={14} />)}
+            </div>
+            )
         });
       }
     });

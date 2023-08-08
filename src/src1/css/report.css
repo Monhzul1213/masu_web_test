@@ -184,3 +184,14 @@
     font-size: 14px;
     margin: 0;
   }
+
+  .check_icon {
+    color: var(--config-color);
+    margin-right: 7px;
+    font-size: 18px;
+  }
+  .check_icon1 {
+    color: var(--text2-color);
+    margin-right: 7px;
+    font-size: 18px;
+  }

@@ -5,11 +5,11 @@ import moment from 'moment';
 
 import { ExportExcel } from '../../../../helpers';
 import { getList, getConstants } from '../../../../services';
-import { MultiSelect, DynamicAIIcon, Date } from '../../all/all_m';
+import { MultiSelect, DynamicAIIcon, Date, DynamicMDIcon } from '../../all/all_m';
 import { SearchInput } from './SearchInput';
 
 export function Header(props){
-  const { setError, onSearch, size, data, columns, excelName , filter1 } = props;
+  const { setError, onSearch, size, data, setData, columns, excelName , filter1 } = props;
   const { t } = useTranslation();
   const [date, setDate] = useState(moment());
   const [site, setSite] = useState([]);
@@ -115,10 +115,23 @@ export function Header(props){
     onSearch && onSearch(query, filter1, date);
   }
 
+  const onClickRefresh = async () => {
+    setLoading(true);
+    let api = 'Txn/GetTxnCost' +'?BeginDate=' + moment()?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD') ;
+    let headers = { merchantid: user?.merchantId };
+    const response = await dispatch(getList(user, token, api, null, headers));
+    if(response?.error) setError(response?.error);
+    else {
+      setData(response?.data);
+    }
+    setLoading(false);  
+  }
+
   const onClickSearch = () => setShowSearch(!showSearch);
 
+
   const width = showSearch ? 0 : (size?.width > 780 ? 320 : (size?.width - 30));
-  const width1 = !showSearch ? 0 : (size?.width > 470 ? 320 : (size?.width - 30));
+  const width1 = !showSearch ? 0 : (size?.width > 470 ? 375 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const id = size?.width > 1080 ? 'ih_large' : 'ih_small';
   const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
@@ -134,7 +147,7 @@ export function Header(props){
     classBack, classLabel, className ,
     label: t('supplier.title'), onFocus: onFocusSupplier, loading: loading === 'suppliers', maxTag: maxSupp, placeholder: t('time.select_supp')};
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide,
-    className: 'mn_date', classBack: 'mn_date1' };
+    className: 'mn_date', classBack: 'mn_date' };
   const empProps = { value: emp, setValue: setEmp, data: emps, s_value: 'empCode', s_descr: 'empName',  onHide,
     label: t('employee.title'), onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp'), 
     classBack, classLabel, className};
@@ -143,12 +156,13 @@ export function Header(props){
     classBack, classLabel, className};
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
+  const refreshProps = { className: 'ih_refresh', name: 'MdRefresh', onClick: onClickRefresh };
 
   return (
-    <div className='ih_header' id={id}>
+    <div className='ih_header' id={id} style={{paddingTop: 0}}>
         <div className={classH} >
-            <Date {...dateProps} />
             <div className='mn_header2' >
+                <Date {...dateProps} />
                 <MultiSelect {...siteProps} />
                 <MultiSelect {...empProps} />
             </div>  
@@ -157,11 +171,12 @@ export function Header(props){
                 <MultiSelect {...suppProps} />
             </div>            
         </div>
-        <div className='th_header_mn' style={style}>
-          <div className='ih_btn_row_z' >
-            <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
-          </div>
-            <DynamicAIIcon {...searchProps} style ={{ marginTop: 15}} />
+        <div className='th_header_mn' style={style} >
+            <div className='ih_btn_row_z' >
+              <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
+            </div>
+            <DynamicAIIcon {...searchProps} style ={{ marginTop: 12}} />
+            <DynamicMDIcon {...refreshProps} style ={{ marginTop: 12}}/>
         </div>
         <SearchInput {...inputProps} />
     </div>

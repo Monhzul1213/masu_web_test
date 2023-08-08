@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { FooterTable, Money, PaginationTable } from '../../all/all_m';
+import { Money, PaginationTable, TableResize } from '../../all/all_m';
 import { formatNumber } from '../../../../helpers';
 import { Header } from './Header';
 
@@ -23,7 +23,7 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: <div >{t('report.site')}</div>, accessor: 'siteName', customStyle: { width: 250 },
+      { Header: <div >{t('report.site')}</div>, accessor: 'siteName', width: 150, minWidth: 110 ,
        Footer: t('report.total'), exLabel: t('report.site') },
       { Header: <div >{t('time.t_emp')}</div>, accessor: 'cashierCode', customStyle: { width: 200 },  exLabel: t('time.t_emp') },
       { Header: t('report.pay_type'), accessor: 'paymentTypeName' , exLabel: t('report.pay_type') , customStyle: { width: 250 } }, 
@@ -80,11 +80,10 @@ export function List(props){
 
   
 
-
-  // const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 5px)';
-  const tableInstance = useTable({ columns, data,  autoResetPage: false, autoResetSortBy: false,
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
-      }, useSortBy, usePagination, useRowSelect);
+      }, useSortBy, usePagination, useRowSelect,  useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName };
 
@@ -93,7 +92,7 @@ export function List(props){
       <Header {...filterProps} />
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <FooterTable {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

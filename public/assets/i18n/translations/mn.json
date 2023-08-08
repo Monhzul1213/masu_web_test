@@ -76,7 +76,7 @@
     "/report/report_discount": "Хөнгөлөлт",
     "/report/report_noat": "НӨАТ-н тайлан",
     "/report/report_cashier": "Касс хүлээлцэх",
-    "/report/report_order": "Борлуулалтын захиалга",
+    "/report/report_orList": "Борлуулалтын захиалга",
     "/report/terms": "Үйлчилгээний дэлгэрэнгүй",
     "/inventory": "Бараа",
     "/management": "Барааны менежмент",
@@ -654,10 +654,12 @@
       { "label": "Бэлэн мөнгө", "value": "sale.totalCashAmount" },
       { "label": "Бэлэн бус", "value": "sale.totalNonCashAmount" },
       { "label": "Нэмэлт төлбөр", "value": "sale.useModifier" },
+      { "label": "Борлуулалтын зарлага", "value": "sale.status" },
       { "label": "НӨАТ", "value": "sale.totalVatAmount" },
       { "label": "НХАТ", "value": "sale.totalNhatamount" },
-      { "label": "Үүсгэсэн огноо", "value": "sale.createdDate" },
-      { "label": "Харилцагч", "value": "sale.vatCustomerId" }
+      { "label": "НӨАТ-н ДДТД", "value": "sale.vatDdtd" },
+      { "label": "НӨАТ байгууллага", "value": "sale.vat_CustomerId" },
+      { "label": "Үүсгэсэн огноо", "value": "sale.createdDate" }
     ]
   },
   "report": {
@@ -1051,6 +1053,8 @@
     "is_dtl": "Дэлгэрэнгүй",
     "costType": "Төрөл",
     "costNo" : "Гүйлгээ #",
+    "txnId": "Гүйлгээ №",
+    "t_no": "Эх гүйлгээ",
     "costDate": "Огноо"
   },
   "adjust": {
