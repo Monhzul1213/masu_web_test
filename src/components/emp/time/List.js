@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Check, CheckBtn, PaginationTable, Table } from '../../all';
+import { Check, CheckBtn, PaginationTable, TableResize } from '../../all';
 
 export function List(props){
   const { data, setData, onClickAdd, setShow, checked, setChecked, size } = props;
@@ -12,21 +12,22 @@ export function List(props){
 
   useEffect(() => {
     const customStyle = { width: 40 };
-    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
+    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', width: 40};
     setColumns([
       {
         id: 'check', noSort: true, isBtn: true, customStyle,
+        width: 45, minWidth: 45, maxWidth: 45,
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => {
           return (<div style={style}><CheckBtn checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>)
         }
       },
-      { Header: t('time.t_start'), accessor: 'begin' },
-      { Header: t('time.t_end'), accessor: 'end' },
-      { Header: t('time.t_emp'), accessor: 'empName' },
-      { Header: t('time.t_site'), accessor: 'siteName' },
+      { Header: t('time.t_start'), accessor: 'begin', width: 165, minWidth: 75, maxWidth: 175 },
+      { Header: t('time.t_end'), accessor: 'end', width: 165, minWidth: 80, maxWidth: 175 },
+      { Header: t('time.t_emp'), accessor: 'empName', width: 135, minWidth: 90, maxWidth: 200 },
+      { Header: t('time.t_site'), accessor: 'siteName', width: 135, minWidth: 90 },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('time.t_total')}</div>, accessor: 'totalHours',
+        Header: <div style={{textAlign: 'right'}}>{t('time.t_total')}</div>, accessor: 'totalHours', width: 120, minWidth: 90, maxWidth: 200,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value ? props.value : 0}</div>
       },
     ]);
@@ -69,14 +70,14 @@ export function List(props){
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
-    onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
+    onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };
 
   return (
     <div>
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

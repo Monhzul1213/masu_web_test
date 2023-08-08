@@ -659,8 +659,7 @@
       { "label": "НХАТ", "value": "sale.totalNhatamount" },
       { "label": "НӨАТ-н ДДТД", "value": "sale.vatDdtd" },
       { "label": "НӨАТ байгууллага", "value": "sale.vat_CustomerId" },
-      { "label": "Үүсгэсэн огноо", "value": "sale.createdDate" },
-      { "label": "Харилцагч", "value": "sale.vatCustomerId" }
+      { "label": "Үүсгэсэн огноо", "value": "sale.createdDate" }
     ]
   },
   "report": {

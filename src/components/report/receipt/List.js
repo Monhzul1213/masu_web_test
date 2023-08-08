@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import moment from 'moment';
 
-import { PaginationTable, Table, Money, DynamicBSIcon } from '../../all';
+import { PaginationTable, TableResize, Money, DynamicBSIcon } from '../../all';
 import { Drawer } from './Drawer';
 import { Header } from './Header';
 
@@ -24,18 +24,19 @@ export function List(props){
 
   const changeColumns = (value) => {
     let columns = [
-      { Header: t('report_receipt.t_no'), accessor: 'sale.salesNo', exLabel: t('report_receipt.t_no') },
+      { Header: t('report_receipt.t_no'), accessor: 'sale.salesNo', exLabel: t('report_receipt.t_no'), width: 125, maxWidth: 150, minWidth: 100 },
       {
         Header: t('page.date'), accessor: 'sale.salesDate',
+        width: 100, minWidth: 75, maxWidth: 100,
         exLabel: t('page.date'),
         Cell: ({ value }) => {
           return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
         }
       },
-      { Header: t('time.t_site'), accessor: 'sale.siteName', exLabel: t('time.t_site'), customStyle : {width: 200} },
-      { Header: t('pos.title'), accessor: 'sale.terminalDescr', exLabel: t('pos.title') },
-      { Header: t('time.t_emp'), accessor: 'sale.cashierName', exLabel: t('time.t_emp') },
-      { Header: t('report_receipt.t_type'), accessor: 'sale.salesTypeName', exLabel: t('report_receipt.t_type') },
+      { Header: t('time.t_site'), accessor: 'sale.siteName', exLabel: t('time.t_site'), customStyle : {width: 200}, width: 150, minWidth: 90 },
+      { Header: t('pos.title'), accessor: 'sale.terminalDescr', exLabel: t('pos.title'), width: 150, minWidth: 90 },
+      { Header: t('time.t_emp'), accessor: 'sale.cashierName', exLabel: t('time.t_emp'), width: 150, minWidth: 90 },
+      { Header: t('report_receipt.t_type'), accessor: 'sale.salesTypeName', exLabel: t('report_receipt.t_type'), width: 125, minWidth: 90 },
     ];
     setColumns1(value);
     t('report_receipt.columns')?.forEach(item => {
@@ -43,6 +44,7 @@ export function List(props){
       if(exists){
         columns.push({
           Header: <div style={item?.value === 'sale.createdDate' ? {textAlign: 'left'} : {textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
+          width: 150, minWidth: 120,
           exLabel: item?.label,
           Cell: props => (
             item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD hh:mm:ss') :
@@ -82,7 +84,7 @@ export function List(props){
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesDate', desc: true }] }},
-    useSortBy, usePagination, useRowSelect);
+    useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };
   const drawerProps = { selected, open, setOpen };
   const filterProps = { onSearch: getData, size, filter, columns, data1 : data, excelName, 
@@ -94,7 +96,7 @@ export function List(props){
       <Header {...filterProps} />        
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useSortBy } from 'react-table';
+import { useTable, usePagination, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 
 import '../../../css/report.css';
 import { ExportExcel } from '../../../helpers';
-import { PaginationTable, Table, IconSelect, DynamicMDIcon, Money } from '../../all';
+import { PaginationTable, TableResize, IconSelect, DynamicMDIcon, Money } from '../../all';
 
 export function List(props){
   const { data, excelName } = props;
@@ -20,7 +20,7 @@ export function List(props){
   }, [i18n?.language]);
 
   const changeColumns = value => {
-    let columns = [{ Header: t('report.t_item'), accessor: 'invtName', exLabel: t('report.t_item') }];
+    let columns = [{ Header: t('report.t_item'), accessor: 'invtName', exLabel: t('report.t_item'), width: 140, minWidth: 75 }];
     setColumns1(value);
     t('report.column')?.forEach(item => {
       let index = value?.findIndex(val => val === item?.value);
@@ -29,6 +29,7 @@ export function List(props){
         columns.push({
           Header: <div style={{ textAlign }}>{item?.label}</div>, accessor: item?.value,
           exLabel: item?.label,
+          width: 160, minWidth: 120,
           Cell: props => {
             return (
               <div style={{ textAlign, paddingRight: 15}}>
@@ -48,7 +49,7 @@ export function List(props){
     dropdownStyle: { minWidth: 200 }, dropdownAlign: { offset: [-165, 5] } };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)';
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination);
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
 
   return (
@@ -59,7 +60,7 @@ export function List(props){
       </div>
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

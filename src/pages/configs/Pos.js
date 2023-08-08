@@ -106,7 +106,7 @@ function Screen(props){
     if(toGet) getPos(site);
   }
 
-  const width = size?.width >= 560 ? 560 : size?.width;
+  const width = size?.width >= 720 ? 720 : size?.width;
   const id = size?.width > 380 ? 'mo_large' : 'mo_small';
   const emptyProps = { icon: 'MdStayCurrentPortrait', type: showPos ? 'pos' : 'pos1', onClickAdd: showPos ? onClickAdd : onClickShop };
   const addProps = { type: 'pos', onClickAdd, show, onClickDelete };
