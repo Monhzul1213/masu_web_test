@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useSortBy } from 'react-table';
+import { useTable, usePagination, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
 import moment from 'moment';
 
 import '../../../css/report.css';
-import { PaginationTable, Table, IconSelect, DynamicMDIcon, Money } from '../../all';
+import { PaginationTable, TableResize, IconSelect, DynamicMDIcon, Money } from '../../all';
 import { ExportExcel } from '../../../helpers';
 
 export function List(props){
@@ -25,12 +25,13 @@ export function List(props){
     let columns = [
       {
         Header: t(isHour ? 'page.time' : 'page.date'), accessor: 'salesDate',
+        width: 100, minWidth: 75, maxWidth: 100,
         exLabel: t(isHour ? 'page.time' : 'page.date'),
         Cell: ({ value }) => {
-          return isHour ? (<div>{value}</div>) : (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
+          return isHour ? (<span>{value}</span>) : (<span>{moment(value)?.format('yyyy.MM.DD')}</span>)
         }
       },
-      { Header: t('order.site'), accessor: 'siteName', exLabel: t('order.site') }
+      { Header: t('order.site'), accessor: 'siteName', exLabel: t('order.site'), width: 135, minWidth: 90 }
     ];
     setColumns1(value);
     t('report_review.columns')?.forEach(item => {
@@ -38,6 +39,7 @@ export function List(props){
       if(exists){
         columns.push({
           Header: <div style={{textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
+          width: 150, minWidth: 90,
           exLabel: item?.label,
           Cell: props => (
             <div style={{textAlign: 'right', paddingRight: 15}}>
@@ -51,7 +53,7 @@ export function List(props){
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)';
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination);
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const columnProps = { value: columns1, setValue: changeColumns, data: t('report_review.columns'), className: 'rp_list_drop',
     Icon: () => <DynamicMDIcon name='MdOutlineViewColumn' className='rp_list_drop_icon' />,
@@ -65,7 +67,7 @@ export function List(props){
       </div>
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

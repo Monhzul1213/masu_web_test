@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { PaginationTable, Table , Money } from '../../all/all_m';
 import moment from 'moment';
+
+import { PaginationTable, Money } from '../../all/all_m';
 import { Header } from './Header';
+import { TableRowResize } from '../../../../components/all';
 
 export function List(props){
   const { data, excelName, size} = props;
@@ -13,8 +15,8 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: <div >{t('report.site')}</div>, accessor: 'siteName', customStyle: { width: 250 }, exLabel: t('report.site')  },
-      { Header: <div >{t('report.date')}</div>, accessor: 'salesDate' , customStyle: { width: 150 }, exLabel: t('report.date'), 
+      { Header: <div >{t('report.site')}</div>, accessor: 'siteName', width: 300, minWidth: 110 , exLabel: t('report.site')  },
+      { Header: <div >{t('report.date')}</div>, accessor: 'salesDate' , width: 100, minWidth: 90 , exLabel: t('report.date'), 
       Cell: ({ value }) => (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)},
       { Header: <div style={{textAlign: 'right'}}>{t('report.total_sales')}</div> , accessor: 'totalSalesAmount', exLabel: t('report.total_sales'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> , customStyle: { width: 150 }},
@@ -39,9 +41,9 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
-
-  const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
+  const defaultColumn = useMemo(() => ({ minWidth: 60, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn,  autoResetPage: true, autoResetSortBy: false,
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName };
 
@@ -50,7 +52,7 @@ export function List(props){
       <Header {...filterProps} />
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableRowResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

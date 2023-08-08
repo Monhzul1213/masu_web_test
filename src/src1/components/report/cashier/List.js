@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { PaginationTable, Table , Money } from '../../all/all_m';
+import { PaginationTable, Money } from '../../all/all_m';
 import { Header } from './Header';
+import { TableResize } from '../../../../components/all';
 
 export function List(props){
   const { data, excelName, size} = props;
@@ -14,33 +15,33 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('report.site'), accessor: 'siteName', exLabel: t('report.site'), customStyle: { width: 150 },},
-      { Header: t('report.pos'), accessor: 'terminalName', exLabel: t('report.pos'), customStyle: { width: 100 },},
-      { Header: t('page.date'), accessor: 'currentDate', exLabel: t('page.date'), customStyle: { width: 120 },
+      { Header: t('report.site'), accessor: 'siteName', exLabel: t('report.site'), width: 150, minWidth: 110 },
+      { Header: t('report.pos'), accessor: 'terminalName', exLabel: t('report.pos'),  width: 110, minWidth: 110 ,},
+      { Header: t('page.date'), accessor: 'currentDate', exLabel: t('page.date'), width: 120, minWidth: 110 ,
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
       }
       },
-      { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'), customStyle: { width: 120 },},
-      { Header: t('report.beginDate'), accessor: 'openDate', exLabel: t('report.beginDate'), 
+      { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'),  width: 120, minWidth: 110 ,},
+      { Header: t('report.beginDate'), accessor: 'openDate', exLabel: t('report.beginDate'),  width: 100, minWidth: 110 ,
       Cell: ({ value }) => {
         return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD hh:mm:ss') : ''}</div>)
       }},
-      { Header: t('report.closedDate'), accessor: 'closeDate', exLabel: t('report.closedDate'),
+      { Header: t('report.closedDate'), accessor: 'closeDate', exLabel: t('report.closedDate'),  width: 100, minWidth: 110 ,
       Cell: ({ value }) => {
         return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD hh:mm:ss') : ''}</div>)
       }},
       { Header: <div style={{textAlign: 'right'}}>{t('report.beginBalance')}</div>, accessor: 'beginBalance',
-      exLabel: t('report.beginBalance'), customStyle: { width: 150 },
+      exLabel: t('report.beginBalance'), width: 120, minWidth: 110 ,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,},
       { Header: <div style={{textAlign: 'right'}}>{t('report.sales_amt')}</div>, accessor: 'cashAmt',
-      exLabel: t('report.sales_amt'), customStyle: { width: 160 },
+      exLabel: t('report.sales_amt'), width: 120, minWidth: 110 ,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,},
       { Header: <div style={{textAlign: 'right'}}>{t('report.closedBalance')}</div>, accessor: 'closedBalance',
-      exLabel: t('report.closedBalance'),
+      exLabel: t('report.closedBalance'),  width: 100, minWidth: 110 ,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,},
       { Header: <div style={{textAlign: 'right'}}>{t('report.diff')}</div>, accessor: 'diffAmount',
-      exLabel: t('report.diff'), 
+      exLabel: t('report.diff'),  width: 100, minWidth: 110 ,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,},
     ]);
     return () => {};
@@ -58,9 +59,10 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
+  const defaultColumn = useMemo(() => ({ minWidth: 60, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'OpenDate', desc: true }] },
-      }, useSortBy, usePagination, useRowSelect);
+      }, useSortBy, usePagination, useRowSelect, useResizeColumns, useBlockLayout);
   const tableProps = { tableInstance, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName };
 
@@ -69,7 +71,7 @@ export function List(props){
       <Header {...filterProps} />
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

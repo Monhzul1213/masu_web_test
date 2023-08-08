@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { PaginationTable, FooterTable, Money } from '../../all/all_m';
+import { PaginationTable, TableResize, Money } from '../../all/all_m';
 import { Header } from './Header';
 import moment from 'moment';
 
@@ -24,20 +24,20 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: <div style={{textAlign: 'right'}}>{t('report.salesNo')}</div> , accessor: 'salesNo', exLabel: t('report.salesNo'),
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>, customStyle: { width: 100 }, Footer: t('report.total'),},
-      { Header: t('page.date'), accessor: 'salesDate', exLabel: t('page.date'),
+      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>, width: 100, minWidth: 110 , Footer: t('report.total'),},
+      { Header: t('page.date'), accessor: 'salesDate', exLabel: t('page.date'), width: 100, minWidth: 110 ,
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)}
       },
-      { Header: t('report.siteName'), accessor: 'siteName', exLabel: t('report.siteName'), customStyle: { width: 150 }, },
-      { Header: t('report.pos'), accessor: 'terminalName', exLabel: t('report.pos'), customStyle: { width: 100 }, },
-      { Header: t('report.type'), accessor: 'salesTypeName', exLabel: t('report.type'), customStyle: { width: 150 }, },
-      { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'), customStyle: { width: 150 } },
-      { Header: t('report.invtName'), accessor: 'invtName', exLabel: t('report.invtName'), customStyle: { width: 150 } },
-      { Header:  <div style={{textAlign: 'right'}}>{t('report.price1')}</div>, accessor: 'price',  customStyle: { width: 100 }, 
+      { Header: t('report.siteName'), accessor: 'siteName', exLabel: t('report.siteName'), width: 150, minWidth: 80 , },
+      { Header: t('report.pos'), accessor: 'terminalName', exLabel: t('report.pos'), width: 150, minWidth: 80 , },
+      { Header: t('report.type'), accessor: 'salesTypeName', exLabel: t('report.type'), width: 100, minWidth: 80 ,},
+      { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'), width: 100, minWidth: 80 , },
+      { Header: t('report.invtName'), accessor: 'invtName', exLabel: t('report.invtName'), width: 120, minWidth: 80 , },
+      { Header:  <div style={{textAlign: 'right'}}>{t('report.price1')}</div>, accessor: 'price', width: 100, minWidth: 80, 
       exLabel: t('report.price1'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> },
-      { Header: <div style={{textAlign: 'right'}}>{t('report.qty1')}</div>, accessor: 'qty',customStyle: { width: 60 },
+      { Header: <div style={{textAlign: 'right'}}>{t('report.qty1')}</div>, accessor: 'qty', width: 100, minWidth: 80 ,
       exLabel: t('report.qty1',),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value ? props.value : 0} </div>,
       Footer: info => {
@@ -46,7 +46,7 @@ export function List(props){
           [info.rows]  )
         return <><div style={{textAlign: 'right', paddingRight: 15}}>{total}</div></>
         } },
-      { Header:  <div style={{textAlign: 'right'}}>{t('report.amount')}</div>, accessor: 'amount',  customStyle: { width: 150 }, 
+      { Header:  <div style={{textAlign: 'right'}}>{t('report.amount')}</div>, accessor: 'amount', width: 90, minWidth: 70 , 
       exLabel: t('report.amount'), 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
       Footer: info => {
@@ -55,7 +55,7 @@ export function List(props){
           [info.rows]  )
         return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /></div></>
         } },
-      { Header: t('report.descr'), accessor: 'serviceDescr', exLabel: t('report.descr') },
+      { Header: t('report.descr'), accessor: 'serviceDescr', exLabel: t('report.descr'), width: 100, minWidth: 70 ,},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,9 +63,9 @@ export function List(props){
 
 
 
-
-  const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect);
+  const defaultColumn = useMemo(() => ({ minWidth: 60, width: 190, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: true, autoResetSortBy: false,
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect, useResizeColumns, useBlockLayout);
   const tableProps = { tableInstance, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName };
 
@@ -74,7 +74,7 @@ export function List(props){
       <Header {...filterProps} />
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <FooterTable {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

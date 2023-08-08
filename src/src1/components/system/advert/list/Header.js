@@ -61,9 +61,9 @@ export function Header(props){
   const addProps = { type: 'advert', onClickAdd, show, onClickDelete };
 
   return (
-    <div className='ih_header' id={id} style={{paddingTop: 0}}>
+    <div className='ih_header' id={id} >
       <ButtonRowAddConfirm {...addProps} />
-      <div className={classH} style={{marginTop: 0}}>
+      <div className={classH} >
         <PlainRange {...dateProps} />
         <div className='th_header_s'>
           <PlainSelect {...statProps} />

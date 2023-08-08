@@ -64,7 +64,7 @@
   display: flex;
   flex-flow: row;
   justify-content: flex-end;
-    justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
 }
 #ih_small .th_header_mn3 {
@@ -152,13 +152,13 @@
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
   max-width: 1600px;
 }
-.is_dtl{
-  margin-top: 10px;
-}
+  .is_dtl{
+    margin-top: 10px;
+  }
 .ih_btn_row_mn {
   display: flex;
   flex-flow: row;
-  margin-left: 40px;
+  /* margin-left: 40px; */
 }
 .th_select_back1 {
   margin-right: 15px;
@@ -173,4 +173,15 @@
 }
 #tr_btns {
   max-width: 850px;
+}
+.ih_refresh {
+  height: 32px;
+  color: var(--text2-color);
+  font-size: 22px;
+  margin-left: 10px;
+}
+
+.ih_refresh:hover {
+  cursor: pointer;
+  color: var(--config-color);
 }
