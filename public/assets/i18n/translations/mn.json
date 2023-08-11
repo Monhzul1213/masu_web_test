@@ -133,7 +133,9 @@
     "/system/advert": "Сурталчилгаа",
     "/system/advert/advert_add": "Сурталчилгаа",
     "/system/notification": "Мэдэгдэл",
-    "/system/notification/noti_add": "Мэдэгдэл"
+    "/system/notification/noti_add": "Мэдэгдэл",
+    "/system/rating": "Үнэлгээ",
+    "/system/rating/rating_add": "Үнэлгээ бүртгэх"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -174,6 +176,7 @@
     "info": "Харилцагчийн мэдээлэл",
     "advert": "Сурталчилгаа",
     "noti": "Мэдэгдэл",
+    "rating": "Үнэлгээ",
     "order": "Захиалга",
     "system_partner" : "Партнерийн мэдээлэл",
     "report_order": "Борлуулалтын захиалга",
@@ -1091,6 +1094,17 @@
     "add_success": "Хөдөлгөөн амжилттай хийлээ.",
     "delete_success": "Хөдөлгөөн амжилттай устгагдлаа.",
     "warning_item": "Салбар сонгоно уу"
+  },
+  "rating":{
+    "edit": "Үнэлгээ засах",
+    "title": "Үнэлгээ",
+    "add": "Үнэлгээ бүртгэх",
+    "type": "Төрөл",
+    "all_customer" : "Бүх хэрэглэгч",
+    "selected_cus" : "Сонгосон хэрэглэгч",
+    "select_customer" : "Хэрэглэгч сонгох ",
+    "add_success": "Мэдэгдэл амжилттай бүртгэгдлээ.",
+    "delete_success": "Мэдэгдэл амжилттай устгагдлаа."
   },
   "version": "12"
 }
