@@ -12,6 +12,7 @@ import '../../css/menu.css';
 import { getItem } from '../../helpers';
 import { Profile } from './Profile';
 import { Install } from './Install';
+import { Rating } from './Rating';
 const { Sider } = Layout;
 
 export function Menu(props){
@@ -24,6 +25,7 @@ export function Menu(props){
   const path = pathname?.split('/') && pathname?.split('/')[1];
   const navigate = useNavigate();
   const [hideMenu, setHideMenu] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     let pathname1 = pathname?.toLowerCase();
@@ -36,6 +38,9 @@ export function Menu(props){
   useEffect(() => {
     setCollapsed(size?.width > 740 ? false : true);
     if(isAdmin) setOpenKeys(["system", "/system"]);
+    
+    // comment
+    // setOpen(true);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -141,9 +146,11 @@ export function Menu(props){
   const profileProps = { collapsed, setCollapsed };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline', openKeys, onOpenChange };
   const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
+  const rateProps = { open, setOpen };
 
   return hideMenu ? null : (
     <>
+      <Rating {...rateProps} />
       <Sider {...siderProps}>
         <div className='mi_top'>
           <Profile {...profileProps} />
