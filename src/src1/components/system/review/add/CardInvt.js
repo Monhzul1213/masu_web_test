@@ -27,7 +27,7 @@ export function Card(props){
   }, [i18n?.language]);
 
   const onClickDelete = row => {
-    if(row?.original?.notifcationId || row?.original?.notifcationId === 0) setDKits(old => [...old, row?.original]);
+    if(row?.original?.reviewId || row?.original?.reviewId === 0) setDKits(old => [...old, row?.original]);
     setData(data?.filter(item => item?.merchantId !== row?.original?.merchantId));
     setSearch({ value: null });
   }

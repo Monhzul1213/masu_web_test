@@ -7,10 +7,10 @@ import { message } from 'antd';
 import '../../../css/invt.css';
 import { getList, sendRequest} from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Header, List } from '../../components/system/rating/list';
+import { Header, List } from '../../components/system/review/list';
 import { useTranslation } from 'react-i18next';
 
-export function Rating(){
+export function Reviews(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
@@ -35,18 +35,10 @@ export function Rating(){
   const getData = async query => {
     setError(null);
     setLoading(true);
-    let api = 'System/GetNotification' + (query ?? '');
+    let api = 'Merchant/GetReview' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
-    else { 
-      let grpData =[];
-      response?.data?.header.forEach(item => {
-        if(item?.status !== 0){
-          grpData.push(item)
-        } 
-        setData(grpData)
-      })
-    }
+    else setData(response?.data?.review)
     setShow(false);
     setChecked(false);
     setLoading(false);
@@ -55,25 +47,23 @@ export function Rating(){
   const onClickDelete = async () => {
     let toDelete = [];
     data?.forEach(item => {
-      if(item.checked) toDelete.push({
-        notificationID: item?.notifcationId ,
-        notificationType: item?.notifcationType,
+      if(item.checked) toDelete.push({ 
+        reviewID: item?.reviewId ,
+        reviewType: item?.reviewType,
         beginDate: item?.beginDate,
         endDate: item?.endDate,
-        subject: item?.subject,
         text: item?.text,
         status: item?.status,
         rowStatus:'D',
-        isSendMail: item?.isSendMail ? 'Y' : 'N',
-        notifItem: []});
+        merchantIDs: []});
     });    
     setError(null);
     setLoading(true);
-    let response = await dispatch(sendRequest(user, token, 'System/ModNotification', toDelete));
+    let response = await dispatch(sendRequest(user, token, 'Merchant/ModReview', toDelete));
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      message.success(t('noti.delete_success'));
+      message.success(t('rating.delete_success'));
       getData();
     }
   }

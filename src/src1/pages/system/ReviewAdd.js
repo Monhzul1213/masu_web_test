@@ -8,11 +8,10 @@ import '../../css/system.css';
 import '../../../css/config.css';
 import { getList, sendRequest } from '../../../services';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all/all_m';
-import { Main , CardInvt} from '../../components/system/rating/add';
+import { Main , CardInvt} from '../../components/system/review/add';
 
-export function RatingAdd(){
+export function ReviewAdd(){
   const { t } = useTranslation();
-  const [subject, setSubject] = useState({ value: '' });
   const [text, setText] = useState({ value: '' });
   const [beginDate, setBeginDate] = useState({ value: moment() });
   const [endDate, setEndDate] = useState({ value: moment() });
@@ -49,36 +48,41 @@ export function RatingAdd(){
 
 
   const getData = async () => {
-    let notifcationId = searchParams?.get('notifcationId');
-    if(notifcationId || notifcationId === 0) {GetNoti(notifcationId)} ;
+    let reviewId = searchParams?.get('reviewId');
+    if(reviewId || reviewId === 0) {GetRating(reviewId)} ;
   }
 
-  const GetNoti = async (notificationId ) => {
+  const GetRating = async (reviewId ) => {
     setError(null);
     setLoading(true);
-    let api = '?notificationId=' + notificationId;
-    let response = await dispatch(getList(user, token, 'System/GetNotification' + api,   ));
+    let api = '?reviewId=' + reviewId;
+    let response = await dispatch(getList(user, token, 'Merchant/GetReview' + api  ));
     setLoading(false);
     if(response?.error) setError(response?.error)
     else {    
-      let notif = response?.data && response?.data?.header && response?.data?.header[0] ;
-      let ads1 = response?.data && response?.data?.item ;
-      setSelected(notif)
+      let review = response?.data && response?.data?.review && response?.data?.review[0] ;
+      let ads1 = response?.data && response?.data?.reviewitem ;
+      setSelected(review)
       setItem(response?.data);
-      setType({ value : notif?.notifcationType })
-      setSubject({ value: notif?.subject ?? '' });
-      setBeginDate ({ value: moment(notif?.beginDate, 'yyyy.MM.DD') })
-      setEndDate ({ value: moment(notif?.endDate, 'yyyy.MM.DD') })
-      setText({ value: notif?.text ?? ''}); 
-      setStatus({ value: notif?.status ?? 0  })
-      setIsSendMail(notif?.isSendMail === 'Y' )
+      setType({ value : review?.reviewType })
+      setBeginDate ({ value: moment(review?.beginDate, 'yyyy.MM.DD') })
+      setEndDate ({ value: moment(review?.endDate, 'yyyy.MM.DD') })
+      setText({ value: review?.text ?? ''}); 
+      setStatus({ value: review?.status ?? 0  })
+      setIsSendMail(review?.isSendMail === 'Y' )
       getKits(ads1)
     }
   }
 
 
   const getKits = item => {
-    setKits(item)
+    let reviewitem = []
+    item?.forEach(it => {
+      if(it?.reviewType === 'WEB'){
+        reviewitem.push(it)
+      }
+    })
+    setKits(reviewitem)
   }
 
   const onLoad = () => {
@@ -104,72 +108,68 @@ export function RatingAdd(){
   const onClickCancel = () =>  navigate('/system/rating');
  
   const checkValid = () => {
-    let notifItem = [];
-    if( subject?.value?.trim() && text?.value?.trim()   ){
+    let merchantIDs = [];
+    if( text?.value?.trim() ){
       if(type?.value === "MERCHANT"){
         if(kits?.length){
           kits?.forEach(item => {
-            notifItem.push({ merchantID: item?.merchantId,
-            showDate: item?.createdDate , isShow: 'N', 
-            rowStatus: item?.notifcationId ? 'U' : 'I'});
+            merchantIDs.push(item?.merchantId);
           });
-          dkits?.forEach(it => notifItem?.push({...it, rowStatus: 'D'}));
+          dkits?.forEach(it => merchantIDs?.push({...it, rowStatus: 'D'}));
         } else {
           setSearchI({ value: searchI?.value, error: t('noti.kit_error') });
           return false;
         }
       } else {
-        notifItem.push({merchantID: 135, showDate: '1900-01-01T00:00:00' , isShow: 'N' , rowStatus: item?.notifcationId  ? 'U' : 'I'})
+        merchantIDs.push()
       }
       let data = [{
-        notificationID: selected ? selected?.notifcationId : -1,
-        notificationType: type?.value,
+        reviewID: selected ? selected?.reviewId : -1,
+        reviewType: type?.value,
         beginDate: beginDate?.value?.format('yyyy.MM.DD'),
         endDate: endDate?.value?.format('yyyy.MM.DD'),
-        subject: subject?.value,
         text: text?.value,
         status: status?.value,
         rowStatus: selected ? 'U' : 'I',
-        isSendMail: isSendMail ? 'Y' : 'N',
-        notifItem
+        merchantIDs
       }]
       return data;
     } else {
-      if(!subject?.value?.trim()) setSubject({ value: '', error: t('error.not_empty') });
       if(!text?.value?.trim()) setText({ value: '', error: t('error.not_empty') });
 
     }
   }
   const onClickSave = async e => {
     e?.preventDefault();
-    let data =checkValid()
+    let data = checkValid()
+    console.log(data)
     if(data){
       onLoad();
       setLoading(true);
-      const response = await dispatch(sendRequest(user, token, 'System/ModNotification', data));
+      const response = await dispatch(sendRequest(user, token, 'Merchant/ModReview', data));
+      console.log(response)
       if(response?.error) onError(response?.error);
-      else onSuccess(t('noti.add_success'));  
+      else onSuccess(t('rating.add_success'));  
     } 
   }
 
   const onClickDelete = async () => {
     onLoad();
-    let data = [{notificationID: selected?.notifcationId ,
-      notificationType: type?.value,
+    let data = [{
+      reviewID: selected?.reviewId ,
+      reviewType: type?.value,
       beginDate: beginDate?.value?.format('yyyy.MM.DD'),
       endDate: endDate?.value?.format('yyyy.MM.DD'),
-      subject: subject?.value,
       text: text?.value,
       status: status?.value,
-      rowStatus:'D',
-      isSendMail: isSendMail ? 'Y' : 'N',
-      notifItem: [] }]; 
-    const response = await dispatch(sendRequest(user, token, 'System/ModNotification', data));
+      rowStatus: 'D',
+      merchantIDs: [] }]; 
+    const response = await dispatch(sendRequest(user, token, 'Merchant/ModReview', data));
     if(response?.error) onError(response?.error, true);
-    else onSuccess(t('noti.delete_success'), true);
+    else onSuccess(t('rating.delete_success'), true);
   }
   
-  const mainProps = { setError, subject, setSubject, setText, text , beginDate, setBeginDate, endDate, setEndDate, 
+  const mainProps = { setError, setText, text , beginDate, setBeginDate, endDate, setEndDate, 
     status, setStatus, type, setType , isSendMail, setIsSendMail};
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
   const invtProps = { data: kits, setData: setKits, setError, setEdited,
