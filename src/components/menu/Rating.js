@@ -63,8 +63,8 @@ export function Rating(props){
             value={descr}
             setValue={setDescr}
             placeholder={t('rating.descr')}
-            length={200} />
-          <p className='rate_length'>{descr?.value?.length}/200</p>
+            length={300} />
+          <p className='rate_length'>{descr?.value?.length}/300</p>
         </div>
         {error && <Error error={error} id='m_error' />}
       </div>
