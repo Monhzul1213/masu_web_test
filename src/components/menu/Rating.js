@@ -10,9 +10,9 @@ export function Rating(props){
   const { review, setReview } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0);
   const [descr, setDescr] = useState({ value: '' });
-  const [height, setHeight] = useState(0);
+  const [height, setHeight] = useState(110);
   const [error, setError] = useState(null);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export function Rating(props){
 
   const onChangeRating = value => {
     setRating(value);
-    setHeight(value === 5 ? 0 : 100);
+    setHeight(value === 5 ? 0 : 110);
   }
 
   const onClickCancel = () => setReview(false);
@@ -49,21 +49,22 @@ export function Rating(props){
         {/* <DynamicAIIcon className='m_rate_close' name='AiOutlineClose' onClick={onClickCancel} /> */}
         <p className='m_title' id='m_rating'>{review?.text}</p>
         <div className='m_rate_back'>
-          <p className='select_lbl'>{t('rating.rate')}</p>
           <Rate
             allowHalf={false}
-            defaultValue={5}
+            defaultValue={0}
             value={rating}
+            style={{fontSize: 27}}
             onChange={onChangeRating} />
         </div>
         <div style={style}>
           <DescrInput
+            id_back='rate_back'
             id='rate_input'
             value={descr}
             setValue={setDescr}
-            label={t('rating.descr')}
             placeholder={t('rating.descr')}
-            length={300} />
+            length={200} />
+          <p className='rate_length'>{descr?.value?.length}/200</p>
         </div>
         {error && <Error error={error} id='m_error' />}
       </div>

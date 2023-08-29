@@ -65,7 +65,7 @@ export function Input(props){
 }
 
 export function DescrInput(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, inRow, length, id } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, inRow, length, id, id_back } = props;
   const { t } = useTranslation();
 
   const onChange = e => {
@@ -89,7 +89,7 @@ export function DescrInput(props){
 
   return (
     <div style={inRow ? { flex: 1 } : {}}>
-      <div className='select_back' style={backStyle}>
+      <div className='select_back' style={backStyle} id={id_back}>
         <p className='select_lbl' style={style}>{label}</p>
         <textarea
           id={id}

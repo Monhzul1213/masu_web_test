@@ -376,14 +376,27 @@
 #m_rating {
   font-size: 17px;
   font-weight: 550;
+  text-align: center;
 }
 
 .m_rate_back {
   margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+#rate_back {
+  border: 1px solid var(--input1-color);
+  border-radius: 5px;
+  padding: 3px 5px;
+}
+
+#rate_back:focus-within {
+  border: 1px solid var(--success-color);
 }
 
 #rate_input {
-  height: 50px;
+  height: 60px;
   resize: none;
 }
 
@@ -424,4 +437,11 @@
 .rate_btn:disabled {
   cursor: not-allowed;
   background-color: var(--config-b-color);
+}
+
+.rate_length {
+  color: var(--text2-color);
+  font-size: 11px;
+  text-align: end;
+  margin: 0 3px;
 }
