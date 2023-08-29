@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, Rate } from 'antd';
+import { message, Modal, Rate } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { DescrInput, DynamicAIIcon, Button } from '../all';
+import { sendRequest } from '../../services';
+import { DescrInput, DynamicAIIcon, Button, Error } from '../all';
 
 export function Rating(props){
   const { review, setReview } = props;
@@ -11,6 +13,9 @@ export function Rating(props){
   const [rating, setRating] = useState(5);
   const [descr, setDescr] = useState({ value: '' });
   const [height, setHeight] = useState(0);
+  const [error, setError] = useState(null);
+  const { user, token } = useSelector(state => state.login);
+  const dispatch = useDispatch();
   const open = review ? true : false;
 
   const onChangeRating = value => {
@@ -20,9 +25,19 @@ export function Rating(props){
 
   const onClickCancel = () => setReview(false);
 
-  const onClickSave = async () => {
+  const onClickSave = async e => {
+    e?.preventDefault();
+    setError(null);
     setLoading(true);
-    setTimeout(() => setLoading(false), 600);
+    let ratingText = rating === 5 ? '' : (descr?.value ?? '');
+    let data = { reviewID: review?.reviewId, rating, ratingText };
+    let response = await dispatch(sendRequest(user, token, 'Merchant/ModReviewItem', data));
+    if(response?.error) setError(response?.error);
+    else {
+      onClickCancel();
+      message.success(t('rating.success'));
+    }
+    setLoading(false);
   }
 
   const style = { overflow: 'hidden', transition: 'height 0.2s ease-in', height };
@@ -36,7 +51,7 @@ export function Rating(props){
         <div className='m_rate_back'>
           <p className='select_lbl'>{t('rating.rate')}</p>
           <Rate
-            allowHalf={true}
+            allowHalf={false}
             defaultValue={5}
             value={rating}
             onChange={onChangeRating} />
@@ -50,6 +65,7 @@ export function Rating(props){
             placeholder={t('rating.descr')}
             length={300} />
         </div>
+        {error && <Error error={error} id='m_error' />}
       </div>
       <Button loading={loading} className='rate_btn' text={t('rating.send')} disabled={disabled} onClick={onClickSave} />
       <div className='gap' />
