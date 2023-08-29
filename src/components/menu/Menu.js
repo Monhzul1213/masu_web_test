@@ -6,9 +6,10 @@ import { TbBuildingWarehouse } from 'react-icons/tb';
 import { FiTool } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import '../../css/menu.css';
+import { getList } from '../../services';
 import { getItem } from '../../helpers';
 import { Profile } from './Profile';
 import { Install } from './Install';
@@ -20,12 +21,13 @@ export function Menu(props){
   const { t } = useTranslation();
   const [openKeys, setOpenKeys] = useState([]);
   const [hideConfig, setHideConfig] = useState(true);
+  const [hideMenu, setHideMenu] = useState(false);
+  const [review, setReview] = useState(false);
+  const { user: { msRole, isAdmin }, isPartner, user, token } = useSelector(state => state.login);
   const { pathname } = useLocation();
-  const { user: { msRole, isAdmin }, isPartner } = useSelector(state => state.login);
   const path = pathname?.split('/') && pathname?.split('/')[1];
   const navigate = useNavigate();
-  const [hideMenu, setHideMenu] = useState(false);
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let pathname1 = pathname?.toLowerCase();
@@ -38,9 +40,8 @@ export function Menu(props){
   useEffect(() => {
     setCollapsed(size?.width > 740 ? false : true);
     if(isAdmin) setOpenKeys(["system", "/system"]);
-    
-    // comment
-    // setOpen(true);
+
+    getReview();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -51,6 +52,12 @@ export function Menu(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width, collapsed]);
+
+  const getReview = async () => {
+    const response = await dispatch(getList(user, token, 'Merchant/GetReviewItem'));
+    const review = response?.data?.filter(item => item.isShow !== 'Y')[0];
+    setReview(review);
+  }
 
   const style = {
     overflowY: 'auto',
@@ -146,7 +153,7 @@ export function Menu(props){
   const profileProps = { collapsed, setCollapsed };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline', openKeys, onOpenChange };
   const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
-  const rateProps = { open, setOpen };
+  const rateProps = { review, setReview };
 
   return hideMenu ? null : (
     <>

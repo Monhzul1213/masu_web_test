@@ -5,19 +5,20 @@ import { useTranslation } from 'react-i18next';
 import { DescrInput, DynamicAIIcon, Button } from '../all';
 
 export function Rating(props){
-  const { open, setOpen } = props;
+  const { review, setReview } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState(5);
   const [descr, setDescr] = useState({ value: '' });
   const [height, setHeight] = useState(0);
+  const open = review ? true : false;
 
   const onChangeRating = value => {
     setRating(value);
     setHeight(value === 5 ? 0 : 100);
   }
 
-  const onClickCancel = () => setOpen(false);
+  const onClickCancel = () => setReview(false);
 
   const onClickSave = async () => {
     setLoading(true);
@@ -30,8 +31,8 @@ export function Rating(props){
   return (
     <Modal title={null} footer={null} closable={false} open={open} centered={true} width={360}>
       <div className='m_back'>
-        <DynamicAIIcon className='m_rate_close' name='AiOutlineClose' onClick={onClickCancel} />
-        <p className='m_title' id='m_rating'>{t('rating.title')}</p>
+        {/* <DynamicAIIcon className='m_rate_close' name='AiOutlineClose' onClick={onClickCancel} /> */}
+        <p className='m_title' id='m_rating'>{review?.text}</p>
         <div className='m_rate_back'>
           <p className='select_lbl'>{t('rating.rate')}</p>
           <Rate
