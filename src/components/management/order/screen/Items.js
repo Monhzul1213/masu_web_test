@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 
-import { Money, TableRow, TableRowResize } from '../../../all';
+import { Money, TableRowResize } from '../../../all';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 
 export function Items(props){
