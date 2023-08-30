@@ -97,7 +97,7 @@ export function List(props){
       <Drawer {...drawerProps} />
       <Header {...filterProps} />        
       <div style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
         </div>
       </div>
