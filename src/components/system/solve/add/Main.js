@@ -38,7 +38,7 @@ function Card(props){
   const checkProps = { checked, label: 'tax.checked', style: { marginTop: 10, flex: 1 }, disabled: true };
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: states, setError, setEdited, s_value: 'valueNum',
     s_descr: 'valueStr1', onFocus: onFocusStatus, loading, inRow: true, disabled };
-  const descrProps = { value: notes, setValue: setNotes, label: t('tax.note'), placeholder: t('tax.note'), inRow: true, disabled };
+  const descrProps = { value: notes, setValue: setNotes, label: t('tax.note'), placeholder: t('tax.note'), inRow: true, disabled, length: 50 };
   const style = size?.width > 445 ? { marginBottom: 10 } : { flexFlow: 'column-reverse', marginBottom: 10 }
   const imageProps = { image, setEdited, setError, size };
 
