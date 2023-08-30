@@ -10,7 +10,7 @@ export function Rating(props){
   const { review, setReview } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [rating, setRating] = useState(0);
+  const [rating, setRating] = useState(1);
   const [descr, setDescr] = useState({ value: '' });
   const [height, setHeight] = useState(110);
   const [error, setError] = useState(null);
@@ -51,7 +51,7 @@ export function Rating(props){
         <div className='m_rate_back'>
           <Rate
             allowHalf={false}
-            defaultValue={0}
+            defaultValue={1}
             value={rating}
             style={{fontSize: 27}}
             onChange={onChangeRating} />
