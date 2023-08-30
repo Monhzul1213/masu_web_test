@@ -15,7 +15,7 @@ export function ReviewAdd(){
   const [text, setText] = useState({ value: '' });
   const [beginDate, setBeginDate] = useState({ value: moment() });
   const [endDate, setEndDate] = useState({ value: moment() });
-  const [status, setStatus] = useState({ value: 1 });
+  const [status, setStatus] = useState({ value: 0 });
   const [type, setType] = useState({ value: "ALL" });
   const [error, setError] = useState(null);
   const [item, setItem] = useState(null);
@@ -76,13 +76,13 @@ export function ReviewAdd(){
 
 
   const getKits = item => {
-    let reviewitem = []
-    item?.forEach(it => {
-      if(it?.reviewType === 'WEB'){
-        reviewitem.push(it)
-      }
-    })
-    setKits(reviewitem)
+    // let reviewitem = []
+    // item?.forEach(it => {
+    //   if(it?.reviewType === 'WEB'){
+    //     reviewitem.push(it)
+    //   }
+    // })
+    setKits(item)
   }
 
   const onLoad = () => {
@@ -142,12 +142,10 @@ export function ReviewAdd(){
   const onClickSave = async e => {
     e?.preventDefault();
     let data = checkValid()
-    console.log(data)
     if(data){
       onLoad();
       setLoading(true);
       const response = await dispatch(sendRequest(user, token, 'Merchant/ModReview', data));
-      console.log(response)
       if(response?.error) onError(response?.error);
       else onSuccess(t('rating.add_success'));  
     } 
@@ -171,7 +169,7 @@ export function ReviewAdd(){
   
   const mainProps = { setError, setText, text , beginDate, setBeginDate, endDate, setEndDate, 
     status, setStatus, type, setType , isSendMail, setIsSendMail};
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp_zz' };
   const invtProps = { data: kits, setData: setKits, setError, setEdited,
     search: searchI, setSearch: setSearchI , setDKits };
 
@@ -183,7 +181,7 @@ export function ReviewAdd(){
         <from>
             <Main {...mainProps} />
             <div className='gap_z' />
-            {type?.value === "ALL" ? '' : <CardInvt {...invtProps} />}
+            {!kits?.length && type?.value !== 'MERCHANT' ? '' : <CardInvt {...invtProps} />}
         </from>
       </div>
       <ButtonRowConfirm {...btnProps} />

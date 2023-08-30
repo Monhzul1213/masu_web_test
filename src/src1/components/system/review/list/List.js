@@ -28,7 +28,7 @@ export function List(props){
       { Header: t('invoice.end'), accessor: 'endDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },
-      { Header: t('noti.text'), accessor: 'text' },
+      { Header: t('rating.title'), accessor: 'text' },
       { id: 'status', Header: t('order.status'),  accessor: d => { return d.status === 0 ? 'Идэвхгүй' : 'Идэвхтэй' }},
     ]);
     return () => {};

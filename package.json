@@ -41,6 +41,7 @@
     "react-router-dom": "^6.4.2",
     "react-router-prompt": "^0.3.0",
     "react-scripts": "5.0.1",
+    "react-simple-star-rating": "^5.1.7",
     "react-sizeme": "^3.0.2",
     "react-spinners": "^0.13.5",
     "react-table": "^7.8.0",

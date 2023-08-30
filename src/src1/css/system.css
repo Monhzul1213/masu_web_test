@@ -7,6 +7,7 @@
   --color-width: 60px;
   --cat-width: 40px;
   --system-width: 500px;
+  --system-width1: 800px;
 } 
 
 .ia_back_z {
@@ -15,6 +16,13 @@
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding: var(--page-padding);
   max-width: var(--system-width);
+}
+.ia_back_z1 {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding: var(--page-padding);
+  max-width: var(--system-width1);
 }
 .gap_z {
   width: var(--page-padding);
@@ -26,6 +34,13 @@
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding: var(--page-padding);
   width: var(--system-width);
+}
+.ac_back_sys1 {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding: var(--page-padding);
+  width: var(--system-width1);
 }
 .ac_lbl_sys {
   margin: 0;

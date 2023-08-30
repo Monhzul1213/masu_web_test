@@ -19,6 +19,9 @@
 #btn_supp_z{
   max-width: 600px;
 }
+#btn_supp_zz{
+  max-width: 800px;
+}
 #supp_list_z {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
   max-width: 800px;

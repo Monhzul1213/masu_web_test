@@ -37,6 +37,7 @@ export function Reviews(){
     setLoading(true);
     let api = 'Merchant/GetReview' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
+    console.log(response)
     if(response?.error) setError(response?.error);
     else setData(response?.data?.review)
     setShow(false);
