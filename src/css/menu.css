@@ -372,3 +372,76 @@
   border-color: var(--input1-color);
   border-width: 1px 0 0;
 }
+
+#m_rating {
+  font-size: 17px;
+  font-weight: 550;
+  text-align: center;
+}
+
+.m_rate_back {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+#rate_back {
+  border: 1px solid var(--input1-color);
+  border-radius: 5px;
+  padding: 3px 5px;
+}
+
+#rate_back:focus-within {
+  border: 1px solid var(--success-color);
+}
+
+#rate_input {
+  height: 60px;
+  resize: none;
+}
+
+.m_rate_close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  color: var(--text3-color);
+}
+
+.m_rate_close:hover {
+  cursor: pointer;
+  color: var(--config-color);
+}
+
+.rate_btn {
+  background-color: var(--config-b-color);
+  border: none;
+  box-shadow: none;
+  height: 40px;
+  border-radius: var(--radius);
+  width: calc(100% - 40px);
+  margin: 20px 20px 0 20px;
+  color: var(--root-color);
+  font-size: 15px;
+  font-weight: 650;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rate_btn:hover {
+  cursor: pointer;
+  background-color: var(--config-color);
+}
+
+.rate_btn:disabled {
+  cursor: not-allowed;
+  background-color: var(--config-b-color);
+}
+
+.rate_length {
+  color: var(--text2-color);
+  font-size: 11px;
+  text-align: end;
+  margin: 0 3px;
+}

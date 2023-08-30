@@ -1107,7 +1107,8 @@
     "delete_success": "Үнэлгээ амжилттай устгагдлаа.",
     "reviewType": "Төхөөрөмж",
     "isShow": "Харсан эсэх",
-    "ratingText": "Санал хүсэлт"
+    "ratingText": "Санал хүсэлт",
+    "rating": " үнэлгээ"
   },
   "version": "12"
 }

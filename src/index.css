@@ -434,3 +434,7 @@ input[type="file"] {
   -webkit-text-fill-color: transparent;
   opacity: 0.6;
 }
+
+.ant-modal-content {
+  border-radius: 5px;
+}

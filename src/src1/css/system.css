@@ -204,3 +204,69 @@
   color: var(--text4-color);
   margin: 40px 35px;
 }
+
+.rating_back{
+  display: flex;
+  flex-flow: row;
+}
+.rate_back{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+.rating_back_1{
+  display: flex;
+  flex-flow: column;
+
+  /* justify-content: space-between; */
+}
+.rating_average{
+  font-size: 60px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: -20px;
+}
+.rating_text{
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text2-color);
+  justify-content: flex-end;
+}
+
+.ant-rate-star-second{
+  color: var(--text4-color) ;
+}
+.ant-rate-star:not(:last-child){
+  margin-right: 2px;
+}
+
+.rating_star_row{
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  padding-top: 15px;
+
+}
+.rating_progress{
+  display: flex;
+  flex-flow: row;
+  margin-bottom: -10px ;
+}
+.po_progress_z {
+  height: 5px;
+  border-radius: 10px;
+}
+
+.po_progress_back_z {
+  background-color: var(--back-color);
+  height: 5px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  overflow: hidden;
+}
+
+.ant-progress-inner{
+  margin-bottom: 10px;
+  margin-left: 5px;
+}

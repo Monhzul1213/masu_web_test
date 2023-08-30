@@ -5,13 +5,15 @@ import { withSize } from 'react-sizeme';
 import { types } from '../../../../../helpers'
 import { Date } from '../../../../../components/all';
 import { CardNote, Radio, Selects } from '../../../all/all_m';
+// import { Rating } from './Rating';
 
  function Card(props){
   const {setEdited,size,  setError, text, setText, setBeginDate, beginDate,
-    endDate, setEndDate, status, setStatus, type, setType} = props;
+    endDate, setEndDate, status, setStatus, type, setType, rate, selected} = props;
   const { t } = useTranslation();
 
   useEffect(() => {
+    console.log(rate, selected)
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -33,7 +35,7 @@ import { CardNote, Radio, Selects } from '../../../all/all_m';
   const endProps = { value: endDate, setValue: setEndDate, label: t('invoice.end'), inRow: true,};
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: t('advert.types'), setError, setEdited };
   const merchProps = { value: type, setValue: setType, label: t('noti.type'), setError, setEdited, inRow: false, data: types};
-
+  // const rateProps = { selected, rate }
   return (
     <div className='ac_back_sys1' id={id}>
       <form>
@@ -44,9 +46,12 @@ import { CardNote, Radio, Selects } from '../../../all/all_m';
               <Date {...endProps} />
             </div>            
             <CardNote {...textProps} />
-            <div id={idRow1}>
-              <Radio {...statusProps} />
-          </div>
+            {/* <div className='rate_back'> */}
+              <div id={idRow1}>
+                <Radio {...statusProps} />
+              </div>
+              {/* <Rating {...rateProps}/>
+            </div> */}
         </form>
     </div>
     

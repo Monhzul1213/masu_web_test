@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { Check, PaginationTable, Table } from '../../../all/all_m';
+import { Rate } from 'antd';
 
 export function List(props){
   const { data, size ,setData, setShow, checked, setChecked } = props;
@@ -22,14 +23,16 @@ export function List(props){
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       {id : 'reviewType',  Header: t('noti.type'), accessor: d => { return d.reviewType === 'ALL' ? 'Бүх хэрэглэгч' : 'Сонгосон хэрэглэгч' } },
-      { Header: t('invoice.begin'), accessor: 'beginDate', customStyle: { minWidth: 120 },
+      { Header: t('invoice.begin'), accessor: 'beginDate', customStyle: { minWidth: 100 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },      
-      { Header: t('invoice.end'), accessor: 'endDate', customStyle: { minWidth: 120 },
+      { Header: t('invoice.end'), accessor: 'endDate', customStyle: { minWidth: 100 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },
-      { Header: t('rating.title'), accessor: 'text' },
-      { id: 'status', Header: t('order.status'),  accessor: d => { return d.status === 0 ? 'Идэвхгүй' : 'Идэвхтэй' }},
+      { Header: t('rating.title'), accessor: 'avgRating', customStyle: { minWidth: 50 },
+      Cell: ({ value }) => ( <div>{ <Rate style={{fontSize: 18, padding: 0}} defaultValue={0} value={value} allowHalf={true} disabled/>}</div>)
+      },
+      { id: 'status', Header: t('order.status'),  accessor: d => { return d.status === 0 ? 'Идэвхгүй' : 'Идэвхтэй' }, customStyle: { minWidth: 70 },},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

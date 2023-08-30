@@ -28,6 +28,7 @@ export function ReviewAdd(){
   const [selected, setSelected ] = useState(null);
   const [searchParams] = useSearchParams();
   const [kits, setKits] = useState([]);
+  const [rate, setRate] = useState(null);
   const [searchI, setSearchI] = useState({ value: null });
   const [dkits, setDKits] = useState([]);
   const [isSendMail, setIsSendMail] = useState(false);
@@ -62,6 +63,8 @@ export function ReviewAdd(){
     else {    
       let review = response?.data && response?.data?.review && response?.data?.review[0] ;
       let ads1 = response?.data && response?.data?.reviewitem ;
+      let ads2 = response?.data && response?.data?.summary;
+      setRate(ads2)
       setSelected(review)
       setItem(response?.data);
       setType({ value : review?.reviewType })
@@ -76,14 +79,9 @@ export function ReviewAdd(){
 
 
   const getKits = item => {
-    // let reviewitem = []
-    // item?.forEach(it => {
-    //   if(it?.reviewType === 'WEB'){
-    //     reviewitem.push(it)
-    //   }
-    // })
     setKits(item)
   }
+
 
   const onLoad = () => {
     setError(null);
@@ -168,7 +166,7 @@ export function ReviewAdd(){
   }
   
   const mainProps = { setError, setText, text , beginDate, setBeginDate, endDate, setEndDate, 
-    status, setStatus, type, setType , isSendMail, setIsSendMail};
+    status, setStatus, type, setType , isSendMail, setIsSendMail, rate, selected};
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp_zz' };
   const invtProps = { data: kits, setData: setKits, setError, setEdited,
     search: searchI, setSearch: setSearchI , setDKits };
