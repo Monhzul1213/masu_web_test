@@ -50,7 +50,7 @@ export function List(props){
         <Button {...exportProps} />
         <IconDropdown {...columnProps} />
       </div>
-      <div style={{overflowX: 'scroll'}}>
+      <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />
         </div>

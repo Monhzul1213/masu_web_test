@@ -74,9 +74,9 @@ export function List(props){
     <div>
       {open && <Confirm {...confirmProps} />}
       <div style={{height: 20}} />
-      <div className='list_back' id='paging'>
-        <Table {...tableProps}/>
-      </div>
+        <div className='table_scroll' id='paging'>
+          <Table {...tableProps}/>
+        </div>
       <PaginationTable {...tableProps} />
     </div>
   )

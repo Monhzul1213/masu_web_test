@@ -66,7 +66,7 @@ export function List(props){
         <IconSelect {...columnProps} />
       </div>
       <div style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
         </div>
       </div>

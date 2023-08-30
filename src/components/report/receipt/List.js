@@ -17,7 +17,9 @@ export function List(props){
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    changeColumns(['sale.totalAmount', 'sale.totalDiscountAmount', 'sale.totalSalesAmount', 'sale.totalCashAmount', 'sale.totalNonCashAmount'], period);
+    changeColumns([
+      'sale.totalAmount', 'sale.totalDiscountAmount', 'sale.totalSalesAmount', 'sale.totalCashAmount', 'sale.totalNonCashAmount',
+      'sale.vatDdtd', 'sale.vat_CustomerId'], period);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language, period]);
@@ -49,7 +51,7 @@ export function List(props){
           Cell: props => (
             item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD hh:mm:ss') :
             <div style={{textAlign: 'right', paddingRight: 15}}>
-             {item?.value === 'sale.vatCustomerId' ? props?.value : 
+             {item?.value === 'sale.vat_CustomerId' ? props?.value : 
               item?.value === 'sale.status' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> : <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> ): 
               item?.value === 'sale.vatDdtd' ? props?.value: ( <Money value={props?.value} fontSize={14} />)}
             </div>
@@ -95,7 +97,7 @@ export function List(props){
       <Drawer {...drawerProps} />
       <Header {...filterProps} />        
       <div style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
         </div>
       </div>
