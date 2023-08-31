@@ -58,7 +58,9 @@ export function Advert(){
     if(response?.error) setError(response?.error);
     else {
       message.success(t('advert.delete_success'));
-      getData();
+      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') +
+      '&EndDate=' + moment()?.format('yyyy.MM.DD');
+      getData(query);
     }
   }
 

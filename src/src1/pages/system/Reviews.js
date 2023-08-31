@@ -37,7 +37,6 @@ export function Reviews(){
     setLoading(true);
     let api = 'Merchant/GetReview' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
-    console.log(response)
     if(response?.error) setError(response?.error);
     else setData(response?.data?.review)
     setShow(false);
@@ -46,6 +45,8 @@ export function Reviews(){
   }
 
   const onClickDelete = async () => {
+    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') +
+    '&EndDate=' + moment()?.format('yyyy.MM.DD');
     let toDelete = [];
     data?.forEach(item => {
       if(item.checked) toDelete.push({ 
@@ -65,9 +66,10 @@ export function Reviews(){
     if(response?.error) setError(response?.error);
     else {
       message.success(t('rating.delete_success'));
-      getData();
+      getData(query);
     }
   }
+
 
   const onClickAdd = () => navigate('rating_add');
 
