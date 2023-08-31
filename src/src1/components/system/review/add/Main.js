@@ -25,7 +25,7 @@ import { Rating } from './Rating';
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   // const idRow1 = size?.width > 480 ? 'im_unit_row_large' : 'im_unit_row_small';
 
-  const textProps = { value: text, setValue: setText, label: t('noti.text'), placeholder: t('noti.text'), setError, setEdited, length:200, handleEnter};
+  const textProps = { value: text, setValue: setText, label: t('rating.title'), placeholder: t('rating.title'), setError, setEdited, length:200, handleEnter};
   const beginProps = { value: beginDate, setValue: setBeginDate, label: t('invoice.begin'), inRow: true, };
   const endProps = { value: endDate, setValue: setEndDate, label: t('invoice.end'), inRow: true,};
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: t('advert.types'), setError, setEdited };

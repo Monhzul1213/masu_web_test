@@ -53,6 +53,8 @@ export function Notification(){
   }
 
   const onClickDelete = async () => {
+    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') +
+    '&EndDate=' + moment()?.format('yyyy.MM.DD');
     let toDelete = [];
     data?.forEach(item => {
       if(item.checked) toDelete.push({
@@ -74,7 +76,7 @@ export function Notification(){
     if(response?.error) setError(response?.error);
     else {
       message.success(t('noti.delete_success'));
-      getData();
+      getData( query);
     }
   }
 
