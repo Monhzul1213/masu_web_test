@@ -38,7 +38,7 @@ export function List(props){
       <Header {...filterProps} />
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <>
-        <div style={{overflowX: 'scroll'}}>
+        <div className='table_scroll' style={{overflowX: 'scroll'}}>
           <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
             <Table {...tableProps} />
           </div>

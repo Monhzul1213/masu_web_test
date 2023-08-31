@@ -42,6 +42,10 @@ export function formatNumber(num, dec){
   return new Intl.NumberFormat('en-US', { style: 'decimal', maximumFractionDigits: dec ?? 2 }).format(num ?? 0);
 }
 
+export function formatNumber1(num, dec){
+  return new Intl.NumberFormat('en-US', { style: 'decimal', maximumFractionDigits: dec ?? 1 }).format(num ?? 0);
+}
+
 export const urlToFile = async (url, mimeType) => {
   const res = await fetch(url);
   const buf = await res.arrayBuffer();

@@ -90,7 +90,7 @@ export function List(props){
   return (
     <div>
       <Header {...filterProps} />
-      <div style={{overflowX: 'scroll'}}>
+      <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
         </div>

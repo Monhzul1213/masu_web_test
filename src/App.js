@@ -15,7 +15,7 @@ import { Order, OrderAdd, OrderVendors, OrderScreen, OrderReceipt } from './page
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, InvtTxn, Transfer, TransferAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
-import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo } from './src1/pages/system';
+import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
 import { Bill, Order as OrderBill } from './pages/lone';
 import { Integration } from './pages/integration';
@@ -159,6 +159,8 @@ export function App(){
                 <Route path='/management/transfer/transfer_add' element={<TransferAdd />} />
                 <Route path='/management/adjust' element={<Adjust />} />
                 <Route path='/management/adjust/adjust_add' element={<AdjustAdd />} />
+                <Route path='/system/rating' element={<Reviews />} />
+                <Route path='/system/rating/rating_add' element={<ReviewAdd />} />
               </Routes>
             </Layout>
           </Layout>

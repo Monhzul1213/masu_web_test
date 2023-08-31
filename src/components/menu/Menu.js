@@ -77,6 +77,7 @@ export function Menu(props){
       getItem(t('menu.system_partner'), '/system/partner'),
       getItem(t('menu.advert'), '/system/advert'),
       getItem(t('menu.noti'), '/system/notification'),
+      getItem(t('menu.rating'), '/system/rating')
     ])
   ] : [
     getItem(t('menu.report'), '/report', <BsClipboardData />, [
