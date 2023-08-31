@@ -15,7 +15,7 @@ export function ReviewAdd(){
   const [text, setText] = useState({ value: '' });
   const [beginDate, setBeginDate] = useState({ value: moment() });
   const [endDate, setEndDate] = useState({ value: moment() });
-  const [status, setStatus] = useState({ value: 0 });
+  const [status, setStatus] = useState({ value: 1 });
   const [type, setType] = useState({ value: "ALL" });
   const [error, setError] = useState(null);
   const [item, setItem] = useState(null);

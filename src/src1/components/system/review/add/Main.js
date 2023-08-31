@@ -1,22 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withSize } from 'react-sizeme';
 
 import { types } from '../../../../../helpers'
 import { Date } from '../../../../../components/all';
 import { CardNote, Radio, Selects } from '../../../all/all_m';
-// import { Rating } from './Rating';
+import { Rating } from './Rating';
 
  function Card(props){
   const {setEdited,size,  setError, text, setText, setBeginDate, beginDate,
     endDate, setEndDate, status, setStatus, type, setType, rate, selected} = props;
   const { t } = useTranslation();
 
-  useEffect(() => {
-    console.log(rate, selected)
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const handleEnter = e => {
     if (e?.key?.toLowerCase() === "enter") {
@@ -28,14 +23,15 @@ import { CardNote, Radio, Selects } from '../../../all/all_m';
 }
 
   const id = size?.width > 480 ? 'im_large' : 'im_small';
-  const idRow1 = size?.width > 480 ? 'im_unit_row_large' : 'im_unit_row_small';
+  // const idRow1 = size?.width > 480 ? 'im_unit_row_large' : 'im_unit_row_small';
 
-  const textProps = { value: text, setValue: setText, label: t('rating.title'), placeholder: t('rating.title'), setError, setEdited, length:200, handleEnter};
+  const textProps = { value: text, setValue: setText, label: t('noti.text'), placeholder: t('noti.text'), setError, setEdited, length:200, handleEnter};
   const beginProps = { value: beginDate, setValue: setBeginDate, label: t('invoice.begin'), inRow: true, };
   const endProps = { value: endDate, setValue: setEndDate, label: t('invoice.end'), inRow: true,};
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: t('advert.types'), setError, setEdited };
   const merchProps = { value: type, setValue: setType, label: t('noti.type'), setError, setEdited, inRow: false, data: types};
-  // const rateProps = { selected, rate }
+  const rateProps = { selected, rate }
+
   return (
     <div className='ac_back_sys1' id={id}>
       <form>
@@ -46,12 +42,12 @@ import { CardNote, Radio, Selects } from '../../../all/all_m';
               <Date {...endProps} />
             </div>            
             <CardNote {...textProps} />
-            {/* <div className='rate_back'> */}
-              <div id={idRow1}>
+            <div className='rate_back'>
+              {/* <div id={idRow1}> */}
                 <Radio {...statusProps} />
-              </div>
-              {/* <Rating {...rateProps}/>
-            </div> */}
+              {/* </div> */}
+              <Rating {...rateProps}/>
+            </div>
         </form>
     </div>
     

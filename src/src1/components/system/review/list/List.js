@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { useNavigate, createSearchParams } from 'react-router-dom';
-import { Check, PaginationTable, Table } from '../../../all/all_m';
 import { Rate } from 'antd';
+import { useNavigate, createSearchParams } from 'react-router-dom';
+
+import { Check, PaginationTable } from '../../../all/all_m';
+import { TableResize } from '../../../../../components/all';
 
 export function List(props){
   const { data, size ,setData, setShow, checked, setChecked } = props;
@@ -14,25 +16,25 @@ export function List(props){
   const navigate = useNavigate();
 
   useEffect(() => {
-    const customStyle = { width: 40 }
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       {
-        id: 'check', noSort: true, isBtn: true, customStyle,
+        id: 'check', noSort: true, isBtn: true, width: 40, minWidth: 40 ,
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      {id : 'reviewType',  Header: t('noti.type'), accessor: d => { return d.reviewType === 'ALL' ? 'Бүх хэрэглэгч' : 'Сонгосон хэрэглэгч' } },
-      { Header: t('invoice.begin'), accessor: 'beginDate', customStyle: { minWidth: 100 },
+      {id : 'reviewType',  Header: t('noti.type'), accessor: d => { return d.reviewType === 'ALL' ? 'Бүх хэрэглэгч' : 'Сонгосон хэрэглэгч' }, width: 150, minWidth: 80  },
+      { Header: t('invoice.begin'), accessor: 'beginDate', width: 120, minWidth: 80 ,
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },      
-      { Header: t('invoice.end'), accessor: 'endDate', customStyle: { minWidth: 100 },
+      { Header: t('invoice.end'), accessor: 'endDate', width: 130, minWidth: 80 ,
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },
-      { Header: t('rating.title'), accessor: 'avgRating', customStyle: { minWidth: 50 },
+      {Header: t('rating.title'), accessor: 'text', width: 300, minWidth: 80  },
+      { Header: t('noti.amount'), accessor: 'avgRating', width: 130, minWidth: 80 ,
       Cell: ({ value }) => ( <div>{ <Rate style={{fontSize: 18, padding: 0}} defaultValue={0} value={value} allowHalf={true} disabled/>}</div>)
       },
-      { id: 'status', Header: t('order.status'),  accessor: d => { return d.status === 0 ? 'Идэвхгүй' : 'Идэвхтэй' }, customStyle: { minWidth: 70 },},
+      { id: 'status', Header: t('order.status'),  accessor: d => { return d.status === 0 ? 'Идэвхгүй' : 'Идэвхтэй' }, width: 100, minWidth: 80 ,},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,16 +74,17 @@ export function List(props){
   const onRowClick = row => {
     navigate({ pathname: 'rating_add', search: createSearchParams({ reviewId: row?.original?.reviewId}).toString() });
   }
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginDate', desc: true }] }, 
-    onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect);
+    onClickCheckAll, checked, onClickCheck }, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick,  hasTotal: true , total: data?.length };
 
   return (
     <div>
       <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

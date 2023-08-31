@@ -3,21 +3,16 @@ import { useTranslation } from 'react-i18next';
 import { Rate, Progress } from "antd";
 import { formatNumber1 } from "../../../../../helpers";
 
-// import { Progress } from "./Progress";
 
 export function Rating(props){
   const { selected, rate } = props
   const { t } = useTranslation();
 
-  
-  const result = rate?.reduce((obj) => ({...obj}))
-
-  const rate5 = result?.rating === 5 ? result?.percentOfAll : 0
-  const rate4 = result?.rating === 4 ? result?.percentOfAll : 0
-  const rate3 = result?.rating === 3 ? result?.percentOfAll : 0
-  const rate2 = result?.rating === 2 ? result?.percentOfAll : 0
-  const rate1 = result?.rating === 1 ? result?.percentOfAll : 0
-  const rate0 = result?.rating === 0 ? result?.percentOfAll : 0
+  const rate5 = rate?.filter(i => i.rating === 5)[0]?.percentOfAll ?? 0;
+  const rate4 = rate?.filter(i => i.rating === 4)[0]?.percentOfAll ?? 0;
+  const rate3 = rate?.filter(i => i.rating === 3)[0]?.percentOfAll ?? 0;
+  const rate2 = rate?.filter(i => i.rating === 2)[0]?.percentOfAll ?? 0;
+  const rate1 = rate?.filter(i => i.rating === 1)[0]?.percentOfAll ?? 0;
 
      return (
       <div className="rating_back_1">
@@ -44,13 +39,9 @@ export function Rating(props){
                   <Rate count={1} style={{fontSize: 8}} defaultValue={0} disabled/>
                   <Progress percent = {rate1} style={{width: 200}} showInfo={false}  />
                 </div>
-                <div className='rating_progress'>
-                  <Rate count={1} style={{fontSize: 8}} defaultValue={0} disabled/>
-                  <Progress percent = {rate0} style={{width: 200}} showInfo={false}  />
-                </div>
               </div>
             </div>
-            <p className='rating_text'>{selected?.ratingCount + t('rating.rating')}</p>
+            <p className='rating_text'>{(selected?.ratingCount ?? 0 )+ t('rating.rating')}</p>
       </div>
      )
 }

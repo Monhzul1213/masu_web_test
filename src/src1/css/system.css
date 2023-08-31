@@ -269,4 +269,12 @@
 .ant-progress-inner{
   margin-bottom: 10px;
   margin-left: 5px;
+  height: 6px;
+  color: var(--text-color);
 }
+.ant-progress-bg, .ant-progress-success-bg{
+  background-color: var(--text3-color);
+}
+.ant-progress-status-success .ant-progress-bg {
+  background-color: var(--text3-color);
+  }
