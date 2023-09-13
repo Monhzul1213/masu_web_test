@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getList } from '../../services';
 import { Empty1, Error1, Overlay } from '../../components/all';
+import { EmpList, SiteList } from '../../components/config/invocies';
 
 function Card(props){
   const { size } = props;
@@ -42,8 +43,10 @@ function Card(props){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {hasData ?
-          <div className='mo_container' style={{ width }}>
-            2 lists
+          <div>
+            {data1?.length ? <EmpList data={data1} width={width} /> : null}
+            {data1?.length && data2?.length ? <div className='gap' /> : null}
+            {data2?.length ? <SiteList data={data2} width={width} /> : null}
           </div>
         : <div style={{ width }}><Empty1 {...emptyProps} /></div>}
       </Overlay>
