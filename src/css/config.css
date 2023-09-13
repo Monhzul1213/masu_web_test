@@ -1331,3 +1331,16 @@
   background: rgb(160,32,240);
   background: linear-gradient(270deg, rgba(160,32,240,1) 0%, rgba(129,18,222,1) 100%);
 }
+
+.card_scroll {
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
+  display: flex;
+  flex-flow: column;
+  overflow: scroll;
+}
+
+.card_title {
+  font-size: 15px;
+  font-weight: 500;
+  margin: 0 0 0 0;
+}

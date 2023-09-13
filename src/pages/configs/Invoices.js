@@ -11,6 +11,8 @@ function Card(props){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [hasData, setHasData] = useState(false);
+  const [hasData1, setHasData1] = useState(false);
+  const [hasData2, setHasData2] = useState(false);
   const [data1, setData1] = useState([]);
   const [data2, setData2] = useState([]);
   const { user, token }  = useSelector(state => state.login);
@@ -29,6 +31,8 @@ function Card(props){
     if(response?.error) setError(response?.error);
     else {
       setHasData(response?.data?.empSubscriptions?.length || response?.data?.siteSubscriptions?.length);
+      setHasData1(response?.data?.empSubscriptions?.length ? true : false);
+      setHasData2(response?.data?.siteSubscriptions?.length ? true : false);
       setData1(response?.data?.empSubscriptions);
       setData2(response?.data?.siteSubscriptions);
     }
@@ -43,10 +47,9 @@ function Card(props){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {hasData ?
-          <div>
-            {data1?.length ? <EmpList data={data1} width={width} /> : null}
-            {data1?.length && data2?.length ? <div className='gap' /> : null}
-            {data2?.length ? <SiteList data={data2} width={width} /> : null}
+          <div className='card_scroll'>
+            {hasData1 && <EmpList data={data1} width={width} hasData={hasData2} />}
+            {hasData2 && <SiteList data={data2} width={width} hasData={hasData1} />}
           </div>
         : <div style={{ width }}><Empty1 {...emptyProps} /></div>}
       </Overlay>
