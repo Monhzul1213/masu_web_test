@@ -190,7 +190,8 @@ function Pay(props){
           <Field label={t('employee.acct_no')} value={selected?.acct} />
           <Field label={t('employee.receive')} value={selected?.name} />
           <Field label={t('employee.amt')} value={formatNumber(amt) + '₮'} copy={amt} />
-          <Field label={t('employee.txn_descr')} value={txnNo} />
+          <Field label={t('employee.txn_descr')} value={txnNo} isBold={true} />
+          <p className='card_warning'>{t('invoices.warning')}</p>
         </div>
       </div>
     </div>

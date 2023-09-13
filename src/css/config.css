@@ -1344,3 +1344,11 @@
   font-weight: 500;
   margin: 0 0 0 0;
 }
+
+.card_warning {
+  font-size: 14px;
+  margin: 10px 0 0 0;
+  line-height: 18px;
+  /* color: var(--text2-color); */
+  color: #606060;
+}
