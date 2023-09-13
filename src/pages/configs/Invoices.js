@@ -41,6 +41,7 @@ function Card(props){
 
   const width = size?.width >= 840 ? 840 : size?.width;
   const emptyProps = { icon: 'MdReceipt', text: 'invoices.empty' };
+  const listProps = { width, getData, setError, setLoading };
   
   return (
     <div className='store_tab' style={{flex: 1}}>
@@ -48,8 +49,8 @@ function Card(props){
         {error && <Error1 error={error} />}
         {hasData ?
           <div className='card_scroll'>
-            {hasData1 && <EmpList data={data1} width={width} hasData={hasData2} />}
-            {hasData2 && <SiteList data={data2} width={width} hasData={hasData1} />}
+            {hasData1 && <EmpList data={data1} hasData={hasData2} {...listProps} />}
+            {hasData2 && <SiteList data={data2} hasData={hasData1} {...listProps} />}
           </div>
         : <div style={{ width }}><Empty1 {...emptyProps} /></div>}
       </Overlay>
