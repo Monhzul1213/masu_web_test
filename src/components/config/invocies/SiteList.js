@@ -4,11 +4,14 @@ import { usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
 import moment from 'moment';
 
 import { Money, PaginationTable, Table } from '../../all';
+import { SubscriptionSite } from '../../management/adjust/list';
 
 export function SiteList(props){
-  const { data, width, hasData } = props;
+  const { data, width, hasData, getData, setError } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     setColumns([
@@ -30,7 +33,7 @@ export function SiteList(props){
       {
         Header: '', accessor: 'empCode', noSort: true, isBtn: true, customStyle: { maxWidth: 140, minWidth: 140 },
         Cell: ({ value, row, onClickLink }) => {
-          return (<div className='table_link' onClick={() => onClickLink(row)}>{t('invoices.extend')}</div>);
+          return (<div className='table_link' onClick={() => onClickLink(row)}>{t(row?.original?.invoiceNo ? 'invoices.extend' : 'invoices.pay')}</div>);
         }
       },
     ]);
@@ -39,9 +42,15 @@ export function SiteList(props){
   }, [i18n?.language]);
 
   const onClickLink = row => {
-    // comment
-    // setVisible(true);
-    // setSite(row?.original);
+    setVisible(true);
+    setSelected(row?.original);
+    setError(null);
+  }
+
+  const onDone = () => {
+    setVisible(false);
+    setSelected(null);
+    getData && getData();
   }
 
   const maxHeight = hasData
@@ -50,9 +59,11 @@ export function SiteList(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, onClickLink },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: () => {} };
+  const subProps = { visible, setVisible, site: selected, onDone, noTrial: true, noBack: true, fromSite: true };
 
   return (
     <div className='mo_container' style={{ width, marginTop: hasData ? 15 : 0 }}>
+      {visible && <SubscriptionSite {...subProps} />}
       <p className='card_title'>{t('invoices.management')}</p>
       <div style={{overflowX: 'scroll'}}>
         <div className='table_scroll' id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 540}}>
