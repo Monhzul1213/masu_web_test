@@ -49,7 +49,7 @@ export function List(props){
           width: 150, minWidth: 120,
           exLabel: item?.label,
           Cell: props => (
-            item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD hh:mm:ss') :
+            item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD HH:mm:ss') :
             <div style={{textAlign: 'right', paddingRight: 15}}>
              {item?.value === 'sale.vat_CustomerId' ? props?.value : 
               item?.value === 'sale.status' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> : <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> ): 
