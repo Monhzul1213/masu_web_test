@@ -12,6 +12,7 @@ export function Bill(){
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
   const [detail, setDetail] = useState(null);
+  const [bill, setBill] = useState(null);
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
 
@@ -34,6 +35,7 @@ export function Bill(){
       if(header) header.paidAmount = (header.totalCashAmount ?? 0) + (header.totalNonCashAmount ?? 0);
       setHeader(header);
       setDetail(response?.data?.retdata?.salesitem);
+      setBill(response?.data?.retdata?.bill);
     }
     setLoading(false);
   }
@@ -44,11 +46,12 @@ export function Bill(){
         {error && <Error1 error={error} />}
         {!header ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
           <div>
-            <Info header={header} />
+            <Info header={header} bill={bill} />
             <Header />
             <Items detail={detail} />
             <Total header={header} />
             <QR header={header} />
+            {bill?.footer ? <p className='bl_footer'>{bill?.footer}</p> : null}
           </div>
         }
       </div>

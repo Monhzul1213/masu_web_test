@@ -27,13 +27,14 @@ const Label = props => {
 }
 
 export function Info(props){
-  const { header } = props;
+  const { header, bill } = props;
   const { t } = useTranslation();
   const isRefund = header?.salesType === 1;
   const date = moment(header?.salesDate).format('yyyy.MM.DD');
 
   return (
     <div>
+      {bill?.header ? <p className='bl_title'>{bill?.header}</p> : null}
       <p className='bl_title'>{t(isRefund ? 'bill.refund' : 'bill.sales')}</p>
       <div className='bl_row'>
         <LabelIcon icon='MdPersonOutline' value={header?.cashierName ?? header?.cashierCode} />
