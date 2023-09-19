@@ -6,3 +6,4 @@ export * from './Pos';
 export * from './Tax';
 export * from './TaxAdd';
 export * from './Document';
+export * from './Invoices';

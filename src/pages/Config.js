@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import '../css/config.css';
 import '../css/invt.css';
 import { Card, AppModal } from '../components/config';
-import { Additional, Type, Cashier, Tax, Store, Pos, Document, TaxAdd } from './configs';
+import { Additional, Cashier, Tax, Store, Pos, Document, TaxAdd, Invoices } from './configs';
 import { Order } from '../src1/pages/config/Order';
 
 export function Config(props){
@@ -49,7 +49,8 @@ export function Config(props){
         <Route path="/" element={<Navigate to="additional" replace />} />
         <Route path="*" element={<Navigate to="additional" replace />} />
         <Route path='additional' element={<Additional />} />
-        <Route path='type' element={<Type />} />
+        {/* // COMMENT INVOICES */}
+        {/* <Route path='type' element={<Invoices />} /> */}
         <Route path='cashier' element={<Cashier />} />
         <Route path='tax' element={<Tax />} />
         <Route path='tax/tax_add' element={<TaxAdd />} />

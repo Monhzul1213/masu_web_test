@@ -33,7 +33,7 @@ export function Select(props){
 }
 
 export function Field(props){
-  const { label, value, copy } = props;
+  const { label, value, copy, isBold } = props;
 
   const onCopy = () => message.success('Copied to clipboard');
 
@@ -41,7 +41,7 @@ export function Field(props){
     <div className='es_field_back' id='es_row'>
       <div style={{flex: 1}}>
         <p className='es_field_label'>{label}</p>
-        <p className='es_field_value'>{value}</p>
+        <p className='es_field_value' style={{fontWeight: isBold ? '600' : '450', color: isBold ? 'var(--logo1-color)' : 'var(--text-color)'}}>{value}</p>
       </div>
       <CopyToClipboard text={copy ?? value} onCopy={onCopy}>
         <DynamicAIIcon name='AiOutlineCopy' className='es_field_copy' />
