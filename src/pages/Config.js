@@ -49,7 +49,8 @@ export function Config(props){
         <Route path="/" element={<Navigate to="additional" replace />} />
         <Route path="*" element={<Navigate to="additional" replace />} />
         <Route path='additional' element={<Additional />} />
-        <Route path='type' element={<Invoices />} />
+        {/* // COMMENT INVOICES */}
+        {/* <Route path='type' element={<Invoices />} /> */}
         <Route path='cashier' element={<Cashier />} />
         <Route path='tax' element={<Tax />} />
         <Route path='tax/tax_add' element={<TaxAdd />} />
