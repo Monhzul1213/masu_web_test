@@ -35,6 +35,7 @@ export function Info(props){
   return (
     <div>
       {bill?.header ? <p className='bl_title'>{bill?.header}</p> : null}
+      {bill?.data ? <img className='bl_image' src={"data:image/" + (bill?.type?.replace('.', '') ?? 'png') + ";base64," + bill?.data} alt="Image" /> : null}
       <p className='bl_title'>{t(isRefund ? 'bill.refund' : 'bill.sales')}</p>
       <div className='bl_row'>
         <LabelIcon icon='MdPersonOutline' value={header?.cashierName ?? header?.cashierCode} />

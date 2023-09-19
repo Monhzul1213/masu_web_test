@@ -71,7 +71,6 @@ export function EmpList(props){
         });
         let data = [{...employee, employeeSites, rowStatus: 'U', status: 1, password: ''}];
         let response1 = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
-        console.log(response1);
         if(response1?.error) setError(response1?.error);
         else getData && getData();
       }
