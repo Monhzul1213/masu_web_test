@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { ExportExcel } from '../../../../helpers';
 import { getList } from '../../../../services';
-import { MultiSelect, DynamicAIIcon, CheckBox1, DynamicMDIcon } from '../../../components/all/all_m';
+import { MultiSelect, DynamicAIIcon, CheckBox1, DynamicMDIcon, Button } from '../../../components/all/all_m';
 import { SearchInput } from './SearchInput';
 
 export function Header(props){
@@ -20,6 +21,7 @@ export function Header(props){
   const [classH, setClassH] = useState('th_header_mn1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     onFocusSite();
@@ -99,6 +101,8 @@ export function Header(props){
     setLoading(false);  
   }
 
+  const onClickImport = () => navigate('remain_import');
+
   const width = showSearch ? 0 : (size?.width > 780 ? 1312 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 370 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in', marginTop: 10 };
@@ -117,6 +121,7 @@ export function Header(props){
   const refreshProps = { className: 'ih_refresh', name: 'MdRefresh', onClick: onClickRefresh };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
   const dtlProps = { label: t('manage.is_dtl'), checked: isDtl, setChecked: setIsDtl, onHide: onHide1 };
+  const importProps = { className: 'ih_btn', text: t('page.import'), onClick: onClickImport };
 
 
   return (
@@ -132,6 +137,7 @@ export function Header(props){
         </div>
         <div className='th_header_mn3' style={style}>
           <div className='ih_btn_row_mn' >
+            <Button {...importProps} />
             <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
             <DynamicAIIcon {...searchProps} />
             <DynamicMDIcon {...refreshProps} />

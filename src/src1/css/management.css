@@ -185,3 +185,19 @@
   cursor: pointer;
   color: var(--config-color);
 }
+.ii_link_z {
+  color: var(--link-color);
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 0 100px;
+  flex: 1;
+  text-align: right;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
+
+.ii_link_z:hover {
+  text-align: right;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}
