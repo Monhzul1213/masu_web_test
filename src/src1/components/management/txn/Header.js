@@ -117,7 +117,7 @@ export function Header(props){
 
   const onClickRefresh = async () => {
     setLoading(true);
-    let api = 'Txn/GetTxnCost' +'?BeginDate=' + moment()?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD') ;
+    let api = 'Txn/GetTxnCost' + '?BeginDate=' + moment()?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD') ;
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
     if(response?.error) setError(response?.error);

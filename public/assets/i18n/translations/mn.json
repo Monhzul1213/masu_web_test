@@ -88,6 +88,7 @@
     "/management/order_list/order": "Худалдан авалтын захиалгын дэлгэрэнгүй",
     "/management/order_list/order_receipt": "Худалдан авалтын захиалгаас орлого авах",
     "/management/invt_remainder": "Барааны үлдэгдэл",
+    "/management/invt_remainder/remain_import": "Барааны үлдэгдэл бөөнөөр оруулах",
     "/management/invt_txn": "Гүйлгээний жагсаалт",
     "/management/adjust": "Барааны орлого зарлага хийх",
     "/management/adjust/adjust_add": "Барааны орлого зарлага хийх",
@@ -1058,7 +1059,8 @@
     "costNo" : "Гүйлгээ #",
     "txnId": "Гүйлгээ №",
     "t_no": "Эх гүйлгээ",
-    "costDate": "Огноо"
+    "costDate": "Огноо",
+    "import_link" : "Барааны үлдэгдэл авах формат"
   },
   "adjust": {
     "add": "Гүйлгээ хийх",
@@ -1114,6 +1116,13 @@
     "isShow": "Харсан эсэх",
     "ratingText": "Санал хүсэлт",
     "rating": " үнэлгээ"
+  },
+  "remain": {
+    "siteCode": "Салбарын код",
+    "invtCode": "Барааны код",
+    "vendCode": "Нийлүүлэгчийн код",
+    "descr": "Байршил",
+    "add_success": "Барааны үлдэгдэл амжилттай бүртгэгдлээ"
   },
   "invoices": {
     "empty": "Төлбөртэй нэмэлт үйлчилгээ хоосон байна.",
