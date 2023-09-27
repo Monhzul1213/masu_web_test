@@ -5,11 +5,13 @@ import { useSelector } from 'react-redux';
 
 import { Check, CheckBtn, PaginationTable, Table } from '../../../all';
 import { Subscription } from '../add';
+import { Tax } from '../../../system/invoice/list/Tax';
 
 export function List(props){
   const { data, setData, onClickAdd, setShow, checked, setChecked, size, onSubscribe, getData } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [visible1, setVisible1] = useState(false);
   const [visible, setVisible] = useState(false);
   const [invNo, setInvNo] = useState(null);
   const [emp, setEmp] = useState(null);
@@ -85,9 +87,13 @@ export function List(props){
     setEmp(null);
     setInvNo(null);
   }
-  
+
+  const onBack1 = () => {
+    setVisible1(false);
+  }
+
   const onPay = () => {
-    onBack();
+    setVisible1(true);
     getData && getData();
   }
 
@@ -103,9 +109,11 @@ export function List(props){
     onClickCheckAll, checked, onClickCheck, onClickLink }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
   let subProps = { visible, invNo, emp, onBack, onDone, onPay };
-  
+  const sub1Props = { visible: visible1, setVisible: setVisible1, onBack: onBack1, print: true, invNo };
+
   return (
     <div>
+      {visible1 && <Tax {...sub1Props} />}
       {visible && <Subscription {...subProps} />}
       <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>

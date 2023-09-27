@@ -573,8 +573,8 @@ export const excelTypes = [
 ];
 
 export const subscriptions = [
-  { amt: 10000, length: 'сар', text: 'Сараар нэг ажилтан', value: 0 },
-  { amt: 100000, length: 'жил', text: 'Жилээр нэг ажилтан', value: 1 },
+  { amt: 10, length: 'сар', text: 'Сараар нэг ажилтан', value: 0 },
+  { amt: 100, length: 'жил', text: 'Жилээр нэг ажилтан', value: 1 },
 ];
 
 export const banks = [

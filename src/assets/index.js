@@ -2,6 +2,7 @@ import login_image from './3.png';
 import header_image from './4.png';
 import logo from './6.png';
 import placeholder from './7.png';
+import logo_image from './2.png';
 import icon1 from './masu_icons/1.png';
 import icon2 from './masu_icons/2.png';
 import icon3 from './masu_icons/3.png';
@@ -35,7 +36,7 @@ import golomt from './banks/golomt.png';
 
 import qr_holder from './qr.png';
 
-export { login_image, header_image, logo, placeholder, qr_holder };
+export { login_image, header_image, logo, placeholder, qr_holder, logo_image };
 export const icons = [
   icon1, icon2, icon3, icon4, icon5,
   icon6, icon7, icon8, icon9, icon10,

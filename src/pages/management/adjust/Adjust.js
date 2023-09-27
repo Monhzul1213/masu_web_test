@@ -9,12 +9,14 @@ import '../../../css/invt.css';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Filter, List, Subscription } from '../../../components/management/adjust/list';
+// import { Tax } from '../../../system/invoice/list/Tax';
 
 export function Adjust(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [visible1, setVisible1] = useState(false);
   const [sites, setSites] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -53,14 +55,21 @@ export function Adjust(){
     onSearch(query);
   }
 
+
+  const onBack = () => {
+    setVisible1(false);
+  }
+
   const onClickAdd = () => navigate('/management/adjust/adjust_add');
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
   const subProps = { visible, setVisible, sites, setSites, onDone };
+  // const sub1Props = { visible: visible1, setVisible: setVisible1, onBack, print: true, invNo: txnNo };
 
   return (
     <div className='s_container_i'>
+      {/* {visible1 && <Tax {...sub1Props} />} */}
       {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}

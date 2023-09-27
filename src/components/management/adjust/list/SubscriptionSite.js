@@ -11,9 +11,11 @@ import { qr_holder } from '../../../../assets';
 import { DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Step } from '../../../emp/employee/add/Step';
 import { Select, Field } from '../../../emp/employee/add/Field';
+import { Tax } from '../../../system/invoice/list/Tax';
 
 export function SubscriptionSite(props){
   const { visible, setVisible, site, onDone } = props;
+    //loading, current, error, setError, selected, amt, setAmt, txnNo, onSelect, onNext
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [current, setCurrent] = useState(0);
@@ -122,6 +124,7 @@ function Pay(props){
   const [selected, setSelected] = useState(banks[0]);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     getQR();
@@ -142,7 +145,8 @@ function Pay(props){
       let invoice = response?.data && response?.data[0]?.status;
       if(invoice === 3){
         message.success(t('employee.success_pay'));
-        onDone();
+        setVisible(true)
+        // onDone();
       }
     }
   };
@@ -162,11 +166,16 @@ function Pay(props){
     setValue(index);
     setSelected(banks[index]);
   }
-  
+
+  const onBack = () => {
+    setVisible(false);
+  }
   const bankProps = { value, setValue: changeValue, data: banks, label: t('employee.bank') };
+  const sub1Props = { visible, setVisible, onBack, print: true, invNo: txnNo };
 
   return (
     <div className='es_scroll'>
+      {visible && <Tax {...sub1Props} />}
       <p className='es_title'>{t('employee.pay')}</p>
       <div className='es_pay_back'>
         <div className='es_pay_col'>

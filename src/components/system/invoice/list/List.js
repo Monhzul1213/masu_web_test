@@ -4,11 +4,14 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import { Money, PaginationTable, Table } from '../../../all';
+import { Tax } from './Tax';
 
 export function List(props){
   const { onClickAdd, data, size } = props;
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
+  const [visible, setVisible] = useState(false);
+  const [invNo, setInvNo] = useState(null)
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -26,6 +29,12 @@ export function List(props){
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
       { Header: t('order.status'), accessor: 'statusName' },
+      { Header: '', accessor: 'status', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
+        Cell: ({ value, row, onClickLink }) => {
+          let active = value === 3;
+          return active && (<div className='table_link' onClick={() => onClickLink(row)}>{t('system.tax_sent')}</div>);
+        }
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,12 +49,24 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original);
 
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
+  const onClickLink = row => {
+    setInvNo(row?.original?.invoiceNo)
+    console.log(invNo)
+    setVisible(true);
+  }
+
+  const onBack = () => {
+    setVisible(false);
+  }
+
+  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, onClickLink,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
+  let subProps = { visible, onBack, invNo };
 
   return (
     <div>
+      <Tax {...subProps} />
       <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />

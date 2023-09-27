@@ -6,13 +6,18 @@ import { config as loginConfig } from '../helpers';
 
 const initialState = {
   token: '',
+  token1: '',
   user: null,
   webUser: null,
+  user1: null,
+  webUser1: null,
   toRemember: false,
   isOwner: false,
+  isOwner1: false,
   partnerUser: null,
   toPartnerRemember: false,
   isPartner: false,
+  isPartner1: false,
 };
 
 export const loginSlice = createSlice({
@@ -22,10 +27,18 @@ export const loginSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    setToken1: (state, action) => {
+      state.token1 = action.payload;
+    },
     setUser: (state, action) => {
       state.user = action.payload;
       state.webUser = action.payload;
       state.isPartner = false;
+    },
+    setUser1: (state, action) => {
+      state.user1 = action.payload;
+      state.webUser1 = action.payload;
+      state.isPartner1 = false;
     },
     setPartnerUser: (state, action) => {
       state.user = action.payload;
@@ -35,6 +48,9 @@ export const loginSlice = createSlice({
     },
     setIsOwner: (state, action) => {
       state.isOwner = action.payload;
+    },
+    setIsOwner1: (state, action) => {
+      state.isOwner1 = action.payload;
     },
     logout: state => {
       state.user = null;
@@ -103,6 +119,47 @@ export const apiLogin = (mail, password, fromAd) => async dispatch => {
         token: response?.token,
         viewReport: response?.msRole?.webViewSalesReport === 'Y',
         isAdmin: response?.isAdmin === 'Y'
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    return Promise.resolve({ error: err?.toString() });
+  }
+};
+
+export const apiLogin1 = (mail, password, fromAd) => async dispatch => {
+  try {
+    const config = {
+      method: 'POST',
+      url: loginConfig?.url2 + 'Pos/Login',
+      headers: { 'Content-Type': 'application/json', 'Accept': '*/*' }, 
+      data: { mail, password }
+    };
+    const response = await fetchRetryLogin(config);
+    if(!response || response?.result){
+      return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
+    } else {
+      if(!fromAd){
+        let isOwner = mail?.trim()?.toLowerCase() === response?.msMerchant?.Email?.trim()?.toLowerCase();
+        dispatch(setIsOwner1(isOwner));
+        dispatch(setToken1(response?.token));
+        dispatch(setUser1({
+          mail,
+          password,
+          isAdmin: response?.msEmployee?.isAdmin === 'Y',
+          approvedLevel1: response?.msEmployee?.Approved_level1 === 'Y',
+          approvedLevel2: response?.msEmployee?.Approved_level2 === 'Y',
+          merchantId: response?.MerchantId,
+          msRole: response?.msRole,
+          msMerchant: response?.msMerchant,
+          useInventoryManagement: response?.useInventoryManagement === 'Y',
+        }));
+      }
+      return Promise.resolve({
+        error: null,
+        token: response?.token,
+        viewReport: response?.msRole?.webViewSalesReport === 'Y',
+        isAdmin: response?.msEmployee?.isAdmin === 'Y'
       });
     }
   } catch (err) {
@@ -243,6 +300,6 @@ function fetchRetrySend(config, retries = 0) {
     });
 }
 
-export const { setToken, setUser, logout, setLogin, setIsOwner, setPartnerUser, setPartnerLogin } = loginSlice.actions;
+export const { setToken, setToken1, setUser, setUser1, logout, setLogin, setIsOwner, setIsOwner1, setPartnerUser, setPartnerLogin } = loginSlice.actions;
 
 export const loginReducer = loginSlice.reducer;
