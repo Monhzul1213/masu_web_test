@@ -173,8 +173,8 @@ export const partnerLogin = (partnerCode, password) => async dispatch => {
       data: { partnerCode, password }
     };
     const response = await fetchRetryLogin(config);
-    if(!response || response?.result){
-      return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
+    if(!response || response?.result || response?.rettype){
+      return Promise.resolve({ error: response?.message ?? response?.retdesc ?? 'Алдаа гарлаа.' });
     } else {
       dispatch(setToken(response?.retdata?.token));
       let user = {...response?.retdata?.user, password };
