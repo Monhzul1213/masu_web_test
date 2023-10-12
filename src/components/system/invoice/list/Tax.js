@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
@@ -9,8 +9,7 @@ import jsPDF from 'jspdf';
 
 import '../../../../css/config.css'
 import '../../../../css/system.css'
-import { sendVat, getVat } from '../../../../services';
-import { getPrintHtml } from '../../../../helpers/getPrintHtml';
+import { getList } from '../../../../services';
 import { qr_holder, logo_image } from '../../../../assets';
 import { Error1, Overlay, Money } from '../../../all';
 import { Step } from './Step';
@@ -29,10 +28,8 @@ export function Tax(props){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(user)
     if(visible) {
-      // getQR();
-      getQR1();
+      getQR();
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -64,50 +61,41 @@ export function Tax(props){
     )
   }
 
-  const getQR = async ( query) => {
+  const getQR = async () => {
     setError(null);
     setLoading(true);
     setQR(null);
-    let api = 'Pos/GetMasuVat' + ('?InvoiceNo=' + invNo)
-    let response = await dispatch(sendVat(user, token, api ));
-    console.log(api, invNo)
+    let api = 'System/GetMasuVat' + ('?InvoiceNo=' + invNo)
+    let response = await dispatch(getList(user, token, api ));
     if(response?.error) setError(response?.error);
-    else setQR(response?.data?.ebarimtdata?.qrData)
-    setInfo(response?.data)
-    setData(response?.data?.info)
-    setLoading(false);
-  }
-
-  const getQR1 = async ( query) => {
-    setError(null);
-    setLoading(true);
-    setQR(null);
-    let api = 'Pos/SendDataEBarimt'
-    let response = await dispatch(getVat(user, token, api ));
-    if(response?.error) setError(response?.error);
-    else getQR()
+    else {
+      message.success(t('employee.success_pay'));
+      setQR(response?.data?.ebarimtdata?.qrData)
+      setInfo(response?.data)
+      setData(response?.data?.info)
+    }
     setLoading(false);
   }
 
   const onPressPrint = () => {
-    const html = getPrintHtml({merchant: info, data, amt, currency: user?.msMerchant?.currency});
-    console.log(html)
-    // html2canvas(document.getElementById('tax_pdf')).then(function(canvas) {
-    //   const imgWidth = 188, pageHeight = 195;
-    //   const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    //   let heightLeft = imgHeight, position = 10, margin= 10;
-    //   heightLeft -= pageHeight;
-    //   const pdf = new jsPDF('p', 'mm');
-    //   pdf.addImage(canvas, 'PNG', margin, position, imgWidth, imgHeight, '', 'FAST');
-    //   while (heightLeft >= 0) {
-    //     position = heightLeft - imgHeight;
-    //     pdf.addPage();
-    //     pdf.addImage(canvas, 'PNG', margin, position, imgWidth, imgHeight, '', 'FAST');
-    //     heightLeft -= pageHeight;
-    //   }
-    //   pdf.save(t('system.receipt') + '.pdf');
-    // });
+    html2canvas(document.getElementById('tax_pdf')).then(function(canvas) {
+      const imgWidth = 188, pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight, position = 10, margin= 10;
+      heightLeft -= pageHeight;
+      const pdf = new jsPDF('p', 'mm');
+      pdf.addImage(canvas, 'PNG', margin, position, imgWidth, imgHeight, '', 'FAST');
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(canvas, 'PNG', margin, position, imgWidth, imgHeight, '', 'FAST');
+        heightLeft -= pageHeight;
+      }
+      pdf.save(t('system.receipt') + '.pdf');
+    });
   }
+  
+  
 
   const stepProps = { onBack, onDone: onDone1, print: print, onPressPrint };
   const listProps = { data, setAmt };
@@ -128,7 +116,7 @@ export function Tax(props){
             </div>
             <div className='sys_h_row'>
               <p className='h_label'>{t('page.date')}: </p>
-              <p className='sys_info_value'>{moment(info?.createdDate).format('yyyy.MM.DD HH:mm')}</p>
+              <p className='sys_info_value'>{moment(info?.merchant?.lastUpdate).format('yyyy.MM.DD HH:mm')}</p>
             </div>
         </div>
         <div className='sys_row'>
@@ -142,10 +130,10 @@ export function Tax(props){
           </div>
           <div className='sys_col1'>
             <p className='sys_label'>{t('system.resend')}:</p>
-              <Field label={t('page.name')} value={info?.merchant?.Descr}/>
-              <Field label={t('employee.mail')} value={info?.merchant?.Email}/>
-              <Field label={t('noti.address')} value={info?.merchant?.Address}/>
-              <Field label={t('bill.phone')} value={info?.merchant?.Phone}/>
+              <Field label={t('page.name')} value={info?.merchant?.descr}/>
+              <Field label={t('employee.mail')} value={info?.merchant?.email}/>
+              {/* <Field label={t('noti.address')} value={info?.merchant?.Address}/> */}
+              <Field label={t('bill.phone')} value={info?.merchant?.address}/>
           </div>
         </div>
         <div>

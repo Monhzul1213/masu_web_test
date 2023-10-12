@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { message } from 'antd';
 
-import { Money, PaginationTable, Table } from '../../../all';
-import { Tax } from './Tax';
+import { Money, Overlay, PaginationTable, Table } from '../../../all';
+import { getList } from '../../../../services';
 
 export function List(props){
-  const { onClickAdd, data, size } = props;
+  const { onClickAdd, data, size, getData, date } = props;
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
-  const [visible, setVisible] = useState(false);
-  const [invNo, setInvNo] = useState(null)
   const { t, i18n } = useTranslation();
+  const { user, token } = useSelector(state => state.login);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
+    console.log(data)
     setColumns([
       { Header: t('tax.customer'), accessor: 'label1' },
       { Header: t('invoice.invoice'), accessor: 'invoiceNo' },
@@ -29,10 +34,11 @@ export function List(props){
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
       { Header: t('order.status'), accessor: 'statusName' },
-      { Header: '', accessor: 'status', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
+      { Header: '', accessor: 'isSendVat', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
         Cell: ({ value, row, onClickLink }) => {
-          let active = value === 3;
-          return active && (<div className='table_link' onClick={() => onClickLink(row)}>{t('system.tax_sent')}</div>);
+          // console.log(row?.original)
+          let active = row?.original?.status === 3 && value !== 'Y';
+          return active && (<div className='table_link' onClick={() => onClickLink(row)}><Overlay loading= {loading}>{t('system.tax_sent')}</Overlay></div>);
         }
       },
     ]);
@@ -49,24 +55,27 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original);
 
-  const onClickLink = row => {
-    setInvNo(row?.original?.invoiceNo)
-    console.log(invNo)
-    setVisible(true);
+  
+  const onClickLink = async (row) => {
+    setLoading(true)
+    let api = 'System/GetMasuVat' + ('?InvoiceNo=' + row?.original?.invoiceNo)
+    let send = await dispatch(getList(user, token, api ));
+    if(send?.error) message.error(send?.error)
+    else {
+      message.success(t('system.success'))
+      let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+      getData(query);    
+    }
+    setLoading(false)
   }
-
-  const onBack = () => {
-    setVisible(false);
-  }
+  
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, onClickLink,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
-  let subProps = { visible, onBack, invNo };
 
   return (
     <div>
-      <Tax {...subProps} />
       <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />

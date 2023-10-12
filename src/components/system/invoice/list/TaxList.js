@@ -13,15 +13,15 @@ export function TaxList(props){
 
   useEffect(() => {
     setColumns([
-      { id: 'Name', Header: <div style={{textAlign: 'center' }}>{t('page.name')}</div>, accessor: d => { return d.EmpName ? d.EmpName : d.Name }, noSort: true, isBtn: true},
-      { Header: <div style={{textAlign: 'center' }}>{t('system.service_name')}</div>, accessor: 'SubscriptionName', noSort: true, isBtn: true,
+      { Header: <div style={{textAlign: 'center' }}>{t('page.name')}</div>, accessor: 'name', noSort: true, isBtn: true},
+      { Header: <div style={{textAlign: 'center' }}>{t('system.service_name')}</div>, accessor: 'subscriptionName', noSort: true, isBtn: true,
         Cell: ({ value }) => (<div style={{ paddingLeft: 5}}>{value}</div>),    },
-      { Header: <div style={{textAlign: 'center' }}>{t('invoice.time')}</div>, accessor: 'SubscriptionTimeName', Footer: <div style={{textAlign: 'right' }}>{t('report.total')}</div>, noSort: true, isBtn: true },
-      { Header: <div style={{textAlign: 'center',  paddingRight: 15}}>{t('invoice.amount')}</div>, accessor: 'Amount', noSort: true, isBtn: true,
+      { Header: <div style={{textAlign: 'center' }}>{t('invoice.time')}</div>, accessor: 'subscriptionTimeName', Footer: <div style={{textAlign: 'right' }}>{t('report.total')}</div>, noSort: true, isBtn: true },
+      { Header: <div style={{textAlign: 'center',  paddingRight: 15}}>{t('invoice.amount')}</div>, accessor: 'amount', noSort: true, isBtn: true,
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>),
         Footer: info => {
           const total = React.useMemo(() =>
-            info.rows.reduce((sum, row) => row.values.Amount + sum, 0),
+            info.rows.reduce((sum, row) => row.values.amount + sum, 0),
             [info.rows]  )
             setAmt(total)
           return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /></div></>}},

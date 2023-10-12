@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 import { config as loginConfig } from '../helpers';
-import { apiLogin, apiLogin1, partnerLogin } from './login.slice';
+import { apiLogin, partnerLogin } from './login.slice';
 
 const initialState = {
   loggedIn: false,
@@ -293,73 +293,7 @@ export const getServiceOTC = (api, method) => async dispatch => {
   }
 };
 
-export const getVat = (user, token, api, setFunction, headers) => async dispatch => {
-  try {
-    const config = {
-      method: 'GET', url: loginConfig?.url2 + api,
-      headers: {...{ 'authorization': token, 'Accept': '*/*' }, ...headers}
-    };
-    const response = await fetchRetry(config);
-    if(response?.rettype === 2){
-      const responseLogin = await dispatch(apiLogin1(user?.mail, user?.password));
-      if(responseLogin?.error) return responseLogin;
-      else {
-        const configNew = {
-          method: 'GET', url: loginConfig?.url2 + api,
-          headers: {...{ 'authorization': responseLogin?.token ?? token, 'Accept': '*/*' }, ...headers}
-        };
-        const responseNew = await fetchRetry(configNew);
-        if(responseNew?.rettype === 0){
-          setFunction && dispatch(setFunction(responseNew?.retdata));
-          return Promise.resolve({ error: null, data: responseNew?.retdata });
-        } else
-          return Promise.resolve({ error: responseNew?.retdesc ?? responseNew?.message ?? 'Алдаа гарлаа.', code: responseNew?.rettype, data: responseNew?.retdata });
-      }
-    } else if(response?.rettype === 0){
-      setFunction && dispatch(setFunction(response?.retdata));
-      return Promise.resolve({ error: null, data: response?.retdata });
-    }
-    return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.', code: response?.rettype, data: response?.retdata });
-  } catch (err) {
-    console.log(err);
-    return Promise.resolve({ error: err?.toString() });
-  }
-};
 
-export const sendVat = (user, token, api, contentType) => async dispatch => {
-  try {
-    const config = {
-      method: 'POST', url: loginConfig?.url2 + api,
-      headers: { 'authorization': token, 'Accept': '*/*', 'Content-Type': contentType ?? 'application/json' },
-      //data
-    }
-    const response = await fetchRetry(config);
-    if(response?.rettype === 2){
-      const responseLogin = await dispatch(apiLogin1(user?.mail, user?.password));
-      if(responseLogin?.error) return responseLogin;
-      else {
-        const configNew = {
-          method: 'POST', url: loginConfig?.url2 + api,
-          headers: {
-            'authorization': responseLogin?.token ?? token, 'Accept': '*/*',
-            'Content-Type': contentType ?? 'application/json' },
-          //data
-        }
-        const responseNew = await fetchRetry(configNew);
-        if(responseNew?.rettype === 0){
-          return Promise.resolve({ error: null, data: responseNew?.retdata });
-        } else
-          return Promise.resolve({ error: responseNew?.retdesc ?? responseNew?.message ?? 'Алдаа гарлаа.', code: responseNew?.rettype, data: responseNew?.retdata });
-      }
-    } else if(response?.rettype === 0){
-      return Promise.resolve({ error: null, data: response?.retdata });
-    }
-    return Promise.resolve({ error: response?.retdesc ?? response?.message ?? 'Алдаа гарлаа.', code: response?.rettype, data: response?.retdata });
-  } catch (err) {
-    console.log(err);
-    return Promise.resolve({ error: err?.toString() });
-  }
-}
 
 function fetchRetry(config, retries = 5) {
   return axios(config)

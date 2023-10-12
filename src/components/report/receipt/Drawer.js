@@ -42,7 +42,7 @@ export function Drawer(props){
 
   const Field = props => {
     const { icon, label, value } = props;
-
+    
     return (
       <div className='dr_field'>
         <DynamicRIIcon className='dr_field_icon' name={icon} />

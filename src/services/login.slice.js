@@ -127,47 +127,6 @@ export const apiLogin = (mail, password, fromAd) => async dispatch => {
   }
 };
 
-export const apiLogin1 = (mail, password, fromAd) => async dispatch => {
-  try {
-    const config = {
-      method: 'POST',
-      url: loginConfig?.url2 + 'Pos/Login',
-      headers: { 'Content-Type': 'application/json', 'Accept': '*/*' }, 
-      data: { mail, password }
-    };
-    const response = await fetchRetryLogin(config);
-    if(!response || response?.result){
-      return Promise.resolve({ error: response?.message ?? 'Алдаа гарлаа.' });
-    } else {
-      if(!fromAd){
-        let isOwner = mail?.trim()?.toLowerCase() === response?.msMerchant?.Email?.trim()?.toLowerCase();
-        dispatch(setIsOwner1(isOwner));
-        dispatch(setToken1(response?.token));
-        dispatch(setUser1({
-          mail,
-          password,
-          isAdmin: response?.msEmployee?.isAdmin === 'Y',
-          approvedLevel1: response?.msEmployee?.Approved_level1 === 'Y',
-          approvedLevel2: response?.msEmployee?.Approved_level2 === 'Y',
-          merchantId: response?.MerchantId,
-          msRole: response?.msRole,
-          msMerchant: response?.msMerchant,
-          useInventoryManagement: response?.useInventoryManagement === 'Y',
-        }));
-      }
-      return Promise.resolve({
-        error: null,
-        token: response?.token,
-        viewReport: response?.msRole?.webViewSalesReport === 'Y',
-        isAdmin: response?.msEmployee?.isAdmin === 'Y'
-      });
-    }
-  } catch (err) {
-    console.log(err);
-    return Promise.resolve({ error: err?.toString() });
-  }
-};
-
 export const apiValidate = mail => async dispatch => {
   try {
     const config = {
@@ -300,6 +259,6 @@ function fetchRetrySend(config, retries = 0) {
     });
 }
 
-export const { setToken, setToken1, setUser, setUser1, logout, setLogin, setIsOwner, setIsOwner1, setPartnerUser, setPartnerLogin } = loginSlice.actions;
+export const { setToken, setUser, logout, setLogin, setIsOwner, setPartnerUser, setPartnerLogin } = loginSlice.actions;
 
 export const loginReducer = loginSlice.reducer;
