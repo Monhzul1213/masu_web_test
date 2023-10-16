@@ -181,7 +181,7 @@ function Pay(props){
   }
   
   const onBack1 = () => {
-    onPay()
+    onBack()
     setVisible1(false);
   }
 
