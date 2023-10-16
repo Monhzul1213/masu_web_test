@@ -65,6 +65,7 @@ export function Drawer(props){
         <Field icon='RiStore2Line' label='report_receipt.dr_site' value={selected?.sale?.siteName} />
         <Field icon='RiBillLine' label='report_receipt.dr_no' value={selected?.sale?.salesNo} />
         <Field icon='RiCalendarLine' label='system.date' value={moment(selected?.sale?.createdDate)?.format('yyyy.MM.DD HH:mm:ss')} />
+        <Field icon='RiTeamLine' label='menu.customer' value={selected?.customer} /> 
         <div className='dr_header'>
           <p className='dr_header_text1'>{t('report_receipt.invt')}</p>
           <p className='dr_header_text2'>{t('report_receipt.qty')}</p>
