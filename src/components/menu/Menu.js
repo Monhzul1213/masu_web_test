@@ -123,8 +123,7 @@ export function Menu(props){
       getItem(t('system_menu.cashier'), '/config/cashier', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.tax'), '/config/tax', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.document'), '/config/document', null, null, null, msRole?.webEditSettings !== 'Y'),
-      // COMMENT INVOICES
-      // getItem(t('system_menu.type'), '/config/type', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.type'), '/config/type', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.store'), '/config/store', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.order_location'), '/config/location', null, null, null, msRole?.webEditSettings !== 'Y'),

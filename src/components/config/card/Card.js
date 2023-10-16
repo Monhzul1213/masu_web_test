@@ -17,8 +17,7 @@ export function Card(){
     getItem(t('system_menu.cashier'), 'cashier'),
     getItem(t('system_menu.tax'), 'tax'),
     getItem(t('system_menu.document'), 'document'),
-    // COMMENT INVOICES
-    // getItem(t('system_menu.type'), 'type'),
+    getItem(t('system_menu.type'), 'type'),
   ];
 
   const items1 = [
