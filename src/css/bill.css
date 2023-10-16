@@ -309,7 +309,7 @@
 .bo_footer {
   display: flex;
   flex-flow: row;
-  justify-content: end;
+  justify-content: flex-end;
   border-left: 1px solid transparent; 
   border-right: 1px solid var(--text-color);
 }

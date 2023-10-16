@@ -7,11 +7,11 @@ import { getConstants } from '../../../../services';
 import { PlainRange, PlainSelect } from '../../../all';
 
 export function Header(props){
-  const { setError, onSearch, size } = props;
+  const { setError, onSearch, size, date, setDate } = props;
   const { t } = useTranslation();
   const [status, setStatus] = useState(-1);
   const [states, setStates] = useState([{valueNum: -1, valueStr1: t('order.all_status')}]);
-  const [date, setDate] = useState([moment().startOf('month'), moment()]);
+  // const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [loading, setLoading] = useState(false);
   const [classH, setClassH] = useState('th_header1');
   const { user, token }  = useSelector(state => state.login);

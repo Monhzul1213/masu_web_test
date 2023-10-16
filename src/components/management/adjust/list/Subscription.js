@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { message, Modal, Steps } from 'antd';
+import { Modal, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import { qr_holder } from '../../../../assets';
 import { Check, DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Step } from '../../../emp/employee/add/Step';
 import { Select, Field } from '../../../emp/employee/add/Field';
+import { Tax } from '../../../system/invoice/list/Tax';
 
 export function Subscription(props){
   const { visible, setVisible, sites, setSites, onDone, noTrial, noBack } = props;
@@ -49,7 +50,7 @@ export function Subscription(props){
   }
 
   const typeProps = { selected, onSelect, amt, sites, setSites, setAmt, setError, data };
-  const payProps = { amt, txnNo, onDone, setError };
+  const payProps = { amt, txnNo, onDone, setError, setVisible };
 
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
@@ -62,7 +63,7 @@ export function Subscription(props){
       setError(null);
       setLoading(true);
       let siteID = [];
-      sites?.map(item => { if(item?.checked) siteID?.push(item?.siteId); });
+      sites?.forEach(item => { if(item?.checked) siteID?.push(item?.siteId); });
       let data = { invoicetime: selected?.length, invoiceAmount: amt, siteID }
       let response = await dispatch(sendRequest(user, token, 'Txn/ModSiteInvoice', data));
       if(response?.error) setError(response?.error);
@@ -156,7 +157,7 @@ function Type(props){
 }
 
 function Pay(props){
-  const { amt, txnNo, onDone, setError } = props;
+  const { amt, txnNo, onDone, setError, setVisible } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [qr, setQR] = useState('');
@@ -164,6 +165,7 @@ function Pay(props){
   const [selected, setSelected] = useState(banks[0]);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const [visible1, setVisible1] = useState(false);
 
   useEffect(() => {
     getQR();
@@ -183,8 +185,9 @@ function Pay(props){
     if(!response?.error){
       let invoice = response?.data && response?.data[0]?.status;
       if(invoice === 3){
-        message.success(t('employee.success_pay'));
-        onDone();
+        if (setVisible1) setVisible1(true)
+        else if(onDone) onDone()
+        else setVisible(false);
       }
     }
   };
@@ -204,11 +207,18 @@ function Pay(props){
     setValue(index);
     setSelected(banks[index]);
   }
-  
+
+  const onBack1 = () => {
+    setVisible(false)
+    setVisible1(false);
+  }
+
   const bankProps = { value, setValue: changeValue, data: banks, label: t('employee.bank') };
+  const sub1Props = { visible : visible1, setVisible: setVisible1, onBack: onBack1, print: true, invNo: txnNo };
 
   return (
     <div className='es_scroll'>
+      {visible1 && <Tax {...sub1Props} />}
       <p className='es_title'>{t('employee.pay')}</p>
       <div className='es_pay_back'>
         <div className='es_pay_col'>

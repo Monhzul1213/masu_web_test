@@ -1,0 +1,119 @@
+@import './color.css';
+
+.sys_col_back {
+    margin: 30px 0;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+}
+.sys_pdf_value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text2-color);
+    margin: 0;
+    width: 50%;
+}
+.h_text{
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 5px;
+    align-items: center;
+    justify-content: center;
+}
+.sys_logo {
+    height: 32px;
+    justify-content: flex-end;
+}
+
+.h_row{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -20px;
+    margin-top: -35px;
+}
+.tax_back{
+    display: flex;
+    flex-flow: row;
+    flex: 1;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 80px;
+}
+
+.sys_date{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.sys_row{
+    display: flex;
+    flex-flow: row;
+    margin-left: 10px;
+}
+.sys_col {
+    flex: 1;
+  }
+.sys_label{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sys_col1 {
+    flex: 1;
+}
+.h_label{
+    font-size: 14px;
+    margin-right: 10px;
+}
+.sys_info_row {
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 5px;
+}
+  
+.sys_info_label {
+    font-size: 15px;
+    margin: 0;
+    width: 30%
+  }
+.sys_info_label1 {
+    font-size: 15px;
+    margin: 0;
+    width: 20%
+}
+.sys_info_value {
+    font-weight: 550;
+    font-size: 15px;
+    margin: 0;
+}
+
+.sys_pdf_col {
+    display: flex;
+    flex-flow: column;
+    flex: 1; 
+    margin: 30px;
+}
+.sys_h_row{
+    display: flex;
+    flex-flow: row;
+}
+
+.resizer1 {
+    display: inline-block;
+    background: var(--line-color);
+    width: 1px;
+    height: calc(100% - 20px);
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    z-index: 1;
+  }
+/*   
+.resizer1:hover, #resizing {
+    background-color: var(--config-b-color);
+  } */
+  

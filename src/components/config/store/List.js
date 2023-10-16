@@ -49,7 +49,7 @@ export function List(props){
   const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, onClickLink},
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd };
-  const subProps = { visible, setVisible, site, onDone, noTrial: true, noBack: true, fromSite: true };
+  const subProps = { visible, setVisible, site, onDone, noTrial: true, noBack: true, fromSite: true }; 
 
   return (
     <div>

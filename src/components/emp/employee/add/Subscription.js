@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { message, Modal, Steps } from 'antd';
+import { Modal, Steps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
@@ -11,6 +11,7 @@ import { qr_holder } from '../../../../assets';
 import { DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Field, Select } from './Field';
 import { Step } from './Step';
+import { Tax } from '../../../system/invoice/list/Tax';
 
 export function Subscription(props){
   const { visible, emp, onBack, onDone, onPay, invNo } = props;
@@ -134,7 +135,8 @@ function Pay(props){
   const [qr, setQR] = useState('');
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
-  
+  const [visible1, setVisible1] = useState(false);
+
   useEffect(() => {
     getQR();
     return () => {};
@@ -153,9 +155,11 @@ function Pay(props){
     if(!response?.error){
       let invoice = response?.data && response?.data[0]?.status;
       if(invoice === 3){
-        message.success(t('employee.success_pay'));
-        if(onPay) onPay()
-        else onBack();
+        if (setVisible1) {
+          setVisible1(true)
+        }
+        else if(onPay) onPay()
+        else { onBack() };
       }
     }
   };
@@ -175,11 +179,18 @@ function Pay(props){
     setValue(index);
     setSelected(banks[index]);
   }
+  
+  const onBack1 = () => {
+    onPay()
+    setVisible1(false);
+  }
 
   const bankProps = { value, setValue: changeValue, data: banks, label: t('employee.bank') };
-  
+  const sub1Props = { visible: visible1, setVisible: setVisible1, onBack: onBack1, print: true, invNo: txnNo };
+
   return (
     <div className='es_scroll'>
+      {visible1 && <Tax {...sub1Props} />}
       <p className='es_title'>{t('employee.pay')}</p>
       <div className='es_pay_back'>
         <div className='es_pay_col'>

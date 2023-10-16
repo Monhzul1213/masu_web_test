@@ -6,6 +6,7 @@
 export const config = { // production
   url: 'https://app.masu.mn:8082/',
   domain: 'https://app.masu.mn',
+  url2: 'http://202.131.232.99:8083/',
   url1: 'http://test-sales.apu.mn:3031/',
   otc: 'http://test-sales.apu.mn:3031/',
   // url: 'http://192.168.1.232:8181/',

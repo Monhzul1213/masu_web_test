@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { message } from 'antd';
 
-import { Money, PaginationTable, Table } from '../../../all';
+import { Money, Overlay, PaginationTable, Table } from '../../../all';
+import { getList } from '../../../../services';
 
 export function List(props){
-  const { onClickAdd, data, size } = props;
+  const { onClickAdd, data, size, getData, date } = props;
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
   const { t, i18n } = useTranslation();
+  const { user, token } = useSelector(state => state.login);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     setColumns([
@@ -26,6 +33,13 @@ export function List(props){
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
       { Header: t('order.status'), accessor: 'statusName' },
+      { Header: '', accessor: 'isSendVat', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
+        Cell: ({ value, row, onClickLink }) => {
+          // console.log(row?.original)
+          let active = row?.original?.status === 3 && value !== 'Y';
+          return active && (<div className='table_link' onClick={() => onClickLink(row)}><Overlay loading= {loading}>{t('system.tax_sent')}</Overlay></div>);
+        }
+      },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +54,22 @@ export function List(props){
 
   const onRowClick = row => onClickAdd(row?.original);
 
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
+  
+  const onClickLink = async (row) => {
+    setLoading(true)
+    let api = 'System/GetMasuVat' + ('?InvoiceNo=' + row?.original?.invoiceNo)
+    let send = await dispatch(getList(user, token, api ));
+    if(send?.error) message.error(send?.error)
+    else {
+      message.success(t('system.success'))
+      let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+      getData(query);    
+    }
+    setLoading(false)
+  }
+  
+
+  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, onClickLink,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick };
 
