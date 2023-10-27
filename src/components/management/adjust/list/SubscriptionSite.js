@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
-import { banks, formatNumber, siteSubscriptions1 } from '../../../../helpers';
+import { banks, config, encrypt, formatNumber, siteSubscriptions1 } from '../../../../helpers';
 import { getList, sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
 import { DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../all';
@@ -66,7 +66,15 @@ export function SubscriptionSite(props){
     setVisible(false);
   }
 
-  const stepProps = { current, steps, onBack: onClose, onDone, onNext };
+  const onPressExport = () => {
+    let msg = txnNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/inv?invoiceno=' + encodeURIComponent(code);
+    console.log(url)
+    window.open(url);
+  }
+
+  const stepProps = { current, steps, onBack: onClose, onDone, onNext, onPressExport };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={640}>

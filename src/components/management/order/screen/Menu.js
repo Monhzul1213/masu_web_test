@@ -3,8 +3,6 @@ import { MdChevronLeft } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { jsPDF } from "jspdf";
-import html2canvas from 'html2canvas';
 
 import { sendRequest } from '../../../../services';
 import { config, encrypt } from '../../../../helpers';
