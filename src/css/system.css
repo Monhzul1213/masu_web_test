@@ -1,5 +1,22 @@
 @import './color.css';
 
+
+.step_invoice {
+    background-color: var(--header-color);
+    border: none;
+    border-radius: var(--radius);
+    padding: 5px 15px;
+    color: var(--root-color);
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 10px;
+  }
+  
+  .step_invoice:hover {
+    cursor: pointer;
+    background-color: var(--logo1-color);
+  }
+  
 .sys_col_back {
     margin: 30px 0;
     display: flex;
@@ -116,4 +133,203 @@
 .resizer1:hover, #resizing {
     background-color: var(--config-b-color);
   } */
+.invoice_pdf{
+    margin-bottom: 20px;
+}
+
+.in_row{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+.in_logo {
+    height: 42px;
+}
+.in_header_text{
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--logo1-color);
+    align-items: center;
+    justify-content: center;
+}
+.in_text1{
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: -30px;
+    align-items: center;
+    justify-content: center;
+}
+.in_col{
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
+    margin: 0;
+}
+.in_info_row {
+    display: flex;
+    flex-flow: row;
+}
+.in_info_label {
+    font-size: 12px;
+    margin: 0;
+    min-width: 35%
+}
+.in_info_value {
+    font-weight: 550;
+    font-size: 12px;
+    margin: 0;
+    width: 70%
+}
+.in_info_back{
+    margin-top: -10px;
+    display: flex;
+    flex-flow: row;
+    /* align-items: center; */
+}
+.in_text{
+    font-weight: 650;
+    font-size: 13px;
+    color: var(--text2-color);
+}
+.in_info1{
+    display: flex;
+    flex-flow: column;
+    /* align-items: flex-end; */
+}
+.in_info_label1 {
+    font-size: 13px;
+    margin: 0;
+    min-width: 70%;
+}
+
+.in_info_back1{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.in_info_value1 {
+    font-weight: 550;
+    font-size: 13px;
+    margin: 0;
+}
+
+.in_header1 {
+    width: 5%;
+    border-right: 1px solid var(--text-color);
+}
   
+.in_header2 {
+    width: 75%;
+    border-right: 1px solid var(--text-color);
+}
+  
+.in_header3 {
+    width: 20%;
+    border-right: 1px solid var(--text-color);
+    text-align: right;
+}
+
+.inText{
+    font-size: 13px;
+    color: var(--text2-color);
+    margin: 0;
+    width: 70%;
+}
+
+.inText1{
+    font-size: 14px;
+    font-weight: 600px;
+    color: var(--text2-color);
+    margin: 0;
+}
+.in_text_label {
+    font-weight: 550;
+    font-size: 12px;
+    margin: 0;
+    min-width: 23%
+}
+.in_text_label1 {
+    font-weight: 550;
+    font-size: 12px;
+    margin: 0;
+    min-width: 33%
+}
+.in_text_value {
+    font-weight: 550;
+    font-size: 12px;
+    margin: 0;
+}
+.qr_back{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
+.in_text2{
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: -10px;
+    align-items: center;
+    justify-content: center;
+}
+.in_foot{
+    font-size: 16px; 
+    font-weight: 700;
+}
+.in_seal{
+    position: relative;
+    height: 130px;
+    transform: rotate(0deg);
+}
+.in_pdf_btn {
+    border: none;
+    border-radius: 5px;
+    background-color: var(--input1-color);
+    padding: 5px 20px;
+    color: var(--text-color);
+    /* top: 0px;
+    left: 300px; */
+    position: relative;
+  }
+  
+.in_pdf_btn:hover { 
+cursor: pointer;
+color: var(--logo1-color);
+}
+
+.in_cont {
+    position: relative;
+    max-height: calc(150vh);
+    margin: 10px 0;
+    overflow: scroll;
+  }
+
+.in_back {
+    background-color: var(--root-color);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    margin: 2px 15px;
+    padding: 15px 30px;
+    border-radius: 2px;
+    max-width: calc(100% - 20px);
+    width: 640px;
+    min-width: 600px;
+    max-height: calc(120vh );
+    overflow: scroll;
+    min-height: 40vh;
+    display: flex;
+    flex-flow: column;
+}
+
+#in_ac_btns{
+    max-width: 650px;
+}
+.inCol{
+    display: flex;
+    flex-flow: column;
+    margin-left: -100px ;
+    margin-top: -40px;
+}
+.in_notes_back{
+    max-width: 95%;
+}

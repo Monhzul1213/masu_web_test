@@ -573,13 +573,13 @@ export const excelTypes = [
 ];
 
 export const subscriptions = [
-  { amt: 10, length: 'сар', text: 'Сараар нэг ажилтан', value: 0 },
-  { amt: 100, length: 'жил', text: 'Жилээр нэг ажилтан', value: 1 },
+  { amt: 10000, length: 'сар', text: 'Сараар нэг ажилтан', value: 0 },
+  { amt: 100000, length: 'жил', text: 'Жилээр нэг ажилтан', value: 1 },
 ];
 
 export const banks = [
   { label: 'Хаан банк', bank: 'ХААНБАНК', logo: 'haan', acct: '5011703186', name: 'МасуПОС ххк' },
-  { label: 'Худалдаад хөгжлийн банк', bank: 'ХХБ', logo: 'tdb', acct: '819006011', name: 'МасуПОС ххк' },
+  { label: 'Худалдаа хөгжлийн банк', bank: 'ХХБ', logo: 'tdb', acct: '819006011', name: 'МасуПОС ххк' },
   // { label: 'Хас банк', bank: 'ХАСБАНК', logo: 'has', acct: '5005573920', name: 'МасуПОС ххк' },
   // { label: 'Голомт банк', bank: 'ГОЛОМТБАНК', logo: 'golomt', acct: '1605231423', name: 'МасуПОС ххк' },
 ];
@@ -596,12 +596,12 @@ export const status = [
 ];
 
 export const siteSubscriptions = [
-  { amt: 25, length: 'MONTH', text: 'Сараар нэг салбар', value: 0, label: "25,000₮/салбар" },
-  { amt: 250, length: 'YEAR', text: 'Жилээр нэг салбар', value: 1, label: "250,000₮/салбар" },
+  { amt: 25000, length: 'MONTH', text: 'Сараар нэг салбар', value: 0, label: "25,000₮/салбар" },
+  { amt: 250000, length: 'YEAR', text: 'Жилээр нэг салбар', value: 1, label: "250,000₮/салбар" },
   { amt: 0, length: 'TRIAL', text: '14 хоног үнэгүй', value: 2, label: "Туршилт хийх" },
 ];
 
 export const siteSubscriptions1 = [
-  { amt: 25, length: 'MONTH', text: 'Сараар нэг салбар', value: 0, label: "25,000₮/салбар" },
-  { amt: 250, length: 'YEAR', text: 'Жилээр нэг салбар', value: 1, label: "250,000₮/салбар" },
+  { amt: 25000, length: 'MONTH', text: 'Сараар нэг салбар', value: 0, label: "25,000₮/салбар" },
+  { amt: 250000, length: 'YEAR', text: 'Жилээр нэг салбар', value: 1, label: "250,000₮/салбар" },
 ];

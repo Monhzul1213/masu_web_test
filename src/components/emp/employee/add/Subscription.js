@@ -12,9 +12,10 @@ import { DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Field, Select } from './Field';
 import { Step } from './Step';
 import { Tax } from '../../../system/invoice/list/Tax';
+import { config, encrypt } from '../../../../helpers';
 
 export function Subscription(props){
-  const { visible, emp, onBack, onDone, onPay, invNo } = props;
+  const { visible, emp, onBack, onDone, onPay, invNo} = props;
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
   const [amt, setAmt] = useState(0);
@@ -71,17 +72,27 @@ export function Subscription(props){
     setLoading(false);
   }
 
+  const onPressExport = () => {
+    let msg = txnNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/inv?invoiceno=' + encodeURIComponent(code);
+    console.log(url)
+
+    window.open(url);
+  }
+
   const typeProps = { selected, onSelect };
   const payProps = { amt, txnNo, setError, onPay, onBack };
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
   ];
-  const stepProps = { current, steps, onBack, onDone, onNext };
+  const stepProps = { current, steps, onBack, onDone, onNext, onPressExport};
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={640}>
       <Overlay loading={loading} className='m_back2'>
+        {/* <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onBack} /> */}
         <Steps current={current} items={steps} />
         <div>{steps[current]?.content}</div>
         <div className='gap' />
