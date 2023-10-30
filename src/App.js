@@ -61,7 +61,7 @@ export function App(){
           <Route path='/partner_sign_in' element={<PartnerLogin />} />
           <Route path='/bill' element={<Bill />} />
           <Route path='/order' element={<OrderBill />} />
-          <Route path='/inv' element={<InvoiceSend />} />
+          <Route path='/statement' element={<InvoiceSend />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
@@ -84,7 +84,7 @@ export function App(){
                 <Route path='/partner' element={<Partner />} />
                 <Route path='/bill' element={<Bill />} />
                 <Route path='/order' element={<OrderBill />} />
-                <Route path='/inv' element={<InvoiceSend />} />
+                <Route path='/statement' element={<InvoiceSend />} />
               </Routes>
             </Layout>
           </Layout>
@@ -152,7 +152,7 @@ export function App(){
                 <Route path='/system/partner' element={<PartnerInfo />} />
                 <Route path='/bill' element={<Bill />} />
                 <Route path='/order' element={<OrderBill />} />
-                <Route path='/inv' element={<InvoiceSend />} />
+                <Route path='/statement' element={<InvoiceSend />} />
                 <Route path='/report/report_orList' element={<SalesOrder />} />
                 <Route path='/report/terms' element={<Terms />} />
                 <Route path='/integration' element={<Integration />} />
