@@ -75,7 +75,7 @@ export function Subscription(props){
   const onPressExport = () => {
     let msg = txnNo
     let code = encrypt(msg);
-    let url = config?.domain + '/inv?invoiceno=' + encodeURIComponent(code);
+    let url = config?.domain + '/statement?invoiceno=' + encodeURIComponent(code);
     console.log(url)
 
     window.open(url);
