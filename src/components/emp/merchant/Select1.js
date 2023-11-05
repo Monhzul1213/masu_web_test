@@ -54,18 +54,25 @@ export function Select1(props){
 
   const onChange = e => {
     setCustom(e?.target?.value);
+    data?.map(item => {
+      let f = item?.valueNum?.toString()
+      f?.startsWith(1) ? setValue(null) : setValue()
+    })
+    data1?.map(item => {
+      let f = item?.valueNum?.toString()
+      f?.startsWith(2) ? setValue(null) : setValue()
+    })
   }
 
   const setChange = item => {
-    let ss = item === undefined ? merchant?.merchantSubType : item 
-    let s = ss?.toString()
-    console.log(ss)
-    if(s?.startsWith(1) ){
+    let string = item === undefined ? merchant?.merchantSubType : item 
+    let s = string?.toString()
+    if(s?.startsWith(1) || item === 204 ){
       setCustom('1')
-      setValue(ss);
+      setValue(string)
     } else {
       setCustom('2')
-      setValue(ss)
+      setValue(string);
     }
     
   }
@@ -92,7 +99,7 @@ export function Select1(props){
     let valueStr1 = addItem?.value?.trim();
     if(valueStr1){
       let exists = data?.findIndex(d => d.valueStr1?.toLowerCase() === valueStr1?.toLowerCase());
-      console.log(valueStr1)
+      console.log(valueStr1) 
       if(exists === -1){
         // let item = { valueStr1 };
         // setData1(old => [...old, item]);
