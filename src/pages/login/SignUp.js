@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { Checkbox } from 'antd';
 import { Link, useNavigate, createSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import '../../css/login.css';
 import '../../css/config.css';
 import { login_image } from '../../assets';
 import { validateEmail, validateNumber } from '../../helpers';
-import { apiLogin, apiRegister, getService, setIsLoggedIn, setLogin } from '../../services';
+import { apiLogin, apiRegister, getService, setIsLoggedIn, setLogin, getConstants } from '../../services';
 import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
 import { Copyright, Partner } from '../../components/login';
 import { Confirm } from '../../components/login/Confirm';
+import { RadioSelect } from '../../components/emp/merchant';
 
 export function SignUp(){
   const { t } = useTranslation();
@@ -25,6 +26,12 @@ export function SignUp(){
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [expire, setExpire] = useState(null);
+  const [activity, setActivity] = useState({ value: null });
+  const [addItem, setAddItem] = useState({ value: '' });
+  const [sales, setSales] = useState([]);
+  const [vendor, setVendor] = useState([]);
+  const { user, token } = useSelector(state => state.login);
+  const merchant = user?.msMerchant;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -120,6 +127,45 @@ export function SignUp(){
     setAddress({ value: text });
   }
 
+  const onFocusSales = async () => {
+    if(!sales?.length || sales?.length === 1){
+      setError && setError(null);
+      setLoading('status');
+      const response = await dispatch(getConstants(user, token, 'msMerchant_SubType'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        let num = [];
+        response?.data?.forEach(item => {
+          if(item?.valueNum === 204) item.row_color = '#effd5f';
+          let string = item?.valueNum?.toString();
+          let n1 = string.startsWith(1)
+          if ( n1 === true || string === '204' ){num.push({...item}) } 
+        })
+        setSales(num?.sort((a, b) => a.valueNum - b.valueNum));
+      }
+      setLoading(null);
+    }
+  }
+  const onFocusVendor = async () => {
+    if(!vendor?.length || vendor?.length === 1){
+      setError && setError(null);
+      setLoading('status');
+      const response = await dispatch(getConstants(user, token, 'msMerchant_SubType'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        let num = [] ;
+        response?.data?.forEach(item => {
+          if(item?.valueNum === 204) item.row_color = '#effd5f';
+          let string = item?.valueNum?.toString();
+          let n2 = string.startsWith(2)
+          if ( n2 === true ){ num.push(item) } 
+        })
+        setVendor(num?.sort((a, b) => a.valueNum - b.valueNum));
+      }
+      setLoading(null);
+    }
+  }
+
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
   const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError };
@@ -128,6 +174,8 @@ export function SignUp(){
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
   const confirmProps = { visible, closeModal, number: address?.value, expire, email: email?.value };
   const partProps = { partner, setPartner };
+  let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), placeholder: t('profile.activity'), merchant,
+  setError, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem, setData: setSales, setData1: setVendor };
 
   return (
     <div className='l_container'>
@@ -139,6 +187,7 @@ export function SignUp(){
           <FloatingInput {...emailProps} />
           <FloatingPassword {...passProps} />
           <FloatingInput {...businessProps} />
+          <RadioSelect {...subProps}/>  
           <FloatingInput {...addressProps} />
           <Partner {...partProps} />
           <div className='co_gap' />

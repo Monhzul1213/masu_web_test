@@ -339,10 +339,6 @@ color: var(--logo1-color);
     margin-right: 15px;
     width: 180px;
   }
-.pro_button{
-    border: none;
-    background-color: var(--root-color) ;
-}
 
 .pro_select.ant-select .ant-select-selector {
     box-shadow: none;
@@ -405,4 +401,91 @@ color: var(--logo1-color);
 
 .pro_select_back:focus-within .select_lbl {
     color: var(--success-color);
+}
+
+.pro_card {
+    max-width: 1260px;
+    display: flex;
+    flex-flow: column;
+    padding: 15px 0 0px 0px;
+}
+
+.pro_card_btn {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    border-style: solid;
+    /* border-width: 0 0 3px 0; */
+    border-color: transparent;
+    /* box-shadow: 0px 2px 5px rgba(0,0,0,.15); */
+    padding: 5px 5px;
+    display: flex;
+    flex-flow: column;
+  }
+  
+.pro_card_btn:hover {
+    cursor: pointer;
+  }
+.pro_card_row {
+    display: flex;
+    flex-flow: row;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: var(--radius);
+    margin-top: 5px;
+}
+
+.pro_card_header {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 0 0;
+    width: 100%;
+    justify-content: center;
+  }
+.pro_card_label {
+    color: var(--text-color);
+    font-size: 14px;
+    margin: 0 0 0 3px;
+    line-height: 16px;
+}
+
+.pro_content {
+    display: flex;
+    flex-flow: column;
+}
+.pro_pop_back{
+    border-radius: var(--radius);
+}
+.ant-popover-inner{
+    border-radius: var(--radius);
+    max-height: 200px;
+    width: 220px;
+    overflow-y: scroll;
+}
+.ant-popover-arrow{
+    display: none;
+}
+.pro_button{
+    display: flex;
+    border: none;
+    background-color: var(--root-color) ;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: rgba(0,0,0,.15);
+    text-align: start;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 500;
+}
+.pro_button1{
+    display: flex;
+    border: none;
+    background-color: var(--root-color) ;   
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: rgba(0,0,0,.15);
+    text-align: start;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 400;
 }

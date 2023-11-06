@@ -1,136 +1,69 @@
-import React, { useState, useEffect } from 'react';
-import { Radio, Select } from 'antd';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BsCheckLg } from 'react-icons/bs';
 
-import { AddInput } from './AddInput';
+import '../../../css/report.css';
+import { Button, DynamicAIIcon, DynamicTBIcon, Money, Select } from '../../all';
+import { Popover } from 'antd';
+import { IconButton } from './Button';
 
 const { Option } = Select;
 
-const SubSelect = props => {
-  const {label, value, setValue, data, onFocus, handleEnter, addItem, setAddItem } = props;
+export function Select1(props){
+  const { tab, setTab, size, data, data1, setValue, value, label } = props;
+  const { t } = useTranslation();
+  const [icon, setIcon]= useState(null)
+  const id = size?.width >= 720 ? 'rp_card_large' : 'rp_card_small';
+  const maxWidth = size?.width >= 1260 ? 410 : 230;
 
   const renderItem = (item, index) => {
-    return (<Option key={index} value={item['valueNum']} label={item['valueStr1']}>{item['valueStr1']}</Option>);
+
+    const onClick = () => {
+        // console.log(item)
+        setValue(item?.valueNum)
+        // console.log(value)
+        // setIcon(<BsCheckLg/>)
+      }
+
+    // console.log(item?.valueNum)
+    return (<IconButton icon={item?.valueNum === value ? <DynamicAIIcon style={{color: 'var(--config-color)'}} name={'AiOutlineCheck'} /> : ''}  className={ item?.valueNum === value ? 'pro_button' : 'pro_button1'} text= {item?.valueStr1} onClick ={onClick}/>);
   }
 
-  return (
-    <div className='pro_back'>
-      <Select
-        className='pro_select'
-        onChange={setValue}
-        value={value}
-        placeholder={label}
-        onFocus={() => onFocus && onFocus()}
-        // dropdownRender={dropdownRender}
-        >
-        {data?.map(renderItem)}
-      </Select>
-      {value === 204 && <AddInput
-        setValue={setAddItem}
-        value={addItem}
-        placeholder={'Нэмж бүртгүүлэх'}
-        onFocus={() => onFocus && onFocus()}
-        handleEnter={handleEnter}
-        // dropdownRender={dropdownRender}
-        >
-        {data?.map(renderItem)}
-      </AddInput>}
+  console.log(value)
+
+  const content = (
+    <div className='pro_content'>
+       {tab === -1 ? data?.map(renderItem) : data1?.map(renderItem)}
     </div>
   )
-}
+  const Tab = props => {
+    const { label, icon, index, color } = props;
+    const btnStyle = index === tab ?  { borderColor: 'var(--config-color)', maxWidth: 230, width: maxWidth } : { maxWidth: 230, width: maxWidth };
 
-export function Select1(props){
-  const {label, value, setValue, data, data1, onFocusSales, onFocusVendor, addItem, setAddItem, merchant, setData, setData1 } = props;
-  const [custom, setCustom] = useState('1');
-  const { t } = useTranslation();
+    return (
+        <>
+        <Popover trigger={'click'} placement="bottom" title={null} content={content} className='pro_pop_back' >
+            <button className='pro_card_btn' style={btnStyle} onClick={() => setTab(index)}>
+                <div className='pro_card_header'>
+                    {/* <DynamicTBIcon name={icon} className='rp_card_icon' style={{ color }} /> */}
+                    <p className='pro_card_label' >{t('profile.' + label)}</p>
+                </div>
+            </button>
+        </Popover>
+        </>
 
-  useEffect(() => {
-    onFocusSales()
-    onFocusVendor()
-    setChange()
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const onChange = e => {
-    setCustom(e?.target?.value);
-    data?.map(item => {
-      let f = item?.valueNum?.toString()
-      f?.startsWith(1) ? setValue(null) : setValue()
-    })
-    data1?.map(item => {
-      let f = item?.valueNum?.toString()
-      f?.startsWith(2) ? setValue(null) : setValue()
-    })
+    );
   }
-
-  const setChange = item => {
-    let string = item === undefined ? merchant?.merchantSubType : item 
-    let s = string?.toString()
-    if(s?.startsWith(1) || item === 204 ){
-      setCustom('1')
-      setValue(string)
-    } else {
-      setCustom('2')
-      setValue(string);
-    }
-    
-  }
-
-  const onOpenChange = show => {
-    if(!show) setChange();
-  }
-  const handleEnter = e => {
-    e?.preventDefault();
-    let valueStr1 = addItem?.value?.trim();
-    if(valueStr1){
-      let exists = data?.findIndex(d => d.valueStr1?.toLowerCase() === valueStr1?.toLowerCase());
-      console.log(valueStr1)
-      if(exists === -1){
-        // let item = { valueStr1 };
-        // setData(old => [...old, item]);
-        setAddItem({ value: '' });
-        // setEdited && setEdited(true);
-      } else setAddItem({ value: addItem?.value?.trim(), error: t('inventory.variant_error') });
-    }
-  }
-  const handleEnter1 = e => {
-    e?.preventDefault();
-    let valueStr1 = addItem?.value?.trim();
-    if(valueStr1){
-      let exists = data?.findIndex(d => d.valueStr1?.toLowerCase() === valueStr1?.toLowerCase());
-      console.log(valueStr1) 
-      if(exists === -1){
-        // let item = { valueStr1 };
-        // setData1(old => [...old, item]);
-        setAddItem({ value: '' });
-        // setEdited && setEdited(true);
-      } else setAddItem({ value: addItem?.value?.trim(), error: t('inventory.variant_error') });
-    }
-  }
-
-  let sub1Props = { value: value, setValue: setChange, label: t('profile.sale'), data: data, onFocus: onFocusSales, addItem, setAddItem };
-  let sub2Props = { value: value, setValue: setChange, label: t('profile.vendor'), data: data1, onFocus: onFocusVendor, addItem, setAddItem };
 
   return (
-    <div className='select_back' >
-      <p className='select_lbl' >{label}</p>
-      <div className='pro_dropdown'>
-        <Radio.Group className='mr_radio' onChange={onChange} value={custom}>
-          {/* <div> */}
-            <Radio value={'1'}>{t('profile.sale')}</Radio>
-            {custom === '1' && <div className='mr_times'>
-              <SubSelect {...sub1Props}/>
-            </div>} 
-          {/* </div> */}
-          {/* <div> */}
-            <Radio value={'2'}>{t('profile.vendor')}</Radio>
-            {custom === '2' && <div className='mr_times'>
-              <SubSelect {...sub2Props}/>
-            </div>}
-          {/* </div> */}
-        </Radio.Group>
+    <div className='pro_card'>
+        <p className='select_lbl'>{t('profile.activity')}</p>
+      <div className='pro_card_row'>
+        <Tab label='sale' index={-1} color='#017EBE' icon='TbReceipt' />
+        <div className='rp_card_line' />
+        <Tab label='vendor' index={0} color='#4BAF4F' icon='TbReceipt2' />
       </div>
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
     </div>
-  )
+  );
 }

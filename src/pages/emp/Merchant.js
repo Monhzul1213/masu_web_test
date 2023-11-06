@@ -8,6 +8,7 @@ import '../../css/invt.css';
 import { apiLogin, getConstants, getService, sendRequest } from '../../services';
 import { currencyList, validateEmail } from '../../helpers';
 import { ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Prompt, Select } from '../../components/all';
+import { RadioSelect } from '../../components/emp/merchant';
 import { Select1 } from '../../components/emp/merchant/Select1';
 
 export function Merchant ( props){
@@ -21,7 +22,7 @@ export function Merchant ( props){
   const [vendor, setVendor] = useState([]);
   const [password, setPassword] = useState({ value: '' });
   const [currency, setCurrency] = useState({ value: '₮' });
-  const [activity, setActivity] = useState({ value: null });
+  const [activity, setActivity] = useState({ value: '' });
   const [addItem, setAddItem] = useState({ value: '' });
   const [partner, setPartner] = useState({ value: '', error: null });
   const { user, token, isOwner } = useSelector(state => state.login);
@@ -29,7 +30,11 @@ export function Merchant ( props){
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [tab, setTab] = useState(-1);
+
   useEffect(() => {
+    onFocusSales()
+    onFocusVendor()
     !isOwner ? navigate({ pathname: '/' }) : setData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +45,7 @@ export function Merchant ( props){
     setError(null);
     setName({ value: merchant?.descr });
     setMail({ value: merchant?.email });
-    setActivity({value: merchant?.merchantSubType})
+    setActivity({value: merchant?.merchantSubType })
     setCurrency({ value: merchant?.currency ? merchant?.currency : '₮' });
     if(merchant?.partnerCode) handlePartner(null, merchant?.partnerCode);
   }
@@ -55,14 +60,15 @@ export function Merchant ( props){
     let isPasswordValid = !password?.value || (password?.value?.length >= passwordLength);
     let isBusinessValid = name?.value?.length >= businessLength;
     let isPartnerValid = (partner?.value && partner?.name) || (!partner?.value && !partner?.name) ? true : false;
-    if(isBusinessValid && isEmailValid && isPasswordValid && isPartnerValid){
+    if(isBusinessValid && isEmailValid && isPasswordValid && isPartnerValid && activity?.value){
       let data = { email: mail?.value, password: password?.value, descr: name?.value, currency: currency?.value, partnerCode: partner?.value ?? '',
-                  merchantType: 0, merchantSubType : activity, addSubDescr: addItem?.value };
+                  merchantType: 0, merchantSubType : activity?.value, addSubDescr: addItem?.value };
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       else if(!isBusinessValid) setName({ value: name?.value, error: ' ' + businessLength + t('error.longer_than') });
       if(!mail?.value) setMail({ value: '', error: t('error.not_empty') });
+      if(!activity?.value) setActivity({ value: '', error: t('profile.select') });
       else if(!isEmailValid) setMail({ value: mail?.value, error: t('error.be_right') });
       if(!isPasswordValid) setPassword({ value: password?.value, error: ' ' + passwordLength + t('error.longer_than') });
       if(!isPartnerValid) setPartner({...partner, error: t('error.be_right') })
@@ -142,6 +148,9 @@ export function Merchant ( props){
     }
   }
 
+  const onChangeTab = value => {
+    setTab(value);
+  }
 
   let nameProps = { value: name, setValue: setName, label: t('login.business'), placeholder: t('login.business'),
     setError, inRow: true, setEdited, length: 50 };
@@ -156,7 +165,8 @@ export function Merchant ( props){
     handleEnter: handlePartner, inRow: true, noBlur: true, disabled: true };
   let partnerNameProps = { label: t('login.partner_name'), placeholder: t('login.partner_name'), value: { value: partner?.name ?? '' }, disabled: true };
   let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), placeholder: t('profile.activity'), merchant,
-  setError, setEdited, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem, setData: setSales, setData1: setVendor };
+  setError, setEdited, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem, setData: setSales, setData1: setVendor ,
+  tab, setTab: onChangeTab};
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -168,8 +178,8 @@ export function Merchant ( props){
             <Input {...nameProps} />
             <Input {...mailProps} />
             <InputPassword {...passProps} />
-            {/* <SubSelect {...subProps}/>   */}
             <Select1 {...subProps}/>  
+            {/* <RadioSelect {...subProps}/>   */}
             <Select {...currencyProps} />
             <div id='im_input_row_large' style={{ flexFlow: 'row', alignItems: 'flex-end' }}>
               <Input {...partnerProps} />
