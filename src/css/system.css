@@ -467,11 +467,12 @@ color: var(--logo1-color);
 }
 .pro_button{
     display: flex;
-    border: none;
     background-color: var(--root-color) ;
-    border-style: solid;
+    border: none;
+    width: 410px;
+    /* border-style: solid;
     border-width: 0 0 1px 0;
-    border-color: rgba(0,0,0,.15);
+    border-color: rgba(0,0,0,.15); */
     text-align: start;
     justify-content: space-between;
     font-size: 14px;
@@ -479,13 +480,36 @@ color: var(--logo1-color);
 }
 .pro_button1{
     display: flex;
-    border: none;
     background-color: var(--root-color) ;   
-    border-style: solid;
+    border: none;
+    width: 410px;
+    /* border-style: solid;
     border-width: 0 0 1px 0;
-    border-color: rgba(0,0,0,.15);
+    border-color: rgba(0,0,0,.15); */
     text-align: start;
     justify-content: space-between;
     font-size: 14px;
     font-weight: 400;
+    margin-bottom: 3px;
 }
+.button_back{
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    border-radius: var(--radius);
+    padding: 10px;
+    margin:  5px 5px 0 5px;
+    max-height: 150px;
+    overflow-x: scroll;
+}
+
+.button_back1{
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    border-radius: var(--radius);
+    padding: 0 20px;
+    margin:  5px 0px 0 230px;
+    max-height: 200px;
+    overflow-x: scroll;
+}
+.button_line{
+    border-top: 1px solid var(--line-color);
+    align-items: center;
+    }
