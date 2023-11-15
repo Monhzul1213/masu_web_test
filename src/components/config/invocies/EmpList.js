@@ -35,9 +35,10 @@ export function EmpList(props){
       },
       { Header: t('invoices.status'), accessor: 'statusName' },
       {
-        Header: '', accessor: 'empCode', noSort: true, isBtn: true, customStyle: { maxWidth: 140, minWidth: 140 },
+        Header: '', accessor: 'isOwner', noSort: true, isBtn: true, customStyle: { maxWidth: 140, minWidth: 140 },
         Cell: ({ value, row, onClickLink }) => {
-          return (<div className='table_link' onClick={() => onClickLink(row)}>{t(row?.original?.invoiceNo ? 'invoices.extend' : 'invoices.pay')}</div>);
+          let active = value !== 'Y';
+          return active && (<div className='table_link' onClick={() => onClickLink(row)}>{t(row?.original?.invoiceNo ? 'invoices.extend' : 'invoices.pay')}</div>);
         }
       },
     ]);

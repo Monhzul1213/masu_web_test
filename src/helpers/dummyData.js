@@ -605,3 +605,8 @@ export const siteSubscriptions1 = [
   { amt: 25000, length: 'MONTH', text: 'Сараар нэг салбар', value: 0, label: "25,000₮/салбар" },
   { amt: 250000, length: 'YEAR', text: 'Жилээр нэг салбар', value: 1, label: "250,000₮/салбар" },
 ];
+
+export const subs = [
+  { label: "Борлуулалт хийх", value: "0" },
+  { label: "Нийлүүлэлт хийх", value: "1" }
+];

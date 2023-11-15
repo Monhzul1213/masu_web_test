@@ -50,7 +50,7 @@ export function InvoiceSend(){
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight, position = 0;
       heightLeft -= pageHeight;
-      const pdf = new jsPDF('p', 'mm');
+      const pdf = new jsPDF('p', 'mm', 'a4');
       pdf.addImage(canvas, 'PNG', 0, position, imgWidth, imgHeight, '', 'FAST');
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;

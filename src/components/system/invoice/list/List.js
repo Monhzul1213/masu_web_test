@@ -35,8 +35,7 @@ export function List(props){
       { Header: t('order.status'), accessor: 'statusName' },
       { Header: '', accessor: 'isSendVat', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
         Cell: ({ value, row, onClickLink }) => {
-          // console.log(row?.original)
-          let active = row?.original?.status === 3 && value !== 'Y';
+          let active = row?.original?.status === 3 && value !== 'Y' && row?.original?.invoiceTime !== 'TRIAL';
           return active && (<div className='table_link' onClick={() => onClickLink(row)}><Overlay loading= {loading}>{t('system.tax_sent')}</Overlay></div>);
         }
       },

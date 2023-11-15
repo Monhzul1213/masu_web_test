@@ -53,7 +53,7 @@ function Card(props){
 
   const width = size?.width >= 840 ? 840 : size?.width;
   const emptyProps = { icon: 'MdStorefront', type: 'shop', noDescr: true, onClickAdd };
-  const modalProps = { visible, closeModal, selected: item };
+  const modalProps = { visible, closeModal, selected: item, setData };
   const addProps = { type: 'shop', onClickAdd };
   const listProps = { data, onClickAdd, getData };
 
