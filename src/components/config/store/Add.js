@@ -65,7 +65,7 @@ export function Add(props){
       setLoading(true);
       let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
         subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng};
-        console.log(data)
+        // console.log(data)
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
