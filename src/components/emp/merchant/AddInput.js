@@ -42,7 +42,7 @@ export function AddInput(props){
 
   return (
     <div style={inRow ? { flex: 1 } : {}}>
-      <div className={classBack ?? ''} style={backStyle}>
+      <div className={classBack ?? 'input_back1'} style={backStyle}>
         <InputMask
           className={className ?? 'm_input'}
           mask={mask}

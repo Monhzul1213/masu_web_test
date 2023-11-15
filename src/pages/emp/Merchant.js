@@ -8,8 +8,7 @@ import '../../css/invt.css';
 import { apiLogin, getConstants, getService, sendRequest } from '../../services';
 import { currencyList, validateEmail } from '../../helpers';
 import { ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Prompt, Select } from '../../components/all';
-import { RadioSelect } from '../../components/emp/merchant';
-import { Select1 } from '../../components/emp/merchant/Select1';
+import { RadioSelect } from '../../components/emp/merchant/Select';
 
 export function Merchant ( props){
   const { t } = useTranslation();
@@ -19,10 +18,11 @@ export function Merchant ( props){
   const [name, setName] = useState({ value: '' });
   const [mail, setMail] = useState({ value: '' });
   const [sales, setSales] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [vendor, setVendor] = useState([]);
   const [password, setPassword] = useState({ value: '' });
   const [currency, setCurrency] = useState({ value: '₮' });
-  const [activity, setActivity] = useState({ value: '' });
+  const [activity, setActivity] = useState({ value: null});
   const [addItem, setAddItem] = useState({ value: '' });
   const [partner, setPartner] = useState({ value: '', error: null });
   const { user, token, isOwner } = useSelector(state => state.login);
@@ -30,7 +30,6 @@ export function Merchant ( props){
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [tab, setTab] = useState(-1);
 
   useEffect(() => {
     onFocusSales()
@@ -41,11 +40,10 @@ export function Merchant ( props){
   }, []);
 
   const setData = async () => {
-    console.log(merchant)
     setError(null);
     setName({ value: merchant?.descr });
     setMail({ value: merchant?.email });
-    setActivity({value: merchant?.merchantSubType })
+    setActivity({ value: merchant?.merchantSubType})
     setCurrency({ value: merchant?.currency ? merchant?.currency : '₮' });
     if(merchant?.partnerCode) handlePartner(null, merchant?.partnerCode);
   }
@@ -55,12 +53,13 @@ export function Merchant ( props){
   }
 
   const validateData = () => {
+    let item = activity?.value === 204 ? addItem?.value : !addItem?.value
     let passwordLength = 8, businessLength = 6;
     let isEmailValid = validateEmail(mail?.value);
     let isPasswordValid = !password?.value || (password?.value?.length >= passwordLength);
     let isBusinessValid = name?.value?.length >= businessLength;
     let isPartnerValid = (partner?.value && partner?.name) || (!partner?.value && !partner?.name) ? true : false;
-    if(isBusinessValid && isEmailValid && isPasswordValid && isPartnerValid && activity?.value){
+    if(isBusinessValid && isEmailValid && isPasswordValid && isPartnerValid && activity?.value && item ){
       let data = { email: mail?.value, password: password?.value, descr: name?.value, currency: currency?.value, partnerCode: partner?.value ?? '',
                   merchantType: 0, merchantSubType : activity?.value, addSubDescr: addItem?.value };
       return data;
@@ -68,10 +67,11 @@ export function Merchant ( props){
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
       else if(!isBusinessValid) setName({ value: name?.value, error: ' ' + businessLength + t('error.longer_than') });
       if(!mail?.value) setMail({ value: '', error: t('error.not_empty') });
-      if(!activity?.value) setActivity({ value: '', error: t('profile.select') });
       else if(!isEmailValid) setMail({ value: mail?.value, error: t('error.be_right') });
       if(!isPasswordValid) setPassword({ value: password?.value, error: ' ' + passwordLength + t('error.longer_than') });
       if(!isPartnerValid) setPartner({...partner, error: t('error.be_right') })
+      if(!activity?.value) setActivity({ value: null, error: t('profile.select') });
+      if(!addItem?.value) setAddItem({ value: '', error: t('error.not_empty') });
       return false;
     }
   }
@@ -82,7 +82,6 @@ export function Merchant ( props){
       setError(null);
       setLoading(true);
       const response = await dispatch(sendRequest(user, token, 'Merchant/Modify', data));
-      console.log(data)
       setLoading(false);
       if(response?.error) setError(response?.error);
       else {
@@ -118,11 +117,11 @@ export function Merchant ( props){
       else {
         let num = [];
         response?.data?.forEach(item => {
-          if(item?.valueNum === 204) item.row_color = '#effd5f';
           let string = item?.valueNum?.toString();
           let n1 = string.startsWith(1)
           if ( n1 === true || string === '204' ){num.push({...item}) } 
         })
+        setAllData(response?.data)
         setSales(num?.sort((a, b) => a.valueNum - b.valueNum));
       }
       setLoading(null);
@@ -137,7 +136,6 @@ export function Merchant ( props){
       else {
         let num = [] ;
         response?.data?.forEach(item => {
-          if(item?.valueNum === 204) item.row_color = '#effd5f';
           let string = item?.valueNum?.toString();
           let n2 = string.startsWith(2)
           if ( n2 === true ){ num.push(item) } 
@@ -146,10 +144,6 @@ export function Merchant ( props){
       }
       setLoading(null);
     }
-  }
-
-  const onChangeTab = value => {
-    setTab(value);
   }
 
   let nameProps = { value: name, setValue: setName, label: t('login.business'), placeholder: t('login.business'),
@@ -164,9 +158,8 @@ export function Merchant ( props){
   let partnerProps = { label: t('login.partner'), placeholder: t('login.partner'), value: partner, setValue: setPartner, setError,
     handleEnter: handlePartner, inRow: true, noBlur: true, disabled: true };
   let partnerNameProps = { label: t('login.partner_name'), placeholder: t('login.partner_name'), value: { value: partner?.name ?? '' }, disabled: true };
-  let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), placeholder: t('profile.activity'), merchant,
-  setError, setEdited, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem, setData: setSales, setData1: setVendor ,
-  tab, setTab: onChangeTab};
+  let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), placeholder: t('profile.activity1'), allData, merchant,
+  setError, setEdited, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem,};
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -178,8 +171,8 @@ export function Merchant ( props){
             <Input {...nameProps} />
             <Input {...mailProps} />
             <InputPassword {...passProps} />
-            <Select1 {...subProps}/>  
-            {/* <RadioSelect {...subProps}/>   */}
+            <RadioSelect {...subProps}/>
+            {/* <Select1 {...subProps}/> */}
             <Select {...currencyProps} />
             <div id='im_input_row_large' style={{ flexFlow: 'row', alignItems: 'flex-end' }}>
               <Input {...partnerProps} />

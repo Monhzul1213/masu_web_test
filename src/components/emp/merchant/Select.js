@@ -7,7 +7,7 @@ import { AddInput } from './AddInput';
 const { Option } = Select;
 
 const SubSelect = props => {
-  const { value, setValue, data, onFocus, handleEnter, addItem, setAddItem } = props;
+  const { value, setValue, data, onFocus} = props;
   const { t } = useTranslation();
 
   const renderItem = (item, index) => {
@@ -15,33 +15,22 @@ const SubSelect = props => {
   }
 
   return (
-    <div className='pro_back'>
+    <div className='select_back_z'>
       <Select
-        className='pro_select'
+        className='select_m'
         onChange={setValue}
-        value={value}
-        placeholder={t('profile.activity')}
+        value={value?.value}
+        placeholder={t('profile.activity1')}
         onFocus={() => onFocus && onFocus()}
-        // dropdownRender={dropdownRender}
         >
         {data?.map(renderItem)}
       </Select>
-      {value === 204 && <AddInput
-        setValue={setAddItem}
-        value={addItem}
-        placeholder={'Нэмж бүртгүүлэх'}
-        onFocus={() => onFocus && onFocus()}
-        handleEnter={handleEnter}
-        // dropdownRender={dropdownRender}
-        >
-        {data?.map(renderItem)}
-      </AddInput>}
     </div>
   )
 }
 
 export function RadioSelect(props){
-  const {label, value, setValue, data, data1, onFocusSales, onFocusVendor, addItem, setAddItem, merchant, setData, setData1 } = props;
+  const {label, value, setValue, data, data1, onFocusSales, onFocusVendor, addItem, setAddItem, merchant, allData } = props;
   const [custom, setCustom] = useState('1');
   const { t } = useTranslation();
 
@@ -55,84 +44,61 @@ export function RadioSelect(props){
 
   const onChange = e => {
     setCustom(e?.target?.value);
-    data?.map(item => {
-      let f = item?.valueNum?.toString()
-      f?.startsWith(1) ? setValue(null) : setValue()
-    })
-    data1?.map(item => {
-      let f = item?.valueNum?.toString()
-      f?.startsWith(2) ? setValue(null) : setValue()
-    })
+    setValue(null)
+    setAddItem(null)
   }
 
   const setChange = item => {
+    setAddItem(null)
     let string = item === undefined ? merchant?.merchantSubType : item 
     let s = string?.toString()
-    if(s?.startsWith(1) || item === 204 ){
+    if(s?.startsWith(1) || merchant?.merchantSubType === null || merchant === undefined){
       setCustom('1')
-      setValue(string)
+      setValue({value: string})
     } else {
       setCustom('2')
-      setValue(string);
+      setValue({value: string});
     }
-    
   }
 
-  const onOpenChange = show => {
-    if(!show) setChange();
-  }
   const handleEnter = e => {
     e?.preventDefault();
     let valueStr1 = addItem?.value?.trim();
     if(valueStr1){
-      let exists = data?.findIndex(d => d.valueStr1?.toLowerCase() === valueStr1?.toLowerCase());
-      console.log(valueStr1)
+      let exists = allData?.findIndex(d => d.valueStr1?.toLowerCase() === valueStr1?.toLowerCase());
       if(exists === -1){
-        // let item = { valueStr1 };
-        // setData(old => [...old, item]);
         setAddItem({ value: valueStr1 });
         message.success(t('login.success'))
-        // setEdited && setdited(true);
-      } else setAddItem({ value: addItem?.value?.trim(), error: t('inventory.variant_error') });
+      } else setAddItem({ value: addItem?.value?.trim(), error: t('profile.variant_error') });
     }
   }
-  const handleEnter1 = e => {
-    e?.preventDefault();
-    let valueStr1 = addItem?.value?.trim();
-    if(valueStr1){
-      let exists = data?.findIndex(d => d.valueStr1?.toLowerCase() === valueStr1?.toLowerCase());
-      console.log(valueStr1) 
-      if(exists === -1){
-        // let item = { valueStr1 };
-        // setData1(old => [...old, item]);
-        setAddItem({ value: '' });
-        // setEdited && setEdited(true);
-      } else setAddItem({ value: addItem?.value?.trim(), error: t('inventory.variant_error') });
-    }
-  }
+
 
   let sub1Props = { value: value, setValue: setChange, label: t('profile.sale'), data: data, onFocus: onFocusSales, addItem, setAddItem, handleEnter };
-  let sub2Props = { value: value, setValue: setChange, label: t('profile.vendor'), data: data1, onFocus: onFocusVendor, addItem, setAddItem };
+  let sub2Props = { value: value, setValue: setChange, label: t('profile.vendor'), data: data1, onFocus: onFocusVendor, addItem, setAddItem, handleEnter };
 
   return (
-    <div className='select_back' >
+    <div className='radio_back' >
       <p className='select_lbl' >{label}</p>
-      <div className='pro_dropdown'>
-        <Radio.Group className='mr_radio' onChange={onChange} value={custom}>
-          {/* <div> */}
-            <Radio value={'1'}>{t('profile.sale')}</Radio>
-            {custom === '1' && <div className='mr_times'>
-              <SubSelect {...sub1Props}/>
-            </div>} 
-          {/* </div> */}
-          {/* <div> */}
-            <Radio value={'2'}>{t('profile.vendor')}</Radio>
-            {custom === '2' && <div className='mr_times'>
-              <SubSelect {...sub2Props}/>
-            </div>}
-          {/* </div> */}
-        </Radio.Group>
+      <Radio.Group className= {merchant ? 'pro_radio' : 'pro_radioz'} onChange={onChange} value={custom}>
+          <Radio value={'1'}>{t('profile.sale')}</Radio>
+          <div className={merchant ? 'pro_gap' : ''}/>
+          <Radio value={'2'}>{t('profile.vendor')}</Radio>
+      </Radio.Group>
+      <div className={value?.value === 204 ? 'row' : 'col'}>
+        <div className='list_scroll' style={{overflowY: 'scroll', maxHeight: 150}}>
+              {custom === '1' ? <SubSelect {...sub1Props}/> : <SubSelect {...sub2Props}/>}
+        </div>
+        {value?.value === 204 && <AddInput
+          setValue={setAddItem}
+          value={addItem}
+          placeholder={'Нэмж бүртгүүлэх'}
+          handleEnter={handleEnter}
+          length={100}
+          >
+        </AddInput>}
       </div>
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
     </div>
   )
 }

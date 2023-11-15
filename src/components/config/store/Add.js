@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteRequest, sendRequest } from '../../../services'
-import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select } from '../../all';
+import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select, IconInput } from '../../all';
 import { cityList, districtList } from '../../../helpers';
+import { Location } from './Location';
 
 export function Add(props){
   const { visible, selected, closeModal } = props;
@@ -19,6 +20,9 @@ export function Add(props){
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
+  const [select, setSelect] = useState(false);
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -60,7 +64,8 @@ export function Add(props){
       let districtCode = cityList?.filter(ct => ct.value === descr?.value)[0]?.districtCode;
       setLoading(true);
       let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
-        subDescr: subDescr?.value, districtCode };
+        subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng};
+        console.log(data)
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
@@ -102,20 +107,36 @@ export function Add(props){
     setPhone({ value: text });
   }
 
+  const onClickLocation = row => {
+    setSelect(true);
+  }
+
+
+  const closeLocation = (hasLocation, y, x) => {
+    setSelect(false);
+    if(hasLocation){
+      let coordinate = y + '\n' + x;
+      setAddress({value: coordinate})
+      setError && setError(null);
+    }
+  }
+
   const nameProps = { value: name, setValue: setName, label: t('shop.name'), placeholder: t('shop.name1'), setError, length: 40 };
   const cityProps = { value: descr, setValue: onChangeDescr, label: t('shop.city'), placeholder: t('shop.location1'), setError,
     data: cityList };
   const districtProps = { value: subDescr, setValue: setSubDescr, label: t('shop.district'), placeholder: t('shop.location1'), setError,
     data: list };
-  const addrProps = { value: address, setValue: setAddress, label: t('shop.addr'), placeholder: t('shop.addr1'), setError, length: 250 };
+  const addrProps = { value: address, setValue: setAddress, label: t('shop.addr'), placeholder: t('shop.addr1'), setError, length: 250, onClick: onClickLocation };
   const phoneProps = { value: phone, setValue: changePhone, label: t('shop.phone'), placeholder: t('shop.phone1'), setError, length: 20,
     handleEnter: onClickSave };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
+  const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, selected };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
       {open && <Confirm {...confirmProps} />}
+      <Location {...mapProps} />
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdStorefront' title={t(selected ? 'shop.edit' : 'shop.new')} isMD={true} />
@@ -125,6 +146,7 @@ export function Add(props){
               <Select {...cityProps} />
               <Select {...districtProps} />
               <Input {...addrProps} />
+              {/* <IconInput {...addrProps} /> */}
               <Input {...phoneProps} />
             </form>
             {error && <Error error={error} id='m_error' />}

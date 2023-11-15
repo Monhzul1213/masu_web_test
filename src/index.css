@@ -41,6 +41,19 @@ p {
   height: 5px !important;
 }
 
+.list_scroll::-webkit-scrollbar, #list_scroll::-webkit-scrollbar {
+  height: 0;
+  width: 5px !important;
+  display: flex;
+  border-radius: 10px;
+}
+
+.list_scroll::-webkit-scrollbar-thumb, #list_scroll::-webkit-scrollbar-thumb {
+  background-color: var(--text4-color);
+  border-radius: 10px;
+  width: 5px !important;
+}
+
 .ant-layout {
   background-color: var(--back-color); 
 }
