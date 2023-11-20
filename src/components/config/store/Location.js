@@ -4,10 +4,10 @@ import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { ButtonRow, ModalTitle } from '../../../components/all';
-import Map from '../tax/add/Map';
+import Map from './Map';
 
 export function Location(props){
-  const { visible, closeModal, lng, setLng, lat, setLat, selected} = props
+  const { visible, closeModal, lng, setLng, lat, setLat, selected, descr, subDescr} = props
   const { t } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
@@ -17,8 +17,8 @@ export function Location(props){
         setLat(parseFloat(selected?.latitudes));
         setLng(parseFloat(selected?.longitudes));
       } else {
-        // setLat(47.914318);
-        // setLng(106.919143);
+        setLat(47.914318);
+        setLng(106.919143);
       }
       setLoaded(visible);
       return () => {};
@@ -26,7 +26,7 @@ export function Location(props){
     }, [visible]);
 
   const onClick = e => {
-    console.log(e.latLng.toString())
+    console.log(descr, subDescr)
     setLat(e.latLng.lat());
     setLng(e.latLng.lng());
   }
