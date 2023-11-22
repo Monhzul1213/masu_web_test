@@ -44,6 +44,7 @@ export function SignUp(){
   }, []);
 
   const checkValid = () => {
+    let item = (activity?.value === 204 || activity?.value === 205) ? addItem?.value : !addItem?.value
     let passwordLength = 8, businessLength = 6;
     let isValid = email?.value && password?.value && business?.value && address?.value?.trim();
     let isEmailValid = validateEmail(email?.value);
@@ -51,7 +52,7 @@ export function SignUp(){
     let isBusinessValid = business?.value?.length >= businessLength;
     let isAddressValid = validateNumber(address?.value?.trim());
     let isPartnerValid = (partner?.value && partner?.name) || (!partner?.value && !partner?.name) ? true : false;
-    if(isValid && isEmailValid && isPasswordValid && isBusinessValid && isAddressValid && isPartnerValid && activity?.value && activity?.value === 204 ? addItem?.value : !addItem?.value){
+    if(isValid && isEmailValid && isPasswordValid && isBusinessValid && isAddressValid && isPartnerValid && activity?.value && item){
       return true;
     } else {
       if(!email?.value) setEmail({ value: '', error: t('error.not_empty') });
@@ -169,7 +170,9 @@ export function SignUp(){
         response?.data?.forEach(item => {
           let string = item?.valueNum?.toString();
           let n2 = string.startsWith(2)
-          if ( n2 === true ){ num.push(item) } 
+          if ( n2 === true ){ 
+            if(string !== '204'){ num.push(item) } 
+          }
         })
         setVendor(num?.sort((a, b) => a.valueNum - b.valueNum));
       }

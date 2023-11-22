@@ -36,7 +36,6 @@ export function RemainImport(){
     let api = 'Txn/GetSiteInventory' + (query !== undefined ? query : '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log( api, response)
     if(response?.error) setError(response?.error);
     else { setData(response?.data) }
     setLoading(false);    

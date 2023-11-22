@@ -70,7 +70,6 @@ export function SubscriptionSite(props){
     let msg = txnNo
     let code = encrypt(msg);
     let url = config?.domain + '/statement?invoiceno=' + encodeURIComponent(code);
-    console.log(url)
     window.open(url);
   }
 

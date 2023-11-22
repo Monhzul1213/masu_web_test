@@ -33,7 +33,6 @@ export function InvoiceSend(){
     let invoiceno = searchParams?.get('invoiceno');
     let api = 'Txn/GetInvoiceData?data=' + encodeURIComponent(invoiceno);
     let response = await dispatch(getService(api, 'GET'));
-    console.log(api)
     let url1 = config?.domain + '/statement?invoiceno=' + encodeURIComponent(invoiceno);
     if(response?.error) setError(response?.error);
     else {

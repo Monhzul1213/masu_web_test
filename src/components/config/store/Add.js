@@ -131,7 +131,7 @@ export function Add(props){
     handleEnter: onClickSave };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
-  const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, selected };
+  const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, selected, descr, subDescr };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>

@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../../css/invt.css';
 import { apiLogin, getConstants, getService, sendRequest } from '../../services';
 import { currencyList, validateEmail } from '../../helpers';
-import { ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Prompt, Select } from '../../components/all';
-import { RadioSelect } from '../../components/emp/merchant/Select';
+import { ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Select } from '../../components/all';
+import { RadioSelect, Prompt1 } from '../../components/emp/merchant';
 
 export function Merchant ( props){
   const { t } = useTranslation();
@@ -44,6 +44,7 @@ export function Merchant ( props){
     setName({ value: merchant?.descr });
     setMail({ value: merchant?.email });
     setActivity({ value: merchant?.merchantSubType})
+    setAddItem({ value: merchant?.addSubDescr})
     setCurrency({ value: merchant?.currency ? merchant?.currency : '₮' });
     if(merchant?.partnerCode) handlePartner(null, merchant?.partnerCode);
   }
@@ -53,7 +54,7 @@ export function Merchant ( props){
   }
 
   const validateData = () => {
-    let item = activity?.value === 204 ? addItem?.value : !addItem?.value
+    let item = (activity?.value === 204 || activity?.value === 205) ? addItem?.value : !addItem?.value
     let passwordLength = 8, businessLength = 6;
     let isEmailValid = validateEmail(mail?.value);
     let isPasswordValid = !password?.value || (password?.value?.length >= passwordLength);
@@ -127,6 +128,7 @@ export function Merchant ( props){
       setLoading(null);
     }
   }
+
   const onFocusVendor = async () => {
     if(!vendor?.length || vendor?.length === 1){
       setError && setError(null);
@@ -138,9 +140,12 @@ export function Merchant ( props){
         response?.data?.forEach(item => {
           let string = item?.valueNum?.toString();
           let n2 = string.startsWith(2)
-          if ( n2 === true ){ num.push(item) } 
-        })
-        setVendor(num?.sort((a, b) => a.valueNum - b.valueNum));
+          if ( n2 === true ){ 
+            if(string !== '204'){
+              num.push(item) } 
+          }
+      })
+      setVendor(num?.sort((a, b) => a.valueNum - b.valueNum));
       }
       setLoading(null);
     }
@@ -159,11 +164,11 @@ export function Merchant ( props){
     handleEnter: handlePartner, inRow: true, noBlur: true, disabled: true };
   let partnerNameProps = { label: t('login.partner_name'), placeholder: t('login.partner_name'), value: { value: partner?.name ?? '' }, disabled: true };
   let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), placeholder: t('profile.activity1'), allData, merchant,
-  setError, setEdited, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem,};
+  setError, setEdited, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem };
 
   return (
     <Overlay className='i_container' loading={loading}>
-      <Prompt edited={edited} />
+      <Prompt1 value={!activity?.value } edited={edited} /> 
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>
@@ -172,7 +177,6 @@ export function Merchant ( props){
             <Input {...mailProps} />
             <InputPassword {...passProps} />
             <RadioSelect {...subProps}/>
-            {/* <Select1 {...subProps}/> */}
             <Select {...currencyProps} />
             <div id='im_input_row_large' style={{ flexFlow: 'row', alignItems: 'flex-end' }}>
               <Input {...partnerProps} />
