@@ -131,7 +131,7 @@ export const cityList = [
   { label: 'Дорнод аймаг', value: 'Дорнод аймаг', districtCode: '07' },
   { label: 'Дундговь аймаг', value: 'Дундговь аймаг', districtCode: '08' },
   { label: 'Завхан аймаг', value: 'Завхан аймаг', districtCode: '09' },
-  { label: 'Орхон аймаг', value: 'Орхон аймаг ', districtCode: '20' },
+  { label: 'Орхон аймаг', value: 'Орхон аймаг', districtCode: '20' },
   { label: 'Өвөрхангай аймаг', value: 'Өвөрхангай аймаг', districtCode: '10' },
   { label: 'Өмнөговь аймаг', value: 'Өмнөговь аймаг', districtCode: '11' },
   { label: 'Сүхбаатар аймаг', value: 'Сүхбаатар аймаг', districtCode: '12' },
