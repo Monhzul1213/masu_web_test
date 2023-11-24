@@ -234,7 +234,7 @@ export function InputPassword(props){
 }
 
 export function IconInput(props){
-  const {value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, maskChar, inRow,
+  const {value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, id, 
         length, noBlur, className, onClick } = props;
   const { t } = useTranslation();
 
@@ -276,15 +276,13 @@ export function IconInput(props){
     <div style={inRow ? { flex: 1, position: 'relative' } : {position: 'relative'}}>
       <div className='select_back' style={backStyle}>
         {label && <p className='select_lbl' style={style}>{label}</p>}
-        <InputMask
-          className={className ?? 'm_input'}
-          mask={mask}
+          <textarea
+          id={id}
+          className={className ?? 'm_input_descr'}
           disabled={disabled}
-          maskChar={maskChar ?? '-'}
-          onKeyDown={onKeyDown}
-          onBlur={onBlur}
           placeholder={placeholder}
           value={value?.value}
+          onBlur={onBlur}
           onChange={onChange} />
       </div>
       <DynamicMDIcon className='loc_icon' name='MdLocationPin' onClick={onClick} />

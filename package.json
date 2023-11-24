@@ -33,6 +33,7 @@
     "react-currency-input-field": "^3.6.9",
     "react-dom": "^18.2.0",
     "react-google-maps": "^9.4.5",
+    "react-google-places-autocomplete": "^4.0.1",
     "react-i18next": "^11.18.6",
     "react-icons": "^4.4.0",
     "react-input-mask": "^2.0.4",

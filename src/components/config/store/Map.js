@@ -1,6 +1,7 @@
 import React from 'react';
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 
+
 const GoogleMapExample = withGoogleMap(props => (
   <GoogleMap
     onClick={props?.onClick}

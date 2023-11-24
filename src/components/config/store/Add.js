@@ -13,11 +13,15 @@ export function Add(props){
   const { t } = useTranslation();
   const [name, setName] = useState({ value: '' });
   const [address, setAddress] = useState({ value: '' });
+  const [location, setLocation] = useState(null);
   const [phone, setPhone] = useState({ value: '' });
   const [descr, setDescr] = useState({ value: null });
+  const [descr1, setDescr1] = useState({ value: null });
+  const [descr2, setDescr2] = useState({ value: null });
   const [subDescr, setSubDescr] = useState({ value: null });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [city, setCity] = useState(null);
   const [open, setOpen] = useState(false);
   const [list, setList] = useState([]);
   const [select, setSelect] = useState(false);
@@ -32,6 +36,9 @@ export function Add(props){
       setAddress({ value: selected?.address ?? '' });
       setPhone({ value: selected?.phone ?? '' });
       setDescr({ value: selected?.descr ? selected?.descr : null });
+      setLat( selected?.latitudes ? selected?.latitudes : 47.91452468522501 );
+      setLng(selected?.longitudes ? selected?.longitudes : 106.91007001230763 );
+      setLocation({ value : selected?.latitudes ? selected?.latitudes + '\n' + selected?.longitudes : ''})
       setSubDescr({ value: selected?.subDescr ? selected?.subDescr : null });
       setList(districtList?.filter(item => item?.parent?.includes(selected?.descr)));
     }
@@ -65,7 +72,6 @@ export function Add(props){
       setLoading(true);
       let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
         subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng};
-        // console.log(data)
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
@@ -100,6 +106,12 @@ export function Add(props){
     setDescr(value);
     setSubDescr({ value: null });
     setList(districtList?.filter(item => item?.parent?.includes(value?.value)));
+    cityList?.forEach(item => {
+      if(item?.label?.includes(value?.value)){
+        setDescr1({value: item?.lan})
+        setDescr2({value: item?.lng})
+        setCity(item?.city)
+    }});
   }
 
   const changePhone = value => {
@@ -108,7 +120,10 @@ export function Add(props){
   }
 
   const onClickLocation = row => {
-    setSelect(true);
+    if(!descr?.value) {
+      setDescr({ value: null, error: t('profile.select') });
+      setSelect(false);
+    } else setSelect(true);
   }
 
 
@@ -116,22 +131,26 @@ export function Add(props){
     setSelect(false);
     if(hasLocation){
       let coordinate = y + '\n' + x;
-      setAddress({value: coordinate})
+      setLocation({value: coordinate})
+      setLat(y)
+      setLng(x)
       setError && setError(null);
     }
   }
 
   const nameProps = { value: name, setValue: setName, label: t('shop.name'), placeholder: t('shop.name1'), setError, length: 40 };
   const cityProps = { value: descr, setValue: onChangeDescr, label: t('shop.city'), placeholder: t('shop.location1'), setError,
-    data: cityList };
+    data: cityList};
   const districtProps = { value: subDescr, setValue: setSubDescr, label: t('shop.district'), placeholder: t('shop.location1'), setError,
     data: list };
-  const addrProps = { value: address, setValue: setAddress, label: t('shop.addr'), placeholder: t('shop.addr1'), setError, length: 250, onClick: onClickLocation };
+  const addrProps = { value: address, setValue: setAddress, label: t('shop.addr'), placeholder: t('shop.addr1'), setError, length: 250 };
+  const locProps = { value: location, setValue: setLocation, label: t('tax.location'), placeholder: t('tax.location'), setError, length: 250, 
+                    onClick: onClickLocation, disabled: true, className: 'store_descr' };
   const phoneProps = { value: phone, setValue: changePhone, label: t('shop.phone'), placeholder: t('shop.phone1'), setError, length: 20,
     handleEnter: onClickSave };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
-  const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, selected, descr, subDescr };
+  const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, descr1, descr2, city };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
@@ -146,7 +165,7 @@ export function Add(props){
               <Select {...cityProps} />
               <Select {...districtProps} />
               <Input {...addrProps} />
-              {/* <IconInput {...addrProps} /> */}
+              <IconInput {...locProps} />
               <Input {...phoneProps} />
             </form>
             {error && <Error error={error} id='m_error' />}

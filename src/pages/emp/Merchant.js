@@ -54,7 +54,7 @@ export function Merchant ( props){
   }
 
   const validateData = () => {
-    let item = (activity?.value === 204 || activity?.value === 205) ? addItem?.value : !addItem?.value
+    let item = (activity?.value === 199 || activity?.value === 205) ? addItem?.value : !addItem?.value
     let passwordLength = 8, businessLength = 6;
     let isEmailValid = validateEmail(mail?.value);
     let isPasswordValid = !password?.value || (password?.value?.length >= passwordLength);
@@ -62,7 +62,7 @@ export function Merchant ( props){
     let isPartnerValid = (partner?.value && partner?.name) || (!partner?.value && !partner?.name) ? true : false;
     if(isBusinessValid && isEmailValid && isPasswordValid && isPartnerValid && activity?.value && item ){
       let data = { email: mail?.value, password: password?.value, descr: name?.value, currency: currency?.value, partnerCode: partner?.value ?? '',
-                  merchantType: 0, merchantSubType : activity?.value, addSubDescr: addItem?.value };
+                  merchantSubType : activity?.value, addSubDescr: addItem?.value };
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
@@ -120,7 +120,8 @@ export function Merchant ( props){
         response?.data?.forEach(item => {
           let string = item?.valueNum?.toString();
           let n1 = string.startsWith(1)
-          if ( n1 === true || string === '204' ){num.push({...item}) } 
+          if ( n1 === true ){
+            num.push({...item}) } 
         })
         setAllData(response?.data)
         setSales(num?.sort((a, b) => a.valueNum - b.valueNum));
@@ -140,10 +141,7 @@ export function Merchant ( props){
         response?.data?.forEach(item => {
           let string = item?.valueNum?.toString();
           let n2 = string.startsWith(2)
-          if ( n2 === true ){ 
-            if(string !== '204'){
-              num.push(item) } 
-          }
+          if ( n2 === true ){ num.push(item) } 
       })
       setVendor(num?.sort((a, b) => a.valueNum - b.valueNum));
       }
