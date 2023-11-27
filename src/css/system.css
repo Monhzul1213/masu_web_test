@@ -551,3 +551,22 @@ color: var(--logo1-color);
 .btn_back{
     max-width: 300px;
 }
+
+.store_descr {
+    padding-left: 0;
+    border: none;
+    color: var(--text-color);
+    font-size: 14px;
+    height: 45px;
+    background-color: var(--root-color);
+  }
+  
+  .m_input:focus, .store_descr:focus {
+    outline: none;
+  }
+  
+  .m_input:disabled, .store_descr:disabled {
+    cursor: not-allowed;
+    color: var(--text-color);
+    background-color: transparent;
+  }

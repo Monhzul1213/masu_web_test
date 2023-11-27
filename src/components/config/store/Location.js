@@ -7,31 +7,24 @@ import { ButtonRow, ModalTitle } from '../../../components/all';
 import Map from './Map';
 
 export function Location(props){
-  const { visible, closeModal, lng, setLng, lat, setLat, selected, descr, subDescr} = props
+  const { visible, closeModal, lng, setLng, lat, setLat, descr1, descr2, city} = props
   const { t } = useTranslation();
   const [loaded, setLoaded] = useState(false);
 
-    useEffect(() => {
-      console.log(selected)
-      if(visible && selected && selected?.haslocation){
-        setLat(parseFloat(selected?.latitudes));
-        setLng(parseFloat(selected?.longitudes));
-      } else {
-        setLat(47.914318);
-        setLng(106.919143);
-      }
-      setLoaded(visible);
-      return () => {};
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [visible]);
+  useEffect(() => {
+    setLat(descr1?.value ? descr1?.value : lat);
+    setLng(descr2?.value ? descr2?.value : lng);
+    setLoaded(visible);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   const onClick = e => {
-    console.log(descr, subDescr)
     setLat(e.latLng.lat());
     setLng(e.latLng.lng());
   }
 
-  const mapProps = { onClick, lat, lng };
+  const mapProps = { onClick, lat, lng, city };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave: () => closeModal(true, lat, lng) };
 
   return (

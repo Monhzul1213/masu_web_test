@@ -36,9 +36,8 @@ export function RadioSelect(props){
 
   useEffect(() => {
     let s = merchant?.merchantSubType?.toString()
-    if(s?.startsWith(1) || merchant?.merchantSubType === null || merchant === undefined || merchant?.merchantSubType === 204) setCustom('1') 
+    if(s?.startsWith(1) || merchant?.merchantSubType === null || merchant === undefined) setCustom('1') 
     else setCustom('2')
-    // else setCustom('2')
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -76,8 +75,8 @@ export function RadioSelect(props){
   }
 
 
-  let sub1Props = { value: value, setValue: setChange, label: t('profile.sale'), data: data, onFocus: onFocusSales, addItem, setAddItem, handleEnter };
-  let sub2Props = { value: value, setValue: setChange1, label: t('profile.vendor'), data: data1, onFocus: onFocusVendor, addItem, setAddItem, handleEnter };
+  let sub1Props = { value: value, setValue: setChange, label: t('profile.sale'), data: data, onFocus: onFocusSales };
+  let sub2Props = { value: value, setValue: setChange1, label: t('profile.vendor'), data: data1, onFocus: onFocusVendor };
 
   return (
     <div className='radio_back' >
@@ -87,11 +86,11 @@ export function RadioSelect(props){
           <div className={merchant ? 'pro_gap' : ''}/>
           <Radio value={'2'}>{t('profile.vendor')}</Radio>
       </Radio.Group>
-      <div className={(value?.value === 204 || value?.value === 205) ? 'row' : 'col'}>
+      <div className={(value?.value === 199 || value?.value === 205) ? 'row' : 'col'}>
         <div className='list_scroll' style={{overflowY: 'scroll', maxHeight: 150}}>
               {custom === '1' ? <SubSelect {...sub1Props}/> : <SubSelect {...sub2Props}/>}
         </div>
-        {(value?.value === 204 || value?.value === 205) && <AddInput
+        {(value?.value === 199 || value?.value === 205) && <AddInput
           setValue={setAddItem}
           value={addItem}
           placeholder={'Нэмж бүртгүүлэх'}
