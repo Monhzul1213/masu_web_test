@@ -4,7 +4,7 @@ import InputMask from 'react-input-mask';
 import { DatePicker, Dropdown, Radio, Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { timeList } from '../../../../helpers';
+import { timeList, timeList1 } from '../../../../helpers';
 import { DynamicAIIcon } from './DynamicIcon';
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -237,4 +237,40 @@ export function PlainRange(props){
         {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
       </div>
     );
+  }
+
+  const TimeSelect1 = props => {
+    const { value, setValue } = props;
+  
+    const renderItem = item => {
+      return (<Option key={item} value={item}>{item}</Option>);
+    }
+  
+    return (
+      <div className='tm_time_back'>
+        <Select
+          className='tm_time_select'
+          onChange={setValue}
+          value={value}>
+          {timeList1?.map(renderItem)}
+        </Select>
+      </div>
+    )
+  }
+  
+  export function SelectTime(props){
+    const { value, setValue } = props;
+    const { t } = useTranslation();
+  
+    const setTime = data => {
+      setValue(data);
+    }
+  
+    return (
+      <div className='tm_times'>
+        <TimeSelect1 value={value[0]} setValue={val => setTime([val, value[1]])} />
+        <div className='gap' />
+        <TimeSelect1 value={value[1]} setValue={val => setTime([value[0], val])} />
+      </div>
+    )
   }

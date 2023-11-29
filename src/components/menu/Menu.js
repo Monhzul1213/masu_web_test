@@ -3,6 +3,7 @@ import { Layout, Menu as AntMenu, Drawer } from 'antd';
 import { RiContactsLine, RiTeamLine } from 'react-icons/ri';
 import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
 import { TbBuildingWarehouse } from 'react-icons/tb';
+import { BiCalendar } from "react-icons/bi";
 import { FiTool } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -116,6 +117,7 @@ export function Menu(props){
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
+    getItem(t('menu.timetable'), '/timetable', <BiCalendar />, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />, null, null, msRole?.webManageCustomer !== 'Y'),
     hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :
     getItem(t('menu.config'), '/config', <BsGear />, [
