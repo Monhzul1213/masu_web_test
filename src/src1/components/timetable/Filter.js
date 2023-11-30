@@ -47,7 +47,7 @@ export function Filter(props){
 
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const dayProps = { value: day, setValue: onChangeDay, data: week, s_value: 'value', s_descr: 'label', onHide, classBack: 'rp_select_back', className: 'rp_select',};
-  const addProps = { date, setDate}
+  const addProps = { }
   
   return (
     <div className={classH}>
