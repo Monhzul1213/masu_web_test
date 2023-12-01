@@ -68,10 +68,11 @@ function Card(props){
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     setDetail(old => old.map((row, index) => {
+      console.log(old[rowIndex]?.itemType)
       if(index === rowIndex){
         let itemType = columnId === 'itemType' ? value : old[rowIndex]?.itemType;
         let qty = columnId === 'qty' ? parseFloat(value ? value : 0) : old[rowIndex]?.qty;
-        let leftQty = add(qty, old[rowIndex]?.siteQty);
+        let leftQty = old[rowIndex]?.itemType === 'RC' ? add(qty, old[rowIndex]?.siteQty) : add(old[rowIndex]?.siteQty, qty, true);
         let cost = columnId === 'itemType' ? old[rowIndex]?.origCost : columnId === 'cost' ? parseFloat(value ? value : 0) : old[rowIndex]?.cost;
         let totalCost = divide(qty, cost, true);
         return { ...old[rowIndex], itemType, qty, leftQty, cost, totalCost, amount: qty, totalAmount: totalCost };

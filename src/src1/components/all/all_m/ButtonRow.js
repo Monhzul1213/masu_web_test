@@ -4,13 +4,15 @@ import { useTranslation } from 'react-i18next';
 import { Confirm } from './Confirm';
 import { Button, IconButton } from './Button';
 import { DynamicBSIcon } from './DynamicIcon';
+import { CheckBox } from './CheckAll';
 
 export function ButtonRow(props){
   const { t } = useTranslation();
-  const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2 } = props;
+  const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2, check, label, checked, setChecked } = props;
 
   return (
     <div className='a_btn_row'>
+      {check && <CheckBox className='tm_btn_check' id='tm_check' checked={checked}  setChecked={setChecked} label={label} />}
       {show && <DynamicBSIcon className='a_btn_delete' name='BsTrash' onClick={onClickDelete} />}
       <Button className='a_btn' text={t(text1 ?? 'page.cancel')} onClick={onClickCancel} />
       <Button className='a_btn' id='a_btn_save' text={t(text2 ?? 'page.save')} type={type} onClick={onClickSave} />

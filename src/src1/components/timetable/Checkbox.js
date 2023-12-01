@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, DynamicAIIcon, SelectTime } from '../all/all_m';
 
-export function CheckBox(props){
+export function Checks(props){
     const { label, checked, setChecked, style, disabled, value, setValue } = props;
     const { t } = useTranslation();
   

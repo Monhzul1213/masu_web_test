@@ -27,7 +27,7 @@ export function Add(props){
   const menu = () => {
     return (
       <div className='tm_menu'>
-        <Button className='tm_menu_btn' text={t('timetable.service')} onClick={onClickService} />
+        <Button className='tm_menu_btn' text={t('timetable.service_time')} onClick={onClickService} />
         <Button className='tm_menu_btn' text={t('timetable.lesson')} onClick={'onClickSignout'} disabled={true} />
         <Button className='tm_menu_btn' text={t('timetable.measure')} onClick={'onClickSignout'} disabled={true}/>
       </div>

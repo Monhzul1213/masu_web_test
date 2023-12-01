@@ -28,7 +28,7 @@ export function CheckAll(props){
   )
 }
 export function CheckBox(props){
-  const { label, checked, setChecked, style, disabled } = props;
+  const { label, checked, setChecked, style, disabled, className, id } = props;
   const { t } = useTranslation();
 
   const onClick = () => {
@@ -36,7 +36,7 @@ export function CheckBox(props){
   }
 
   return (
-    <div className='i_check_row' style={style} id ='is_check'>
+    <div className= {className ?? 'i_check_row'} style={style} id ={ id ?? 'is_check'}>
       <Check checked={checked} onClick={onClick} disabled={disabled} />
       <p className='i_check_lbl'>{t(label)}</p>
     </div>
