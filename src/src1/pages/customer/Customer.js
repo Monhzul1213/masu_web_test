@@ -103,10 +103,10 @@ export function Customer(props){
 
 
   const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , isMd : true};
-  const modalProps = { visible, closeModal, selected: item, onSearch, filter, data, };
+  const modalProps = { visible, closeModal, selected: item, onSearch, filter, data };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
-  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch ,};
-  const listProps = { data,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked  };
+  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };
+  const listProps = { data,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked };
   
   return (
     <div className='s_container_z'>

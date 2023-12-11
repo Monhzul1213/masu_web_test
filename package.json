@@ -53,6 +53,7 @@
     "react-spinners": "^0.13.5",
     "react-table": "^7.8.0",
     "react-timer-hook": "^3.0.5",
+    "react-timetable-events": "^2.0.0",
     "recharts": "^2.1.16",
     "redux-persist": "^6.0.0",
     "sheetjs-style": "^0.15.8",

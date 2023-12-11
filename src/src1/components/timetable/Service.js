@@ -1,46 +1,89 @@
 import React, { useState, useEffect } from "react";
 import { Modal, message } from "antd";
 import { useTranslation } from "react-i18next";
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from "@iconify/react";
 import moment from "moment";
 
-import { ButtonRow, Overlay, Error, Confirm, SelectTime } from "../all/all_m";
-import {
-  Button,
-  DynamicAIIcon,
-  DynamicBSIcon,
-  IconButton,
-  Input,
-  MonthRange,
-  CheckBox,
-  Check,
-} from "../../../components/all";
-import { Checks } from "./Checkbox";
+import { ButtonRow, Overlay, Error, Confirm, MonthRange, PlainSelect1 } from "../all/all_m";
+import { getList, sendRequest } from "../../../services";
+import { AddList } from "./AddList";
 
 export function Service(props) {
-  const { visible, selected, closeModal } = props;
+  const { visible, selected, closeModal, day, site, sites } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState([]);
+  const [repeat, setRepeat] = useState(false);
   const [dates, setDates] = useState([]);
   const [date, setDate] = useState([moment(), moment().add(7, "days")]);
-  // const { user, token }  = useSelector(state => state.login);
-  // const dispatch = useDispatch();
-  const [time, setTime] = useState(["00:00", "01:00"]);
+  const [emp, setEmp] = useState({value: null});
+  const [emps, setEmps] = useState([]);
+  const [invt, setInvt] = useState({value: null});
+  const [invts, setInvts] = useState();
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(() => { 
     daysBetween(date[0].format("YYYY-MM-DD"), date[1].format("YYYY-MM-DD"));
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onClickSave = async (e) => {
+  const checkValid = () => {
+    if(invt?.value && emp?.value){
+      return true;
+    } else {
+      if(!invt?.value) setInvt({ value: null, error: t('profile.select') });
+      if(!emp?.value) setEmp({ value: null, error: t('profile.select') });
+    }
+  }
+
+  const onClickSave = async e => {
+    console.log(site, sites)
     e?.preventDefault();
+    if(checkValid()){
     setError(null);
-  };
+    // setLoading(true);
+    let data = [];
+    if( site === -1 ){
+        sites?.forEach(list=> {
+          if(list?.siteId !== -1){
+            dates?.forEach(item=>{
+               if(item?.checked) data.push({ scheduleID: selected ? selected?.scheduleID : -1, siteID: list?.siteId, descr: "string", scheduleType: 0,
+                status: 0, serviceID: invt?.value, employeeID: emp?.value, serviceTime: 0,
+                schdDate: item?.date.toLocaleDateString("en-EN", { weekday: "long", year: "numeric", month: "2-digit", day: "2-digit"}),
+                beginTime: item?.beginTime ? item?.beginTime?.replace(/-/g, '0') : '09:00', endTime: item?.endTime ? item?.endTime?.replace(/-/g, '0') : '18:00',
+                isRepeat: repeat ? 1 : 0, repeatType: repeat ? day : '', rowStatus: selected ? 'U' : 'I'
+              })
+            })
+          }
+        })
+    } else {
+      dates?.forEach(item=>{
+         if(item?.checked) data.push({ scheduleID: selected ? selected?.scheduleID : -1, siteID: site, descr: "string",  scheduleType: 0,
+          status: 0, serviceID: invt?.value, employeeID: emp?.value, serviceTime: 0,
+          schdDate: item?.date.toLocaleDateString("en-EN", { weekday: "long", year: "numeric", month: "2-digit", day: "2-digit"}),
+          beginTime: item?.beginTime ? item?.beginTime?.replace(/-/g, '0') : '09:00',
+          endTime: item?.endTime ? item?.endTime?.replace(/-/g, '0') : '18:00', isRepeat: repeat ? 1 : 0, repeatType: repeat ? day : '', rowStatus: selected ? 'U' : 'I'
+        })
+      })
+    }
+    if(data?.length){ 
+      console.log(data)
+      const response = await dispatch(sendRequest(user, token, 'Txn/ModSchedule',  data));
+      setLoading(false);
+      if(response?.error) setError(response?.error);
+      else {
+        closeModal(true);
+        message.success(t('timetable.add_success'));
+      }
+    } else setError(t('timetable.schedule_error'))
+      
+    }
+  }
 
   const onClickDelete = () => setOpen(true);
 
@@ -49,30 +92,37 @@ export function Service(props) {
     setOpen(false);
   };
 
-  const renderItem = (item) => {
-    console.log(
-      item.toLocaleDateString("mn-MN", {
-        weekday: "long",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      })
-    );
-    return (
-      <Checks
-        label={item.toLocaleDateString("mn-MN", {
-          weekday: "long",
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        })}
-        value={time}
-        setValue={setTime}
-        checked={checked}
-        setChecked={setChecked}
-      />
-    );
-  };
+  const onFocusEmp = async () => {
+    if(!emps?.length){
+      setError && setError(null);
+      setLoading('emps');
+      const response = await dispatch(getList(user, token, 'Employee/GetEmployees'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        setEmps(response?.data);
+      }
+      setLoading(false);
+    }
+  }
+  
+  const onFocusInvt = async () => {
+    if(!invts?.length){
+      setError && setError(null);
+      setLoading('invts');
+      const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
+      // console.log(response?.data?.inventoryies)
+      if(response?.error) setError && setError(response?.error);
+      else {
+        let invts = [];
+        response?.data?.inventoryies?.forEach(item => {
+          if(item?.msInventory?.isService === 'Y') {
+            // console.log(item)
+            invts.push(item?.msInventory)}})
+        setInvts(invts)
+      }
+      setLoading(false);
+    }
+  }
 
   const onHide = () => {
     daysBetween(date[0].format("YYYY-MM-DD"), date[1].format("YYYY-MM-DD"));
@@ -85,76 +135,48 @@ export function Service(props) {
 
     for (let i = 0; i <= diffDays; i++) {
       const newdate = new Date(new Date(startDate).getTime() + i * 864e5);
-      arr.push(newdate);
+      arr.push({date: newdate});
     }
     setDates(arr);
   };
 
+  const onChangeEmp = value => {
+    setEmp(value)
+  }
+  const onChangeInvt = value => {
+    setInvt(value)
+  }
+
   const maxheight = "calc(90vh - 105px )";
-  const btnProps = {
-    onClickCancel: () => closeModal(),
-    onClickSave,
-    type: "submit",
-    show: selected ? true : false,
-    onClickDelete,
-    check : true,
-    label: t("timetable.repeat"),
-    checked, setChecked
-  };
-  const confirmProps = {
-    open,
-    text: t("page.delete_confirm"),
-    confirm: onDelete,
-  };
-  const dateProps = {
-    value: date,
-    setValue: setDate,
-    classBack: "tm_date_back",
-    className: "rp_date",
-    onHide,
-  };
+  const classBack = 'tm_select_back1', className = 'tm_select_add';
+  const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: "submit", show: selected ? true : false, onClickDelete, check : true, 
+                    label: t("timetable.repeat"), checked: repeat, setChecked: setRepeat};
+  const confirmProps = { open, text: t("page.delete_confirm"), confirm: onDelete, };
+  const dateProps = { value: date, setValue: setDate, classBack: "tm_date_back", className: "rp_date", onHide, id: 'tm_btn1', id1: 'tm_btn2', className1: 'tm_btn'  };
+  const tableProps = { setData: setDates, setChecked, data: dates, checked };
+  const empProps = { value: emp, setValue: onChangeEmp, data: emps, s_value: 'empCode', s_descr: 'empName', onHide, setError,
+  classBack, className, onFocus: onFocusEmp, loading: loading === 'emps', placeholder: t('employee.add') , label: t('employee.title') };
+  const invtProps = { value: invt, setValue: onChangeInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide, setError,
+  classBack, className, onFocus: onFocusInvt, loading: loading === 'emps', placeholder: t('timetable.service'), label: t('report.invtName') };
 
   return (
-    <Modal
-      title={null}
-      footer={null}
-      closable={false}
-      open={visible}
-      centered={true}
-      width={500}
-    >
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={550}>
       {open && <Confirm {...confirmProps} />}
       <Overlay loading={loading}>
         <div className="m_back">
-          <div className="m_title_row">
+          <div className="tm_title_row">
             <Icon icon="mdi:timetable" className="tm_title_icon" />
             <p className="tm_title">{t("timetable.service_date")}</p>
           </div>
-          <div>
-            <MonthRange {...dateProps} />
-          </div>
-          <div
-            className="list_scroll"
-            style={{ overflowY: "scroll", maxHeight: maxheight }}
-          >
+          <MonthRange {...dateProps} />
+          <div className="form_back" id="list_scroll" style={{ overflowY: "scroll", maxHeight: maxheight }}>
             <form onSubmit={onClickSave}>
-              {/* <CheckBox/> */}
-              <div className="">{dates?.map(renderItem)}</div>
+              <AddList {...tableProps}/>
             </form>
           </div>
           <div className="tm_add_back">
-            <IconButton
-              className="tm_add_btn"
-              text={t("timetable.service")}
-              id="add_row_add"
-              icon={<DynamicBSIcon name="BsPlusLg" className="add_row_icon" />}
-            />
-            <IconButton
-              className="tm_add_btn"
-              text={t("employee.add")}
-              id="add_row_add"
-              icon={<DynamicBSIcon name="BsPlusLg" className="add_row_icon" />}
-            />
+            <PlainSelect1 {...invtProps}/>
+            <PlainSelect1 {...empProps}/>
           </div>
           {error && <Error error={error} id="m_error" />}
         </div>

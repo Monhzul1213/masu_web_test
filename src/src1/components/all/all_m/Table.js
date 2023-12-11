@@ -147,3 +147,69 @@ export function TableResize(props){
     </table>
   );
 }
+
+export function NoHeaderTable(props){
+  const { tableInstance, onRowClick } = props;
+
+  const { getTableProps, getTableBodyProps, prepareRow, page } = tableInstance;
+
+  return (
+    <table className='tm_table_back' {...getTableProps()}>
+      <tbody className='table_body_back' {...getTableBodyProps()}>
+        {page.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr className={row?.isSelected ? 'tm_table_row_selected' : 'tm_table_row'}  {...row.getRowProps()}>
+              {row.cells.map(cell => {
+                let style = cell?.column?.customStyle ?? { };
+                return (
+                  <td className='tm_table_cell_text' {...cell.getCellProps()} style={style}
+                    onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
+                    {cell.render('Cell')}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}
+
+export function NoHeaderTable1(props){
+  const { tableInstance, onRowClick, colSpan, Detail, detailName, open } = props;
+
+  const { getTableProps, getTableBodyProps, prepareRow, page } = tableInstance;
+
+  return (
+    <table className='table_back' {...getTableProps()}>
+      <tbody className='table_body_back' {...getTableBodyProps()}>
+        {page.map((row, i) => {
+          // console.log(row?.open)
+          prepareRow(row);
+          return (
+            <>
+              <tr className={row?.isSelected ? 'table_row_selected' : 'table_row'}  {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  let style = cell?.column?.customStyle ?? { };
+                  return (
+                    <td className='table_cell_text1' {...cell.getCellProps()} style={style}
+                      onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
+              </tr>
+              {row?.open ?
+                <tr colSpan={colSpan}><td colSpan={colSpan}>
+                  <Detail data={row?.original && row?.original[detailName]} index={row?.index} />
+                </td></tr>
+              : null} 
+            </>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}

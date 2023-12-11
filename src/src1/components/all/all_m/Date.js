@@ -34,7 +34,7 @@ export function PlainRange(props){
   }
  
   export function MonthRange(props){
-    const { classBack, className, placeholder, onHide, disabled, value, setValue } = props;
+    const { classBack, className, placeholder, onHide, disabled, value, setValue, id, id1, className1 } = props;
   
     const onClick = isNext => {
       const diff = value[1]?.diff(value[0], 'days');
@@ -51,7 +51,7 @@ export function PlainRange(props){
   
     return (
       <div className={classBack}>
-        <button className='mr_btn' id='mr_btn1' onClick={() => onClick(false)}>
+        <button className={className1 ?? 'mr_btn'} id= {id ?? 'mr_btn1'} onClick={() => onClick(false)}>
           <DynamicAIIcon name='AiOutlineLeft' className='mr_icon' />
         </button>
         <DynamicAIIcon name='AiOutlineCalendar' className='mr_cal' />
@@ -65,7 +65,7 @@ export function PlainRange(props){
           format='yyyy.MM.DD'
           disabled={disabled}
           onChange={setValue} />
-        <button className='mr_btn' id='mr_btn2' onClick={() => onClick(true)}>
+        <button className={className1 ?? 'mr_btn'} id={id1 ?? 'mr_btn2'} onClick={() => onClick(true)}>
           <DynamicAIIcon name='AiOutlineRight' className='mr_icon' />
         </button>
       </div>

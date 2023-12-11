@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Dropdown, Modal, message } from 'antd';
+import React, { useState } from 'react';
+import { Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 
-import { Button, DynamicBSIcon, IconButton, Input } from '../../../components/all';
+import { Button, DynamicBSIcon, IconButton } from '../../../components/all';
 import { Service } from './Service';
 
 export function Add(props){
-  const { } = props;
+  const { day, site, sites } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -34,14 +34,14 @@ export function Add(props){
     );
   }
 
-  const addProps = { visible, closeModal  }
+  const addProps = { visible, closeModal , day, site, sites }
   return (
     <div>
       {visible && <Service {...addProps}/>}
       <Dropdown overlay={menu} trigger='click' open={open} onOpenChange={setOpen}>
         <div className='add_row_back'>
           <IconButton className='add_row_btn' text={t('timetable' + '.add')} id='add_row_add'
-          icon={<DynamicBSIcon name='BsPlusLg' className='add_row_icon' />}  />
+          icon={<DynamicBSIcon name='BsPlusLg' className='add_row_icon' />}/>
         </div>
       </Dropdown>
     </div>
