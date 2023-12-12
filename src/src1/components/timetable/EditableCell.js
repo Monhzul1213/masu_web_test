@@ -5,7 +5,7 @@ import ReactInputMask from 'react-input-mask';
 // import { Input, Percent } from '../all/all_m';
 
 export const SelectableCell = props => {
-  const { row, column: { id, width }, updateMyData, data, initialValue } = props;
+  const { row, column: { id, width }, updateMyData, data, initialValue, handleEnter } = props;
   const [value, setValue] = useState(initialValue);
   const [open, setOpen] = useState(false);
   const inputRef = useRef(null);
@@ -48,9 +48,24 @@ export const SelectableCell = props => {
     if(length !== 0 && length !== 5) setValue( value?.replace(/-/g, '0') );
   }
 
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter"){
+      if(handleEnter) handleEnter(e);
+      else {
+        const form = e.target.form;
+        if(form){
+          const index = [...form].indexOf(e.target);
+          form.elements[index + 1]?.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  }
+  
   return (
     <div className='tm_select_backs' style={{ width }}>
       <AutoComplete 
+        onKeyDown={onKeyDown}
         allowClear 
         filterOption={(inputValue, option) => option.value.toLowerCase().indexOf(inputValue.toLowerCase()) >= 0 }
         style={{ width: 70 }}

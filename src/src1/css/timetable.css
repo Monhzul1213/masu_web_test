@@ -120,6 +120,15 @@
   color: var(--success-color);
 }
 
+.tm_icon1{
+  font-size: 16px;
+  margin: 10px ;
+  color: var(--danger-color);
+}
+.tm_icon1:hover {
+  color: var(--danger-color);
+}
+
 .tm_time_back {
   display: flex;
   flex-flow: column;

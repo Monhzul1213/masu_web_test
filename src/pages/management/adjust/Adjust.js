@@ -34,12 +34,12 @@ export function Adjust(){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Txn/GetAdjust' + (query ?? '')));
-    if(response?.code === 1000){
+    if(response?.code !== 1000){
       // comment
       // isNew or isExpired
       // || response?.code === 1001
       setVisible(true);
-      setSites(response?.data);
+      // setSites(response?.data);
     }
     else if(response?.error) setError(response?.error);
     else setData(response?.data?.adjfinal);

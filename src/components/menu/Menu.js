@@ -117,7 +117,7 @@ export function Menu(props){
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
-    getItem(t('menu.timetable'), '/timetable', <BiCalendar />, null, null, msRole?.webManageCustomer !== 'Y'),
+    // getItem(t('menu.timetable'), '/timetable', <BiCalendar />, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />, null, null, msRole?.webManageCustomer !== 'Y'),
     hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :
     getItem(t('menu.config'), '/config', <BsGear />, [

@@ -21,7 +21,7 @@ import { Bill, Order as OrderBill } from './pages/lone';
 import { Integration } from './pages/integration';
 import { Adjust, AdjustAdd } from './pages/management/adjust';
 import { InvoiceSend } from './components/emp/employee/add/InvoiceSend';
-import { Timetable } from './src1/pages/timetable';
+import { Timetable1 } from './src1/pages/timetable';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -167,7 +167,7 @@ export function App(){
                 <Route path='/management/adjust/adjust_add' element={<AdjustAdd />} />
                 <Route path='/system/rating' element={<Reviews />} />
                 <Route path='/system/rating/rating_add' element={<ReviewAdd />} />
-                <Route path='/timetable' element={<Timetable />} />
+                <Route path='/timetable' element={<Timetable1 />} />
               </Routes>
             </Layout>
           </Layout>
