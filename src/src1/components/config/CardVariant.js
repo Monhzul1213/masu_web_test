@@ -14,7 +14,7 @@ export function CardVariant(props){
   useEffect(() => {
     const width = size?.width >= 400 ? 550 : (size?.width -20 );
     setColumns([
-      { Header: t('orders.location'), accessor: 'ticketBinName', width: width-20, length: 20 },
+      { Header: t('orders.location'), accessor: 'ticketBinName', width: width-20, length: 50 },
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>
           (<div className='ac_delete_back'>

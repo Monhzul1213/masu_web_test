@@ -51,7 +51,7 @@ export function Select(props){
 }
 
 export function PlainSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, bStyle } = props;
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, bStyle, Icon } = props;
   
   const renderItem = (item, index) => {
     return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
@@ -59,6 +59,7 @@ export function PlainSelect(props){
 
   return (
     <div className={classBack} style={bStyle}>
+      {Icon && <Icon />}
       {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
       <AntSelect
         className={className}
@@ -247,5 +248,37 @@ export function IconSelect(props){
       maxTagPlaceholder=''>
       {data?.map(renderItem)}
     </AntSelect>
+  );
+}
+
+export function PlainSelect1(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, bStyle, setEdited, setError } = props;
+  
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  const handleChange = e => {
+    setValue({ value: e });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  return (
+    <div className={classBack} style={bStyle}>
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={handleChange}
+        value={value?.value}
+        loading={loading}
+        onFocus={onFocus}
+        // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' />}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
   );
 }
