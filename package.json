@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@emailjs/browser": "^3.7.0",
+    "@iconify/react": "^4.1.1",
     "@react-pdf/renderer": "^3.0.1",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
@@ -46,6 +47,7 @@
     "react-spinners": "^0.13.5",
     "react-table": "^7.8.0",
     "react-timer-hook": "^3.0.5",
+    "react-timetable-events": "^2.0.0",
     "recharts": "^2.1.16",
     "redux-persist": "^6.0.0",
     "sheetjs-style": "^0.15.8",
