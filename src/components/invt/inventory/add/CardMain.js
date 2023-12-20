@@ -90,7 +90,7 @@ function Card(props){
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
   const idRow1 = size?.width > 540 ? 'im_unit_row_large' : 'im_unit_row_small';
 
-  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true, length: 30 };
+  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true, length: 75 };
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false,
     data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories };
   const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setEdited, setError, length: 500 };

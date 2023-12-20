@@ -33,7 +33,6 @@ export const SelectableCell = props => {
 
   const handleSearch = (data, option) => {
     setValue(data)
-    console.log(data);
   };
   
   const onClick = (e) => {
