@@ -42,11 +42,12 @@ export function Filter(props){
 
   const onChangeDay = value => {
     setDay(value)
-    if(value === "7 хоног") setDate([moment(), moment().add(7, 'days')])
+    if(value === "7 хоног") setDate([moment(), moment().add(1, 'week')])
     else if(value === "Ажлын өдөр") setDate([moment(), moment().add(5, 'days')])
-    else if(value === "Өдөр") setDate([moment(), moment().add(1, 'days')])
+    else if(value === "Өдөр") setDate([moment(), moment()])
     else setDate([moment(), moment().add(1, 'months')])
   }
+
   const onFocusSite = async () => {
     if(!sites?.length || sites?.length === 1){
       setError(null);
@@ -70,7 +71,7 @@ export function Filter(props){
   classBack: 'rp_select_back', className: 'rp_select', onFocus: onFocusSite, loading: loading === 'sites' };
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const dayProps = { value: day, setValue: onChangeDay, data: week, s_value: 'value', s_descr: 'label', onHide, classBack: 'rp_select_back', className: 'rp_select',};
-  const addProps = { day, site, sites }
+  const addProps = { day, site, sites, date, setDate }
   
   return (
     <div className={classH}>

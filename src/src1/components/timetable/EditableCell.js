@@ -15,13 +15,14 @@ export const SelectableCell = props => {
   //   return () => {};
   // }, [select])
   
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+  // useEffect(() => {
+  //   setValue(initialValue);
+  // }, [initialValue]);
 
   const onChange = (e )=> {
     // setValue(e);
     updateMyData(row?.index, id, e)
+    // console.log(row?.index, id, e)
   }
 
   const onSelect = (val) => {
@@ -33,7 +34,7 @@ export const SelectableCell = props => {
 
   const handleSearch = (data, option) => {
     setValue(data)
-    console.log(data);
+    // console.log(data);
   };
   
   const onClick = (e) => {

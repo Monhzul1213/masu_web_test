@@ -97,7 +97,7 @@ function Screen(props){
           hoursInterval={[7, 24]}
           timeLabel="Time :)"/> */}
           {/* <Calendar/> */}
-          <TimeTable 
+          {/* <TimeTable 
             events={{
               monday: [
                 {
@@ -113,7 +113,7 @@ function Screen(props){
               thursday: [],
               friday: [],
             }}
-  style={{ height: '500px' }}/>
+  style={{ height: '500px' }}/> */}
         </div>
       </Overlay>
     </div>
