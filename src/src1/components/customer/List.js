@@ -4,10 +4,11 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
 import { Check, PaginationTable, Money, Table } from '../all/all_m';
 import { Transaction } from './Transaction';
+import { Header } from './Header';
 
 
 export function List(props){
-  const { onClickAdd, data,  setData, loaded, setShow, autoResetExpanded, checked, setChecked, size} = props;
+  const { onClickAdd, data,  setData, loaded, setShow, autoResetExpanded, checked, setChecked, size, excelName, onClickDelete, show, setError, onSearch} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -22,21 +23,21 @@ export function List(props){
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('customer.t_name'), accessor: 'custName' },
-      { Header: t('customer.phone1'), accessor: 'phone',
+      { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name') },
+      { Header: t('customer.phone1'), accessor: 'phone', exLabel: t('customer.phone1'),
         Cell: props => <div >{props.value}</div>},
-      { Header: <div style={{textAlign: 'right'}}> {t('customer.arAmt')}</div>, accessor: 'arBalance', isBtn: true, customStyle: { maxWidth: 110 },
+      { Header: <div style={{textAlign: 'right'}}> {t('customer.arAmt')}</div>, accessor: 'arBalance', isBtn: true, customStyle: { maxWidth: 110 }, exLabel: t('customer.arAmt'),
         Cell: ({ value, row, onClickLink }) => {
           return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} fontSize={14} /></div>);
         }
       },
-      { Header: t('customer.Email'), accessor: 'email',
+      { Header: t('customer.Email'), accessor: 'email', exLabel: t('customer.Email'),
         Cell: props => <div >{props.value}</div>},
-      { Header: t('customer.address'), accessor: 'address',
+      { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'),
         Cell: props => <div >{props.value}</div>},
-      { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode',
+      { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode', exLabel: t('customer.code'),
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value }</div>},
-      { Header: t('customer.desc'), accessor: 'note'},
+      { Header: t('customer.desc'), accessor: 'note', exLabel: t('customer.desc')},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,10 +86,12 @@ const tableInstance = useTable( { columns, data, autoResetPage: false, autoReset
     onClickCheckAll, checked, onClickCheck, onClickLink}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd, };
   let subProps = { visible, closeModal , selected};
+  const filterProps = { columns, data, setData, excelName, size, onClickAdd, onClickDelete, show, setError, onSearch };
 
   return (
     <div >
-      <Transaction {...subProps} />
+      <Header {...filterProps} />
+      {visible && <Transaction {...subProps} />}
       <div className='table_scroll' style={{overflowX: 'scroll'}} >
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 720}}>
               <Table {...tableProps} />

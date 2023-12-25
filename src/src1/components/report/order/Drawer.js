@@ -35,6 +35,7 @@ export function Drawer(props){
           <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>
           <p className='dr_item_text4'><Money value={item?.amount} fontSize={13} /></p>
         </div>
+         <p className='dr_item_text_z1'>{(item?.barCode) ? ( item?.barCode ) : ''}</p>
          <p className='dr_item_text_z'>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('report_receipt.t_emp')+ ': ' + item?.serviceName ) : ''}</p>
          <p className='dr_item_text_z'>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('report.descr')+ ': ' + item?.serviceDescr ) : ''}</p>
       </div>

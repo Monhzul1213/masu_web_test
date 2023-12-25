@@ -359,45 +359,6 @@
 .tm_select_add.ant-select-single.ant-select-open .ant-select-selection-item{
   color: var(--line-color);
 }
-/* .tm_select .css-1wy0on6{
-  display: none;
-}
-.tm_select .css-13cymwt-control{
-  border-radius: var(--radius);
-  box-shadow: none;
-  border: none;
-  min-height: 10px;
-}
-
-.tm_select .css-t3ipsp-control {
-  box-shadow: none;
-  border: none;
-  color: var(--text-color);
-  font-size: 14px;
-  background-color: transparent;
-  padding: 0;
-  min-height: 10px;
-}
-
-.tm_select .css-t3ipsp-control:focus-within {
-  border-color: var(--config-b-color);
-  box-shadow: none;
-}
-.tm_select .css-1nmdiq5-menu{
-  box-shadow: 0px 3px 5px -1px rgba(0,0,0,.2),0px 4px 5px 0px rgba(0,0,0,.14),0px 1px 10px 0px rgba(0,0,0,.12);
-}
-.tm_select .css-tr4s17-option{
-    padding: 5px 12px;
-    background-color: var(--config-b-color);
-}
-.tm_select .css-10wo9uf-option {
-  padding: 5px 12px;
-}
-.tm_select .css-d7l1ni-option{
-  padding: 5px 12px;
-  background-color: var(--root-color);
-} */
-
  .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector{
   border-color: var(--config-color);
   box-shadow: none;
@@ -418,4 +379,23 @@
   margin-left: -20px;
   position: relative;
   color: var(--text2-color);
+}
+
+.invt_select.ant-select .ant-select-selector {
+  box-shadow: none;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-size: 14px;
+  background-color: transparent;
+  /* padding: 5px 10px ;   */
+}
+
+.invt_select:focus-within{
+  border-color: var(--config-b-color);
+  /* border-bottom: 1px solid var(--config-b-color); */
+}
+
+.invt_select:hover{
+  /* border-bottom: 1px solid var(--config-b-color); */
+  border-color: var(--config-b-color);
 }

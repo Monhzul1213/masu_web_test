@@ -184,6 +184,11 @@
     font-size: 14px;
     margin: 0;
   }
+  .dr_item_text_z1 {
+    color: var(--text2-color);
+    font-size: 12px;
+    margin: 0 0 0 5px;
+  }
 
   .check_icon {
     color: var(--config-color);

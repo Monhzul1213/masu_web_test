@@ -6,7 +6,7 @@ import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import { Empty, Overlay, Error1 , Confirm, Empty1 } from '../../components/all/all_m';
-import { Add, List, Header } from '../../components/customer';
+import { Add, List } from '../../components/customer';
 import { getList , sendRequest } from '../../../services';
 import '../../css/customer.css'
 
@@ -14,6 +14,7 @@ export function Customer(props){
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState([]);
+  const [excelName, setExcelName] = useState('');
   const [loaded, setLoaded] = useState(0);
   const [item, setItem] = useState(null);
   const [error, setError] = useState(null);
@@ -43,6 +44,7 @@ export function Customer(props){
     if(response?.error) setError(response?.error);
     else {
       setData(response?.data?.customers)
+      setExcelName(t('header./customer'));
     }
     setLoaded(loaded + 1);
     setLoading(false);
@@ -105,8 +107,7 @@ export function Customer(props){
   const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , isMd : true};
   const modalProps = { visible, closeModal, selected: item, onSearch, filter, data };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
-  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch };
-  const listProps = { data,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked };
+  const listProps = { data,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked, excelName , onClickDelete, show, setError, onSearch};
   
   return (
     <div className='s_container_z'>
@@ -117,7 +118,6 @@ export function Customer(props){
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <SizeMe>{({ size }) => 
           <div className='i_list_cont_z' id='solve_list'>
-            <Header {...headerProps} size={size} />
             {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
           </div>
         }</SizeMe>

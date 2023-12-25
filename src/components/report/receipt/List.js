@@ -52,6 +52,7 @@ export function List(props){
             item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD HH:mm:ss') :
             <div style={{textAlign: 'right', paddingRight: 15}}>
              {item?.value === 'sale.vat_CustomerId' ? props?.value : 
+              item?.value === 'customer' ? props?.value :
               item?.value === 'sale.status' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> : <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> ): 
               item?.value === 'sale.vatDdtd' ? props?.value: ( <Money value={props?.value} fontSize={14} />)}
             </div>
