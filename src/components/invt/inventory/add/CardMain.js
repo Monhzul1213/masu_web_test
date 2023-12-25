@@ -3,16 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
 
-import { limitList } from '../../../../helpers';
+import { limitList, timeList1 } from '../../../../helpers';
 import { getList } from '../../../../services';
 import { CheckBox, DescrInput, DynamicBSIcon, Input, MoneyInput, Radio, Select, UploadImage, IconButton } from '../../../all';
 import { Add as AddCategory } from '../../category';
 import { Add as AddVendor } from '../../../management/vendor';
+import { SelectableCell1 } from './EditableCell1';
 
 function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice,
     cost, setCost, sku, setSku, barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange,
-    setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId, setLoading, isService, setIsService } = props;
+    setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId, setLoading, isService, setIsService, time, setTime } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [vendors, setVendors] = useState([]);
@@ -89,6 +90,7 @@ function Card(props){
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
   const idRow1 = size?.width > 540 ? 'im_unit_row_large' : 'im_unit_row_small';
+  const idRow2 = size?.width > 540 ? 'tm_unit_row_large' : 'tm_unit_row_small';
 
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true, length: 75 };
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false,
@@ -108,7 +110,8 @@ function Card(props){
   const vendProps = { value: vendId, setValue: setVendId, label: t('inventory.vendor'), setError, setEdited, data: vendors, inRow: true,
     s_value: 'vendId', s_descr: 'vendName', placeholder: t('inventory.vendor') };
   const serviceProps = { label: t('inventory.service'), checked: isService, setChecked: setIsService };
-  
+  const timeProps = { data: timeList1, value: time, setValue: setTime, label: t('timetable.service_time') };
+
   return (
     <div className='ia_back' id={id}>
       {categoryVisible && <AddCategory visible={categoryVisible} closeModal={closeCategory} />}
@@ -122,8 +125,11 @@ function Card(props){
           </div>
           <div id={idRow1}>
             <Radio {...unitProps} />
-            <div className='im_gap' />
+          </div>
+          <div id={idRow2}>
             <CheckBox {...serviceProps} />
+            <div className='time_gap' />
+            {isService ? <SelectableCell1 {...timeProps}/> : ''}
           </div>
         </div>
         <div className='gap' />

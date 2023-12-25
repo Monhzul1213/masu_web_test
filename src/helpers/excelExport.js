@@ -10,7 +10,11 @@ export const ExportExcel = ({ excelData, columns, fileName, text }) => {
   const exportToExcel = async () => {
     let excelData1 = excelData?.map(item => {
       let newItem = {};
-      columns?.forEach(col => newItem[col.exLabel] = item[col.accessor]);
+      columns?.forEach(col => {
+        if(col?.exLabel){
+          newItem[col.exLabel] = item[col.accessor]
+        }
+      });
       return newItem;
     });
     const ws = XLSX.utils.json_to_sheet(excelData1);

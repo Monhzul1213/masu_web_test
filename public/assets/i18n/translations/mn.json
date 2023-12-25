@@ -512,7 +512,10 @@
     "delete_success": "Харилцагчийг амжилттай устгалаа",
     "create": "Тооцоо үүсгэсэн: ",
     "close": "Тооцоо хаасан: ",
-    "balance": "Тооцооны үлдэгдэл: "
+    "balance": "Тооцооны үлдэгдэл: ",
+    "import_title": "Харилцагч оруулах",
+    "import_link": "Харилцагчийн формат татах",
+    "import_error": "Файл оруулна уу"
   },
   "supplier":{
     "close":"Хаах",
@@ -664,6 +667,7 @@
     "paid": "Төлсөн",
     "columns": [
       { "label": "Нийт дүн", "value": "sale.totalAmount" },
+      { "label": "Харилцагч", "value": "customer" },
       { "label": "Хөнгөлөлт", "value": "sale.totalDiscountAmount" },
       { "label": "Төлөх дүн", "value": "sale.totalSalesAmount" },
       { "label": "Бэлэн мөнгө", "value": "sale.totalCashAmount" },
@@ -910,7 +914,8 @@
     "logo": "Лого",
     "header": "Толгой хэсэг",
     "footer": "Хөл хэсэг",
-    "success_msg": "ПОС талоны загвар амжилттай бүртгэлээ"
+    "success_msg": "ПОС талоны загвар амжилттай бүртгэлээ",
+    "isPrint": "Баркод хэвлэх эсэх?"
   },
   "invoice": {
     "invoice": "Нэхэмжлэх",
@@ -1174,7 +1179,7 @@
     "measure": "Арга хэмжээний цаг",
     "service_date": "Үйлчилгээний цагийн хуваарь оруулах",
     "service" :"Үйлчилгээ нэмэх",
-    "repeat": "Байнга давтагддаг эсэх?",
+    "repeat": "Давтагдах эсэх?",
     "schedule_error": "Цагийн хуваариа сонгоно уу?",
     "add_success": "Цаг захиалга амжилттай бүртгэгдлээ.",
     "subscription": "Цаг захиалга - Төлбөртэй үйлчилгээ",

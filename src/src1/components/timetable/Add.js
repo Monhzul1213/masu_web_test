@@ -7,7 +7,7 @@ import { Button, DynamicBSIcon, IconButton } from '../../../components/all';
 import { Service } from './Service';
 
 export function Add(props){
-  const { day, site, sites } = props;
+  const { day, site, sites, date, setDate } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -34,7 +34,7 @@ export function Add(props){
     );
   }
 
-  const addProps = { visible, closeModal , day, site, sites }
+  const addProps = { visible, closeModal , day, site, sites, date, setDate }
   return (
     <div>
       {visible && <Service {...addProps}/>}

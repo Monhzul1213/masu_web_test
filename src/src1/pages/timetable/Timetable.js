@@ -40,7 +40,6 @@ function Screen(props){
     let api = 'Txn/GetSchedule' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response)
     if(response?.code === 2000){
       // comment
       // isNew or isExpired
@@ -97,7 +96,7 @@ function Screen(props){
           hoursInterval={[7, 24]}
           timeLabel="Time :)"/> */}
           {/* <Calendar/> */}
-          <TimeTable 
+          {/* <TimeTable 
             events={{
               monday: [
                 {
@@ -113,7 +112,7 @@ function Screen(props){
               thursday: [],
               friday: [],
             }}
-  style={{ height: '500px' }}/>
+  style={{ height: '500px' }}/> */}
         </div>
       </Overlay>
     </div>

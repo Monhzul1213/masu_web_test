@@ -926,6 +926,16 @@
   flex-flow: column;
 }
 
+#tm_unit_row_large {
+  display: flex;
+  flex-flow: row;
+  align-items: flex-end;
+}
+
+#tm_unit_row_small {
+  display: flex;
+  flex-flow: column;
+}
 #im_unit_row_large .i_check_row {
   margin: 0 0 6px 0;
 }
@@ -940,6 +950,16 @@
 }
 
 #im_input_row_small .im_gap, #im_unit_row_small .im_gap {
+  width: 10px;
+  height: 10px;
+}
+
+#tm_unit_row_large .time_gap {
+  width: 30px;
+  height: var(--page-padding);
+}
+
+#tm_unit_row_small .time_gap {
   width: 10px;
   height: 10px;
 }

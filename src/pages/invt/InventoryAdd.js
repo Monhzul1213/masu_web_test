@@ -18,6 +18,7 @@ export function InventoryAdd(){
   const [isEach, setIsEach] = useState({ value: 'Y' });
   const [isService, setIsService] = useState(false);
   const [price, setPrice] = useState({ value: '' });
+  const [time, setTime] = useState({ value: '01:00' });
   const [cost, setCost] = useState({ value: '' });
   const [sku, setSku] = useState({ value: '' });
   const [barcode, setBarcode] = useState({ value: '' });
@@ -91,6 +92,16 @@ export function InventoryAdd(){
     }
   }
 
+  const padTo2Digits = (num) => {
+    return num.toString().padStart(2, '0');
+  }
+
+  const toHours = (totalMinutes) => {
+    const minutes = totalMinutes % 60;
+    const hours = Math.floor(totalMinutes / 60);  
+    setTime({value: `${padTo2Digits(hours)}:${padTo2Digits(minutes)}`});
+  }
+
   const getInventory = async (value, sites1, modifiers1) => {
     setError(null);
     let data = [{ fieldName: 'InvtID', value }];
@@ -105,6 +116,7 @@ export function InventoryAdd(){
       if(invt?.msInventory?.vendID !== -1) setVendId({ value: invt?.msInventory?.vendID })
       setIsEach({ value: invt?.msInventory?.isEach ?? 'Y' });
       setIsService(invt?.msInventory?.isService === 'Y')
+      toHours(invt?.msInventory?.serviceTime)
       setDescr({ value: invt?.msInventory?.descr ?? '' });
       setPrice({ value: invt?.msInventory?.price ?? 0 });
       setCost({ value: invt?.msInventory?.cost ?? 0 });
@@ -180,6 +192,8 @@ export function InventoryAdd(){
     let nameLength = 2;
     let isNameValid = name?.value?.length >= nameLength;
     let invkite = [], invvar = [], invmod = [], invsales = [];
+    let [hours, minutes] = time?.value?.replace(/-/g, '0').split(':');
+    let totalSeconds = (+hours) * 60 + (+minutes) ;
     if(isNameValid && barcode?.value){
       if(isKit){
         if(kits?.length){
@@ -232,7 +246,7 @@ export function InventoryAdd(){
         sku: sku?.value, barCode: barcode?.value, isKit: isKit ? 'Y' : 'N', isTrackStock: isTrack ? 'Y' : 'N',
         UseAllSite: checked ? 'Y' : 'N',
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
-        isService: isService ? 'Y' : 'N',
+        isService: isService ? 'Y' : 'N', serviceTime: totalSeconds,
         rowStatus: invt ? 'U' : 'I',
         invkite, invvar, invmod, invsales
       };
@@ -288,7 +302,7 @@ export function InventoryAdd(){
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach,
     price, setPrice, cost, setCost, sku, setSku, setLoading, barcode, setBarcode, image, setImage, setImage64,
     setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit, vendId, setVendId,
-    isService, setIsService };
+    isService, setIsService, time, setTime };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,

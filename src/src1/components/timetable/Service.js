@@ -3,14 +3,14 @@ import { Modal, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from "@iconify/react";
-import moment from "moment";
 
 import { ButtonRow, Overlay, Error, Confirm, MonthRange, PlainSelect1 } from "../all/all_m";
 import { getList, sendRequest } from "../../../services";
 import { AddList } from "./AddList";
+import moment from "moment";
 
 export function Service(props) {
-  const { visible, selected, closeModal, day, site, sites } = props;
+  const { visible, selected, closeModal, day, site, sites, date, setDate } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -18,7 +18,7 @@ export function Service(props) {
   const [checked, setChecked] = useState([]);
   const [repeat, setRepeat] = useState(false);
   const [dates, setDates] = useState([]);
-  const [date, setDate] = useState([moment(), moment().add(7, "days")]);
+  // const [date, setDate] = useState([moment(), moment().add(7, "days")]);
   const [emp, setEmp] = useState({value: null});
   const [emps, setEmps] = useState([]);
   const [invt, setInvt] = useState({value: null});
@@ -27,6 +27,8 @@ export function Service(props) {
   const dispatch = useDispatch();
 
   useEffect(() => { 
+    onFocusEmp()
+    onFocusInvt()
     daysBetween(date[0].format("YYYY-MM-DD"), date[1].format("YYYY-MM-DD"));
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +44,6 @@ export function Service(props) {
   }
 
   const onClickSave = async e => {
-    console.log(site, sites)
     e?.preventDefault();
     if(checkValid()){
     setError(null);
@@ -52,9 +53,9 @@ export function Service(props) {
         sites?.forEach(list=> {
           if(list?.siteId !== -1){
             dates?.forEach(item=>{
-               if(item?.checked) data.push({ scheduleID: selected ? selected?.scheduleID : -1, siteID: list?.siteId, descr: "string", scheduleType: 0,
+               if(item?.checked) data.push({ scheduleID: selected ? selected?.scheduleID : -1, siteID: list?.siteId, descr: "", scheduleType: 0,
                 status: 0, serviceID: invt?.value, employeeID: emp?.value, serviceTime: 0,
-                schdDate: item?.date.toLocaleDateString("en-EN", { weekday: "long", year: "numeric", month: "2-digit", day: "2-digit"}),
+                schdDate: item?.date.format("YYYY-MM-DD dddd"),
                 beginTime: item?.beginTime ? item?.beginTime?.replace(/-/g, '0') : '09:00', endTime: item?.endTime ? item?.endTime?.replace(/-/g, '0') : '18:00',
                 isRepeat: repeat ? 1 : 0, repeatType: repeat ? day : '', rowStatus: selected ? 'U' : 'I'
               })
@@ -63,16 +64,15 @@ export function Service(props) {
         })
     } else {
       dates?.forEach(item=>{
-         if(item?.checked) data.push({ scheduleID: selected ? selected?.scheduleID : -1, siteID: site, descr: "string",  scheduleType: 0,
+         if(item?.checked) data.push({ scheduleID: selected ? selected?.scheduleID : -1, siteID: site, descr: "",  scheduleType: 0,
           status: 0, serviceID: invt?.value, employeeID: emp?.value, serviceTime: 0,
-          schdDate: item?.date.toLocaleDateString("en-EN", { weekday: "long", year: "numeric", month: "2-digit", day: "2-digit"}),
+          schdDate: item?.date.format("YYYY-MM-DD dddd"),
           beginTime: item?.beginTime ? item?.beginTime?.replace(/-/g, '0') : '09:00',
           endTime: item?.endTime ? item?.endTime?.replace(/-/g, '0') : '18:00', isRepeat: repeat ? 1 : 0, repeatType: repeat ? day : '', rowStatus: selected ? 'U' : 'I'
         })
       })
     }
     if(data?.length){ 
-      console.log(data)
       const response = await dispatch(sendRequest(user, token, 'Txn/ModSchedule',  data));
       setLoading(false);
       if(response?.error) setError(response?.error);
@@ -81,7 +81,6 @@ export function Service(props) {
         message.success(t('timetable.add_success'));
       }
     } else setError(t('timetable.schedule_error'))
-      
     }
   }
 
@@ -110,13 +109,11 @@ export function Service(props) {
       setError && setError(null);
       setLoading('invts');
       const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
-      // console.log(response?.data?.inventoryies)
       if(response?.error) setError && setError(response?.error);
       else {
         let invts = [];
         response?.data?.inventoryies?.forEach(item => {
           if(item?.msInventory?.isService === 'Y') {
-            // console.log(item)
             invts.push(item?.msInventory)}})
         setInvts(invts)
       }
@@ -129,12 +126,12 @@ export function Service(props) {
   };
 
   const daysBetween = (startDate, endDate) => {
-    const diffTime = Math.abs(new Date(endDate) - new Date(startDate));
+    const diffTime = Math.abs(moment(new Date(endDate)) - moment(new Date(startDate)));
     const diffDays = 0 | (diffTime / 864e5);
     const arr = [];
 
     for (let i = 0; i <= diffDays; i++) {
-      const newdate = new Date(new Date(startDate).getTime() + i * 864e5);
+      const newdate = moment(new Date(moment(new Date(startDate).getTime()) + i * 864e5));
       arr.push({date: newdate});
     }
     setDates(arr);
@@ -153,7 +150,7 @@ export function Service(props) {
                     label: t("timetable.repeat"), checked: repeat, setChecked: setRepeat};
   const confirmProps = { open, text: t("page.delete_confirm"), confirm: onDelete, };
   const dateProps = { value: date, setValue: setDate, classBack: "tm_date_back", className: "rp_date", onHide, id: 'tm_btn1', id1: 'tm_btn2', className1: 'tm_btn'  };
-  const tableProps = { setData: setDates, setChecked, data: dates, checked };
+  const tableProps = { setData: setDates, setChecked, data: dates, checked, day };
   const empProps = { value: emp, setValue: onChangeEmp, data: emps, s_value: 'empCode', s_descr: 'empName', onHide, setError,
   classBack, className, onFocus: onFocusEmp, loading: loading === 'emps', placeholder: t('employee.add') , label: t('employee.title') };
   const invtProps = { value: invt, setValue: onChangeInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide, setError,
