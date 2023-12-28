@@ -13,7 +13,7 @@ export function Invoice(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
-  const [filter,  setFilter] =   useState('');
+  const [filter, setFilter] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,7 +33,6 @@ export function Invoice(){
     setError(null);
     setLoading(true);
     let api = 'Txn/GetInvoice' + (query ?? '');
-    console.log(api)
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     else {

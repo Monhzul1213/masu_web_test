@@ -14,7 +14,6 @@ export function List(props){
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(null);
 
-
   useEffect(() => {
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([

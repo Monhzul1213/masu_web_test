@@ -50,10 +50,8 @@ export function Service(props) {
     // setLoading(true);
     let data = [];
     if( site === -1 ){
-      console.log(site)
         sites?.forEach(list=> {
           if(list?.siteId !== -1){
-            console.log( sites)
             dates?.forEach(item=>{
                if(item?.checked) data.push({ scheduleID: selected ? selected?.scheduleID : -1, siteID: list?.siteId, descr: "", scheduleType: 0,
                 status: 0, serviceID: invt?.value, employeeID: emp?.value, serviceTime: 0,
@@ -66,7 +64,6 @@ export function Service(props) {
         })
     } else {
       dates?.forEach(item=>{
-        console.log(item)
          if(item?.checked) data.push({ scheduleID: selected ? selected?.scheduleID : -1, siteID: site, descr: "",  scheduleType: 0,
           status: 0, serviceID: invt?.value, employeeID: emp?.value, serviceTime: 0,
           schdDate: item?.date.format("YYYY-MM-DD dddd"),
@@ -76,7 +73,6 @@ export function Service(props) {
       })
     }
     if(data?.length){ 
-      console.log(data)
       const response = await dispatch(sendRequest(user, token, 'Txn/ModSchedule',  data));
       setLoading(false);
       if(response?.error) setError(response?.error);
@@ -113,14 +109,11 @@ export function Service(props) {
       setError && setError(null);
       setLoading('invts');
       const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
-      // console.log(response?.data?.inventoryies)
       if(response?.error) setError && setError(response?.error);
       else {
-        console.log()
         let invts = [];
         response?.data?.inventoryies?.forEach(item => {
           if(item?.msInventory?.isService === 'Y') {
-            // console.log(item)
             invts.push(item?.msInventory)}})
         setInvts(invts)
       }

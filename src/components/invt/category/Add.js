@@ -57,8 +57,8 @@ export function Add(props){
       setLoading(true);
       let useKitchenPrinter = useKitchen ? 'Y' : 'N';
       let data = selected
-        ? { categoryId: selected?.categoryId, categoryName: name?.value, color: 0, icon, class: class1?.value, useKitchenPrinter }
-        : { merchantID: user?.merchantId, categoryName: name?.value, color: 0, icon, class: class1?.value, useKitchenPrinter  };
+        ? [{ categoryId: selected?.categoryId, categoryName: name?.value, color: 0, icon, class: class1?.value, useKitchenPrinter, viewPriority: selected?.viewPriority }]
+        : { merchantID: user?.merchantId, categoryName: name?.value, color: 0, icon, class: class1?.value, useKitchenPrinter, viewPriority: 0 };
       let api = selected ? 'Inventory/UpdateCategory' : 'Inventory/AddCategory';
       const response = await dispatch(sendRequest(user, token, api, data));
       if(response?.error) setError(response?.error);

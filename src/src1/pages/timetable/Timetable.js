@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
 // import { useTranslation } from 'react-i18next';
-import TimeTable from 'react-timetable-events';
 
 import { getList } from '../../../services';
 import { Error1, Overlay } from '../../components/all/all_m';
@@ -40,7 +39,6 @@ function Screen(props){
     let api = 'Txn/GetSchedule' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response)
     if(response?.code === 2000){
       // comment
       // isNew or isExpired
@@ -81,7 +79,7 @@ function Screen(props){
     // onSearch(query);
   }
 
-  let filterProps = { onSearch: getData, size, setError };
+  let filterProps = { onSearch: getData, size, setError, data };
   const subProps = { visible, setVisible, sites, setSites, onDone };
 
   return (

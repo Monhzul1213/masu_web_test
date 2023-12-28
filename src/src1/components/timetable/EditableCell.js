@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { AutoComplete } from 'antd';
 import { DynamicMDIcon } from '../all/all_m';
 import ReactInputMask from 'react-input-mask';
@@ -34,7 +34,6 @@ export const SelectableCell = props => {
 
   const handleSearch = (data, option) => {
     setValue(data)
-    // console.log(data);
   };
   
   const onClick = (e) => {

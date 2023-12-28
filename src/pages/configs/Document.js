@@ -86,7 +86,6 @@ function Card(props){
   }
 
   const setData = data => {
-    console.log(data)
     setBill(data);
     getImage(data);
     setHeader({ value: data?.header ?? '' });
@@ -123,7 +122,6 @@ function Card(props){
       rowStatus: bill ? 'U' : 'I',
       isPrintBarCode: isPrint ? 'Y' : 'N'
     }
-    console.log(data)
     const response = await dispatch(sendRequest(user, token, 'Site/AddBill', data));
     setLoading(false);
     if(response?.error) setError(response?.error);

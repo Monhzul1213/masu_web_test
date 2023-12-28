@@ -52,8 +52,6 @@ export function Header(props){
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(status !== -1) query += '&Status=' + status;
     if(search?.length !== 0) data?.forEach(item => { query += '&Filter=' + item });
-    // onSearch && onSearch(query, filter, date );
-    console.log(data)
     onSearch(query);
   }
 
@@ -69,7 +67,6 @@ export function Header(props){
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(status !== -1) query += '&Status=' + status;
     query += (value ? ('&Filter=' + value) : '');
-    console.log(data)
     onSearch && onSearch( query );
   }
 

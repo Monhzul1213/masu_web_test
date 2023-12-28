@@ -168,7 +168,7 @@ export function App(){
                 <Route path='/management/adjust/adjust_add' element={<AdjustAdd />} />
                 <Route path='/system/rating' element={<Reviews />} />
                 <Route path='/system/rating/rating_add' element={<ReviewAdd />} />
-                <Route path='/timetable' element={<Timetable1 />} />
+                <Route path='/timetable/timeschedule' element={<Timetable1 />} />
               </Routes>
             </Layout>
           </Layout>

@@ -52,13 +52,13 @@ export const SelectableCell1 = props => {
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
 
   return (
-    <div className='' >
-      {label && <p className='select_lbl' style={style}>{label}</p>}
+    <div className='invt_time_back' >
+      {label && <p className='select_lbl_i' style={style}>{label}</p>}
       <AutoComplete 
         onKeyDown={onKeyDown}
         allowClear 
         filterOption={(inputValue, option) => option.value.toLowerCase().indexOf(inputValue.toLowerCase()) >= 0 }
-        style={{ width: '100%' }}
+        style={{ width: '50%' }}
         onSearch={handleSearch}
         className='invt_select'
         onSelect={onSelect}
