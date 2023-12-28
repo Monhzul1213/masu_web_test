@@ -293,8 +293,6 @@ export const getServiceOTC = (api, method) => async dispatch => {
   }
 };
 
-
-
 function fetchRetry(config, retries = 5) {
   return axios(config)
     .then(res => {

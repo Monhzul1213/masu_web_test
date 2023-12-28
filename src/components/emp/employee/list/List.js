@@ -25,7 +25,7 @@ export function List(props){
         Cell: ({ row, onClickCheck }) => {
           let disabled = row?.original?.isOwner === 'Y' || row?.original?.email?.toLowerCase() === mail?.toLowerCase();
           return (<div style={style}><CheckBtn checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} disabled={disabled} /></div>)
-        } 
+        }
       },
       { Header: t('page.name'), accessor: 'empName' },
       { Header: t('employee.mail'), accessor: 'email' },

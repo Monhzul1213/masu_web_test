@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { ButtonRow, ModalTitle } from '../../../components/all';
 import Map from './Map';
 
-
 export function Location(props){
   const { visible, closeModal, lng, setLng, lat, setLat, descr1, descr2, city} = props
   const { t } = useTranslation();

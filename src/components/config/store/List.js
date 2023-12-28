@@ -15,7 +15,6 @@ export function List(props){
   const { useInventoryManagement } = useSelector(state => state.login.user);
 
   useEffect(() => {
-    console.log(data)
     setColumns([
       { Header: t('shop.t_name'), accessor: 'name' },
       { Header: t('shop.t_addr'), accessor: 'address_text' },

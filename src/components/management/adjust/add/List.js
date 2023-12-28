@@ -68,7 +68,6 @@ function Card(props){
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     setDetail(old => old.map((row, index) => {
-      console.log(old[rowIndex]?.itemType)
       if(index === rowIndex){
         let itemType = columnId === 'itemType' ? value : old[rowIndex]?.itemType;
         let qty = columnId === 'qty' ? parseFloat(value ? value : 0) : old[rowIndex]?.qty;
