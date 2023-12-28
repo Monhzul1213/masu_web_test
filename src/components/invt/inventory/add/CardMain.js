@@ -109,7 +109,7 @@ function Card(props){
   const limitProps = { value: buyAgeLimit, setValue: setBuyAgeLimit, label: t('inventory.limit'), setError, setEdited, data: limitList, inRow: true };
   const vendProps = { value: vendId, setValue: setVendId, label: t('inventory.vendor'), setError, setEdited, data: vendors, inRow: true,
     s_value: 'vendId', s_descr: 'vendName', placeholder: t('inventory.vendor') };
-  const serviceProps = { label: t('inventory.service'), checked: isService, setChecked: setIsService };
+  const serviceProps = { label: t('inventory.service'), checked: isService, setChecked: setIsService , style: {width: '50%'}};
   const timeProps = { data: timeList1, value: time, setValue: setTime, label: t('timetable.service_time') };
 
   return (
@@ -128,7 +128,6 @@ function Card(props){
           </div>
           <div id={idRow2}>
             <CheckBox {...serviceProps} />
-            <div className='time_gap' />
             {isService ? <SelectableCell1 {...timeProps}/> : ''}
           </div>
         </div>

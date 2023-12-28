@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { AutoComplete } from 'antd';
 import { DynamicMDIcon } from '../all/all_m';
 import ReactInputMask from 'react-input-mask';
@@ -15,13 +15,14 @@ export const SelectableCell = props => {
   //   return () => {};
   // }, [select])
   
-  useEffect(() => {
-    setValue(initialValue);
-  }, [initialValue]);
+  // useEffect(() => {
+  //   setValue(initialValue);
+  // }, [initialValue]);
 
   const onChange = (e )=> {
     // setValue(e);
     updateMyData(row?.index, id, e)
+    // console.log(row?.index, id, e)
   }
 
   const onSelect = (val) => {

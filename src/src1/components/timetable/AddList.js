@@ -7,7 +7,7 @@ import { timeList1 } from "../../../helpers";
 import { SelectableCell } from "./EditableCell";
 
 export function AddList(props) {
-  const { data, setData, setChecked, day } = props;
+  const { data, setData, setChecked } = props;
   const { i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [initialValue, setInitialValue] = useState('09:00');

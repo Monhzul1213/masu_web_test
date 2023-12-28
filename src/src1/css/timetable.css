@@ -387,7 +387,7 @@
   color: var(--text-color);
   font-size: 14px;
   background-color: transparent;
-  /* padding: 5px 10px ;   */
+  margin-left: 10px ;  
 }
 
 .invt_select:focus-within{
@@ -398,4 +398,16 @@
 .invt_select:hover{
   /* border-bottom: 1px solid var(--config-b-color); */
   border-color: var(--config-b-color);
+}
+.invt_time_back{
+  display: flex;
+  flex-flow: row;
+  margin-left: 30px;
+}
+
+.select_lbl_i {
+  color: var(--text2-color);
+  font-size: 13px;
+  font-weight: 450;
+  margin: 10px 0 3px 0;
 }

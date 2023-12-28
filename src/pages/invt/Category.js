@@ -32,7 +32,7 @@ export function Category(){
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
     if(response?.error) setError(response?.error);
-    else setData(response?.data);
+    else setData(response?.data?.sort((a, b) => a.viewPriority - b.viewPriority));
     await getConfig();
     setLoading(false);
     setShow(false);
@@ -69,7 +69,7 @@ export function Category(){
 
   const addProps = { visible, closeModal, selected: item, useConfig };
   const emptyProps = { icon: 'MdOutlineCategory', type: 'category', onClickAdd };
-  const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected };
+  const listProps = { data, onClickAdd, onDelete, setLoading, setError, show, setShow, checked, setChecked, selected, setSelected, setData };
 
   return (
     <div className='s_container_i'>

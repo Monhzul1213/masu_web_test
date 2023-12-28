@@ -178,7 +178,7 @@ export function NoHeaderTable(props){
 }
 
 export function NoHeaderTable1(props){
-  const { tableInstance, onRowClick, colSpan, Detail, detailName, open } = props;
+  const { tableInstance, onRowClick, colSpan, Detail, detailName } = props;
 
   const { getTableProps, getTableBodyProps, prepareRow, page } = tableInstance;
 
@@ -186,7 +186,6 @@ export function NoHeaderTable1(props){
     <table className='table_back' {...getTableProps()}>
       <tbody className='table_body_back' {...getTableBodyProps()}>
         {page.map((row, i) => {
-          // console.log(row?.open)
           prepareRow(row);
           return (
             <>
