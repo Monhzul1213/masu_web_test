@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteRequest, sendRequest } from '../../../services'
-import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select, IconInput } from '../../all';
+import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select, IconInput, UploadImage } from '../../all';
 import { cityList, districtList } from '../../../helpers';
 import { Location } from './Location';
 
@@ -27,6 +27,15 @@ export function Add(props){
   const [select, setSelect] = useState(false);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
+  const [image, setImage] = useState(null);
+  const [image64, setImage64] = useState('');
+  const [imageType, setImageType] = useState('');
+  const [image1, setImage1] = useState(null);
+  const [image164, setImage164] = useState('');
+  const [imageType1, setImageType1] = useState('');
+  const [image2, setImage2] = useState(null);
+  const [image264, setImage264] = useState('');
+  const [imageType2, setImageType2] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -70,8 +79,17 @@ export function Add(props){
     if(checkValid()){
       let districtCode = cityList?.filter(ct => ct.value === descr?.value)[0]?.districtCode;
       setLoading(true);
+      let sitePictures = []
+      
       let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
-        subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng};
+        subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng, sitePictures };
+        // {
+        //   "viewPriority": 0,
+        //   "isVideo": "string",
+        //   "videoURL": "string",
+        //   "rowStatus": "string",
+        //   "files": {}
+        // }
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
@@ -151,6 +169,9 @@ export function Add(props){
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
   const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, descr1, descr2, city };
+  const imageProps = { image, setImage, setImage64, setImageType, setError, className: 'im_image' };
+  const image1Props = { image: image1, setImage: setImage1, setImage64: setImage164, setImageType: setImageType1, setError, className: 'im_image' };
+  const image2Props = { image: image2, setImage: setImage2, setImage64: setImage264, setImageType: setImageType2, setError, className: 'im_image' };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
@@ -167,6 +188,12 @@ export function Add(props){
               <Input {...addrProps} />
               <IconInput {...locProps} />
               <Input {...phoneProps} />
+              {/* <p className='image_lbl'>{t('shop.image')}</p>
+              <div className='store_image_back'>
+                <UploadImage {...imageProps}/>
+                <UploadImage {...image1Props}/>
+                <UploadImage {...image2Props}/>
+              </div> */}
             </form>
             {error && <Error error={error} id='m_error' />}
           </div>
