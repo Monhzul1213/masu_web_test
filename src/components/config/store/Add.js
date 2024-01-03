@@ -3,10 +3,11 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { deleteRequest, sendRequest } from '../../../services'
+import { deleteRequest, getList, sendRequest } from '../../../services'
 import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select, IconInput, UploadImage } from '../../all';
-import { cityList, districtList } from '../../../helpers';
+import { cityList, districtList, urlToFile } from '../../../helpers';
 import { Location } from './Location';
+import mime from 'mime';
 
 export function Add(props){
   const { visible, selected, closeModal } = props;
@@ -50,10 +51,58 @@ export function Add(props){
       setLocation({ value : selected?.latitudes ? selected?.latitudes + '\n' + selected?.longitudes : ''})
       setSubDescr({ value: selected?.subDescr ? selected?.subDescr : null });
       setList(districtList?.filter(item => item?.parent?.includes(selected?.descr)));
+      getImages(selected?.siteId)
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getImages = async SiteID => {
+    const response = await dispatch(getList(user, token, 'Site/GetSitePics?SiteID=' + SiteID));
+    response?.data?.map(item => {
+      if(item?.viewPriority === 1) getImage(item)
+      else if(item?.viewPriority === 2) getImage1(item)
+      else if(item?.viewPriority === 3) getImage2(item)
+    })
+  }
+
+  const getImage = async data => {
+    if(data?.fileRaw?.fileData){
+      let type = data?.fileRaw?.fileType?.replace('.', '');
+      setImageType(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${data?.fileRaw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage64(attach64);
+      setImage(attachFile);
+    }
+  }
+
+  const getImage1 = async data => {
+    if(data?.fileRaw?.fileData){
+      let type = data?.fileRaw?.fileType?.replace('.', '');
+      setImageType1(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${data?.fileRaw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage164(attach64);
+      setImage1(attachFile);
+    }
+  }
+  const getImage2 = async data => {
+    if(data?.fileRaw?.fileData){
+      let type = data?.fileRaw?.fileType?.replace('.', '');
+      setImageType2(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${data?.fileRaw?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage264(attach64);
+      setImage2(attachFile);
+    }
+  }
 
   const checkValid = () => {
     let nameLength = 2, addressLength = 8, phoneLength = 8;
@@ -73,23 +122,14 @@ export function Add(props){
     }
   }
 
-  const onClickSave = async e => {
-    e?.preventDefault();
+  const saveRequest = async sitePictures => {
+    // e?.preventDefault();
     setError(null);
     if(checkValid()){
       let districtCode = cityList?.filter(ct => ct.value === descr?.value)[0]?.districtCode;
       setLoading(true);
-      let sitePictures = []
-      
       let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
         subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng, sitePictures };
-        // {
-        //   "viewPriority": 0,
-        //   "isVideo": "string",
-        //   "videoURL": "string",
-        //   "rowStatus": "string",
-        //   "files": {}
-        // }
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
@@ -101,6 +141,27 @@ export function Add(props){
       }
       setLoading(false);
     }
+  }
+
+  const onClickSave = async e => {
+    e.preventDefault();
+    // checkValid().then(res => {
+    //   if(res){
+        // setLoading('saving');
+        setError(null);
+        let sitePictures = [];
+        if(image64){
+          sitePictures.push({ viewPriority: 1, isVideo: "", videoURL: "", rowStatus: selected ? 'U' : 'I', files: { FileData: image64 ?? '', FileType: imageType ?? ''} });
+        }
+        if(image164){
+          sitePictures.push({ viewPriority: 2, isVideo: "", videoURL: "", rowStatus: selected ? 'U' : 'I', files: { FileData: image164 ?? '', FileType: imageType1 ?? ''} });
+        }
+        if(image264){
+          sitePictures.push({ viewPriority: 3, isVideo: "", videoURL: "", rowStatus: selected ? 'U' : 'I', files: { FileData: image264 ?? '', FileType: imageType2 ?? ''} });
+        }
+        saveRequest(sitePictures);
+    //   }
+    // });
   }
 
   const onClickDelete = () => setOpen(true);
@@ -188,12 +249,14 @@ export function Add(props){
               <Input {...addrProps} />
               <IconInput {...locProps} />
               <Input {...phoneProps} />
-              {/* <p className='image_lbl'>{t('shop.image')}</p>
-              <div className='store_image_back'>
-                <UploadImage {...imageProps}/>
-                <UploadImage {...image1Props}/>
-                <UploadImage {...image2Props}/>
-              </div> */}
+              {user?.useAppointment && <div>
+                <p className='image_lbl'>{t('shop.image')}</p>
+                <div className='store_image_back'>
+                  <UploadImage {...imageProps}/>
+                  <UploadImage {...image1Props}/>
+                  <UploadImage {...image2Props}/>
+                </div>
+              </div>}
             </form>
             {error && <Error error={error} id='m_error' />}
           </div>

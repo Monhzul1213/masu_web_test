@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from "@iconify/react";
 
-import { ButtonRow, Overlay, Error, Confirm, MonthRange, PlainSelect1 } from "../all/all_m";
-import { getList, sendRequest } from "../../../services";
+import { ButtonRow, Overlay, Error, Confirm, MonthRange, PlainSelect1 } from "../../all/all_m";
+import { getList, sendRequest } from "../../../../services";
 import { AddList } from "./AddList";
 import moment from "moment";
 

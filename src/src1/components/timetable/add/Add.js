@@ -3,7 +3,7 @@ import { Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
 // import { useSelector, useDispatch } from 'react-redux';
 
-import { Button, DynamicBSIcon, IconButton } from '../../../components/all';
+import { Button, DynamicBSIcon, IconButton } from '../../../../components/all';
 import { Service } from './Service';
 
 export function Add(props){

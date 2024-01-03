@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import '../../css/timetable.css'
-import { MonthRange, PlainSelect } from '../../components/all/all_m';
-import { week } from '../../../helpers';
-import { Add } from './Add';
-import { getList } from '../../../services';
+import '../../../css/timetable.css'
+import { MonthRange, PlainSelect } from '../../../components/all/all_m';
+import { week } from '../../../../helpers';
+import { Add } from '../add/Add';
+import { getList } from '../../../../services';
 
 export function Filter(props){
   const { setError, size } = props;

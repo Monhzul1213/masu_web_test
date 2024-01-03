@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { AutoComplete } from 'antd';
-import { DynamicMDIcon } from '../all/all_m';
+import { DynamicMDIcon } from '../../all/all_m';
 import ReactInputMask from 'react-input-mask';
 // import { Input, Percent } from '../all/all_m';
 

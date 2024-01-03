@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import { getList } from '../../../services';
 import { Error1, Overlay } from '../../components/all/all_m';
-import { Filter } from '../../components/timetable'
+import { Filter } from '../../components/timetable/list'
 import { Subscription } from './Subscription';
 
 function Screen(props){

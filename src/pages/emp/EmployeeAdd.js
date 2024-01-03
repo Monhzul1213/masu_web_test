@@ -3,10 +3,11 @@ import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import mime from 'mime';
 
 import '../../css/invt.css';
 import { apiLogin, getList, sendRequest } from '../../services';
-import { validateEmail } from '../../helpers';
+import { urlToFile, validateEmail } from '../../helpers';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { CardMain, Subscription } from '../../components/emp/employee/add';
 import { CardSite } from '../../components/invt/modifier/add';
@@ -23,6 +24,9 @@ export function EmployeeAdd(){
   const [phone, setPhone] = useState({ value: '' });
   const [role, setRole] = useState({ value: null });
   const [code, setCode] = useState({ value: '' });
+  const [image, setImage] = useState(null);
+  const [image64, setImage64] = useState('');
+  const [imageType, setImageType] = useState('');
   const [sites, setSites] = useState([]);
   const [checked, setChecked] = useState(true);
   const [saved, setSaved] = useState(false);
@@ -94,7 +98,21 @@ export function EmployeeAdd(){
           item.rowStatus = exists ? 'U' : 'I';
         });
         setSites(sites1);
+        getImage(emp)
       }
+    }
+  }
+
+  const getImage = async data => {
+    if(data?.files?.fileData){
+      let type = data?.files?.fileType?.replace('.', '');
+      setImageType(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${data?.files?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage64(attach64);
+      setImage(attachFile);
     }
   }
 
@@ -133,7 +151,7 @@ export function EmployeeAdd(){
         empCode: selected?.empCode ?? -1, empName: name?.value, email: mail?.value,
         password: password?.value, employeeSites, phone: phone?.value, roleID: role?.value,
         rowStatus: selected ? 'U' : 'I', useAllSite: checked ? 'Y' : 'N', poS_PIN: pin,
-        status: selected?.status ?? 0
+        status: selected?.status ?? 0, files: { FileData: image64 ?? '', FileType: imageType ?? ''}
       }];
       return data;
     } else {
@@ -153,6 +171,7 @@ export function EmployeeAdd(){
 
   const saveData = async data => {
     onLoad();
+    console.log(data)
     const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
     if(response?.error) onError(response?.error, true);
     else {
@@ -199,7 +218,7 @@ export function EmployeeAdd(){
   }
 
   let mainProps = { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode, selected,
-    isOwner: selected?.isOwner === 'Y' };
+    isOwner: selected?.isOwner === 'Y', image, setImage, setImage64, setImageType };
   let siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, id: 'ea_back', label: 'employee' };
   let siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'ea_back' };
   let btnProps = { onClickCancel, onClickSave, onClickDelete, show, id: 'emp_ac_btns' };
