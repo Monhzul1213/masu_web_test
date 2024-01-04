@@ -137,7 +137,8 @@
     "/system/notification/noti_add": "Мэдэгдэл",
     "/system/rating": "Үнэлгээ",
     "/system/rating/rating_add": "Үнэлгээ бүртгэх",
-    "/timetable": "Цаг авах хуваарь"
+    "/timetable": "Цаг авах хуваарь",
+    "/timetable/service": "Үйлчилгээ ажилтнаар"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -171,6 +172,7 @@
     "access_config": "Эрхийн тохиргоо",
     "shift_config": "Цагийн тохиргоо",
     "shift_list": "Цагийн жагсаалт",
+    "service" : "Үйлчилгээ ажилтнаар",
     "hours_worked": "Ажилласан цагийн лавлагаа",
     "system": "Систем",
     "solve": "НӨАТ хэвлэх хүсэлт шийдэх",
@@ -1186,6 +1188,17 @@
     "add_success": "Цаг захиалга амжилттай бүртгэгдлээ.",
     "subscription": "Цаг захиалга - Төлбөртэй үйлчилгээ",
     "select_site": "Цаг захиалга хөтлөх салбараа сонгоно уу"
+  },
+  "employeeService":{
+    "site": "Салбар",
+    "employee": "Ажилтан",
+    "serviceQty": "Үйлчилгээний тоо",
+    "serviceAdd": "Үйлчилгээ нэмэх",
+    "serviceCreate": "Үйлчилгээ бүртгэх",
+    "serviceName" : "Үйлчилгээний нэр",
+    "invtName" : "Барааны код",
+    "price" : "Үнэ",
+    "successMessage" : "Үйлчилгээ амжилттай бүртгэгдлээ."
   },
   "version": "13"
 }
