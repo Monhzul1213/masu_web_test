@@ -22,6 +22,7 @@ export function Menu(props){
   const { t } = useTranslation();
   const [openKeys, setOpenKeys] = useState([]);
   const [hideConfig, setHideConfig] = useState(true);
+  const [hideTime, setHideTime] = useState(true);
   const [hideMenu, setHideMenu] = useState(false);
   const [review, setReview] = useState(false);
   const { user: { msRole, isAdmin }, isPartner, user, token } = useSelector(state => state.login);
@@ -43,6 +44,11 @@ export function Menu(props){
     if(isAdmin) setOpenKeys(["system", "/system"]);
 
     getReview();
+
+    if(user?.merchantId === 66 || user?.merchantId === 135 || user?.merchantId === 383 || user?.merchantId === 631)
+      setHideTime(false);
+    else
+      setHideTime(true);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -117,7 +123,7 @@ export function Menu(props){
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
-    getItem(t('timetable.time'), '/timetable', <BiCalendar />, [
+    hideTime ? null : getItem(t('timetable.time'), '/timetable', <BiCalendar />, [
       getItem(t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
