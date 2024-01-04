@@ -171,7 +171,6 @@ export function EmployeeAdd(){
 
   const saveData = async data => {
     onLoad();
-    console.log(data)
     const response = await dispatch(sendRequest(user, token, 'Employee/Modify', data));
     if(response?.error) onError(response?.error, true);
     else {

@@ -43,7 +43,6 @@ function Screen(props){
     let api = 'Txn/GetSchedule' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response)
     if(response?.code === 2000){
       // comment
       // isNew or isExpired

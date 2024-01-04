@@ -22,6 +22,7 @@ import { Integration } from './pages/integration';
 import { Adjust, AdjustAdd } from './pages/management/adjust';
 import { InvoiceSend } from './components/emp/employee/add/InvoiceSend';
 import { Timetable1 } from './src1/pages/timetable';
+import { EmployeeService } from './src2/pages/timetable/EmployeeService';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -125,6 +126,7 @@ export function App(){
                 <Route path='/employee/access_config/access_add' element={<RoleAdd />} />
                 <Route path='/employee/shift_config' element={<Time />} />
                 <Route path='/employee/shift_list' element={<TimeList />} />
+                <Route path='/timetable/service' element={<EmployeeService />} />
                 <Route path='/management/suppliers' element={<Suppliers />} />
                 <Route path='/management/suppliers/supp_add' element={<SupplierAdd/>} />
                 <Route path='/management/order_list' element={<Order />} />
