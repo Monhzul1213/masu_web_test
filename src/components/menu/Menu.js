@@ -119,6 +119,7 @@ export function Menu(props){
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(t('timetable.time'), '/timetable', <BiCalendar />, [
       getItem(t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
     getItem(t('menu.integration'), '/integration', <BsPuzzle />, null, null, msRole?.webManageCustomer !== 'Y'),
     hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :
