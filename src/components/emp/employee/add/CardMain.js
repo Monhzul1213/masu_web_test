@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getList } from '../../../../services';
-import { Input, Select, InputPassword } from '../../../all';
+import { Input, Select, InputPassword, UploadImage } from '../../../all';
 
 export function CardMain(props){
-  const { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, role, setRole, code, setCode, selected, isOwner } = props;
+  const { setError, setEdited, name, setName, mail, setMail, password, setPassword, phone, setPhone, 
+          role, setRole, code, setCode, selected, isOwner, image, setImage, setImage64, setImageType } = props;
   const { t } = useTranslation();
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -44,11 +45,17 @@ export function CardMain(props){
     data: roles, s_value: 'roleId', s_descr: 'roleName', onFocus, loading, disabled: isOwner };
   const codeProps = { value: code, setValue: setCode, label: t('employee.code'), placeholder: t('employee.code'), setError, setEdited,
     mask: '9 9 9 9', maskChar: '_' };
+  const imageProps = { image, setImage, setImage64, setImageType, setError, className: 'em_image' };
 
   return (
     <div className='ea_back'>
-      <Input {...nameProps} />
-      <Input {...mailProps} />
+      <div className='ei_back'>
+        <div >
+          <Input {...nameProps} />
+          <Input {...mailProps} />
+        </div>
+        <UploadImage {...imageProps}/>
+      </div>
       <InputPassword {...passProps} />
       <Input {...phonProps} />
       <Select {...roleProps} />

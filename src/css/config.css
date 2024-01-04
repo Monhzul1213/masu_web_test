@@ -1352,3 +1352,37 @@
   /* color: var(--text2-color); */
   color: #606060;
 }
+.store_image_back{
+  display: flex;
+  flex-flow: row;
+  margin-top: 15px;
+}
+.image_lbl {
+  color: var(--text2-color);
+  font-size: 13px;
+  font-weight: 450;
+  margin: 10px 0 3px 0;
+}
+.ei_back{
+  display: flex;
+  flex-flow: row;
+}
+
+.em_image {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.em_image .ant-upload.ant-upload-select-picture-card {
+  width: 200px;
+  height: 180px;
+  overflow: hidden;
+  border-color: var(--line-color);
+  background-color: var(--back-color);
+  align-self: center;
+}
+
+.em_image .ant-upload.ant-upload-select-picture-card:hover {
+  border-color: var(--config-color);
+}

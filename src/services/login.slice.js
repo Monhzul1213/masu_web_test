@@ -112,6 +112,7 @@ export const apiLogin = (mail, password, fromAd) => async dispatch => {
           msRole: response?.msRole,
           msMerchant: response?.msMerchant,
           useInventoryManagement: response?.useInventoryManagement === 'Y',
+          useAppointment: response?.useAppointment === 'Y',
         }));
       }
       return Promise.resolve({

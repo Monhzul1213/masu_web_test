@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import '../../css/timetable.css'
-import { MonthRange, PlainSelect } from '../../components/all/all_m';
-import { week } from '../../../helpers';
-import { Add } from './Add';
-import { getList } from '../../../services';
+import '../../../css/timetable.css'
+import { MonthRange, PlainSelect } from '../../../components/all/all_m';
+import { week } from '../../../../helpers';
+import { Add } from '../add/Add';
+import { getList } from '../../../../services';
 
 export function Filter(props){
-  const { setError, size } = props;
+  const { setError, size, handleViewChange } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(null);
   const [date, setDate] = useState([moment(), moment().add(7, 'days')]);
@@ -42,10 +42,18 @@ export function Filter(props){
 
   const onChangeDay = value => {
     setDay(value)
-    if(value === "7 хоног") setDate([moment(), moment().add(1, 'week')])
-    else if(value === "Ажлын өдөр") setDate([moment(), moment().add(5, 'days')])
-    else if(value === "Өдөр") setDate([moment(), moment()])
-    else setDate([moment(), moment().add(1, 'months')])
+    if(value === "7 хоног") {
+      handleViewChange('week')
+      setDate([moment(), moment().add(1, 'week')])}
+    else if(value === "Ажлын өдөр") {
+      handleViewChange('work_week')
+      setDate([moment(), moment().add(5, 'days')])}
+    else if(value === "Өдөр") {
+      handleViewChange('day')
+      setDate([moment(), moment()])}
+    else {
+      handleViewChange('month')
+      setDate([moment(), moment().add(1, 'months')])}
   }
 
   const onFocusSite = async () => {
@@ -68,9 +76,10 @@ export function Filter(props){
   }
 
   const siteProps = { value: site, setValue: onSelectSite, data: sites, s_value: 'siteId', s_descr: 'name',
-  classBack: 'rp_select_back', className: 'rp_select', onFocus: onFocusSite, loading: loading === 'sites' };
-  const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
-  const dayProps = { value: day, setValue: onChangeDay, data: week, s_value: 'value', s_descr: 'label', onHide, classBack: 'rp_select_back', className: 'rp_select',};
+  classBack: 'rp_select_back3', className: 'rp_select', onFocus: onFocusSite, loading: loading === 'sites' };
+  const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back_z', className: 'rp_date' };
+  const dayProps = { value: day, setValue: onChangeDay, data: week, s_value: 'value', s_descr: 'label', 
+  onHide, classBack: 'rp_select_back3', className: 'rp_select',};
   const addProps = { day, site, sites, date, setDate }
   
   return (

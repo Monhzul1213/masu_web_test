@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { DynamicAIIcon, Check, NoHeaderTable } from "../all/all_m";
-import { timeList1 } from "../../../helpers";
+import { DynamicAIIcon, Check, NoHeaderTable } from "../../all/all_m";
+import { timeList1 } from "../../../../helpers";
 import { SelectableCell } from "./EditableCell";
 
 export function AddList(props) {

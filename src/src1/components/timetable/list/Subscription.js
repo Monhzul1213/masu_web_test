@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
 
-import '../../../css/config.css'
-import { banks, divide, formatNumber, siteSubscriptions, siteSubscriptions1 } from '../../../helpers';
-import { getList, sendRequest } from '../../../services';
-import { qr_holder } from '../../../assets';
-import { Check, DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../components/all';
-import { Step } from '../../../components/emp/employee/add/Step';
-import { Select, Field } from '../../../components/emp/employee/add/Field';
-import { Tax } from '../../../components/system/invoice/list/Tax';
+import '../../../../css/config.css'
+import { banks, divide, formatNumber, siteSubscriptions, siteSubscriptions1 } from '../../../../helpers';
+import { getList, sendRequest } from '../../../../services';
+import { qr_holder } from '../../../../assets';
+import { Check, DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../../components/all';
+import { Step } from '../../../../components/emp/employee/add/Step';
+import { Select, Field } from '../../../../components/emp/employee/add/Field';
+import { Tax } from '../../../../components/system/invoice/list/Tax';
 
 export function Subscription(props){
   const { visible, setVisible, sites, setSites, onDone, noTrial, noBack } = props;
@@ -77,7 +77,7 @@ export function Subscription(props){
       }
       setLoading(false);
     } else
-      setError(t('adjust.select_site'));
+      setError(t('timetable.select_site'));
   }
   const onClose = () => {
     setSites([]);

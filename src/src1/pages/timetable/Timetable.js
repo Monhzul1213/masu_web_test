@@ -4,11 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
 // import { useTranslation } from 'react-i18next';
+import {Calendar, momentLocalizer} from "react-big-calendar";
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import { getList } from '../../../services';
 import { Error1, Overlay } from '../../components/all/all_m';
-import { Filter } from '../../components/timetable'
-import { Subscription } from './Subscription';
+import { Filter } from '../../components/timetable/list'
+import { Subscription } from '../../components/timetable/list/Subscription';
+import { cal } from '../../../helpers';
 
 function Screen(props){
   // const { t } = useTranslation();
@@ -18,6 +21,7 @@ function Screen(props){
   const [data, setData] = useState(null);
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState([]);
+  const [view, setView] = useState('month');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -49,28 +53,8 @@ function Screen(props){
     else if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoading(false);
-    // setFilter(query);
-    // setFilter1(query1 ?? '');
   }
 
-  // const renderHour = (hour, defaultAttributes, styles) => {
-  //   return (
-  //     <div {...defaultAttributes} key={hour}>
-  //       {hour}h
-  //     </div>
-  //   );
-  // }
-
-  // const renderEvent = (e, defaultAttributes, styles) => {
-  //   return (
-  //     <div {...defaultAttributes} title={e.name} key={e.id}>
-  //       <span className={styles.event_info}>[ {e.name} ]</span>
-  //       <span className={styles.event_info}>
-  //         {e.startTime.format("HH:mm")} - {e.endTime.format("HH:mm")}
-  //       </span>
-  //     </div>
-  //   );
-  // }
 
   const onDone = async () => {
     setVisible(false);
@@ -79,7 +63,54 @@ function Screen(props){
     // onSearch(query);
   }
 
-  let filterProps = { onSearch: getData, size, setError, data };
+  const localizer = momentLocalizer(moment)
+
+  const handleViewChange = (view) => {
+    setView(view)
+  };
+
+  const customFormats = {
+    dayFormat: (date, culture, localizer) => 
+      localizer.format(date, 'dddd', culture) === 'Monday' ? 'Даваа ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Tuesday' ? 'Мягмар ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Wednesday' ? 'Лхагва ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Thursday' ? 'Пүрэв ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Friday' ? 'Баасан ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Saturday' ? 'Бямба ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Sunday' ? 'Ням ' + localizer.format(date, 'MM/DD', culture) : '',
+    timeGutterFormat: 'HH:mm',
+    dayHeaderFormat: (date, culture, localizer) => 
+      localizer.format(date, 'dddd', culture) === 'Monday' ? 'Даваа ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Tuesday' ? 'Мягмар ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Wednesday' ? 'Лхагва ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Thursday' ? 'Пүрэв ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Friday' ? 'Баасан ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Saturday' ? 'Бямба ' + localizer.format(date, 'MM/DD', culture)
+      : localizer.format(date, 'dddd', culture) === 'Sunday' ? 'Ням ' + localizer.format(date, 'MM/DD', culture) : '',   
+  };
+
+  const customMonthHeader = ({ label }) => {
+    return (
+      <span>{label === 'Mon' ? 'Даваа' : label === 'Tue' ? 'Мягмар' : label === 'Wed' ? 'Лхагва' : label === 'Thu' ? 'Пүрэв'
+            : label === 'Fri' ? 'Баасан': label === 'Sat' ? 'Бямба': label === 'Sun' ? 'Ням' : ''}</span>
+    )};
+
+  const customToolbar = (toolbar) => {
+      const { label } = toolbar;
+      return (
+        <div className="custom-toolbar">{view === 'day' ?  <span>{label}</span>: null}</div>
+  )};
+
+  const yourEventsArray = [
+    // {
+    //   title: 'Event 1',
+    //   start: new Date(2024, 1, 1),
+    //   end: new Date(2024, 1, 2),
+    // },
+    // Add more events as needed
+  ];
+
+  let filterProps = { onSearch: getData, size, setError, data, handleViewChange };
   const subProps = { visible, setVisible, sites, setSites, onDone };
 
   return (
@@ -89,29 +120,25 @@ function Screen(props){
         {error && <Error1 error={error} />}
         <div className='i_list_cont_z' id='solve_lists'>
           <Filter {...filterProps} />
-          {/* <TimeTable events={data}
-          renderHour={renderHour}
-          renderEvent={renderEvent}
-          hoursInterval={[7, 24]}
-          timeLabel="Time :)"/> */}
-          {/* <Calendar/> */}
-          {/* <TimeTable 
-            events={{
-              monday: [
-                {
-                  id: 1,
-                  name: "Custom Event 1",
-                  type: "custom",
-                  startTime: new Date("2018-02-23T12:30:00"),
-                  endTime: new Date("2018-02-23T14:00:00"),
-                },
-              ],
-              tuesday: [],
-              wednesday: [],
-              thursday: [],
-              friday: [],
+          <Calendar localizer={localizer} view={view} 
+            // toolbar={null}
+            // showAllDay={false}
+            events={yourEventsArray}
+            startAccessor="start"
+            endAccessor="end"
+            className='tm_bc_back'
+            timeslots={4}
+            step={15}
+            views={['month', 'week', 'work_week', 'day']}
+            onView={ handleViewChange}  
+            formats={customFormats}
+            components={{ 
+              month: { 
+                header: customMonthHeader,
+              },
+              toolbar: customToolbar,
             }}
-  style={{ height: '500px' }}/> */}
+          />
         </div>
       </Overlay>
     </div>
