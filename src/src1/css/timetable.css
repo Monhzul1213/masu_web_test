@@ -445,9 +445,10 @@
 .custom-toolbar span {
   font-size: 18px;
 }
-/* .tm_bc_back{
-  
-} */
+.tm_bc_back{
+    display: flex;
+    flex-flow: row;
+}
 .rbc-timeslot-group{
   min-height: 120px;
   /* background-color: var(--back-color); */
@@ -464,5 +465,23 @@
   max-height: 630px;
 }
 .rbc-calendar {
-  min-height: 580px;
+  min-height: 680px;
+  flex:1;
+}
+.day_calendar .ant-picker-calendar-header{
+  display: none;
+}
+.day_calendar{
+  margin-top: 10px;
+}
+.day_text{
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--back-color);
+  justify-content: center;
+  margin-top: 25px;
+}
+.day_calendar.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-content{
+  height: 30px;
 }
