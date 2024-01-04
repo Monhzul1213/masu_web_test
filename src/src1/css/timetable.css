@@ -411,3 +411,58 @@
   font-weight: 450;
   margin: 10px 0 3px 0;
 }
+
+.rp_h_back2 .rp_select_back3 {
+  width: 234px;
+}
+
+.rp_select_back3{
+  background-color: var(--back-color);
+  height: 36px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  width: 180px;
+}
+.rp_date_back_z {
+  background-color: var(--back-color);
+  height: 36px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+.rbc-allday-cell {
+  display: none !important;
+}
+.custom-toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.custom-toolbar span {
+  font-size: 18px;
+}
+/* .tm_bc_back{
+  
+} */
+.rbc-timeslot-group{
+  min-height: 120px;
+  /* background-color: var(--back-color); */
+}
+.rbc-header{
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  justify-content: center;
+}
+.rbc-time-content{
+  border-top: 1px solid #ddd;
+  overflow-y: scroll;
+  max-height: 630px;
+}
+.rbc-calendar {
+  min-height: 580px;
+}
