@@ -137,7 +137,7 @@
     "/system/notification/noti_add": "Мэдэгдэл",
     "/system/rating": "Үнэлгээ",
     "/system/rating/rating_add": "Үнэлгээ бүртгэх",
-    "/timetable": "Цаг авах хуваарь",
+    "/timetable/timeschedule": "Цаг авах хуваарь",
     "/timetable/service": "Үйлчилгээ ажилтнаар"
   },
   "menu": {
