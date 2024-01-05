@@ -42,6 +42,7 @@ function Screen(props){
     let api = 'Txn/GetSchedule' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
+    console.log(response?.data)
     if(response?.code === 2000){
       // comment
       // isNew or isExpired
@@ -68,7 +69,7 @@ function Screen(props){
 
   let filterProps = { onSearch: getData, size, setError, data, handleViewChange };
   const subProps = { visible, setVisible, sites, setSites, onDone };
-  const calendarProps = { view, handleViewChange}
+  const calendarProps = { view, handleViewChange, day, setDay}
 
   return (
     <div className='s_container_r'>
@@ -77,10 +78,10 @@ function Screen(props){
         {error && <Error1 error={error} />}
         <div className='i_list_cont_z' id='solve_lists'>
           <Filter {...filterProps} />
-          <div className='tm_bc_back'>
+          {/* <div className='tm_bc_back'> */}
             <BigCalendar {...calendarProps}/>
-            {view === 'day' && <Day />}
-          </div>
+            {/* {view === 'day' && <Day day={day} setDay ={setDay} />} */}
+          {/* </div> */}
         </div>
       </Overlay>
     </div>

@@ -449,9 +449,9 @@
     display: flex;
     flex-flow: row;
 }
-.rbc-timeslot-group{
+.rbc-time-column .rbc-timeslot-group{
   min-height: 120px;
-  /* background-color: var(--back-color); */
+  background-color: var(--back-color);
 }
 .rbc-header{
   display: flex;
@@ -480,8 +480,24 @@
   font-weight: 500;
   border-bottom: 1px solid var(--back-color);
   justify-content: center;
-  margin-top: 25px;
+  margin-top: 20px;
 }
 .day_calendar.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-content{
-  height: 30px;
+  height: 20px;
+}
+.rbc-day-slot .rbc-time-slot{
+  border-bottom: 1px solid var(--root-color);
+}
+.rbc-time-view .rbc-row {
+  height: 40px;
+}
+.rbc-header{
+  font-weight: normal;
+  font-size: 50%;
+}
+.rbc-month-header{
+  height: 40px;
+}
+.custom-toolbar span{
+  font-size: 15px;
 }
