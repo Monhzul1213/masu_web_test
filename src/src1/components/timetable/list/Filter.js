@@ -10,7 +10,7 @@ import { Add } from '../add/Add';
 import { getList } from '../../../../services';
 
 export function Filter(props){
-  const { setError, size, handleViewChange } = props;
+  const { setError, size, handleViewChange, onSearch } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(null);
   const [date, setDate] = useState([moment(), moment().add(7, 'days')]);
@@ -35,10 +35,12 @@ export function Filter(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
-  const onHide = () => {
-    // let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
-    // onSearch && onSearch(query, filter1, date);
-  }
+  // const onHide = () => {
+  //   let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+  //   // let api = '?SiteID=' + site;
+  //   if(site) query += '&SiteID=' + site
+  //   onSearch && onSearch(query);
+  // }
 
   const onChangeDay = value => {
     setDay(value)
@@ -70,14 +72,31 @@ export function Filter(props){
     }
   }
 
-  const onSelectSite = value => {
-    setSite(value);
-    // getData(value);
+  // const onSelectSite = value => {
+  //   setSite(value);
+  //   let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+  //   // let api = '?SiteID=' + site;
+  //   if(site === -1) query += '&SiteID=' + value
+  //   // console.log(site)
+  //   // getData(value); 
+  //   // let api = '?SiteID=' + value;
+  //   onSearch(query);
+  // }
+  const onHide = (site) => {
+    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    if(site !== -1) query += '&SiteID=' + site;
+    onSearch(query);
   }
 
-  const siteProps = { value: site, setValue: onSelectSite, data: sites, s_value: 'siteId', s_descr: 'name',
+  const onChangeSite = value => {
+    setSite(value);
+    onHide(value);
+  }
+
+
+  const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name',
   classBack: 'rp_select_back3', className: 'rp_select', onFocus: onFocusSite, loading: loading === 'sites' };
-  const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back_z', className: 'rp_date' };
+  const dateProps = { value: date, setValue: setDate, onHide: () => onHide(site), classBack: 'rp_date_back_z', className: 'rp_date' };
   const dayProps = { value: day, setValue: onChangeDay, data: week, s_value: 'value', s_descr: 'label', 
   onHide, classBack: 'rp_select_back3', className: 'rp_select',};
   const addProps = { day, site, sites, date, setDate }

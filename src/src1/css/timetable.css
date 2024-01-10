@@ -445,12 +445,13 @@
 .custom-toolbar span {
   font-size: 18px;
 }
-/* .tm_bc_back{
-  
-} */
-.rbc-timeslot-group{
+.tm_bc_back{
+    display: flex;
+    flex-flow: row;
+}
+.rbc-time-column .rbc-timeslot-group{
   min-height: 120px;
-  /* background-color: var(--back-color); */
+  background-color: var(--back-color);
 }
 .rbc-header{
   display: flex;
@@ -464,5 +465,43 @@
   max-height: 630px;
 }
 .rbc-calendar {
-  min-height: 580px;
+  min-height: 680px;
+  flex:1;
+}
+.day_calendar .ant-picker-calendar-header{
+  display: none;
+}
+.day_calendar{
+  margin-top: 10px;
+}
+.day_text{
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--back-color);
+  justify-content: center;
+  margin-top: 20px;
+}
+.day_calendar.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-content{
+  height: 20px;
+}
+.rbc-day-slot .rbc-time-slot{
+  border-bottom: 1px solid var(--root-color);
+}
+.rbc-time-view .rbc-row {
+  height: 40px;
+}
+.rbc-header{
+  font-weight: normal;
+  font-size: 50%;
+}
+.rbc-month-header{
+  height: 40px;
+}
+.custom-toolbar span{
+  font-size: 15px;
+}
+.tm_calendar .rbc-event{
+  background-color: #BE6DF3;
+  border-color: #BE6DF3;
 }

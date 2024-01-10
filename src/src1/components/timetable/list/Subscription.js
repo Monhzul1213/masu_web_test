@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
-import { banks, divide, formatNumber, siteSubscriptions, siteSubscriptions1 } from '../../../../helpers';
+import { banks, config, divide, encrypt, formatNumber, siteSubscriptions, siteSubscriptions1 } from '../../../../helpers';
 import { getList, sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
 import { Check, DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../../components/all';
@@ -65,7 +65,7 @@ export function Subscription(props){
       let siteID = [];
       sites?.forEach(item => { if(item?.checked) siteID?.push(item?.siteId); });
       let data = { invoicetime: selected?.length, invoiceAmount: amt, siteID }
-      let response = await dispatch(sendRequest(user, token, 'Txn/ModSiteInvoice', data));
+      let response = await dispatch(sendRequest(user, token, 'Txn/ModScheduleInvoice', data));
       if(response?.error) setError(response?.error);
       else {
         if(selected?.value === 2){
@@ -82,10 +82,17 @@ export function Subscription(props){
   const onClose = () => {
     setSites([]);
     setVisible(false);
-    // if(!noBack) navigate(-1);
+    if(!noBack) navigate(-1);
   }
 
-  const stepProps = { current, steps, onBack: onClose, onDone, onNext };
+  const onPressExport = () => {
+    let msg = txnNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/statement?invoiceno=' + encodeURIComponent(code);
+    window.open(url);
+  }
+
+  const stepProps = { current, steps, onBack: onClose, onDone, onNext, onPressExport };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={640}>
@@ -184,6 +191,7 @@ function Pay(props){
     let response = await dispatch(getList(user, token, api));
     if(!response?.error){
       let invoice = response?.data && response?.data[0]?.status;
+      // console.log(api)
       if(invoice === 3){
         if (setVisible1) setVisible1(true)
         else if(onDone) onDone()

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Drawer as AntDrawer } from 'antd';
 import { useTranslation } from 'react-i18next';
+import { IoLocationOutline } from "react-icons/io5";
+
 import '../../../../css/report.css';
 import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all/all_m';
 
@@ -51,10 +53,11 @@ export function Drawer(props){
 
     return (
       <div className='dr_field'>
-        <DynamicRIIcon className='dr_field_icon' name={icon} />
+        {label !== 'orders.location' ? <DynamicRIIcon className='dr_field_icon' name={icon} /> :
+        <IoLocationOutline className='dr_field_icon'/>}
         <p className='dr_field_label'>{t(label)}</p>
         <p className='dr_field_label1'>:</p>
-        <p className='dr_field_value'>{value}</p>
+        <p className='dr_field_value_z'>{value}</p>
       </div>
     )
   }
@@ -70,6 +73,7 @@ export function Drawer(props){
         <Field icon='RiDeviceLine' label='report_receipt.pos' value={selected?.terminalName} />
         <Field icon='RiStore2Line' label='report_receipt.dr_site' value={selected?.siteName} />
         <Field icon='RiBillLine' label='report_receipt.dr_no' value={selected?.salesNo} />
+        <Field icon='IoLocationOutline' label='orders.location' value={selected?.ticket} />
         <div className='dr_header'>
           <p className='dr_header_text1'>{t('report_receipt.invt')}</p>
           <p className='dr_header_text2'>{t('report_receipt.qty')}</p>

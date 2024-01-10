@@ -35,8 +35,10 @@ export const ExportExcel2 = ({ excelData, columns, fileName, text }) => {
     let excelData1 = excelData?.map(item => {
       let newItem = {};
       columns?.forEach(col => {
-        let accessor = col.accessor?.split('.');
-        newItem[col.exLabel] = item[accessor[0]][accessor[1]];
+        if(col?.exLabel){
+          let accessor = col.accessor?.split('.');
+          newItem[col.exLabel] = item[accessor[0]][accessor[1]];
+        }
       });
       return newItem;
     });

@@ -3,15 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
-// import { useTranslation } from 'react-i18next';
-import {Calendar, momentLocalizer} from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 
 import { getList } from '../../../services';
 import { Error1, Overlay } from '../../components/all/all_m';
 import { Filter } from '../../components/timetable/list'
 import { Subscription } from '../../components/timetable/list/Subscription';
-import { cal } from '../../../helpers';
+import { BigCalendar } from '../../components/timetable/list/Calendar';
 
 function Screen(props){
   // const { t } = useTranslation();
@@ -21,7 +18,8 @@ function Screen(props){
   const [data, setData] = useState(null);
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState([]);
-  const [view, setView] = useState('month');
+  const [view, setView] = useState('week');
+  const [day, setDay] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,6 +41,7 @@ function Screen(props){
     let api = 'Txn/GetSchedule' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
+    // console.log(response?.data, api)
     if(response?.code === 2000){
       // comment
       // isNew or isExpired
@@ -63,55 +62,13 @@ function Screen(props){
     // onSearch(query);
   }
 
-  const localizer = momentLocalizer(moment)
-
   const handleViewChange = (view) => {
     setView(view)
   };
 
-  const customFormats = {
-    dayFormat: (date, culture, localizer) => 
-      localizer.format(date, 'dddd', culture) === 'Monday' ? 'Даваа ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Tuesday' ? 'Мягмар ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Wednesday' ? 'Лхагва ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Thursday' ? 'Пүрэв ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Friday' ? 'Баасан ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Saturday' ? 'Бямба ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Sunday' ? 'Ням ' + localizer.format(date, 'MM/DD', culture) : '',
-    timeGutterFormat: 'HH:mm',
-    dayHeaderFormat: (date, culture, localizer) => 
-      localizer.format(date, 'dddd', culture) === 'Monday' ? 'Даваа ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Tuesday' ? 'Мягмар ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Wednesday' ? 'Лхагва ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Thursday' ? 'Пүрэв ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Friday' ? 'Баасан ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Saturday' ? 'Бямба ' + localizer.format(date, 'MM/DD', culture)
-      : localizer.format(date, 'dddd', culture) === 'Sunday' ? 'Ням ' + localizer.format(date, 'MM/DD', culture) : '',   
-  };
-
-  const customMonthHeader = ({ label }) => {
-    return (
-      <span>{label === 'Mon' ? 'Даваа' : label === 'Tue' ? 'Мягмар' : label === 'Wed' ? 'Лхагва' : label === 'Thu' ? 'Пүрэв'
-            : label === 'Fri' ? 'Баасан': label === 'Sat' ? 'Бямба': label === 'Sun' ? 'Ням' : ''}</span>
-    )};
-
-  const customToolbar = (toolbar) => {
-      const { label } = toolbar;
-      return (
-        <div className="custom-toolbar">{view === 'day' ?  <span>{label}</span>: null}</div>
-  )};
-
-  const yourEventsArray = [
-    // {
-    //   title: 'Event 1',
-    //   start: new Date(2024, 1, 1),
-    //   end: new Date(2024, 1, 2),
-    // },
-    // Add more events as needed
-  ];
-
   let filterProps = { onSearch: getData, size, setError, data, handleViewChange };
   const subProps = { visible, setVisible, sites, setSites, onDone };
+  const calendarProps = { view, handleViewChange, day, setDay, setData, data}
 
   return (
     <div className='s_container_r'>
@@ -120,25 +77,10 @@ function Screen(props){
         {error && <Error1 error={error} />}
         <div className='i_list_cont_z' id='solve_lists'>
           <Filter {...filterProps} />
-          <Calendar localizer={localizer} view={view} 
-            // toolbar={null}
-            // showAllDay={false}
-            events={yourEventsArray}
-            startAccessor="start"
-            endAccessor="end"
-            className='tm_bc_back'
-            timeslots={4}
-            step={15}
-            views={['month', 'week', 'work_week', 'day']}
-            onView={ handleViewChange}  
-            formats={customFormats}
-            components={{ 
-              month: { 
-                header: customMonthHeader,
-              },
-              toolbar: customToolbar,
-            }}
-          />
+          {/* <div className='tm_bc_back'> */}
+            <BigCalendar {...calendarProps}/>
+            {/* {view === 'day' && <Day day={day} setDay ={setDay} />} */}
+          {/* </div> */}
         </div>
       </Overlay>
     </div>

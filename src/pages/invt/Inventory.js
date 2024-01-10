@@ -8,7 +8,7 @@ import { message } from 'antd';
 import '../../css/invt.css';
 import { deleteMultiRequest, getList, sendRequest } from '../../services';
 import { Confirm, Empty2, Empty1, Error1, Overlay } from '../../components/all';
-import { Header, List } from '../../components/invt/inventory/list';
+import { List } from '../../components/invt/inventory/list';
 
 export function Inventory(){
   const { t } = useTranslation();
@@ -20,8 +20,9 @@ export function Inventory(){
   const [filtering, setFiltering] = useState(false);
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [open, setOpen] = useState(false);
-  const [pageInfo, setPageInfo] = useState({ pageNumber: 1, pageSize: 25, totalPage: 1 });
+  const [pageInfo, setPageInfo] = useState({ pageNumber: 1, pageSize: 300, totalPage: 1 });
   const [filter, setFilter] = useState([]);
+  const [excelName, setExcelName] = useState('');
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ export function Inventory(){
     const response = await dispatch(getList(user, token, api));
     setInventory(response, response?.data?.inventoryies, response?.data?.pageInfo);
     setFiltering(false);
+    setExcelName(t('header./inventory'))
   }
 
   const onSearch = async (filter, isEdit) => {
@@ -93,7 +95,7 @@ export function Inventory(){
       let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
       setInventory(response, response?.data);
       setFiltering(true);
-      setPageInfo({ pageNumber: 1, pageSize: 25, totalPage: 1 });
+      setPageInfo({ pageNumber: 1, pageSize: 300, totalPage: 1 });
     } else 
       getInventory(pageInfo, isEdit);
   }
@@ -139,9 +141,8 @@ export function Inventory(){
   const onClickImport = () => navigate('invt_import');
 
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd, onClickImport };
-  const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats: categories };
   const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory,
-    autoResetExpanded, pageInfo, getInventory, filtering };
+    autoResetExpanded, pageInfo, getInventory, filtering, onClickDelete, show, setError, onSearch, cats: categories, excelName};
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
@@ -152,7 +153,6 @@ export function Inventory(){
         {!data?.length && !filtering ? <Empty2 {...emptyProps} /> :
           <SizeMe>{({ size }) => 
             <div className='i_list_cont' id='invt_list'>
-              <Header {...headerProps} size={size} />
               {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
             </div>
           }</SizeMe>

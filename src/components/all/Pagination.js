@@ -87,9 +87,9 @@ export function Pagination(props){
 export function PaginationTable(props){
   const { tableInstance } = props;
   const [page, setPage] = useState(1);
-  const pageRange = [10, 25, 50, 100];
   const { canPreviousPage, canNextPage, pageCount, gotoPage, nextPage, previousPage, setPageSize,
-    state: { pageIndex, pageSize }} = tableInstance;
+    state: { pageIndex, pageSize, size }} = tableInstance;
+  const pageRange = size ? [300, 600, 1000] : [10, 25, 50, 100];
 
   useEffect(() => {
     setPage(pageIndex + 1);
@@ -145,9 +145,9 @@ export function PaginationTable(props){
 
 
 export function PaginationList(props){
-  const { pageInfo, getInventory } = props;
+  const { pageInfo, getInventory, size } = props;
   const [value, setValue] = useState(1);
-  const pageRange = [10, 25, 50, 100];
+  const pageRange = size ? [300, 600, 1000] : [10, 25, 50, 100];
   const page = pageInfo?.pageNumber ?? 1;
   const count = pageInfo?.totalPage ?? 1;
 

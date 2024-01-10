@@ -200,3 +200,13 @@
     margin-right: 7px;
     font-size: 18px;
   }
+
+  .dr_field_value_z {
+    color: var(--text-color);
+    font-size: 14px;
+    margin: 0;
+    font-weight: 500;
+    line-height: 16px;
+    flex: 1;
+    white-space: pre-wrap;
+  }
