@@ -8,7 +8,6 @@ import { getList } from '../../../services';
 import { Error1, Overlay } from '../../components/all/all_m';
 import { Filter } from '../../components/timetable/list'
 import { Subscription } from '../../components/timetable/list/Subscription';
-import { Day } from '../../components/timetable/list/Day';
 import { BigCalendar } from '../../components/timetable/list/Calendar';
 
 function Screen(props){
@@ -19,7 +18,7 @@ function Screen(props){
   const [data, setData] = useState(null);
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState([]);
-  const [view, setView] = useState('month');
+  const [view, setView] = useState('week');
   const [day, setDay] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -42,7 +41,7 @@ function Screen(props){
     let api = 'Txn/GetSchedule' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response?.data)
+    // console.log(response?.data, api)
     if(response?.code === 2000){
       // comment
       // isNew or isExpired
@@ -69,7 +68,7 @@ function Screen(props){
 
   let filterProps = { onSearch: getData, size, setError, data, handleViewChange };
   const subProps = { visible, setVisible, sites, setSites, onDone };
-  const calendarProps = { view, handleViewChange, day, setDay}
+  const calendarProps = { view, handleViewChange, day, setDay, setData, data}
 
   return (
     <div className='s_container_r'>

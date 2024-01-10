@@ -1,15 +1,14 @@
-import React, { useState,  } from 'react';
+import React from 'react';
 import moment from 'moment';
 import {Calendar, momentLocalizer} from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Day } from './Day';
-
+import { IoCheckbox } from "react-icons/io5";
 export function BigCalendar(props){
   // const { t } = useTranslation();
-  const { view, handleViewChange, day, setDay } = props;
+  const { view, handleViewChange, data, setDay } = props;
   const localizer = momentLocalizer(moment)
-    const [sites, setSites] = useState([]);
-
+  
   const customFormats = {
     dayFormat: (date, culture, localizer) => 
       localizer.format(date, 'dddd', culture) === 'Monday' ? 'Даваа ' + localizer.format(date, 'MM/DD', culture)
@@ -36,45 +35,46 @@ export function BigCalendar(props){
               : label === 'Fri' ? 'Баасан': label === 'Sat' ? 'Бямба': label === 'Sun' ? 'Ням' : ''}
         </span>
     )};
+
   const customDayHeader = (label) => {
-    // console.log(label?.label)
     return (
         <span>{label?.label}</span>
     )
   };
 
   const customToolbar = (toolbar) => {
-      // console.log(toolbar)
       const { label } = toolbar;
       return (
         <div className="custom-toolbar">{view === 'day' ?  <span>{label}</span>: null}</div>
   )};
 
-  const yourEventsArray = [
-    // {
-    //   title: 'Event 1',
-    //   start: new Date(2024, 1, 1),
-    //   end: new Date(2024, 1, 2),
-    // },
-    // Add more events as needed
-  ];
-
+  const datas = [];
+  data?.forEach(item=> {
+    // console.log(item?.serviceId)
+      let date = new Date(item?.schdDate).toLocaleDateString();
+      let beginTime = moment(date + 'T' + item?.beginTime, 'DD.MM.YYYYTHH:mm').toDate();
+      let endTime = moment(date + 'T' + item?.endTime, 'DD.MM.YYYYTHH:mm').toDate();
+      // datas.push({title: item?.serviceId, start: beginTime, end: endTime, item })
+  })
+  const CustomEvent = ({ event }) => (
+    // console.log(event)
+    <div>
+      {/* <div className='row'>
+      <IoCheckbox />
+              <strong>{event?.item?.employeeId}</strong>
+      </div> */}
+      {/* <div>{event.title}</div> */}
+      {/* <div>{'Zahialagch: '} {event?.item?.employeeId}</div> */}
+    </div>
+  );
   const components = {
-    month: { 
-        header: customMonthHeader,
-    },
-    day: { 
-      header: customDayHeader,
-    },
+    month: { header: customMonthHeader },
+    day: { header: customDayHeader },
     toolbar: customToolbar,
+    event: CustomEvent
   };
-  
-  // const resourceMap = (toolbar) => {
-  //    let resourceMap = [{ resourceId: 1, resourceTitle: 'day'}] 
-  //    return resourceMap
-  // };
 
-  const resourceMap = [{ resourceId: 1, resourceTitle: 'day' }]
+  // const resourceMap = [{ resourceId: 1, resourceTitle: 'day' }]
   const dayProps = { customDayHeader, setDay}
 
   return (
@@ -82,7 +82,7 @@ export function BigCalendar(props){
       <Calendar localizer={localizer} 
           className='tm_calendar'
           view={view} 
-          events={yourEventsArray}
+          events={datas}
           startAccessor="start"
           endAccessor="end"
           timeslots={4}

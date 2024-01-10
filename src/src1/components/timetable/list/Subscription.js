@@ -65,7 +65,7 @@ export function Subscription(props){
       let siteID = [];
       sites?.forEach(item => { if(item?.checked) siteID?.push(item?.siteId); });
       let data = { invoicetime: selected?.length, invoiceAmount: amt, siteID }
-      let response = await dispatch(sendRequest(user, token, 'Txn/ModSiteInvoice', data));
+      let response = await dispatch(sendRequest(user, token, 'Txn/ModScheduleInvoice', data));
       if(response?.error) setError(response?.error);
       else {
         if(selected?.value === 2){
@@ -82,7 +82,7 @@ export function Subscription(props){
   const onClose = () => {
     setSites([]);
     setVisible(false);
-    // if(!noBack) navigate(-1);
+    if(!noBack) navigate(-1);
   }
 
   const onPressExport = () => {
@@ -191,7 +191,7 @@ function Pay(props){
     let response = await dispatch(getList(user, token, api));
     if(!response?.error){
       let invoice = response?.data && response?.data[0]?.status;
-      console.log(api)
+      // console.log(api)
       if(invoice === 3){
         if (setVisible1) setVisible1(true)
         else if(onDone) onDone()

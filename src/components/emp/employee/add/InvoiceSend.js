@@ -72,7 +72,7 @@ export function InvoiceSend(){
             <Info header={header} url={url} />
             <Header />
             <Items  detail={detail}/>
-            <Footer header={header}/>
+            <Footer detail={detail}/>
             <Sign header={header}/>
           </div>
         }

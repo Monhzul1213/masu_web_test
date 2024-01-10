@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { getList } from '../../../../services';
 import { Button, ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
 import { SearchInput } from './SearchInput';
+import { ExportExcel2 } from '../../../../helpers';
 
 export function Header(props){
-  const { onClickAdd, onClickDelete, show, setError, onSearch, cats, size } = props;
+  const { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName } = props;
   const { t } = useTranslation();
   const [sites, setSites] = useState([{siteId: -1, name: t('pos.all')}]);
   const [site, setSite] = useState(-1);
@@ -82,7 +83,7 @@ export function Header(props){
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
   const importProps = { className: 'ih_btn', text: t('page.import'), onClick: onClickImport };
-  const exportProps = { className: 'ih_btn', text: t('page.export'), disabled: true };
+  const exportProps = { text: t('page.export'), columns: columns, excelData: data, fileName: excelName};
 
   return (
     <div className='ih_header' id={id}>
@@ -90,7 +91,7 @@ export function Header(props){
         <ButtonRowAdd {...addProps} />
         <div className='ih_btn_row'>
           <Button {...importProps} />
-          <div style={{ display: 'none' }}><Button {...exportProps} /></div>
+          <ExportExcel2 {...exportProps} />
         </div>
       </div>
       <div className='ih_header2' style={style}>

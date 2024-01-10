@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { Money, PaginationTable, Table } from '../../all/all_m';
+import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
+
+import { Money, PaginationTable, Table } from '../../all/all_m';
+import { Detail } from './Detail';
+import { getList } from '../../../../services';
 
 export function List(props){
   const { data, size } = props;
   const [columns, setColumns] = useState([]);
+  const [detail, setDetail] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [maxHeight, setMaxHeight] = useState('300px');
   const { t, i18n } = useTranslation();
+  const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setColumns([
@@ -37,9 +46,10 @@ export function List(props){
         Header: <div style={{textAlign: 'right'}}>{t('system.sub_amount')}</div>, accessor: 'subAmount', customStyle: { width: 80 },
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
       },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('system.sales_amt')}</div>, accessor: 'totalSales', customStyle: { width: 80 },
-        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
+      { Header: <div style={{textAlign: 'right'}}> {t('system.sales_amt')}</div>, accessor: 'totalSales',customStyle: { width: 80 },
+        Cell: ({ value, row, onClickLink }) => {
+          return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} fontSize={14} /></div>);
+        }
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('system.sales_qty')}</div>, accessor: 'salesQty', customStyle: { width: 80 },
@@ -71,12 +81,29 @@ export function List(props){
   }, [size?.width]);
 
 
+  const onClickLink = async (row) => {
+    setVisible(true);
+    setLoading(true);
+    let query = row?.original?.merchantID;
+    let api = 'Merchant/GetMerchantSales?merchantid=' + (query ?? '');
+    const response = await dispatch(getList(user, token, api));
+    // if(response?.error) setError(response?.error);
+    setDetail(response?.data);
+    setLoading(false);
+  }
+
+  const closeModal = () => {
+    setVisible(false);
+  }
+
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'merchantID', desc: true }] }}, useSortBy, usePagination, useRowSelect);
+    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'merchantID', desc: true }] }, onClickLink}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, hasTotal: true , total: data?.length };
+  let detailProps = { data : detail, visible, closeModal, loading};
 
   return (
     <div>
+      {visible && <Detail {...detailProps} />}
       <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />
