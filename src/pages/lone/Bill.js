@@ -48,7 +48,7 @@ export function Bill(){
           <div>
             <Info header={header} bill={bill} />
             <Header />
-            <Items detail={detail} />
+            <Items detail={detail} bill={bill} />
             <Total header={header} />
             <QR header={header} />
             {bill?.footer ? <p className='bl_footer'>{bill?.footer}</p> : null}
