@@ -16,6 +16,7 @@ export function InvoiceSend(){
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
   const [detail, setDetail] = useState(null);
+  const [sum, setSum] = useState(0);
   const [url, setUrl] = useState(null);
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
@@ -39,6 +40,11 @@ export function InvoiceSend(){
       setHeader(response?.data?.retdata && response?.data?.retdata[0]);
       setDetail(response?.data?.retdata);
       setUrl(url1)
+      let sum1 = 0;
+      response?.data?.retdata.forEach(item => {
+         sum1 += item?.amount
+      })
+      setSum(sum1)
     }
     setLoading(false);
   }
@@ -72,7 +78,7 @@ export function InvoiceSend(){
             <Info header={header} url={url} />
             <Header />
             <Items  detail={detail}/>
-            <Footer detail={detail}/>
+            <Footer sum={sum}/>
             <Sign header={header}/>
           </div>
         }

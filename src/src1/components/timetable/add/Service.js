@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Modal, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from 'react-redux';
-import { Icon } from "@iconify/react";
 
 import { ButtonRow, Overlay, Error, Confirm, MonthRange, PlainSelect1 } from "../../all/all_m";
 import { getList, sendRequest } from "../../../../services";
@@ -10,7 +9,7 @@ import { AddList } from "./AddList";
 import moment from "moment";
 
 export function Service(props) {
-  const { visible, selected, closeModal, day, site, sites, date, setDate } = props;
+  const { visible, selected, closeModal, day, site, sites, date, setDate, repeatType } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -57,7 +56,7 @@ export function Service(props) {
                 status: 0, serviceID: invt?.value, employeeID: emp?.value, serviceTime: 0,
                 schdDate: item?.date.format("YYYY-MM-DD dddd"),
                 beginTime: item?.beginTime ? item?.beginTime?.replace(/-/g, '0') : '09:00', endTime: item?.endTime ? item?.endTime?.replace(/-/g, '0') : '18:00',
-                isRepeat: repeat ? 1 : 0, repeatType: repeat ? day : '', rowStatus: selected ? 'U' : 'I'
+                isRepeat: repeat ? 1 : 0, repeatType: repeat ? repeatType : '', rowStatus: selected ? 'U' : 'I'
               })
             })
           }
@@ -68,7 +67,7 @@ export function Service(props) {
           status: 0, serviceID: invt?.value, employeeID: emp?.value, serviceTime: 0,
           schdDate: item?.date.format("YYYY-MM-DD dddd"),
           beginTime: item?.beginTime ? item?.beginTime?.replace(/-/g, '0') : '09:00',
-          endTime: item?.endTime ? item?.endTime?.replace(/-/g, '0') : '18:00', isRepeat: repeat ? 1 : 0, repeatType: repeat ? day : '', rowStatus: selected ? 'U' : 'I'
+          endTime: item?.endTime ? item?.endTime?.replace(/-/g, '0') : '18:00', isRepeat: repeat ? 1 : 0, repeatType: repeat ? repeatType : '', rowStatus: selected ? 'U' : 'I'
         })
       })
     }
@@ -154,7 +153,7 @@ export function Service(props) {
   const empProps = { value: emp, setValue: onChangeEmp, data: emps, s_value: 'empCode', s_descr: 'empName', onHide, setError,
   classBack, className, onFocus: onFocusEmp, loading: loading === 'emps', placeholder: t('employee.add') , label: t('employee.title') };
   const invtProps = { value: invt, setValue: onChangeInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide, setError,
-  classBack, className, onFocus: onFocusInvt, loading: loading === 'emps', placeholder: t('timetable.service'), label: t('report.invtName') };
+  classBack, className, onFocus: onFocusInvt, loading: loading === 'emps', placeholder: t('timetable.service_add'), label: t('report.invtName') };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={550}>
@@ -162,7 +161,6 @@ export function Service(props) {
       <Overlay loading={loading}>
         <div className="m_back">
           <div className="tm_title_row">
-            <Icon icon="mdi:timetable" className="tm_title_icon" />
             <p className="tm_title">{t("timetable.service_date")}</p>
           </div>
           <MonthRange {...dateProps} />

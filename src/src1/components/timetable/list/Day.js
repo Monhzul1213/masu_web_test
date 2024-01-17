@@ -3,20 +3,21 @@ import { Calendar } from 'antd';
 import moment from 'moment';
 
 export function Day(props){
-  const { customDayHeader, setDay, resourceMap } = props;
+  const { onNavigate, value, setValue, onSearch } = props;
   const [text, setText] = useState(moment()?.format('MMMM YYYY'));
 
   const onChange = (value) => {
     setText(value.format('MMMM YYYY'))
-    setDay(value.format('MMMM YYYY'))
-    customDayHeader({label: value})
-    // console.log(value)
+    onNavigate(value.toDate(), 'Өдөр')
+    setValue(value)
+    let query = '?BeginDate=' + value?.format('yyyy.MM.DD') + '&EndDate=' +value?.format('yyyy.MM.DD');
+    onSearch(query)
   };
 
   return ( 
     <div style={{width: 300}}>
         <p className='day_text'>{text}</p>
-        <Calendar className='day_calendar' onChange={onChange}/>
+        <Calendar className='day_calendar' value={value} onChange={onChange}/>
     </div>
   );
 }

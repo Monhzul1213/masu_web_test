@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
-import { PaginationTable, Table, DynamicBSIcon } from '../../../all/all_m';
+import { DynamicBSIcon, TableText } from '../../../all/all_m';
 import { ItemSelect, SelectItem } from './SelectItem';
 import { Rating } from 'react-simple-star-rating'
 
 export function Card(props){
-  const { data, setData, search, setSearch,size, setDKits, type } = props;
+  const { data, setData, search, setSearch, setDKits, type } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -23,7 +23,7 @@ export function Card(props){
       { Header: <div >{t('rating.title')}</div>, accessor: 'rating', width: 70,
         Cell: ({ value }) => ( <div>{ <Rating size={20} initialValue={value} readonly/>}</div>)
       },
-      { Header: <div >{t('rating.ratingText')}</div>, accessor: 'ratingText', width: 70 },
+      // { Header: <div >{t('rating.ratingText')}</div>, accessor: 'ratingText', width: 70 },
       data?.length === 0 ? { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>
           (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
@@ -46,27 +46,22 @@ export function Card(props){
       isShow : cust?.status, address: cust?.address};
   }
 
-  const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
-
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const tableInstance = useTable({ columns, data, autoResetPage: false, 
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'showDate', desc: true }] }, onClickDelete },
+    initialState: { pageIndex: 0, pageSize: 10000, sortBy: [{ id: 'showDate', desc: true }] }, onClickDelete },
     useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, detailName: 'ratingText', colSpan: 5 };
   const selectProps = { search, setSearch, data, setData, newItem, type };
 
   return (
     <div className='ia_back_z1'>
       <p className='ac_title'>{t('noti.selected_cus')}</p> 
-      {<>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
-          <Table {...tableProps} />
+      <div >
+        <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight}}>
+          <TableText {...tableProps} />
         </div>
         <ItemSelect {...selectProps} />
-        <div className={classPage}>
-          <PaginationTable {...tableProps} />
-        </div>
-      </>}
+      </div>
     </div>
   );
 }

@@ -63,7 +63,7 @@ function Screen(props){
       setTotal({totalQty, totalAmt, salesQty, returnQty, salesAmt, returnAmt});
       setData(response?.data);      
       setData1(response?.data?.item);
-      response?.data?.list?.filter(item => {
+      response?.data?.list?.forEach(item => {
         let acc = item.ticketDescr.split('|')
         let a = acc[0] ? acc[0] + '\n': ''; let b = acc[1] ? acc[1]  + '\n': ''; let c = acc[2] ? acc[2]+ '\n': '' ; let d = acc[3] ? acc[3]: '';
         item.ticket = a + b + c + d
