@@ -3,13 +3,13 @@ import { Modal, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from 'react-redux';
 
-import { ButtonRow, Overlay, Error, Confirm, MonthRange, PlainSelect1 } from "../../all/all_m";
+import { ButtonRow, Overlay, Error, Confirm, MonthRange, PlainSelect1, DynamicMDIcon } from "../../all/all_m";
 import { getList, sendRequest } from "../../../../services";
 import { AddList } from "./AddList";
 import moment from "moment";
 
 export function Service(props) {
-  const { visible, selected, closeModal, day, site, sites, date, setDate, repeatType } = props;
+  const { visible, selected, closeModal, day, site, sites, repeatType, onSearch, filter } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -17,7 +17,7 @@ export function Service(props) {
   const [checked, setChecked] = useState([]);
   const [repeat, setRepeat] = useState(false);
   const [dates, setDates] = useState([]);
-  // const [date, setDate] = useState([moment(), moment().add(7, "days")]);
+  const [date, setDate] = useState([moment(), moment().add(7, "days")]);
   const [emp, setEmp] = useState({value: null});
   const [emps, setEmps] = useState([]);
   const [invt, setInvt] = useState({value: null});
@@ -33,18 +33,17 @@ export function Service(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const checkValid = () => {
-    if(invt?.value && emp?.value){
-      return true;
-    } else {
-      if(!invt?.value) setInvt({ value: null, error: t('profile.select') });
-      if(!emp?.value) setEmp({ value: null, error: t('profile.select') });
-    }
-  }
+  // const checkValid = () => {
+  //   if(invt?.value && emp?.value){
+  //     return true;
+  //   } else {
+  //     if(!invt?.value) setInvt({ value: null, error: t('profile.select') });
+  //     if(!emp?.value) setEmp({ value: null, error: t('profile.select') });
+  //   }
+  // }
 
   const onClickSave = async e => {
     e?.preventDefault();
-    if(checkValid()){
     setError(null);
     // setLoading(true);
     let data = [];
@@ -78,9 +77,9 @@ export function Service(props) {
       else {
         closeModal(true);
         message.success(t('timetable.add_success'));
+        onSearch(filter)
       }
     } else setError(t('timetable.schedule_error'))
-    }
   }
 
   const onClickDelete = () => setOpen(true);
@@ -161,6 +160,7 @@ export function Service(props) {
       <Overlay loading={loading}>
         <div className="m_back">
           <div className="tm_title_row">
+            <DynamicMDIcon name ='MdOutlineSchedule' className='tm_title_icon'/>
             <p className="tm_title">{t("timetable.service_date")}</p>
           </div>
           <MonthRange {...dateProps} />

@@ -11,7 +11,7 @@ import { getList } from '../../../../services';
 import { MonthRange } from './Date';
 
 export function Filter(props){
-  const { setError, size, handleViewChange, onSearch, day, setDay, navigateContants, onNavigate, date, setDate, setSDate } = props;
+  const { setError, size, handleViewChange, onSearch, day, setDay, navigateContants, onNavigate, date, setDate, setSDate, filter } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(null);
   // const [date, setDate] = useState([moment().startOf('week'), moment().endOf('week')]);
@@ -56,7 +56,6 @@ export function Filter(props){
       query += '?BeginDate=' + moment().startOf('week')?.format('yyyy.MM.DD') + '&EndDate=' + moment().endOf('week')?.format('yyyy.MM.DD');
     }
     else if(value === "Ажлын өдөр") {
-      console.log(value, 'ajil')
       onNavigate(moment().startOf('week'), "Ажлын өдөр", navigateContants?.DATE)
       handleViewChange('work_week')
       setRepeatType("A")
@@ -96,6 +95,7 @@ export function Filter(props){
   }
 
   const onHide = (site) => {
+    // onNavigate(date[0], day)
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(site !== -1) query += '&SiteID=' + site;
     onSearch(query);
@@ -113,7 +113,7 @@ export function Filter(props){
   className: 'rp_date', navigateContants, onNavigate, day };
   const dayProps = { value: day, setValue: onChangeDay, data: week, s_value: 'value', s_descr: 'label', 
   onHide, classBack: 'rp_select_back3', className: 'rp_select',};
-  const addProps = { day, site, sites, date, setDate, repeatType }
+  const addProps = { day, site, sites, repeatType, onSearch, filter }
   
   return (
     <div className={classH}>

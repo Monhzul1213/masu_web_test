@@ -17,18 +17,12 @@ function Screen(props){
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState([]);
   const [view, setView] = useState('week');
-  const [min, setMin] = useState();
+  const [filter,  setFilter] =   useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
-    // else {
-    //   let dates = [moment()?.startOf('month'), moment()];
-    //   let query = '?BeginDate=' + moment()?.startOf('week')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.endOf('week')?.format('yyyy.MM.DD');
-    //   getData(query);
-    // }
     if(user?.msRole?.webManageItem !== 'Y') navigate({ pathname: '/' });
     else {
       let query = '?BeginDate=' + moment()?.startOf('week')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.endOf('week')?.format('yyyy.MM.DD');  
@@ -44,7 +38,6 @@ function Screen(props){
     let api = 'Txn/GetSchedule' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response?.data, api)
     if(response?.code === 2000){
       // comment
       // isNew or isExpired
@@ -56,12 +49,12 @@ function Screen(props){
     else {
       let datas = [];
       response?.data?.forEach(item=> {
-        let date = new Date(item?.schdDate).toLocaleDateString();
-        let beginTime = moment(date + 'T' + item?.beginTime, 'DD.MM.YYYYTHH:mm').toDate();
-        let endTime = moment(date + 'T' + item?.endTime, 'DD.MM.YYYYTHH:mm').toDate(); 
-        datas.push({title: item?.serviceName, start: new Date(beginTime), end: new Date(endTime), item })
-        setMin(beginTime)
+        let date = moment(item?.schdDate)?.format('YYYY.MM.DD')
+        let beginTime = moment(date + 'T' + item?.beginTime, 'YYYY.MM.DDTHH:mm').toDate();
+        let endTime = moment(date + 'T' + item?.endTime, 'YYYY.MM.DDTHH:mm').toDate(); 
+        datas.push({title: item?.serviceName, start: beginTime, end: endTime, item })
       })
+      setFilter(query)
       setDatas(datas)
       setData(response?.data);
       setLoading(false);
@@ -78,29 +71,15 @@ function Screen(props){
     setView(view)
   };
 
-  const events1 = [
-    {
-      title: 'Event 1',
-      start: new Date(2024, 0, 1, 10, 0),
-      end: new Date(2024, 0, 1, 12, 0),
-    },
-    {
-      title: 'Event 2',
-      start: new Date(2024, 0, 2, 14, 0),
-      end: new Date(2024, 0, 2, 16, 0),
-    },
-    // Add more events as needed
-  ];
-
   const subProps = { visible, setVisible, sites, setSites, onDone };
-  const calendarProps = { view, setView, handleViewChange, setData, datas, onSearch: getData, size, min, setError, data, events1}
+  const calendarProps = { view, setView, handleViewChange, setData, datas, onSearch: getData, size, setError, data, filter}
 
   return (
     <div className='s_container_r'>
       {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        <div className='i_list_cont_z' id='solve_lists'>
+        <div className='i_list_cont_z' style={{marginTop: 10, overflowY: 'scroll', minWidth : 720}}>
           <BigCalendar {...calendarProps}/>
         </div>
       </Overlay>

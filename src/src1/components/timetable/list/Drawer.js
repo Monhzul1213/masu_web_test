@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import '../../../css/report.css';
 import { DynamicAIIcon, Money } from '../../all/all_m';
+import { weekCheck } from '../../../../helpers';
 
 export function Drawer(props){
   const { selected, open, setOpen } = props;
@@ -41,8 +42,13 @@ export function Drawer(props){
         <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onClose} />
         <p className='tm_dr_title'>{t('timetable.order_time')}</p>
         <div className='tm_col'>
-            <p className='dr_row_label'>{selected?.item?.beginTime + '-' + selected?.item?.endTime}</p>
-            <p className='dr_row_value'>{moment(selected?.item?.schdDate)?.format('yyyy.MM.DD dddd')}</p>
+            <p className='dr_row_label'>
+              {selected?.item?.beginTime.split(':')[0] + ':' + selected?.item?.beginTime.split(':')[1]}{'-'}
+              {selected?.item?.endTime.split(':')[0] + ':' + selected?.item?.endTime.split(':')[1]}
+            </p>
+            <p className='dr_row_value'>
+              {weekCheck(moment(selected?.item?.schdDate)?.format('ddd')) + moment(selected?.item?.schdDate)?.format('yyyy.MM.DD') }
+            </p>
         </div>
         <div className='tm_col'>
             <p className='dr_row_label'>{t('employee.title')}</p>

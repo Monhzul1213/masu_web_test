@@ -59,8 +59,8 @@
     display: flex;
     flex-flow: column;
     min-width: 150px;
+    width: 170px;
     box-shadow: 0px 2px 4px -1px rgba(0,0,0,.2),0px 4px 5px 0px rgba(0,0,0,.14),0px 1px 10px 0px rgba(0,0,0,.12);
-    padding: 5px 0;
   }
   
   .tm_menu_btn {
@@ -71,7 +71,7 @@
     font-size: 14px;
     text-align: left;
     font-weight: 400;
-    padding: 5px 20px;
+    padding:  5px 10px;
   }
   
   .tm_menu_btn:hover {
@@ -86,9 +86,9 @@
 
   .tm_title_icon {
     color: var(--config-color);
-    width: 26px;
-    height: 26px;
-    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
   }
   .tm_title {
     color: var(--text2-color);
@@ -433,7 +433,7 @@
 }
 .rbc-header{
   display: flex;
-  font-size: 14px;
+  font-size: 100%;
   align-items: center;
   justify-content: center;
 }
@@ -464,8 +464,8 @@
 .day_calendar.ant-picker-calendar-full .ant-picker-panel .ant-picker-calendar-date-content{
   height: 20px;
 }
-.rbc-day-slot .rbc-time-slot{
-  border-bottom: 1px solid var(--root-color);
+.tm_calendar .rbc-day-slot .rbc-time-slot{
+  border-top: 1px solid var(--back-color);
 }
 .rbc-time-view .rbc-row {
   height: 40px;
@@ -482,33 +482,16 @@
 }
 .tm_calendar .rbc-event{
   background-color: #BE6DF3;
+  height: 30px;
 }
 .tm_calendar .rbc-day-slot .rbc-event, .rbc-day-slot .rbc-background-event{
   border-color: #9B1EED;
+  padding: 0;
 }
 .tm_calendar .rbc-event-label {
   display: none;
 }
-.event_icon{
-  height: 16px;
-  width: 16px;
-  background-color: var(--root-color);
-  color: var(--config-b-color);
-  border-radius: var(--radius);
-  margin-top: 5px;
-}
-.event_label{
-  font-size: 14px;  
-  font-weight: 500;
-  margin: 5px;
-  color: var(--root-color);
-}
-.event_label1{
-  font-size: 14px;
-  font-weight: 550;
-  margin: 5px;
-  color: var(--root-color);
-}
+
 .tm_calendar .rbc-day-slot .rbc-events-container{
   margin-right: 0px;
 }
@@ -518,7 +501,6 @@
   font-size: 16px;
   margin: 0;
   font-weight: 450;
-  /* text-align: center; */
   padding: 25px 0 10px 0;
 }
 .tm_col{
@@ -539,11 +521,10 @@
 }
 .tm_calendar .rbc-event.rbc-selected, .rbc-day-slot .rbc-selected.rbc-background-event{
   background-color: #9B1EED;
-  /* width: 50%; */
 }
-/* .tm_calendar .rbc-month-view{
-  width: 90%;
-} */
+.tm_calendar .rbc-event:hover{
+  background-color: #9B1EED;
+}
 /* ///////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 .tm_cal_back1{
@@ -554,7 +535,42 @@
   display: flex;
   flex-flow: column;
 }
-.tm_cal_back3{
+.tm_list{
   display: flex;
   flex-flow: column;
+}
+.event_icon{
+  min-height: 15px;
+  min-width: 15px;
+  background-color: var(--root-color);
+  color: var(--config-b-color);
+  border-radius: var(--radius);
+  margin-top: 5px;
+}
+.event_label{
+  width: 20px;
+  font-size: 14px;  
+  font-weight: 600;
+  margin: 5px 2px;
+  color: var(--root-color);
+}
+.event_label1{
+  font-size: 13px;
+  font-weight: 550;
+  margin: 5px;
+  color: var(--root-color);
+}
+
+.event_label3{
+  font-size: 12px;
+  font-weight: 600;
+  margin: 5px 2px;
+  color: var(--root-color);
+}
+.tm_calendar .rbc-day-slot .rbc-event-content{
+  word-wrap: normal;
+}
+
+.tm_calendar .rbc-time-column .rbc-timeslot-group{
+  background-color: var(--root-color);
 }
