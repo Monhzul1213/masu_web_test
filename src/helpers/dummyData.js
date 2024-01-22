@@ -561,7 +561,7 @@ export const topColors = [
 ];
 
 export const excelTypes = [
-  'application/vnd.ms-excel',
+  // 'application/vnd.ms-excel',
   'application/msexcel',
   'application/x-msexcel',
   'application/x-ms-excel',

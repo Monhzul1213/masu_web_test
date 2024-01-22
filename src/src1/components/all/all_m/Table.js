@@ -212,3 +212,58 @@ export function NoHeaderTable1(props){
     </table>
   );
 }
+
+export function TableText(props){
+  const { tableInstance, onRowClick, colSpan, detailName } = props;
+
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } = tableInstance;
+
+  return (
+    <table className='table_back1' {...getTableProps()}>
+      <thead>
+        {headerGroups.map(headerGroup => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map(column => {
+              let style = column?.customStyle ?? { };
+              let style1 = column?.isSorted11 ? { color: '#8cc748', flex: 1 } : { flex: 1};
+              return (
+                <th className='table_header_text' {...column.getHeaderProps(column.getSortByToggleProps())} style={style}>
+                  <div className='table_header_cell'>
+                    <span style={style1}>{column.render('Header')}</span>
+                    {!column?.noSort && <Sort data={column} />}
+                  </div>
+                </th>
+              )
+            })}
+          </tr>
+        ))}
+      </thead>
+      <tbody className='table_body_back' {...getTableBodyProps()}>
+        {page.map((row, i) => {
+          // console.log(row)
+          prepareRow(row);
+          return (
+            <>
+              <tr className={row?.isSelected ? 'table_row_selected' : 'table_row'}  {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  let style = cell?.column?.customStyle ?? { };
+                  return (
+                    <td className='table_cell_text1' {...cell.getCellProps()} style={style}
+                      onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
+                      {cell.render('Cell')}
+                    </td>
+                  );
+                })}
+              </tr>
+              {row?.original?.ratingText ?
+              <tr colSpan={colSpan}><td colSpan={colSpan}>
+                <p className='table_detail_text'>{'Санал хүсэлт: '}{row?.original[detailName]}</p>                
+              </td></tr>
+              : null}
+            </>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}

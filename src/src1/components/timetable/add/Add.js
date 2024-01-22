@@ -7,7 +7,7 @@ import { Button, DynamicBSIcon, IconButton } from '../../../../components/all';
 import { Service } from './Service';
 
 export function Add(props){
-  const { day, site, sites, date, setDate } = props;
+  const { day, site, sites, repeatType, onSearch, filter } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -34,15 +34,13 @@ export function Add(props){
     );
   }
 
-  const addProps = { visible, closeModal , day, site, sites, date, setDate }
+  const addProps = { visible, closeModal , day, site, sites, repeatType, onSearch, filter }
   return (
-    <div>
+    <div className='but_add_back'>
       {visible && <Service {...addProps}/>}
       <Dropdown overlay={menu} trigger='click' open={open} onOpenChange={setOpen}>
-        <div className='add_row_back'>
-          <IconButton className='add_row_btn' text={t('timetable' + '.add')} id='add_row_add'
+          <IconButton className='add_row_btn' text={t('timetable.' + 'add')} id='add_row_add'
           icon={<DynamicBSIcon name='BsPlusLg' className='add_row_icon' />}/>
-        </div>
       </Dropdown>
     </div>
 

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getList } from '../../../../services';
 import { Button, ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
 import { SearchInput } from './SearchInput';
-import { ExportExcel2 } from '../../../../helpers';
+import { InventoryExcel } from '../../../../helpers';
 
 export function Header(props){
   const { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName } = props;
@@ -73,6 +73,7 @@ export function Header(props){
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const bStyle = { maxWidth: size?.width > 780 ? 180 : ((size?.width - 52) / 2) };
+  const excelWidth = [{ wpx: 400 }, { wpx: 70 }, { wpx: 70 }, { wpx: 70 }, { wpx: 70 } ];
 
   const addProps = { type: 'inventory', onClickAdd, show, onClickDelete };
   const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
@@ -83,7 +84,7 @@ export function Header(props){
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
   const importProps = { className: 'ih_btn', text: t('page.import'), onClick: onClickImport };
-  const exportProps = { text: t('page.export'), columns: columns, excelData: data, fileName: excelName};
+  const exportProps = { text: t('page.export'), columns: columns, excelData: data, fileName: excelName, width: excelWidth};
 
   return (
     <div className='ih_header' id={id}>
@@ -91,7 +92,7 @@ export function Header(props){
         <ButtonRowAdd {...addProps} />
         <div className='ih_btn_row'>
           <Button {...importProps} />
-          <ExportExcel2 {...exportProps} />
+          <InventoryExcel {...exportProps} />
         </div>
       </div>
       <div className='ih_header2' style={style}>

@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { AutoComplete } from 'antd';
 import { DynamicMDIcon } from '../../all/all_m';
 import ReactInputMask from 'react-input-mask';
-// import { Input, Percent } from '../all/all_m';
 
 export const SelectableCell = props => {
   const { row, column: { id, width }, updateMyData, data, initialValue, handleEnter } = props;
@@ -10,29 +9,17 @@ export const SelectableCell = props => {
   const [open, setOpen] = useState(false);
   const inputRef = useRef(null);
 
-  // useEffect(() => {
-  //   if(select) inputRef?.current?.focus();
-  //   return () => {};
-  // }, [select])
-  
-  // useEffect(() => {
-  //   setValue(initialValue);
-  // }, [initialValue]);
-
   const onChange = (e )=> {
-    // setValue(e);
     updateMyData(row?.index, id, e)
-    // console.log(row?.index, id, e)
   }
 
   const onSelect = (val) => {
-    // setSelect(!select)
     setValue(val)
     setOpen(false)
   };
 
 
-  const handleSearch = (data, option) => {
+  const handleSearch = (data ) => {
     setValue(data)
   };
   
@@ -74,7 +61,6 @@ export const SelectableCell = props => {
         onSelect={onSelect}
         onChange={onChange}
         open= {open}
-        // onClear={onClear}
         value={value}
         options={data}>
         <ReactInputMask onBlur={onBlur} mask={mask} maskChar={'-'} formatChars={formatChars} ref={inputRef} className='c_input'/> 

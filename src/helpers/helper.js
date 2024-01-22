@@ -105,3 +105,23 @@ export function getColor(pct) {
   };
   return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
 }  
+
+export function weekCheck(label){
+  return (label === 'Mon' ? 'Даваа ' : label === 'Tue' ? 'Мягмар ' : label === 'Wed' ? 'Лхагва ' : label === 'Thu' 
+          ? 'Пүрэв ' : label === 'Fri' ? 'Баасан ': label === 'Sat' ? 'Бямба ': label === 'Sun' ? 'Ням ' : '')
+};
+export function monthCheck(label){
+  return (label === '01' ?  "1-р сар" :
+  label === '02' ? '2-р сар' :
+  label === '03' ? '3-р сар' :
+  label === '04' ? '4-р сар' :
+  label === '05' ? '5-р сар' :
+  label === '06' ? '6-р сар' :
+  label === '07' ? '7-р сар' :
+  label === '08' ? '8-р сар' :
+  label === '09' ? '9-р сар' :
+  label === '10' ? '10-р сар' :
+  label === '11' ? '11-р сар' :
+  label === '12' ? '12-р сар' :
+  '')
+};

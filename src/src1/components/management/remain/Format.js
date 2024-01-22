@@ -47,6 +47,7 @@ export function Format(props){
       { Header: t('remain.cost'), accessor: 'cost', exLabel: t('orders.cost')},
       { Header: t('remain.vendCode'), accessor: 'vendId', exLabel: t('remain.vendCode')},
       { Header: t('supplier.title'), accessor: 'vendName', exLabel:t('supplier.title') },
+      { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode') },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +59,7 @@ export function Format(props){
     onFormat(query)
   }
   const onHide1 = value => {
-    let query = '?TxnDate=' + date?.format('yyyy.MM.DD');
+    // let query = '?TxnDate=' + date?.format('yyyy.MM.DD');
     // onClickSave(query)
   }
 
@@ -73,7 +74,7 @@ export function Format(props){
   const uploadProps = { file, setFile, types: excelTypes };
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide: onHide1, className: 'mn_date' };
   const siteProps = { value: site, setValue: onChangeSite, data: sites, s_value: 'siteId', s_descr: 'name', onHide, label: t('inventory.t_site'), 
-    onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('time.select_shop'), classBack, classLabel, className};
+    onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('time.select_shop'), classBack, classLabel, className, error};
 
   return (
         <div className='ma_back'>

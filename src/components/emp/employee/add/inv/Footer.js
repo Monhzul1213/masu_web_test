@@ -4,13 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Money } from '../../../../all';
 
 export function Footer(props){
-  const { detail } = props;
+  const { sum } = props;
   const { t } = useTranslation();
-
-  let sum = 0;
-  detail?.map(item => {
-    sum += item?.amount
-  })
 
   return (
     <div className='bo_footer_back'>
