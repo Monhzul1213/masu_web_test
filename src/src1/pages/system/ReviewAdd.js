@@ -167,8 +167,8 @@ export function ReviewAdd(){
   
   const mainProps = { setError, setText, text , beginDate, setBeginDate, endDate, setEndDate, 
     status, setStatus, type, setType , isSendMail, setIsSendMail, rate, selected};
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp_zz' };
-  const invtProps = { data: kits, setData: setKits, setError, setEdited, search: searchI, setSearch: setSearchI , setDKits };
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: !kits?.length && type?.value !== 'MERCHANT' ? 'btn_rating' : 'btn_rating1' };
+  const invtProps = { data: kits, setData: setKits, setError, setEdited, search: searchI, setSearch: setSearchI , setDKits};
 
   return (
     <Overlay className='i_container' loading={loading}>
