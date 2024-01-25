@@ -82,7 +82,7 @@ function Screen(props){
   } 
 
   let filterProps = { onSearch: getData, size, setError, filter, filter1 };
-  let cardProps = { data: filteredData, data1, tab, setTab: onChangeTab, size, loading, excelName, getData, filter , total};
+  let cardProps = { data: filteredData, data1, tab, setTab: onChangeTab, size, loading, excelName, getData, filter , total, user};
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
   return (

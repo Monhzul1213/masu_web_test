@@ -5,9 +5,10 @@ import { IoLocationOutline } from "react-icons/io5";
 
 import '../../../../css/report.css';
 import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all/all_m';
+import { config, encrypt } from '../../../../helpers';
 
 export function Drawer(props){
-  const { selected, open, setOpen , data1} = props;
+  const { selected, open, setOpen, data1, user} = props;
   const { t } = useTranslation();
   const [pureAmount, setPureAmount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -62,6 +63,13 @@ export function Drawer(props){
     )
   }
 
+  const onClickLink = () => {
+    let msg = user?.merchantId + '-' + selected?.siteId + '-' + selected?.salesNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/Bill?billno=' + encodeURIComponent(code);
+    window.open(url);
+  }
+
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
 
   return (
@@ -72,7 +80,14 @@ export function Drawer(props){
         <Field icon='RiUserLine' label='time.t_emp' value={selected?.cashierName} />
         <Field icon='RiDeviceLine' label='report_receipt.pos' value={selected?.terminalName} />
         <Field icon='RiStore2Line' label='report_receipt.dr_site' value={selected?.siteName} />
-        <Field icon='RiBillLine' label='report_receipt.dr_no' value={selected?.salesNo} />
+        {selected?.status === 1 ?
+        <div className='dr_field'>
+          <DynamicRIIcon className='dr_field_icon' name={'RiBillLine'} />
+          <p className='dr_field_label'>{t('report_receipt.dr_no')}</p>
+          <p className='dr_field_label1'>:</p>
+          <a className='table_link' onClick={onClickLink}>{selected?.salesNo}</a>
+        </div> :
+        <Field icon='RiBillLine' label='report_receipt.dr_no' value={selected?.salesNo} />} 
         <Field icon='IoLocationOutline' label='orders.location' value={selected?.ticket} />
         <div className='dr_header'>
           <p className='dr_header_text1'>{t('report_receipt.invt')}</p>

@@ -4,6 +4,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import moment from 'moment';
 
 import { PaginationTable, Money, Table } from '../all/all_m';
+import { config, encrypt } from '../../../helpers';
 
 
 export function TranList(props){
@@ -17,6 +18,11 @@ export function TranList(props){
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
       } },
+      { Header: t('customer.salesNo'), accessor: 'salesNo', isBtn: true, customStyle: { maxWidth: 130 },
+        Cell: ({ value, row, onClickLink }) => {
+          return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}>{value}</div>);
+        }
+      },
       { Header: t('report_receipt.dr_site'), accessor: 'siteName', customStyle: {width: 180}},
       { Header: t('customer.t_name'), accessor: 'custName',  },
       { Header: t('discount.type'), accessor: 'txnTypeName', customStyle: {width: 150}},
@@ -28,13 +34,18 @@ export function TranList(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language,]);
 
- 
+  const onClickLink = (row) => {
+    let msg = row?.original?.merchantId + '-' + row?.original?.siteId + '-' + row?.original?.salesNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/Bill?billno=' + encodeURIComponent(code);
+    window.open(url);
+  }
 
   const maxHeight = size?.width > 380
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 210px - 10px - 37px)';
   const tableInstance = useTable( { columns, data, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 25 , sortBy: [{ id: 'salesDate', desc: true }]},
-  }, useSortBy, usePagination, useRowSelect);
+  onClickLink}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
 
   return (

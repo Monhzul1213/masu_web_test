@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import '../../../css/report.css';
 import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all';
+import { config, encrypt } from '../../../helpers';
 
 export function Drawer(props){
   const { selected, open, setOpen } = props;
@@ -53,6 +54,13 @@ export function Drawer(props){
     )
   }
 
+  const onClickLink = () => {
+    let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/Bill?billno=' + encodeURIComponent(code);
+    window.open(url);
+  }
+
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
 
   return (
@@ -63,7 +71,12 @@ export function Drawer(props){
         <Field icon='RiUserLine' label='time.t_emp' value={selected?.sale?.cashierName} />
         <Field icon='RiDeviceLine' label='report_receipt.pos' value={selected?.sale?.terminalDescr} />
         <Field icon='RiStore2Line' label='report_receipt.dr_site' value={selected?.sale?.siteName} />
-        <Field icon='RiBillLine' label='report_receipt.dr_no' value={selected?.sale?.salesNo} />
+        <div className='dr_field'>
+          <DynamicRIIcon className='dr_field_icon' name={'RiBillLine'} />
+          <p className='dr_field_label'>{t('report_receipt.dr_no')}</p>
+          <p className='dr_field_label1'>:</p>
+          <a className='table_link' onClick={onClickLink}>{selected?.sale?.salesNo}</a>
+        </div>
         <Field icon='RiCalendarLine' label='system.date' value={moment(selected?.sale?.createdDate)?.format('yyyy.MM.DD HH:mm:ss')} />
         <Field icon='RiTeamLine' label='menu.customer' value={selected?.customer} /> 
         <div className='dr_header'>
