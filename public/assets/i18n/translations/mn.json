@@ -138,7 +138,9 @@
     "/system/rating": "Үнэлгээ",
     "/system/rating/rating_add": "Үнэлгээ бүртгэх",
     "/timetable/timeschedule": "Цаг авах хуваарь",
-    "/timetable/service": "Үйлчилгээ ажилтнаар"
+    "/timetable/service": "Үйлчилгээ ажилтнаар",
+    "/coupon": "Купон",
+    "/vaucher": "Ваучер"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -189,7 +191,10 @@
     "invt_txn": "Гүйлгээний жагсаалт",
     "adjust": "Барааны орлого зарлага хийх",
     "transfer": "Барааны хөдөлгөөн хийх",
-    "timetable": "Цаг авах хуваарь"
+    "timetable": "Цаг авах хуваарь",
+    "loyalty" : "Лояалти",
+    "coupon" : "Купон",
+    "vaucher" : "Ваучер"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
@@ -518,7 +523,8 @@
     "balance": "Тооцооны үлдэгдэл: ",
     "import_title": "Харилцагч оруулах",
     "import_link": "Харилцагчийн формат татах",
-    "import_error": "Файл оруулна уу"
+    "import_error": "Файл оруулна уу",
+    "salesNo": "Борлуулалтын дугаар"
   },
   "supplier":{
     "close":"Хаах",
@@ -1152,7 +1158,10 @@
     "reviewType": "Төхөөрөмж",
     "isShow": "Харсан эсэх",
     "ratingText": "Санал хүсэлт",
-    "rating": " үнэлгээ"
+    "rating": " үнэлгээ",
+    "isText": "Санал хүсэлт оруулсан эсэх?",
+    "isShow?": "Харсан эсэх?",
+    "all_rating": "Бүх үнэлгээ"
   },
   "remain": {
     "siteCode": "Салбарын код",

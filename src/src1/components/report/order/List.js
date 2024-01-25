@@ -8,7 +8,7 @@ import { Header } from './Header';
 import { Drawer } from './Drawer';
 
 export function List(props){
-  const { data, size, loading, tab, excelName, filter, data1} = props;
+  const { data, size, loading, tab, excelName, filter, data1, user} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
@@ -105,7 +105,7 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect, useResizeColumns, useBlockLayout);
   const tableProps = { tableInstance, onRowClick, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName , size , filter, };
-  const drawerProps = { selected, open, setOpen , data1};
+  const drawerProps = { selected, open, setOpen , data1, user};
 
   return (
     <div>
