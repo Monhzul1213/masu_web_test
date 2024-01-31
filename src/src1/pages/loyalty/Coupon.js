@@ -32,7 +32,6 @@ export function Coupon(){
     setLoading(true);
     let api = 'Site/GetCoupon' + query ?? '';
     const response = await dispatch(getList(user, token, api));
-    console.log(api)
     if(response?.error) setError(response?.error);
     else setData(response?.data?.coupon);
     // else setData(response?.data?.coupon?.filter( item => item?.status !== 0));

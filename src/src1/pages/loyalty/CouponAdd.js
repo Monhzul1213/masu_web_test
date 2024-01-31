@@ -71,7 +71,6 @@ export function CouponAdd(){
         item.age = item?.consumerAge
       })
       setConsumer(response?.data?.couponconsumer)
-      console.log(response?.data?.couponconsumer)
       setSelected(coupon);
       setItem(response?.data?.coupon);
       setType({value: coupon?.couponType ?? '' })
@@ -140,7 +139,6 @@ export function CouponAdd(){
     let data = validateData();
     if(data){
       onLoad();
-      console.log(data)
       const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
       if(response?.error) onError(response?.error, true);
       else onSuccess(t('coupon.add_success'));

@@ -11,7 +11,6 @@ export function List(props){
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
-    console.log(data)
     const style = { maxWidth: 72, display: 'flex', alignItems: 'center', justifyContent: 'center' };
     setColumns([
       {  id: 'check', noSort: true, isBtn: true, customStyle: { width: 15 },

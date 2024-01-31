@@ -46,7 +46,6 @@ export function Card(props){
   }
 
   const newItem = consumer => {
-    console.log(consumer)
     return { consumerId: consumer.consumerId, firstName: consumer.firstName, phone: consumer.phone, email: consumer.email, 
       age: consumer.age, gender: consumer.gender, status: consumer.status  };
   }
