@@ -8,14 +8,11 @@ import '../../../src1/css/loyalty.css';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Filter, List } from '../../components/loyalty/coupon/list';
-// import { Subscription } from '../../../components/management/adjust/list';
 
 export function Coupon(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
-  // const [visible, setVisible] = useState(false);
-  // const [sites, setSites] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,28 +30,22 @@ export function Coupon(){
   const onSearch = async query => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Site/GetCoupon' + query ?? ''));
+    let api = 'Site/GetCoupon' + query ?? '';
+    const response = await dispatch(getList(user, token, api));
+    console.log(api)
     if(response?.error) setError(response?.error);
-    else setData(response?.data?.coupon?.filter( item => item?.status !== 0));
+    else setData(response?.data?.coupon);
+    // else setData(response?.data?.coupon?.filter( item => item?.status !== 0));
     setLoading(false);
   }
 
   const onClickAdd = () => navigate('coupon_add');
 
-  // const onDone = async () => {
-  //   setVisible(false);
-  //   setSites([]);
-  //   let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
-  //   onSearch(query);
-  // }
-
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
-  // const subProps = { visible, setVisible, sites, setSites, onDone };
 
   return (
     <div className='s_container_i'>
-      {/* {visible && <Subscription {...subProps} />} */}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 

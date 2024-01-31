@@ -8,7 +8,7 @@ import { getList } from '../../../../../services';
 
 export function Main(props){
   const { setError, setEdited, name, setName, perc, setPerc, price, setPrice, beginDate, setBeginDate, endDate, setEndDate,
-          status, setStatus, category, setCategory, type, setType, number, setNumber, invt, setInvt } = props;
+          status, setStatus, category, setCategory, type, setType, number, setNumber, invt, setInvt, selected } = props;
   const { t } = useTranslation();
   const [states, setStates] = useState([{ value: 1, label: 'Идэвхитэй' }]);
   const [types, setTypes] = useState([{ value: 0, label: 'Хувиар хөнгөлөх' },]);
@@ -18,6 +18,10 @@ export function Main(props){
   const dispatch = useDispatch();
 
   useEffect(() => {
+    onFocusType();
+    onFocusStatus();
+    getInvts();
+    getCategories();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -32,9 +36,6 @@ export function Main(props){
 
   const onChangeStatus = value => {
     setStatus(value);
-  }
-  const onChangeType = value => {
-    setType(value);
   }
 
   const onFocusType = async () => {
@@ -54,20 +55,19 @@ export function Main(props){
       ]);
     }
   }
-  const getCategories = async (toGet, id) => {
-    if(!categories?.length || categories?.length === 1 || toGet){
+  const getCategories = async () => {
+    if(!categories?.length || categories?.length === 1 ){
       setError(null);
       const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
       if(response?.error) setError(response?.error);
       else {
         setCategories(response?.data);
-        if(id) setCategory({ value: id });
       }
     }
   }
 
-  const getInvts = async (toGet, id) => {
-    if(!categories?.length || categories?.length === 1 || toGet){
+  const getInvts = async () => {
+    if(!categories?.length || categories?.length === 1 ){
       setError(null);
       const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
       if(response?.error) setError(response?.error);
@@ -76,7 +76,6 @@ export function Main(props){
         response?.data?.inventoryies?.forEach(item => {
             invts.push(item?.msInventory)})
         setInvts(invts)
-        if(id) setInvt({ value: id });
       }
     }
   }
@@ -94,18 +93,18 @@ export function Main(props){
   }
   
 
-  const amtProps = { value: price, setValue: setPrice, label: t('coupon.couponAmt'), placeholder: t('coupon.couponAmt'), setError, setEdited };
-  const percProps = { value: perc, setValue: changePerc, label: t('discount.perc'), placeholder: t('discount.perc'), setError, setEdited, max: 100 };
-  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('page.name'), setError, length: 100, inRow: true, };
+  const amtProps = { value: price, setValue: setPrice, label: t('coupon.couponAmt'), placeholder: t('coupon.couponAmt'), setError, setEdited , disabled : selected ? true : false};
+  const percProps = { value: perc, setValue: changePerc, label: t('discount.perc'), placeholder: t('discount.perc'), setError, setEdited, max: 100, disabled : selected ? true : false };
+  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('page.name'), setError, length: 100, inRow: true, disabled : selected ? true : false};
   const date1Props = { value: beginDate, setValue: onChangeDate1, label: t('coupon.beginDate'), inRow: true  };
   const date2Props = { value: endDate, setValue: onChangeDate2, label: t('coupon.endDate'), inRow: true };
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'value', s_descr: 'label', label: t('order.status'), onFocus: onFocusStatus };
-  const typeProps = { value: type, setValue: onChangeType, data: types, s_value: 'value', s_descr: 'label', label: t('coupon.type'), onFocus: onFocusType };
+  const typeProps = { value: type, setValue: setType, data: types, s_value: 'value', s_descr: 'label', label: t('coupon.type'), onFocus: onFocusType, disabled : selected ? true : false };
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false, placeholder: t('coupon.category_select'),
-    data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories };
-  const numberProps = { value: number, setValue: changeNumber, label: t('inventory.t_qty'), placeholder: t('inventory.t_qty'), setEdited, setError, length: 30 };
+    data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories, disabled : selected ? true : false };
+  const numberProps = { value: number, setValue: changeNumber, label: t('inventory.t_qty'), placeholder: t('inventory.t_qty'), setEdited, setError, length: 30, };
   const invtProps = { value: invt, setValue: setInvt, label: t('coupon.invt'), setError, setEdited, inRow: false,
-  data: invts, s_value: 'invtId', s_descr: 'name', onFocus: getInvts, placeholder: t('coupon.invt_select') };
+  data: invts, s_value: 'invtId', s_descr: 'name', onFocus: getInvts, placeholder: t('coupon.invt_select'), disabled : selected ? true : false };
 
   return (
     <div className='cou_add_back'>

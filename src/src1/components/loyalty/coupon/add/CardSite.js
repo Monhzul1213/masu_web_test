@@ -35,7 +35,7 @@ export function CardSite(props){
   }
 
  
-  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, onClickCheck }, useSortBy, usePagination, useRowSelect);
+  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 10000 }, onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
 
@@ -46,7 +46,6 @@ export function CardSite(props){
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />
       </div>
-      <PaginationTable {...tableProps} />
     </div>
   );
 }

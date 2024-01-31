@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import { getList, sendRequest } from '../../../services';
-import { Error1, Overlay, Prompt, Confirm, ButtonRowConfirm } from '../../../components/all';
+import { Error1, Overlay, Prompt, ButtonRowConfirm } from '../../../components/all';
 import { Main, CardSite, CardService } from '../../components/loyalty/coupon/add';
 
 export function CouponAdd(){
@@ -16,7 +16,6 @@ export function CouponAdd(){
   const [error, setError] = useState(null);
   const [saved, setSaved] = useState(false);
   const [selected, setSelected ] = useState(null);
-  const [open, setOpen] = useState(false);
   const [name, setName] = useState({ value: '' });
   const [price, setPrice] = useState({ value: 0 });
   const [perc, setPerc] = useState({ value: 0 });
@@ -26,11 +25,11 @@ export function CouponAdd(){
   const [endDate, setEndDate] = useState({ value: moment() });
   const [category, setCategory] = useState({ value: null });
   const [invt, setInvt] = useState({ value: null });
-  const [number, setNumber] = useState({ value: 0 });
+  const [number, setNumber] = useState({ value: '' });
   const [sites, setSites] = useState([]);
   const [checked, setChecked] = useState(true);
-  const [kits, setKits] = useState([]);
-  const [dkits, setDKits] = useState([]);
+  const [consumer, setConsumer] = useState([]);
+  const [dconsumer, setDConsumer] = useState([]);
   const [item, setItem] = useState(null);
   const [searchI, setSearchI] = useState({ value: null });
   const { user, token }  = useSelector(state => state.login);
@@ -62,13 +61,20 @@ export function CouponAdd(){
     setError(null);
     setLoading(true);
     let api = '?CouponId=' + couponId;
-    let response = await dispatch(getList(user, token, 'Site/GetCoupon' + api,   ));
+    let response = await dispatch(getList(user, token, 'Site/GetCoupon' + api));
     setLoading(false);
     if(response?.error) setError(response?.error)
     else {    
-      let coupon = response?.data?.coupon ;
+      let coupon = response?.data?.coupon && response?.data?.coupon[0] ;
+      response?.data?.couponconsumer?.forEach(item => {
+        item.firstName = item?.consumerName
+        item.age = item?.consumerAge
+      })
+      setConsumer(response?.data?.couponconsumer)
+      console.log(response?.data?.couponconsumer)
       setSelected(coupon);
       setItem(response?.data?.coupon);
+      setType({value: coupon?.couponType ?? '' })
       setName({ value: coupon?.name ?? '' });
       setPrice({ value: coupon?.couponValue ?? '' })
       setPerc({ value: coupon?.couponValue ?? '' })
@@ -85,7 +91,6 @@ export function CouponAdd(){
       setSites(site);
     }
   }
-  const onClickCancel = () => navigate({ pathname: '/loyalty/coupon' });
 
   const getSites = async () => {
     setError(null);
@@ -104,29 +109,30 @@ export function CouponAdd(){
 
   const validateData = () => {
     let couponConsumers = [], siteID = [];
-    if( name?.value?.trim() && category?.value ){
-        if(kits?.length){
-          kits?.forEach(item => {
+    if( name?.value?.trim() && category?.value && number?.value ){
+        if(consumer?.length){
+          consumer?.forEach(item => {
             couponConsumers.push({consumerID: item?.consumerId, couponID: selected ? selected?.couponId : -1, status: item?.status});
           });
-          dkits?.forEach(it => couponConsumers?.push({...it, rowStatus: 'D'}));
+          dconsumer?.forEach(it => couponConsumers?.push({...it, rowStatus: 'D'}));
         } else {
           setSearchI({ value: searchI?.value, error: t('coupon.kit_error') });
           return false;
         }
       sites?.forEach(item => {if(item?.checked) siteID.push(item?.siteId)})
       let data = selected ? { couponID: selected?.couponId, name: name?.value, type: type?.value,  couponValue: type?.value === 0 ? perc?.value : price?.value,
-        beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'), categoryId: category?.value, invtId: invt?.value,
+        beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'), categoryId: category?.value, invtId: invt?.value === null ? -1 : invt?.value ,
         status: status?.value, qty: number?.value, rowStatus: 'U', couponConsumers, siteID } : 
       { name: name?.value, type: type?.value, couponValue: type?.value === 0 ? perc?.value : price?.value,
         beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'),
-        categoryId: category?.value, invtId: invt?.value, status: status?.value, qty: number?.value,
+        categoryId: category?.value, invtId: invt?.value === null ? -1 : invt?.value, status: status?.value, qty: number?.value,
         rowStatus: 'I',couponConsumers, siteID
       }
       return data;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       if(!category?.value ) setCategory({ value: category?.value, error: t('error.not_empty') });
+      if(!number?.value?.trim()) setNumber({ value: '', error: t('error.not_empty') });
     }
   }
 
@@ -134,6 +140,7 @@ export function CouponAdd(){
     let data = validateData();
     if(data){
       onLoad();
+      console.log(data)
       const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
       if(response?.error) onError(response?.error, true);
       else onSuccess(t('coupon.add_success'));
@@ -141,15 +148,15 @@ export function CouponAdd(){
   }
 
 
-  const onClickDelete = async () => {
-    onLoad();
-    let data = {couponID: selected?.couponId, name: selected?.name, type: selected?.couponType,  couponValue: selected?.couponValue,
-      beginDate: selected?.beginDate, endDate: selected?.endDate, categoryId: selected?.categoryId, invtId: selected?.invtId,
-      status: 0, qty: selected?.qty, rowStatus: 'D', couponConsumers : [] , siteID : [] };
-    const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
-    if(response?.error) onError(response?.error, true);
-    else onSuccess(t('coupon.delete_success'), true);
-  }
+  // const onClickDelete = async () => {
+  //   onLoad();
+  //   let data = {couponID: selected?.couponId, name: selected?.name, type: selected?.couponType,  couponValue: selected?.couponValue,
+  //     beginDate: selected?.beginDate, endDate: selected?.endDate, categoryId: selected?.categoryId, invtId: selected?.invtId,
+  //     status: 0, qty: selected?.qty, rowStatus: 'D', couponConsumers : [] , siteID : [] };
+  //   const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
+  //   if(response?.error) onError(response?.error, true);
+  //   else onSuccess(t('coupon.delete_success'), true);
+  // }
 
   const onLoad = () => {
     setError(null);
@@ -171,23 +178,18 @@ export function CouponAdd(){
     setLoading(false);
   }
 
-  const confirm = sure => {
-    setOpen(false);
-    setError(null);
-    // if(sure) setVisible(true);
-  }
+  const onClickCancel = () => navigate({ pathname: '/loyalty/coupon' });
 
-  let mainProps = { setError, setEdited,name, setName, price, setPrice, number, setNumber, invt, setInvt,
+  let mainProps = { setError, setEdited,name, setName, price, setPrice, number, setNumber, invt, setInvt, selected,
     perc, setPerc, beginDate, setBeginDate, endDate, setEndDate, status, setStatus, category, setCategory, type, setType};
-  let btnProps = { onClickCancel, onClickSave, onClickDelete, id: 'co_btn', show: item ? true:  false  };
-  let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
+  let btnProps = { onClickCancel, onClickSave, id: 'co_btn', }
+  // onClickDelete, show: item ? true:  false  };
   const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked };
-  const serviceProps = {data: kits, setData: setKits, setError, setEdited, setDKits, search: searchI, setSearch: setSearchI };
+  const serviceProps = {data: consumer, setData: setConsumer, setError, setEdited, setDKits : setDConsumer, search: searchI, setSearch: setSearchI, number };
   
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
-      <Confirm {...confirmProps} />
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
           <Main {...mainProps} />

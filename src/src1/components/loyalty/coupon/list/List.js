@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePagination, useRowSelect, useSortBy, useTable } from 'react-table';
+import { useBlockLayout, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-import { PaginationTable, Table } from '../../../all/all_m';
+import { Money, PaginationTable } from '../../../all/all_m';
+import { TableResize } from '../../../../../components/all';
 
 export function List(props){
   const { data, size } = props;
@@ -15,27 +16,24 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('coupon.name'), accessor: 'name', customStyle: { width: 150 } },
-      { Header: t('coupon.type'), accessor: 'couponType', customStyle: { width: 50 } },
-      { Header: t('coupon.couponAmt'), accessor: 'couponValue', customStyle: { width: 100 } },
+      { Header: t('coupon.name'), accessor: 'name', width: 150, minWidth: 80 },
+      { Header: t('coupon.type'), accessor: 'typeName', width: 150, minWidth: 90 },
+      { Header: t('coupon.couponAmt'), accessor: 'couponValue', width: 130, minWidth: 70,
+      Cell: props => props?.row?.original?.couponType === 1 ? 
+        <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> 
+        : <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}%</div>      
+      },
       {
-        Header: t('coupon.beginDate'), accessor: 'beginDate', customStyle: { width: 80 },
+        Header: t('coupon.beginDate'), accessor: 'beginDate', width: 130, minWidth: 100,
         Cell: ({ value }) => <div style={{}}>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>
       },
       {
-        Header: t('coupon.endDate'), accessor: 'endDate', customStyle: { width: 80 },
+        Header: t('coupon.endDate'), accessor: 'endDate', width: 130, minWidth: 100,
         Cell: ({ value }) => <div style={{}}>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>
       },
-      {
-        Header: t('coupon.status'), accessor: 'status', customStyle: { width: 50 },
-        Cell: ({ value, row }) => {
-          let status = row?.original?.status;
-          let color = status !== 1 ? 'var(--text-color)' : 'var(--text2-color)';
-          return <span style={{ color }}>{value}</span>
-        }
-      },
-      { Header: t('coupon.category'), accessor: 'categoryId', customStyle: { width: 80 } },
-      { Header: t('coupon.invt'), accessor: 'invtId', customStyle: { width: 80 } },
+      { Header: t('coupon.status'), accessor: 'statusName', width: 120, minWidth: 60 },
+      { Header: t('coupon.category'), accessor: 'categoryName', width: 150, minWidth: 100 },
+      { Header: t('coupon.invt'), accessor: 'invtName', width: 250, minWidth: 100 },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,9 +51,10 @@ export function List(props){
     navigate({ pathname: 'coupon_add', search: createSearchParams({ couponId: row?.original?.couponId }).toString() });
   }
 
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'transferNo', desc: true }] }},
-    useSortBy, usePagination, useRowSelect);
+    useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };
 
 
@@ -63,7 +62,7 @@ export function List(props){
     <div>
       <div style={{overflowX: 'scroll'}}>
         <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

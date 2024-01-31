@@ -28,25 +28,26 @@ export function Filter(props){
     if(!states?.length || states?.length === 1){
       setStates([
         { valueNum: -1, valueStr1: t('order.all_status') },
-        { valueNum: 0, valueStr1: 'Идэвхитэй' },
-        { valueNum: 1, valueStr1: 'Хүчингүй' },
+        { valueNum: 1, valueStr1: 'Идэвхитэй' },
+        { valueNum: 0, valueStr1: 'Хүчингүй' },
       ]);
     }
   }
 
-  const onHide = (status) => {
+  const onHide = (status, name) => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(status !== -1) query += '&Status=' + status;
+    query += name ? '&Name=' + name : '';
     onSearch(query);
   }
 
   const onChangeStatus = value => {
     setStatus(value);
-    onHide(value);
+    onHide(value, search);
   }
 
   const handleEnter = value => {
-    onSearch( search, value);
+    onHide( status, value);
   }
 
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
@@ -61,7 +62,7 @@ export function Filter(props){
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), 
     onHide: () => onHide(status), className: 'rh_date'};
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'valueNum', s_descr: 'valueStr1',
-    label: t('order.status'), onFocus: onFocusStatus, loading: loading === 'status', classBack, classLabel, className, bStyle };
+    label: t('order.status'), onFocus: onFocusStatus, classBack, classLabel, className, bStyle };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
 

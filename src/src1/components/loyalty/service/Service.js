@@ -39,14 +39,14 @@ export function Service(props){
       if(response?.error) setError(response?.error);
       else setData(response?.data);
       setLoading(false);
-    
+      setChecked(false);
   }
 
   const onClickSave = () => {
     setLoading(true);
     let item = [];
     data?.forEach(list => { if(list?.checked) item.push(list)})
-    if(!item?.length) setError('data baihgui')
+    if(!item?.length) setError(t('coupon.no_data'))
     else {setItem(item)
     setVisible(false)
     }
