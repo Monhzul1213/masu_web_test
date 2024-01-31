@@ -240,7 +240,6 @@ export function TableText(props){
       </thead>
       <tbody className='table_body_back' {...getTableBodyProps()}>
         {page.map((row, i) => {
-          // console.log(row)
           prepareRow(row);
           return (
             <>

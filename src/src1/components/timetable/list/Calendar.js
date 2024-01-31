@@ -22,7 +22,6 @@ export function BigCalendar(props){
   const [day, setDay] = useState("7 хоног");
 
   useEffect(() => {
-    // console.log(datas)
     if(size?.width >= 850) setClassH('tm_cal_back1');
     else if(size?.width < 850 && size?.width >= 410) setClassH('tm_cal_back2');
     else setClassH('tm_cal_back3');

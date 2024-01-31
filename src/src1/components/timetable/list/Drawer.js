@@ -13,7 +13,6 @@ export function Drawer(props){
 
   useEffect(() => {
     if(selected){
-      console.log(selected)
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -93,7 +93,7 @@ export function Percent(props){
   let mask = '12.34';
 
   return (
-    <div style={inRow ? { flex: 1 } : {}}>
+    <div style={inRow ? { flex: 1, marginTop: 20 } : {}}>
       <div className='cust_back' style={backStyle}>
         {label && <p className='select_lbl' style={style}>{label}</p>}
         <div className='cust_back1'>
@@ -266,3 +266,60 @@ export function Input1(props){
   );
 }
 
+export function ValidateInput(props){
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, inRow, id, max } = props;
+  const { t } = useTranslation();
+    
+  const onChange = e => {
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
+    else if(e?.target?.value > max)
+      setValue({ value: value?.value, error: ' ' + max + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter"){
+      if(handleEnter) handleEnter(e);
+      else {
+        const form = e.target.form;
+        if(form){
+          const index = [...form].indexOf(e.target);
+          form.elements[index + 1]?.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  }
+
+  const onBlur = () => {
+    setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? { flex: 1 } : {}} id={id}>
+      <div className='cust_back' style={backStyle} >
+        {label && <p className='select_lbl' style={style}>{label}</p>}
+            <InputMask
+            className='c_input'
+            mask={mask}
+            disabled={disabled}
+            maskChar='-'
+            onBlur={onBlur}
+            onKeyDown={onKeyDown}
+            placeholder={placeholder}
+            value={value?.value}
+            onChange={onChange} 
+            />
+      </div>
+      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
+    </div>
+  );
+}
