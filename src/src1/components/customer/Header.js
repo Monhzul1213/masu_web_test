@@ -22,7 +22,7 @@ export function Header(props){
   const width = showSearch ? 0 : 50;
   const width1 = !showSearch ? 0 : (size?.width > 495 ? 320 : (size?.width - 20));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
-  const id = size?.width > 780 ? 'ih_large' : 'ih_small';
+  const id = size?.width > 180 ? 'ih_large' : 'ih_small';
 
   const onClickSearch = () => setShowSearch(!showSearch);
   const addProps = { type: 'customer', onClickAdd, show, onClickDelete };

@@ -35,3 +35,16 @@ export function Empty1(props){
     </div>
   )
 }
+export function Empty2(props){
+  const { icon } = props;
+  const { t } = useTranslation();
+
+  return (
+    <div className='empty_back2'>
+      <div className='empty_icon_back2'>
+        <DynamicMDIcon className='empty_icon' name={icon} />
+      </div>
+      <p className='empty_descr'>{t('page.no_filter')}</p>
+    </div>
+  )
+}

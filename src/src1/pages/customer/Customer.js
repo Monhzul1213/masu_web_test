@@ -26,7 +26,6 @@ export function Customer(props){
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const [checked, setChecked] = useState(false);
 
   
@@ -36,20 +35,24 @@ export function Customer(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async () => {
+  const getData = async (name) => {
+    setFilter(name);
     setError(null);
     setLoading(true);
     let headers = {CustID: -1};
-    const response = await dispatch(getList(user, token, 'Site/GetCustomer', null, headers));
+    let response = name
+      ? await dispatch(getList(user, token, 'Site/GetCustomer/' + name ))
+      : await dispatch(getList(user, token, 'Site/GetCustomer',null,  headers));
     if(response?.error) setError(response?.error);
     else {
-      setData(response?.data?.customers)
+      setData(response?.data?.customers ?? response?.data)
       setExcelName(t('header./customer'));
     }
     setLoaded(loaded + 1);
     setLoading(false);
     setShow(false)
     setChecked(false)
+    setFiltering(true);
   }
 
   const onClickDelete = () => setOpen(true);
@@ -72,7 +75,7 @@ export function Customer(props){
       if(response?.error) setError(response?.error);
       else {
         message.success(t('customer.delete_success'))
-        onSearch(filter)
+        getData(filter)
       }
     }
   };
@@ -87,27 +90,12 @@ export function Customer(props){
     setItem(null);
     if(toGet) getData();
   }
-  
-  const onSearch = async( name , isEdit)=> {
-    setFilter(name);
-    setError(null);
-    setLoading(true);
-    setAutoResetExpanded(isEdit ? false : true);
-    let headers = { CustID: -1};
-    let response = name
-      ? await dispatch(getList(user, token, 'Site/GetCustomer/' + name ))
-      : await dispatch(getList(user, token, 'Site/GetCustomer',null,  headers));
-    setData(response?.data);
-    setLoading(false);
-    setFiltering(true);
-  }
-  
 
 
   const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , isMd : true};
-  const modalProps = { visible, closeModal, selected: item, onSearch, filter, data };
+  const modalProps = { visible, closeModal, selected: item, onSearch: getData, filter, data };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
-  const listProps = { data,  onClickAdd, setData , loaded, setShow, autoResetExpanded, checked, setChecked, excelName , onClickDelete, show, setError, onSearch};
+  const listProps = { data,  onClickAdd, setData , loaded, setShow, checked, setChecked, excelName , onClickDelete, show, setError, onSearch: getData};
   
   return (
     <div className='s_container_z'>

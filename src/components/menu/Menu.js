@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu as AntMenu, Drawer } from 'antd';
-import { RiContactsLine, RiTeamLine } from 'react-icons/ri';
+import { RiContactsLine, RiCoupon2Line, RiTeamLine } from 'react-icons/ri';
 import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
 import { TbBuildingWarehouse } from 'react-icons/tb';
 import { BiCalendar } from "react-icons/bi";
@@ -123,6 +123,10 @@ export function Menu(props){
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
+    hideTime ? null : getItem(t('menu.loyalty'), '/loyalty', <RiCoupon2Line />, [
+      getItem(t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(t('menu.vaucher'), '/loyalty/vaucher', null, null, null, msRole?.webManageEmployy !== 'Y')
+    ]),
     hideTime ? null : getItem(t('timetable.time'), '/timetable', <BiCalendar />, [
       getItem(t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),

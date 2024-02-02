@@ -8,7 +8,7 @@ import { Header } from './Header';
 
 
 export function List(props){
-  const { onClickAdd, data,  setData, loaded, setShow, autoResetExpanded, checked, setChecked, size, excelName, onClickDelete, show, setError, onSearch} = props;
+  const { onClickAdd, data,  setData, loaded, setShow, checked, setChecked, size, excelName, onClickDelete, show, setError, onSearch} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -81,7 +81,7 @@ export function List(props){
   const maxHeight = size?.width > 780
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
-const tableInstance = useTable( { columns, data, autoResetPage: false, autoResetExpanded, initialState: { pageIndex: 0, pageSize: 25 },
+const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     onClickCheckAll, checked, onClickCheck, onClickLink}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickAdd, };
   let subProps = { visible, closeModal , selected};

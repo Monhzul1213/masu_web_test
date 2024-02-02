@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DynamicAIIcon } from '../../components/all/all_m';
 
 export function Search(props){
-  const { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch, width, className } = props;
+  const { showSearch, setShowSearch, handleEnter, search, setSearch, width, className } = props;
   const { t } = useTranslation();
   const inputRef = useRef(null);
 
@@ -16,7 +16,10 @@ export function Search(props){
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in', height: 40, };
 
   const onKeyDown = e => {
-    if(e?.key?.toLowerCase() === "enter") handleEnter(search);
+    if(e?.key?.toLowerCase() === "enter"){
+      e?.preventDefault();
+      handleEnter && handleEnter(search);
+    }
   }
 
   const onChange = e => setSearch(e.target.value);
@@ -24,7 +27,8 @@ export function Search(props){
   const onClose = () => {
     setShowSearch(!showSearch);
     setSearch('');
-    onSearch('');
+    handleEnter && handleEnter(search)
+    // onSearch('');
   }
 
   return (

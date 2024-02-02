@@ -23,6 +23,7 @@ import { Adjust, AdjustAdd } from './pages/management/adjust';
 import { InvoiceSend } from './components/emp/employee/add/InvoiceSend';
 import { Timetable1 } from './src1/pages/timetable';
 import { EmployeeService } from './src2/pages/timetable/EmployeeService';
+import { Coupon, CouponAdd } from './src1/pages/loyalty';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -171,6 +172,8 @@ export function App(){
                 <Route path='/system/rating' element={<Reviews />} />
                 <Route path='/system/rating/rating_add' element={<ReviewAdd />} />
                 <Route path='/timetable/timeschedule' element={<Timetable1 />} />
+                <Route path='/loyalty/coupon' element={<Coupon />} />
+                <Route path='/loyalty/coupon/coupon_add' element={<CouponAdd />} />
               </Routes>
             </Layout>
           </Layout>
