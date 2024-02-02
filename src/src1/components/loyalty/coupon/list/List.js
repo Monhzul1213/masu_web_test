@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBlockLayout, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table';
 import { createSearchParams, useNavigate } from 'react-router-dom';
-import moment from 'moment';
 
 import { Money, PaginationTable } from '../../../all/all_m';
 import { TableResize } from '../../../../../components/all';
@@ -16,24 +15,19 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('coupon.name'), accessor: 'name', width: 150, minWidth: 80 },
-      { Header: t('coupon.type'), accessor: 'typeName', width: 150, minWidth: 90 },
-      { Header: t('coupon.couponAmt'), accessor: 'couponValue', width: 130, minWidth: 70,
+      { Header: t('coupon.name'), accessor: 'name', width: 220, minWidth: 80 },
+      { Header: <div style={{textAlign: 'right'}}>{t('coupon.couponAmt')}</div>, accessor: 'couponValue', width: 130, minWidth: 70,
       Cell: props => props?.row?.original?.couponType === 1 ? 
         <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div> 
         : <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}%</div>      
       },
-      {
-        Header: t('coupon.beginDate'), accessor: 'beginDate', width: 130, minWidth: 100,
-        Cell: ({ value }) => <div style={{}}>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>
+      { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', width: 80, minWidth: 50,
+      Cell: props =>  <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div> 
       },
-      {
-        Header: t('coupon.endDate'), accessor: 'endDate', width: 130, minWidth: 100,
-        Cell: ({ value }) => <div style={{}}>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>
-      },
+      {Header: t('page.date'), accessor: 'date', width: 200, minWidth: 100},
       { Header: t('coupon.status'), accessor: 'statusName', width: 120, minWidth: 60 },
-      { Header: t('coupon.category'), accessor: 'categoryName', width: 150, minWidth: 100 },
-      { Header: t('coupon.invt'), accessor: 'invtName', width: 250, minWidth: 100 },
+      { Header: t('coupon.category'), accessor: 'categoryName', width: 180, minWidth: 100 },
+      { Header: t('coupon.invt'), accessor: 'invtName', width: 270, minWidth: 100 },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

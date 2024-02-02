@@ -8,7 +8,6 @@ import { SearchInput } from '../../../../../components/invt/inventory/list/Searc
 export function Filter(props){
   const { size, onClickAdd, onSearch } = props;
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(null);
   const [classH, setClassH] = useState('th_header1');
   const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [status, setStatus] = useState(-1);

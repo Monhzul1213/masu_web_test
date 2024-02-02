@@ -33,8 +33,12 @@ export function Coupon(){
     let api = 'Site/GetCoupon' + query ?? '';
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
-    else setData(response?.data?.coupon);
-    // else setData(response?.data?.coupon?.filter( item => item?.status !== 0));
+    else {
+      response?.data?.coupon?.forEach(item=> {
+        item.date = moment(item?.beginDate)?.format('yyyy.MM.DD') + '-' + moment(item?.endDate)?.format('yyyy.MM.DD')
+      })
+      setData(response?.data?.coupon);
+    }
     setLoading(false);
   }
 

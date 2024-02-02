@@ -9,7 +9,7 @@ import { List } from './List';
 import { age } from '../coupon/add/age';
 
 export function Service(props){
-  const { visible, closeModal, setItem, setVisible} = props;
+  const { visible, closeModal, setItem, setVisible, item} = props;
   const { t } = useTranslation();
   const [data, setData] = useState([]);
   const [name, setName] = useState({ value: '' });
@@ -37,18 +37,30 @@ export function Service(props){
       let api = 'Site/GetConsumer' + query ?? '';
       let response = await dispatch(getList(user, token, api))
       if(response?.error) setError(response?.error);
-      else setData(response?.data);
-      setLoading(false);
-      setChecked(false);
+      else {
+        response?.data?.forEach(list => {
+          let check = item?.findIndex(it => it?.consumerId === list?.consumerId)
+          if(check !== -1) list.checked = true
+        })
+        setData(response?.data);
+        }
+        setLoading(false);
+        setChecked(false);
   }
 
   const onClickSave = () => {
     setLoading(true);
-    let item = [];
-    data?.forEach(list => { if(list?.checked) item.push(list)})
-    if(!item?.length) setError(t('coupon.no_data'))
-    else {setItem(item)
-    setVisible(false)
+    let list = [];
+    data?.forEach(li => { if(li?.checked) list.push(li)})
+    if(!list?.length ) setError(t('coupon.no_data'))
+    else {
+      let li = []
+      list?.forEach(l=> {
+        let check = item?.findIndex(it => it?.consumerId === l?.consumerId)
+        if(check === -1) li.push(l)
+      })
+      setItem(old => [...old, ...li])
+      setVisible(false)
     }
     setLoading(false)
   }
@@ -78,22 +90,9 @@ export function Service(props){
       setOtherBuyers([
         { value: 'A', label: 'Бүгд' },
         { value: 'Y', label: 'Үйлчлүүлж байсан' },
-        { value: 'N', label: 'Үйлчлүүлээгүй' },
+        // { value: 'N', label: 'Үйлчлүүлээгүй' },
       ]);
     }
-  }
-
-
-  const onChangeGender = value => {
-    setGender(value)
-  }
-
-  const onChangeBuyer = value => {
-    setBuyer(value)
-  }
-
-  const onChangeOtherBuyer = value => {
-    setOtherBuyer(value)
   }
 
   const onClick = () => {
@@ -111,16 +110,16 @@ export function Service(props){
   const nameProps = { value: name, setValue: setName, label: t('page.name'), setError, placeholder: t('coupon.name_phone'), inRow: true  };
   const beginAgeProps = { value: beginAge, setValue: setBeginAge, label: t('coupon.age'), setError, className: className1, classLabel, data: age };
   const endAgeProps = { value: endAge, setValue: setEndAge, label: t('coupon.age'), setError, className: className1, classLabel, data: age };
-  const genderProps = { value: gender, setValue: onChangeGender, data: genders, s_value: 'value', s_descr: 'label', label: t('coupon.gender'), onFocus: onFocusGender, className: className2 , classLabel};
-  const buyerProps = { value: buyer, setValue: onChangeBuyer, data: buyers, s_value: 'value', s_descr: 'label', label: t('coupon.buyer'), onFocus: onFocusBuyer, className , classLabel};
-  const otherBuyerProps = { value: otherBuyer, setValue: onChangeOtherBuyer, data: otherBuyers, s_value: 'value', s_descr: 'label', label: t('coupon.otherBuyer'), onFocus: onFocusOtherBuyer, className: className2, classLabel : 'cou_select_lbl1' };
+  const genderProps = { value: gender, setValue: setGender, data: genders, s_value: 'value', s_descr: 'label', label: t('coupon.gender'), onFocus: onFocusGender, className: className2 , classLabel};
+  const buyerProps = { value: buyer, setValue: setBuyer, data: buyers, s_value: 'value', s_descr: 'label', label: t('coupon.buyer'), onFocus: onFocusBuyer, className , classLabel};
+  const otherBuyerProps = { value: otherBuyer, setValue: setOtherBuyer, data: otherBuyers, s_value: 'value', s_descr: 'label', label: t('coupon.otherBuyer'), onFocus: onFocusOtherBuyer, className: className2, classLabel : 'cou_select_lbl1' };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave  };
   const searchProps = {text: t('page.search'), className: 'cou_add_btn', onClick}
   const listProps = {checked, setChecked, data, setData}
   const emptyProps = { icon: 'MdSupervisorAccount' };
+  
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={600}>
-      {/* {open && <Confirm {...confirmProps} />} */}
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSupervisorAccount' title={t('coupon.consumer_add')} isMD={true} />
@@ -140,10 +139,6 @@ export function Service(props){
                 <div className='gap'/>
                 <IconButton {...searchProps}/>
               </div>
-                {/* <Select {...genderProps} />
-                <Select {...buyerProps} />
-                <Select {...otherBuyerProps} />
-                <Button {...searchProps}/> */}
           </div>
           {data?.length ? <List {...listProps}/> : <Empty2 {...emptyProps}/>}
           {error && <Error error={error} id = 'm_error' />}

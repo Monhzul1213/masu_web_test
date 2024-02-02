@@ -3,7 +3,7 @@
     margin: 0 15px;
 }
 #co_btn{
-    max-width: 550px;
+    max-width: 700px;
 }
 .cou_add_back {
     background-color: var(--root-color);
@@ -19,6 +19,14 @@
     box-shadow: 0px 2px 5px rgba(0,0,0,.15);
     padding: var(--page-padding);
     max-width: 550px;
+    margin-top: 10px;
+}
+.cou_service_back {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    padding: var(--page-padding);
+    max-width: 700px;
     margin-top: 10px;
 }
 .cou_title_back{
@@ -149,4 +157,9 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+}
+.coupon_text{
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
 }

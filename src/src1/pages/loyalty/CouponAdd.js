@@ -14,6 +14,7 @@ export function CouponAdd(){
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
+  const [error1, setError1] = useState(null);
   const [saved, setSaved] = useState(false);
   const [selected, setSelected ] = useState(null);
   const [name, setName] = useState({ value: '' });
@@ -30,7 +31,7 @@ export function CouponAdd(){
   const [checked, setChecked] = useState(true);
   const [consumer, setConsumer] = useState([]);
   const [dconsumer, setDConsumer] = useState([]);
-  const [item, setItem] = useState(null);
+  // const [item, setItem] = useState(null);
   const [searchI, setSearchI] = useState({ value: null });
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -66,13 +67,8 @@ export function CouponAdd(){
     if(response?.error) setError(response?.error)
     else {    
       let coupon = response?.data?.coupon && response?.data?.coupon[0] ;
-      response?.data?.couponconsumer?.forEach(item => {
-        item.firstName = item?.consumerName
-        item.age = item?.consumerAge
-      })
-      setConsumer(response?.data?.couponconsumer)
       setSelected(coupon);
-      setItem(response?.data?.coupon);
+      // setItem(response?.data?.coupon);
       setType({value: coupon?.couponType ?? '' })
       setName({ value: coupon?.name ?? '' });
       setPrice({ value: coupon?.couponValue ?? '' })
@@ -81,13 +77,18 @@ export function CouponAdd(){
       setEndDate ({ value: moment(coupon?.endDate, 'YYYY-MM-DD') })
       setStatus({value: coupon?.status ?? 0})
       setCategory({value: coupon?.categoryId})
-      setInvt({value: coupon?.invtId})
+      setInvt({value: coupon?.invtId === -1 ? null : coupon?.invtId})
       setNumber({value: coupon?.qty})
       site?.forEach(item => {
         let exists = response?.data?.couponsite?.filter(si => si.siteId === item.siteId)[0];
         item.checked = exists;
       });
       setSites(site);
+      response?.data?.couponconsumer?.forEach(item => {
+        item.firstName = item?.consumerName
+        item.age = item?.consumerAge
+      })
+      setConsumer(response?.data?.couponconsumer)
     }
   }
 
@@ -109,13 +110,13 @@ export function CouponAdd(){
   const validateData = () => {
     let couponConsumers = [], siteID = [];
     if( name?.value?.trim() && category?.value && number?.value ){
-        if(consumer?.length){
+        if(consumer?.length <= number?.value){
           consumer?.forEach(item => {
             couponConsumers.push({consumerID: item?.consumerId, couponID: selected ? selected?.couponId : -1, status: item?.status});
           });
-          dconsumer?.forEach(it => couponConsumers?.push({...it, rowStatus: 'D'}));
+          // dconsumer?.forEach(it => couponConsumers?.push({...it, rowStatus: 'D'}));
         } else {
-          setSearchI({ value: searchI?.value, error: t('coupon.kit_error') });
+          setSearchI({ value: searchI?.value, error: t('coupon.number_max') });
           return false;
         }
       sites?.forEach(item => {if(item?.checked) siteID.push(item?.siteId)})
@@ -131,17 +132,20 @@ export function CouponAdd(){
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
       if(!category?.value ) setCategory({ value: category?.value, error: t('error.not_empty') });
-      if(!number?.value?.trim()) setNumber({ value: '', error: t('error.not_empty') });
+      if(!number?.value) setNumber({ value: '', error: t('error.not_empty') });
     }
   }
 
   const onClickSave = async () => {
     let data = validateData();
     if(data){
-      onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
-      if(response?.error) onError(response?.error, true);
-      else onSuccess(t('coupon.add_success'));
+      if(data?.siteID?.length === 0) setError1(t('shop.title') + t('error.not_empty'))
+      else {
+        onLoad();
+        const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
+        if(response?.error) onError(response?.error, true);
+        else onSuccess(t('coupon.add_success'));
+      }
     }
   }
 
@@ -182,8 +186,8 @@ export function CouponAdd(){
     perc, setPerc, beginDate, setBeginDate, endDate, setEndDate, status, setStatus, category, setCategory, type, setType};
   let btnProps = { onClickCancel, onClickSave, id: 'co_btn', }
   // onClickDelete, show: item ? true:  false  };
-  const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked };
-  const serviceProps = {data: consumer, setData: setConsumer, setError, setEdited, setDKits : setDConsumer, search: searchI, setSearch: setSearchI, number };
+  const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, error: error1 };
+  const serviceProps = {data: consumer, setData: setConsumer, setError, setEdited, setDKits : setDConsumer, search: searchI, setSearch: setSearchI, number, dconsumer };
   
   return (
     <Overlay className='i_container' loading={loading}>

@@ -123,7 +123,7 @@ export function Menu(props){
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
-    getItem(t('menu.loyalty'), '/loyalty', <RiCoupon2Line />, [
+    hideTime ? null : getItem(t('menu.loyalty'), '/loyalty', <RiCoupon2Line />, [
       getItem(t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(t('menu.vaucher'), '/loyalty/vaucher', null, null, null, msRole?.webManageEmployy !== 'Y')
     ]),

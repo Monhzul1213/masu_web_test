@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { PaginationTable, Table, Check } from '../../../components/all/all_m';
+import { Table, Check } from '../../../components/all/all_m';
 
 
 export function List(props){
@@ -46,7 +46,7 @@ export function List(props){
   }
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, onClickCheck, onClickCheckAll, checked },
+  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 10000 }, onClickCheck, onClickCheckAll, checked },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
 
@@ -55,7 +55,7 @@ export function List(props){
         <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
           <Table {...tableProps} />
         </div>
-        <PaginationTable {...tableProps} />
+        <p className='coupon_text'>{t('report.total')}: {data?.length}</p>
     </div>
   );
 }

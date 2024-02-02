@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, PaginationTable, Table } from '../../../all/all_m';
+import { Check, Error, Table } from '../../../all/all_m';
 
 export function CardSite(props){
-  const { isTrack, data, setData, setEdited, setChecked } = props;
+  const { isTrack, data, setData, setEdited, setChecked, error } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -46,6 +46,7 @@ export function CardSite(props){
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />
       </div>
+      {error && <Error error={error} id = 'm_error' />}
     </div>
   );
 }
