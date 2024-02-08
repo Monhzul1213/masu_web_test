@@ -23,6 +23,7 @@ import { Adjust, AdjustAdd } from './pages/management/adjust';
 import { InvoiceSend } from './components/emp/employee/add/InvoiceSend';
 import { Timetable1 } from './src1/pages/timetable';
 import { EmployeeService } from './src2/pages/timetable/EmployeeService';
+import { Voucher, VoucherAdd } from './src2/pages/loyalty';
 import { Coupon, CouponAdd } from './src1/pages/loyalty';
 
 export function App(){
@@ -174,6 +175,8 @@ export function App(){
                 <Route path='/timetable/timeschedule' element={<Timetable1 />} />
                 <Route path='/loyalty/coupon' element={<Coupon />} />
                 <Route path='/loyalty/coupon/coupon_add' element={<CouponAdd />} />
+                <Route path='/loyalty/voucher' element={<Voucher />} />
+                <Route path='/loyalty/voucher/voucher_add' element={<VoucherAdd />} />
               </Routes>
             </Layout>
           </Layout>
