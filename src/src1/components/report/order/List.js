@@ -37,6 +37,7 @@ export function List(props){
       { Header: t('orders.location'), accessor: 'ticket', exLabel: t('orders.location'), width: 130, minWidth: 80 },
       { Header: t('time.t_emp'), accessor: 'cashierName', exLabel: t('time.t_emp'), width: 100, minWidth: 80  },
       { Header: t('report_receipt.t_type'), accessor: 'salesTypeName', exLabel: t('report_receipt.t_type'), width:100, minWidth: 80 },
+      { Header: t('menu.customer'), accessor: 'customer', exLabel: t('menu.customer'), width:110, minWidth: 80 },
       { Header: <div style={{textAlign: 'right'}}>{t('report.amount')}</div>, accessor: 'totalAmount' , width: 100, minWidth: 90 ,
        exLabel: t('report.amount'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={props?.value} fontSize={14} />}</div>,  

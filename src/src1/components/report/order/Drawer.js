@@ -14,6 +14,7 @@ export function Drawer(props){
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
+    console.log(selected)
     if(selected){
       let pure = (selected?.totalSalesAmount ?? 0) -
         (selected?.totalVatAmount ?? 0) - (selected?.totalNhatamount ?? 0);
@@ -88,6 +89,7 @@ export function Drawer(props){
           <a className='table_link' onClick={onClickLink}>{selected?.salesNo}</a>
         </div> :
         <Field icon='RiBillLine' label='report_receipt.dr_no' value={selected?.salesNo} />} 
+        <Field icon='RiTeamLine' label='menu.customer' value={selected?.customer} /> 
         <Field icon='IoLocationOutline' label='orders.location' value={selected?.ticket} />
         <div className='dr_header'>
           <p className='dr_header_text1'>{t('report_receipt.invt')}</p>
