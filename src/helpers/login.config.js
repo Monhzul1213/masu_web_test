@@ -4,7 +4,8 @@
 // }
 
 export const config = { // production
-  url: 'https://app.masu.mn:8082/',
+  // url: 'https://app.masu.mn:8082/',
+  url: 'http://172.16.1.183:8082/',
   url2: 'http://202.131.232.99:8083/',
   domain: 'https://app.masu.mn',
   url1: 'http://test-sales.apu.mn:3031/',
