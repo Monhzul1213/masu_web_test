@@ -14,7 +14,6 @@ export function Drawer(props){
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
-    console.log(selected)
     if(selected){
       let pure = (selected?.totalSalesAmount ?? 0) -
         (selected?.totalVatAmount ?? 0) - (selected?.totalNhatamount ?? 0);
