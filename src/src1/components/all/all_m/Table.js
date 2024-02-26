@@ -85,7 +85,7 @@ export function FooterTable(props){
           );
         })}
       </tbody>
-      <tfoot>
+      <tfoot style={{ position: "sticky", bottom: 0, alignSelf: "flex-end", zIndex: 0}}>
         {footerGroups.map(group => (
           <tr {...group.getFooterGroupProps()}>
             {group.headers.map(column => (

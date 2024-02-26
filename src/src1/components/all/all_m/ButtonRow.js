@@ -57,6 +57,16 @@ export function ButtonRowAdd(props){
     </div>
   )
 }
+
+export function ButtonUpdate(props){
+  const { t } = useTranslation();
+  const { type, onClickAdd} = props;
+
+  return (
+    <Button className='order_row_btn' text={t(type + '.update')} id='add_row_add' onClick={() => onClickAdd()} />
+  )
+}
+
 export function ButtonRowConfirm(props){
   const { t } = useTranslation();
   const { onClickCancel, onClickSave, onClickDelete, type, show, text1, text2, id } = props;

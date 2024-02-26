@@ -793,7 +793,9 @@
     "beginBalance" : "Эхний үлдэгдэл",
     "closedBalance" : "Тушаасан",
     "sales_amt" : "Борлуулалт/Бэлэн/",
-    "diff" : "Зөрүү"
+    "diff" : "Зөрүү",
+    "update": "Захиалга засах",
+    "update_success": "Захиалга амжилттай засагдлаа"
   },
   
   "report_review": {

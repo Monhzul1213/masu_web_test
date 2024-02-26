@@ -8,12 +8,13 @@ import { Header } from './Header';
 import { Drawer } from './Drawer';
 
 export function List(props){
-  const { data, size, loading, tab, excelName, filter, data1, user} = props;
+  const { data, size, loading, tab, excelName, filter, data1, user, getData} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
+  const [data2, setData2] = useState(false);
 
   useEffect(() => {
     if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 117px - 38px - 60px)');
@@ -99,6 +100,13 @@ export function List(props){
   const onRowClick = row => {
     setSelected(row?.original);
     setOpen(true);
+    let data = []
+    data1?.forEach(item => {
+      if(item?.salesNo === row?.original?.salesNo){
+        data.push(item)
+      }
+      setData2(data)
+    })
   }
 
   const defaultColumn = useMemo(() => ({ minWidth: 60, width: 150, maxWidth: 400 }), []);
@@ -106,7 +114,7 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect, useResizeColumns, useBlockLayout);
   const tableProps = { tableInstance, onRowClick, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName , size , filter, };
-  const drawerProps = { selected, open, setOpen , data1, user};
+  const drawerProps = { selected, open, setOpen , data1, user, data2, setData2, tab, getData, filter};
 
   return (
     <div>

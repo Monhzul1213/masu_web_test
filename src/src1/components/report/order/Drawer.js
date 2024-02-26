@@ -4,14 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { IoLocationOutline } from "react-icons/io5";
 
 import '../../../../css/report.css';
-import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all/all_m';
+import { ButtonUpdate, DynamicAIIcon, DynamicRIIcon, Money } from '../../all/all_m';
 import { config, encrypt } from '../../../../helpers';
+import { Update } from './Update';
 
 export function Drawer(props){
-  const { selected, open, setOpen, data1, user} = props;
+  const { selected, open, setOpen, data1, user, data2, setData2, tab, getData, filter} = props;
   const { t } = useTranslation();
   const [pureAmount, setPureAmount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if(selected){
@@ -70,11 +72,21 @@ export function Drawer(props){
     window.open(url);
   }
 
+  const onClickAdd = () => {
+    setVisible(true);
+  }
+
+  const closeModal = () => {
+    setVisible(false);
+  }
+
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
+  const modalProps = { visible, closeModal, onClickLink, selected, data2, setData2, getData, filter };
 
   return (
     <AntDrawer {...drawerProps}>
-      <div className='dr_back'>
+      {visible && <Update {...modalProps} />}
+      <div className='dr_back' style={{overflowY: 'scroll', maxHeight: '95%'}}>
         <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onClose} />
         <p className='dr_title'>{selected?.salesTypeName}</p>
         <Field icon='RiUserLine' label='time.t_emp' value={selected?.cashierName} />
@@ -139,6 +151,7 @@ export function Drawer(props){
           </div>
         </div>
       </div>
+      { tab === 0 ? <ButtonUpdate type={'report'} onClickAdd= {onClickAdd}/> : null}
     </AntDrawer>
   );
 }
