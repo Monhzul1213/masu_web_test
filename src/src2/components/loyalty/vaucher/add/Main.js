@@ -96,8 +96,8 @@ export function Main(props){
 
   const amtProps = { value: price, setValue: setPrice, label: t('voucher.voucherAmt'), placeholder: t('voucher.voucherAmt'), setError, setEdited, disabled: controlDisable };
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('page.name'), setError, length: 100, inRow: true, disabled: controlDisable };
-  const date1Props = { value: beginDate, setValue: onChangeDate1, label: t('voucher.beginDate'), inRow: true, disabled: controlDisable  };
-  const date2Props = { value: endDate, setValue: onChangeDate2, label: t('voucher.endDate'), inRow: true, disabled: controlDisable };
+  const date1Props = { value: beginDate, setValue: onChangeDate1, label: t('voucher.beginDate'), inRow: true  };
+  const date2Props = { value: endDate, setValue: onChangeDate2, label: t('voucher.endDate'), inRow: true };
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'value', s_descr: 'label', label: t('order.status'), onFocus: onFocusStatus };
   const numberProps = { value: number, setValue: changeNumber, label: t('voucher.voucherQty'), placeholder: t('voucher.voucherQty'), setEdited, setError, length: 30 };
 
