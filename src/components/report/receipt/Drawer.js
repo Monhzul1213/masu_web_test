@@ -41,6 +41,15 @@ export function Drawer(props){
     )
   }
 
+  const renderItem1 = (item) => {
+    return (
+      <div className='dr_row_m'>
+          <p className='dr_row_label_m'>{item?.paymentTypeName}</p>
+          <p className='dr_row_value_m'><Money value={item?.paymentAmount} fontSize={13} /></p>
+      </div> 
+    )
+  }
+
   const Field = props => {
     const { icon, label, value } = props;
     
@@ -122,6 +131,7 @@ export function Drawer(props){
             <p className='dr_row_label'>{t('report_receipt.non_cash')}</p>
             <p className='dr_row_value'><Money value={selected?.sale?.totalNonCashAmount} fontSize={13} /></p>
           </div>
+          {selected?.paymentitem?.map(renderItem1)}
           <div className='dr_row'>
             <p className='dr_row_label' style={{fontWeight: 'bold'}}>{t('report_receipt.paid')}</p>
             <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={totalAmount} fontSize={13} /></p>
