@@ -52,7 +52,7 @@ export function Customer(props){
     setLoading(false);
     setShow(false)
     setChecked(false)
-    setFiltering(true);
+    setFiltering(name ? true : false);
   }
 
   const onClickDelete = () => setOpen(true);
@@ -101,16 +101,16 @@ export function Customer(props){
     <div className='s_container_z'>
       {visible && <Add {...modalProps} />}
       <Overlay loading={loading}>
-      {open && <Confirm {...confirmProps} />}
+        {open && <Confirm {...confirmProps} />}
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <SizeMe>{({ size }) => 
-          <div className='i_list_cont_z' id='solve_list'>
-            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
-          </div>
-        }</SizeMe>
+            <div className='i_list_cont_z' id='solve_list'>
+              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
+            </div>}
+          </SizeMe>
         }      
-        </Overlay>
+      </Overlay>
     </div>
   );
 }
