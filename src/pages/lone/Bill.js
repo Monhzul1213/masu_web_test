@@ -12,6 +12,7 @@ export function Bill(){
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
   const [detail, setDetail] = useState(null);
+  const [payments, setPayments] = useState(null);
   const [bill, setBill] = useState(null);
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ export function Bill(){
       if(header) header.paidAmount = (header.totalCashAmount ?? 0) + (header.totalNonCashAmount ?? 0);
       setHeader(header);
       setDetail(response?.data?.retdata?.salesitem);
+      setPayments(response?.data?.retdata?.paymentitem?.filter(p => p?.detailType !== 0));
       setBill({...response?.data?.retdata?.bill, ...response?.data?.retdata?.data});
     }
     setLoading(false);
@@ -49,7 +51,7 @@ export function Bill(){
             <Info header={header} bill={bill} />
             <Header />
             <Items detail={detail} bill={bill} />
-            <Total header={header} />
+            <Total header={header} payments={payments} />
             <QR header={header} />
             {bill?.footer ? <p className='bl_footer'>{bill?.footer}</p> : null}
           </div>

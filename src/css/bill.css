@@ -160,6 +160,16 @@
   margin: 0;
 }
 
+.bl_total_text1 {
+  font-size: 13px;
+  margin: 0 0 0 10px;
+}
+
+.bl_total_text2 {
+  font-size: 13px;
+  margin: 0;
+}
+
 #bl_total_bold > p {
   font-weight: 600;
 }
