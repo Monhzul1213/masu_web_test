@@ -6,6 +6,7 @@ import moment from 'moment';
 import '../../../css/report.css';
 import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all';
 import { config, encrypt } from '../../../helpers';
+import { coupon } from '../../../src1/assets'
 
 export function Drawer(props){
   const { selected, open, setOpen } = props;
@@ -35,6 +36,13 @@ export function Drawer(props){
           <p className='dr_item_text2'>{item?.qty}</p>
           <p className='dr_item_text3'><Money value={item?.price} fontSize={13} /></p>
           <p className='dr_item_text4'><Money value={item?.amount} fontSize={13} /></p>
+        </div>
+        <div className='dr_item_text_back'>
+          <div className='dr_img_back'>
+            {item?.couponName ? <img src={coupon} className='dr_img' alt='coupon'/> : ''}
+            <p className='dr_item_text_z2'>{item?.couponName ? (item?.couponName) : ''}</p>
+          </div>
+          <p className='dr_item_text_z2'>{item?.couponAmount ? <Money value={item?.couponAmount}/> : ''}</p>
         </div>
         <p className='dr_item_text'>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('report_receipt.t_emp')+ ': ' + item?.empName ) : ''}</p>
       </div>

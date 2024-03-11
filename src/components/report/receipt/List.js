@@ -53,6 +53,9 @@ export function List(props){
             <div style={{textAlign: 'right', paddingRight: 15}}>
              {item?.value === 'sale.vat_CustomerId' ? props?.value : 
               item?.value === 'customer' ? props?.value :
+              item?.value === 'sale.consumerDescr' ? props?.value :
+              item?.value === 'sale.useVoucher' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> ) :
+              item?.value === 'sale.useCoupon' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> ) :
               item?.value === 'sale.status' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> : <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> ): 
               item?.value === 'sale.vatDdtd' ? props?.value: ( <Money value={props?.value} fontSize={14} />)}
             </div>

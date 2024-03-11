@@ -253,3 +253,26 @@
     text-align: center;
     padding: 10px 0 10px 0;
   }
+  .dr_item_text_z2 {
+    color: var(--text2-color);
+    font-size: 12px;
+    margin: 0;
+  }
+  .dr_item_text_back{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .dr_img_back{
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+  }
+  
+  .dr_img{
+    width: 17px;
+    height: 15px;
+    color: var(--text2-color);
+    margin-right: 5px;
+    margin-left: 5px;
+  }
