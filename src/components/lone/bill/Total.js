@@ -15,8 +15,17 @@ const Label = props => {
 }
 
 export function Total(props){
-  const { header } = props;
+  const { header, payments } = props;
   const { t } = useTranslation();
+
+  const renderPayment = (item, index) => {
+    return (
+      <div className='bl_total_row' key={index}>
+        <p className='bl_total_text1'>{item?.paymentTypeName}</p>
+        <p className='bl_total_text2'><Money value={item?.paymentAmount} fontSize={12} currency='₮' /></p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -32,6 +41,7 @@ export function Total(props){
       <div className='bl_gap' />
       <Label label={t('bill.cash')} value={header?.totalCashAmount} />
       <Label label={t('bill.noncash')} value={header?.totalNonCashAmount} />
+      {payments?.map(renderPayment)}
       <Label label={t('bill.paid')} value={header?.paidAmount} id='bl_total_bold' />
       <div className='bl_gap' />
       <div className='bl_dash' />

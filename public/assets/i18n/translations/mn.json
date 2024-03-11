@@ -679,6 +679,9 @@
     "columns": [
       { "label": "Нийт дүн", "value": "sale.totalAmount" },
       { "label": "Харилцагч", "value": "customer" },
+      { "label": "Үйлчүүлэгч", "value": "sale.consumerDescr" },
+      { "label": "Ваучер", "value": "sale.useVoucher" },
+      { "label": "Купон", "value": "sale.useCoupon" },
       { "label": "Хөнгөлөлт", "value": "sale.totalDiscountAmount" },
       { "label": "Төлөх дүн", "value": "sale.totalSalesAmount" },
       { "label": "Бэлэн мөнгө", "value": "sale.totalCashAmount" },
