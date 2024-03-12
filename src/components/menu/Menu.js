@@ -105,7 +105,6 @@ export function Menu(props){
       getItem(t('menu.invt_list'), '/inventory/invt_list', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_category'), '/inventory/invt_category', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_modi'), '/inventory/invt_modi', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
     getItem(t('menu.management'), '/management', <TbBuildingWarehouse />,[
       getItem(t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageItem !== 'Y'),
@@ -125,7 +124,8 @@ export function Menu(props){
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
     hideTime ? null : getItem(t('menu.loyalty'), '/loyalty', <RiCoupon2Line />, [
       getItem(t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageEmployy !== 'Y')
+      getItem(t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
     hideTime ? null : getItem(t('timetable.time'), '/timetable', <BiCalendar />, [
       getItem(t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
