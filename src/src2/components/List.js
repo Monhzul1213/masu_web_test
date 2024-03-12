@@ -3,10 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
 
 import { getList } from "../../services";
-import {
-  PaginationTable,
-  Table,
-} from "../../src1/components/all/all_m";
+import { PaginationTable, Table } from "../../src1/components/all/all_m";
 import { EmployeeServiceModal } from "./emp/employeeService/EmployeeServiceModal";
 import { useDispatch, useSelector } from "react-redux";
 

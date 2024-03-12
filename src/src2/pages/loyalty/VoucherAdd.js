@@ -13,10 +13,7 @@ import {
   Confirm,
   ButtonRowConfirm,
 } from "../../../components/all";
-import {
-  Main,
-  CardService,
-} from "../../components/loyalty/vaucher/add";
+import { Main, CardService } from "../../components/loyalty/vaucher/add";
 
 export function VoucherAdd() {
   const { t } = useTranslation();

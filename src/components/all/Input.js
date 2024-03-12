@@ -234,7 +234,7 @@ export function InputPassword(props){
 }
 
 export function IconInput(props){
-  const {value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, id, 
+  const {value, setValue, label, placeholder, disabled, setError, setEdited, inRow, id, 
         length, noBlur, className, onClick } = props;
   const { t } = useTranslation();
 
@@ -250,19 +250,19 @@ export function IconInput(props){
     setEdited && setEdited(true);
   }
 
-  const onKeyDown = e => {
-    if(e?.key?.toLowerCase() === "enter"){
-      if(handleEnter) handleEnter(e);
-      else {
-        const form = e.target.form;
-        if(form){
-          const index = [...form].indexOf(e.target);
-          form.elements[index + 1]?.focus();
-          e.preventDefault();
-        }
-      }
-    }
-  }
+  // const onKeyDown = e => {
+  //   if(e?.key?.toLowerCase() === "enter"){
+  //     if(handleEnter) handleEnter(e);
+  //     else {
+  //       const form = e.target.form;
+  //       if(form){
+  //         const index = [...form].indexOf(e.target);
+  //         form.elements[index + 1]?.focus();
+  //         e.preventDefault();
+  //       }
+  //     }
+  //   }
+  // }
 
   const onBlur = () => {
     !noBlur && setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
