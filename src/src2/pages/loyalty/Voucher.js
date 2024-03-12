@@ -14,8 +14,6 @@ export function Voucher(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
-  // const [visible, setVisible] = useState(false);
-  // const [sites, setSites] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();

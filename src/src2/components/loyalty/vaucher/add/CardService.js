@@ -6,7 +6,6 @@ import { withSize } from 'react-sizeme';
 import { PaginationTable, Table, DynamicBSIcon, IconButton, Money } from '../../../../../src1/components/all/all_m';
 import { ItemSelect, SelectItem } from './SelectItem';
 import { Service } from '../../service/Service';
-import { config, encrypt } from '../../../../../helpers';
 
 
 export function Card(props){

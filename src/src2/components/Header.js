@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
-import moment from 'moment';
 
 import { getList } from '../../services';
-import { MultiSelect, PlainRange } from '../../src1/components/all/all_m';
+import { MultiSelect } from '../../src1/components/all/all_m';
 
 export function Header(props){
-  const { setError, onSearch, sites, emps, setSites, setEmps, size, data, columns, excelName , filter1 } = props;
+  const { setError, onSearch, sites, emps, setSites, setEmps, size, filter1 } = props;
   const { t } = useTranslation();
   const [site, setSite] = useState([]);
   const [emp, setEmp] = useState([]);
   const [classH, setClassH] = useState('th_header1');
-  const [date, setDate] = useState([moment().startOf('month'), moment()]);
+  // const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -64,8 +63,9 @@ export function Header(props){
     let query = "?";
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
-    onSearch && onSearch(query, filter1, date);
+    onSearch && onSearch(query, filter1);
   }
+
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
   const classBack = 'th_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
@@ -76,8 +76,6 @@ export function Header(props){
   const empProps = { value: emp, setValue: setEmp, data: emps, s_value: 'empCode', s_descr: 'empName', onHide,
   classBack, classLabel, className ,
     label: t('employee.title'), onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp')};
-  const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide,
-    className: 'rh_date_z' , };
 
   return (
     <div className='ih_header' id={id}  >

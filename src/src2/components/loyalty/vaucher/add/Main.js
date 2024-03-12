@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { Date, Select } from '../../../../../components/all';
-import { Input, MoneyInput, ValidateInput } from '../../../../../src1/components/all/all_m';
-import { getList } from '../../../../../services';
+import { Input, MoneyInput } from '../../../../../src1/components/all/all_m';
 
 export function Main(props){
-  const { setError, setEdited, name, setName, perc, setPerc, price, setPrice, qty, setQty, beginDate, setBeginDate, endDate, setEndDate,
-          status, setStatus, category, setCategory, type, setType, number, setNumber, invt, setInvt, controlDisable } = props;
+  const { setError, setEdited, name, setName, price, setPrice, beginDate, setBeginDate, endDate, setEndDate,
+          status, setStatus, number, setNumber, controlDisable } = props;
   const { t } = useTranslation();
   const [states, setStates] = useState([{ value: 1, label: 'Идэвхитэй' }]);
-  const [types, setTypes] = useState([{ value: 0, label: 'Хувиар хөнгөлөх' },]);
-  const [categories, setCategories] = useState();
-  const [invts, setInvts] = useState();
-  const { user, token }  = useSelector(state => state.login);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     return () => {};
@@ -33,18 +26,6 @@ export function Main(props){
   const onChangeStatus = value => {
     setStatus(value);
   }
-  const onChangeType = value => {
-    setType(value);
-  }
-
-  const onFocusType = async () => {
-    if(!types?.length || types?.length === 1){
-      setTypes([
-        { value: 0, label: 'Хувиар хөнгөлөх' },
-        { value: 1, label: 'Дүнгээр хөнгөлөх' },
-      ]);
-    }
-  }
 
   const onFocusStatus = async () => {
     if(!states?.length || states?.length === 1){
@@ -54,44 +35,12 @@ export function Main(props){
       ]);
     }
   }
-  const getCategories = async (toGet, id) => {
-    if(!categories?.length || categories?.length === 1 || toGet){
-      setError(null);
-      const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
-      if(response?.error) setError(response?.error);
-      else {
-        setCategories(response?.data);
-        if(id) setCategory({ value: id });
-      }
-    }
-  }
-
-  const getInvts = async (toGet, id) => {
-    if(!categories?.length || categories?.length === 1 || toGet){
-      setError(null);
-      const response = await dispatch(getList(user, token, 'Inventory/GetInventory'));
-      if(response?.error) setError(response?.error);
-      else {
-        let invts = [];
-        response?.data?.inventoryies?.forEach(item => {
-            invts.push(item?.msInventory)})
-        setInvts(invts)
-        if(id) setInvt({ value: id });
-      }
-    }
-  }
 
   const changeNumber = value => {
     let text = value?.value?.replace(/[^0-9]/g, '');
     if(isNaN(text)) setNumber({...value, error: 'must_number'});
     else setNumber({ value: text });
   } 
-
-  const changePerc = value => {
-    let text = value?.value?.replace(/[^0-9]/g, '');
-    if(isNaN(text)) setPerc({...value, error: 'must_number'});
-    else setPerc({ value: text });
-  }
   
 
   const amtProps = { value: price, setValue: setPrice, label: t('voucher.voucherAmt'), placeholder: t('voucher.voucherAmt'), setError, setEdited, disabled: controlDisable };

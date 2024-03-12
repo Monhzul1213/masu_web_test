@@ -160,7 +160,7 @@ export function TransferAdd(){
   let listProps = { detail, setDetail, search, setSearch, fromSiteId, toSiteId, setEdited, setDItems, editable };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), onClickDelete, header };
   let subProps = { visible, setVisible, sites, setSites, onDone, noTrial: true, noBack: true };
-  let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
+  let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error, status1};
 
   return (
     <Overlay className='i_container' loading={loading}>

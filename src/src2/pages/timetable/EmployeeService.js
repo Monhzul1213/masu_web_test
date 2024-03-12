@@ -4,9 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getList } from '../../../services';
-import {  Error1, Overlay } from '../../../src1/components/all/all_m';
-import { List,Header } from '../../components';
-import { Subscription } from '../../../components/management/adjust/list/Subscription';
+import { Error1, Overlay } from '../../../src1/components/all/all_m';
+import { List, Header } from '../../components';
 
 export function EmployeeService(){
   const [loading, setLoading] = useState(false);
@@ -18,14 +17,12 @@ export function EmployeeService(){
   const [sites, setSites] = useState([]);
   const [emps, setEmps] = useState([]);
   const [checked, setChecked] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [dialogClose, setDialagClose] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : getData();
-    setVisible(true)
     return () => { };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dialogClose]);
@@ -42,21 +39,11 @@ export function EmployeeService(){
     setShow(false);
   }
 
-  const onBack = async () => {
-    setVisible(false);
-    setSites([]);
-  }
-
-  const onDone = () => {
-    setVisible(false);
-  }
-
   const listProps = {data, setError, onSearch: getData, sites, setSites, emps, setEmps, serviceData, checked, setChecked, setData, setShow, setDialagClose, dialogClose };
-  const headerProps = { data, setError, onSearch: getData, sites, setSites, emps, setEmps, show, setError };
-  let subProps = { visible,  onBack, onDone, setSites, setVisible };
+  const headerProps = { data, setError, onSearch: getData, sites, setSites, emps, setEmps, show };
+
   return (
     <div className='s_container_i'>
-         {/* {visible && <Subscription {...subProps}/>} */}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
           <SizeMe>{({ size }) => 

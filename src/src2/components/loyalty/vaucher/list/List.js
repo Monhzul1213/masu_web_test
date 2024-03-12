@@ -81,7 +81,7 @@ export function List(props) {
         Cell: ({ value, row }) => {
           let status = row?.original?.status;
           let color = status !== 1 ? "var(--text-color)" : "var(--text2-color)";
-          return <span style={{ color }}>{value == 1 ? "Идэвхтэй" : "Идэвхгүй"}</span>;
+          return <span style={{ color }}>{value === 1 ? "Идэвхтэй" : "Идэвхгүй"}</span>;
         },
       },
     ]);

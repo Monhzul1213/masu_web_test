@@ -15,7 +15,6 @@ import {
 } from "../../../components/all";
 import {
   Main,
-  CardSite,
   CardService,
 } from "../../components/loyalty/vaucher/add";
 
@@ -25,7 +24,6 @@ export function VoucherAdd() {
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [saved, setSaved] = useState(false);
-  const [error1, setError1] = useState(null);
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState({ value: "" });
@@ -37,7 +35,6 @@ export function VoucherAdd() {
   const [beginDate, setBeginDate] = useState({ value: moment() });
   const [endDate, setEndDate] = useState({ value: moment() });
   const [number, setNumber] = useState({ value: '' });
-  const [checked, setChecked] = useState(true);
   const [kits, setKits] = useState([]);
   const [dkits, setDKits] = useState([]);
   const [item, setItem] = useState(null);
@@ -48,7 +45,6 @@ export function VoucherAdd() {
   const [searchParams] = useSearchParams();
   const [controlDisable, setControlDisable] = useState(false);
   const [consumer, setConsumer] = useState([]);
-  const [dconsumer, setDConsumer] = useState([]);
 
   useEffect(() => {
     if (saved) onClickCancel();
@@ -83,7 +79,6 @@ export function VoucherAdd() {
     if (response?.error) setError(response?.error);
     else {
       let voucher = response?.data?.voucher && response?.data?.voucher[0] ;
-
       setKits(response?.data?.voucherconsumer);
       setSelected(voucher);
       setItem(response?.data);
@@ -247,14 +242,14 @@ export function VoucherAdd() {
   };
 
   const serviceProps = {
-    number,
-    data: consumer,
-    setData: setConsumer,
-    setError,
-    setEdited,
-    setDKits,
-    search: searchI,
-    setSearch: setSearchI,
+        number,
+        data: consumer,
+        setData: setConsumer,
+        setError,
+        setEdited,
+        setDKits,
+        search: searchI,
+        setSearch: setSearchI,
   };
 
   return (
