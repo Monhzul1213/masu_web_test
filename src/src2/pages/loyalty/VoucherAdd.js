@@ -228,7 +228,7 @@ export function VoucherAdd() {
     onClickCancel,
     onClickSave,
     onClickDelete,
-    id: "co_btn",
+    id: "vo_btn",
     show: false,
   };
   let confirmProps = {

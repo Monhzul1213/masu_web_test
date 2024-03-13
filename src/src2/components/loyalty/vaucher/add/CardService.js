@@ -93,13 +93,13 @@ export function Card(props){
   const modalProps = { visible, closeModal, data , setItem: setData, setVisible, item: data};
 
   return (
-    <div className='cou_service_back'>
+    <div className='vou_service_back'>
       {visible && <Service {...modalProps}/>}
         <div className='cou_title_back'>
           <p className='ac_title'>{t('voucher.consumer')}</p>
           <IconButton {...addProps}/>
         </div>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+        <div className='table_scroll' id='paging' style={{overflowY: 'scroll', maxHeight, overflowX: 'scroll'}}>
           <Table {...tableProps} />
         </div>
         <ItemSelect {...selectProps} />

@@ -29,6 +29,17 @@
     max-width: 700px;
     margin-top: 10px;
 }
+#vo_btn{
+    max-width: 800px;
+}
+.vou_service_back {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    padding: var(--page-padding);
+    max-width: 800px;
+    margin-top: 10px;
+}
 .cou_title_back{
     display: flex;
     flex-flow: row;
