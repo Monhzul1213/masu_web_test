@@ -34,7 +34,7 @@ export function VoucherAdd() {
   const [number, setNumber] = useState({ value: '' });
   const [kits, setKits] = useState([]);
   const [dkits, setDKits] = useState([]);
-  const [item, setItem] = useState(null);
+  // const [item, setItem] = useState(null);
   const [searchI, setSearchI] = useState({ value: null });
   const { user, token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ export function VoucherAdd() {
       let voucher = response?.data?.voucher && response?.data?.voucher[0] ;
       setKits(response?.data?.voucherconsumer);
       setSelected(voucher);
-      setItem(response?.data);
+      // setItem(response?.data);
       setName({ value: voucher?.name ?? "" });
       setPrice({ value: voucher?.voucherAmount ?? "" });
       setPerc({ value: voucher?.voucherValue ?? "" });
