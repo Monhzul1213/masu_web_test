@@ -6,9 +6,10 @@ export function Chat(){
   
   return (
       <MessengerCustomerChat
-          pageId="105497049025361"
-          appId="1039030647202273"
-          themeColor={'#a020f0'}
+          pageId = "105497049025361"
+          appId = "1039030647202273"
+          themeColor = "#a020f0"
+          htmlRef = ''
       />
   );
 }
