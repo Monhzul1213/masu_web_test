@@ -45,7 +45,8 @@ export function Menu(props){
 
     getReview();
 
-    if(user?.merchantId === 66 || user?.merchantId === 135 || user?.merchantId === 383 || user?.merchantId === 631 || user?.merchantId === 270)
+    if(user?.merchantId === 66 || user?.merchantId === 135 || user?.merchantId === 383 || user?.merchantId === 631 || 
+      user?.merchantId === 270 || user?.merchantId === 164 || user?.merchantId === 700 || user?.merchantId === 999)
       setHideTime(false);
     else
       setHideTime(true);
