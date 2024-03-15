@@ -57,7 +57,7 @@ export function Card(props){
       
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
       Cell: ({ row, onClickDelete }) =>
-        (row?.original?.status === 2 ? '' :<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+        (row?.original?.salesAmount > 0 ? '' :<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
     },
     ]);
     return () => {};
