@@ -6,7 +6,6 @@ import { coupon } from '../../../src1/assets'
 export function Items(props){
   const { detail, bill } = props;
 
-  console.log(detail)
   const renderItem = (item, index) => {
     const showBarCode = bill?.isPrintBarCode === 'Y' && item?.barCode;
     const service = (item?.serviceName ?? item?.serviceCode) + (item?.serviceDescr ? (', ' + item?.serviceDescr) : '');

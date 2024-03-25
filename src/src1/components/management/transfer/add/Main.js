@@ -6,14 +6,14 @@ import { getList } from '../../../../../services';
 import { DescrInput, Select } from '../../../../../components/all';
 
 export function Main(props){
-  const { setError, setEdited, header, detail, toSiteId, setToSiteId, fromSiteId, setFromSiteId, notes, setNotes, editable } = props;
+  const { setError, setEdited, header, toSiteId, setToSiteId, fromSiteId, setFromSiteId, notes, setNotes, editable } = props;
   const { t } = useTranslation();
   const [fromSites, setFromSites] = useState([]);
   const [toSites, setToSites] = useState([]);
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
-  const disabled = detail?.length ? true : false;
+  // const disabled = detail?.length ? true : false;
 
   useEffect(() => {
     if(header){
@@ -61,9 +61,9 @@ export function Main(props){
   }
 
   const fromSiteProps = { value: fromSiteId, setValue: setFromSiteId, label: t('transfer.from_site'), placeholder: t('report_receipt.dr_site'), data: fromSites, setError, setEdited,
-    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusFromSite, loading, disabled };
+    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusFromSite, loading,  };
   const toSiteProps = { value: toSiteId, setValue: setToSiteId, label: t('transfer.to_site'), placeholder: t('report_receipt.dr_site'), data: toSites, setError, setEdited,
-    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusToSite, loading, disabled };
+    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusToSite, loading,  };
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
 
   return (

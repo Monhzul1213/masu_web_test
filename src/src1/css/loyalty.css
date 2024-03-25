@@ -6,6 +6,7 @@
     max-width: 700px;
 }
 .cou_add_back {
+    flex: 1;
     background-color: var(--root-color);
     border-radius: var(--radius);
     box-shadow: 0px 2px 5px rgba(0,0,0,.15);
@@ -13,6 +14,10 @@
     max-width: 550px;
 }
 
+.cou_main_back {
+    display: flex;
+    flex-flow: row;
+}
 .cou_site_back {
     background-color: var(--root-color);
     border-radius: var(--radius);
@@ -173,4 +178,127 @@
     margin: 0;
     font-size: 14px;
     font-weight: bold;
+}
+.coupon_image_back{
+    width: 450px;
+    height: 200px;
+
+    margin: 10px 30px;
+    position: relative;
+}
+.coupon1{
+    margin-top: -50px;
+    position: absolute;
+
+}
+.image_back{
+    border-radius: 30px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    padding: var(--page-padding);
+    width: 400px;
+    height: 200px;
+    margin: 10px 30px;
+}
+.circle {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--back-color);
+    position: relative;
+    top: -140px;
+}
+.circle1 {
+    display: flex;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: var(--back-color);
+    padding: 10px;
+    position: relative;
+    top: -400px;
+    left: 400px;
+}
+.img_line{
+    position: relative;
+    border-left: 1px dashed var(--root-color);
+    padding: 20px;
+    height: 200px;
+    top: -270px;
+    left: 190px;
+}
+.image_name_back{
+    position: relative;
+    top: -525px;
+    left: 70px;
+    max-width: 120px;
+    width: 120px;
+    /* border: 1px dashed var(--root-color); */
+}
+.image_price_back{
+    display: flex;
+    flex-flow: column;
+    position: relative;
+    top: -525px;
+    left: 80px;
+    /* border: 1px dashed var(--root-color); */
+    max-width: 230px;
+}
+.descr_text{
+    font-size: 15px;
+    font-weight: 550;
+    color: var(--root-color);
+}
+.name_text{
+    position: relative;
+    font-size: 18px;
+    font-weight: 550;
+    color: var(--root-color);
+    margin-top: 40px;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+    overflow-wrap: break-word;
+    align-items: center;
+    justify-content: center;
+    /* word-break: break-all; */
+    /* align-items: center; */
+}
+.text_co{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--root-color);
+    width: 60px;
+    font-size: 12px;
+    border-radius: 10px;
+    margin: 0;
+}
+
+.price_text{
+    font-size: 25px;
+    font-weight: 800;
+    color: var(--root-color);
+    margin: 0;
+}
+
+.price_back{
+    margin-top: 30px;
+}
+.price_back1{
+    margin-top: 54px;
+}
+.date_back{
+    display: flex;
+    flex-flow: row;
+    margin-top: 40px;
+    align-items: center;
+}
+.date_text{
+    margin: 0 3px;
+    align-items: center;
+    color: var(--root-color);
+    font-size: 12px;
 }
