@@ -13,16 +13,17 @@ export function Image(props) {
     return (
     <div>
         <div className='image_back' style={{backgroundColor: '#' + color?.value}}></div>
-        <div className="circle"/>
+        <div className="cou_circle_back"/>
         <div className="img_line"/>
         <IoIosArrowDroprightCircle name='IoIosArrowDroprightCircle' className="circle1" style={{color: '#' + color?.value}}/>
         <div className='row'>
             <div className='image_name_back'>
                 <p className='descr_text'>{user?.msMerchant?.descr}</p>
                 <p className='name_text'>{name?.value}</p>
+                <p className='gap'/>
             </div>
             <div className='image_price_back'>
-                <p className= 'descr_text'>{ 
+                <p className= 'category_text'>{ 
                     categories?.map(item => {
                         if(item?.categoryId === category?.value) return item?.categoryName }
                     )}

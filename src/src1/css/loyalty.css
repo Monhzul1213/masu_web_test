@@ -182,7 +182,6 @@
 .coupon_image_back{
     width: 450px;
     height: 200px;
-
     margin: 10px 30px;
     position: relative;
 }
@@ -199,7 +198,7 @@
     height: 200px;
     margin: 10px 30px;
 }
-.circle {
+.cou_circle_back {
     display: flex;
     width: 60px;
     height: 60px;
@@ -230,42 +229,51 @@
 .image_name_back{
     position: relative;
     top: -525px;
-    left: 70px;
-    max-width: 120px;
-    width: 120px;
+    left: 60px;
+    max-width: 125px;
+    width: 115px;
     /* border: 1px dashed var(--root-color); */
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
 }
 .image_price_back{
     display: flex;
     flex-flow: column;
     position: relative;
     top: -525px;
-    left: 80px;
-    /* border: 1px dashed var(--root-color); */
+    left: 90px;
     max-width: 230px;
 }
 .descr_text{
     font-size: 15px;
     font-weight: 550;
     color: var(--root-color);
+    display: flex;
+    justify-content: center;
 }
 .name_text{
     position: relative;
     font-size: 18px;
     font-weight: 550;
     color: var(--root-color);
-    margin-top: 40px;
     -webkit-line-clamp: 3;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    display: -webkit-box;
-    overflow-wrap: break-word;
+    display: flex;
+    align-content: center;
     align-items: center;
     justify-content: center;
-    /* word-break: break-all; */
-    /* align-items: center; */
+    overflow-wrap: break-word;
 }
+
+.category_text{
+    font-size: 15px;
+    font-weight: 550;
+    color: var(--root-color);
+}
+
 .text_co{
     display: flex;
     align-items: center;
@@ -301,4 +309,38 @@
     align-items: center;
     color: var(--root-color);
     font-size: 12px;
+};
+#vo_btn {
+    max-width: 800px;
+  }
+  
+.vou_service_back {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    padding: var(--page-padding);
+    max-width: 800px;
+    margin-top: 10px;
 }
+.voucher_image_back {
+    width: 350px;
+    margin: 10px 20px;
+  }
+  
+  .vou_main_back {
+    display: flex;
+    flex-flow: row;
+  }
+  
+  .vou_add_back {
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    padding: var(--page-padding);
+    max-width: 550px;
+    flex: 1;
+  }
+  
+  .vou_main {
+    margin: 10px 30px;
+  }

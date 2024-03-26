@@ -99,8 +99,6 @@ export function EmployeeServiceModal(props) {
       });
     });
 
-    // console.log("..............................", serviceData);
-
     e?.preventDefault();
     onLoad();
     setLoading(true);
