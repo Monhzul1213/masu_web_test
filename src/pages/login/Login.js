@@ -36,6 +36,7 @@ export function Login(){
     if(email?.value && password?.value?.trim()){
       setLoading(true);
       const response = await dispatch(apiLogin(email?.value, password?.value?.trim()));
+      console.log(response)
       if(response?.error) setError(response?.error);
       else {
         dispatch(setLogin({ toRemember: checked }));
