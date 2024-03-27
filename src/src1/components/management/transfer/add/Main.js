@@ -19,7 +19,10 @@ export function Main(props){
     if(header){
       onFocusFromSite() 
       onFocusToSite();
-    } 
+    } else {
+      onFocusToSite();
+
+    }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [header]);

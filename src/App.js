@@ -13,7 +13,7 @@ import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/em
 import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen, OrderReceipt } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
-import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat } from './src1/pages';
+import { Customer, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
@@ -24,7 +24,7 @@ import { InvoiceSend } from './components/emp/employee/add/InvoiceSend';
 import { Timetable1 } from './src1/pages/timetable';
 import { EmployeeService } from './src2/pages/timetable/EmployeeService';
 import { Voucher, VoucherAdd } from './src2/pages/loyalty';
-import { Coupon, CouponAdd } from './src1/pages/loyalty';
+import { Coupon, CouponAdd, Discount, DiscountAdd } from './src1/pages/loyalty';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);

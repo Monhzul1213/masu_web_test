@@ -7,7 +7,7 @@ import { message } from 'antd';
 import { getList, sendRequest } from '../../../services';
 import '../../css/discount.css';
 import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
-import { Add , Site, CardEmpty} from '../../components/invt/discount';
+import { Add , Site, CardEmpty} from '../../components/loyalty/discount';
 
 export function DiscountAdd(){
   const [name, setName] = useState({ value: '' });
