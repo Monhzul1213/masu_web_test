@@ -18,7 +18,7 @@ export function Radio(props){
 
   return (
     <div style={inRow ? { flex: 1 } : {}}>
-      <div className='select_back' style={inRow ? { margin: '0 0 0 0', borderColor: 'transparent' } : { borderColor: 'transparent' }}>
+      <div className='select_back_dis' style={inRow ? { margin: '0 0 0 0', borderColor: 'transparent' } : { borderColor: 'transparent' }}>
         <p className='select_lbl' style={style}>{label}</p>
         <AntRadio.Group className='radio_back' onChange={onChange} value={value?.value}>
           {data?.map(renderItem)}

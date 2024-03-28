@@ -184,7 +184,7 @@ export function MoneyInput(props){
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
   return (
-    <div style={inRow ? { flex: 1 } : {}}>
+    <div style={inRow ? { flex: 1, marginTop: 20 } : {}}>
       <div className='select_back' style={backStyle}>
         <p className='select_lbl' style={style}>{label}</p>
         <CurrencyInput

@@ -344,3 +344,22 @@
   .vou_main {
     margin: 10px 30px;
   }
+  .select_back_dis {
+    display: flex;
+    flex-flow: column;
+    border-bottom: 1px solid var(--text4-color);
+    margin: 10px 0 0 0;
+    padding: 3px 0;
+  }
+  
+  .select_back_dis:focus-within {
+    border-bottom: 1px solid var(--success-color);
+  }
+  
+  .select_back_dis:focus-within .select_lbl {
+    color: var(--success-color);
+  }
+  .dis_input_back{
+    flex: 1;
+    margin-top: 10px;
+  }

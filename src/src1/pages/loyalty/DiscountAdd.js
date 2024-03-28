@@ -7,14 +7,19 @@ import { message } from 'antd';
 import { getList, sendRequest } from '../../../services';
 import '../../css/discount.css';
 import { ButtonRowConfirm, Error1, Overlay , Prompt } from '../../components/all/all_m';
-import { Add , Site, CardEmpty} from '../../components/loyalty/discount';
+import { Add , Site, CardEmpty} from '../../components/loyalty/discount/list';
+import moment from 'moment';
+import { CardService } from '../../components/loyalty/coupon/add';
 
 export function DiscountAdd(){
   const [name, setName] = useState({ value: '' });
   const [price, setPrice] = useState({ value: '' });
   const [perc, setPerc] = useState({ value: '' });
   const [isEach, setIsEach] = useState({ value: '0' });
+  const [isDis, setIsDis] = useState({ value: '0' });
   const [isCheck, setIsCheck] = useState(false);
+  const [beginDate, setBeginDate] = useState({ value: moment() });
+  const [endDate, setEndDate] = useState({ value: moment() });
   const [sites, setSites] = useState([]);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
@@ -22,6 +27,7 @@ export function DiscountAdd(){
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [checked, setChecked] = useState(true);
+  const [consumer, setConsumer] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -103,6 +109,9 @@ export function DiscountAdd(){
       setIsEach({ value: dis?.discountType.toString() ?? '0' });
       setPrice({ value: dis?.discountValue ?? '' });
       setPerc({ value: dis?.discountValue.toString() ?? ''  });
+      // let length = dis?.discountValue?.replace(/[-.]/g, '')?.length;
+      // if(length !== 0 && length !== 4) setPerc({ value: dis?.discountValue?.replace(/-/g, '0') });
+      // setPerc({ value: length.toString() ?? ''  });
       setIsCheck( dis?.isRestrictedAccess === 'Y' );
       response?.data?.forEach(item => item.rowStatus = 'U');
       site?.forEach(item => {
@@ -154,11 +163,12 @@ const onClickSave = async () => {
     else onSuccess(t('employee.delete_success'), true);
   }
   
-  const mainProps = { setError, name, setName, isEach, setIsEach, price, setPrice, perc, setPerc, setEdited,  setIsCheck, isCheck };
+  const mainProps = { setError, name, setName, isEach, setIsEach, price, setPrice, perc, setPerc, setEdited,  
+                      setIsCheck, isCheck, isDis, setIsDis, beginDate, setBeginDate, endDate, setEndDate };
   const siteProps = {  data: sites, setData: setSites, setEdited, checked, setChecked  };
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'mo_ac_btn_z'  };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add', id: 'mo_ac_back' };
-
+  const serviceProps = { data: consumer, setData: setConsumer}
   return (
     <Overlay className='i_container' loading={loading}>
       <Prompt edited={edited} />
@@ -168,6 +178,7 @@ const onClickSave = async () => {
           <Add {...mainProps}/>
           <div className='gap' />
           {sites?.length ? <Site {...siteProps} />  : <CardEmpty  {...siteEmptyProps}/>}
+          {/* {isDis?.value === '1' ? <CardService {...serviceProps}/> : ''} */}
         </form>
       </div>
       <ButtonRowConfirm {...btnProps} />

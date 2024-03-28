@@ -586,7 +586,11 @@
     ],
     "add_success": "Хөнгөлөлт амжилттай бүртгэгдлээ.",
     "delete_success": "Хөнгөлөлт амжилттай устгагдлаа.",
-    "isRestrictedAccess": "Эрх шалгах"
+    "isRestrictedAccess": "Эрх шалгах",
+    "discount": [
+      { "label": "Үнийн дүнгийн хөнгөлөлт", "value": "0" },
+      { "label": "Loyalty хөнгөлөлт", "value": "1" }
+    ]
   },
   "role": {
     "title": "Эрхийн тохиргоо",
