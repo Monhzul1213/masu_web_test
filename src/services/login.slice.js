@@ -209,6 +209,7 @@ function fetchRetryLogin(config, retries = 5) {
     .then(res => {
       return res?.data;
     }).catch(error => {
+      console.log(error)
       if(error?.message === 'Network Error' && retries > 0){
         console.log('retrying network', retries);
         return fetchRetryLogin(config, retries - 1)

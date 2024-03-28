@@ -4,10 +4,12 @@
 // }
 
 export const config = { // production
-  // url: 'https://app.masu.mn:8082/',
+  url: 'https://app.masu.mn:8082/',
   // url: 'http://192.168.1.208:8082/',
-  url: 'http://192.168.1.208:8082/',
-  url2: 'http://202.131.232.99:8083/',
+  // url: 'http://66.181.175.6:8082/',
+  // url: 'http://202.131.232.99:8082/',
+
+  // url2: 'http://202.131.232.99:8083/',
   domain: 'https://app.masu.mn',
   url1: 'http://test-sales.apu.mn:3031/',
   otc: 'http://test-sales.apu.mn:3031/',
