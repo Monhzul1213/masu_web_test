@@ -19,7 +19,7 @@ export function SelectItem(props){
 }
 
 export function ItemSelect(props){
-  const { search, setSearch, data, setData, newItem, number, disabled } = props;
+  const { search, setSearch, data, setData, newItem, disabled } = props;
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -50,8 +50,8 @@ export function ItemSelect(props){
     let exists = data?.findIndex(d => d.consumerId === consumer?.consumerId);
     if(exists === -1){
       let item = newItem(consumer);
-      if(data?.length < number?.value) setData(old => [...old, item]);
-      else setSearch({ value: null, error: t('coupon.number_max') });
+      setData(old => [...old, item]);
+      // else setSearch({ value: null, error: t('coupon.number_max') });
     } else {
       setSearch({ value: null, error: t('coupon.already_added') });
     }

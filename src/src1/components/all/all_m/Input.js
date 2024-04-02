@@ -62,8 +62,8 @@ export function Input(props){
 }
 
 export function Percent(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow  } = props;
-   
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, className  } = props;
+
   const onChange = e => {
     setValue({ value: e.target.value });
     setError && setError(null);
@@ -83,18 +83,20 @@ export function Percent(props){
       }
     }
   }
+
   const onBlur = () => {
     let length = value?.value?.replace(/[-.]/g, '')?.length;
     if(length !== 0 && length !== 4) setValue({ value: value?.value?.replace(/-/g, '0') });
   }
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
   let formatChars = { '1': '[0-9]', '2': '[0-9]', '3': '[0-9]', '4': '[0-9]' };
   let mask = '12.34';
 
   return (
-    <div style={inRow ? { flex: 1, marginTop: 20 } : {}}>
-      <div className='cust_back' style={backStyle}>
+    <div style={inRow ? { flex: 1, marginTop: 20 } : {flex: 1}}>
+      <div className= {className ? className : 'cust_back'} style={backStyle}>
         {label && <p className='select_lbl' style={style}>{label}</p>}
         <div className='cust_back1'>
             <InputMask
@@ -158,7 +160,7 @@ export function DescrInput(props){
 }
 
 export function MoneyInput(props){
-  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, onBlur } = props;
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, onBlur, className } = props;
 
   const onChange = value => {
     setValue({ value });
@@ -184,8 +186,8 @@ export function MoneyInput(props){
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
   return (
-    <div style={inRow ? { flex: 1, marginTop: 20 } : {}}>
-      <div className='select_back' style={backStyle}>
+    <div style={inRow ? { flex: 1, marginTop: 20 } : {flex: 1}}>
+      <div className={className ? className : 'select_back'} style={backStyle}>
         <p className='select_lbl' style={style}>{label}</p>
         <CurrencyInput
           className='m_input'
@@ -320,6 +322,58 @@ export function ValidateInput(props){
             />
       </div>
       {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : label} {value?.error}</p>}
+    </div>
+  );
+}
+
+
+export function PercentInput(props){
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, onBlur, className } = props;
+
+  const onChange = value => {
+    setValue({ value: value > 100 ? 100 : value });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter"){
+      if(handleEnter) handleEnter(e);
+      else {
+        const form = e.target.form;
+        if(form){
+          const index = [...form].indexOf(e.target);
+          form.elements[index + 1]?.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? { flex: 1, marginTop: 20 } : {flex: 1}}>
+      <div className={className ? className : 'select_back'} style={backStyle}>
+        <p className='select_lbl' style={style}>{label}</p>
+        <CurrencyInput
+          className='m_input'
+          suffix= '%'
+          allowNegativeValue={false}
+          disabled={disabled}
+          placeholder={placeholder}
+          decimalsLimit={2}
+          value={value?.value}
+          maxLength= {5}
+          step={2}
+          onBlur={onBlur}
+          onKeyDown={onKeyDown}
+          onValueChange={onChange}
+          disableGroupSeparators={true}
+           />
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
     </div>
   );
 }

@@ -116,7 +116,7 @@ export function Main(props){
   const colorProps = { value: color, setValue: setColor, data: colors, s_value: 'valueStr1', s_descr: 'valueStr1', label: t('coupon.color'), onFocus: onFocusColor, inRow: true};
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false, placeholder: t('coupon.category_select'),
     data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories, disabled : selected ? true : false };
-  const numberProps = { value: number, setValue: changeNumber, label: t('inventory.t_qty'), placeholder: t('inventory.t_qty'), setEdited, setError, length: 30, };
+  const numberProps = { value: number, setValue: changeNumber, label: t('coupon.qty'), placeholder: t('inventory.t_qty'), setEdited, setError, length: 30, };
   const invtProps = { value: invt, setValue: setInvt, label: t('coupon.invt'), setError, setEdited, inRow: false,
   data: invts, s_value: 'invtId', s_descr: 'name', onFocus: getInvts, placeholder: t('coupon.invt_select'), disabled : selected ? true : false };
   const imageProps = { color, name, user, category, price, perc, type, categories};

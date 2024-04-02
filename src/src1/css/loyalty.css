@@ -363,3 +363,20 @@
     flex: 1;
     margin-top: 10px;
   }
+  .dis_back {
+    display: flex;
+    flex-flow: column;
+    border-bottom: 1px solid var(--text4-color);
+    margin: 10px 0 0 15px;
+    padding: 3px 0;
+  }
+  .dis_back:focus-within {
+    border-bottom: 1px solid var(--success-color);
+  }
+  
+  .dis_back:focus-within .select_lbl {
+    color: var(--success-color);
+  }
+  .radio_back_dis{
+    margin: 6px 5px 0 5px;
+ }

@@ -9,11 +9,12 @@ import { CheckBox, DescrInput, DynamicBSIcon, Input, MoneyInput, Radio, Select, 
 import { Add as AddCategory } from '../../category';
 import { Add as AddVendor } from '../../../management/vendor';
 import { SelectableCell1 } from './EditableCell1';
+import { ValidateInput } from '../../../../src1/components/all/all_m';
 
 function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice,
     cost, setCost, sku, setSku, barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange,
-    setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId, setLoading, isService, setIsService, time, setTime } = props;
+    setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId, setLoading, isService, setIsService, time, setTime, batch, setBatch } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [vendors, setVendors] = useState([]);
@@ -87,9 +88,15 @@ function Card(props){
     if(saved) getVendors(id);
   }
 
+  const changeBatch = value => {
+    let text = value?.value?.replace(/[^0-9]/g, '');
+    if(isNaN(text)) setBatch({...value, error: 'must_number'});
+    else setBatch({ value: text });
+  }
+
   const id = size?.width > 480 ? 'im_large' : 'im_small';
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
-  const idRow1 = size?.width > 540 ? 'im_unit_row_large' : 'im_unit_row_small';
+  // const idRow1 = size?.width > 540 ? 'im_unit_row_large' : 'im_unit_row_small';
   const idRow2 = size?.width > 540 ? 'tm_unit_row_large' : 'tm_unit_row_small';
 
   const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('inventory.name'), setError, setEdited, inRow: true, length: 75 };
@@ -97,7 +104,7 @@ function Card(props){
     data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories };
   const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setEdited, setError, length: 500 };
   const unitProps = { value: isEach, setValue: setIsEach, label: t('inventory.unit'), data: t('inventory.units'),
-    setEdited, setError, inRow: false };
+    setEdited, setError, inRow: false, className : 'radio_back_dis' };
   const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setEdited, setError,
     inRow: true, onBlur: onPriceChange };
   const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setEdited, setError, inRow: true,
@@ -111,6 +118,7 @@ function Card(props){
     s_value: 'vendId', s_descr: 'vendName', placeholder: t('inventory.vendor') };
   const serviceProps = { label: t('inventory.service'), checked: isService, setChecked: setIsService , style: {width: '50%'}};
   const timeProps = { data: timeList1, value: time, setValue: setTime, label: t('timetable.service_time') };
+  const batchProps = { value: batch, setValue: changeBatch, label: t('order.t_batch'), placeholder: t('order.t_batch'), setError, setEdited, className: 'invt_back'};
 
   return (
     <div className='ia_back' id={id}>
@@ -123,8 +131,10 @@ function Card(props){
             <div style={{flex: 1}}><Select {...categoryProps} /></div>
             <IconButton className='im_add_btn' onClick={onClickCategory} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
           </div>
-          <div id={idRow1}>
+          <div id={idRow}>
             <Radio {...unitProps} />
+            <div className='gap'/>
+            <ValidateInput {...batchProps} />
           </div>
           <div id={idRow2}>
             <CheckBox {...serviceProps} />
