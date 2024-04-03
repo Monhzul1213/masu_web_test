@@ -12,7 +12,6 @@ import { apiLogin, apiRegister, getService, setIsLoggedIn, setLogin, getConstant
 import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
 import { Copyright, Partner } from '../../components/login';
 import { Confirm } from '../../components/login/Confirm';
-import { RadioSelect } from '../../components/emp/merchant';
 
 export function SignUp(){
   const { t } = useTranslation();
@@ -28,11 +27,10 @@ export function SignUp(){
   const [expire, setExpire] = useState(null);
   const [activity, setActivity] = useState({ value: null});
   const [addItem, setAddItem] = useState({ value: '' });
-  const [allData, setAllData] = useState([]);
   const [sales, setSales] = useState([]);
   const [vendor, setVendor] = useState([]);
   const { user, token } = useSelector(state => state.login);
-  const merchant = user?.msMerchant;
+  // const merchant = user?.msMerchant;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -152,7 +150,6 @@ export function SignUp(){
           let n1 = string.startsWith(1)
           if ( n1 === true || string === '204' ){num.push({...item}) } 
         })
-        setAllData(response?.data)
         setSales(num?.sort((a, b) => a.valueNum - b.valueNum));
       }
       setLoading(null);
@@ -188,8 +185,6 @@ export function SignUp(){
   const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
   const confirmProps = { visible, closeModal, number: address?.value, expire, email: email?.value };
   const partProps = { partner, setPartner };
-  let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), allData, merchant,
-  setError, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem, };
 
   return (
     <div className='l_container'>
@@ -201,7 +196,7 @@ export function SignUp(){
           <FloatingInput {...emailProps} />
           <FloatingPassword {...passProps} />
           <FloatingInput {...businessProps} />
-          <RadioSelect {...subProps}/>  
+          {/* <RadioSelect {...subProps}/>   */}
           <FloatingInput {...addressProps} />
           <Partner {...partProps} />
           <div className='co_gap' />
