@@ -118,7 +118,7 @@ function Card(props){
     s_value: 'vendId', s_descr: 'vendName', placeholder: t('inventory.vendor') };
   const serviceProps = { label: t('inventory.service'), checked: isService, setChecked: setIsService , style: {width: '50%'}};
   const timeProps = { data: timeList1, value: time, setValue: setTime, label: t('timetable.service_time') };
-  const batchProps = { value: batch, setValue: changeBatch, label: t('order.t_batch'), placeholder: t('order.t_batch'), setError, setEdited, className: 'invt_back'};
+  const batchProps = { value: batch, setValue: changeBatch, label: t('order.t_batch'), placeholder: t('order.t_batch'), setError, setEdited, className: 'invt_back', inRow: true};
 
   return (
     <div className='ia_back' id={id}>
@@ -133,11 +133,12 @@ function Card(props){
           </div>
           <div id={idRow}>
             <Radio {...unitProps} />
-            <div className='gap'/>
+            {/* <div className='gap'/> */}
             <ValidateInput {...batchProps} />
           </div>
           <div id={idRow2}>
             <CheckBox {...serviceProps} />
+            <div className='gap'/>
             {isService ? <SelectableCell1 {...timeProps}/> : ''}
           </div>
         </div>

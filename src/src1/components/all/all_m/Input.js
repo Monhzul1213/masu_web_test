@@ -306,7 +306,7 @@ export function ValidateInput(props){
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
   return (
-    <div style={inRow ? { flex: 1 } : {}} id={id}>
+    <div style={inRow ? { flex: 1, marginTop: 20 } : {}} id={id}>
       <div className='cust_back' style={backStyle} >
         {label && <p className='select_lbl' style={style}>{label}</p>}
             <InputMask
