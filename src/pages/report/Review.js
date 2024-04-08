@@ -1,14 +1,15 @@
 import React from 'react';
 import { withSize } from 'react-sizeme';
 
+import '../../css/invt.css';
 import '../../css/report.css';
-import { Review1 } from '../../components/report/review';
+import { Filter } from '../../components/report/review/Filter';
 
 function Screen(props){
 
   return (
-    <div className='s_container'>
-        <Review1/>
+    <div className='s_container_r'>
+        <Filter  />
     </div>
   )
 }
