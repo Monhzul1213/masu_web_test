@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Money } from '../../all';
+import { coupon } from '../../../src1/assets'
 
 export function Items(props){
   const { detail, bill } = props;
@@ -18,6 +19,13 @@ export function Items(props){
         </div>
         {showBarCode ? <p className='bl_item_descr'>{item?.barCode}</p> : null}
         {item?.serviceCode ? <p className='bl_item_descr'>{service}</p> : null}
+        <div className='dr_item_text_back'>
+          <div className='dr_img_back'>
+            {item?.couponName ? <img src={coupon} className='dr_img' alt='coupon'/> : ''}
+            <p className='dr_item_text_z2'>{ (item?.couponName ? item?.couponName : '')}</p>
+          </div>
+          <p className='dr_item_text_z2'>{item?.couponAmount ? <Money value={item?.couponAmount}/> : ''}</p>
+        </div>
       </div>
     );
   }

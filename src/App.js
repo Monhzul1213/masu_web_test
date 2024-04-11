@@ -106,7 +106,7 @@ export function App(){
           <SizeMe>{({ size }) => 
           <Layout>
             <Menu {...menuProps} size={size} />
-            {(user?.merchantId === 66 || user?.merchantId === 135 || user?.merchantId === 383 || user?.merchantId === 631 || user?.merchantId === 270) && loggedIn ? <Chat/> : null}
+            <Chat/>
             <Layout>
               <Routes>
                 <Route path='/' element={<Home />} />

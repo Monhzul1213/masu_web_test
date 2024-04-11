@@ -11,7 +11,7 @@ import { weekCheck } from '../../../../helpers';
 
 export function BigCalendar(props){
   // const { t } = useTranslation();
-  const { view, handleViewChange, datas, min, onSearch, size, data, setError, filter } = props;
+  const { view, handleViewChange, datas, onSearch, size, data, setError, filter } = props;
   const [selected, setSelected] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [open, setOpen] = useState(false);

@@ -462,7 +462,9 @@
     "edit_variant": "Хувилбар засах",
     "import_title": "Бараа оруулах",
     "import_link": "Барааны формат татах",
-    "import_error": "Файл оруулна уу"
+    "import_error": "Файл оруулна уу",
+    "all": "Бүх бараа",
+    "invt": " бараа"
   },
   "modifier": {
     "title": "Нэмэлт төлбөр",
@@ -586,7 +588,12 @@
     ],
     "add_success": "Хөнгөлөлт амжилттай бүртгэгдлээ.",
     "delete_success": "Хөнгөлөлт амжилттай устгагдлаа.",
-    "isRestrictedAccess": "Эрх шалгах"
+    "isRestrictedAccess": "Эрх шалгах",
+    "discount": [
+      { "label": "Үнийн дүнгийн хөнгөлөлт", "value": "0" },
+      { "label": "Loyalty хөнгөлөлт", "value": "1" }
+    ],
+    "check_lbl" : "Loyalty-н бүх үйлчлүүлэгчид үйлчилнэ."
   },
   "role": {
     "title": "Эрхийн тохиргоо",
@@ -760,7 +767,7 @@
       { "label": "Буцаасан нэмэлт төлбөрийн дүн", "value": "ReturnModiferAmount" }
     ],
     "column": [
-      { "label": "Барааны код", "value": "invtID", "align": "left", "noformat": true },
+      { "label": "Баркод", "value": "barCode", "align": "left", "noformat": true },
       { "label": "Ангилал", "value": "categoryName", "align": "left", "noformat": true },
       { "label": "Борлуулалтын дүн", "value": "totalSalesAmt" },
       { "label": "Борлуулалтын тоо", "value": "qty", "noformat": true },
@@ -1145,7 +1152,9 @@
     "items_error": "Хөдөлгөөнд дор хаяж нэг барааг оруулна уу",
     "add_success": "Хөдөлгөөн амжилттай хийлээ.",
     "delete_success": "Хөдөлгөөн амжилттай устгагдлаа.",
-    "warning_item": "Салбар сонгоно уу"
+    "warning_item": "Салбар сонгоно уу",
+    "order_invt": "Захиалгын бараа",
+    "sale_site": "Борлуулагчийн салбар"
   },
   "rating":{
     "edit": "Үнэлгээ засах",
@@ -1247,7 +1256,9 @@
     "no_data": "Үйлчлүүлэгч сонгоно уу!",
     "already_added": "Энэ үйлчлүүлэгч жагсаалтад нэмэгдсэн байна",
     "number_max" : "Үйлчлүүлэгчдийн тоо дүүрсэн байна.",
-    "edit": "Ашигласан"
+    "edit": "Ашигласан",
+    "color": "Өнгө",
+    "qty":"Купоны тоо"
   },
   "voucher" : {
     "add" : "Ваучер нэмэх",
@@ -1279,7 +1290,8 @@
     "number_max" : "Үйлчлүүлэгчдийн тоо дүүрсэн байна.",
     "edit": "Ашигласан",
     "already_added": "Энэ үйлчлүүлэгч жагсаалтад нэмэгдсэн байна",
-    "price_max" : "Ваучерын дүн 0 байж болохгүй"
+    "price_max" : "Ваучерын дүн 0 байж болохгүй",
+    "color": "Өнгө"
   },
   "version": "13"
 }

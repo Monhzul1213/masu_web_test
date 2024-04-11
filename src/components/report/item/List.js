@@ -3,18 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 
 import '../../../css/report.css';
-import { ExportExcel } from '../../../helpers';
-import { PaginationTable, TableResize, IconSelect, DynamicMDIcon, Money } from '../../all';
+import { PaginationTable, TableResize, Money } from '../../all';
+import { Header } from './Header';
 
 export function List(props){
-  const { data, excelName } = props;
+  const { data, excelName, filter, size, getData, date } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [columns1, setColumns1] = useState([]);
 
   useEffect(() => {
-    changeColumns(['totalSalesAmt', 'totalReturnAmt', 'totalDiscAmt', 'totalNetSalesAmt', 'totalCost',
-      'totalProfitAmt', 'taxes']);
+    changeColumns(['barCode', 'categoryName', 'qty', 'totalSalesAmt', 'totalReturnAmt', 'returnQty', 'totalDiscAmt', 'totalNetSalesAmt', 'totalCost',
+      'totalProfitAmt', 'taxes', 'totalVatAmt']);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
@@ -44,20 +44,16 @@ export function List(props){
     setColumns(columns);
   }
 
-  const columnProps = { value: columns1, setValue: changeColumns, data: t('report.column'),
-    className: 'rp_list_drop', Icon: () => <DynamicMDIcon name='MdOutlineViewColumn' className='rp_list_drop_icon' />,
-    dropdownStyle: { minWidth: 200 }, dropdownAlign: { offset: [-165, 5] } };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)';
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
-
+  const filterProps = { onSearch: getData, size, filter, columns, data1: data, excelName, date,
+    value: columns1, setValue: changeColumns, data: t('report.column'), className: 'rp_list_drop' };
+  
   return (
     <div>
-      <div className='rp_list_filter'>
-        <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
-        <IconSelect {...columnProps} />
-      </div>
+      <Header {...filterProps} />        
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />

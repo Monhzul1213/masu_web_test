@@ -6,7 +6,6 @@ import { withSize } from 'react-sizeme';
 import { PaginationTable, Table, DynamicBSIcon, IconButton, Money } from '../../../../../src1/components/all/all_m';
 import { ItemSelect, SelectItem } from './SelectItem';
 import { Service } from '../../service/Service';
-import { config, encrypt } from '../../../../../helpers';
 
 
 export function Card(props){
@@ -58,7 +57,7 @@ export function Card(props){
       
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
       Cell: ({ row, onClickDelete }) =>
-        (row?.original?.status === 2 ? '' :<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+        (row?.original?.salesAmount > 0 ? '' :<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
     },
     ]);
     return () => {};
@@ -94,13 +93,13 @@ export function Card(props){
   const modalProps = { visible, closeModal, data , setItem: setData, setVisible, item: data};
 
   return (
-    <div className='cou_service_back'>
+    <div className='vou_service_back'>
       {visible && <Service {...modalProps}/>}
         <div className='cou_title_back'>
           <p className='ac_title'>{t('voucher.consumer')}</p>
           <IconButton {...addProps}/>
         </div>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+        <div className='table_scroll' id='paging' style={{overflowY: 'scroll', maxHeight, overflowX: 'scroll'}}>
           <Table {...tableProps} />
         </div>
         <ItemSelect {...selectProps} />

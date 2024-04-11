@@ -1,29 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
-import { useNavigate, createSearchParams } from "react-router-dom";
 
-import {
-  Check,
-  Confirm,
-  PaginationTable,
-  Table,
-  Money,
-} from "../../../../src1/components/all/all_m";
+import { Check, Table, Money } from "../../../../src1/components/all/all_m";
 import { EmployeeServiceModal } from "./EmployeeServiceModal";
 import { getList } from "../../../../services";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export function CreateService(props) {
   const { data, setData, setShow, checked, setChecked } = props;
   const { user, token } = useSelector((state) => state.login);
   const { t, i18n } = useTranslation();
-  const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [columns, setColumns] = useState([]);
   const [serviceData, setServiceData] = useState([]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
 
@@ -77,10 +67,6 @@ export function CreateService(props) {
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
-
-  const confirm = (sure) => {
-    setOpen(false);
-  };
 
   const onClickCheckAll = (e) => {
     setShow(!checked);
@@ -137,7 +123,7 @@ export function CreateService(props) {
     usePagination,
     useRowSelect
   );
-  const tableProps = { tableInstance, onClickLink };
+  const tableProps = { tableInstance, onClickLink, error };
 
   return (
     <div>

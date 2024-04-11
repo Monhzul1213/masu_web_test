@@ -3,7 +3,7 @@ import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useRe
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { PaginationTable, Empty1, Money, TableResize } from '../../../components/all/all_m';
+import { Empty1, Money, TableResize } from '../../../components/all/all_m';
 import { Header } from './Header';
 import { formatNumber } from '../../../../helpers';
 
@@ -124,7 +124,7 @@ export function List(props){
 
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable({ columns : (!isDtl ? columns : columns1), data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [isDtl ? { id: 'invtName', desc: true } : { id: 'costDate', desc: true }] },}, 
+    initialState: { pageIndex: 0, pageSize: 100000, sortBy: [isDtl ? { id: 'invtName', desc: true } : { id: 'costDate', desc: true }] },}, 
     useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const filterProps = { columns, data, setData, excelName, setError, onSearch , size, isDtl, setIsDtl };
@@ -140,7 +140,6 @@ export function List(props){
             <TableResize {...tableProps} />
           </div>
         </div>     
-        <PaginationTable {...tableProps} />
        </>
       }
     </div>

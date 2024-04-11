@@ -29,7 +29,7 @@ export function InvtTxn(){
     if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
     else {
       let dates = [moment(), moment()];
-      let query = '?BeginDate=' + moment()?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
+      let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
       onSearch(query, null, dates);   
     }
     return () => {};

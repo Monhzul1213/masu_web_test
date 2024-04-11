@@ -52,7 +52,6 @@ export function List(props) {
         ),
       },
 
-     
       {
         Header: t("voucher.beginDate"),
         accessor: "beginDate",
@@ -73,7 +72,17 @@ export function List(props) {
           </div>
         ),
       },
-      
+      {
+        Header: <div style={{ textAlign: "right" }}>{t("voucher.color")}</div>,
+        accessor: "color",
+        customStyle: { width: 80 },
+        exLabel: t("voucher.color"),
+        Cell: (props) => (
+          <div style={{ textAlign: "right", paddingRight: 15 }}>
+            {props.value ? props.value : 0}
+          </div>
+        ),
+      },
       {
         Header: t("voucher.status"),
         accessor: "status",
@@ -81,7 +90,11 @@ export function List(props) {
         Cell: ({ value, row }) => {
           let status = row?.original?.status;
           let color = status !== 1 ? "var(--text-color)" : "var(--text2-color)";
-          return <span style={{ color }}>{value == 1 ? "Идэвхтэй" : "Идэвхгүй"}</span>;
+          return (
+            <span style={{ color }}>
+              {value === 1 ? "Идэвхтэй" : "Идэвхгүй"}
+            </span>
+          );
         },
       },
     ]);

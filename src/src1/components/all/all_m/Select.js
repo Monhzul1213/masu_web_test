@@ -282,3 +282,50 @@ export function PlainSelect1(props){
     </div>
   );
 }
+
+export function ColorSelect(props){
+  const { value, setValue, label, placeholder, data, setError, setEdited, s_value, s_descr, mode, inRow, onFocus,
+    loading, disabled, id } = props;
+  const { t } = useTranslation();
+  
+  let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
+
+  const handleChange = e => {
+    setValue({ value: e });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const renderItem = (item, index) => {
+    return (<Option style={{ backgroundColor: "#" + item[s_descr ?? "value"] , width: 240, margin: 2, borderRadius: 20}} key={index} value={item[s_value ?? 'value']}>{'#' + item[s_descr ?? 'label']}</Option>);
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? { flex: 1 } : {}}>
+      <div className='select_back' style={backStyle} id={id}>
+        <p className='select_lbl' style={style}>{label}</p>
+        <AntSelect
+          mode={mode}
+          loading={loading}
+          disabled={disabled}
+          className='select_m'
+          style={{backgroundColor: "#" + value?.value}}
+          showSearch
+          filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          onChange={handleChange}
+          value={value?.value}
+          onFocus={() => onFocus && onFocus()}
+          maxTagCount={0}
+          maxTagPlaceholder={maxTagPlaceholder}
+          // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' style={style} />}
+          placeholder={placeholder}>
+          {data?.map(renderItem)}
+        </AntSelect>
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}

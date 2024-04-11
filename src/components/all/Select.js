@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select as AntSelect } from 'antd';
+import { Select as AntSelect, Tag } from 'antd';
 import { BsCheckLg } from 'react-icons/bs';
 import { useTranslation } from 'react-i18next';
 
@@ -203,5 +203,63 @@ export function IconSelect(props){
       maxTagPlaceholder=''>
       {data?.map(renderItem)}
     </AntSelect>
+  );
+}
+
+export function InvtSelect(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, onHide, Icon,
+    dropdownStyle, dropdownAlign, text, onSearch } = props;
+  const { t } = useTranslation();
+  
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={isIndex ? index : item?.msInventory[s_value ?? 'value']}>{item?.msInventory[s_descr ?? 'label']}</Option>);
+  }
+
+  const onDropdownVisibleChange = show => {
+    if(!show) onHide();
+  }
+
+  const tagRender = (props) => {
+    const { label, closable, onClose  } = props;
+
+    const onPreventMouseDown = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+    return (
+      <Tag onMouseDown={onPreventMouseDown} closable={closable} onClose={onClose} style={{ marginInlineEnd: 2}}>
+        {label}
+      </Tag>
+    );
+  }
+
+  const empty = t(text?.length > 3 ? 'page.no_filter' : 'inventory.morethan');
+
+
+  return (
+    <div className={classBack}>
+      {Icon && <Icon />}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch allowClear
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={setValue}
+        value={value}
+        loading={loading}
+        onFocus={onFocus}
+        mode='multiple'
+        dropdownStyle={dropdownStyle}
+        dropdownAlign={dropdownAlign}
+        menuItemSelectedIcon={<BsCheckLg />}
+        onDropdownVisibleChange={onDropdownVisibleChange}
+        onSearch={onSearch}
+        notFoundContent={empty}
+        maxTagCount={'responsive'}
+        tagRender={tagRender}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+    </div>
   );
 }

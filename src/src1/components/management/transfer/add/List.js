@@ -4,17 +4,19 @@ import { useBlockLayout, useGlobalFilter, usePagination, useResizeColumns, useRo
 import { useTranslation } from 'react-i18next';
 
 import { add } from '../../../../../helpers';
-import { DynamicBSIcon, PaginationTable } from '../../../all/all_m';
+import { DynamicBSIcon, IconButton, PaginationTable } from '../../../all/all_m';
 import { Search } from '../../../../../components/management/order/add/Search';
 import { ItemSelect } from './SelectItem';
 import { SelectItem } from '../../../../../components/invt/inventory/add/SelectItem';
 import { EditableCell as EditableCellQty } from './EditableCell';
 import { TableResize } from '../../../../../components/all';
+import { Order } from '../order/Order';
 
 function Card(props){
-  const { size, detail, setDetail, search, setSearch, fromSiteId, toSiteId, setEdited, setDItems, editable } = props;
+  const { size, detail, setDetail, search, setSearch, fromSiteId, toSiteId, setEdited, setDItems, editable, setToSiteId } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     let columns = [
@@ -72,6 +74,15 @@ function Card(props){
     setSearch({ value: null });
   }
 
+  const onClick = (e) => {
+    e?.preventDefault();
+    setVisible(true)
+  }
+
+  const closeModal = () => {
+    setVisible(false)
+  }
+
   const newItem = invt => {
     return {
       name: invt.name, invtId: invt.invtId, sku: invt?.sku, barCode: invt?.barCode,
@@ -90,9 +101,12 @@ function Card(props){
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, fromSiteId, toSiteId };
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
+  const addProps = { className: 'po_add_btn', text: t('transfer.order_invt'), icon: <DynamicBSIcon name='BsPlusLg' className='po_add_icon' />, onClick};
+  const modalProps = { visible, closeModal, item: detail , setItem: setDetail, setVisible, toSiteId, setToSiteId};
 
   return (
     <div className='po_back_invt3'>
+      {visible && <Order {...modalProps}/>}
       <Search {...searchProps} />
       <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight}}>
         <TableResize {...tableProps} />
@@ -100,7 +114,7 @@ function Card(props){
       {editable && <ItemSelect {...selectProps} />}
       <div className={classPage}>
         <PaginationTable {...tableProps} />
-        <div />
+        <IconButton {...addProps}/>
       </div>
     </div>
   );

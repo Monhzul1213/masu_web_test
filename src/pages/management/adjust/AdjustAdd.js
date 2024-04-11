@@ -57,7 +57,7 @@ export function AdjustAdd(){
         setEditable(header?.status !== 1);
         setSiteId({ value: header?.siteId });
         setNotes({ value: header?.descr });
-        response?.data?.inAdjustitem?.map(item => {
+        response?.data?.inAdjustitem?.forEach(item => {
           item.adjustItemID = item.adjustItemId;
           item.sourceItemID = item.sourceItemId;
           item.origCost = item.cost;

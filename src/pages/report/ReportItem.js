@@ -9,8 +9,7 @@ import '../../css/invt.css';
 import { getList } from '../../services';
 import { topColors } from '../../helpers';
 import { Empty1, Error1, Overlay } from '../../components/all';
-import { Filter } from '../../components/report/receipt';
-import { Graph, List, Top } from '../../components/report/item';
+import { Graph, List, Top, Filter } from '../../components/report/item';
 
 function Screen(props){
   const { size } = props;
@@ -25,6 +24,7 @@ function Screen(props){
   const [data, setData] = useState([]);
   const [period, setPeriod] = useState('D');
   const [excelName, setExcelName] = useState('');
+  const [invt, setInvt] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ function Screen(props){
   useEffect(() => {
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
     else {
-      let dates = [moment()?.startOf('month'), moment()];
+      let dates = [moment(), moment()];
       let query = '?BeginDate=' + dates[0]?.format('yyyy.MM.DD') + '&EndDate=' + dates[1]?.format('yyyy.MM.DD');
       getData(query, null, dates);
     }
@@ -147,7 +147,7 @@ function Screen(props){
     let period1 = dates ? setPeriods(dates) : period2;
     setError(null);
     setLoading(true);
-    let api = 'Sales/GetSalesByItem' + (query ?? '') + '&SearchPeriod=' + period1;
+    let api = 'Sales/GetSalesByItem' + (query ?? '') + (q2 ?? '') + '&SearchPeriod=' + period1;
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     else {
@@ -164,18 +164,19 @@ function Screen(props){
     getData(filter, null, null, value);
   }
   
-  let filterProps = { onSearch: getData, size, setError };
+  let filterProps = { onSearch: getData, size, setError, invt, setInvt };
   let card_id = size?.width >= 800 ? 'ri_large' : 'ri_small';
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
   let graphProps = {  bar: top, data: graph, size, period, setPeriod: changePeriod, periodData }
-  let listProps = { data, size, excelName };
+  let listProps = { data, size, excelName, filter, getData, date };
 
   return (
     <div className='s_container_r'>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
-        {top?.length ?
+        {invt?.length ? null :
+        top?.length ?
           <div className='ri_card' id={card_id}>
             <Top data={top} />
             <Graph {...graphProps} />

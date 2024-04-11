@@ -260,7 +260,6 @@ export function PlainRange(props){
   
   export function SelectTime(props){
     const { value, setValue } = props;
-    const { t } = useTranslation();
   
     const setTime = data => {
       setValue(data);

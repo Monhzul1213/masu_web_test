@@ -156,6 +156,22 @@
     margin-left: 15px;
     width: 180px;
   }
+
+  .rp_h_back2 .rp_select_back4 {
+    width: 234px;
+  }
+
+  .rp_select_back4{
+    background-color: var(--root-color);
+    height: 36px;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 5px rgba(0,0,0,.15);
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    width: 250px;
+  }
+
   #rp_card_large .rp_card_icon_z {
     color: var(--root-color);
     font-size: 20px;
@@ -275,4 +291,9 @@
     color: var(--text2-color);
     margin-right: 5px;
     margin-left: 5px;
+  }
+
+  .rh_select_back {
+    margin-right: 15px;
+    width: 210px;
   }

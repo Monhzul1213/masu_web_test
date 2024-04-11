@@ -1,15 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
-import { useNavigate, createSearchParams } from "react-router-dom";
+
 import { getList } from "../../services";
-import {
-  Check,
-  Confirm,
-  PaginationTable,
-  Table,
-  Money,
-} from "../../src1/components/all/all_m";
+import { PaginationTable, Table } from "../../src1/components/all/all_m";
 import { EmployeeServiceModal } from "./emp/employeeService/EmployeeServiceModal";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -25,14 +19,12 @@ export function List(props) {
   } = props;
   const { user, token } = useSelector((state) => state.login);
   const { t, i18n } = useTranslation();
-  const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [checked1, setChecked1] = useState(false);
   const [columns, setColumns] = useState([]);
   const [error, setError] = useState(null);
   const [serviceData, setServiceData] = useState([]);
   const [dialogDatamatch, setDialogDataMatch] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -91,9 +83,6 @@ export function List(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
 
-  const confirm = (sure) => {
-    setOpen(false);
-  };
   const onClickCheckAll = (e) => {
     setChecked(!checked);
     setData((old) =>
@@ -126,7 +115,7 @@ export function List(props) {
     const response = await dispatch(getList(user, token, api));
     if (response?.error) setError(response?.error);
     else {
-      response?.data?.employeeservice?.map((item) => {
+      response?.data?.employeeservice?.forEach((item) => {
         if (item) {
           item.EmpCode = row?.original?.empCode;
         }

@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { ExportExcel } from '../../../../helpers';
-import { getList } from '../../../../services';
+import { ExportExcel, useDebounce } from '../../../../helpers';
+import { getList, sendRequest } from '../../../../services';
 import { MultiSelect, DynamicAIIcon, CheckBox1, DynamicMDIcon, Button } from '../../../components/all/all_m';
 import { SearchInput } from './SearchInput';
+import { InvtSelect } from '../../../../components/all';
 
 export function Header(props){
   const { setError, onSearch, size, data, setData, columns, excelName , filter1, isDtl, setIsDtl } = props;
@@ -18,6 +19,9 @@ export function Header(props){
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [invt, setInvt] = useState([]);
+  const [invts, setInvts] = useState([]);
+  const [text, setText] = useDebounce();
   const [classH, setClassH] = useState('th_header_mn1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -29,6 +33,12 @@ export function Header(props){
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    getData(text);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
 
   useEffect(() => {
     if(size?.width >= 870) setClassH('th_header_mn1');
@@ -66,6 +76,19 @@ export function Header(props){
     }
   }
 
+  const getData = async value => {
+    if(value?.length > 3){
+      setLoading(true);
+      let filter = [{ fieldName: "Name", value }];
+      let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
+      if(response?.error) setError && setError(response?.error);
+      else {
+        setInvts(response?.data);
+      }
+      setLoading(false);
+    }
+  }
+
   const handleEnter = value => {
     onHide(value);
   }
@@ -78,6 +101,7 @@ export function Header(props){
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
     query += (value ? ('&InvtName=' + value) : '');
     query += (isDtl ? ('&IsDtl=' + q) : '');
+    invt?.forEach(item => query += '&InvtId=' + item);
     onSearch && onSearch(query, filter1);
   }
 
@@ -122,7 +146,10 @@ export function Header(props){
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
   const dtlProps = { label: t('manage.is_dtl'), checked: isDtl, setChecked: setIsDtl, onHide: onHide1 };
   const importProps = { className: 'ih_btn', text: t('page.import'), onClick: onClickImport };
-
+  const invtProps = { value: invt, setValue: setInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide, label: t('inventory.title'),
+    classBack: 'ih_select_back', className: 'ih_select', classLabel: 'ih_select_lbl', dropdownStyle: { marginLeft: -30, minWidth: 180 },
+    loading: loading === 'sites', placeholder: t('inventory.search'), onSearch: setText, text };
+   
 
   return (
     <div className='ih_header' id={id} style={{paddingTop: 0}}>
@@ -130,6 +157,7 @@ export function Header(props){
           <div className='mn_header2'>
               <MultiSelect {...siteProps} />
               <MultiSelect {...suppProps} />
+              <InvtSelect {...invtProps}/>
               <div className='is_dtl'>
                <CheckBox1 {...dtlProps} /> 
               </div>

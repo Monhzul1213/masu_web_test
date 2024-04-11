@@ -4,7 +4,7 @@ import { useTable, usePagination, useRowSelect, useSortBy, useGlobalFilter, useB
 import { withSize } from 'react-sizeme';
 
 import { add, divide } from '../../../../helpers';
-import { PaginationTable, DynamicBSIcon, Money, TableResize } from '../../../all';
+import { DynamicBSIcon, Money, TableResize } from '../../../all';
 import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { Search } from './Search';
 import { EditableCell } from './EditableCell';
@@ -100,7 +100,7 @@ function Card(props){
     return rows.filter(row => row.values['name']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['barCode']?.includes(query));
   }, []);
 
-  const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
+  // const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const selectProps = { search, setSearch, data: items, setData: setItems, newItem };
@@ -118,10 +118,6 @@ function Card(props){
         <TableResize {...tableProps} />
       </div>
       <ItemSelect {...selectProps} />
-      <div className={classPage}>
-        <PaginationTable {...tableProps} />
-        <div />
-      </div>
     </div>
   );
 }

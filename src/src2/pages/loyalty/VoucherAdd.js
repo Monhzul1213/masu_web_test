@@ -13,11 +13,8 @@ import {
   Confirm,
   ButtonRowConfirm,
 } from "../../../components/all";
-import {
-  Main,
-  CardSite,
-  CardService,
-} from "../../components/loyalty/vaucher/add";
+import { Main, CardService } from "../../components/loyalty/vaucher/add";
+import { VoucherImage } from "../../components/loyalty/vaucher/add/image";
 
 export function VoucherAdd() {
   const { t } = useTranslation();
@@ -25,7 +22,6 @@ export function VoucherAdd() {
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
   const [saved, setSaved] = useState(false);
-  const [error1, setError1] = useState(null);
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   const [name, setName] = useState({ value: "" });
@@ -36,11 +32,11 @@ export function VoucherAdd() {
   const [type, setType] = useState({ value: 0 });
   const [beginDate, setBeginDate] = useState({ value: moment() });
   const [endDate, setEndDate] = useState({ value: moment() });
-  const [number, setNumber] = useState({ value: '' });
-  const [checked, setChecked] = useState(true);
+  const [number, setNumber] = useState({ value: "" });
+  const [color, setColor] = useState({ value: "006838" });
   const [kits, setKits] = useState([]);
   const [dkits, setDKits] = useState([]);
-  const [item, setItem] = useState(null);
+  // const [item, setItem] = useState(null);
   const [searchI, setSearchI] = useState({ value: null });
   const { user, token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
@@ -48,8 +44,6 @@ export function VoucherAdd() {
   const [searchParams] = useSearchParams();
   const [controlDisable, setControlDisable] = useState(false);
   const [consumer, setConsumer] = useState([]);
-  const [dconsumer, setDConsumer] = useState([]);
-
   useEffect(() => {
     if (saved) onClickCancel();
     return () => {};
@@ -66,27 +60,27 @@ export function VoucherAdd() {
 
   const getData = async () => {
     let voucherId = searchParams?.get("voucherId");
-    if (voucherId || voucherId === 0) {Getvoucher(voucherId);
-      setControlDisable(true)
+    if (voucherId || voucherId === 0) {
+      Getvoucher(voucherId);
+      setControlDisable(true);
     }
   };
 
   const Getvoucher = async (voucherId) => {
     setError(null);
     setLoading(true);
+
     let api = "?voucherId=" + voucherId;
     let response = await dispatch(
       getList(user, token, "Site/GetVoucher" + api)
     );
-    console.log("response", response);
     setLoading(false);
     if (response?.error) setError(response?.error);
     else {
-      let voucher = response?.data?.voucher && response?.data?.voucher[0] ;
-
+      let voucher = response?.data?.voucher && response?.data?.voucher[0];
       setKits(response?.data?.voucherconsumer);
       setSelected(voucher);
-      setItem(response?.data);
+      // setItem(response?.data);
       setName({ value: voucher?.name ?? "" });
       setPrice({ value: voucher?.voucherAmount ?? "" });
       setPerc({ value: voucher?.voucherValue ?? "" });
@@ -94,70 +88,81 @@ export function VoucherAdd() {
       setEndDate({ value: moment(voucher?.endDate, "YYYY-MM-DD") });
       setStatus({ value: voucher?.status ?? 0 });
       setNumber({ value: voucher?.voucherCount });
+      setColor({ value: voucher?.color });
 
-      response?.data?.voucherconsumer?.forEach(item => {
-        item.firstName = item?.consumerName
-        item.age = item?.consumerAge
-      })
-      setConsumer(response?.data?.voucherconsumer)
+      response?.data?.voucherconsumer?.forEach((item) => {
+        item.firstName = item?.consumerName;
+        item.age = item?.consumerAge;
+      });
+      setConsumer(response?.data?.voucherconsumer);
     }
   };
   const onClickCancel = () => navigate({ pathname: "/loyalty/voucher" });
 
   const validateData = () => {
-    let consumers = []
+    let consumers = [];
     if (name?.value?.trim() && number?.value && price?.value > 0) {
       let data = "";
-      if(consumer?.length <= number?.value){
-        consumer?.forEach(item => {
-          consumers.push({consumerID: item?.consumerId, voucherID: selected ? selected?.voucherId : -1, status: item?.status});
+      if (consumer?.length <= number?.value) {
+        consumer?.forEach((item) => {
+          consumers.push({
+            consumerID: item?.consumerId,
+            voucherID: selected ? selected?.voucherId : -1,
+            status: item?.status,
+          });
         });
         // dconsumer?.forEach(it => couponConsumers?.push({...it, rowStatus: 'D'}));
       } else {
-        setSearchI({ value: searchI?.value, error: t('voucher.number_max') });
+        setSearchI({ value: searchI?.value, error: t("voucher.number_max") });
         return false;
       }
 
-        data = selected
-          ? {
-              voucherID: selected?.voucherId,
-              name: name?.value,
-              beginDate: moment(beginDate?.value).format("yyyy.MM.DD"),
-              endDate: moment(endDate.value).format("yyyy.MM.DD"),
-              status: status?.value,
-              voucherCount: number?.value,
-              voucherAmount: price?.value,
-              rowStatus: "U",
-              consumers,
-            }
-          : {
-              name: name?.value,
-              beginDate: moment(beginDate?.value).format("yyyy.MM.DD"),
-              endDate: moment(endDate.value).format("yyyy.MM.DD"),
-              status: status?.value,
-              voucherCount: number?.value,
-              voucherAmount: price?.value,
-              rowStatus: "I",
-              consumers,
-            };
+      data = selected
+        ? {
+            voucherID: selected?.voucherId,
+            name: name?.value,
+            beginDate: moment(beginDate?.value).format("yyyy.MM.DD"),
+            endDate: moment(endDate.value).format("yyyy.MM.DD"),
+            status: status?.value,
+            voucherCount: number?.value,
+            voucherAmount: price?.value,
+            color: color?.value?.replace("#", ""),
+            rowStatus: "U",
+            consumers,
+          }
+        : {
+            name: name?.value,
+            beginDate: moment(beginDate?.value).format("yyyy.MM.DD"),
+            endDate: moment(endDate.value).format("yyyy.MM.DD"),
+            status: status?.value,
+            voucherCount: number?.value,
+            voucherAmount: price?.value,
+            color: color?.value?.replace("#", ""),
+            rowStatus: "I",
+            consumers,
+          };
       return data;
     } else {
       if (!name?.value?.trim())
-      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
-      if(!number?.value) setNumber({ value: '', error: t('error.not_empty') });
+        if (!name?.value?.trim())
+          setName({ value: "", error: t("error.not_empty") });
+      if (!number?.value) setNumber({ value: "", error: t("error.not_empty") });
 
       // if(qty?.value < 1) setQty({ value: '', error: t('error.not_empty') });
-      if(price?.value < 1) setPrice({ value: '', error: t('0 байж болохгүй') });
+      if (price?.value < 1)
+        setPrice({ value: "", error: t("0 байж болохгүй") });
     }
   };
 
   const onClickSave = async () => {
     let data = validateData();
-    if(data){
-        onLoad();
-        const response = await dispatch(sendRequest(user, token, 'Site/ModVoucher', data));
-        if(response?.error) onError(response?.error, true);
-        else onSuccess(t('coupon.already_added'));
+    if (data) {
+      onLoad();
+      const response = await dispatch(
+        sendRequest(user, token, "Site/ModVoucher", data)
+      );
+      if (response?.error) onError(response?.error, true);
+      else onSuccess(t("coupon.already_added"));
     }
   };
 
@@ -170,10 +175,11 @@ export function VoucherAdd() {
       beginDate: selected?.beginDate,
       endDate: selected?.endDate,
       status: selected?.status,
-      consumerAge : selected.consumerAge,
+      consumerAge: selected.consumerAge,
       voucherAmount: selected?.voucherAmount,
+      color: selected?.color,
       rowStatus: "D",
-      consumers: []
+      consumers: [],
     };
     const response = await dispatch(
       sendRequest(user, token, "Site/ModVoucher", data)
@@ -208,7 +214,6 @@ export function VoucherAdd() {
     // if(sure) setVisible(true);
   };
 
-
   let mainProps = {
     setError,
     setEdited,
@@ -230,13 +235,15 @@ export function VoucherAdd() {
     setStatus,
     type,
     setType,
-    controlDisable
+    controlDisable,
+    color,
+    setColor,
   };
   let btnProps = {
     onClickCancel,
     onClickSave,
     onClickDelete,
-    id: "co_btn",
+    id: "vo_btn",
     show: false,
   };
   let confirmProps = {

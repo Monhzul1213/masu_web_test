@@ -59,7 +59,7 @@ export function Add(props){
 
   const getImages = async SiteID => {
     const response = await dispatch(getList(user, token, 'Site/GetSitePics?SiteID=' + SiteID));
-    response?.data?.map(item => {
+    response?.data?.forEach(item => {
       if(item?.viewPriority === 1) getImage(item)
       else if(item?.viewPriority === 2) getImage1(item)
       else if(item?.viewPriority === 3) getImage2(item)

@@ -3,15 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Date, Select } from '../../../../../components/all';
-import { Input, MoneyInput, ValidateInput } from '../../../all/all_m';
-import { getList } from '../../../../../services';
+import { ColorSelect, Input, MoneyInput, ValidateInput } from '../../../all/all_m';
+import { getConstants, getList } from '../../../../../services';
+import { Image } from './Image';
 
 export function Main(props){
   const { setError, setEdited, name, setName, perc, setPerc, price, setPrice, beginDate, setBeginDate, endDate, setEndDate,
-          status, setStatus, category, setCategory, type, setType, number, setNumber, invt, setInvt, selected } = props;
+          status, setStatus, category, setCategory, type, setType, number, setNumber, invt, setInvt, selected, color, setColor } = props;
   const { t } = useTranslation();
   const [states, setStates] = useState([{ value: 1, label: 'Идэвхитэй' }]);
   const [types, setTypes] = useState([{ value: 0, label: 'Хувиар хөнгөлөх' },]);
+  const [colors, setColors] = useState([]);
   const [categories, setCategories] = useState();
   const [invts, setInvts] = useState();
   const { user, token }  = useSelector(state => state.login);
@@ -22,6 +24,7 @@ export function Main(props){
     onFocusStatus();
     getInvts();
     getCategories();
+    onFocusColor();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -44,6 +47,16 @@ export function Main(props){
         { value: 0, label: 'Хувиар хөнгөлөх' },
         { value: 1, label: 'Дүнгээр хөнгөлөх' },
       ]);
+    }
+  }
+
+  const onFocusColor = async () => {
+    if(!colors?.length || colors?.length === 1){
+      const response = await dispatch(getConstants(user, token, 'msCoupon_Color'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        setColors(response?.data?.sort((a,b)=> a.valueNum - b.valueNum));
+      }
     }
   }
 
@@ -99,27 +112,38 @@ export function Main(props){
   const date1Props = { value: beginDate, setValue: onChangeDate1, label: t('coupon.beginDate'), inRow: true  };
   const date2Props = { value: endDate, setValue: onChangeDate2, label: t('coupon.endDate'), inRow: true };
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'value', s_descr: 'label', label: t('order.status'), onFocus: onFocusStatus };
-  const typeProps = { value: type, setValue: setType, data: types, s_value: 'value', s_descr: 'label', label: t('coupon.type'), onFocus: onFocusType, disabled : selected ? true : false };
+  const typeProps = { value: type, setValue: setType, data: types, s_value: 'value', s_descr: 'label', label: t('coupon.type'), onFocus: onFocusType, disabled : selected ? true : false , inRow: true};
+  const colorProps = { value: color, setValue: setColor, data: colors, s_value: 'valueStr1', s_descr: 'valueStr1', label: t('coupon.color'), onFocus: onFocusColor, inRow: true};
   const categoryProps = { value: category, setValue: setCategory, label: t('inventory.category'), setError, setEdited, inRow: false, placeholder: t('coupon.category_select'),
     data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories, disabled : selected ? true : false };
-  const numberProps = { value: number, setValue: changeNumber, label: t('inventory.t_qty'), placeholder: t('inventory.t_qty'), setEdited, setError, length: 30, };
+  const numberProps = { value: number, setValue: changeNumber, label: t('coupon.qty'), placeholder: t('inventory.t_qty'), setEdited, setError, length: 30, };
   const invtProps = { value: invt, setValue: setInvt, label: t('coupon.invt'), setError, setEdited, inRow: false,
   data: invts, s_value: 'invtId', s_descr: 'name', onFocus: getInvts, placeholder: t('coupon.invt_select'), disabled : selected ? true : false };
+  const imageProps = { color, name, user, category, price, perc, type, categories};
 
   return (
-    <div className='cou_add_back'>
-      <Input {...nameProps}/>
-      <Select {...typeProps}/>
-      {(type?.value === 0) ? <ValidateInput {...percProps}/> :  <MoneyInput {...amtProps}/>}
-      <div className='ac_row' style={{marginTop: 20}}>
-        <Date {...date1Props} />
-        <div className='gap' />
-        <Date {...date2Props} />
+    <div className='cou_main_back'>
+      <div className='cou_add_back'>
+        <Input {...nameProps}/>
+        <div className='ac_row' style={{marginTop: 20}}>
+          <Select {...typeProps}/>
+          <div className='gap' />
+          <ColorSelect {...colorProps}/>
+        </div>
+        {(type?.value === 0) ? <ValidateInput {...percProps}/> :  <MoneyInput {...amtProps}/>}
+        <div className='ac_row' style={{marginTop: 20}}>
+          <Date {...date1Props} />
+          <div className='gap' />
+          <Date {...date2Props} />
+        </div>
+        <Select {...statProps}/>
+        <Select {...categoryProps} />
+        <Select {...invtProps} />
+        <Input {...numberProps}/>
       </div>
-      <Select {...statProps}/>
-      <Select {...categoryProps} />
-      <Select {...invtProps} />
-      <Input {...numberProps}/>
+      <div> 
+        <Image {...imageProps} />
+      </div>
     </div>
   );
 }

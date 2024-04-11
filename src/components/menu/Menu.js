@@ -45,7 +45,8 @@ export function Menu(props){
 
     getReview();
 
-    if(user?.merchantId === 66 || user?.merchantId === 135 || user?.merchantId === 383 || user?.merchantId === 631 || user?.merchantId === 270)
+    if(user?.merchantId === 66 || user?.merchantId === 135 || user?.merchantId === 383 || user?.merchantId === 631 || 
+      user?.merchantId === 270 || user?.merchantId === 164 || user?.merchantId === 700 || user?.merchantId === 999)
       setHideTime(false);
     else
       setHideTime(true);
@@ -105,7 +106,6 @@ export function Menu(props){
       getItem(t('menu.invt_list'), '/inventory/invt_list', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_category'), '/inventory/invt_category', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_modi'), '/inventory/invt_modi', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
     getItem(t('menu.management'), '/management', <TbBuildingWarehouse />,[
       getItem(t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageItem !== 'Y'),
@@ -123,9 +123,10 @@ export function Menu(props){
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
-    hideTime ? null : getItem(t('menu.loyalty'), '/loyalty', <RiCoupon2Line />, [
+    getItem(t('menu.loyalty'), '/loyalty', <RiCoupon2Line />, [
       getItem(t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageEmployy !== 'Y')
+      getItem(t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
     hideTime ? null : getItem(t('timetable.time'), '/timetable', <BiCalendar />, [
       getItem(t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),

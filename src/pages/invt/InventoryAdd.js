@@ -18,6 +18,7 @@ export function InventoryAdd(){
   const [isEach, setIsEach] = useState({ value: 'Y' });
   const [isService, setIsService] = useState(false);
   const [price, setPrice] = useState({ value: '' });
+  const [batch, setBatch] = useState({ value: '' });
   const [time, setTime] = useState({ value: '01:00' });
   const [cost, setCost] = useState({ value: '' });
   const [sku, setSku] = useState({ value: '' });
@@ -110,6 +111,7 @@ export function InventoryAdd(){
     if(response?.error) setError(response?.error);
     else if(invt) {
       setInvt(invt);
+      setBatch({ value: invt?.msInventory?.batchQty ?? '' })
       setName({ value: invt?.msInventory?.name ?? '' });
       setCategory({ value: invt?.msInventory?.categoryId ?? -1 });
       setBuyAgeLimit({ value: invt?.msInventory?.buyAgeLimit ?? 0 })
@@ -247,7 +249,7 @@ export function InventoryAdd(){
         UseAllSite: checked ? 'Y' : 'N',
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
         isService: isService ? 'Y' : 'N', serviceTime: totalSeconds,
-        rowStatus: invt ? 'U' : 'I',
+        rowStatus: invt ? 'U' : 'I', batchQty: batch?.value,
         invkite, invvar, invmod, invsales
       };
       if(invt){
@@ -302,7 +304,7 @@ export function InventoryAdd(){
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach,
     price, setPrice, cost, setCost, sku, setSku, setLoading, barcode, setBarcode, image, setImage, setImage64,
     setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit, vendId, setVendId,
-    isService, setIsService, time, setTime };
+    isService, setIsService, time, setTime, batch, setBatch };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,

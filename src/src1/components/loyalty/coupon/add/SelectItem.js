@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Select, message } from 'antd';
+import { Select } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -19,7 +19,7 @@ export function SelectItem(props){
 }
 
 export function ItemSelect(props){
-  const { search, setSearch, data, setData, newItem, number } = props;
+  const { search, setSearch, data, setData, newItem, number, disabled } = props;
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -83,7 +83,7 @@ export function ItemSelect(props){
 
   const selectProps = { value: search, setValue: onSelect, placeholder: t('coupon.search'), data: items,
     className: 'kit_select', classBack: 'kit_search', onFocus, renderItem, filterOption, onSearch: setText, text,
-    setData: setItems };
+    setData: setItems, disabled };
 
   return (
     <Overlay loading={loading}>

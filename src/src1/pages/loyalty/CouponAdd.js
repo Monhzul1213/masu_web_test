@@ -22,6 +22,7 @@ export function CouponAdd(){
   const [perc, setPerc] = useState({ value: 0 });
   const [status, setStatus] = useState({ value: 1});
   const [type, setType] = useState({ value: 0});
+  const [color, setColor] = useState({ value: '006838'});
   const [beginDate, setBeginDate] = useState({ value: moment() });
   const [endDate, setEndDate] = useState({ value: moment() });
   const [category, setCategory] = useState({ value: null });
@@ -68,7 +69,6 @@ export function CouponAdd(){
     else {    
       let coupon = response?.data?.coupon && response?.data?.coupon[0] ;
       setSelected(coupon);
-      // setItem(response?.data?.coupon);
       setType({value: coupon?.couponType ?? '' })
       setName({ value: coupon?.name ?? '' });
       setPrice({ value: coupon?.couponValue ?? '' })
@@ -79,6 +79,7 @@ export function CouponAdd(){
       setCategory({value: coupon?.categoryId})
       setInvt({value: coupon?.invtId === -1 ? null : coupon?.invtId})
       setNumber({value: coupon?.qty})
+      setColor({value: coupon?.color ?? '006838'})
       site?.forEach(item => {
         let exists = response?.data?.couponsite?.filter(si => si.siteId === item.siteId)[0];
         item.checked = exists;
@@ -122,11 +123,11 @@ export function CouponAdd(){
       sites?.forEach(item => {if(item?.checked) siteID.push(item?.siteId)})
       let data = selected ? { couponID: selected?.couponId, name: name?.value, type: type?.value,  couponValue: type?.value === 0 ? perc?.value : price?.value,
         beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'), categoryId: category?.value, invtId: invt?.value === null ? -1 : invt?.value ,
-        status: status?.value, qty: number?.value, rowStatus: 'U', couponConsumers, siteID } : 
+        status: status?.value, qty: number?.value, rowStatus: 'U', couponConsumers, siteID, color: color?.value } : 
       { name: name?.value, type: type?.value, couponValue: type?.value === 0 ? perc?.value : price?.value,
         beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'),
         categoryId: category?.value, invtId: invt?.value === null ? -1 : invt?.value, status: status?.value, qty: number?.value,
-        rowStatus: 'I',couponConsumers, siteID
+        rowStatus: 'I',couponConsumers, siteID, color: color?.value
       }
       return data;
     } else {
@@ -183,7 +184,7 @@ export function CouponAdd(){
   const onClickCancel = () => navigate({ pathname: '/loyalty/coupon' });
 
   let mainProps = { setError, setEdited,name, setName, price, setPrice, number, setNumber, invt, setInvt, selected,
-    perc, setPerc, beginDate, setBeginDate, endDate, setEndDate, status, setStatus, category, setCategory, type, setType};
+    perc, setPerc, beginDate, setBeginDate, endDate, setEndDate, status, setStatus, category, setCategory, type, setType, color, setColor};
   let btnProps = { onClickCancel, onClickSave, id: 'co_btn', }
   // onClickDelete, show: item ? true:  false  };
   const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, error: error1 };

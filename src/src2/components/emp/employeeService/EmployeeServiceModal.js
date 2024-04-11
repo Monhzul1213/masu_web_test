@@ -10,7 +10,7 @@ import {
   Error1,
   Overlay,
 } from "../../../../src1/components/all/all_m";
-import { getList, sendRequest } from "../../../../services";
+import { sendRequest } from "../../../../services";
 import { CreateService } from "./CreateService";
 
 export function EmployeeServiceModal(props) {
@@ -18,10 +18,7 @@ export function EmployeeServiceModal(props) {
     visible,
     setVisible,
     site,
-    onDone,
     data,
-    setShow,
-    setChecked,
     setDialagClose,
     dialogClose,
     dialogDatamatch,
@@ -31,11 +28,8 @@ export function EmployeeServiceModal(props) {
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
   const [amt, setAmt] = useState(0);
-  const [txnNo, setTxnNo] = useState("");
   const [saved, setSaved] = useState(false);
   const { user, token } = useSelector((state) => state.login);
-  const [serviceModData, setServiceModData] = useState();
-  const [saveButton, setSaveButton] = useState(false);
   const [edited, setEdited] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -81,17 +75,17 @@ export function EmployeeServiceModal(props) {
 
   const onClickSave = async (e) => {
     const serviceData = [];
-    dialogDatamatch.map((el, index) => {
-      data.map((el1, index1) => {
+    dialogDatamatch.forEach((el, index) => {
+      data.forEach((el1, index1) => {
         if (
           index === index1 &&
-          el.checked != el1.checked &&
-          el.serviceID == el1.serviceID
+          el.checked !== el1.checked &&
+          el.serviceID === el1.serviceID
         ) {
           var rowStatusChange = "";
-          if (el.checked == false && el1.checked == true) {
+          if (el.checked === false && el1.checked === true) {
             rowStatusChange = "I";
-          } else if (el.checked == true && el1.checked == false) {
+          } else if (el.checked === true && el1.checked === false) {
             rowStatusChange = "D";
           }
 
@@ -104,8 +98,6 @@ export function EmployeeServiceModal(props) {
         }
       });
     });
-
-    // console.log("..............................", serviceData);
 
     e?.preventDefault();
     onLoad();
@@ -147,7 +139,6 @@ export function EmployeeServiceModal(props) {
 }
 
 function Type(props) {
-  const { selected, onSelect, amt, site } = props;
   const { t } = useTranslation();
 
   return (
