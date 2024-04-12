@@ -143,7 +143,8 @@
     "/loyalty/coupon/coupon_add": "Купон бүртгэх",
     "/loyalty/voucher": "Ваучер",
     "/loyalty/voucher/voucher_add": "Ваучер бүртгэх",
-    "/loyalty/bonus": "Урамшуулал"
+    "/loyalty/bonus": "Урамшуулал",
+    "/loyalty/bonus/bonus_add": "Урамшуулал бүртгэх"
   },
   "menu": {
     "profile": "Хэрэглэгч",

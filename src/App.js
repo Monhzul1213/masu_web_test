@@ -25,7 +25,7 @@ import { Timetable1 } from './src1/pages/timetable';
 import { EmployeeService } from './src2/pages/timetable/EmployeeService';
 import { Voucher, VoucherAdd } from './src2/pages/loyalty';
 import { Coupon, CouponAdd } from './src1/pages/loyalty';
-import { Bonus } from './pages/loyalty';
+import { Bonus, BonusAdd } from './pages/loyalty';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -180,6 +180,7 @@ export function App(){
                 <Route path='/loyalty/voucher' element={<Voucher />} />
                 <Route path='/loyalty/voucher/voucher_add' element={<VoucherAdd />} />
                 <Route path='/loyalty/bonus' element={<Bonus />} />
+                <Route path='/loyalty/bonus/bonus_add' element={<BonusAdd />} />
               </Routes>
             </Layout>
           </Layout>
