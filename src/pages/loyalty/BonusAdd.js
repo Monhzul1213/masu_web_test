@@ -19,7 +19,7 @@ export function BonusAdd(){
   const [status, setStatus] = useState({ value: 1 });
 
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
-    endTime, setEndTime, type, setType, status, setStatus };
+    endTime, setEndTime, status, setStatus };
 
   return (
     <Overlay className='i_container' loading={loading}>

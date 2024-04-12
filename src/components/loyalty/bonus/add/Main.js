@@ -8,50 +8,27 @@ import { CheckBox, Date, Input, Select, Time } from '../../../all';
 
 function Card(props){
   const { size, setError, setEdited, name, setName, beginDate, useTime, setUseTime, setBeginDate, endDate, setEndDate, beginTime, setBeginTime,
-    endTime, setEndTime, type, setType, status, setStatus } = props;
+    endTime, setEndTime, status, setStatus } = props;
   const { t } = useTranslation();
-  const [types, setTypes] = useState([]);
   const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    getData();
+    getStates();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async () => {
-    let response = await getTypes();
-    if(response) await getStates();
-  }
-
-  const getTypes = async id => {
-    if(!types?.length){
-      setError(null);
-      setLoading('types');
-      const response = await dispatch(getConstants(user, token, 'msBonus_BonusType'));
-      setLoading(null);
-      if(response?.error){
-        setError(response?.error);
-        return false;
-      } else {
-        setTypes(response?.data);
-        return true;
-      }
-    }
-    return true;
-  }
-  
   const getStates = async () => {
     if(!states?.length){
       setError(null);
-      setLoading('states');
+      setLoading(true);
       const response = await dispatch(getConstants(user, token, 'msBonus_Status'));
       if(response?.error) setError(response?.error);
       else setStates(response?.data);
-      setLoading(null);
+      setLoading(false);
     }
   }
 
@@ -62,10 +39,8 @@ function Card(props){
   const timeProps = { checked: useTime, setChecked: setUseTime, label: t('bonus.use'), style: { marginTop: 15 } };
   const time1Props = {  value: beginTime, setValue: setBeginTime, label: t('bonus.begin'), inRow: true, setError, setEdited };
   const time2Props = {  value: endTime, setValue: setEndTime, label: t('bonus.end'), inRow: true, setError, setEdited };
-  const typeProps = { value: type, setValue: setType, label: t('bonus.type1'), setError, setEdited, data: types, inRow: true,
-    s_value: 'valueNum', s_descr: 'valueStr1', loading: loading === 'types', onFocus: getTypes };
   const statProps = { value: status, setValue: setStatus, label: t('bonus.status'), setError, setEdited, data: states, inRow: true,
-    s_value: 'valueNum', s_descr: 'valueStr1', loading: loading === 'states', onFocus: getStates };
+    s_value: 'valueNum', s_descr: 'valueStr1', loading, onFocus: getStates };
 
   return (
     <div className='ia_back'>
@@ -82,8 +57,6 @@ function Card(props){
         <Time {...time2Props} />
       </div>}
       <div id={idRow} style={{marginTop: 15}}>
-        <Select {...typeProps} />
-        <div className='gap' />
         <Select {...statProps} />
       </div>
     </div>
