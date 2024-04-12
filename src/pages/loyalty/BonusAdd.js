@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 
 import '../../css/invt.css';
-import { Overlay } from '../../components/all';
+import { Error1, Overlay, Prompt } from '../../components/all';
 import { Main } from '../../components/loyalty/bonus/add';
 
 export function BonusAdd(){
@@ -23,8 +23,8 @@ export function BonusAdd(){
 
   return (
     <Overlay className='i_container' loading={loading}>
-      {/* <Prompt edited={edited} /> */}
-      {/* {error && <Error1 error={error} />} */}
+      <Prompt edited={edited} />
+      {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <Main {...mainProps} />
         {/* <CardSite {...siteProps}/> */}
