@@ -3,10 +3,31 @@ import { SizeMe } from 'react-sizeme';
 
 import '../../css/invt.css';
 import { Error1, Overlay } from '../../components/all';
+import { Filter } from '../../components/loyalty/bonus/list';
 
 export function Bonus(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const onSearch = async query => {
+    // comment
+    // setError(null);
+    // setLoading(true);
+    // let api = 'Site/GetCoupon' + query ?? '';
+    // const response = await dispatch(getList(user, token, api));
+    // if(response?.error) setError(response?.error);
+    // else {
+    //   response?.data?.coupon?.forEach(item=> {
+    //     item.date = moment(item?.beginDate)?.format('yyyy.MM.DD') + '-' + moment(item?.endDate)?.format('yyyy.MM.DD')
+    //   })
+    //   setData(response?.data?.coupon);
+    // }
+    // setLoading(false);
+  }
+
+  const onClickAdd = () => {};//comment navigate('coupon_add');
+
+  const headerProps = { onClickAdd, setError, onSearch };
 
   return (
     <div className='s_container_i'>
@@ -15,7 +36,7 @@ export function Bonus(){
         <SizeMe>{({ size }) => 
           <div className='i_list_cont' id='invt_list'>
             {/* comment */}
-            {/* <Filter {...headerProps} size={size} /> */}
+            <Filter {...headerProps} size={size} />
             {/* {!data?.length ? <Empty1 icon='MdOutlineArticle' /> : <List {...listProps} size={size} />} */}
           </div>
         }</SizeMe>
@@ -51,24 +72,9 @@ export function Coupon(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSearch = async query => {
-    setError(null);
-    setLoading(true);
-    let api = 'Site/GetCoupon' + query ?? '';
-    const response = await dispatch(getList(user, token, api));
-    if(response?.error) setError(response?.error);
-    else {
-      response?.data?.coupon?.forEach(item=> {
-        item.date = moment(item?.beginDate)?.format('yyyy.MM.DD') + '-' + moment(item?.endDate)?.format('yyyy.MM.DD')
-      })
-      setData(response?.data?.coupon);
-    }
-    setLoading(false);
-  }
+  
 
-  const onClickAdd = () => navigate('coupon_add');
 
-  const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
 
   return (
