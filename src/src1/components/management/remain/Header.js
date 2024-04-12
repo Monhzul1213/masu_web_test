@@ -148,7 +148,7 @@ export function Header(props){
   const importProps = { className: 'ih_btn', text: t('page.import'), onClick: onClickImport };
   const invtProps = { value: invt, setValue: setInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide, label: t('inventory.title'),
     classBack: 'ih_select_back', className: 'ih_select', classLabel: 'ih_select_lbl', dropdownStyle: { marginLeft: -30, minWidth: 180 },
-    loading: loading === 'sites', placeholder: t('inventory.search'), onSearch: setText, text };
+    loading: loading === 'invts', placeholder: t('inventory.search'), onSearch: setText, text };
    
 
   return (

@@ -16,17 +16,12 @@ export function Card(props){
 
   useEffect(() => {
     setColumns([
-      {
-        Header: t('voucher.consumer'), accessor: 'consumerName',
+      { Header: t('voucher.consumer'), accessor: 'consumerName',
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
-      {
-        Header: t('voucher.phone'), accessor: 'phone',
-      },      {
-        Header: t('voucher.email'), accessor: 'email',
-      },      {
-        Header: t('voucher.age'), accessor: 'age',
-      },     
+      { Header: t('voucher.phone'), accessor: 'phone'},      
+      { Header: t('voucher.email'), accessor: 'email'},      
+      { Header: t('voucher.age'), accessor: 'age'},     
       { id: 'gender', Header: t('voucher.gender'), accessor: d => { return d.gender === 'M' ? 'Эрэгтэй' : d.gender === 'F' ? 'Эмэгтэй' : '' }},
       {
         Header: (
@@ -53,14 +48,13 @@ export function Card(props){
           </div>
         ),
       },
-
-      
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
       Cell: ({ row, onClickDelete }) =>
         (row?.original?.salesAmount > 0 ? '' :<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
     },
     ]);
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
   
   const onClickDelete = row => {

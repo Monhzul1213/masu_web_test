@@ -143,11 +143,11 @@ function Screen(props){
     return newData;
   }
 
-  const getData = async (query, q2, dates, period2) => {
+  const getData = async (query, query1, dates, period2) => {
     let period1 = dates ? setPeriods(dates) : period2;
     setError(null);
     setLoading(true);
-    let api = 'Sales/GetSalesByItem' + (query ?? '') + (q2 ?? '') + '&SearchPeriod=' + period1;
+    let api = 'Sales/GetSalesByItem' + (query ?? '') + (query1 ?? '') + '&SearchPeriod=' + period1;
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     else {

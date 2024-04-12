@@ -8,7 +8,6 @@ import "../../../src1/css/loyalty.css";
 import { getList } from "../../../services";
 import { Empty1, Error1, Overlay } from "../../../components/all";
 import { Filter, List } from "../../components/loyalty/vaucher/list";
-// import { Subscription } from '../../../components/management/adjust/list';
 
 export function Voucher() {
   const [loading, setLoading] = useState(false);
@@ -21,13 +20,10 @@ export function Voucher() {
   useEffect(() => {
     if (user?.msRole?.webManageItem !== "Y") navigate({ pathname: "/" });
     else {
-      let query =
-        "?BeginDate=" +
-        moment()?.startOf("month")?.format("yyyy.MM.DD") +
-        "&EndDate=" +
-        moment()?.format("yyyy.MM.DD");
+      let query = "?BeginDate=" + moment()?.startOf("month")?.format("yyyy.MM.DD") + "&EndDate=" + moment()?.format("yyyy.MM.DD");
       onSearch(query);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {};
   }, []);
 
@@ -43,20 +39,12 @@ export function Voucher() {
   };
 
   const onClickAdd = () => navigate("voucher_add");
-  // const onDone = async () => {
-  //   setVisible(false);
-  //   setSites([]);
-  //   let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
-  //   onSearch(query);
-  // }
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
-  // const subProps = { visible, setVisible, sites, setSites, onDone };
 
   return (
     <div className="s_container_i">
-      {/* {visible && <Subscription {...subProps} />} */}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>

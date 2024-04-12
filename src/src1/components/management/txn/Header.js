@@ -183,7 +183,7 @@ export function Header(props){
   const refreshProps = { className: 'ih_refresh', name: 'MdRefresh', onClick: onClickRefresh };
   const invtProps = { value: invt, setValue: setInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide, label: t('inventory.title'),
     classBack: 'ih_select_back', className, classLabel, dropdownStyle: { marginLeft: -30, minWidth: 180 },
-    loading: loading === 'sites', placeholder: t('inventory.search'), onSearch: setText, text };
+    loading: loading === 'invts', placeholder: t('inventory.search'), onSearch: setText, text };
  
   return (
     <div className='ih_header' id={id} style={{paddingTop: 0}}>

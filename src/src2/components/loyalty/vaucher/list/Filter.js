@@ -26,11 +26,13 @@ export function Filter(props){
 
   const onFocusStatus = async () => {
     if(!states?.length || states?.length === 1){
+      setLoading('status');
       setStates([
         { valueNum: -1, valueStr1: t('order.all_status') },
         { valueNum: 1, valueStr1: 'Идэвхтэй' },
         { valueNum: 0, valueStr1: 'Хүчингүй' },
       ]);
+      setLoading(false);
     }
   }
 

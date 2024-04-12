@@ -113,8 +113,8 @@ export function Filter(props){
     
   const invtProps = { value: invt, setValue: setInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide,
     Icon: () => <DynamicMDIcon name='MdOutlineInventory2' className='mr_cal' />, classBack: 'rp_select_back4',
-    className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 240 }, dropdownAlign: { offset: [-30, 5] },
-    loading: loading === 'sites', maxTag: maxInvt, placeholder: t('inventory.search'), onSearch: setText, text, getData: onSearch, filter: filter1, date };
+    className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 250 }, dropdownAlign: { offset: [-30, 5] },
+    loading: loading === 'invts', maxTag: maxInvt, placeholder: t('inventory.search'), onSearch: setText, text };
     
   return (
     <div className={classH}>

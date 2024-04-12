@@ -6,15 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import { getList, sendRequest } from "../../../services";
-import {
-  Error1,
-  Overlay,
-  Prompt,
-  Confirm,
-  ButtonRowConfirm,
-} from "../../../components/all";
+import { Error1, Overlay, Prompt, Confirm, ButtonRowConfirm} from "../../../components/all";
 import { Main, CardService } from "../../components/loyalty/vaucher/add";
-import { VoucherImage } from "../../components/loyalty/vaucher/add/image";
 
 export function VoucherAdd() {
   const { t } = useTranslation();
@@ -34,9 +27,8 @@ export function VoucherAdd() {
   const [endDate, setEndDate] = useState({ value: moment() });
   const [number, setNumber] = useState({ value: "" });
   const [color, setColor] = useState({ value: "006838" });
-  const [kits, setKits] = useState([]);
-  const [dkits, setDKits] = useState([]);
-  // const [item, setItem] = useState(null);
+  // const [kits, setKits] = useState([]);
+  // const [dkits, setDKits] = useState([]);
   const [searchI, setSearchI] = useState({ value: null });
   const { user, token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
@@ -44,6 +36,7 @@ export function VoucherAdd() {
   const [searchParams] = useSearchParams();
   const [controlDisable, setControlDisable] = useState(false);
   const [consumer, setConsumer] = useState([]);
+  
   useEffect(() => {
     if (saved) onClickCancel();
     return () => {};
@@ -78,7 +71,7 @@ export function VoucherAdd() {
     if (response?.error) setError(response?.error);
     else {
       let voucher = response?.data?.voucher && response?.data?.voucher[0];
-      setKits(response?.data?.voucherconsumer);
+      // setKits(response?.data?.voucherconsumer);
       setSelected(voucher);
       // setItem(response?.data);
       setName({ value: voucher?.name ?? "" });
@@ -214,55 +207,14 @@ export function VoucherAdd() {
     // if(sure) setVisible(true);
   };
 
-  let mainProps = {
-    setError,
-    setEdited,
-    name,
-    setName,
-    price,
-    setPrice,
-    qty,
-    setQty,
-    number,
-    setNumber,
-    perc,
-    setPerc,
-    beginDate,
-    setBeginDate,
-    endDate,
-    setEndDate,
-    status,
-    setStatus,
-    type,
-    setType,
-    controlDisable,
-    color,
-    setColor,
-  };
-  let btnProps = {
-    onClickCancel,
-    onClickSave,
-    onClickDelete,
-    id: "vo_btn",
-    show: false,
-  };
-  let confirmProps = {
-    open,
-    text: t("adjust.confirm_pay"),
-    confirm,
-    text1: error,
-  };
+  let mainProps = { setError, setEdited, name, setName, price, setPrice, qty, setQty,
+    number, setNumber, perc, setPerc, beginDate, setBeginDate, endDate, setEndDate, status,
+    setStatus, type, setType, controlDisable, color, setColor };
 
-  const serviceProps = {
-    number,
-    data: consumer,
-    setData: setConsumer,
-    setError,
-    setEdited,
-    setDKits,
-    search: searchI,
-    setSearch: setSearchI,
-  };
+  let btnProps = { onClickCancel, onClickSave, onClickDelete, id: "vo_btn", show: false};
+  let confirmProps = { open, text: t("adjust.confirm_pay"), confirm, text1: error};
+
+  const serviceProps = {number, data: consumer, setData: setConsumer, setError, setEdited, search: searchI, setSearch: setSearchI};
 
   return (
     <Overlay className="i_container" loading={loading}>
