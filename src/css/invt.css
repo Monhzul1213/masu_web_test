@@ -1110,6 +1110,10 @@
   max-width: calc(100vw - var(--page-padding) * 4);
 }
 
+.th_header1 .rh_date {
+  width: 220px;
+}
+
 .rp_h_back1 {
   padding: 1px 0 15px 1px;
   display: flex;
