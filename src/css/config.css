@@ -517,6 +517,7 @@
   box-shadow: none !important;
 }
 
+
 .select_m .ant-select-selection-search {
   left: 0 !important;
 }
@@ -587,6 +588,7 @@
 
 .ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector {
   background-color: transparent !important;
+  border:none;
 }
 
 #p_tab_cont {

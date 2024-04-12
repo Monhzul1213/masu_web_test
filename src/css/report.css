@@ -596,6 +596,7 @@
 
 .rr_graph_select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
 }
 
 .rr_graph_select .ant-select-arrow {
@@ -833,3 +834,22 @@
   font-size: 15px;
   margin-right: 3px;
 }
+
+.search-section
+{
+  display: flex;
+  flex: row;
+}
+
+.rp_select.ant-select .ant-select-selector {
+  border: none;
+}
+
+.calendar {
+  padding: 24px 11px 4px;
+}
+
+.rp_date_back {
+  border: none;
+}
+

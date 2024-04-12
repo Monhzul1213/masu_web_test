@@ -391,6 +391,10 @@
   width: 100%;
 }
 
+.ant-select-selector {
+  border: none;
+}
+
 .kit_select.ant-select .ant-select-selector {
   border: none;
   box-shadow: none;
@@ -404,6 +408,7 @@
 
 .kit_select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
 }
 
 .kit_select .ant-select-arrow {
@@ -804,6 +809,7 @@
 
 .ih_select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
 }
 
 .ih_select .ant-select-arrow {
@@ -1031,6 +1037,7 @@
 
 .mo_select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
 }
 
 .mo_select .ant-select-arrow {
@@ -1153,6 +1160,7 @@
 }
 
 .rp_date_back {
+  border: none;
   background-color: var(--root-color);
   height: 36px;
   border-radius: var(--radius);
@@ -1164,6 +1172,7 @@
 
 .mr_btn {
   border: none;
+  border-radius: 4px;
   box-shadow: none;
   background-color: transparent;
   width: 36px;
@@ -1214,6 +1223,10 @@
   background-color: transparent;
   height: 36px;
   padding: 0;
+}
+
+.ant-picker {
+  border: none;
 }
 
 .rp_date .ant-picker-input>input {
@@ -1333,6 +1346,7 @@
 
 .mr_time_select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
 }
 
 .mr_time_select .ant-select-arrow {
@@ -1348,6 +1362,7 @@
   display: flex;
   align-items: center;
   margin-right: 15px;
+  margin-left: 20px;
   width: 180px;
 }
 
@@ -1362,21 +1377,28 @@
 }
 
 .rp_select {
+  border: none;
   width: 100%;
-  margin-left: 5px;
+  /* margin-left: 5px; */
 }
 
 .rp_select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
+}
+
+.ant-select-selection-overflow-item {
+  border: none;
 }
 
 .rp_select.ant-select .ant-select-selector {
+  border: none !important; 
   box-shadow: none;
-  border: none;
   color: var(--text-color);
   font-size: 14px;
   background-color: transparent;
 }
+
 
 .rp_select.ant-select-multiple .ant-select-selection-item {
   background-color: transparent;
