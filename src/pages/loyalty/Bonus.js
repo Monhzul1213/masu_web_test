@@ -27,7 +27,7 @@ export function Bonus(){
 
   const onClickAdd = () => {};//comment navigate('coupon_add');
 
-  const headerProps = { onClickAdd, setError, onSearch };
+  const headerProps = { onClickAdd, setError, onSearch, setError };
 
   return (
     <div className='s_container_i'>

@@ -8,14 +8,17 @@ import { ButtonRowAddConfirm, DynamicAIIcon, PlainRange, PlainSelect } from '../
 import { SearchInput } from '../../../invt/inventory/list/SearchInput';
 
 export function Filter(props){
-  const { size, onClickAdd, onSearch } = props;
+  const { size, onClickAdd, onSearch, setError } = props;
   const { t } = useTranslation();
   const [classH, setClassH] = useState('th_header1');
   const [showSearch, setShowSearch] = useState(false);
   const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [status, setStatus] = useState(-1);
   const [states, setStates] = useState([{valueNum: -1, valueStr1: t('order.all_status')}]);
+  const [type, setType] = useState(-1);
+  const [types, setTypes] = useState([{valueNum: -1, valueStr1: t('bonus.all_type')}]);
   const [search, setSearch] = useState('');
+  const [loading, setLoading] = useState(null);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -28,14 +31,27 @@ export function Filter(props){
   }, [size?.width]);
 
   const onFocusStatus = async () => {
-    // comment
-    // const response = await dispatch(getConstants(user, token, 'msBonus_BonusType'));
     if(!states?.length || states?.length === 1){
-      setStates([
-        { valueNum: -1, valueStr1: t('order.all_status') },
-        { valueNum: 1, valueStr1: 'Идэвхитэй' },
-        { valueNum: 0, valueStr1: 'Хүчингүй' },
-      ]);
+      setError && setError(null);
+      setLoading('status');
+      const response = await dispatch(getConstants(user, token, 'msBonus_Status'));
+      if(response?.error) setError && setError(response?.error);
+      else setStates([...[{valueNum: -1, valueStr1: t('order.all_status')}], ...response?.data]);
+      setLoading(null);
+    }
+  }
+
+  const onFocusType = async () => {
+    if(!types?.length || types?.length === 1){
+      setError && setError(null);
+      setLoading('type');
+      const response = await dispatch(getConstants(user, token, 'msBonus_BonusType'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        let data = [...[{valueNum: -1, valueStr1: t('bonus.all_type')}], ...response?.data];
+        setTypes(data?.sort((a, b) => a.valueNum - b.valueNum));
+      }
+      setLoading(null);
     }
   }
 
@@ -48,6 +64,11 @@ export function Filter(props){
 
   const onChangeStatus = value => {
     setStatus(value);
+    onHide(value, search);
+  }
+
+  const onChangeType = value => {
+    setType(value);
     onHide(value, search);
   }
 
@@ -66,11 +87,11 @@ export function Filter(props){
   const classBack = 'cou_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const bStyle = { maxWidth: size?.width > 890 ? 180 : ((size?.width - 52) / 2) };
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'valueNum', s_descr: 'valueStr1',
-    label: t('order.status'), onFocus: onFocusStatus, classBack, classLabel, className, bStyle };
-  const typeProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'valueNum', s_descr: 'valueStr1',
-    label: t('order.status'), onFocus: onFocusStatus, classBack: 'cou_select_back1', classLabel, className, bStyle };
+    label: t('order.status'), onFocus: onFocusStatus, classBack, classLabel, className, bStyle, loading: loading === 'status' };
+  const typeProps = { value: type, setValue: onChangeType, data: types, s_value: 'valueNum', s_descr: 'valueStr1',
+    label: t('bonus.type'), onFocus: onFocusType, classBack: 'cou_select_back1', classLabel, className, bStyle, loading: loading === 'type' };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
-  const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));//comment
+  const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
 
   return (
