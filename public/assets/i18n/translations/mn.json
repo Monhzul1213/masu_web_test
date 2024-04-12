@@ -141,8 +141,9 @@
     "/timetable/service": "Үйлчилгээ ажилтнаар",
     "/loyalty/coupon": "Купон",
     "/loyalty/coupon/coupon_add": "Купон бүртгэх",
-    "/loyalty/vaucher": "Ваучер",
-    "/loyalty/voucher/voucher_add": "Ваучер бүртгэх"
+    "/loyalty/voucher": "Ваучер",
+    "/loyalty/voucher/voucher_add": "Ваучер бүртгэх",
+    "/loyalty/bonus": "Урамшуулал"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -196,7 +197,8 @@
     "timetable": "Цаг авах хуваарь",
     "loyalty" : "Лояалти",
     "coupon" : "Купон",
-    "voucher" : "Ваучер"
+    "voucher" : "Ваучер",
+    "bonus": "Урамшуулал"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
