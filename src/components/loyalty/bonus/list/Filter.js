@@ -55,25 +55,26 @@ export function Filter(props){
     }
   }
 
-  const onHide = (status, name) => {
+  const onHide = (status, type, name) => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(status !== -1) query += '&Status=' + status;
+    if(type !== -1) query += '&Type=' + type;
     query += name ? '&Name=' + name : '';
     onSearch(query);
   }
 
   const onChangeStatus = value => {
     setStatus(value);
-    onHide(value, search);
+    onHide(value, type, search);
   }
 
   const onChangeType = value => {
     setType(value);
-    onHide(value, search);
+    onHide(status, value, search);
   }
 
   const handleEnter = value => {
-    onHide(status, value);
+    onHide(status, type, value);
   }
 
   const onClickSearch = () => setShowSearch(!showSearch);
@@ -83,7 +84,7 @@ export function Filter(props){
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const addProps = { type: 'bonus', onClickAdd, show: false };
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), 
-    onHide: () => onHide(status), className: 'rh_date'};
+    onHide: () => onHide(status, type), className: 'rh_date'};
   const classBack = 'cou_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const bStyle = { maxWidth: size?.width > 890 ? 180 : ((size?.width - 52) / 2) };
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'valueNum', s_descr: 'valueStr1',

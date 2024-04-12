@@ -10,6 +10,7 @@ export function Bonus(){
   const [error, setError] = useState(null);
 
   const onSearch = async query => {
+    console.log(query);
     // comment
     // setError(null);
     // setLoading(true);
