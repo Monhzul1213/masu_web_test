@@ -64,9 +64,16 @@ export function BonusAdd(){
     let type1Valid = (type?.value === 1 && type?.purchaseCount && type?.purchaseMinAmount && type?.bonusPoint) || type?.value !== 1;
     let type2Valid = (type?.value === 2 && bonusItems?.length) || type?.value !== 2;
     let type3Valid = (type?.value === 3 && type?.categoryId && type?.bonusPoint) || type?.value !== 3;
+    let typesValid = typeValid && type0Valid && type1Valid && type2Valid && type3Valid;
     let rewardValid = reward?.value || reward?.value === 0;
-    if(name?.value?.trim() && timeValid && typeValid && type0Valid && type1Valid && type2Valid && type3Valid){
+    let reward0Valid = (reward?.value === 0 && reward?.rewardName && rewardItems?.length) || reward?.value !== 0;
+    let reward1Valid = (reward?.value === 1 && reward?.rewardName && rewardItems?.length) || reward?.value !== 1;
+    let reward2Valid = (reward?.value === 2 && reward?.rewardName && reward?.categoryId && reward?.discountValue && reward?.earnPoint) || reward?.value !== 2;
+    let reward3Valid = (reward?.value === 3 && reward?.rewardName && reward?.discountValue && reward?.earnPoint) || reward?.value !== 3;
+    let rewardsValid = rewardValid && reward0Valid && reward1Valid && reward2Valid && reward3Valid;
+    if(name?.value?.trim() && timeValid && typesValid && rewardsValid){
       let bItems = bonusItems?.map(b => { return {...b, bonusPoint: parseFloat(b?.bonusPoint ? b?.bonusPoint : 0) }; });
+      let rItems = rewardItems?.map(b => { return {...b, earnPoint: parseFloat(b?.earnPoint ? b?.earnPoint : 0), discountValue: parseFloat(b?.discountValue ? b?.discountValue : 0) }; });
       let data = {
         bonusID: bonus?.bonusID ?? 0, name: name?.value?.trim(), rowStatus: bonus ? 'U' : 'I',
         beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'),
@@ -76,25 +83,18 @@ export function BonusAdd(){
         bonusPoint: parseFloat(type?.bonusPoint ? type?.bonusPoint : 0),
         purchaseCount: parseFloat(type?.purchaseCount ? type?.purchaseCount : 0),
         purchaseMinAmount: parseFloat(type?.purchaseMinAmount ? type?.purchaseMinAmount : 0),
-        categoryId: type?.categoryId,
-        bonusItems: bItems
-        // "rewardReqs": [
-        //   {
-        //     "rewardID": 0,
-        //     "rewardName": "string",
-        //     "rewardType": 0,
-        //     "categoryId": 0,
-        //     "earnPoint": 0,
-        //     "discountType": 0,
-        //     "discountValue": 0,
-        //     "rewardItems": [
-        //       {
-        //         "invtId": 0,
-        //         "earnPoint": 0
-        //       }
-        //     ]
-        //   }
-        // ]
+        categoryId: type?.categoryId ?? 0,
+        bonusItems: bItems,
+        rewardReqs: [{
+          rewardID: 0,//comment
+          rewardName: reward?.rewardName,
+          rewardItems: rItems,
+          rewardType: reward?.value,
+          categoryId: reward?.categoryId ?? 0,
+          earnPoint: parseFloat(reward?.earnPoint ? reward?.earnPoint : 0),
+          discountType: reward?.discountType,
+          discountValue: parseFloat(reward?.discountValue ? reward?.discountValue : 0),
+        }]
       }
       return data;
     } else {
@@ -107,39 +107,14 @@ export function BonusAdd(){
         setPage(2);
       }
       if(typeValid && (!type0Valid || !type1Valid || !type2Valid || !type3Valid)) setError1(t('bonus.type_valid1'));
+      if(rewardValid && (!reward0Valid || !reward1Valid || !reward2Valid || !reward3Valid)) setError1(t('bonus.type_valid1'));
     }
-    // let couponConsumers = [], siteID = [];
-    // if( name?.value?.trim() && category?.value && number?.value ){
-    //     if(consumer?.length <= number?.value){
-    //       consumer?.forEach(item => {
-    //         couponConsumers.push({consumerID: item?.consumerId, couponID: selected ? selected?.couponId : -1, status: item?.status});
-    //       });
-    //       // dconsumer?.forEach(it => couponConsumers?.push({...it, rowStatus: 'D'}));
-    //     } else {
-    //       setSearchI({ value: searchI?.value, error: t('coupon.number_max') });
-    //       return false;
-    //     }
-    //   sites?.forEach(item => {if(item?.checked) siteID.push(item?.siteId)})
-    //   let data = selected ? { couponID: selected?.couponId, name: name?.value, type: type?.value,  couponValue: type?.value === 0 ? perc?.value : price?.value,
-    //     beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'), categoryId: category?.value, invtId: invt?.value === null ? -1 : invt?.value ,
-    //     status: status?.value, qty: number?.value, rowStatus: 'U', couponConsumers, siteID, color: color?.value } : 
-    //   { name: name?.value, type: type?.value, couponValue: type?.value === 0 ? perc?.value : price?.value,
-    //     beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'),
-    //     categoryId: category?.value, invtId: invt?.value === null ? -1 : invt?.value, status: status?.value, qty: number?.value,
-    //     rowStatus: 'I',couponConsumers, siteID, color: color?.value
-    //   }
-    //   return data;
-    // } else {
-    //   if(!category?.value ) setCategory({ value: category?.value, error: t('error.not_empty') });
-    //   if(!number?.value) setNumber({ value: '', error: t('error.not_empty') });
-    // }
   }
 
   const onClickSave = async () => {
-    // comment
     let data = validateData();
     if(data){
-      console.log(data);
+    // comment
     //   if(data?.siteID?.length === 0) setError1(t('shop.title') + t('error.not_empty'))
     //   else {
     //     onLoad();

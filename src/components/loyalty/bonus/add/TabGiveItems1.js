@@ -7,7 +7,7 @@ import { SelectableCell, EditableCell } from '../../../invt/inventory/add/Editab
 import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 
 export function TabGiveItems1(props){
-  const { rewardItems, setRewardItems } = props;
+  const { rewardItems, setRewardItems, setError } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [search, setSearch] = useState('');
@@ -41,6 +41,7 @@ export function TabGiveItems1(props){
   }, [i18n?.language]);
 
   const newItem = invt => {
+    setError && setError(null)
     return { invtId: invt.invtId, name: invt.name, earnPoint: 0, discountType: 0, discountValue: 0 };
   }
 

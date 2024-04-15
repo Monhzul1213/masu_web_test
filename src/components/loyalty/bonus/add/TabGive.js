@@ -9,13 +9,14 @@ import { TabGiveItems1 } from './TabGiveItems1';
 import { Type } from './TabType';
 
 export function TabGive(props){
-  const { page, reward, setReward, setRewardItems, setError } = props;
+  const { page, reward, setReward, setRewardItems, setError, setError1 } = props;
   const { t } = useTranslation();
 
   const onChange = (checked, value) => {
     setReward({ value: checked ? null : value, rewardName: reward?.rewardName, categoryId: null, discountType: 0, discountValue: '', earnPoint: '' });
     setRewardItems([]);
     setError(null);
+    setError1(null);
   }
 
   const onChangeText = (value, field) => {
@@ -36,9 +37,10 @@ export function TabGive(props){
           placeholder={t('bonus.reward_name')}
           value={{ value: reward?.rewardName }}
           setValue={value => onChangeText(value, 'rewardName')}
+          setError={setError1}
           inRow={true} />
         <div className='gap' />
-        <TabGiveItems {...props} />
+        <TabGiveItems {...props} setError={setError1} />
       </Type>
       <Type title={t('bonus.title1_1')} label={t('bonus.label1_1')} value={1} onChange={onChange} data={reward}>
         <Input
@@ -46,15 +48,16 @@ export function TabGive(props){
           placeholder={t('bonus.reward_name')}
           value={{ value: reward?.rewardName }}
           setValue={value => onChangeText(value, 'rewardName')}
+          setError={setError1}
           inRow={true} />
         <div className='gap' />
-        <TabGiveItems1 {...props} />
+        <TabGiveItems1 {...props} setError={setError1} />
       </Type>
       <Type title={t('bonus.title2_1')} label={t('bonus.label2_1')} value={2} onChange={onChange} data={reward}>
-        <TabGiveCategory {...props} onChangeText={onChangeText} onChangeNumber={onChangeNumber} />
+        <TabGiveCategory {...props} onChangeText={onChangeText} onChangeNumber={onChangeNumber} setError1={setError1} />
       </Type>
       <Type title={t('bonus.title3_1')} label={t('bonus.label3_1')} value={3} onChange={onChange} data={reward}>
-        <TabGiveAmount {...props} onChangeText={onChangeText} onChangeNumber={onChangeNumber} />
+        <TabGiveAmount {...props} onChangeText={onChangeText} onChangeNumber={onChangeNumber} setError1={setError1} />
       </Type>
     </div>
   );
