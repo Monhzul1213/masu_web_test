@@ -53,7 +53,15 @@ export function TabGiveItems1(props){
     e?.preventDefault();
     setRewardItems(old => old.map((row, index) => {
       if(index === rowIndex){
-        if(columnId !== 'discountType') return { ...old[rowIndex], [columnId]: value };
+        if(columnId === 'discountValue'){
+          let discountValue = value;
+          let edited = old[rowIndex]?.edited ?? 0;
+          if(old[rowIndex]?.discountType === 0){
+            discountValue = parseFloat(discountValue) > 100 ? '100' : value;
+          }
+          return { ...old[rowIndex], discountValue, edited: edited + 1 };
+        }
+        else if(columnId !== 'discountType') return { ...old[rowIndex], [columnId]: value };
         else return { ...old[rowIndex], [columnId]: value, discountValue: 0, isMoney1: value === 1 };
       } else {
         return row;

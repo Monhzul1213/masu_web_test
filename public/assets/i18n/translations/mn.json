@@ -1335,7 +1335,8 @@
     "reward_name": "Шагналын нэр",
     "earn_point": "Зарцуулах оноо",
     "discount_type": "Хөнгөлөлтийн төрөл",
-    "discount_value": "Хөнгөлөлтийн дүн"
+    "discount_value": "Хөнгөлөлтийн дүн",
+    "reward_category": "Хөнгөлөлт эдлэх категори"
   },
   "version": "13"
 }

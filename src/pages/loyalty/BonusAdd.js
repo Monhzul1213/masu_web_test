@@ -19,7 +19,7 @@ export function BonusAdd(){
   const [type, setType] = useState({ value: null, everyAmount: '', bonusPoint: '', purchaseMinAmount: '', purchaseCount: '', categoryId: null });
   const [status, setStatus] = useState({ value: 1 });
   const [bonusItems, setBonusItems] = useState([]);
-  const [reward, setReward] = useState({ value: null, rewardName: '' });
+  const [reward, setReward] = useState({ value: null, rewardName: '', categoryId: null, discountType: 0, discountValue: '', earnPoint: '' });
   const [rewardItems, setRewardItems] = useState([]);
   const [page, setPage] = useState(1);
 

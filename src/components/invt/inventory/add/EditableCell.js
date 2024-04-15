@@ -40,7 +40,7 @@ export const EditableCell = props => {
 
   useEffect(() => {
     setValue(initialValue)
-  }, [initialValue])
+  }, [initialValue, row?.original?.edited])
   
   const errorStyle = hasError ? { borderColor: '#e41051' } : {};
   const style = {...{ textAlign: 'right', width: width1 }, ...errorStyle};
