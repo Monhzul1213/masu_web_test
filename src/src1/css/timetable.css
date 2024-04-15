@@ -336,8 +336,8 @@
   border-color: var(--config-color);
   box-shadow: none;
 }
-.ant-select-single .ant-select-selector .ant-select-selection-search {
-  padding: 0px 10px 0 0px;
+.tm_select.ant-select-single .ant-select-selector .ant-select-selection-search {
+  padding: 0px 10px !important;
 }
 .ant-select-auto-complete .ant-select-clear {
   right: 5px;
