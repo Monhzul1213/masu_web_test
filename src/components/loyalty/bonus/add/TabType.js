@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Input, MoneyInput } from '../../../all';
 import { TabTypeItems } from './TabTypeItems';
+import { TabTypeCategory } from './TabTypeCategory';
 
 export function TabType(props){
   const { page, type, setType } = props;
@@ -53,7 +54,7 @@ export function TabType(props){
         <TabTypeItems {...props} />
       </Type>
       <Type title={t('bonus.title3')} label={t('bonus.label3')} value={3} {...props}>
-
+        <TabTypeCategory {...props} onChangeNumber={onChangeNumber} />
       </Type>
     </div>
   );
@@ -64,7 +65,7 @@ function Type(props){
   const checked = type?.value === value;
 
   const onChange = () => {
-    setType({ value: checked ? null : value, everyAmount: '', bonusPoint: '', purchaseMinAmount: '' });
+    setType({ value: checked ? null : value, everyAmount: '', bonusPoint: '', purchaseMinAmount: '', purchaseCount: '', categoryId: null });
     setBonusItems([]);
   }
 
