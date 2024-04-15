@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 import '../../css/invt.css';
 import '../../css/bonus.css';
-import { Error1, Overlay, Prompt } from '../../components/all';
+import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { Main, Tab, TabGive, TabType } from '../../components/loyalty/bonus/add';
 
 export function BonusAdd(){
@@ -22,12 +24,48 @@ export function BonusAdd(){
   const [reward, setReward] = useState({ value: null, rewardName: '', categoryId: null, discountType: 0, discountValue: '', earnPoint: '' });
   const [rewardItems, setRewardItems] = useState([]);
   const [page, setPage] = useState(1);
+  const [saved, setSaved] = useState(false);
+  const { user, token }  = useSelector(state => state.login);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(saved) onClickCancel();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saved]);
+
+  useEffect(() => {
+    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    return () => setEdited(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getData = async () => {
+    // comment
+  }
+
+  const onClickCancel = () => navigate({ pathname: '/loyalty/bonus' });
+
+  const onClickSave = async () => {
+    // comment
+    // let data = validateData();
+    // if(data){
+    //   if(data?.siteID?.length === 0) setError1(t('shop.title') + t('error.not_empty'))
+    //   else {
+    //     onLoad();
+    //     const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
+    //     if(response?.error) onError(response?.error, true);
+    //     else onSuccess(t('coupon.add_success'));
+    //   }
+    // }
+  }
 
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
     endTime, setEndTime, status, setStatus };
   let tabProps = { page, setPage };
   let typeProps = { page, type, setType, bonusItems, setBonusItems };
   let giveProps = { page, reward, setReward, rewardItems, setRewardItems };
+  let btnProps = { onClickCancel, onClickSave }
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -42,7 +80,7 @@ export function BonusAdd(){
           <TabGive {...giveProps} />
         </div>
       </div>
-      {/* <ButtonRowConfirm {...btnProps} /> */}
+      <ButtonRowConfirm {...btnProps} />
     </Overlay>
   );
 }
@@ -63,7 +101,6 @@ import { Main, CardSite, CardService } from '../../components/loyalty/coupon/add
 export function CouponAdd(){
   const { t } = useTranslation();
   const [error1, setError1] = useState(null);
-  const [saved, setSaved] = useState(false);
   const [selected, setSelected ] = useState(null);
   const [price, setPrice] = useState({ value: 0 });
   const [perc, setPerc] = useState({ value: 0 });
@@ -80,23 +117,10 @@ export function CouponAdd(){
   const [dconsumer, setDConsumer] = useState([]);
   // const [item, setItem] = useState(null);
   const [searchI, setSearchI] = useState({ value: null });
-  const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    if(saved) onClickCancel();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [saved]);
-
-  useEffect(() => {
-    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
-    getSites();
-    return () => setEdited(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  
 
   
   const getData = async () => {
@@ -183,18 +207,7 @@ export function CouponAdd(){
     }
   }
 
-  const onClickSave = async () => {
-    let data = validateData();
-    if(data){
-      if(data?.siteID?.length === 0) setError1(t('shop.title') + t('error.not_empty'))
-      else {
-        onLoad();
-        const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
-        if(response?.error) onError(response?.error, true);
-        else onSuccess(t('coupon.add_success'));
-      }
-    }
-  }
+  
 
 
   // const onClickDelete = async () => {
@@ -227,10 +240,8 @@ export function CouponAdd(){
     setLoading(false);
   }
 
-  const onClickCancel = () => navigate({ pathname: '/loyalty/coupon' });
 
   
-  let btnProps = { onClickCancel, onClickSave, id: 'co_btn', }
   // onClickDelete, show: item ? true:  false  };
   const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, error: error1 };
   const serviceProps = {data: consumer, setData: setConsumer, setError, setEdited, setDKits : setDConsumer, search: searchI, setSearch: setSearchI, number, dconsumer };
