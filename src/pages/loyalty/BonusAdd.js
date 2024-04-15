@@ -35,7 +35,7 @@ export function BonusAdd(){
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <Main {...mainProps} />
-        <div className='gap' />
+        <div className='bt_gap' />
         <div className='ia_back'>
           <Tab {...tabProps} />
           <TabType {...typeProps} />

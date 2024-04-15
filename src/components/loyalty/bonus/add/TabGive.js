@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Input } from '../../../all';
+import { TabGiveAmount } from './TabGiveAmount';
 import { TabGiveCategory } from './TabGiveCategory';
 import { TabGiveItems } from './TabGiveItems';
 import { TabGiveItems1 } from './TabGiveItems1';
@@ -52,6 +53,7 @@ export function TabGive(props){
         <TabGiveCategory {...props} onChangeText={onChangeText} onChangeNumber={onChangeNumber} />
       </Type>
       <Type title={t('bonus.title3_1')} label={t('bonus.label3_1')} value={3} onChange={onChange} data={reward}>
+        <TabGiveAmount {...props} onChangeText={onChangeText} onChangeNumber={onChangeNumber} />
       </Type>
     </div>
   );

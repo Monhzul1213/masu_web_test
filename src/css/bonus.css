@@ -23,3 +23,8 @@
   margin: 0;
   color: var(--text2-color);
 }
+
+.bt_gap {
+  padding-top: var(--page-padding);
+  padding-left: var(--page-padding);
+}
