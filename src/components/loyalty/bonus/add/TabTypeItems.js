@@ -7,7 +7,7 @@ import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { EditableCell } from '../../../management/order/add/EditableCell';
 
 export function TabTypeItems(props){
-  const { bonusItems, setBonusItems } = props;
+  const { bonusItems, setBonusItems, setError } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [search, setSearch] = useState('');
@@ -32,6 +32,7 @@ export function TabTypeItems(props){
   }, [i18n?.language]);
 
   const newItem = invt => {
+    setError && setError(null)
     return { invtId: invt.invtId, name: invt.name, bonusPoint: 0 };
   }
 

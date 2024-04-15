@@ -9,12 +9,13 @@ import { TabGiveItems1 } from './TabGiveItems1';
 import { Type } from './TabType';
 
 export function TabGive(props){
-  const { page, reward, setReward, setRewardItems } = props;
+  const { page, reward, setReward, setRewardItems, setError } = props;
   const { t } = useTranslation();
 
   const onChange = (checked, value) => {
     setReward({ value: checked ? null : value, rewardName: reward?.rewardName, categoryId: null, discountType: 0, discountValue: '', earnPoint: '' });
     setRewardItems([]);
+    setError(null);
   }
 
   const onChangeText = (value, field) => {

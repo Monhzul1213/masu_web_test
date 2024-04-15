@@ -6,7 +6,7 @@ import { getList } from '../../../../services';
 import { Input, Select } from '../../../all';
 
 export function TabTypeCategory(props){
-  const { type, setType, onChangeNumber } = props;
+  const { type, setType, onChangeNumber, setError1 } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,6 +34,7 @@ export function TabTypeCategory(props){
         placeholder={t('bonus.category1')}
         inRow={true}
         data={categories}
+        setError={setError1}
         s_value='categoryId'
         s_descr='categoryName'
         loading={loading}
@@ -41,6 +42,7 @@ export function TabTypeCategory(props){
       <Input
         label={t('bonus.bonus_point')}
         placeholder={t('bonus.bonus_point')}
+        setError={setError1}
         value={{ value: type?.bonusPoint }}
         setValue={value => onChangeNumber(value, 'bonusPoint')} />
     </div>

@@ -7,12 +7,14 @@ import { TabTypeItems } from './TabTypeItems';
 import { TabTypeCategory } from './TabTypeCategory';
 
 export function TabType(props){
-  const { page, type, setType, setBonusItems } = props;
+  const { page, type, setType, setBonusItems, setError, setError1 } = props;
   const { t } = useTranslation();
 
   const onChange = (checked, value) => {
     setType({ value: checked ? null : value, everyAmount: '', bonusPoint: '', purchaseMinAmount: '', purchaseCount: '', categoryId: null });
     setBonusItems([]);
+    setError(null);
+    setError1(null);
   }
 
   const onChangePrice = (value, field) => setType({...type, [field]: value?.value });
@@ -30,10 +32,12 @@ export function TabType(props){
           placeholder={t('bonus.every_amount')}
           value={{ value: type?.everyAmount }}
           setValue={value => onChangePrice(value, 'everyAmount')}
+          setError={setError1}
           inRow={true} />
         <Input
           label={t('bonus.bonus_point')}
           placeholder={t('bonus.bonus_point')}
+          setError={setError1}
           value={{ value: type?.bonusPoint }}
           setValue={value => onChangeNumber(value, 'bonusPoint')} />
       </Type>
@@ -42,24 +46,27 @@ export function TabType(props){
           label={t('bonus.purchase_count')}
           placeholder={t('bonus.purchase_count')}
           value={{ value: type?.purchaseCount }}
+          setError={setError1}
           setValue={value => onChangeNumber(value, 'purchaseCount')}
           inRow={true}  />
         <MoneyInput
           label={t('bonus.purchase_min_amount')}
           placeholder={t('bonus.purchase_min_amount1')}
+          setError={setError1}
           value={{ value: type?.purchaseMinAmount }}
           setValue={value => onChangePrice(value, 'purchaseMinAmount')} />
         <Input
           label={t('bonus.bonus_point')}
           placeholder={t('bonus.bonus_point')}
+          setError={setError1}
           value={{ value: type?.bonusPoint }}
           setValue={value => onChangeNumber(value, 'bonusPoint')} />
       </Type>
       <Type title={t('bonus.title2')} label={t('bonus.label2')} value={2} onChange={onChange} data={type}>
-        <TabTypeItems {...props} />
+        <TabTypeItems {...props} setError={setError1} />
       </Type>
       <Type title={t('bonus.title3')} label={t('bonus.label3')} value={3} onChange={onChange} data={type}>
-        <TabTypeCategory {...props} onChangeNumber={onChangeNumber} />
+        <TabTypeCategory {...props} onChangeNumber={onChangeNumber} setError1={setError1} />
       </Type>
     </div>
   );
