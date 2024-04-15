@@ -2,17 +2,46 @@ import React from 'react';
 import { Switch } from 'antd';
 import { useTranslation } from 'react-i18next';
 
+import { Input, MoneyInput } from '../../../all';
+
 export function TabType(props){
   const { page, type, setType } = props;
   const { t } = useTranslation();
 
+  const onChangePrice = (value, field) => setType({...type, [field]: value?.value });
+
+  const onChangeNumber = (value, field) => {
+    let text = value?.value?.replace(/[^0-9]/g, '');
+    if(!isNaN(text)) setType({...type, [field]: text });
+  } 
+
   return page === 1 && (
     <div>
       <Type title={t('bonus.title0')} label={t('bonus.label0')} value={0} {...props}>
-
+        <MoneyInput
+          label={t('bonus.every_amount')}
+          placeholder={t('bonus.every_amount')}
+          value={{ value: type?.everyAmount }}
+          setValue={value => onChangePrice(value, 'everyAmount')}
+          inRow={true} />
+        <Input
+          label={t('bonus.bonus_point')}
+          placeholder={t('bonus.bonus_point')}
+          value={{ value: type?.bonusPoint }}
+          setValue={value => onChangeNumber(value, 'bonusPoint')} />
       </Type>
       <Type title={t('bonus.title1')} label={t('bonus.label1')} value={1} {...props}>
-
+        <MoneyInput
+          label={t('bonus.purchase_min_amount')}
+          placeholder={t('bonus.purchase_min_amount1')}
+          value={{ value: type?.purchaseMinAmount }}
+          setValue={value => onChangePrice(value, 'purchaseMinAmount')}
+          inRow={true} />
+        <Input
+          label={t('bonus.bonus_point')}
+          placeholder={t('bonus.bonus_point')}
+          value={{ value: type?.bonusPoint }}
+          setValue={value => onChangeNumber(value, 'bonusPoint')} />
       </Type>
       <Type title={t('bonus.title2')} label={t('bonus.label2')} value={2} {...props}>
 
@@ -28,7 +57,7 @@ function Type(props){
   const { title, label, value, type, setType, children } = props;
   const checked = type?.value === value;
 
-  const onChange = () => setType({...type, value: checked ? null : value });
+  const onChange = () => setType({ value: checked ? null : value, everyAmount: '', bonusPoint: '', purchaseMinAmount: '' });
 
   return (
     <div>
@@ -39,7 +68,7 @@ function Type(props){
         </div>
         <Switch className='a_item_check' checked={checked} onChange={onChange} />
       </div>
-      {children}
+      {checked && children}
     </div>
   );
 }
