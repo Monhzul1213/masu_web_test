@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment';
 
 import '../../css/invt.css';
+import '../../css/bonus.css';
 import { Error1, Overlay, Prompt } from '../../components/all';
 import { Main, Tab, TabGive, TabType } from '../../components/loyalty/bonus/add';
 
@@ -15,14 +16,14 @@ export function BonusAdd(){
   const [useTime, setUseTime] = useState(true);
   const [beginTime, setBeginTime] = useState({ value: '' });
   const [endTime, setEndTime] = useState({ value: '' });
-  const [type, setType] = useState({ value: 0 });
+  const [type, setType] = useState({ });
   const [status, setStatus] = useState({ value: 1 });
   const [page, setPage] = useState(1);
 
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
     endTime, setEndTime, status, setStatus };
   let tabProps = { page, setPage };
-  let typeProps = { page };
+  let typeProps = { page, type, setType };
   let giveProps = { page };
 
   return (

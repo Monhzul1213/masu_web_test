@@ -1,0 +1,24 @@
+@import './color.css';
+
+.bt_header {
+  display: flex;
+  flex-flow: row;
+  margin-top: 20px;
+  align-items: center;
+}
+
+.bt_header1 {
+  margin-right: 10px;
+  flex: 1;
+}
+
+.bt_header_title {
+  font-size: 16px;
+  margin: 0 0 5px 0;
+}
+
+.bt_header_descr {
+  font-size: 15px;
+  margin: 0;
+  color: var(--text2-color);
+}
