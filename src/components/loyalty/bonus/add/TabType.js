@@ -7,8 +7,13 @@ import { TabTypeItems } from './TabTypeItems';
 import { TabTypeCategory } from './TabTypeCategory';
 
 export function TabType(props){
-  const { page, type, setType } = props;
+  const { page, type, setType, setBonusItems } = props;
   const { t } = useTranslation();
+
+  const onChange = (checked, value) => {
+    setType({ value: checked ? null : value, everyAmount: '', bonusPoint: '', purchaseMinAmount: '', purchaseCount: '', categoryId: null });
+    setBonusItems([]);
+  }
 
   const onChangePrice = (value, field) => setType({...type, [field]: value?.value });
 
@@ -19,7 +24,7 @@ export function TabType(props){
 
   return page === 1 && (
     <div>
-      <Type title={t('bonus.title0')} label={t('bonus.label0')} value={0} {...props}>
+      <Type title={t('bonus.title0')} label={t('bonus.label0')} value={0} onChange={onChange} data={type}>
         <MoneyInput
           label={t('bonus.every_amount')}
           placeholder={t('bonus.every_amount')}
@@ -32,7 +37,7 @@ export function TabType(props){
           value={{ value: type?.bonusPoint }}
           setValue={value => onChangeNumber(value, 'bonusPoint')} />
       </Type>
-      <Type title={t('bonus.title1')} label={t('bonus.label1')} value={1} {...props}>
+      <Type title={t('bonus.title1')} label={t('bonus.label1')} value={1} onChange={onChange} data={type}>
         <Input
           label={t('bonus.purchase_count')}
           placeholder={t('bonus.purchase_count')}
@@ -50,24 +55,19 @@ export function TabType(props){
           value={{ value: type?.bonusPoint }}
           setValue={value => onChangeNumber(value, 'bonusPoint')} />
       </Type>
-      <Type title={t('bonus.title2')} label={t('bonus.label2')} value={2} {...props}>
+      <Type title={t('bonus.title2')} label={t('bonus.label2')} value={2} onChange={onChange} data={type}>
         <TabTypeItems {...props} />
       </Type>
-      <Type title={t('bonus.title3')} label={t('bonus.label3')} value={3} {...props}>
+      <Type title={t('bonus.title3')} label={t('bonus.label3')} value={3} onChange={onChange} data={type}>
         <TabTypeCategory {...props} onChangeNumber={onChangeNumber} />
       </Type>
     </div>
   );
 }
 
-function Type(props){
-  const { title, label, value, type, setType, children, setBonusItems } = props;
-  const checked = type?.value === value;
-
-  const onChange = () => {
-    setType({ value: checked ? null : value, everyAmount: '', bonusPoint: '', purchaseMinAmount: '', purchaseCount: '', categoryId: null });
-    setBonusItems([]);
-  }
+export function Type(props){
+  const { title, label, value, data, children, onChange } = props;
+  const checked = data?.value === value;
 
   return (
     <div>
@@ -76,7 +76,7 @@ function Type(props){
           <p className='bt_header_title'>{title}</p>
           <p className='bt_header_descr'>{label}</p>
         </div>
-        <Switch className='a_item_check' checked={checked} onChange={onChange} />
+        <Switch className='a_item_check' checked={checked} onChange={() => onChange(checked, value)} />
       </div>
       {checked && children}
     </div>
