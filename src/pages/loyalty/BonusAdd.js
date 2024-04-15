@@ -64,6 +64,7 @@ export function BonusAdd(){
     let type1Valid = (type?.value === 1 && type?.purchaseCount && type?.purchaseMinAmount && type?.bonusPoint) || type?.value !== 1;
     let type2Valid = (type?.value === 2 && bonusItems?.length) || type?.value !== 2;
     let type3Valid = (type?.value === 3 && type?.categoryId && type?.bonusPoint) || type?.value !== 3;
+    let rewardValid = reward?.value || reward?.value === 0;
     if(name?.value?.trim() && timeValid && typeValid && type0Valid && type1Valid && type2Valid && type3Valid){
       let bItems = bonusItems?.map(b => { return {...b, bonusPoint: parseFloat(b?.bonusPoint ? b?.bonusPoint : 0) }; });
       let data = {
@@ -101,6 +102,10 @@ export function BonusAdd(){
       if(!timeValid && !beginTime?.value) setBeginTime({ value: '', error: t('error.not_empty') });
       if(!timeValid && !endTime?.value) setEndTime({ value: '', error: t('error.not_empty') });
       if(!typeValid) setError(t('bonus.type_valid'));
+      else if(!rewardValid){
+        setError(t('bonus.reward_valid'));
+        setPage(2);
+      }
       if(typeValid && (!type0Valid || !type1Valid || !type2Valid || !type3Valid)) setError1(t('bonus.type_valid1'));
     }
     // let couponConsumers = [], siteID = [];
