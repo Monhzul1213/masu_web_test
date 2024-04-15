@@ -18,12 +18,13 @@ export function BonusAdd(){
   const [endTime, setEndTime] = useState({ value: '' });
   const [type, setType] = useState({ value: null, everyAmount: '', bonusPoint: '', purchaseMinAmount: '' });
   const [status, setStatus] = useState({ value: 1 });
+  const [bonusItems, setBonusItems] = useState([]);
   const [page, setPage] = useState(1);
 
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
     endTime, setEndTime, status, setStatus };
   let tabProps = { page, setPage };
-  let typeProps = { page, type, setType };
+  let typeProps = { page, type, setType, bonusItems, setBonusItems };
   let giveProps = { page };
 
   return (

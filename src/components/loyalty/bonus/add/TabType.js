@@ -3,6 +3,7 @@ import { Switch } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import { Input, MoneyInput } from '../../../all';
+import { TabTypeItems } from './TabTypeItems';
 
 export function TabType(props){
   const { page, type, setType } = props;
@@ -49,7 +50,7 @@ export function TabType(props){
           setValue={value => onChangeNumber(value, 'bonusPoint')} />
       </Type>
       <Type title={t('bonus.title2')} label={t('bonus.label2')} value={2} {...props}>
-
+        <TabTypeItems {...props} />
       </Type>
       <Type title={t('bonus.title3')} label={t('bonus.label3')} value={3} {...props}>
 
@@ -59,10 +60,13 @@ export function TabType(props){
 }
 
 function Type(props){
-  const { title, label, value, type, setType, children } = props;
+  const { title, label, value, type, setType, children, setBonusItems } = props;
   const checked = type?.value === value;
 
-  const onChange = () => setType({ value: checked ? null : value, everyAmount: '', bonusPoint: '', purchaseMinAmount: '' });
+  const onChange = () => {
+    setType({ value: checked ? null : value, everyAmount: '', bonusPoint: '', purchaseMinAmount: '' });
+    setBonusItems([]);
+  }
 
   return (
     <div>

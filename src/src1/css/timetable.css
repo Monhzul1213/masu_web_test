@@ -337,7 +337,7 @@
   box-shadow: none;
 }
 .ant-select-single .ant-select-selector .ant-select-selection-search {
-  padding: 0px 10px;
+  padding: 0px 10px 0 0px;
 }
 .ant-select-auto-complete .ant-select-clear {
   right: 5px;
