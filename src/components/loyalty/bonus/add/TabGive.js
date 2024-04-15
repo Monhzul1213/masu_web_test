@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Input } from '../../../all';
 import { TabGiveItems } from './TabGiveItems';
+import { TabGiveItems1 } from './TabGiveItems1';
 import { Type } from './TabType';
 
 export function TabGive(props){
@@ -29,6 +30,14 @@ export function TabGive(props){
         <TabGiveItems {...props} />
       </Type>
       <Type title={t('bonus.title1_1')} label={t('bonus.label1_1')} value={1} onChange={onChange} data={reward}>
+        <Input
+          label={t('bonus.reward_name')}
+          placeholder={t('bonus.reward_name')}
+          value={{ value: reward?.rewardName }}
+          setValue={value => onChangeText(value, 'rewardName')}
+          inRow={true} />
+        <div className='gap' />
+        <TabGiveItems1 {...props} />
       </Type>
       <Type title={t('bonus.title2_1')} label={t('bonus.label2_1')} value={2} onChange={onChange} data={reward}>
       </Type>

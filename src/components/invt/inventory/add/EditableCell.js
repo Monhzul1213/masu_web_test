@@ -54,7 +54,7 @@ export const EditableCell = props => {
 
   return isText
     ? (<p className='ed_text'>{value}</p>)
-    : isMoney 
+    : isMoney || (row?.original?.isMoney1 && id === 'discountValue')
       ? (<CurrencyInput {...moneyProps} />)
       : isQty
         ? (<CurrencyInput {...qtyProps} />)
