@@ -287,6 +287,14 @@
   margin: 0;
 }
 
+.ac_title1 {
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  flex: 1
+}
+
 .ac_lbl_back {
   display: flex;
   flex-flow: row;

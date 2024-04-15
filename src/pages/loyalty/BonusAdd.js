@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import '../../css/invt.css';
 import { Error1, Overlay, Prompt } from '../../components/all';
-import { Main } from '../../components/loyalty/bonus/add';
+import { Main, Tab } from '../../components/loyalty/bonus/add';
 
 export function BonusAdd(){
   const [loading, setLoading] = useState(false);
@@ -17,9 +17,11 @@ export function BonusAdd(){
   const [endTime, setEndTime] = useState({ value: '' });
   const [type, setType] = useState({ value: 0 });
   const [status, setStatus] = useState({ value: 1 });
+  const [page, setPage] = useState(1);
 
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
     endTime, setEndTime, status, setStatus };
+  let tabProps = { page, setPage };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -27,6 +29,10 @@ export function BonusAdd(){
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <Main {...mainProps} />
+        <div className='gap' />
+        <div className='ia_back'>
+          <Tab {...tabProps} />
+        </div>
         {/* <CardSite {...siteProps}/> */}
         {/* <CardService {...serviceProps}/> */}
       </div>
