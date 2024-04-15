@@ -19,13 +19,14 @@ export function BonusAdd(){
   const [type, setType] = useState({ value: null, everyAmount: '', bonusPoint: '', purchaseMinAmount: '', purchaseCount: '', categoryId: null });
   const [status, setStatus] = useState({ value: 1 });
   const [bonusItems, setBonusItems] = useState([]);
+  const [reward, setReward] = useState({ value: null });
   const [page, setPage] = useState(1);
 
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
     endTime, setEndTime, status, setStatus };
   let tabProps = { page, setPage };
   let typeProps = { page, type, setType, bonusItems, setBonusItems };
-  let giveProps = { page };
+  let giveProps = { page, reward, setReward };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -39,8 +40,6 @@ export function BonusAdd(){
           <TabType {...typeProps} />
           <TabGive {...giveProps} />
         </div>
-        {/* <CardSite {...siteProps}/> */}
-        {/* <CardService {...serviceProps}/> */}
       </div>
       {/* <ButtonRowConfirm {...btnProps} /> */}
     </Overlay>
