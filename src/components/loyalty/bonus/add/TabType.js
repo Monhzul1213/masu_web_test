@@ -31,12 +31,17 @@ export function TabType(props){
           setValue={value => onChangeNumber(value, 'bonusPoint')} />
       </Type>
       <Type title={t('bonus.title1')} label={t('bonus.label1')} value={1} {...props}>
+        <Input
+          label={t('bonus.purchase_count')}
+          placeholder={t('bonus.purchase_count')}
+          value={{ value: type?.purchaseCount }}
+          setValue={value => onChangeNumber(value, 'purchaseCount')}
+          inRow={true}  />
         <MoneyInput
           label={t('bonus.purchase_min_amount')}
           placeholder={t('bonus.purchase_min_amount1')}
           value={{ value: type?.purchaseMinAmount }}
-          setValue={value => onChangePrice(value, 'purchaseMinAmount')}
-          inRow={true} />
+          setValue={value => onChangePrice(value, 'purchaseMinAmount')} />
         <Input
           label={t('bonus.bonus_point')}
           placeholder={t('bonus.bonus_point')}
