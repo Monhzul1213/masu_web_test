@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import '../../css/invt.css';
 import { Error1, Overlay, Prompt } from '../../components/all';
-import { Main, Tab } from '../../components/loyalty/bonus/add';
+import { Main, Tab, TabGive, TabType } from '../../components/loyalty/bonus/add';
 
 export function BonusAdd(){
   const [loading, setLoading] = useState(false);
@@ -22,6 +22,8 @@ export function BonusAdd(){
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
     endTime, setEndTime, status, setStatus };
   let tabProps = { page, setPage };
+  let typeProps = { page };
+  let giveProps = { page };
 
   return (
     <Overlay className='i_container' loading={loading}>
@@ -32,6 +34,8 @@ export function BonusAdd(){
         <div className='gap' />
         <div className='ia_back'>
           <Tab {...tabProps} />
+          <TabType {...typeProps} />
+          <TabGive {...giveProps} />
         </div>
         {/* <CardSite {...siteProps}/> */}
         {/* <CardService {...serviceProps}/> */}
