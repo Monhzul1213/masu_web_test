@@ -79,7 +79,7 @@ export function BonusAdd(){
       let value = moment(string, 'yyyy.MM.DD HH:mm:ss').toISOString();
       return value;
     } else
-      return null;
+      return date?.value?.toISOString();
   }
 
   const validateData = () => {

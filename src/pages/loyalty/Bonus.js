@@ -36,8 +36,8 @@ export function Bonus(){
     if(response?.error) setError(response?.error);
     else {
       response?.data?.bonus?.forEach(item=> {
-        item.begin = moment(item?.beginDate)?.format('yyyy.MM.DD') + ' ' + (item?.beginTime ?? '');
-        item.end = moment(item?.endDate)?.format('yyyy.MM.DD') + ' ' + (item?.endTime ?? '');
+        item.begin = moment(item?.beginDate)?.format('yyyy.MM.DD') + (item?.useTime === 'Y' ? (' ' + (item?.beginTime ?? '')) : '');
+        item.end = moment(item?.endDate)?.format('yyyy.MM.DD') + (item?.useTime === 'Y' ? (' ' + (item?.endTime ?? '')) : '');
       });
       setData(response?.data?.bonus);
     }

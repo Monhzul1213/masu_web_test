@@ -20,8 +20,8 @@ export function List(props){
         Header: t('bonus.t_use'), accessor: 'useTime', width: 115, minWidth: 100,
         Cell: ({ row }) => <Check checked={row?.original?.useTime === 'Y'} disabled={true} />,
       },
-      { Header: t('coupon.beginDate'), accessor: 'begin', width: 170, minWidth: 100 },
-      { Header: t('coupon.endDate'), accessor: 'end', width: 170, minWidth: 100 },
+      { Header: t('coupon.beginDate'), accessor: 'begin', width: 190, minWidth: 100 },
+      { Header: t('coupon.endDate'), accessor: 'end', width: 190, minWidth: 100 },
       { Header: t('coupon.status'), accessor: 'statusName', width: 120, minWidth: 60 },
     ]);
     return () => {};
