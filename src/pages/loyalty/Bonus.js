@@ -35,13 +35,11 @@ export function Bonus(){
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     else {
+      response?.data?.bonus?.forEach(item=> {
+        item.begin = moment(item?.beginDate)?.format('yyyy.MM.DD') + ' ' + (item?.beginTime ?? '');
+        item.end = moment(item?.endDate)?.format('yyyy.MM.DD') + ' ' + (item?.endTime ?? '');
+      });
       setData(response?.data?.bonus);
-      console.log(response?.data)
-    // COMMENT
-    //   response?.data?.coupon?.forEach(item=> {
-    //     item.date = moment(item?.beginDate)?.format('yyyy.MM.DD') + '-' + moment(item?.endDate)?.format('yyyy.MM.DD')
-    //   })
-    //   setData(response?.data?.coupon);
     }
     setLoading(false);
   }
