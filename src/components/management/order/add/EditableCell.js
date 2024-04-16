@@ -25,7 +25,7 @@ export const EditableCell = props => {
 
   useEffect(() => {
     setValue(initialValue)
-  }, [initialValue])
+  }, [initialValue, row?.original?.edited])
   
   const style = { textAlign: 'right', width: minWidth ? (minWidth - 18) : width };
   const qtyProps = { className: 'ed_input', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,

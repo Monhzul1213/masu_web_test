@@ -8,7 +8,7 @@ import { CheckBox, Date, Input, Select, Time } from '../../../all';
 
 function Card(props){
   const { size, setError, setEdited, name, setName, beginDate, useTime, setUseTime, setBeginDate, endDate, setEndDate, beginTime, setBeginTime,
-    endTime, setEndTime, status, setStatus } = props;
+    endTime, setEndTime, status, setStatus, disabled } = props;
   const { t } = useTranslation();
   const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(null);
@@ -33,7 +33,7 @@ function Card(props){
   }
 
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
-  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('bonus.name'), setError, setEdited, inRow: true, length: 75 };
+  const nameProps = { value: name, setValue: setName, label: t('page.name'), placeholder: t('bonus.name'), setError, setEdited, inRow: true, length: 75, disabled };
   const date1Props = { value: beginDate, setValue: setBeginDate, label: t('coupon.beginDate'), inRow: true, setError, setEdited };
   const date2Props = { value: endDate, setValue: setEndDate, label: t('coupon.endDate'), inRow: true, setError, setEdited };
   const timeProps = { checked: useTime, setChecked: setUseTime, label: t('bonus.use'), style: { marginTop: 15 } };

@@ -58,7 +58,7 @@ export function Filter(props){
   const onHide = (status, type, name) => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(status !== -1) query += '&Status=' + status;
-    if(type !== -1) query += '&Type=' + type;
+    if(type !== -1) query += '&BonusType=' + type;
     query += name ? '&Name=' + name : '';
     onSearch(query);
   }

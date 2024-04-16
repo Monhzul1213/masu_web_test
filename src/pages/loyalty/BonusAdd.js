@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import '../../css/invt.css';
 import '../../css/bonus.css';
-import { sendRequest } from '../../services';
+import { getList, sendRequest } from '../../services';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { Main, Tab, TabGive, TabType } from '../../components/loyalty/bonus/add';
 
@@ -26,11 +26,13 @@ export function BonusAdd(){
   const [type, setType] = useState({ value: null, everyAmount: '', bonusPoint: '', purchaseMinAmount: '', purchaseCount: '', categoryId: null });
   const [status, setStatus] = useState({ value: 1 });
   const [bonusItems, setBonusItems] = useState([]);
-  const [reward, setReward] = useState({ value: null, rewardName: '', categoryId: null, discountType: 0, discountValue: '', earnPoint: '' });
+  const [reward, setReward] = useState({ value: null, id: 0, rewardName: '', categoryId: null, discountType: 0, discountValue: '', earnPoint: '' });
   const [rewardItems, setRewardItems] = useState([]);
   const [page, setPage] = useState(1);
   const [saved, setSaved] = useState(false);
   const [bonus, setBonus] = useState(null);
+  const [searchParams] = useSearchParams();
+  const [disabled, setDisabled] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,7 +70,36 @@ export function BonusAdd(){
   }
 
   const getData = async () => {
-    // comment
+    let bonusId = searchParams?.get('bonusId');
+    if(bonusId){
+      onLoad();
+      let response = await dispatch(getList(user, token, 'Site/GetBonus?BonusID=' + bonusId));
+      if(response?.error) onError(response?.error, false);
+      else {
+        onSuccess();
+        setDisabled(true);
+        let bonus = response?.data?.bonus && response?.data?.bonus[0];
+        setName({ value: bonus?.name });
+        setBeginDate({ value: moment(bonus?.beginDate) });
+        setEndDate({ value: moment(bonus?.endDate) });
+        setUseTime(bonus?.useTime === 'Y');
+        setBeginTime({ value: bonus?.useTime === 'Y' ? bonus?.beginTime : '' });
+        setEndTime({ value: bonus?.useTime === 'Y' ? bonus?.endTime : '' });
+        setStatus({ value: bonus?.status });
+        setType({ value: bonus?.bonusType, everyAmount: bonus?.everyAmount + '', bonusPoint: bonus?.bonusPoint + '' });
+        let reward = response?.data?.reward && response?.data?.reward[0];
+        setReward({ value: reward?.rewardType, id: reward?.rewardId, rewardName: reward?.rewardName });
+        setRewardItems(response?.data?.rewarditem);
+        setBonus(bonus);
+        // (Төлөв, Tab1:(msBonus.BonusType='Бараагаар' үед бараа нэмэх боломжтой байна),
+        // tab2: msReward.RewardType IN ('Барааны үнэ хөнгөлөх') үед бараа нэмэх болможтой байна ) засах боломжтой харуулна
+
+        // const [type, setType] = useState({ purchaseMinAmount: '', purchaseCount: '', categoryId: null });
+        // const [bonusItems, setBonusItems] = useState([]);
+        // const [reward, setReward] = useState({ : '', categoryId: null, discountType: 0, discountValue: '', earnPoint: '' });
+        // const [rewardItems, setRewardItems] = useState([]);
+      }
+    }
   }
 
   const onClickCancel = () => navigate({ pathname: '/loyalty/bonus' });
@@ -100,7 +131,7 @@ export function BonusAdd(){
       let bItems = bonusItems?.map(b => { return {...b, bonusPoint: parseFloat(b?.bonusPoint ? b?.bonusPoint : 0) }; });
       let rItems = rewardItems?.map(b => { return {...b, earnPoint: parseFloat(b?.earnPoint ? b?.earnPoint : 0), discountValue: parseFloat(b?.discountValue ? b?.discountValue : 0) }; });
       let data = {
-        bonusID: bonus?.bonusID ?? 0, name: name?.value?.trim(), rowStatus: bonus ? 'U' : 'I',
+        bonusID: bonus?.bonusId ?? 0, name: name?.value?.trim(), rowStatus: bonus ? 'U' : 'I',
         beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'),
         useTime: useTime ? 'Y' : 'N', beginTime: getTime(beginDate, beginTime), endTime: getTime(endDate, endTime),
         status: status?.value, bonusType: type?.value,
@@ -111,7 +142,7 @@ export function BonusAdd(){
         categoryId: type?.categoryId ?? 0,
         bonusItems: bItems,
         rewardReqs: [{
-          rewardID: 0,//comment
+          rewardID: reward?.id ?? 0,
           rewardName: reward?.rewardName,
           rewardItems: rItems,
           rewardType: reward?.value,
@@ -121,6 +152,7 @@ export function BonusAdd(){
           discountValue: parseFloat(reward?.discountValue ? reward?.discountValue : 0),
         }]
       };
+      console.log(data);
       return data;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
@@ -147,10 +179,10 @@ export function BonusAdd(){
   }
 
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
-    endTime, setEndTime, status, setStatus };
+    endTime, setEndTime, status, setStatus, disabled };
   let tabProps = { page, setPage };
-  let typeProps = { page, type, setType, bonusItems, setBonusItems, setError, setError1 };
-  let giveProps = { page, reward, setReward, rewardItems, setRewardItems, setError, setError1 };
+  let typeProps = { page, type, setType, bonusItems, setBonusItems, setError, setError1, disabled };
+  let giveProps = { page, reward, setReward, rewardItems, setRewardItems, setError, setError1, disabled };
   let btnProps = { onClickCancel, onClickSave }
 
   return (
@@ -174,46 +206,11 @@ export function BonusAdd(){
 
 /*
 comment
-  const [searchParams] = useSearchParams();
   
-  const getData = async () => {
-    let couponId = searchParams?.get('couponId');
-    let response = await getSites();
-    if(response && (couponId || couponId === 0)) GetCoupon(couponId, response);
-  }
+ 
 
   const GetCoupon = async (couponId, site ) => {
-    setError(null);
-    setLoading(true);
-    let api = '?CouponId=' + couponId;
-    let response = await dispatch(getList(user, token, 'Site/GetCoupon' + api));
-    setLoading(false);
-    if(response?.error) setError(response?.error)
-    else {    
-      let coupon = response?.data?.coupon && response?.data?.coupon[0] ;
-      setSelected(coupon);
-      setType({value: coupon?.couponType ?? '' })
-      setName({ value: coupon?.name ?? '' });
-      setPrice({ value: coupon?.couponValue ?? '' })
-      setPerc({ value: coupon?.couponValue ?? '' })
-      setBeginDate ({ value: moment(coupon?.beginDate, 'YYYY-MM-DD') })
-      setEndDate ({ value: moment(coupon?.endDate, 'YYYY-MM-DD') })
-      setStatus({value: coupon?.status ?? 0})
-      setCategory({value: coupon?.categoryId})
-      setInvt({value: coupon?.invtId === -1 ? null : coupon?.invtId})
-      setNumber({value: coupon?.qty})
-      setColor({value: coupon?.color ?? '006838'})
-      site?.forEach(item => {
-        let exists = response?.data?.couponsite?.filter(si => si.siteId === item.siteId)[0];
-        item.checked = exists;
-      });
-      setSites(site);
-      response?.data?.couponconsumer?.forEach(item => {
-        item.firstName = item?.consumerName
-        item.age = item?.consumerAge
-      })
-      setConsumer(response?.data?.couponconsumer)
-    }
+    
   }
 
   const getSites = async () => {
