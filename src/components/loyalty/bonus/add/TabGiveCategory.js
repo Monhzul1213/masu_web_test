@@ -7,7 +7,7 @@ import { PercentInput } from '../../../../src1/components/all/all_m';
 import { Input, MoneyInput, Select } from '../../../all';
 
 export function TabGiveCategory(props){
-  const { reward, onChangeText, onChangeNumber, setError1 } = props;
+  const { reward, onChangeText, onChangeNumber, setError1, disabled } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,6 +39,7 @@ export function TabGiveCategory(props){
         label={t('bonus.reward_name')}
         placeholder={t('bonus.reward_name')}
         setError={setError1}
+        disabled={disabled}
         value={{ value: reward?.rewardName }}
         setValue={value => onChangeText(value, 'rewardName')}
         inRow={true} />
@@ -48,6 +49,7 @@ export function TabGiveCategory(props){
         label={t('bonus.reward_category')}
         placeholder={t('bonus.reward_category')}
         data={categories}
+        disabled={disabled}
         s_value='categoryId'
         s_descr='categoryName'
         loading={loading}
@@ -57,12 +59,14 @@ export function TabGiveCategory(props){
         value={{ value: reward?.discountType }}
         setValue={value => onChangeText(value, 'discountType')}
         label={t('bonus.discount_type')}
+        disabled={disabled}
         placeholder={t('bonus.discount_type')}
         setError={setError1}
         data={types} />
       {reward?.discountType === 1 ?
         <MoneyInput
           label={t('bonus.discount_value')}
+          disabled={disabled}
           placeholder={t('bonus.discount_value')}
           setError={setError1}
           value={{ value: reward?.discountValue }}
@@ -72,12 +76,14 @@ export function TabGiveCategory(props){
           label={t('bonus.discount_value')}
           placeholder={t('bonus.discount_value')}
           setError={setError1}
+          disabled={disabled}
           value={{ value: reward?.discountValue }}
           setValue={value => onChangeText(value, 'discountValue')} />
       }
       <Input
         label={t('bonus.earn_point')}
         placeholder={t('bonus.earn_point')}
+        disabled={disabled}
         setError={setError1}
         value={{ value: reward?.earnPoint }}
         setValue={value => onChangeNumber(value, 'earnPoint')} />

@@ -5,7 +5,7 @@ import { PercentInput } from '../../../../src1/components/all/all_m';
 import { Input, MoneyInput, Select } from '../../../all';
 
 export function TabGiveAmount(props){
-  const { reward, onChangeText, onChangeNumber, setError1 } = props;
+  const { reward, onChangeText, onChangeNumber, setError1, disabled } = props;
   const { t } = useTranslation();
   const [types] = useState([{ value: 0, label: t('discount.perc') }, { value: 1, label: t('discount.amount') }]);
 
@@ -15,6 +15,7 @@ export function TabGiveAmount(props){
         label={t('bonus.reward_name')}
         placeholder={t('bonus.reward_name')}
         value={{ value: reward?.rewardName }}
+        disabled={disabled}
         setError={setError1}
         setValue={value => onChangeText(value, 'rewardName')}
         inRow={true} />
@@ -22,6 +23,7 @@ export function TabGiveAmount(props){
         value={{ value: reward?.discountType }}
         setValue={value => onChangeText(value, 'discountType')}
         label={t('bonus.discount_type')}
+        disabled={disabled}
         setError={setError1}
         placeholder={t('bonus.discount_type')}
         data={types} />
@@ -29,12 +31,14 @@ export function TabGiveAmount(props){
         <MoneyInput
           label={t('bonus.discount_value')}
           placeholder={t('bonus.discount_value')}
+          disabled={disabled}
           setError={setError1}
           value={{ value: reward?.discountValue }}
           setValue={value => onChangeText(value, 'discountValue')} />
         :
         <PercentInput
           label={t('bonus.discount_value')}
+          disabled={disabled}
           placeholder={t('bonus.discount_value')}
           setError={setError1}
           value={{ value: reward?.discountValue }}
@@ -43,6 +47,7 @@ export function TabGiveAmount(props){
       <Input
         label={t('bonus.earn_point')}
         placeholder={t('bonus.earn_point')}
+        disabled={disabled}
         setError={setError1}
         value={{ value: reward?.earnPoint }}
         setValue={value => onChangeNumber(value, 'earnPoint')} />
