@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +7,7 @@ import moment from 'moment';
 
 import '../../css/invt.css';
 import '../../css/bonus.css';
+import { sendRequest } from '../../services';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { Main, Tab, TabGive, TabType } from '../../components/loyalty/bonus/add';
 
@@ -30,6 +32,7 @@ export function BonusAdd(){
   const [saved, setSaved] = useState(false);
   const [bonus, setBonus] = useState(null);
   const { user, token }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,6 +46,26 @@ export function BonusAdd(){
     return () => setEdited(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onLoad = () => {
+    setError(null);
+    setLoading(true);
+    setEdited(false);
+  }
+
+  const onError = (err, edited) => {
+    setError(err);
+    setEdited(edited);
+    setLoading(false);
+  }
+
+  const onSuccess = msg => {
+    if(msg){
+      message.success(msg);
+      setSaved(true);
+    }
+    setLoading(false);
+  }
 
   const getData = async () => {
     // comment
@@ -114,14 +137,10 @@ export function BonusAdd(){
   const onClickSave = async () => {
     let data = validateData();
     if(data){
-    // comment
-    //   if(data?.siteID?.length === 0) setError1(t('shop.title') + t('error.not_empty'))
-    //   else {
-    //     onLoad();
-    //     const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
-    //     if(response?.error) onError(response?.error, true);
-    //     else onSuccess(t('coupon.add_success'));
-    //   }
+      onLoad();
+      const response = await dispatch(sendRequest(user, token, 'Site/ModBonus', data));
+      if(response?.error) onError(response?.error, true);
+      else onSuccess(t('bonus.add_success'));
     }
   }
 
@@ -153,41 +172,7 @@ export function BonusAdd(){
 
 /*
 comment
-import React, { useEffect, useState } from 'react';
-import { message } from 'antd';
-import { useTranslation } from 'react-i18next';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment';
-
-import { getList, sendRequest } from '../../../services';
-import { Error1, Overlay, Prompt, ButtonRowConfirm } from '../../../components/all';
-import { Main, CardSite, CardService } from '../../components/loyalty/coupon/add';
-
-export function CouponAdd(){
-  const { t } = useTranslation();
-  const [error1, setError1] = useState(null);
-  const [selected, setSelected ] = useState(null);
-  const [price, setPrice] = useState({ value: 0 });
-  const [perc, setPerc] = useState({ value: 0 });
-  const [status, setStatus] = useState({ value: 1});
-  const [type, setType] = useState({ value: 0});
-  const [color, setColor] = useState({ value: '006838'});
-  
-  const [category, setCategory] = useState({ value: null });
-  const [invt, setInvt] = useState({ value: null });
-  const [number, setNumber] = useState({ value: '' });
-  const [sites, setSites] = useState([]);
-  const [checked, setChecked] = useState(true);
-  const [consumer, setConsumer] = useState([]);
-  const [dconsumer, setDConsumer] = useState([]);
-  // const [item, setItem] = useState(null);
-  const [searchI, setSearchI] = useState({ value: null });
-  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-
-  
-
   
   const getData = async () => {
     let couponId = searchParams?.get('couponId');
@@ -243,51 +228,4 @@ export function CouponAdd(){
       return response?.data;
     }
   }
-
- 
-
-  
-
-
-  // const onClickDelete = async () => {
-  //   onLoad();
-  //   let data = {couponID: selected?.couponId, name: selected?.name, type: selected?.couponType,  couponValue: selected?.couponValue,
-  //     beginDate: selected?.beginDate, endDate: selected?.endDate, categoryId: selected?.categoryId, invtId: selected?.invtId,
-  //     status: 0, qty: selected?.qty, rowStatus: 'D', couponConsumers : [] , siteID : [] };
-  //   const response = await dispatch(sendRequest(user, token, 'Site/ModCoupen', data));
-  //   if(response?.error) onError(response?.error, true);
-  //   else onSuccess(t('coupon.delete_success'), true);
-  // }
-
-  const onLoad = () => {
-    setError(null);
-    setLoading(true);
-    setEdited(false);
-  }
-
-  const onError = (err, edited) => {
-    setError(err);
-    setEdited(edited);
-    setLoading(false);
-  }
-
-  const onSuccess = msg => {
-    if(msg){
-      message.success(msg);
-      setSaved(true);
-    }
-    setLoading(false);
-  }
-
-
-  
-  // onClickDelete, show: item ? true:  false  };
-  const siteProps = { data: sites, setData: setSites, setEdited, checked, setChecked, error: error1 };
-  const serviceProps = {data: consumer, setData: setConsumer, setError, setEdited, setDKits : setDConsumer, search: searchI, setSearch: setSearchI, number, dconsumer };
-  
-  return (
-    
-  );
-}
-
 */
