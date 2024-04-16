@@ -35,6 +35,8 @@ export function Bonus(){
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     else {
+      setData(response?.data?.bonus);
+      console.log(response?.data)
     // COMMENT
     //   response?.data?.coupon?.forEach(item=> {
     //     item.date = moment(item?.beginDate)?.format('yyyy.MM.DD') + '-' + moment(item?.endDate)?.format('yyyy.MM.DD')
