@@ -50,18 +50,21 @@ export function TabType(props){
           label={t('bonus.purchase_count')}
           placeholder={t('bonus.purchase_count')}
           value={{ value: type?.purchaseCount }}
+          disabled={disabled}
           setError={setError1}
           setValue={value => onChangeNumber(value, 'purchaseCount')}
           inRow={true}  />
         <MoneyInput
           label={t('bonus.purchase_min_amount')}
           placeholder={t('bonus.purchase_min_amount1')}
+          disabled={disabled}
           setError={setError1}
           value={{ value: type?.purchaseMinAmount }}
           setValue={value => onChangePrice(value, 'purchaseMinAmount')} />
         <Input
           label={t('bonus.bonus_point')}
           placeholder={t('bonus.bonus_point')}
+          disabled={disabled}
           setError={setError1}
           value={{ value: type?.bonusPoint }}
           setValue={value => onChangeNumber(value, 'bonusPoint')} />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -15,6 +15,12 @@ export function TabGiveCategory(props){
   const [types] = useState([{ value: 0, label: t('discount.perc') }, { value: 1, label: t('discount.amount') }]);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    onFocus();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onFocus = async () => {
     if(!categories?.length){

@@ -24,7 +24,8 @@ export function TabTypeItems(props){
       },
       {
         id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
-        Cell: ({ row, onClickDelete }) => (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+        Cell: ({ row, onClickDelete }) => row?.original?.bonusId ? (<div></div>) :
+          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
       },
     ]);
     return () => {};
@@ -44,7 +45,10 @@ export function TabTypeItems(props){
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     setBonusItems(old => old.map((row, index) => {
-      if(index === rowIndex){
+      if(index === rowIndex && old[rowIndex]?.bonusId){
+        let edited = (old[rowIndex]?.edited ?? 0) + 1;
+        return { ...old[rowIndex], edited };
+      } else if(index === rowIndex){
         return { ...old[rowIndex], bonusPoint: value };
       } else {
         return row;

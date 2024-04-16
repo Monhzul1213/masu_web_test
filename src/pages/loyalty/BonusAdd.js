@@ -86,17 +86,18 @@ export function BonusAdd(){
         setBeginTime({ value: bonus?.useTime === 'Y' ? bonus?.beginTime : '' });
         setEndTime({ value: bonus?.useTime === 'Y' ? bonus?.endTime : '' });
         setStatus({ value: bonus?.status });
-        setType({ value: bonus?.bonusType, everyAmount: bonus?.everyAmount + '', bonusPoint: bonus?.bonusPoint + '' });
+        setType({ value: bonus?.bonusType, everyAmount: bonus?.everyAmount + '', bonusPoint: bonus?.bonusPoint + '', purchaseMinAmount: bonus?.purchaseMinAmount + '',
+          purchaseCount: bonus?.purchaseCount + '' });
+        setBonusItems(response?.data?.bonusitem);
         let reward = response?.data?.reward && response?.data?.reward[0];
-        setReward({ value: reward?.rewardType, id: reward?.rewardId, rewardName: reward?.rewardName });
+        setReward({ value: reward?.rewardType, id: reward?.rewardId, rewardName: reward?.rewardName, categoryId: reward?.categoryId, discountType: reward?.discountType,
+          discountValue: reward?.discountValue, earnPoint: reward?.earnPoint });
         setRewardItems(response?.data?.rewarditem);
         setBonus(bonus);
-        // (Төлөв, Tab1:(msBonus.BonusType='Бараагаар' үед бараа нэмэх боломжтой байна),
         // tab2: msReward.RewardType IN ('Барааны үнэ хөнгөлөх') үед бараа нэмэх болможтой байна ) засах боломжтой харуулна
 
-        // const [type, setType] = useState({ purchaseMinAmount: '', purchaseCount: '', categoryId: null });
-        // const [bonusItems, setBonusItems] = useState([]);
-        // const [reward, setReward] = useState({ : '', categoryId: null, discountType: 0, discountValue: '', earnPoint: '' });
+        // const [type, setType] = useState({ : '', : '', categoryId: null });
+        // const [reward, setReward] = useState({ : '', : null, =: 0, : '', earnPoint: '' });
         // const [rewardItems, setRewardItems] = useState([]);
       }
     }
