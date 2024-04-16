@@ -76,10 +76,10 @@ export function BonusAdd(){
   const getTime = (date, time) => {
     if(useTime){
       let string = date?.value?.format('yyyy.MM.DD') + time?.value;
-      let value = moment(string, 'yyyy.MM.DD HH:mm:ss').toISOString();
+      let value = moment(string, 'yyyy.MM.DD HH:mm:ss').format('yyyy-MM-DDTHH:mm:ss.SSS');
       return value;
     } else
-      return date?.value?.toISOString();
+      return date?.value?.format('yyyy-MM-DDTHH:mm:ss.SSS');
   }
 
   const validateData = () => {
