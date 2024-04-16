@@ -15,7 +15,7 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: t('coupon.name'), accessor: 'name', width: 220, minWidth: 80 },
-      { Header: t('bonus.type'), accessor: 'bonusTypeName', width: 200, minWidth: 60 },
+      { Header: t('bonus.type'), accessor: 'bonusTypeName', width: 220, minWidth: 60 },
       {
         Header: t('bonus.t_use'), accessor: 'useTime', width: 115, minWidth: 100,
         Cell: ({ row }) => <Check checked={row?.original?.useTime === 'Y'} disabled={true} />,
