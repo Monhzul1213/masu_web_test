@@ -73,11 +73,13 @@ export function BonusAdd(){
 
   const onClickCancel = () => navigate({ pathname: '/loyalty/bonus' });
 
-  const getTime = value => {
-    let hours = parseInt(value?.substr(0, 2) ? value?.substr(0, 2) : 0);
-    let minutes = parseInt(value?.substr(3, 2) ? value?.substr(3, 2) : 0);
-    let seconds = parseInt(value?.substr(6, 2) ? value?.substr(6, 2) : 0);
-    return { ticks: 0, days: 0, milliseconds: 0, hours, minutes, seconds };
+  const getTime = (date, time) => {
+    if(useTime){
+      let string = date?.value?.format('yyyy.MM.DD') + time?.value;
+      let value = moment(string, 'yyyy.MM.DD HH:mm:ss').toISOString();
+      return value;
+    } else
+      return null;
   }
 
   const validateData = () => {
@@ -100,7 +102,7 @@ export function BonusAdd(){
       let data = {
         bonusID: bonus?.bonusID ?? 0, name: name?.value?.trim(), rowStatus: bonus ? 'U' : 'I',
         beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'),
-        useTime: useTime ? 'Y' : 'N', beginTime: getTime(beginTime?.value), endTime: getTime(endTime?.value),
+        useTime: useTime ? 'Y' : 'N', beginTime: getTime(beginDate, beginTime), endTime: getTime(endDate, endTime),
         status: status?.value, bonusType: type?.value,
         everyAmount: parseFloat(type?.everyAmount ? type?.everyAmount : 0),
         bonusPoint: parseFloat(type?.bonusPoint ? type?.bonusPoint : 0),
@@ -118,7 +120,7 @@ export function BonusAdd(){
           discountType: reward?.discountType,
           discountValue: parseFloat(reward?.discountValue ? reward?.discountValue : 0),
         }]
-      }
+      };
       return data;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
