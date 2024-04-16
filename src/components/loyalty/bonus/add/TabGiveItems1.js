@@ -33,7 +33,8 @@ export function TabGiveItems1(props){
       },
       {
         id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
-        Cell: ({ row, onClickDelete }) => (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+        Cell: ({ row, onClickDelete }) => row?.original?.rewardId ? (<div></div>) :
+          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
       },
     ]);
     return () => {};
@@ -53,7 +54,10 @@ export function TabGiveItems1(props){
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     setRewardItems(old => old.map((row, index) => {
-      if(index === rowIndex){
+      if(index === rowIndex && old[rowIndex]?.rewardId){
+        let edited = (old[rowIndex]?.edited ?? 0) + 1;
+        return { ...old[rowIndex], edited };
+      } else if(index === rowIndex){
         if(columnId === 'discountValue'){
           let discountValue = value;
           let edited = old[rowIndex]?.edited ?? 0;

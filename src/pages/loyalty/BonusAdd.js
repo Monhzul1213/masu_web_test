@@ -94,8 +94,6 @@ export function BonusAdd(){
           discountValue: reward?.discountValue, earnPoint: reward?.earnPoint });
         setRewardItems(response?.data?.rewarditem);
         setBonus(bonus);
-        // tab2: msReward.RewardType IN ('Барааны үнэ хөнгөлөх') үед бараа нэмэх болможтой байна ) засах боломжтой харуулна
-        // const [rewardItems, setRewardItems] = useState([]);
       }
     }
   }
