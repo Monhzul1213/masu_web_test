@@ -201,28 +201,3 @@ export function BonusAdd(){
     </Overlay>
   );
 }
-
-/*
-comment
-  
- 
-
-  const GetCoupon = async (couponId, site ) => {
-    
-  }
-
-  const getSites = async () => {
-    setError(null);
-    setLoading(false);
-    const response = await dispatch(getList(user, token, 'Site/GetSite'));
-    setLoading(false);
-    if(response?.error){
-      setError(response?.error);
-      return false;
-    } else {
-      response?.data?.forEach(item => item.checked = true);
-      setSites(response?.data);
-      return response?.data;
-    }
-  }
-*/
