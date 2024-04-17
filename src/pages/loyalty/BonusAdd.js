@@ -20,7 +20,7 @@ export function BonusAdd(){
   const [name, setName] = useState({ value: '' });
   const [beginDate, setBeginDate] = useState({ value: moment() });
   const [endDate, setEndDate] = useState({ value: moment() });
-  const [useTime, setUseTime] = useState(true);
+  const [useTime, setUseTime] = useState(false);
   const [beginTime, setBeginTime] = useState({ value: '' });
   const [endTime, setEndTime] = useState({ value: '' });
   const [type, setType] = useState({ value: null, everyAmount: '', bonusPoint: '', purchaseMinAmount: '', purchaseCount: '', categoryId: null });

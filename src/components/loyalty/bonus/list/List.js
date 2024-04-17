@@ -16,12 +16,14 @@ export function List(props){
     setColumns([
       { Header: t('coupon.name'), accessor: 'name', width: 220, minWidth: 80 },
       { Header: t('bonus.type'), accessor: 'bonusTypeName', width: 220, minWidth: 60 },
+      { Header: t('coupon.beginDate'), accessor: 'begin1', width: 120, minWidth: 100 },
+      { Header: t('coupon.endDate'), accessor: 'end1', width: 120, minWidth: 100 },
       {
         Header: t('bonus.t_use'), accessor: 'useTime', width: 115, minWidth: 100,
         Cell: ({ row }) => <Check checked={row?.original?.useTime === 'Y'} disabled={true} />,
       },
-      { Header: t('coupon.beginDate'), accessor: 'begin', width: 190, minWidth: 100 },
-      { Header: t('coupon.endDate'), accessor: 'end', width: 190, minWidth: 100 },
+      { Header: t('bonus.begin'), accessor: 'begin2', width: 110, minWidth: 100 },
+      { Header: t('bonus.end'), accessor: 'end2', width: 110, minWidth: 100 },
       { Header: t('coupon.status'), accessor: 'statusName', width: 120, minWidth: 60 },
     ]);
     return () => {};
