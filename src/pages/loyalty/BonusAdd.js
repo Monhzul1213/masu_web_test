@@ -33,6 +33,7 @@ export function BonusAdd(){
   const [bonus, setBonus] = useState(null);
   const [searchParams] = useSearchParams();
   const [disabled, setDisabled] = useState(false);
+  const [color, setColor] = useState({ value: '006838' });
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -94,6 +95,7 @@ export function BonusAdd(){
           discountValue: reward?.discountValue, earnPoint: reward?.earnPoint });
         setRewardItems(response?.data?.rewarditem);
         setBonus(bonus);
+        setColor({ value: bonus?.color ?? '006838' });
       }
     }
   }
@@ -130,7 +132,7 @@ export function BonusAdd(){
         bonusID: bonus?.bonusId ?? 0, name: name?.value?.trim(), rowStatus: bonus ? 'U' : 'I',
         beginDate: beginDate?.value?.format('yyyy.MM.DD'), endDate: endDate?.value?.format('yyyy.MM.DD'),
         useTime: useTime ? 'Y' : 'N', beginTime: getTime(beginDate, beginTime), endTime: getTime(endDate, endTime),
-        status: status?.value, bonusType: type?.value,
+        status: status?.value, bonusType: type?.value, color: color?.value,
         everyAmount: parseFloat(type?.everyAmount ? type?.everyAmount : 0),
         bonusPoint: parseFloat(type?.bonusPoint ? type?.bonusPoint : 0),
         purchaseCount: parseFloat(type?.purchaseCount ? type?.purchaseCount : 0),
@@ -175,7 +177,7 @@ export function BonusAdd(){
   }
 
   let mainProps = { setError, setEdited, name, setName, beginDate, setBeginDate, endDate, setEndDate, useTime, setUseTime, beginTime, setBeginTime,
-    endTime, setEndTime, status, setStatus, disabled };
+    endTime, setEndTime, status, setStatus, color, setColor, disabled };
   let tabProps = { page, setPage };
   let typeProps = { page, type, setType, bonusItems, setBonusItems, setError, setError1, disabled };
   let giveProps = { page, reward, setReward, rewardItems, setRewardItems, setError, setError1, disabled };
