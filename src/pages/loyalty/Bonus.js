@@ -50,7 +50,7 @@ export function Bonus(){
 
   const onClickAdd = () => navigate('bonus_add');
 
-  const headerProps = { onClickAdd, setError, onSearch, setError };
+  const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
 
   return (
