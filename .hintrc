@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "compat-api/css": [
+      "default",
+      {
+        "ignore": [
+          "-webkit-text-security",
+          "text-decoration-skip-ink",
+          "user-select",
+          "position: sticky"
+        ]
+      }
+    ]
+  }
+}

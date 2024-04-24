@@ -10,6 +10,7 @@ import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Recovery } from './pages';
 import { Review } from './pages/report/Review';
 
+
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
   const { user } = useSelector(state => state.login);
@@ -67,6 +68,7 @@ export function App(){
                 <Route path='*' element={<Review />} />
                 <Route path='/confirm' element={<Confirm />} />
                 <Route path='/report/report_buyer' element={<Review />} />
+                <Route path='/report/report_receivable' element={<Review />} />
               </Routes>
             </Layout>
           </Layout>

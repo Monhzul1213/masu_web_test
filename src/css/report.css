@@ -142,7 +142,8 @@
   font-size: 14px;
   font-weight: 500;
   border-radius: var(--radius);
-  padding: 3px 5px;
+  padding: 10px;
+  padding-top: 15px;
 }
 
 .rp_list_select:hover {

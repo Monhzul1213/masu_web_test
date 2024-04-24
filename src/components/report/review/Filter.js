@@ -7,11 +7,11 @@ import 'antd/dist/antd.css';
 import moment from 'moment';
 
 import { getList } from '../../../services';
-import { DynamicAIIcon, MonthRange, MultiSelect } from '../../all';
+import { DynamicAIIcon, MultiSelect } from '../../all';
 
 export function Filter(props) {
   const { RangePicker } = DatePicker;
-  const { maxTag, className, placeholder, disabled } = props;
+  const { placeholder, disabled } = props;
   const [date, setDate] = useState([moment(), moment()]);
 
   const onClick = isNext => {
@@ -36,14 +36,15 @@ export function Filter(props) {
   const [loading, setLoading] = useState(false);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState([]);
+  const [emps, setEmps] = useState([]);
+  const [emp, setEmp] = useState([]);  
   const [classH, setClassH] = useState('rp_h_back1');
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
     onFocusSite();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    onFocusEmp();
     return () => { };
   }, []);
 
@@ -69,6 +70,21 @@ export function Filter(props) {
       setLoading(false);
     }
   }
+
+  const onFocusEmp = async () => {
+    if(!emps?.length){
+      setError && setError(null);
+      setLoading('emps');
+      const response = await dispatch(getList(user, token, 'Employee/GetEmployees'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        setEmps(response?.data);
+        setEmp(response?.data?.map(item => item.empCode));
+      }
+      setLoading(false);
+    }
+  }
+
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
   const siteProps = {
     value: site, setValue: setSite, data: sites, s_value: 'siteId', s_descr: 'name',
@@ -76,6 +92,11 @@ export function Filter(props) {
     className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
     onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('time.select_shop')
   };
+  const maxEmp = emp?.length === emps?.length ? t('time.all_emp') : (emp?.length + t('time.some_emp'));
+  const empProps = { value: emp, setValue: setEmp, data: emps, s_value: 'empCode', s_descr: 'empName', onHide,
+    Icon: () => <DynamicAIIcon name='AiOutlineUser' className='mr_cal' />, classBack: 'rp_select_back1',
+    className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
+    onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp') };
 
   return (
     <div className='search-section'>
@@ -97,6 +118,7 @@ export function Filter(props) {
       </div>
 
       <MultiSelect {...siteProps} />
+      <MultiSelect {...empProps} />
     </div>
   );
 }

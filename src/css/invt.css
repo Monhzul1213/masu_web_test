@@ -1569,9 +1569,63 @@
   margin-left: 10px;
 }
 
+.no_data {
+  margin-top: 25px;
+  background-color: white;
+  height: 230px;
+  border-radius: 10px;
+}
+
+.no_data p {
+  text-align: center;
+  color: gray;
+  font-size: 16px;
+}
+
+.no_data_icon {
+  text-align: center;
+  padding-top: 35px;
+}
+
+.figure_list {
+  margin-top: 25px;
+  background-color: white;
+  height: 250px;
+  border-radius: 5px;
+}
+
+.figure_list h3 {
+  padding: 15px;
+  font-size: 16px;
+}
+
+.figure_thead th {
+  padding: 10px; 
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  width: 800px;
+}
+
+/* Remove the right border for the last header cell */
+.figure_thead th:last-child {
+  border-right: none;
+}
+
+.figure_tbody {
+  background-color: #ffffff;
+}
+
+.figure_tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+/* Style for alternating rows (optional) */
+.figure_tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
 .page_showing{
-  color: var(--text-color2);
-  font-size: 14px;
   font-weight: 600;
   padding-left: 10px;
   padding-top: 15px;

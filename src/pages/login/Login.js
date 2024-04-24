@@ -43,6 +43,7 @@ export function Login(){
         window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
         navigate({ pathname: response?.isAdmin ? '/system/invoice' : webUser?.msMerchant?.merchantType === 0 ? '/profile' : 
         response?.viewReport ? '/report/report_buyer' : '/config'});
+        response?.viewReport ? '/report/report_receivable' : '/config'});
       }
       setLoading(false);
     } else {
