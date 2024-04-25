@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
 import { getList } from '../../../services';
-import { DynamicAIIcon, MonthRange, MultiSelect } from '../../all';
+import { DynamicAIIcon, MonthRange, MultiSelect, TimeRange } from '../../all';
 
 export function Filter(props){
   const { setError, size, onSearch, filter1 } = props;
@@ -15,6 +15,7 @@ export function Filter(props){
   const [site, setSite] = useState([]);
   const [emps, setEmps] = useState([]);
   const [emp, setEmp] = useState([]);
+  const [timeRange, setTimeRange] = useState(['00:00', '23:59']);
   const [classH, setClassH] = useState('rp_h_back1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -72,20 +73,18 @@ export function Filter(props){
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
   const maxEmp = emp?.length === emps?.length ? t('time.all_emp') : (emp?.length + t('time.some_emp'));
+  const timeProps = {classBack: 'rp_time_back', label: t('time.select_time'), value: timeRange, setValue: setTimeRange, onHide: onHide, };
   const siteProps = { value: site, setValue: setSite, data: sites, s_value: 'siteId', s_descr: 'name', onHide,
     Icon: () => <DynamicAIIcon name='AiOutlineShop' className='mr_cal' />, classBack: 'rp_select_back',
     className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
-    onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('time.select_shop') };
-  const empProps = { value: emp, setValue: setEmp, data: emps, s_value: 'empCode', s_descr: 'empName', onHide,
-    Icon: () => <DynamicAIIcon name='AiOutlineUser' className='mr_cal' />, classBack: 'rp_select_back1',
-    className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
-    onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp') };
+    onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('time.all_shop') };
+  
 
   return (
     <div className={'rp_h_back1'}>
         <MonthRange {...dateProps} />
+        <TimeRange {...timeProps}/>
         <MultiSelect {...siteProps} />
-        <MultiSelect {...empProps} />
     </div>
   );
 }

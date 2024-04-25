@@ -51,29 +51,3 @@ export function AreaChart(props){
     </div>
   )
 }
-
-export function PieChart(props){
-  const { data, style, className, tipFormatter } = props;
-
-  return (
-    <div style={style} className={className}>
-      <ResponsiveContainer width="100%" height="100%">
-        <RePieChart width={500} height={360}>
-          <Tooltip formatter={tipFormatter} />
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            outerRadius={110}
-            fill="#8884d8"
-            dataKey="totalNetSalesAmt">
-            {data.map((entry, index) => (
-              <Cell key={index} fill={entry?.color} name={entry?.invtName} />
-            ))}
-          </Pie>
-        </RePieChart>
-      </ResponsiveContainer>
-    </div>
-  );
-}

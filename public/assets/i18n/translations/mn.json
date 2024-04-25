@@ -70,6 +70,7 @@
     "/report/report_invtentory": "Борлуулалт бараагаар",
     "/report/report_category": "Борлуулалт категори",
     "/report/report_employee": "Борлуулалт ажилтнаар",
+    "/report/report_time": "Борлуулалт цагаар",
     "/report/report_payment": "Борлуулалт төлбөрийн төрлөөр",
     "/report/report_document": "Борлуулалтын дэлгэрэнгүй",
     "/report/report_edited": "Борлуулалт нэмэлт төлбөрөөр",
@@ -87,6 +88,7 @@
     "report_invtentory": "Борлуулалт бараагаар",
     "report_category": "Борлуулалт категори",
     "report_employee": "Борлуулалт ажилтнаар",
+    "report_time": " Борлуулалт цагаар",
     "report_payment": "Борлуулалт төлбөрийн төрлөөр",
     "report_document": "Борлуулалтын дэлгэрэнгүй"
   },
@@ -132,7 +134,18 @@
     "variant_error":"Сонголтын нэр давхардаж байна",
     "error": "Үйл ажиллагааны чиглэлээ сонгоно уу!",
     "error1": "Үйл ажиллагааны чиглэлээ хадгална уу!",
-    "ok" : "OK"
+    "ok" : "OK",
+    "sales": "Борлуулалт",
+    "branch": "Салбар",
+    "time": "Цаг",
+    "sales_num": "Борлуулалтын тоо",
+    "sales_amount": "Борлуулалтын дүн",
+    "return_num": "Буцаалтын тоо",
+    "return_amount": "Буцаалтын дүн",
+    "sales_net": "Цэвэр борлуулалт",
+    "return": "Буцаалт",
+    "discount": "Хөнгөлөлт",
+    "profit": "Ашиг"
   },
   "config": {
     "config": "Тохиргоо",
@@ -172,6 +185,7 @@
     "all_status": "Бүх төлөв",
     "some_status": " төлөв",
     "select_date": "Огноо сонгох",
+    "select_time": "Бүх өдөр ",
     "edit": "Тохиргоо засах",
     "date1": "Огноо: Эхлэх",
     "date2": "Дуусах",
@@ -188,5 +202,18 @@
     "t_total": "Нийт цаг",
     "time": "Өдөрт ажиллах цаг"
   },
+  "report_receipt": {
+    "all_day": "Бүх өдөр",
+    "custom_day": "Цагийн хооронд"
+  },
+  "report_review":{
+    "totalSalesAmt": "Борлуулалт",
+    "totalReturnAmt": "Буцаалт",
+    "totalDiscAmt": "Хөнгөлөлт",
+    "totalNetSalesAmt": "Цэвэр борлуулалт",
+    "totalProfitAmt": "Ашиг"
+
+  },
+
   "version": "13"
 }
