@@ -730,6 +730,12 @@
   flex-flow: row;
   margin-left: 5px;
 }
+.ih_btn_row_z{
+  display: flex;
+  flex-flow: row;
+  margin-right: 5px;
+  margin-top: 15px;
+}
 
 #ih_large .ih_btn {
   box-shadow: none;
@@ -1539,4 +1545,12 @@
 #sp_check_btn {
   margin-top: 25px;
   margin-left: 10px;
+}
+
+.page_showing{
+  color: var(--text-color2);
+  font-size: 14px;
+  font-weight: 600;
+  padding-left: 10px;
+  padding-top: 15px;
 }
