@@ -1547,3 +1547,11 @@
   margin-top: 25px;
   margin-left: 10px;
 }
+
+.page_showing{
+  color:var(--text-color2);
+  font-size: 14px;
+  font-weight:600;
+  padding-left:10px;
+  padding-top:15px;
+}
