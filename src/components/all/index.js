@@ -12,5 +12,4 @@ export * from './Select';
 export * from './Date';
 export * from './Chart';
 export * from './Money';
-export * from './Empty';
 export * from './Pagination';

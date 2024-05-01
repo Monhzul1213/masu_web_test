@@ -61,7 +61,7 @@ export function Menu(props){
     getItem(t('menu.partner'), '/partner', <RiTeamLine />),
   ] : [
     getItem(t('menu.report'), '/report', <BsClipboardData />, [
-      getItem(t('menu.report'), '/report/report_sales', null, null, null, msRole?.webViewSalesReport !== 'Y')
+      getItem(t('menu.report_buyer'), '/report/report_buyer', null, null, null, msRole?.webViewSalesReport !== 'Y')
     ])
   ];
 

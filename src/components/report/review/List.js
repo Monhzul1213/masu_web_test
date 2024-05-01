@@ -1,76 +1,79 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
-import moment from 'moment';
-
-import '../../../css/report.css';
-import { PaginationTable, TableResize, IconSelect, DynamicMDIcon, Money } from '../../all';
-import { ExportExcel } from '../../../helpers';
+import { useBlockLayout, usePagination, useResizeColumns, useSortBy, useTable } from 'react-table';
+import { FooterTable, TableRowResize } from '../../all';
+import { PaginationTable } from '../../all';
+import { ExportExcel, formatNumber } from '../../../helpers';
 
 export function List(props){
-  const { data, period, excelName } = props;
-  const { t, i18n } = useTranslation();
-  const [columns, setColumns] = useState([]);
-  const [columns1, setColumns1] = useState([]);
+   
+    const { t } = useTranslation();
+    const { data } = props;
+    const [columns, setColumns] = useState([]);
+    
+    useEffect(() => { 
+        // console.log(data)
+        setColumns([
+        { Header: t('profile.customer'), 
+            accessor: 'consumerName', exLabel: t('profile.customer'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'left', paddingRight: 15}}>{String(props?.value)}</div>, 
+            Footer: <div style={{textAlign: 'left'}}>{t('profile.sum')}</div>},
+        { Header: t('profile.sale_sum'), 
+            accessor: 'salesAmount', exLabel: t('profile.sale_sum'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,  
+            Footer: info => { const total = React.useMemo(() =>
+                info.rows.reduce((sum, row) => row.values.salesAmount + sum, 0), [info.rows]  )
+                return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>} },  
+        { Header: t('profile.return_sum'), 
+            accessor: 'returnAmount', exLabel: t('profile.return_sum'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
+            Footer: info => { const total = React.useMemo(() =>
+                info.rows.reduce((sum, row) => row.values.returnAmount + sum, 0), [info.rows]  )
+                return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>} },
+        { Header: t('profile.purchase_number'), 
+            accessor: 'column4', exLabel: t('profile.purchase_number'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>, },
+        { Header: t('profile.discount_amount'), 
+            accessor: 'discountAmount', exLabel: t('profile.discount_amount'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
+            Footer: info => { const total = React.useMemo(() =>
+                info.rows.reduce((sum, row) => row.values.discountAmount + sum, 0), [info.rows]  );
+                return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>} },
+        { Header: t('profile.vaucher_amount'), 
+            accessor: 'column6', exLabel: t('profile.vaucher_amount'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,},
+        { Header: t('profile.cupon_amount'), 
+            accessor: 'couponAmount ', exLabel: t('profile.cupon_amount'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>, },
+        { Header: t('profile.bonus_amount'), 
+            accessor: 'salesCount', exLabel: t('profile.bonus_amount'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>, },
+        { Header: t('profile.sale_profits'), 
+            accessor: 'rewardAmount', exLabel: t('profile.sale_profits'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>, 
+            Footer: info => { const total = React.useMemo(() =>
+                info.rows.reduce((sum, row) => row.values.rewardAmount + sum, 0), [info.rows]  )
+                return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>} },
+        { Header: t('profile.discount_percentage'), 
+            accessor: 'returnCount', exLabel: t('profile.discount_percentage'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>, },
+        ]);
+        return () => {};
+    }, []);
 
-  useEffect(() => {
-    changeColumns(['totalSalesAmt', 'totalReturnAmt', 'totalDiscAmt', 'totalNetSalesAmt', 'totalCashAmount',
-      'totalNonCashAmount', 'costOfGoods', 'totalProfitAmt'], period);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language, period]);
+    const tableInstance = useTable({ columns, data, 
+        autoResetPage: false,
+        autoResetSortBy: false,
+        initialState: { pageIndex:0, pageSize: 25, sortBy: [{ id:'consumerName', desc: true }] }},
+        useSortBy, usePagination);
 
-  const changeColumns = (value, perd) => {
-    let isHour = perd === 'H';
-    let columns = [
-      {
-        Header: t(isHour ? 'page.time' : 'page.date'), accessor: 'salesDate',
-        width: 100, minWidth: 75, maxWidth: 100,
-        exLabel: t(isHour ? 'page.time' : 'page.date'),
-        Cell: ({ value }) => {
-          return isHour ? (<span>{value}</span>) : (<span>{moment(value)?.format('yyyy.MM.DD')}</span>)
-        }
-      },
-      { Header: t('order.site'), accessor: 'siteName', exLabel: t('order.site'), width: 135, minWidth: 90 }
-    ];
-    setColumns1(value);
-    t('report_review.columns')?.forEach(item => {
-      let exists = value?.findIndex(val => val === item?.value) !== -1;
-      if(exists){
-        columns.push({
-          Header: <div style={{textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
-          width: 150, minWidth: 90,
-          exLabel: item?.label,
-          Cell: props => (
-            <div style={{textAlign: 'right', paddingRight: 15}}>
-              {item?.value === 'margin' ? (+(props?.value)?.toFixed(2) + '%') : <Money value={props?.value} fontSize={14} />}
-            </div>)
-        });
-      }
-    });
-    setColumns(columns);
-  }
+    const tableProps = { tableInstance };
+    const exportExcelProps = { excelData: data, columns, fileName: 'exported_data', text: t('page.export') };
 
-  const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)';
-  const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useBlockLayout, useResizeColumns);
-  const tableProps = { tableInstance };
-  const columnProps = { value: columns1, setValue: changeColumns, data: t('report_review.columns'), className: 'rp_list_drop',
-    Icon: () => <DynamicMDIcon name='MdOutlineViewColumn' className='rp_list_drop_icon' />,
-    dropdownStyle: { minWidth: 200 }, dropdownAlign: { offset: [-165, 5] } };
+    return (
 
-  return (
-    <div>
-      <div className='rp_list_filter'>
-        <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
-        <IconSelect {...columnProps} />
-      </div>
-      <div style={{overflowX: 'scroll'}}>
-        <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <TableResize {...tableProps} />
+        <div className={'rp_list'}>
+            <div>
+                <div className={'ih_btn_row_z'}>
+                    <ExportExcel {...exportExcelProps} />
+                </div>
+                <div style={{overflowX:'scroll'}}>
+                    <div className='table_scroll' id='paging' style={{marginTop:10, overflowX:'scroll',minWidth:720,maxHeight:500 }}>
+                        <FooterTable {...tableProps}/>
+                    </div>
+                </div>
+                    <PaginationTable {...tableProps}/>
+            </div>
         </div>
-      </div>
-      <PaginationTable {...tableProps} />
-    </div>
-  );
+    );
 }

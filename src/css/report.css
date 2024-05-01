@@ -833,37 +833,3 @@
   font-size: 15px;
   margin-right: 3px;
 }
-.rep_select_back {
-  background-color: var(--root-color);
-  height: 36px;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 5px rgba(0,0,0,.15);
-  display: flex;
-  align-items: center;
-  margin-right: 15px;
-  width: 150px;
-}
-
-.rep_select_back1 {
-  background-color: var(--root-color);
-  height: 36px;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 5px rgba(0,0,0,.15);
-  display: flex;
-  align-items: center;
-  width: 150px;
-}
-.rep_select_back2 {
-  background-color: var(--root-color);
-  height: 36px;
-  border-radius: var(--radius);
-  box-shadow: 0 2px 5px rgba(0,0,0,.15);
-  display: flex;
-  align-items: center;
-  margin-left: 10px;
-  width: 150px;
-}
-
-.rep_select_back2 .ant-select-selection-placeholder{
-  color: var(--text-color);
-}

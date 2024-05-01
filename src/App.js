@@ -64,9 +64,9 @@ export function App(){
             <Layout>
               <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='*' element={<Home />} />
+                <Route path='*' element={<Review />} />
                 <Route path='/confirm' element={<Confirm />} />
-                <Route path='/report/report_sales' element={<Review />} />
+                <Route path='/report/report_buyer' element={<Review />} />
               </Routes>
             </Layout>
           </Layout>
