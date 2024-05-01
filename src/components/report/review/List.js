@@ -12,7 +12,6 @@ export function List(props){
     const [columns, setColumns] = useState([]);
     
     useEffect(() => { 
-        // console.log(data)
         setColumns([
         { Header: <div style={{textAlign: 'left'}}>{t('profile.customer')}</div>, 
             accessor: 'consumerName', exLabel: t('profile.customer'), width: 140, minWidth: 110, Cell: props => <div style={{textAlign: 'left', paddingRight: 15}}>{String(props?.value)}</div>, 
