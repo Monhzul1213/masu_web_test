@@ -15,13 +15,15 @@ import { useDispatch } from 'react-redux';
 
 function Screen(props){
 
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { user, token } = useSelector(state => state.login);
   const [ error, setError] = useState(null);
   const { t } = useTranslation();
   const [data, setData] = useState([]);
-  
+  const [total, setTotal] = useState();
+  const [tab, setTab] = useState('salesAmount');
+
   useEffect(() => {
     let query = '?BeginDate=' + moment()?.format('yyyy.MM.DD') + '&EndDate=' +moment()?.format('yyyy.MM.DD');
     getData(query);
@@ -33,19 +35,28 @@ function Screen(props){
       let api = 'Sales/GetSalesByTime' + (query ?? '') + (query1 ?? '');
       // let headers = { merchantid: user?.merchantId };
       const response = await dispatch(getList(user, token, api));
-      console.log( api, response);
+      // console.log( api, response);
       // if(response?.error) setError(response?.error);
       // else {
       //   console.log(data);
-      //   setData(response?.data);
+         setData(response?.data);
+         let sales = 0, refund = 0, avgSales = 0;
+         response?.data?.map(item=> {
+          sales+= item?.salesAmount ?? 0;
+          refund+= item?.returnAmount ?? 0;
+         })
+
+         setTotal({sales, refund})
+
       // }
       setLoading(false);
     };
 
+    const graphProps = {data, total, tab, setTab}
     return (
       <div className='s_container_r'>
           <Filter onSearch = {getData} />
-          <Charts />
+          <Charts  {...graphProps}/>
           {data?.length ? <List data={data}/> :
               <div className={'empty_back1'}>
                   <div className={'empty_icon_back'}>

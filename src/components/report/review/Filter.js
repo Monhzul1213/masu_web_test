@@ -13,8 +13,7 @@ export function Filter(props){
   const [date, setDate] = useState([moment(), moment()]);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState([]);
-  const [emps, setEmps] = useState([]);
-  const [emp, setEmp] = useState([]);
+  const [time, TimeSelect] = useState([]);
   const [timeRange, setTimeRange] = useState(['00:00', '23:59']);
   const [classH, setClassH] = useState('rp_h_back1');
   const { user, token }  = useSelector(state => state.login);
@@ -22,9 +21,8 @@ export function Filter(props){
 
   useEffect(() => {
     onFocusSite();
-    onFocusEmp();
     return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []);
 
   useEffect(() => {
@@ -32,15 +30,17 @@ export function Filter(props){
     else if(size?.width < 920 && size?.width >= 520) setClassH('rp_h_back2');
     else setClassH('rp_h_back3');
     return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
   const onHide = () => {
-    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
-    if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
-    if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
-    onSearch && onSearch(query, filter1, date);
-  }
+    let dateQuery = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    if(site?.length !== sites?.length) site?.forEach(item => dateQuery += '&SiteID=' + item);
+    onSearch && onSearch(dateQuery, filter1, date);
+    let timeQuery = '?BeginTime=' +time[0]?.format('00:00') + '&EndTime=' + time[1]?.format('23:00');
+    if(site?.length !== sites?.length) site?.forEach(item => timeQuery += '&salesTime' + item);
+    onSearch && onSearch (timeQuery,filter1, time);
+}
+
 
   const onFocusSite = async () => {
     if(!sites?.length){
@@ -56,23 +56,8 @@ export function Filter(props){
     }
   }
 
-  const onFocusEmp = async () => {
-    if(!emps?.length){
-      setError && setError(null);
-      setLoading('emps');
-      const response = await dispatch(getList(user, token, 'Employee/GetEmployees'));
-      if(response?.error) setError && setError(response?.error);
-      else {
-        setEmps(response?.data);
-        setEmp(response?.data?.map(item => item.empCode));
-      }
-      setLoading(false);
-    }
-  }
-
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
-  const maxEmp = emp?.length === emps?.length ? t('time.all_emp') : (emp?.length + t('time.some_emp'));
   const timeProps = {classBack: 'rp_time_back', label: t('time.select_time'), value: timeRange, setValue: setTimeRange, onHide: onHide, };
   const siteProps = { value: site, setValue: setSite, data: sites, s_value: 'siteId', s_descr: 'name', onHide,
     Icon: () => <DynamicAIIcon name='AiOutlineShop' className='mr_cal' />, classBack: 'rp_select_back',

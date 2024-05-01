@@ -135,17 +135,18 @@
     "error": "Үйл ажиллагааны чиглэлээ сонгоно уу!",
     "error1": "Үйл ажиллагааны чиглэлээ хадгална уу!",
     "ok" : "OK",
-    "sales": "Борлуулалт",
+    "totalSalesAmt": "Борлуулалт",
     "branch": "Салбар",
-    "time": "Цаг",
+    "salesTime": "Цаг",
     "sales_num": "Борлуулалтын тоо",
     "sales_amount": "Борлуулалтын дүн",
     "return_num": "Буцаалтын тоо",
     "return_amount": "Буцаалтын дүн",
-    "sales_net": "Цэвэр борлуулалт",
-    "return": "Буцаалт",
-    "discount": "Хөнгөлөлт",
-    "profit": "Ашиг"
+    "totalNetSalesAmt": "Цэвэр борлуулалт",
+    "totalReturnAmt": "Буцаалт",
+    "totalDiscAmt": "Хөнгөлөлт",
+    "totalProfitAmt": "Ашиг",
+    "sum": "Нийт"
   },
   "config": {
     "config": "Тохиргоо",
@@ -206,14 +207,36 @@
     "all_day": "Бүх өдөр",
     "custom_day": "Цагийн хооронд"
   },
-  "report_review":{
+  "report_review": {
     "totalSalesAmt": "Борлуулалт",
     "totalReturnAmt": "Буцаалт",
     "totalDiscAmt": "Хөнгөлөлт",
     "totalNetSalesAmt": "Цэвэр борлуулалт",
-    "totalProfitAmt": "Ашиг"
-
+    "totalProfitAmt": "Ашиг",
+    "thousand": "(мянгаар)",
+    "periods": [
+      { "value": "H", "label": "Цагаар" },
+      { "value": "D", "label": "Өдрөөр" },
+      { "value": "W", "label": "7 хоногоор" },
+      { "value": "M", "label": "Сараар" }
+    ],
+    "columns": [
+      { "label": "Борлуулалт", "value": "totalSalesAmt" },
+      { "label": "Буцаалт", "value": "totalReturnAmt" },
+      { "label": "Хөнгөлөлт", "value": "totalDiscAmt" },
+      { "label": "Цэвэр борлуулалт", "value": "totalNetSalesAmt" },
+      { "label": "Бэлэн", "value": "totalCashAmount" },
+      { "label": "Бэлэн бус", "value": "totalNonCashAmount" },
+      { "label": "Барааны өртөг", "value": "costOfGoods" },
+      { "label": "Нийт ашиг", "value": "totalProfitAmt" },
+      { "label": "Ашиг", "value": "margin" },
+      { "label": "Татвар", "value": "taxes" }
+    ]
   },
 
+  "report_time": {
+    "salesAmount": "Борлуулалт",
+    "returnAmount": "Буцаалт"
+  },
   "version": "13"
 }

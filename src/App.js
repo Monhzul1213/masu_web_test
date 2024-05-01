@@ -64,7 +64,7 @@ export function App(){
             <Layout>
               <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='*' element={<Home />} />
+                <Route path='*' element={<Review />} />
                 <Route path='/confirm' element={<Confirm />} />
                 <Route path='/report/report_time' element={<Review />} />
               </Routes>

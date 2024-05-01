@@ -731,6 +731,13 @@
   margin-left: 5px;
 }
 
+.ih_btn_row_z{
+  display: flex;
+  flex_flow: row;
+  margin-left: 5px;
+  
+}
+
 #ih_large .ih_btn {
   box-shadow: none;
   border: none;
