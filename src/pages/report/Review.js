@@ -30,7 +30,6 @@ function Screen(props) {
     let api = 'Sales/GetSalesByConsumer' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    console.log(response?.data);
     if (response?.error) setError(response?.error);
     else {
       setData(response?.data?.sales);
