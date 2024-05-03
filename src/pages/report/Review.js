@@ -33,12 +33,7 @@ function Screen(props){
       setError(null);
       setLoading(true);
       let api = 'Sales/GetSalesByTime' + (query ?? '') + (query1 ?? '');
-      // let headers = { merchantid: user?.merchantId };
       const response = await dispatch(getList(user, token, api));
-      // console.log( api, response);
-      // if(response?.error) setError(response?.error);
-      // else {
-      //   console.log(data);
          setData(response?.data);
          let sales = 0, refund = 0, avgSales = 0;
          response?.data?.map(item=> {

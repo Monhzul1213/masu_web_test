@@ -13,7 +13,7 @@ export function Filter(props){
   const [date, setDate] = useState([moment(), moment()]);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState([]);
-  const [time, TimeSelect] = useState([]);
+  const [time, setTime] = useState(null);
   const [timeRange, setTimeRange] = useState(['00:00', '23:59']);
   const [classH, setClassH] = useState('rp_h_back1');
   const { user, token }  = useSelector(state => state.login);
@@ -33,13 +33,12 @@ export function Filter(props){
   }, [size?.width]);
 
   const onHide = () => {
-    let dateQuery = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
-    if(site?.length !== sites?.length) site?.forEach(item => dateQuery += '&SiteID=' + item);
-    onSearch && onSearch(dateQuery, filter1, date);
-    let timeQuery = '?BeginTime=' +time[0]?.format('00:00') + '&EndTime=' + time[1]?.format('23:00');
-    if(site?.length !== sites?.length) site?.forEach(item => timeQuery += '&salesTime' + item);
-    onSearch && onSearch (timeQuery,filter1, time);
-}
+    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    if(time) query += '&BeginTime=' + time[0] + '&EndTime=' + time[1]
+    if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
+    console.log(query)
+    onSearch && onSearch(query, filter1, date);
+  }
 
 
   const onFocusSite = async () => {
@@ -58,7 +57,7 @@ export function Filter(props){
 
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
-  const timeProps = {classBack: 'rp_time_back', label: t('time.select_time'), value: timeRange, setValue: setTimeRange, onHide: onHide, };
+  const timeProps = { value: time, setValue: setTime, onHide, classBack: 'rp_time_back', label: t('report_receipt.all_day') };
   const siteProps = { value: site, setValue: setSite, data: sites, s_value: 'siteId', s_descr: 'name', onHide,
     Icon: () => <DynamicAIIcon name='AiOutlineShop' className='mr_cal' />, classBack: 'rp_select_back',
     className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },

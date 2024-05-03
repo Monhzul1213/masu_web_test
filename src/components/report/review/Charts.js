@@ -8,7 +8,7 @@ import { formatNumber, graphList } from '../../../helpers';
 import { AreaChart, Empty1, Money } from '../../all';
 
 export default function Charts(props){
-  const { tab, setTab, total, size, period, data } = props;
+  const { tab, setTab, total, size, period,setPeriod,periodData, data } = props;
   const { t } = useTranslation();
   const [isBar, setIsBar] = useState(true);
   const user = useSelector(state => state.login?.user);
@@ -27,9 +27,9 @@ export default function Charts(props){
   }
 
   const xFormatter = value => {
-    // console.log(data, '------------')
     return value + ':00';
   }
+
 
   const tickFormatter = tick => {
     // console.log(tick, 'tick')
@@ -39,9 +39,10 @@ export default function Charts(props){
 
   let id = size?.width >= 400 ? 'rr_large' : 'rr_small';
   let width = size?.width >= 1290 ? 1260 : (size?.width - 30);
+  let periodProps = { value: period, setValue: setPeriod, data: periodData, className: 'rr_graph_select', bStyle: { marginLeft: 15 } };
   let style = { width, height: 360, display: 'flex', alignItems: 'center', justifyContent: 'center' };
   let chartProps = { style, data, dataKey: 'salesTime',
-    bars: [{color: '#4BAF4F', fill: '#4BAF4F55', key: tab}], hasLegend: false,
+    bars: [{color: '#8884d8', fill: '#8884d8',  key: tab}], hasLegend: false,
     tickFormatter, xFormatter,
     legendFormatter: () => t('report_review.' + tab),
     tipFormatter: (value, name, props) => [formatNumber(value) + currency, t('report_time.' + tab)] };
