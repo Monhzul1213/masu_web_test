@@ -7,7 +7,6 @@ import { Filter } from '../../components/report/review/Filter';
 import Charts from '../../components/report/review/Charts'; 
 import { List } from '../../components/report/review/List';
 import { FiColumns } from "react-icons/fi";
-import { use } from 'i18next';
 import {getList} from '../../services'
 import moment from 'moment'; 
 import { useSelector } from 'react-redux';
@@ -29,9 +28,9 @@ function Screen(props){
     getData(query);
   }, []);
     
-    const getData = async (query, query1, dates) => {
-      setError(null);
-      setLoading(true);
+  const getData = async (query, query1, dates) => {
+    setError(null);
+    setLoading(true);
       let api = 'Sales/GetSalesByTime' + (query ?? '') + (query1 ?? '');
       const response = await dispatch(getList(user, token, api));
          setData(response?.data);
@@ -40,29 +39,26 @@ function Screen(props){
           sales+= item?.salesAmount ?? 0;
           refund+= item?.returnAmount ?? 0;
          })
+    setTotal({sales, refund})
+    setLoading(false);
+  };
 
-         setTotal({sales, refund})
-
-      // }
-      setLoading(false);
-    };
-
-    const graphProps = {data, total, tab, setTab}
+  const graphProps = {data, total, tab, setTab}
     return (
-      <div className='s_container_r'>
-          <Filter onSearch = {getData} />
-          <Charts  {...graphProps}/>
-          {data?.length ? <List data={data}/> :
-              <div className={'empty_back1'}>
-                  <div className={'empty_icon_back'}>
-                      <FiColumns className='empty_icon'/>
-                  </div>
-                  <p className={'empty_descr'}>
-                      {t('page.no_filter')}
-                  </p>
-              </div>
-          }
-      </div>
+    <div className='s_container_r'>
+      <Filter onSearch = {getData} />
+      <Charts  {...graphProps}/>
+      {data?.length ? <List data={data}/> :
+        <div className={'empty_back1'}>
+          <div className={'empty_icon_back'}>
+              <FiColumns className='empty_icon'/>
+          </div>
+          <p className={'empty_descr'}>
+          {t('page.no_filter')}
+          </p>
+        </div>
+      }
+    </div>
   );
 }
 
