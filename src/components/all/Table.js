@@ -257,7 +257,6 @@ export function TableRowResize(props){
 
 export function FooterTable(props){
   const { tableInstance, onRowClick } = props;
-
   const { getTableProps, getTableBodyProps, headerGroups, footerGroups,  prepareRow, page } = tableInstance;
 
   return (

@@ -16,7 +16,6 @@ export function PlainRange(props){
     if(!show) onHide();
   }
 
-
   return (
     <div className={classBack}>
       {label && <p className='ih_select_lbl'>{label}</p>}
@@ -33,8 +32,6 @@ export function PlainRange(props){
     </div>
   );
 }
-
-
 
 export function Date(props){
   const { inRow, value, setValue, label, setError, className, disabled, disabledDate, setEdited, allowClear, placeholder } = props;

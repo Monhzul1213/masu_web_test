@@ -151,7 +151,7 @@ export function PaginationTable(props){
             <FiChevronRight className='pg_icon'/>
             </button>
             <div style={{padding: 5}}/>
-                <p className='page_showing'>{pageCount} - {pageCount} of {pageCount}</p>
+                <p className='page_showing'>{pageCount}-{pageCount} of {pageCount} </p>
             <div className='pg_select_back'> 
                 <Select className='pg_select'
                     value={pageSize}

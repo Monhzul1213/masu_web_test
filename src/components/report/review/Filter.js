@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
 import { getList } from '../../../services';
-import { DynamicAIIcon, MonthRange, MultiSelect } from '../../all';
+import { DynamicAIIcon, MonthRange, MultiSelect, TimeRange } from '../../all';
 
 export function Filter(props){
   const { setError, size, onSearch, filter1 } = props;
@@ -13,6 +13,8 @@ export function Filter(props){
   const [date, setDate] = useState([moment(), moment()]);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState([]);
+  const [time, setTime] = useState(null);
+  const [timeRange, setTimeRange] = useState(['00:00', '23:59']);
   const [classH, setClassH] = useState('rp_h_back1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -20,7 +22,7 @@ export function Filter(props){
   useEffect(() => {
     onFocusSite();
     return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []);
 
   useEffect(() => {
@@ -28,15 +30,16 @@ export function Filter(props){
     else if(size?.width < 920 && size?.width >= 520) setClassH('rp_h_back2');
     else setClassH('rp_h_back3');
     return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
   const onHide = () => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    if(time) query += '&BeginTime=' + time[0] + '&EndTime=' + time[1]
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
     console.log(query)
     onSearch && onSearch(query, filter1, date);
   }
+
 
   const onFocusSite = async () => {
     if(!sites?.length){
@@ -54,14 +57,17 @@ export function Filter(props){
 
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
+  const timeProps = { value: time, setValue: setTime, onHide, classBack: 'rp_time_back', label: t('report_receipt.all_day') };
   const siteProps = { value: site, setValue: setSite, data: sites, s_value: 'siteId', s_descr: 'name', onHide,
     Icon: () => <DynamicAIIcon name='AiOutlineShop' className='mr_cal' />, classBack: 'rp_select_back',
     className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
-    onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('time.select_shop') };
+    onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('time.all_shop') };
+  
 
   return (
     <div className={'rp_h_back1'}>
         <MonthRange {...dateProps} />
+        <TimeRange {...timeProps}/>
         <MultiSelect {...siteProps} />
     </div>
   );

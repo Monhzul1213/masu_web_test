@@ -130,14 +130,13 @@ tfoot > tr > th {
   padding-right: 10px;
 }
 
-.table_footer_text{
-  background-color: var(--root-color);
+.table_footer_text {
   border-top: 1px solid var(--text4-color);
   color: var(--text-color);
+  padding: 10px 0;
   font-size: 15px;
   font-weight: 600;
-  padding: 10px;
-  text-align: left;
+  background-color: var(--root-color);
 }
 
 .table_footer_text_o {

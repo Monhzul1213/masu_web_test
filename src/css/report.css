@@ -833,3 +833,10 @@
   font-size: 15px;
   margin-right: 3px;
 }
+
+.rr_card_back1 {
+  display: flex;
+  flex-flow: column;
+  border-top: solid 1px var(--input1-color);
+  overflow: scroll;
+}
