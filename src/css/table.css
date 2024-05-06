@@ -214,10 +214,12 @@ tfoot > tr > th {
 
 .ed_select.ant-select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
 }
 
 .ed_select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
 }
 
 .ed_select .ant-select-selection-search {

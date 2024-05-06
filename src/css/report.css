@@ -131,7 +131,7 @@
   padding-bottom: 6px;
 }
 
-.rp_list_select {
+.rp_list_selectE {
   border: none;
   box-shadow: none;
   background-color: transparent;
@@ -142,15 +142,16 @@
   font-size: 14px;
   font-weight: 500;
   border-radius: var(--radius);
-  padding: 3px 5px;
+  padding: 10px;
+  padding-top: 20px;
 }
 
-.rp_list_select:hover {
+.rp_list_selectE:hover {
   cursor: pointer;
   background-color: var(--back-color);
 }
 
-.rp_list_select:disabled {
+.rp_list_selectE:disabled {
   cursor: not-allowed;
   background-color: transparent;
 }
@@ -596,6 +597,7 @@
 
 .rr_graph_select .ant-select-selector {
   box-shadow: none !important;
+  border: none;
 }
 
 .rr_graph_select .ant-select-arrow {
@@ -833,3 +835,19 @@
   font-size: 15px;
   margin-right: 3px;
 }
+
+.search-section
+{
+  display: flex;
+  flex: row;
+}
+
+.rp_select.ant-select .ant-select-selector {
+  border: none;
+}
+
+.calendar {
+  padding: 24px 11px 4px;
+}
+
+

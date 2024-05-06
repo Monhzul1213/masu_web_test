@@ -312,6 +312,7 @@ input:-webkit-autofill:active{
   box-shadow: none !important;
 }
 
+
 .addr_select .ant-select-selection-search {
   left: 0 !important;
   right: 0 !important;
