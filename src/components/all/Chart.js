@@ -1,6 +1,7 @@
 import React from 'react';
 import { BarChart as ReBarChart, AreaChart as ReAreaChart, Bar, Area, ResponsiveContainer, XAxis, YAxis,
   CartesianGrid, Tooltip, Legend, PieChart as RePieChart, Pie, Cell } from 'recharts';
+import { timeList } from '../../helpers';
 
 export function BarChart(props){
   const { style, className, data, dataKey, tickFormatter, bars, tipFormatter, legendFormatter, hasLegend, xFormatter } = props;
@@ -27,9 +28,22 @@ export function BarChart(props){
   )
 }
 
-export function AreaChart(props){
+const xFormatter = (value, period) => {
+  if (period === 'H') {
+      // Assuming value is in the format 'HH:mm'
+      const [hours, minutes] = value.split(':');
+      return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+  } else {
+      return value; // Return the value unchanged for other periods
+  }
+}
+
+export function AreaChart(props) {
   const { style, className, data, dataKey, tickFormatter, bars, tipFormatter, legendFormatter, hasLegend, xFormatter } = props;
-  
+
+  console.log("xFormatter function:", xFormatter); 
+  console.log("Data Key:", dataKey); 
+
   return (
     <div style={style} className={className}>
       <ResponsiveContainer width="100%" height="100%">
@@ -37,18 +51,18 @@ export function AreaChart(props){
           width={500}
           height={360}
           data={data}
-          margin={{ top: 5, right: 15, left: 18, bottom: 5}}>
+          margin={{ top: 5, right: 15, left: 18, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey={dataKey} tickFormatter={xFormatter} />
           <YAxis tickFormatter={tickFormatter} />
-          <Tooltip cursor={{fill: 'transparent'}} formatter={tipFormatter} labelFormatter={xFormatter} />
+          <Tooltip cursor={{ fill: 'transparent' }} formatter={tipFormatter} labelFormatter={xFormatter} />
           {hasLegend && <Legend formatter={legendFormatter} />}
           {bars?.map(item => {
-              console.log(item)
-            return (<Area key={item?.key} dataKey={item?.key} fill={item?.fill} stroke={item?.color} dot={{ fill: item?.color, strokeWidth: 1 }} />);
+          console.log(item);
+          return (<Area key={item?.key} dataKey={item?.key} fill={item?.fill} stroke={item?.color} dot={{ fill: item?.color, strokeWidth: 1 }} />);
           })}
         </ReAreaChart>
       </ResponsiveContainer>
     </div>
-  )
+  );
 }
