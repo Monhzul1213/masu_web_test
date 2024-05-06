@@ -123,7 +123,13 @@
     "month": " сар",
     "prev": "Буцах",
     "next": "Дараах",
-    "done": "Дуусах"
+    "done": "Дуусах",
+    "amount_beg": "Эхний үлдэгдэл",
+    "amount_receive_crea": "Авлага үүсгэсэн дүн",
+    "amount_receive_clos": "Авлага хаасан дүн",
+    "amount_final": "Эцсийн үлдэгдэл"
+
+
   },
   "profile": {
     "account": "Хэрэглэгч",
@@ -170,6 +176,8 @@
     "add": "Тохиргоо нэмэх",
     "select_shop": "Салбар сонгох",
     "all_shop": "Бүх салбар",
+    "all_cust": "Бүх харилцагч",
+    "some_cust": "Харилцагч",
     "some_shop": " салбар",
     "all": "Бүгдийг сонгох",
     "select_emp": "Ажилтан сонгох",
@@ -202,6 +210,13 @@
     "t_site": "Салбар",
     "t_total": "Нийт цаг",
     "time": "Өдөрт ажиллах цаг"
+  },
+  "receive": {
+    "amount_beg": "Эхний үлдэгдэл",
+    "amount_receive_crea": "Авлага үүсгэсэн дүн",
+    "amount_receive_clos": "Авлага хаасан дүн",
+    "amount_final": "Эцсийн үлдэгдэл",
+    "acc_receive_report": "Авлагын үлдэгдэл тайлан"
   },
   "version": "13"
 }

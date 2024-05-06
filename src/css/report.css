@@ -131,7 +131,7 @@
   padding-bottom: 6px;
 }
 
-.rp_list_select {
+.rp_list_selectE {
   border: none;
   box-shadow: none;
   background-color: transparent;
@@ -143,15 +143,15 @@
   font-weight: 500;
   border-radius: var(--radius);
   padding: 10px;
-  padding-top: 15px;
+  padding-top: 20px;
 }
 
-.rp_list_select:hover {
+.rp_list_selectE:hover {
   cursor: pointer;
   background-color: var(--back-color);
 }
 
-.rp_list_select:disabled {
+.rp_list_selectE:disabled {
   cursor: not-allowed;
   background-color: transparent;
 }
@@ -850,7 +850,4 @@
   padding: 24px 11px 4px;
 }
 
-.rp_date_back {
-  border: none;
-}
 

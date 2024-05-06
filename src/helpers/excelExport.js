@@ -24,7 +24,7 @@ export const ExportExcel = ({ excelData, columns, fileName, text }) => {
     FileSaver.saveAs(data, fileName + fileExtension);
   }
 
-  return (<Button className='rp_list_select' text={text} onClick={exportToExcel} />);
+  return (<Button className='rp_list_selectE' text={text} onClick={exportToExcel} />);
 }
 
 export const ExportExcel2 = ({ excelData, columns, fileName, text }) => {
@@ -49,7 +49,7 @@ export const ExportExcel2 = ({ excelData, columns, fileName, text }) => {
     FileSaver.saveAs(data, fileName + fileExtension);
   }
 
-  return (<Button className='rp_list_select' text={text} onClick={exportToExcel} />);
+  return (<Button className='rp_list_selectE' text={text} onClick={exportToExcel} />);
 }
 
 export const ExportExcel3 = ({ excelData, columns, fileName, text }) => {
@@ -100,5 +100,5 @@ export const InventoryExcel = ({ excelData, columns, fileName, text, width }) =>
     FileSaver.saveAs(data, fileName + fileExtension);
   }
 
-  return (<Button className='rp_list_select' text={text} onClick={exportToExcel} />);
+  return (<Button className='rp_list_selectE' text={text} onClick={exportToExcel} />);
 }
