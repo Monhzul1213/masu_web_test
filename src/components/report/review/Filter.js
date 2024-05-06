@@ -19,6 +19,7 @@ export function Filter(props) {
     const add = (diff + 1) * (isNext ? 1 : -1);
     const begin = moment(date[0]?.add(add, 'days'));
     const end = moment(date[1]?.add(add, 'days'));
+    
     setDate([begin, end]);
     onHide();
   };
