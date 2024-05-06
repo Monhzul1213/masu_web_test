@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { usePagination, useSortBy, useTable } from 'react-table';
 import { Table } from '../../all';
-import { PaginationList, PaginationTable } from '../../all/PaginationTable';
-import {Empty} from 'antd';
+import { PaginationTable } from '../../all/PaginationTable';
+import { ExportExcel, formatNumber } from '../../../helpers';
+import { useTranslation } from 'react-i18next';
+// import { Money } from '../../all/Money1';
+import { Money } from '../../all';
 
 export function Figure(props) {
   const { data } = props;
   const [columns, setColumns] = useState([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setColumns([
-      { Header: 'Харилцагч', accessor: 'column1' },
-      { Header: 'Эхний үлдэгдэл', accessor: 'column2' },
-      { Header: 'Авлага үүсгэсэн дүн', accessor: 'column3' },
-      { Header: 'Авлага хаасан дүн', accessor: 'column4' },
-      { Header: 'Эцсийн үлдэгдэл', accessor: 'column5' }
+      { Header: <div >Харилцагч</div>, accessor: 'custName', exLabel: 'Харилцагч'},
+
+      { Header: <div style={{textAlign: 'right'}}> {t('page.amount_beg')} </div>, accessor: 'beginArAmount', exLabel: 'Эхний үлдэгдэл', 
+      Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/> </div> },
+      { Header: <div style={{textAlign: 'right'}}> {t('receive.amount_receive_crea')} </div>, accessor: 'addAmount',exLabel: 'Авлага үүсгэсэн дүн',
+      Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>  },
+      { Header: <div style={{textAlign: 'right'}}> {t('receive.amount_receive_clos')} </div>, accessor: 'closeAmount',exLabel: 'Авлага хаасан дүн',
+      Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>  },
+      { Header: <div style={{textAlign: 'right'}}> {t('receive.amount_final')} </div>, accessor: 'endArAmount',exLabel: 'Эцсийн үлдэгдэл',
+      Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>  }
     ]);
 
     return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const tableInstance = useTable(
@@ -38,19 +46,20 @@ export function Figure(props) {
   );
 
   const tableProps = { tableInstance };
+  const ExportExcelProps = { excelData: data, columns,  fileName:t('receive.acc_receive_report'), text:t('page.export')};
 
   return (
     <>
-    <div class="figure_list">
-        <button class="rp_list_select">ЭКСПОРТ</button>
+    <div className="figure_list">
+      <ExportExcel {...ExportExcelProps} />
         <div className='table_scroll' style={{paddingRight: 10, overflowX: 'scroll' }}>
-          <div
-            id='paging'
-            style={{ paddingLeft: 30, overflowX: 'scroll',  minWidth: 720, maxHeight: 500 }}>
+          <div id='paging'
+            style={{ paddingLeft: 12, overflowX: 'scroll',  minWidth: 720, maxHeight: 500 }}>
             <Table {...tableProps} />
           </div>
         </div>
         <PaginationTable {...tableProps} />
-      </div></>
+      </div>
+    </>
   );
 }

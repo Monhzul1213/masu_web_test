@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import { getList } from '../../../services';
-import { DynamicAIIcon, MultiSelect } from '../../all';
+import { DynamicAIIcon, MonthRange, MultiSelect } from '../../all';
 
 export function Filter(props) {
   const { setError, size, onSearch, filter1 } = props;
