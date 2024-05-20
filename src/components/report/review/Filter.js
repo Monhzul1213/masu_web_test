@@ -14,7 +14,6 @@ export function Filter(props){
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState([]);
   const [time, setTime] = useState(null);
-  const [timeRange, setTimeRange] = useState(['00:00', '23:59']);
   const [classH, setClassH] = useState('rp_h_back1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -36,7 +35,6 @@ export function Filter(props){
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(time) query += '&BeginTime=' + time[0] + '&EndTime=' + time[1]
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
-    console.log(query)
     onSearch && onSearch(query, filter1, date);
   }
 

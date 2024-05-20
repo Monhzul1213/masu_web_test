@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePagination, useSortBy, useTable } from 'react-table';
-import { Button , Table, FooterTable} from '../../all';
-import { FiColumns } from "react-icons/fi";
+
+import { FooterTable} from '../../all';
 import { PaginationTable } from '../../all/PaginationTable';
 import { formatNumber } from '../../../helpers';
 import { ExportExcel } from '../../../helpers';

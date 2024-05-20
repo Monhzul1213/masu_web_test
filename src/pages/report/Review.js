@@ -31,14 +31,14 @@ function Screen(props){
   const getData = async (query, query1, dates) => {
     setError(null);
     setLoading(true);
-      let api = 'Sales/GetSalesByTime' + (query ?? '') + (query1 ?? '');
-      const response = await dispatch(getList(user, token, api));
-         setData(response?.data);
-         let sales = 0, refund = 0, avgSales = 0;
-         response?.data?.map(item=> {
-          sales+= item?.salesAmount ?? 0;
-          refund+= item?.returnAmount ?? 0;
-         })
+    let api = 'Sales/GetSalesByTime' + (query ?? '') + (query1 ?? '');
+    const response = await dispatch(getList(user, token, api));
+    setData(response?.data?.sort((a,b )=> a.salesTime - b.salesTime));
+    let sales = 0, refund = 0;
+    response?.data?.forEach(item=> {
+    sales+= item?.salesAmount ?? 0;
+    refund+= item?.returnAmount ?? 0;
+    })
     setTotal({sales, refund})
     setLoading(false);
   };
