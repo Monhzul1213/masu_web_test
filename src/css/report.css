@@ -476,6 +476,13 @@
   overflow: scroll;
 }
 
+.rr_card_back1 {
+  display: flex;
+  flex-flow: row;
+  border-top: solid 1px var(--input1-color);
+  overflow: scroll;
+}
+
 #rr_large .rr_card {
   padding: 15px 5px;
   flex: 1;

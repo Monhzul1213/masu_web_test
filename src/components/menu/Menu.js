@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Menu as AntMenu, Drawer } from 'antd';
-import { RiTeamLine } from 'react-icons/ri';
-import { BsClipboardData } from 'react-icons/bs';
+import {  RiTeamLine } from 'react-icons/ri';
+import { BsClipboardData, BsInboxes, BsPuzzle, BsGear, BsQuestionCircle } from 'react-icons/bs';
+import { FiTool } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,14 +13,18 @@ import { getItem } from '../../helpers';
 import { Profile } from './Profile';
 import { Install } from './Install';
 import { Rating } from './Rating';
+
 const { Sider } = Layout;
 
-export function Menu(props){
+export function Menu(props) {
   const { collapsed, setCollapsed, size } = props;
   const { t } = useTranslation();
   const [openKeys, setOpenKeys] = useState([]);
+  const [hideConfig, setHideConfig] = useState(true);
+  const [hideTime, setHideTime] = useState(true);
   const [hideMenu, setHideMenu] = useState(false);
   const [review, setReview] = useState(false);
+  const [subscriptionType, setSubscriptionType] = useState(false);
   const { user: { msRole, isAdmin }, isPartner, user, token } = useSelector(state => state.login);
   const { pathname } = useLocation();
   const path = pathname?.split('/') && pathname?.split('/')[1];
@@ -30,48 +35,68 @@ export function Menu(props){
     let pathname1 = pathname?.toLowerCase();
     let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order')) || pathname1?.includes('statement');
     setHideMenu(hideMenu);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [pathname]);
 
   useEffect(() => {
     setCollapsed(size?.width > 740 ? false : true);
-    if(isAdmin) setOpenKeys(["system", "/system"]);
+    if (isAdmin) setOpenKeys(["system", "/system"]);
 
     getReview();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getConfig();
+
+    if ([66, 135, 383, 631, 270, 164, 700, 999].includes(user?.merchantId)) {
+      setHideTime(false);
+    } else {
+      setHideTime(true);
+    }
   }, []);
+
+  useEffect(() => {
+    let width = (size?.width ?? 1500) - 30 - (collapsed ? 72 : 300);
+    setHideConfig(width >= 1000);
+  }, [size?.width, collapsed]);
 
   const getReview = async () => {
     const response = await dispatch(getList(user, token, 'Merchant/GetReviewItem'));
     const review = response?.data?.filter(item => item.isShow !== 'Y')[0];
     setReview(review);
-  }
+  };
+
+  const getConfig = async () => {
+    const response = await dispatch(getList(user, token, 'Merchant/GetConfig'));
+    setSubscriptionType(response?.data?.subscriptionType);
+  };
 
   const style = {
     overflowY: 'auto',
     overflowX: 'hidden',
     backgroundColor: 'var(--side-color)',
     boxShadow: '0px 2px 5px rgba(0,0,0,.15)',
-    zIndex: 1000
+    zIndex: 1000,
   };
 
   const items = isPartner ? [
     getItem(t('menu.partner'), '/partner', <RiTeamLine />),
-  ] : [
-    getItem(t('menu.report'), '/report', <BsClipboardData />, [
-      getItem(t('menu.report_time'), '/report/report_time', null, null, null, msRole?.webViewSalesReport !== 'Y')
-    ])
+  ] : isAdmin ? [
+    getItem(t('menu.system'), '/system', <FiTool />, [
+      getItem(t('menu.advert'), '/system/advert'),
+    ]),
+  ] : [ 
+    getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
+    <BsPuzzle style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, null, null, msRole?.webManageCustomer !== 'Y'),
+    hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :
+    getItem(t('menu.config'), '/config', <BsGear />, [
+      getItem(t('system_menu.reclam'), '/config/reclam', null, null, null, msRole?.webEditSettings !== 'Y')
+    ]),
   ];
 
   const onClick = (e, hide) => {
-    if(e?.key === '/help') window.open("https://help.masu.mn");
+    if (e?.key === '/help') window.open("https://help.masu.mn");
     else navigate(e?.key);
-    if(hide) setCollapsed(true);
-  }
+    if (hide) setCollapsed(true);
+  };
 
-  const rootSubmenuKeys = ['/report', '/inventory', '/management', '/employee', '/customer', '/integration', '/config', '/help'];
+  const rootSubmenuKeys = ['/report', '/inventory', '/management', '/employee', '/customer', '/loyalty', '/timetable', '/integration', '/config', '/help'];
 
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -82,10 +107,9 @@ export function Menu(props){
     }
   };
 
-  const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style, breakpoint: 'lg', width: 300,
-    onCollapse: setCollapsed };
+  const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style, breakpoint: 'lg', width: 300, onCollapse: setCollapsed };
   const drawerProps = { className: 'menu_drawer', placement: 'left', onClose: () => setCollapsed(true), closable: false, open: !collapsed };
-  const profileProps = { collapsed, setCollapsed };
+  const profileProps = { collapsed, setCollapsed, subscriptionType };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline', openKeys, onOpenChange };
   const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
   const rateProps = { review, setReview };
@@ -108,5 +132,5 @@ export function Menu(props){
         {!isPartner && <Install {...profileProps} />}
       </Drawer>
     </>
-  )
+  );
 }

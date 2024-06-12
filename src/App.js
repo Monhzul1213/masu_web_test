@@ -3,33 +3,36 @@ import { BrowserRouter, Routes, Route, unstable_HistoryRouter as HistoryRouter }
 import { Layout } from 'antd';
 import { SizeMe } from 'react-sizeme';
 import { useSelector, useDispatch } from 'react-redux';
-import { createBrowserHistory } from "history";
+import { createBrowserHistory } from 'history';
 
 import { setIsLoggedIn } from './services';
 import { Header, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Recovery } from './pages';
-import { Review } from './pages/report/Review';
+import { Configs } from './pages';
+import { Reclam, ReclamAdd } from './pages/configs';
 
-export function App(){
+const history = createBrowserHistory();
+
+export function App() {
   const [collapsed, setCollapsed] = useState(false);
-  const { user } = useSelector(state => state.login);
+  const { user, isPartner } = useSelector(state => state.login);
   const loggedIn = useSelector(state => state.temp.loggedIn);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!window.sessionStorage.length){
+    if (!window.sessionStorage.length) {
       window.localStorage.setItem('getSessionStorage', Date.now());
     } else {
       dispatch(setIsLoggedIn(true));
     }
-    window.addEventListener('storage', function(event){
-      if(event.key === 'getSessionStorage') {
+    window.addEventListener('storage', function (event) {
+      if (event.key === 'getSessionStorage') {
         window.localStorage.setItem('sessionStorage', Date.now());
         window.localStorage.removeItem('sessionStorage');
-      } else if(event.key === 'sessionStorage' && !window.sessionStorage.length){
+      } else if (event.key === 'sessionStorage' && !window.sessionStorage.length) {
         window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
         dispatch(setIsLoggedIn(true));
-      } else if(event.key === 'CREDENTIALS_FLUSH'){
+      } else if (event.key === 'CREDENTIALS_FLUSH') {
         dispatch(setIsLoggedIn(false));
         window.sessionStorage.removeItem('CREDENTIALS_TOKEN');
       }
@@ -37,42 +40,44 @@ export function App(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if(!loggedIn || !user) return (
+  if (!loggedIn || !user) return (
     <BrowserRouter>
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path='*' element={<Login />} />
           <Route path='/sign_up' element={<SignUp />} />
           <Route path='/confirm' element={<Confirm />} />
-          <Route path='/recovery' element={<Recovery />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
   );
 
   const menuProps = { collapsed, setCollapsed };
-  
+
   return (
-    <HistoryRouter history={createBrowserHistory()}>
+    <HistoryRouter history={history}>
       <Suspense fallback={<Loading />}>
-        <Layout style={{minHeight: '100vh'}}>
+        <Layout style={{ minHeight: '100vh' }}>
           <Header {...menuProps} />
-          <SizeMe>{({ size }) => 
-          <Layout>
-            <Menu {...menuProps} size={size} />
-            {/* <Chat/> */}
-            <Layout>
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='*' element={<Review />} />
-                <Route path='/confirm' element={<Confirm />} />
-                <Route path='/report/report_time' element={<Review />} />
-              </Routes>
-            </Layout>
-          </Layout>
-          }</SizeMe>
+          <SizeMe>
+            {({ size }) => (
+              <Layout>
+                <Menu {...menuProps} size={size} />
+                <Layout>
+                  <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='*' element={<Home />} />
+                    <Route path='/confirm' element={<Confirm />} />
+                    <Route path='/config/*' element={<Configs size={size} collapsed={collapsed} />} />
+                    <Route path='/config/reclam' element={<Reclam />} />
+                    <Route path='/config/reclam/reclamAdd' element={<ReclamAdd />} />
+                  </Routes>
+                </Layout>
+              </Layout>
+            )}
+          </SizeMe>
         </Layout>
       </Suspense>
     </HistoryRouter>
-  )
+  );
 }

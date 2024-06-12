@@ -1,0 +1,175 @@
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { message } from 'antd';
+import  moment  from 'moment';
+import mime from 'mime';
+
+import '../../../css/invt.css';
+import '../../../css/config.css';
+import { getList, sendRequest } from '../../../services';
+import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all/all_m';
+import { Main } from '../../components/config/reclam/add';
+import { urlToFile } from '../../../helpers';
+
+export function Screen(props){
+  const [name, setName] = useState({ value: '' });
+  const [link, setLink] = useState({ value: '' });
+  const [image, setImage] = useState(null);
+  const [image64, setImage64] = useState('');
+  const [imageType, setImageType] = useState('');
+  const [beginDate, setBeginDate] = useState({ value: moment() });
+  const [endDate, setEndDate] = useState({ value: moment() });
+  const [status, setStatus] = useState({ value: 1 });
+  const [type, setType] = useState({ value: null });
+  const [site, setSite] = useState();
+  const [error, setError] = useState(null);
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [edited, setEdited] = useState(false);
+  const [selected, setSelected ] = useState(null);
+  const { user, token }  = useSelector(state => state.login);
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    user?.isAdmin ? getData() : navigate({ pathname: '/' });
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if(saved) onClickCancel();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saved]);
+
+
+
+  const getData = async () => {
+    let adsId = searchParams?.get('adsId');
+    if(adsId || adsId === 0) {GetAdv(adsId)} ;
+  }
+
+  const GetAdv = async (adsId ) => {
+    setError(null);
+    setLoading(true);
+    let api = '?AdsId=' + adsId;
+    let response = await dispatch(getList(user, token, 'Site/GetAdvertisement' + api,   ));
+    setLoading(false);
+    if(response?.error) setError(response?.error)
+    else {    
+      let ads = response?.data ;
+      setSelected(ads)
+      setItem(response?.data);
+      setName({ value: ads?.adsName ?? '' });
+      setSite({ value: ads?.viewSites ?? 0 })
+      setBeginDate ({ value: moment(ads?.beginDate, 'yyyy.MM.DD') })
+      setEndDate ({ value: moment(ads?.endDate, 'yyyy.MM.DD') })
+      setLink({ value: ads?.imageLink ?? ''}); 
+      setStatus({ value: ads?.status ?? 0 })
+      setType({ value: ads?.adsType })
+      getImage(ads);
+      // response?.data?.forEach(item => item.rowStatus = 'U');
+    }
+  }
+
+  const getImage = async reclam => {
+    if(reclam?.file?.fileData){
+      let type = reclam?.file?.filetype?.replace('.', '');
+      setImageType(type ?? '');
+      let mimeType = mime.getType(type);
+      let dataPrefix = `data:` + mimeType + `;base64,`;
+      let attach64 = `${dataPrefix}${reclam?.file?.fileData}`;
+      let attachFile = await urlToFile(attach64, mimeType);
+      setImage64(attach64);
+      setImage(attachFile);
+    }
+  }
+
+  const onLoad = () => {
+    setError(null);
+    setLoading(true);
+    setEdited(false);
+
+  }
+
+  const onError = err => {
+    setError('Зураг оруулна уу!');
+    setLoading(false);
+    setEdited(true);
+
+  }
+
+  const onSuccess = msg => {
+    message.success(msg);
+    setSaved(true);
+    setLoading(false);
+  }
+ 
+  const onClickCancel = () =>  navigate('/configs/reclam');
+ 
+  const checkValid = () => {
+    let nameLength = 2;
+    let isNameValid = !name?.value?.trim() || name?.value?.length >= nameLength;
+    if( isNameValid ){
+      return true;
+    } else {
+      if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });
+      if(!isNameValid) setName({ value: name?.value, error: ' ' + nameLength + t('error.longer_than') });
+    }
+  }
+  const onClickSave = async e => {
+    e?.preventDefault();
+    if(checkValid()){
+      onLoad();
+      setLoading(true);
+      let data = [{
+        merchantType: 0,
+        merchantID: null,
+        adsID: selected ? selected?.adsId : -1,
+        adsName: name?.value,
+        viewSites: site?.value,
+        beginDate: beginDate?.value?.format('yyyy.MM.DD'),
+        endDate: endDate?.value?.format('yyyy.MM.DD'),
+        image: { FileData: image64 ?? '', FileType: imageType ?? '' },
+        imageLink: link?.value,
+        adsType: type?.value,
+        status: status?.value,
+        rowStatus: selected ? 'U' : 'I'
+      }]
+      const response = await dispatch(sendRequest(user, token, 'Site/ModAdvertisement', data));
+      if(response?.error) onError(response?.error);
+      else onSuccess(t('reclam.add_success'));  
+    } 
+  }
+
+  const onClickDelete = async () => {
+    onLoad();
+    let data = [{...selected, rowStatus: 'D', image : {}}]; 
+    const response = await dispatch(sendRequest(user, token, 'Site/ModAdvertisement', data));
+    if(response?.error) onError(response?.error, true);
+    else onSuccess(t('reclam.delete_success'), true);
+  }
+
+  const mainProps = { setError, name, setName, setLink, link , beginDate, setBeginDate, endDate, setEndDate, 
+    image, setImage, setImage64, image64, setImageType, status, setStatus, type, setType,site, setSite};
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
+
+  return (
+    <Overlay className='i_container' loading={loading}>
+      <Prompt edited={edited} />
+      {error && <Error1 error={error} />}
+      <div className='i_scroll'>
+        <Main {...mainProps} />
+      </div>
+      <ButtonRowConfirm {...btnProps} />
+    </Overlay>
+  );
+}
+const withSizeHOC = withSize();
+export const ReclamAdd = withSizeHOC(Screen);

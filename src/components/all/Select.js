@@ -142,7 +142,7 @@ export function MultiSelect(props){
   const dropdownRender = menu => {
     return (
       <>
-        <Button className='multi_btn' text={t('time.all')} onClick={onClick} />
+        <Button className='multi_btn' text={t('time.all_shop')} onClick={onClick} />
         {menu}
       </>
     );
