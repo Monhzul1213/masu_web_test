@@ -9,11 +9,13 @@ import { getList } from '../../services';
 import { Error1, Overlay } from '../../components/all';
 import { Filter, List } from '../../components/loyalty/bonus/list';
 import { Empty1 } from '../../components/all';
+import { Subscription } from '../../components/management/adjust/list/Subscription';
 
 export function Bonus(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [visible, setVisible] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,6 +35,12 @@ export function Bonus(){
     setLoading(true);
     let api = 'Site/GetBonus' + query ?? '';
     const response = await dispatch(getList(user, token, api));
+    if(response?.code === 1000){
+      // comment
+      // isNew or isExpired
+      // || response?.code === 1001
+      setVisible(true);
+    }
     if(response?.error) setError(response?.error);
     else {
       response?.data?.bonus?.forEach(item=> {
@@ -48,13 +56,19 @@ export function Bonus(){
     setLoading(false);
   }
 
+  const onDone = async () => {
+    setVisible(false);
+  }
+
   const onClickAdd = () => navigate('bonus_add');
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
+  const subProps = { visible, setVisible, onDone };
 
   return (
     <div className='s_container_i'>
+      {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 

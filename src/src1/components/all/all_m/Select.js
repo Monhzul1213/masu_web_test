@@ -122,7 +122,7 @@ export function CustomSelect(props){
 
 export function MultiSelect(props){
   const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
-    dropdownStyle, dropdownAlign } = props;
+    dropdownStyle, dropdownAlign, inRow } = props;
   const { t } = useTranslation();
   
   const renderItem = (item, index) => {
@@ -147,8 +147,12 @@ export function MultiSelect(props){
     );
   }
 
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
   return (
-    <div className={classBack}>
+    <div style={inRow ? { flex: 1 } : {}}>
+    <div className={classBack} style={backStyle}>
       {Icon && <Icon />}
       {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
       <AntSelect
@@ -170,6 +174,7 @@ export function MultiSelect(props){
         placeholder={placeholder}>
         {data?.map(renderItem)}
       </AntSelect>
+    </div>
     </div>
   );
 }
@@ -326,6 +331,72 @@ export function ColorSelect(props){
         </AntSelect>
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}
+
+export function MultiCancelSelect(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
+    dropdownStyle, dropdownAlign, inRow } = props;
+  const { t } = useTranslation();
+  
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  const onClick = (e) => {
+    let all = data?.map(item => item[s_value ?? 'value']);
+    setValue(all);
+  }
+  const onClick1 = (e) => {
+    setValue([]);
+  }
+
+  const onDropdownVisibleChange = show => {
+    if(!show) onHide();
+  }
+
+  const dropdownRender = menu => {
+    return (
+      <>
+      <div className='row'>
+        <Button className='multi_btn' text={t('time.all')} onClick={onClick} />
+        <div className='line'/>
+        <Button className='multi_btn' text={t('count.all_cancel')} onClick={onClick1} />
+      </div>
+        {menu}
+      </>
+    );
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? { flex: 1 } : {}}>
+    <div className={classBack} style={backStyle}>
+      {Icon && <Icon />}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={setValue}
+        value={value}
+        loading={loading}
+        onFocus={onFocus}
+        mode='multiple'
+        dropdownStyle={dropdownStyle}
+        dropdownAlign={dropdownAlign}
+        menuItemSelectedIcon={<BsCheckLg />}
+        onDropdownVisibleChange={onDropdownVisibleChange}
+        dropdownRender={dropdownRender}
+        maxTagCount={0}
+        maxTagPlaceholder={maxTag}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+    </div>
     </div>
   );
 }

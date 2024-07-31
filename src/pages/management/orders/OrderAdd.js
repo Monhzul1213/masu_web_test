@@ -98,7 +98,7 @@ export function OrderAdd(){
 
   const getItems = async (vendor, site) => {
     onLoad();
-    let filter = [{fieldName: "VendID", value: vendor}, {fieldName: "SiteID", value: site}]
+    let filter = [{fieldName : 'GetVariant', value : "Y"}, {fieldName: "VendID", value: vendor}, {fieldName: "SiteID", value: site}]
     const response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter));
     if(response?.error) onError(response?.error, false);
     else {
@@ -204,7 +204,7 @@ export function OrderAdd(){
 
   let mainProps = { setError, setEdited, vendId, setVendId, siteId, setSiteId, orderDate, setOrderDate, reqDate, setReqDate, notes, setNotes, setLoading: setLoading1,
     order, editing, payType, setPayType, total: add(total1, total2), isOTC, setIsOTC, otcInfo, setOtcInfo, totals, setTotals, discount, setDiscount, getItems };
-  let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch };
+  let itemsProps = { items, setItems, setDItems, setEdited, total: total1, setTotal: setTotal1, search, setSearch, siteId };
   let addProps = { adds, setAdds, setDAdds, setEdited, total1, total2, setTotal: setTotal2 };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
     hide: editing && order?.status === 1 };

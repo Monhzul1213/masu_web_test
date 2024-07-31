@@ -833,3 +833,23 @@
   font-size: 15px;
   margin-right: 3px;
 }
+.rr_card_back1 {
+  display: flex;
+  flex-flow: row;
+  border-top: solid 1px var(--input1-color);
+  overflow: scroll;
+  justify-content: center;
+}
+.rp_row_text{
+  font-size: 14px;
+  font-weight: 500;
+  margin-left: 5px;
+
+}
+.rp_row_back{
+  display: flex;
+  flex-flow: row;
+  margin-left: 10px;
+  margin-top: 5px;
+  align-content: center;
+}

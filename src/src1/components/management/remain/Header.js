@@ -94,13 +94,11 @@ export function Header(props){
   }
 
   const onHide = value => {
-    let q = 'Y'
     let query = '?='
-    // let query = !isDtl ? '?IsDtl=' + q : '?IsDtl=' + q1;
     if(supplier?.length !== suppliers?.length) supplier?.forEach(item => query += '&VendID=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
     query += (value ? ('&InvtName=' + value) : '');
-    query += (isDtl ? ('&IsDtl=' + q) : '');
+    query += (isDtl ? ('&IsDtl=' + 'Y') : '');
     invt?.forEach(item => query += '&InvtId=' + item);
     onSearch && onSearch(query, filter1);
   }

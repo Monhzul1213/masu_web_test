@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { CheckBtn } from '../../../all';
+import { CheckBtn1 } from '../../../all';
 
 export function Item(props){
   const { item, index, onCheck, disabled } = props;
@@ -9,7 +9,7 @@ export function Item(props){
 
   return (
     <div className='role_item'>
-      <CheckBtn checked={item?.checked} onClick={onClick} className='role_item_check' disabled={disabled} />
+      <CheckBtn1 checked={item?.checked} onClick={onClick} className='role_item_check' disabled={disabled} />
       <p className='role_item_text'>{item?.label}</p>
     </div>
   );

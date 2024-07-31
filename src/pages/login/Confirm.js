@@ -29,13 +29,13 @@ export function Confirm(){
   }
 
   return (
-    <div className='l_container'>
-      <div className='l_back'>
-        <img className='l_logo' src={login_image} alt='MASU LOGO' />
+    <div className='login_container'>
+      <div className='login_back'>
+        <img className='login_logo' src={login_image} alt='MASU LOGO' />
         <p className='co_title'>{t('login.congrats')}</p>
         <p className='co_sub'>{t('login.confirmed')}</p>
         <p className='co_text'>{t('login.go_back')}</p>
-        <Button className='l_btn' text={t('login.go_back_btn')} onClick={onClick} loading={loading} />
+        <Button className='login_btn' text={t('login.go_back_btn')} onClick={onClick} loading={loading} />
         {error && <Error error={error} />}
       </div>
       <Copyright />

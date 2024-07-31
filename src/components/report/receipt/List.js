@@ -19,7 +19,7 @@ export function List(props){
   useEffect(() => {
     changeColumns([
       'sale.totalAmount', 'sale.totalDiscountAmount', 'sale.totalSalesAmount', 'sale.totalCashAmount', 'sale.totalNonCashAmount',
-      'sale.vatDdtd', 'sale.vat_CustomerId'], period);
+      'sale.vatDdtd', 'sale.vat_CustomerId', 'sale.useBonus', 'sale.useVoucher', 'sale.useCoupon', 'sale.useGiftCard', 'sale.consumerDescr'], period);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language, period]);
@@ -56,6 +56,8 @@ export function List(props){
               item?.value === 'sale.consumerDescr' ? props?.value :
               item?.value === 'sale.useVoucher' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> ) :
               item?.value === 'sale.useCoupon' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> ) :
+              item?.value === 'sale.useBonus' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> ) :
+              item?.value === 'sale.useGiftCard' ? (props?.value === 0 || props?.value === null ? <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> : <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> ) :
               item?.value === 'sale.status' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> : <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> ): 
               item?.value === 'sale.vatDdtd' ? props?.value: ( <Money value={props?.value} fontSize={14} />)}
             </div>

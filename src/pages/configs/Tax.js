@@ -25,7 +25,7 @@ function Card(props){
   const getData = async () => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest'));
+    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest?ReqeustId=-2'));
     if(response?.error) setError(response?.error);
     else setData(response?.data?.vatrequest);
     setLoading(false);

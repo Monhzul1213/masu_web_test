@@ -42,9 +42,9 @@ export function Select(props) {
     return (
       <Option
         style={{
-          width: 240,
+          // width: 240,
           margin: 2,
-          borderRadius: 20,
+          // borderRadius: 20,
           backgroundColor: itemBackgroundColor
             ? "#" + item[s_value ?? "value"]
             : "",

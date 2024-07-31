@@ -23,7 +23,7 @@ export function Partner(props){
     setOpen(true);
   }
 
-  const checkProps = { className: 'l_check', checked, onChange };
+  const checkProps = { className: 'login_check', checked, onChange };
   const modalProps = { open, setOpen, setChecked, partner, setPartner };
   const text = (partner?.value ?? '') + ' - ' + (partner?.name ?? '');
 

@@ -32,7 +32,7 @@ import { CardNote, Radio, Selects } from '../../../all/all_m';
   const textProps = { value: text, setValue: setText, label: t('noti.text'), placeholder: t('noti.text'), setError, setEdited, length:300, handleEnter};
   const beginProps = { value: beginDate, setValue: setBeginDate, label: t('invoice.begin'), inRow: true, };
   const endProps = { value: endDate, setValue: setEndDate, label: t('invoice.end'), inRow: true,};
-  const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: t('advert.types'), setError, setEdited };
+  const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: t('advert.status'), setError, setEdited };
   const merchProps = { value: type, setValue: setType, label: t('noti.type'), setError, setEdited, inRow: false, data: types};
   const serviceProps = { label: t('noti.sent'), checked: isSendMail, setChecked: setIsSendMail };
 

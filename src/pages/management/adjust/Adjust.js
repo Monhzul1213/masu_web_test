@@ -15,7 +15,6 @@ export function Adjust(){
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [sites, setSites] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,7 +38,6 @@ export function Adjust(){
       // isNew or isExpired
       // || response?.code === 1001
       setVisible(true);
-      setSites(response?.data);
     }
     else if(response?.error) setError(response?.error);
     else setData(response?.data?.adjfinal);
@@ -48,20 +46,17 @@ export function Adjust(){
 
   const onDone = async () => {
     setVisible(false);
-    setSites([]);
-    let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
-    onSearch(query);
   }
 
   const onClickAdd = () => navigate('/management/adjust/adjust_add');
 
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
-  const subProps = { visible, setVisible, sites, setSites, onDone };
+  const subProps = { visible, setVisible, onDone };
 
   return (
     <div className='s_container_i'>
-      {visible && <Subscription {...subProps} />}
+      {visible && <Subscription {...subProps} />} 
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 

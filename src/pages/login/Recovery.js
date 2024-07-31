@@ -6,9 +6,10 @@ import { useDispatch } from 'react-redux';
 import '../../css/login.css';
 import '../../css/config.css';
 import { apiRecovery } from '../../services';
-import { login_image } from '../../assets';
-import { Button, Error, Input } from '../../components/all';
+import { header_image, login1, login2, login3, login4 } from '../../assets';
+import { Button, Error, FloatingInput1 } from '../../components/all';
 import { Copyright } from '../../components/login';
+import BackgroundSlider from 'react-background-slider';
 
 export function Recovery(){
   const { t } = useTranslation();
@@ -36,23 +37,26 @@ export function Recovery(){
   }
 
   let mailProps = { value, setValue, placeholder: t('login.email'), setError, handleEnter: onClick,
-    className: 'cfcode_input', classBack: 'co_input_back' }
+    className: 'cfcode_input1', classBack: 'co_input_back' }
 
   return (
-    <div className='l_container'>
-      <div className='l_back'>
-        <img className='l_logo' src={login_image} alt='MASU LOGO' />
+    <div className='login_container'>
+      <BackgroundSlider className='login_container' images= {[login1, login2, login3, login4]} duration={100} transition={2}/>
+      <div className='login_back'>
+        <img className='login_logo' src={header_image} alt='MASU LOGO' />
         <div className='co_gap' />
-        <p className='co_sub'>{t('login.recovery')}</p>
-        <Input {...mailProps} />
-        <Button className='l_btn' text={t('login.send')} onClick={onClick} loading={loading} />
+        <p className='co_sub1'>{t('login.recovery')}</p>
+        <div style={{width: 300}}>
+          <FloatingInput1 {...mailProps} />
+          <Button className='login_btn1' text={t('login.send')} onClick={onClick} loading={loading} />
+        </div>
         {error && <Error error={error} />}
         <div className='co_gap' />
         {sent && <div className='co_sent_back'>
           <p className='co_sent_text'>{t('login.sent')}</p>
         </div>}
         <div className='l_center_row'>
-          <Link className='l_link' to='/'>{t('login.back')}</Link>
+          <Link className='login_link' to='/'>{t('login.back')}</Link>
         </div>
       </div>
       <Copyright />

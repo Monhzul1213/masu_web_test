@@ -9,8 +9,7 @@ import '../../css/invt.css';
 import '../../css/report.css';
 import { getList } from '../../services';
 import { Empty1, Error1, Overlay } from '../../components/all';
-import { Filter } from '../../components/report/receipt';
-import { Card, Graph, List } from '../../components/report/review';
+import { Card, Graph, List, Filter } from '../../components/report/review';
 
 function Screen(props){
   const { size } = props;

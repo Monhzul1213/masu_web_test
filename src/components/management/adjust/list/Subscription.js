@@ -6,158 +6,181 @@ import { useDispatch, useSelector } from 'react-redux';
 import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
-import { banks, divide, formatNumber, siteSubscriptions, siteSubscriptions1 } from '../../../../helpers';
+import { banks, config, encrypt, formatNumber, selectSubscription, subContent, subContent1 } from '../../../../helpers';
 import { getList, sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
-import { Check, DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../all';
-import { Step } from '../../../emp/employee/add/Step';
-import { Select, Field } from '../../../emp/employee/add/Field';
+import { Button, DynamicAIIcon, DynamicMDIcon, Error1, Money, Overlay } from '../../../all';
+import { Select, Field } from './Field';
 import { Tax } from '../../../system/invoice/list/Tax';
 
 export function Subscription(props){
-  const { visible, setVisible, sites, setSites, onDone, noTrial, noBack } = props;
-  const { t } = useTranslation();
+  const { visible, setVisible, onDone, noBack } = props;
   const [loading, setLoading] = useState(false);
   const [current, setCurrent] = useState(0);
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
+  const [itemAmt, setItemAmt] = useState([]);
   const [amt, setAmt] = useState(0);
   const [txnNo, setTxnNo] = useState('');
   const [data, setData] = useState([]);
-  const { user, token } = useSelector(state => state.login);
-  const dispatch = useDispatch();
+  const [length, setLength] = useState('sar');
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSelected(siteSubscriptions && siteSubscriptions[0]);
-    setData(noTrial ? siteSubscriptions1 : siteSubscriptions);
+    onSelect(selectSubscription && selectSubscription[0])
+    setData(selectSubscription); 
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSelect = item => {
-    if(item?.value !== selected?.value){
-      let newSites = sites?.map(i => {
-        let checked = item?.value === 2 ? true : selected?.value === 2 ? false : i.checked;
-        return {...i, checked};
-      });
-      setSites(newSites);
-      let amt = divide(newSites?.filter(i => i.checked)?.length, item?.amt, true);
-      setAmt(amt);
-      setSelected(item);
-    }
-    setError(null);
+    setItemAmt([item?.amt, item?.amt1])
+    setLength(item?.label1)
+    setSelected(item);
   }
 
-  const typeProps = { selected, onSelect, amt, sites, setSites, setAmt, setError, data };
-  const payProps = { amt, txnNo, onDone, setError, setVisible };
+  const onPressExport = () => {
+    let msg = txnNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/statement?invoiceno=' + encodeURIComponent(code);
+    window.open(url);
+  }
+
+  const typeProps = { selected, onSelect, data, amt, setAmt, itemAmt, onDone, length, setError, setLoading, setCurrent, setTxnNo };
+  const payProps = { amt, txnNo, onDone, setError, setVisible, onPressExport };
 
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
   ];
 
-  const onNext = async () => {
-    let checked = sites?.filter(i => i.checked)?.length;
-    if(checked){
-      setError(null);
-      setLoading(true);
-      let siteID = [];
-      sites?.forEach(item => { if(item?.checked) siteID?.push(item?.siteId); });
-      let data = { invoicetime: selected?.length, invoiceAmount: amt, siteID }
-      let response = await dispatch(sendRequest(user, token, 'Txn/ModSiteInvoice', data));
-      if(response?.error) setError(response?.error);
-      else {
-        if(selected?.value === 2){
-          onDone();
-        } else {
-          setCurrent(1);
-          setTxnNo(response?.data?.invoiceNo);
-        }
-      }
-      setLoading(false);
-    } else
-      setError(t('adjust.select_site'));
-  }
   const onClose = () => {
-    setSites([]);
     setVisible(false);
     if(!noBack) navigate(-1);
   }
 
-  const stepProps = { current, steps, onBack: onClose, onDone, onNext };
-
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={640}>
-      <Overlay loading={loading} className='m_back2'>
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={txnNo ? 500: 800}>
+      <Overlay loading={loading} className={txnNo ? 'pay_back': 'm_back4'} > 
         <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onClose} />
         <Steps current={current} items={steps} />
         <div>{steps[current]?.content}</div>
         <div className='gap' />
         {error && <Error1 error={error} />}
-        <Step {...stepProps} />
       </Overlay>
     </Modal>
   );
 }
 
 function Type(props){
-  const { selected, onSelect, amt, sites, setSites, setAmt, setError, data } = props;
+  const { selected, onSelect, data, setAmt, itemAmt, setError, setLoading, setTxnNo, onDone, setCurrent, length } = props;
   const { t } = useTranslation();
+  const { user, token } = useSelector(state => state.login);
+  const dispatch = useDispatch();
+
+
+  const onNext = async () => {
+    setError(null);
+    setLoading(true);
+    let data = {
+      invoiceNo: '',
+      invoiceType: selected?.type,
+      invoiceTime: selected?.length,
+      amount: selected?.amt,
+      rowStatus: 'I',
+    }
+    let response = await dispatch(sendRequest(user, token, 'Txn/ModInvoice', data));
+    if(response?.error) setError(response?.error);
+    else {
+      if(selected?.value === 2){
+        onDone();
+      } else {
+        setCurrent(1);
+        setTxnNo(response?.data?.invoiceNo);
+        setAmt(selected?.amt);
+      }
+    setLoading(false);
+  } 
+}
+
+const onNext1 = async () => {
+  setError(null);
+  setLoading(true);
+  let data = {
+    invoiceNo: '',
+    invoiceType: selected?.type1,
+    invoiceTime: selected?.length,
+    amount: selected?.amt1,
+    rowStatus: 'I',
+  }
+  let response = await dispatch(sendRequest(user, token, 'Txn/ModInvoice', data));
+  if(response?.error) setError(response?.error);
+  else {
+    if(selected?.value === 2){
+      onDone();
+    } else {
+      setCurrent(1);
+      setTxnNo(response?.data?.invoiceNo);
+      setAmt(selected?.amt1)
+    }
+  setLoading(false);
+} 
+}
+
+  const renderContent = (item) => {
+
+    return (
+      <div className='content_back'>
+        <DynamicMDIcon name='MdCheck' className='content_icon'/>
+        <p className='content_text'>{item?.label}</p>
+      </div>
+    )
+  };
 
   const renderItem = (item, index) => {
     const active = selected?.value === item?.value;
-    const id = active ? 'es_type_btn_active' : 'es_type_btn_inactive';
+    const id = active ? item?.value === 1 ? 'subs_type_btn_active1' : 'subs_type_btn_active' : 'subs_type_btn_inactive';
 
     return (
-      <button className='es_type_btn' id={id} key={index} onClick={() => onSelect(item)}>
-        <div className='es_type_side'>
-          <p className='es_type_title'>{item?.label}</p>
-          <p className='es_type_descr'>{item?.text}</p>
-        </div>
-        <DynamicMDIcon className='es_type_icon'
-          name={active ? 'MdOutlineRadioButtonChecked' : 'MdOutlineRadioButtonUnchecked'} />
-      </button>
+        <div >
+          <p id={id} key={index} onClick={() => onSelect(item)} className='sub_type_title'>{item?.label}</p>
+        </div>      
     );
   }
-
-  const onCheck = index => {
-    let newSites = sites?.map((item, i) => {
-      let checked = i === index ? !item?.checked : item?.checked;
-      return {...item, checked};
-    });
-    setSites(newSites);
-    let amt = divide(newSites?.filter(i => i.checked)?.length, selected?.amt, true);
-    setAmt(amt);
-    setError(null);
-  }
-
-  const renderSite = (item, index) => {
-    return (
-      <button className='ss_site_btn' key={index} onClick={() => onCheck(index)}>
-        <Check checked={item?.checked} onClick={() => {}} />
-        <p className='ss_site_text'>{item?.name}</p>
-      </button>
-    );
-  }
-
   return (
-    <div className='es_scroll'>
-      <p className='es_title'>{t('adjust.subscription')}</p>
-      <div className='es_types'>
+    <div className='sub_type_scroll'>
+      <p className='sub_type_header'>{t('invoices.invoices')}</p>
+      <div className='sub_type_select_back'> 
         {data?.map(renderItem)}
       </div>
-      <p className='ss_site_title'>{t('adjust.select_site')}</p>
-      <div className='ss_sites'>
-        {sites?.map(renderSite)}
+      <div className='sub_types'>
+        <div className={'sub_type_back'} >
+            <div className='es_type_side'>
+              <p className='sub_type_title_back'>{'STANDARD'}</p>
+              <p className='sub_type_price'>{<Money value={itemAmt[0]}/>}{'/' + length}</p>
+              <div className='sub_content_back1'>
+                {subContent1?.map(renderContent)}
+              </div>
+              <Button className='sub_step_next' text={t('employee.pay')} onClick={onNext}/>
+            </div> 
+        </div>
+        <div className={'sub_type_back1'} >
+            <div className='es_type_side'>
+              <p className='sub_type_title_back1'>{'PREMIUM'}</p>
+              <p className='sub_type_price'>{<Money value={itemAmt[1]}/>}{'/' + length}</p>
+              <div className='sub_content_back1'>
+                {subContent?.map(renderContent)}
+              </div>
+              <Button className='sub_step_next1' text={t('employee.pay')}  onClick={onNext1}/>
+            </div>
+        </div>
       </div>
-      <p className='ss_amt'>{t('adjust.payment')}: {formatNumber(amt)}₮</p>
     </div>
   );
 }
 
 function Pay(props){
-  const { amt, txnNo, onDone, setError, setVisible } = props;
+  const { amt, txnNo, onDone, setError, setVisible, onPressExport } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [qr, setQR] = useState('');
@@ -166,6 +189,7 @@ function Pay(props){
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
   const [visible1, setVisible1] = useState(false);
+  const [tab, setTab] = useState(-1);
 
   useEffect(() => {
     getQR();
@@ -216,11 +240,59 @@ function Pay(props){
   const bankProps = { value, setValue: changeValue, data: banks, label: t('employee.bank') };
   const sub1Props = { visible : visible1, setVisible: setVisible1, onBack: onBack1, print: true, invNo: txnNo };
 
+  const Tab = props => {
+    const { label, index } = props;
+    const id = index === tab ? 'tab_btn_active' : 'tab_btn_inactive';
+
+    return (
+      <div className='pay_card_btn' id={id} onClick={() => setTab(index)}>
+          {t('manage.' + label)}
+      </div>
+    );
+  }
   return (
-    <div className='es_scroll'>
+    <div className='pay_scroll'>
       {visible1 && <Tax {...sub1Props} />}
       <p className='es_title'>{t('employee.pay')}</p>
-      <div className='es_pay_back'>
+      <div className='pay_tab_back'>
+        <Tab label='qpay' index = {-1}/>
+        <Tab label='acct' index ={ 1}/>
+      </div>
+      {tab === -1 ? 
+            <div className='pay_back_col'>
+              <Overlay loading={loading}>
+                {!qr
+                  ? <img className='es_qr_holder' src={qr_holder} alt='Logo' />
+                  : <QRCode
+                      className='pay_qr_back'
+                      size={220}
+                      style={{ margin: '5px 0'}}
+                      value={qr} />
+                }
+              </Overlay>
+              <p className='pay_amt_title'>{t('employee.amt')}</p>
+              <p className='pay_amt'>{formatNumber(amt)}₮</p>
+              <div className='pay_button_back'>
+                <Button className='pay_step_invoice' text={t('system.invoice')} onClick={onPressExport} />
+              </div>
+            </div>
+             : 
+             <div className='pay_back_col2'>
+                <p className='pay_amt_title'>{t('employee.amt')}</p>
+                <p className='pay_amt'>{formatNumber(amt)}₮</p>
+             <Select {...bankProps} />
+             <Field label={t('employee.acct_no')} value={selected?.acct} />
+             <Field label={t('employee.receive')} value={selected?.name} />
+             {/* <Field label={t('employee.amt')} value={formatNumber(amt) + '₮'} copy={amt} /> */}
+             <Field label={t('employee.txn_descr')} value={txnNo} isBold={true} />
+             <div className='line'/>
+             <p className='card_warning1'>{t('invoices.warning')}</p>
+             <div className='pay_button_back1'>
+              <Button className='pay_step_invoice' text={t('system.invoice')} onClick={onPressExport} />
+              <Button className='pay_step_next' text={t('employee.paid')} onClick={onDone} />
+             </div>
+           </div>}
+      {/* <div className='es_pay_back'>
         <div className='es_pay_col'>
           <p className='es_sub_title'>{t('employee.qr')}</p>
           <Overlay loading={loading}>
@@ -245,7 +317,7 @@ function Pay(props){
           <Field label={t('employee.txn_descr')} value={txnNo} isBold={true} />
           <p className='card_warning'>{t('invoices.warning')}</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

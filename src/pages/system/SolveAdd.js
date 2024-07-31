@@ -8,7 +8,7 @@ import mime from 'mime';
 import { urlToFile } from '../../helpers';
 import '../../css/invt.css';
 import '../../css/config.css';
-import { getList, sendRequest } from '../../services';
+import { getList, getServiceBar, sendRequest } from '../../services';
 import { ButtonRowConfirm, Error1, Overlay, Prompt } from '../../components/all';
 import { Main, List } from '../../components/system/solve/add';
 
@@ -19,6 +19,7 @@ export function SolveAdd(){
   const [error, setError] = useState(null);
   const [regNo, setRegNo] = useState({ value: '' });
   const [name, setName] = useState({ value: '' });
+  const [tinId, setTinId] = useState({ value: '' });
   const [notes, setNotes] = useState({ value: '' });
   const [checked, setChecked] = useState(false);
   const [status, setStatus] = useState({ value: null });
@@ -65,26 +66,42 @@ export function SolveAdd(){
     let requestId = searchParams?.get('requestId');
     setError(null);
     setLoading(true);
-    let api = 'Merchant/VatRequest/GetSolvedRequests?RequestID=' + requestId;
+    let api = 'Merchant/VatRequest/GetVatRequest?ReqeustId=' + requestId;
     let response = await dispatch(getList(user, token, api));
+    let response1 = await dispatch(getServiceBar('getBranchInfo'));
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      let request = response?.data;
+      let request = response?.data?.vatrequest;
       if(request){
         setDisabled(request?.status === 0 || request?.status === 4 ? true : false);
         setRequest(request);
         setRegNo({ value: request?.vatPayerNo });
         setName({ value: request?.vatPayerName });
+        setTinId({ value: request?.tinID });
         setChecked((request?.isVat + '') === '1');
         setNotes({ value: request?.descr });
         setStatus({ value: request?.status });
-        request?.requestItem?.forEach(item => {
-          item.coordinate = item.locationY + '\n' + item.locationX;
+        // request?.items?.forEach(item => {
+        //   if(request?.status === 4 && item.requestFiles && item.requestFiles[0]) item.fileName = item.requestFiles[0].fileName;
+        // });
+        request?.items?.forEach(item => {
+          response1?.data?.data?.forEach(li => {
+            if(li?.branchCode?.includes(item?.branchCode)){
+              item.branchName = li?.branchName
+            }
+          })
+          response1?.data?.data?.forEach(li => {
+            if(li?.branchCode?.includes(item?.branchCode)){
+              if(li?.subBranchCode === item?.subBranchCode ){
+                item.subBranchName = li?.subBranchName
+              }
+            }
+          })
           if(request?.status === 4 && item.requestFiles && item.requestFiles[0]) item.fileName = item.requestFiles[0].fileName;
-        });
-        setItems(request?.requestItem);
-      }
+        })
+        setItems(request?.items);
+      } 
       getImage(request)
     }
   }
@@ -95,21 +112,30 @@ export function SolveAdd(){
     let lengthValid = true;// names?.length === items?.length;
     let nameValid = names.length === new Set(names).size;
     if(status?.value !== 4 || (lengthValid && nameValid)){
-      let msVatRequestFiles = items?.map(item => {
+      let vatRequestTerminalItem = items?.map(item => {
         return { 
           rowStatus: 'I',
-          siteId: item?.siteId,
-          terminalId: item?.terminalID,
-          fileName: item?.fileName ?? '',
-          fileraw: item?.fileRaw ?? {}
+          siteID: item?.siteId,
+          terminalID: item?.terminalId,
+          status: item?.status,
+          branchCode: item?.branchCode,
+          subBranchCode: item?.subBranchCode
+          // fileName: item?.fileName ?? '',
+          // fileraw: item?.fileRaw ?? {}
         }
       });
       let data = {
-        requestID: request?.requestId,
+        vatPayerNo: regNo?.value, vatPayerName: name?.value, 
+        isVat: checked ? 1 : 0,
+        vatPayerPhone: '',
+        tinID: tinId?.value,
+        image: { FileData: image64 ?? '', FileType: imageType ?? '' },
+        reqeustId: request?.requestId, 
         descr: notes?.value,
         status: status?.value,
         rowStatus: 'U',
-        msVatRequestFiles: status?.value === 4 ? msVatRequestFiles : []
+        // vatRequestTerminalItem: status?.value === 4 ? vatRequestTerminalItem : []
+        vatRequestTerminalItem 
       }
       return data;
     }
@@ -140,14 +166,14 @@ export function SolveAdd(){
     let data = validateData();
     if(data){
       onLoad();
-      const response = await dispatch(sendRequest(user, token, 'Merchant/VatRequestSolve', data));
+      const response = await dispatch(sendRequest(user, token, 'Merchant/VatRequest', data));
       if(response?.error) onError(response?.error, true);
       else onSuccess(t('tax.solve_success'), true);
     }
   }
   
   let mainProps = { setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled, setImage, 
-                    image, image64, setImage64, setImageType, imageType };
+                    image, image64, setImage64, setImageType, imageType, tinId };
   let listProps = { data: items, setData: setItems, setEdited, setError, disabled, status };
   let btnProps = { onClickCancel, onClickSave, id: 'add_btns', noSave: disabled };
 

@@ -7,6 +7,7 @@ import '../css/invt.css';
 import { Card, AppModal } from '../components/config';
 import { Additional, Cashier, Tax, Store, Pos, Document, TaxAdd, Invoices } from './configs';
 import { Order } from '../src1/pages/config/Order';
+import { Reclam, ReclamAdd } from '../src3_dadlaga/pages/config';
 
 export function Config(props){
   const { size, collapsed } = props;
@@ -57,6 +58,8 @@ export function Config(props){
         <Route path='pos' element={<Pos />} />
         <Route path='store' element={<Store />} />
         <Route path='location' element={<Order />} />
+        <Route path='reclam' element={<Reclam/>} />
+        <Route path='reclam/reclam_add' element={<ReclamAdd/>} />
       </Routes>
     </div>
   )

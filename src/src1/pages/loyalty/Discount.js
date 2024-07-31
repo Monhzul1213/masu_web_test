@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getList, sendRequest } from '../../../services';
 import { message } from 'antd';
 import { withSize } from 'react-sizeme';
+import { Subscription } from '../../../components/management/adjust/list/Subscription';
 
  function Screen(props){
   const { size } = props;
@@ -18,6 +19,7 @@ import { withSize } from 'react-sizeme';
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState(false);
   const [filtering, setFiltering] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [filter,  setFilter] =   useState('');
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -36,6 +38,12 @@ import { withSize } from 'react-sizeme';
     setLoading(true);
     let api = 'Site/GetDiscount' +( query ?? '') ;
     const response = await dispatch(getList(user, token, api));
+    if(response?.code === 1000){
+      // comment
+      // isNew or isExpired
+      // || response?.code === 1001
+      setVisible(true);
+    }
     if(response?.error) setError(response?.error);
     else setData(response?.data);
     setLoading(false);
@@ -65,12 +73,18 @@ import { withSize } from 'react-sizeme';
   }
   const width = size?.width >= 560 ? 560 : size?.width;
 
+  const onDone = async () => {
+    setVisible(false);
+  }
+
   const listProps = { data, setData, setShow, checked, setChecked };
   const emptyProps = { icon: 'BsTag', type: 'discount', onClickAdd , isMd: false  };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData, size };
+  const subProps = { visible, setVisible, onDone };
 
   return (
     <div className='s_container_di'>
+      {visible && <Subscription {...subProps} />}
       <Overlay loading={loading === 'loading'}>
         {error && <Error1 error={error} />}
         {!data?.length  && !filtering  ? <Empty {...emptyProps} /> :

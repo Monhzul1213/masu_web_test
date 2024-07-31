@@ -8,11 +8,11 @@ import '../../../../css/config.css'
 import { banks, formatNumber, subscriptions } from '../../../../helpers';
 import { getList, sendRequest } from '../../../../services';
 import { qr_holder } from '../../../../assets';
-import { DynamicMDIcon, Error1, Overlay } from '../../../all';
-import { Field, Select } from './Field';
+import { Button, DynamicAIIcon, DynamicMDIcon, Error1, Overlay } from '../../../all';
 import { Step } from './Step';
 import { Tax } from '../../../system/invoice/list/Tax';
 import { config, encrypt } from '../../../../helpers';
+import { Field, Select } from '../../../management/adjust/list/Field';
 
 export function Subscription(props){
   const { visible, emp, onBack, onDone, onPay, invNo} = props;
@@ -80,7 +80,7 @@ export function Subscription(props){
   }
 
   const typeProps = { selected, onSelect };
-  const payProps = { amt, txnNo, setError, onPay, onBack };
+  const payProps = { amt, txnNo, setError, onPay, onBack, onPressExport, onDone };
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
@@ -88,9 +88,9 @@ export function Subscription(props){
   const stepProps = { current, steps, onBack, onDone, onNext, onPressExport};
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={640}>
-      <Overlay loading={loading} className='m_back2'>
-        {/* <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onBack} /> */}
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={txnNo ? 500: 640}>
+      <Overlay loading={loading} className={txnNo ? 'pay_back': 'm_back2'}>
+        <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onBack} />
         <Steps current={current} items={steps} />
         <div>{steps[current]?.content}</div>
         <div className='gap' />
@@ -136,7 +136,7 @@ function Type(props){
 }
 
 function Pay(props){
-  const { amt, txnNo, setError, onPay, onBack } = props;
+  const { amt, txnNo, setError, onPay, onBack, onPressExport, onDone } = props;
   const { t } = useTranslation();
   const [value, setValue] = useState(0);
   const [selected, setSelected] = useState(banks[0]);
@@ -145,6 +145,7 @@ function Pay(props){
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
   const [visible1, setVisible1] = useState(false);
+  const [tab, setTab] = useState(-1);
 
   useEffect(() => {
     getQR();
@@ -197,36 +198,89 @@ function Pay(props){
   const bankProps = { value, setValue: changeValue, data: banks, label: t('employee.bank') };
   const sub1Props = { visible: visible1, setVisible: setVisible1, onBack: onBack1, print: true, invNo: txnNo };
 
-  return (
-    <div className='es_scroll'>
-      {visible1 && <Tax {...sub1Props} />}
-      <p className='es_title'>{t('employee.pay')}</p>
-      <div className='es_pay_back'>
-        <div className='es_pay_col'>
-          <p className='es_sub_title'>{t('employee.qr')}</p>
-          <Overlay loading={loading}>
-            {!qr
-              ? <img className='es_qr_holder' src={qr_holder} alt='Logo' />
-              : <QRCode
-                  size={180}
-                  style={{ margin: '5px 0' }}
-                  value={qr} />
-            }
-          </Overlay>
-          <p className='es_amt_title'>{t('employee.amt')}</p>
-          <p className='es_amt'>{formatNumber(amt)}₮</p>
-        </div>
-        <div className='es_gap' />
-        <div className='es_pay_col2'>
-          <p className='es_sub_title'>{t('employee.acct')}</p>
-          <Select {...bankProps} />
-          <Field label={t('employee.acct_no')} value={selected?.acct} />
-          <Field label={t('employee.receive')} value={selected?.name} />
-          <Field label={t('employee.amt')} value={formatNumber(amt) + '₮'} copy={amt} />
-          <Field label={t('employee.txn_descr')} value={txnNo} isBold={true} />
-          <p className='card_warning'>{t('invoices.warning')}</p>
-        </div>
+  const Tab = props => {
+    const { label, index } = props;
+    const id = index === tab ? 'tab_btn_active' : 'tab_btn_inactive';
+
+    return (
+      <div className='pay_card_btn' id={id} onClick={() => setTab(index)}>
+          {t('manage.' + label)}
       </div>
+    );
+  }
+
+  return (
+    <div className='pay_scroll'>
+    {visible1 && <Tax {...sub1Props} />}
+    <p className='es_title'>{t('employee.pay')}</p>
+    <div className='pay_tab_back'>
+      <Tab label='qpay' index = {-1}/>
+      <Tab label='acct' index ={ 1}/>
     </div>
+    {tab === -1 ? 
+          <div className='pay_back_col'>
+            <Overlay loading={loading}>
+              {!qr
+                ? <img className='es_qr_holder' src={qr_holder} alt='Logo' />
+                : <QRCode
+                    className='pay_qr_back'
+                    size={220}
+                    style={{ margin: '5px 0'}}
+                    value={qr} />
+              }
+            </Overlay>
+            <p className='pay_amt_title'>{t('employee.amt')}</p>
+            <p className='pay_amt'>{formatNumber(amt)}₮</p>
+            <div className='pay_button_back'>
+              <Button className='pay_step_invoice' text={t('system.invoice')} onClick={onPressExport} />
+            </div>
+          </div>
+           : 
+           <div className='pay_back_col2'>
+              <p className='pay_amt_title'>{t('employee.amt')}</p>
+              <p className='pay_amt'>{formatNumber(amt)}₮</p>
+           <Select {...bankProps} />
+           <Field label={t('employee.acct_no')} value={selected?.acct} />
+           <Field label={t('employee.receive')} value={selected?.name} />
+           {/* <Field label={t('employee.amt')} value={formatNumber(amt) + '₮'} copy={amt} /> */}
+           <Field label={t('employee.txn_descr')} value={txnNo} isBold={true} />
+           <div className='line'/>
+           <p className='card_warning1'>{t('invoices.warning')}</p>
+           <div className='pay_button_back1'>
+            <Button className='pay_step_invoice' text={t('system.invoice')} onClick={onPressExport} />
+            <Button className='pay_step_next' text={t('employee.paid')} onClick={onDone} />
+           </div>
+         </div>}
+  </div>
+    // <div className='es_scroll'>
+    //   {visible1 && <Tax {...sub1Props} />}
+    //   <p className='es_title'>{t('employee.pay')}</p>
+    //   <div className='es_pay_back'>
+    //     <div className='es_pay_col'>
+    //       <p className='es_sub_title'>{t('employee.qr')}</p>
+    //       <Overlay loading={loading}>
+    //         {!qr
+    //           ? <img className='es_qr_holder' src={qr_holder} alt='Logo' />
+    //           : <QRCode
+    //               size={180}
+    //               style={{ margin: '5px 0' }}
+    //               value={qr} />
+    //         }
+    //       </Overlay>
+    //       <p className='es_amt_title'>{t('employee.amt')}</p>
+    //       <p className='es_amt'>{formatNumber(amt)}₮</p>
+    //     </div>
+    //     <div className='es_gap' />
+    //     <div className='es_pay_col2'>
+    //       <p className='es_sub_title'>{t('employee.acct')}</p>
+    //       <Select {...bankProps} />
+    //       <Field label={t('employee.acct_no')} value={selected?.acct} />
+    //       <Field label={t('employee.receive')} value={selected?.name} />
+    //       <Field label={t('employee.amt')} value={formatNumber(amt) + '₮'} copy={amt} />
+    //       <Field label={t('employee.txn_descr')} value={txnNo} isBold={true} />
+    //       <p className='card_warning'>{t('invoices.warning') }</p>
+    //     </div>
+    //   </div>
+    // </div>
   );
 }

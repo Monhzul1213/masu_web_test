@@ -9,6 +9,7 @@ import { Error1, Overlay } from '../../../components/all';
 import '../../css/time.css'
 import { List } from '../../components/management/remain';
 import { Subscription } from '../../../components/management/adjust/list';
+import { List1 } from '../../components/management/remain/List1';
 
 
 export function Remain(){
@@ -16,9 +17,12 @@ export function Remain(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [dtlData, setDtlData] = useState([]);
   const [excelName, setExcelName] = useState('');
   const [visible, setVisible] = useState(false);
   const [sites, setSites] = useState([]);
+  const [autoResetExpanded, setAutoResetExpanded] = useState(false);
+  const [isDtl, setIsDtl] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,10 +34,11 @@ export function Remain(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onSearch = async (query, query1 ) => {
+  const onSearch = async (query, query1, isEdit ) => {
     setError(null);
     setLoading(true);
-    let api = 'Txn/GetHandQty' + (query ?? '' ) + (query1 ?? '');
+    setAutoResetExpanded(isEdit ? false : true);
+    let api = 'Txn/GetHandQtyDtl' + (query ?? '' ) + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
     if(response?.code === 1000){
@@ -45,7 +50,17 @@ export function Remain(){
     }
     if(response?.error) setError(response?.error);
     else {
-      setData(response?.data);
+      response?.data?.hdr?.forEach(item => {
+        let detail = [];
+        response?.data?.dtl?.forEach(list => {
+          if(item?.invtID === list?.sourceInvtID) {
+            detail.push(list)
+          }
+        })
+        item.dtl = detail;
+      })
+      setData(response?.data?.hdr ?? response?.data?.dtl ?? []);
+      setDtlData(response?.data?.dtl ?? []);
       setExcelName(t('header./management/invt_remainder'));
     }
     setLoading(false);  
@@ -57,7 +72,8 @@ export function Remain(){
     onSearch();
   }
 
-  const listProps = { data, excelName, setError, onSearch, setData };
+
+  const listProps = { data, excelName, setError, onSearch, setData, autoResetExpanded, dtlData, isDtl, setIsDtl };
   const subProps = { visible, setVisible, sites, setSites, onDone };
 
   return (
@@ -65,11 +81,11 @@ export function Remain(){
       {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-          <SizeMe>{({ size }) => 
+        <SizeMe>{({ size }) => 
               <div className='i_list_cont_zz' id='invt_list_z'>
-                <List {...listProps} size={size} /> 
+                {!isDtl ? <List {...listProps} size={size} /> : <List1 {...listProps} size={size}/>}
               </div>
-          }</SizeMe>
+          }</SizeMe> 
       </Overlay>
     </div>
   );

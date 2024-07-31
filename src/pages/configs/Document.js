@@ -8,7 +8,7 @@ import mime from 'mime';
 
 import { getList, sendRequest } from '../../services';
 import { urlToFile } from '../../helpers';
-import { ButtonRow, CheckBox, Confirm, Empty, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage
+import { ButtonRow, CheckBox, Confirm, DescrInput, Empty, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage
   } from '../../components/all';
 
 function Card(props){
@@ -144,7 +144,7 @@ function Card(props){
   const headerProps = { value: header, setValue: setHeader, label: t('document.header'),
     placeholder: t('document.header'), setEdited, setError, length: 100 };
   const footerProps = { value: footer, setValue: setFooter, label: t('document.footer'),
-    placeholder: t('document.footer'), setEdited, setError, length: 100 };
+    placeholder: t('document.footer'), setEdited, setError, length: 100, id: 'doc_input'};
   const btnProps = { onClickCancel, onClickSave };
   const confirmProps = { open: open ? true : false, text: 'page.back_confirm', confirm };
   const printProps = { label: t('document.isPrint'), checked: isPrint, setChecked: setIsPrint };
@@ -166,7 +166,7 @@ function Card(props){
               <p className='select_lbl'>{t('document.logo')}</p>
               <UploadImage {...logoProps} />
               <Input {...headerProps} />
-              <Input {...footerProps} />
+              <DescrInput {...footerProps} />
               <CheckBox {...printProps}/>
             </div>
             <ButtonRow {...btnProps} />

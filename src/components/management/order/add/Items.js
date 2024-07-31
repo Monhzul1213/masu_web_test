@@ -5,12 +5,13 @@ import { withSize } from 'react-sizeme';
 
 import { add, divide } from '../../../../helpers';
 import { DynamicBSIcon, Money, TableResize } from '../../../all';
-import { ItemSelect, SelectItem } from '../../../invt/inventory/add/SelectItem';
+import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { Search } from './Search';
 import { EditableCell } from './EditableCell';
+import { ItemSelect } from '../../adjust/add/SelectItem';
 
 function Card(props){
-  const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch } = props;
+  const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch, siteId } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -20,7 +21,7 @@ function Card(props){
         Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
-      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90 },
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90, exLabel: t('inventory.barcode') },
       // { Header: '', accessor: 'sku', customStyle: { display: 'none'}, Cell: () => (<div style={{display: 'none'}} />), width: 0 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', width: 100, minWidth: 90,
@@ -35,11 +36,12 @@ function Card(props){
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true,
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', isQty: true, exLabel: t('order.t_qty2'),
         Cell: props => <EditableCell {...props} />, width: 130, minWidth: 130, maxWidth: 130 },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_base')}</div>, accessor: 'orderTotalQty', width: 160, minWidth: 90,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_base')}</div>, accessor: 'orderTotalQty', //width: 160, minWidth: 90,
+        //Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value ?? 0}</div>,
+        Cell: props => <EditableCell {...props} />, width: 130, minWidth: 130, maxWidth: 130
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_cost')}</div>, accessor: 'cost', width: 120, minWidth: 90,
@@ -63,12 +65,25 @@ function Card(props){
     let total = 0;
     setItems(old => old.map((row, index) => {
       if(index === rowIndex){
-        let orderQty = parseFloat(value ? value : 0);
-        let orderTotalQty = divide(orderQty, old[rowIndex]?.batchQty, true);
-        let totalCost = divide(orderTotalQty, old[rowIndex]?.cost, true);
-        total = add(total, totalCost);
-        setTotal(total);
-        return { ...old[rowIndex], orderQty, orderTotalQty, totalCost, error: null };
+        if(columnId === 'orderQty') {
+          // let qty = columnId === 'qty' ? parseFloat(value ? value : 0) : old[rowIndex]?.qty;
+          let orderQty = parseFloat(value ? value : 0);
+          let orderTotalQty = divide(orderQty, old[rowIndex]?.batchQty, true);
+          let totalCost = divide(orderTotalQty, old[rowIndex]?.cost, true);
+          total = add(total, totalCost);
+          setTotal(total);
+          return { ...old[rowIndex], orderQty, orderTotalQty, totalCost, error: null };
+        }
+        if(columnId === 'orderTotalQty') {
+          let orderTotalQty = (old[rowIndex]?.batchQty <= value ? value : 0);
+          let orderQty1 = divide(orderTotalQty, old[rowIndex]?.batchQty);
+          let amt = orderQty1?.toString()?.split(".", 2 );
+          let orderQty = amt[0];
+          let totalCost = divide(orderTotalQty, old[rowIndex]?.cost, true);
+          total = add(total, totalCost);
+          setTotal(total);
+          return { ...old[rowIndex], orderQty, orderTotalQty, totalCost, error: null };
+        }
       } else {
         total = add(total, row.totalCost);
         setTotal(total);
@@ -89,10 +104,10 @@ function Card(props){
     setSearch({ value: null });
   }
   
-  const newItem = invt => {
-    return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: 0, totalCost: 0, cost: invt.cost,
-      siteQty: invt?.siteQty, siteOrderQty: invt?.siteOrderQty,
-      invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, orderTotalQty: 0,
+  const newItem = (invt, qty, orderTotalQty, totalCost) => {
+    return { orderItemId: -1, invtId: invt.invtId, name: invt.name, orderQty: qty ? qty : 0, totalCost: totalCost ? totalCost : 0, cost: invt.cost,
+      siteQty: invt?.siteQty ? invt?.siteQty : 0, siteOrderQty: invt?.siteOrderQty,
+      invtCode: '', rowStatus: 'I', sku: invt?.sku, barCode: invt?.barCode, batchQty: invt?.batchQty ? invt?.batchQty : 1, orderTotalQty: orderTotalQty ? orderTotalQty :0,
       allowDecimal: invt?.isEach === 'N' };
   }
 
@@ -103,13 +118,13 @@ function Card(props){
   // const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
-  const selectProps = { search, setSearch, data: items, setData: setItems, newItem };
+  const selectProps = { search, setSearch, data: items, setData: setItems, newItem, siteId };
   const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, onClickDelete },
     useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
-  const searchProps = { handleEnter: setGlobalFilter, size };
+  const searchProps = { handleEnter: setGlobalFilter, size, data: items, setData: setItems, newItem, siteId, setTotal, isImport: true, columns };
   
   return (
     <div className='po_back_invt1'>

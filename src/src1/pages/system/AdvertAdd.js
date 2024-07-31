@@ -22,16 +22,17 @@ export function AdvertAdd(){
   const [beginDate, setBeginDate] = useState({ value: moment() });
   const [endDate, setEndDate] = useState({ value: moment() });
   const [status, setStatus] = useState({ value: 1 });
+  const [type, setType] = useState({ value: null });
   const [error, setError] = useState(null);
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [edited, setEdited] = useState(false);
+  const [selected, setSelected ] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [selected, setSelected ] = useState(null);
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
@@ -69,6 +70,7 @@ export function AdvertAdd(){
       setEndDate ({ value: moment(ads?.endDate, 'yyyy.MM.DD') })
       setLink({ value: ads?.imageLink ?? ''}); 
       setStatus({ value: ads?.status ?? 0  })
+      setType({ value: ads?.adsType })
       getImage(ads);
       // response?.data?.forEach(item => item.rowStatus = 'U');
     }
@@ -126,13 +128,16 @@ export function AdvertAdd(){
       onLoad();
       setLoading(true);
       let data = [{
+        merchantType: 0,
+        merchantID: null,
         adsID: selected ? selected?.adsId : -1,
-        merchantType: user?.msMerchant?.merchantType,
+        // merchantType: user?.msMerchant?.merchantType,
         adsName: name?.value,
         beginDate: beginDate?.value?.format('yyyy.MM.DD'),
         endDate: endDate?.value?.format('yyyy.MM.DD'),
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
         imageLink: link?.value,
+        adsType: type?.value,
         status: status?.value,
         rowStatus: selected ? 'U' : 'I'
       }]
@@ -151,7 +156,7 @@ export function AdvertAdd(){
   }
   
   const mainProps = { setError, name, setName, setLink, link , beginDate, setBeginDate, endDate, setEndDate, 
-    image, setImage, setImage64, image64, setImageType, status, setStatus};
+    image, setImage, setImage64, image64, setImageType, status, setStatus, type, setType};
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: item ? true:  false , id: 'btn_supp' };
 
   return (

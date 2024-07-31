@@ -642,3 +642,35 @@ export const timeList1 = [
   { label: '20:00', value: '20:00'}, { label: '20:30', value: '20:30'}, { label: '21:00', value: '21:00'}, { label: '21:30', value: '21:30'},   
   { label: '22:00', value: '22:00'}, { label: '22:30', value: '22:30'}, { label: '23:00', value: '23:00'}, { label: '23:30', value: '23:30'},   
 ];
+
+export const selectSubscription = [
+  {value: 0, type: 'STANDARD', type1: 'PREMIUM', length: 'MONTH', amt: 50000, amt1: 100000, label: 'Сар', label1: 'сар'},
+  {value: 1, type: 'STANDARD', type1: 'PREMIUM', length: 'YEAR', amt: 500000, amt1: 1000000, label: 'Жил', label1: 'жил'}
+];
+
+export const subContent = [
+  { value: 0, label: 'Борлуулалтын Пос(Дэлгүүр)'}, 
+  { value: 1, label: 'Борлуулалтын Пос(Ресторан)'}, 
+  { value: 2, label: 'Нэгдсэн захиалгын систем'}, 
+  { value: 3, label: 'Олон салбарын үлдэгдэл хөтлөх(Fifo)'}, 
+  { value: 4, label: 'Лояалти'}, 
+  { value: 5, label: 'Түгээлт'}, 
+  { value: 6, label: 'Integration'}, 
+  { value: 7, label: 'API'}, 
+  { value: 8, label: 'Support'}, 
+  { value: 9, label: 'Нэхэмжлэх(Soon)'}, 
+  { value: 10, label: 'Цаг захиалга(Soon)'}, 
+  { value: 11, label: 'Санхүү (Soon)'}
+];
+
+export const subContent1 = [
+  { value: 0, label: 'Борлуулалтын Пос(Дэлгүүр)'}, 
+  { value: 1, label: 'Борлуулалтын Пос(Ресторан)'}, 
+  { value: 2, label: 'Нэгдсэн захиалгын систем'}, 
+  { value: 3, label: 'Олон салбарын үлдэгдэл хөтлөх(Fifo)'}, 
+  { value: 4, label: 'Лояалти'}, 
+  { value: 5, label: 'Түгээлт'}, 
+  { value: 9, label: 'Нэхэмжлэх(Soon)'}, 
+  { value: 10, label: 'Цаг захиалга(Soon)'}, 
+  { value: 11, label: 'Санхүү (Soon)'}
+];

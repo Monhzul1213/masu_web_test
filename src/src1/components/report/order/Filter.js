@@ -6,7 +6,10 @@ import { status } from '../../../../helpers';
 import { getList } from '../../../../services';
 import { DynamicAIIcon, MonthRange, MultiSelect } from '../../all/all_m';
 
-export function Filter(props){
+import { ButtonAdd } from "../../../../src2/components/ButtonRow";
+import { OrderCreateModal } from "../../../../src2/components/orderCreate/orderCreateModal";
+
+export function Filter(props) {
   const { setError, size, onSearch, filter1 } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
@@ -16,6 +19,7 @@ export function Filter(props){
   const [emps, setEmps] = useState([]);
   const [emp, setEmp] = useState([]);
   const [state, setState] = useState([]);
+  const [visible, setVisible] = useState(false);
   const [classH, setClassH] = useState('rp_h_back1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -42,7 +46,7 @@ export function Filter(props){
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
     if(state?.length !== status?.length) state?.forEach(item => query += '&Status=' + item);
     onSearch && onSearch(query, filter1, date);
-  }
+  };
 
   const onFocusSite = async () => {
     if(!sites?.length){
@@ -56,7 +60,7 @@ export function Filter(props){
       }
       setLoading(false);
     }
-  }
+  };
 
   const onFocusEmp = async () => {
     if(!emps?.length){
@@ -70,7 +74,7 @@ export function Filter(props){
       }
       setLoading(false);
     }
-  }
+  };
 
   const onFocusStatus = async () => {
     if(!state?.length){
@@ -80,8 +84,16 @@ export function Filter(props){
       setState(response?.map(item => item?.status))
       setLoading(false);
     }
-  }
+  };
 
+  const onClickAdd = () => {
+    setVisible(true);
+  };
+
+  const closeModal = () => {
+    setVisible(false);
+  };
+  
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
   const maxEmp = emp?.length === emps?.length ? t('time.all_emp') : (emp?.length + t('time.some_emp'));
@@ -98,7 +110,8 @@ export function Filter(props){
     Icon: () => <DynamicAIIcon name='AiOutlineProfile' className='mr_cal' />, classBack: 'rp_select_back2',
     className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
     onFocus: onFocusStatus, loading: loading === 'status', maxTag: maxStatus,  placeholder: t('orders.select_status') };
-
+  const modalProps = { visible, closeModal, setVisible };
+  
   return (
     <div className={classH}>
       <div className='rp_h_row1'>
@@ -108,6 +121,14 @@ export function Filter(props){
         <MultiSelect {...siteProps} />
         <MultiSelect {...empProps} />
         <MultiSelect {...statProps} />
+        <div style={{ marginLeft: 15 }}>
+          <ButtonAdd
+            className="add_row_btn"
+            text="Захиалга үүсгэх"
+            onClickAdd={onClickAdd}
+          />
+        </div>
+        {visible && <OrderCreateModal {...modalProps} siteProps={siteProps} />}
       </div>
     </div>
   );

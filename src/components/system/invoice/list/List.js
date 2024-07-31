@@ -5,11 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { message } from 'antd';
 
-import { Money, Overlay, PaginationTable, Table } from '../../../all';
+import { Money, Overlay, FooterTable, Empty1 } from '../../../all';
 import { getList } from '../../../../services';
+import { Header } from './Header';
 
 export function List(props){
-  const { onClickAdd, data, size, getData, date } = props;
+  const { onClickAdd, data, size, getData, date, setError, onSearch, excelName } = props;
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
   const { t, i18n } = useTranslation();
@@ -20,19 +21,25 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('tax.customer'), accessor: 'label1' },
-      { Header: t('invoice.invoice'), accessor: 'invoiceNo' },
+      { Header: t('tax.customer'), accessor: 'label1', exLabel: t('tax.customer'), Footer: <div style={{textAlign: 'left', paddingLeft: 15}}>{t('report.total') }</div>},
+      { Header: t('invoice.invoice'), accessor: 'invoiceNo', exLabel: t('invoice.invoice') },
       {
-        Header: t('page.date'), accessor: 'invoiceDate', customStyle: { minWidth: 120 },
+        Header: t('page.date'), accessor: 'invoiceDate', customStyle: { minWidth: 120 }, exLabel: t('page.date'),
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },
-      { Header: t('invoice.type'), accessor: 'invoiceType' },
-      { Header: t('invoice.time'), accessor: 'invoiceTime' },
+      { Header: t('invoice.type'), accessor: 'invoiceType', exLabel: t('invoice.type'), },
+      { Header: t('invoice.time'), accessor: 'invoiceTime', exLabel: t('invoice.time'), },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('invoice.amount')}</div>, accessor: 'amount', customStyle: { width: 100 },
-        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
+        Header: <div style={{textAlign: 'right'}}>{t('invoice.amount')}</div>, accessor: 'amount', customStyle: { width: 100 }, exLabel: t('invoice.amount'),
+        Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>),
+        Footer: info => {
+          const total = React.useMemo(() =>
+            info.rows.reduce((sum, row) => row.values.amount + sum, 0),
+            [info.rows]  )
+          return <><div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={total} fontSize={14} />} </div></>
+        }
       },
-      { Header: t('order.status'), accessor: 'statusName' },
+      { Header: t('order.status'), accessor: 'statusName', exLabel: t('order.status') },
       { Header: '', accessor: 'isSendVat', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
         Cell: ({ value, row, onClickLink }) => {
           let active = row?.original?.status === 3 && value !== 'Y' && row?.original?.invoiceTime !== 'TRIAL';
@@ -69,17 +76,17 @@ export function List(props){
   
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, onClickLink,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick };
+    initialState: { pageIndex: 0, pageSize: 1000000, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
+  const tableProps = { tableInstance, onRowClick, hasFooter: true };
+  const headerProps = {setError, onSearch, size, excelName, data, columns};
+  const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
 
   return (
-    <div>
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
+      <div className='table_scroll'>
+        <Header {...headerProps}/>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          {!data?.length ? <Empty1 {...emptyProps} /> :<FooterTable {...tableProps} /> }
         </div>
       </div>
-      <PaginationTable {...tableProps} />
-    </div>
   );
 }

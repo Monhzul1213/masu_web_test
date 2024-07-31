@@ -575,3 +575,15 @@
   display: flex;
   flex-flow: row;
 }
+.ac_row_back {
+  display: flex;
+  flex-flow: row;
+}
+#i_error{
+  margin-left: 15px;
+}
+.ad_row1 {
+  display: flex;
+  flex-flow: row;
+  margin-top: 10px;
+}

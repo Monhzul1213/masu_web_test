@@ -8,7 +8,7 @@ import { Input, CheckBox, Select, DescrInput } from '../../../all';
 import { UploadImage } from './Upload';
 
 function Card(props){
-  const { size, setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled, image } = props;
+  const { size, setError, setEdited, regNo, name, checked, status, setStatus, notes, setNotes, disabled, image, tinId } = props;
   const { t } = useTranslation();
   const [states, setStates] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,7 @@ function Card(props){
   const idRow = size?.width > 445 ? 'im_input_row_large' : 'im_input_row_small';
   const noProps = { value: regNo, label: t('tax.reg_no'), placeholder: t('tax.reg_no'), inRow: true, disabled: true };
   const nameProps = { value: name, label: t('tax.name'), placeholder: t('tax.name'), inRow: true, disabled: true };
+  const idProps = { value: tinId, label: t('tax.t_no'), placeholder: t('tax.t_no'), inRow: true, disabled: true };
   const checkProps = { checked, label: 'tax.checked', style: { marginTop: 10, flex: 1 }, disabled: true };
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), data: states, setError, setEdited, s_value: 'valueNum',
     s_descr: 'valueStr1', onFocus: onFocusStatus, loading, inRow: true, disabled };
@@ -52,10 +53,11 @@ function Card(props){
             <Input {...nameProps} />
           </div>
           <div id={idRow} style={style}>
-            <Select {...statusProps} />
+            <Input {...idProps} />
             <div className='im_gap' />
-            <CheckBox {...checkProps} />
+            <Select {...statusProps} />
           </div>
+          <CheckBox {...checkProps} />
           <DescrInput {...descrProps} />
         </div>
       <div className='add_image'>

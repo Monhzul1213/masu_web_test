@@ -123,13 +123,13 @@ export function Add(props){
   }
 
   const onChange = (fieldValue, row) => {
-    let notValid = fieldValue?.includes("'");
-    if(!notValid){
+    // let notValid = fieldValue?.includes("'");
+    // if(!notValid){
       setDtl(old => old.map((item, index) => {
         if(row === index) return {...old[index], fieldValue, error: null };
         return item;
       }));
-    }
+    // }
   }
 
   const renderField = (item, index) => {

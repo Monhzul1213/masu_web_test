@@ -6,13 +6,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import '../../css/login.css';
 import '../../css/config.css';
-import { login_image } from '../../assets';
+import { header_image, login1, login2, login3, login4 } from '../../assets';
 import { validateEmail, validateNumber } from '../../helpers';
 import { apiLogin, apiRegister, getService, setIsLoggedIn, setLogin, getConstants } from '../../services';
-import { Button, FloatingInput, FloatingPassword, Error } from '../../components/all';
+import { Button, Error, FloatingInput1, FloatingPassword1, DynamicAIIcon, DynamicMDIcon } from '../../components/all';
 import { Copyright, Partner } from '../../components/login';
 import { Confirm } from '../../components/login/Confirm';
-import { RadioSelect } from '../../components/emp/merchant';
+import { RadioSelect } from '../../components/login/Select';
+import BackgroundSlider from 'react-background-slider';
 
 export function SignUp(){
   const { t } = useTranslation();
@@ -44,7 +45,7 @@ export function SignUp(){
   }, []);
 
   const checkValid = () => {
-    let item = (activity?.value === 204 || activity?.value === 205) ? addItem?.value : !addItem?.value
+    let item = (activity?.value === 199 || activity?.value === 205) ? addItem?.value : !addItem?.value
     let passwordLength = 8, businessLength = 6;
     let isValid = email?.value && password?.value && business?.value && address?.value?.trim();
     let isEmailValid = validateEmail(email?.value);
@@ -150,7 +151,7 @@ export function SignUp(){
         response?.data?.forEach(item => {
           let string = item?.valueNum?.toString();
           let n1 = string.startsWith(1)
-          if ( n1 === true || string === '204' ){num.push({...item}) } 
+          if ( n1 === true || string === '199' ){num.push({...item}) } 
         })
         setAllData(response?.data)
         setSales(num?.sort((a, b) => a.valueNum - b.valueNum));
@@ -171,7 +172,7 @@ export function SignUp(){
           let string = item?.valueNum?.toString();
           let n2 = string.startsWith(2)
           if ( n2 === true ){ 
-            if(string !== '204'){ num.push(item) } 
+            if(string !== '199'){ num.push(item) } 
           }
         })
         setVendor(num?.sort((a, b) => a.valueNum - b.valueNum));
@@ -180,29 +181,30 @@ export function SignUp(){
     }
   }
 
-  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError };
+  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, Icon: () => <DynamicAIIcon className='f_input_icon' name='AiOutlineUser'/> };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError };
-  const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError };
-  const addressProps = { text: t('login.phone'), value: address, setValue: changePhone, setError };//handleEnter: checked && handleSubmit
-  const checkProps = { className: 'l_check', checked, onChange: e => setChecked(e?.target?.checked) };
-  const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup'), disabled: !checked };
+  const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError, Icon: () => <DynamicMDIcon className='f_input_icon' name='MdOutlineBusinessCenter'/> };
+  const addressProps = { text: t('login.phone'), value: address, setValue: changePhone, setError, Icon: () => <DynamicAIIcon className='f_input_icon' name='AiOutlinePhone'/> };//handleEnter: checked && handleSubmit
+  const checkProps = { className: 'login_check', checked, onChange: e => setChecked(e?.target?.checked) };
+  const btnProps = { loading, type: 'submit', className: 'login_btn', text: t('login.signup'), disabled: !checked };
   const confirmProps = { visible, closeModal, number: address?.value, expire, email: email?.value };
   const partProps = { partner, setPartner };
-  let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), allData, merchant,
+  const subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), allData, merchant,
   setError, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem, };
 
   return (
-    <div className='l_container'>
+    <div className='login_container'>
       {visible && <Confirm {...confirmProps} />}
-      <div className='l_back'>
-        <img className='l_logo' src={login_image} alt='MASU LOGO' />
-        <p className='l_text'>{t('login.signup_text')}</p>
-        <form onSubmit={handleSubmit} autoComplete='off'>
-          <FloatingInput {...emailProps} />
-          <FloatingPassword {...passProps} />
-          <FloatingInput {...businessProps} />
+      <BackgroundSlider className='login_container' images= {[login1, login2, login3, login4]} duration={100} transition={2}/>
+      <div className='login_back'>
+        <img className='login_logo' src={header_image} alt='MASU LOGO' />
+        <p className='login_text'>{t('login.signup_text')}</p>
+        <form onSubmit={handleSubmit} autoComplete='off' style={{width: 400}}>
+          <FloatingInput1 {...emailProps} />
+          <FloatingPassword1 {...passProps} />
+          <FloatingInput1 {...businessProps} />
           <RadioSelect {...subProps}/>  
-          <FloatingInput {...addressProps} />
+          <FloatingInput1 {...addressProps} />
           <Partner {...partProps} />
           <div className='co_gap' />
           <div className='co_gap' />
@@ -221,7 +223,7 @@ export function SignUp(){
         </form>
         <div className='l_center_row'>
           <p className='l_link_text'>{t('login.go_login')}</p>
-          <Link className='l_link' to='/'>{t('login.login')}</Link>
+          <Link className='login_link1' to='/'>{t('login.login')}</Link>
         </div>
       </div>
       <Copyright />

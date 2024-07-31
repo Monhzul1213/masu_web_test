@@ -28,7 +28,7 @@ export function EmployeeServiceModal(props) {
   const [error, setError] = useState(null);
   const [selected, setSelected] = useState(null);
   const [amt, setAmt] = useState(0);
-  const [saved, setSaved] = useState(false);
+  // const [saved, setSaved] = useState(false);
   const { user, token } = useSelector((state) => state.login);
   const [edited, setEdited] = useState(false);
   const dispatch = useDispatch();
@@ -69,7 +69,7 @@ export function EmployeeServiceModal(props) {
 
   const onSuccess = (msg) => {
     message.success(msg);
-    setSaved(true);
+    // setSaved(true);
     setLoading(false);
   };
 
@@ -114,7 +114,7 @@ export function EmployeeServiceModal(props) {
     }
   };
 
-  const btnProps = { onClickCancel, onClickSave };
+  const btnProps = { onClickCancel, onClickSave, setCurrent, edited };
 
   return (
     <Modal

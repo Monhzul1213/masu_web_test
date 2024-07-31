@@ -6,9 +6,10 @@ import moment from 'moment';
 import { getConstants } from '../../../../services';
 import { PlainRange, PlainSelect, DynamicAIIcon} from '../../../all';
 import { SearchInput } from '../../../invt/inventory/list/SearchInput';
+import { ExportExcel } from '../../../../helpers';
 
 export function Header(props){
-  const { setError, onSearch, size, data } = props;
+  const { setError, onSearch, size, data, excelName, columns} = props;
   const { t } = useTranslation();
   const [status, setStatus] = useState(-1);
   const [states, setStates] = useState([{valueNum: -1, valueStr1: t('order.all_status')}]);
@@ -52,7 +53,7 @@ export function Header(props){
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(status !== -1) query += '&Status=' + status;
     if(search?.length !== 0) data?.forEach(item => { query += '&Filter=' + item });
-    onSearch(query);
+    onSearch(query, date);
   }
 
   const onChangeStatus = value => {
@@ -85,6 +86,7 @@ export function Header(props){
     label: t('order.status'), onFocus: onFocusStatus, loading: loading === 'status', classBack, classLabel, className, bStyle };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
+  const exportProps = { text: t('page.export'), columns: columns, excelData: data, fileName: excelName};
 
   return (
     <div className='ih_header' id={id} style={{paddingTop: 0}}>
@@ -95,6 +97,7 @@ export function Header(props){
         </div>
       </div>
       <div className='ih_header4' style= {style} >
+        <ExportExcel {...exportProps} />
         <DynamicAIIcon {...searchProps} />
       </div>
       <SearchInput {...inputProps} />

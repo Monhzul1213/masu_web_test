@@ -7,7 +7,7 @@ import { withSize } from 'react-sizeme';
 import mime from 'mime';
 
 import { urlToFile } from '../../helpers';
-import { getList, sendRequest } from '../../services';
+import { getList, getServiceBar, sendRequest } from '../../services';
 import { Error1, Overlay, Prompt, ButtonRowCancel, Empty1 } from '../../components/all';
 import { Main, List } from '../../components/config/tax/add';
 
@@ -19,16 +19,19 @@ function Screen(props){
   const [error, setError] = useState(null);
   const [regNo, setRegNo] = useState({ value: '' });
   const [name, setName] = useState({ value: '' });
+  const [nomer, setNomer] = useState({ value: '' });
   const [notes, setNotes] = useState({ value: '' });
   const [checked, setChecked] = useState(false);
+  const [checkedList, setCheckedList] = useState(false);
   const [sites, setSites] = useState([]);
-  const [show, setShow] = useState(false);
   const [saved, setSaved] = useState(false);
   const [request, setRequest] = useState(null);
-  const [valid, setValid] = useState(false);
+  // const [valid, setValid] = useState(false);
   const [image, setImage] = useState(null);
   const [image64, setImage64] = useState('');
   const [imageType, setImageType] = useState('');
+  const [branch, setBranch] = useState([]);
+  const [subBranch, setSubBranch] = useState([]);
   const [searchParams] = useSearchParams();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -36,6 +39,7 @@ function Screen(props){
 
   useEffect(() => {
     getData();
+    getBranchs();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -52,27 +56,49 @@ function Screen(props){
     else getSites();
   }
 
-  const setSiteData = data => {
-    let error = [];
-    data?.forEach(item => {
-      if(!item.district) item.district = item.descr ?? '';
-      if(!item.district) error.push(item.name);
-    });
-    if(error?.length){
-      setError(t('tax.code_error') + " (" + error?.join(', ') + ")");
-      setValid(false);
-    } else
-      setValid(true);
-    setSites(data);
-  }
-
   const getSites = async () => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest?ReqeustId=-2'));
+    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest'));
     setLoading(false);
     if(response?.error) setError(response?.error);
-    else setSiteData(response?.data?.poscount);
+    else {
+      response?.data?.map(item => {
+        item.name = item?.siteName
+      })
+      setSiteData(response?.data);
+    }
+  }
+
+  const setSiteData = data => {
+    // let error = [];
+    // data?.forEach(item => {
+    //   if(!item.district) item.district = item.descr ?? '';
+    //   if(!item.district) error.push(item.name);
+    // });
+    // if(error?.length){
+    //   setError(t('tax.code_error') + " (" + error?.join(', ') + ")");
+    //   setValid(false);
+    // } else
+    //   setValid(true);
+    setSites(data);
+  }
+
+  const getBranchs = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getServiceBar('getBranchInfo'));
+    if(response?.error) setError(response?.error);
+    else {
+      let data = [];
+      response?.data?.data?.forEach(item => {
+        let index = data?.findIndex(list => item.branchCode === list.branchCode )
+        if(index === -1 ) data.push(item)
+      })
+      setBranch(data);
+      setSubBranch(response?.data?.data);
+    }
+    setLoading(false);
   }
 
   const getImage = async image => {
@@ -91,34 +117,25 @@ function Screen(props){
   const getRequest = async requestId => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest?ReqeustId=' + requestId));
+    const response = await dispatch(getList(user, token, 'Merchant/VatRequest/GetVatRequest?ReqeustId=' + requestId ));
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
       let request = response?.data?.vatrequest;
       setRegNo({ value: request?.vatPayerNo });
       setName({ value: request?.vatPayerName });
+      setNomer({ value: request?.tinId });
       setChecked((request?.isVat + '') === '1');
       setNotes({ value: request?.descr });
       setRequest(request);
-      setShow(request?.status + '' === '1');
-      let items = request?.items?.map(item => {
+      // setShow(request?.status + '' === '1');
+      request?.items?.map(item => {
         item.hasLocation = true;
-        item.coordinate = item.locationY + '\n' + item.locationX;
         item.rowStatus = 'U';
-        item.posCount = item.poscount;
         item.name = item.siteName;
         return item;
       });
-      response?.data?.poscount?.forEach(pos => {
-        let index = items?.findIndex(item => item.siteId === pos.siteID);
-        if(index === -1){
-          items.push(pos);
-        } else {
-          items[index].name = pos.name;
-        }
-      });
-      setSiteData(items);
+      setSiteData(request?.items);
       getImage(request)
       // setSites(items);
     }
@@ -145,30 +162,33 @@ function Screen(props){
   }
 
   const validateData = () => {
-    let length = sites?.filter(item => item.hasLocation)?.length;
+    let length = sites?.length;
     if(regNo?.value && name?.value && length){
-      let items = sites?.filter(item => item.hasLocation || item.rowStatus === 'D');
-      let vatRequestItem = items?.map(item => {
-        let newItem = {
-          siteId: item?.siteId ?? item?.siteID, district: item?.district ?? '',
-          locationX: item?.locationX + '', locationY: item?.locationY + '',
-          poscount: item?.posCount, rowStatus: item?.rowStatus ?? 'I'
-        };
-        return newItem
+      // let items = sites?.filter(item => item.rowStatus === 'D');
+      let vatRequestTerminalItem = [];
+      sites?.map(item => {
+        if(item?.checked){
+          vatRequestTerminalItem.push({
+              siteID: item?.siteId ?? item?.siteID, rowStatus: 'I',
+              branchCode: item?.branchCode, subBranchCode: item?.subBranchCode, terminalID : item?.terminalId
+            })
+        }
       });
 
       let data = {
         reqeustId: request?.requestId ?? -1,
         requestId: request?.requestId ?? -1,
         vatPayerNo: regNo?.value, vatPayerName: name?.value, isVat: checked ? 1 : 0,
-        vatPayerPhone: '', status: 1, descr: notes?.value,
-        rowStatus: request ? 'U' : 'I',
+        vatPayerPhone: '', status: 1, descr: notes?.value ?? '',
+        rowStatus: request ? 'U' : 'I', tinID: nomer?.value,
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
-        vatRequestItem
+        vatRequestTerminalItem
       };
+
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
+      // if(!nomer?.value) setNomer({ value: '', error: t('error.not_empty') });
       if(!length) setError(t('tax.length_error'));
       return false;
     }
@@ -189,19 +209,19 @@ function Screen(props){
     request.isVat = parseInt(request.isVat);
     request.rowStatus = 'U';
     request.status = 0;
-    request.vatRequestItem = request?.items;
+    request.vatRequestTerminalItem = request?.items;
     let response = await dispatch(sendRequest(user, token, 'Merchant/VatRequest', request));
     if(response?.error) onError(response?.error);
     else onSuccess(t('tax.delete_success'));
   }
 
   const width = size?.width >= 690 ? 690 : size?.width;
-  const disabled = request && !show;
+  const disabled = request;
   const mainProps = { setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes, setNotes, 
-    request, image, setImage, setImage64, setImageType };
-  const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled };
+    request, image, setImage, setImage64, setImageType, nomer, setNomer };
+  const siteProps = { data: sites, setData: setSites, setEdited, setError, disabled, branch, subBranch, getBranchs, checked: checkedList, setChecked: setCheckedList };
   const emptyProps = { icon: 'MdStorefront', text: 'tax.empty', id: 'add_back' };
-  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show, id: 'add_btns', msg: 'tax.cancel_message', noSave: disabled || !valid };
+  const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', id: 'add_btns', msg: 'tax.cancel_message', noSave: disabled };
 
   return (
     <div className='add_tab' style={{flex: 1}}>

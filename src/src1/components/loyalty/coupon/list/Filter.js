@@ -50,7 +50,7 @@ export function Filter(props){
   }
 
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
-  const width = showSearch ? 0 : (size?.width > 780 ? 442 : (size?.width - 30));
+  const width = showSearch ? 0 : (size?.width > 780 ? 462 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
   const classBack = 'cou_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const bStyle = { maxWidth: size?.width > 780 ? 180 : ((size?.width - 52) / 2) };

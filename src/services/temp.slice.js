@@ -293,6 +293,22 @@ export const getServiceOTC = (api, method) => async dispatch => {
   }
 };
 
+
+export const getServiceBar = (api, method) => async dispatch => {
+  try {
+    const config = {
+      method: method ?? 'GET', url: loginConfig?.ebarimt + api,
+      headers: {'Accept': '*/*' }
+    };
+    const response = await fetchRetry(config);
+    const error = response?.rettype === 0 ? null : response?.retdesc;
+    return Promise.resolve({ error, data: response });
+  } catch (err) {
+    console.log(err);
+    return Promise.resolve({ error: err?.toString() });
+  }
+};
+
 function fetchRetry(config, retries = 5) {
   return axios(config)
     .then(res => {

@@ -93,7 +93,7 @@ export function EmpList(props){
   const subProps = { visible, invNo: null, emp: selected, onBack, onDone, onPay };
 
   return (
-    <div className='mo_container' style={{ width }}>
+    <div className='mo_container' style={{ width, marginTop: hasData ? 15 : 0 }}>
       {visible && <Subscription {...subProps} />}
       <p className='card_title'>{t('invoices.employee')}</p>
       <div style={{overflowX: 'scroll'}}>

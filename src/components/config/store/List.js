@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 
 import { PaginationTable, Table } from '../../all';
 import { SubscriptionSite } from '../../management/adjust/list';
@@ -12,7 +11,6 @@ export function List(props){
   const [columns, setColumns] = useState([]);
   const [visible, setVisible] = useState(false);
   const [site, setSite] = useState(null);
-  const { useInventoryManagement } = useSelector(state => state.login.user);
 
   useEffect(() => {
     setColumns([
@@ -21,14 +19,7 @@ export function List(props){
       {
         Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'posQty',
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}</div>
-      },
-      {
-        Header: '', accessor: 'status', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
-        Cell: ({ value, row, onClickLink }) => {
-          let active = useInventoryManagement && value === 1;
-          return active && (<div className='table_link' onClick={() => onClickLink(row)}>{t('employee.pay')}</div>);
-        }
-    },
+      }
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

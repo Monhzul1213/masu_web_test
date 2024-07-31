@@ -7,10 +7,8 @@ export function Header(props){
   const { t } = useTranslation();
   const {  columns, data, excelName } = props;
 
-
-  
   return (
-    <div className='ih_btn_row_z' >
+    <div className='ih_btn_row' >
       <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
     </div>
   );

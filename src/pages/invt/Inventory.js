@@ -153,7 +153,7 @@ export function Inventory(){
         {!data?.length && !filtering ? <Empty2 {...emptyProps} /> :
           <SizeMe>{({ size }) => 
             <div className='i_list_cont' id='invt_list'>
-              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
+              {<List {...listProps} size={size} />}
             </div>
           }</SizeMe>
         }

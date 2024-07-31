@@ -3,13 +3,14 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { validateEmail } from '../../../helpers';
+import { cityList, validateEmail } from '../../../helpers';
 import { sendRequest } from '../../../services';
 import { ButtonRow, ModalTitle, Overlay, Error, Confirm } from '../all/all_m';
-import { Input } from '../../../components/all';
+import { IconInput, Input, Select } from '../../../components/all';
+import { Location } from '../../../components/config/store/Location';
 
 export function Add(props){
-  const { visible, selected, closeModal, onSearch, filter} = props;
+  const { visible, selected, closeModal, onSearch, filter, getBranchs, branch, allBranch} = props;
   const { t } = useTranslation();
   const [custName, setCustName] = useState({ value: '' });
   const [address, setAddress] = useState({ value: '' });
@@ -19,9 +20,26 @@ export function Add(props){
   const [note, setNote] = useState({ value: '' });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [descr, setDescr] = useState({ value: null });
+  const [subDescr, setSubDescr] = useState({ value: null });
+  const [subBranch, setSubBranch] = useState([]);
+  const [location, setLocation] = useState(null);
+  const [select, setSelect] = useState(false);
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+  const [descr1, setDescr1] = useState({ value: null });
+  const [descr2, setDescr2] = useState({ value: null });
+  const [city, setCity] = useState(null);
   const [open, setOpen] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    getBranchs();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if(selected){
@@ -31,11 +49,16 @@ export function Add(props){
       setAddress({ value: selected?.address ?? '' });
       setNote({ value: selected?.note ?? '' });
       setCustCode({ value: selected?.custCode ?? '' });
-
+      setDescr({value: selected?.branchCode ?? ''});
+      setSubDescr({value: selected?.subBranchCode ?? ''});
+      setLocation({ value : selected?.latitudes ? selected?.latitudes + '\n' + selected?.longitudes : ''})
+      setSubBranch(allBranch?.filter(item => item?.branchCode?.includes(selected?.branchCode)));
+      setLat( selected?.latitudes ? selected?.latitudes : 47.91452468522501 );
+      setLng(selected?.longitudes ? selected?.longitudes : 106.91007001230763 );
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [allBranch]);
 
   const checkValid = () => {
     let phoneLength = 8 , nameLength = 2, noteLength = 10, addressLength = 8
@@ -78,6 +101,10 @@ export function Add(props){
             country: "",
             note: note?.value?.trim(),
             rowStatus : selected ? "U" : "I",
+            branchCode: descr?.value,
+            subBranchCode: subDescr?.value,
+            latitudes: lat,
+            longitudes: lng
           }]
       const response = await dispatch(sendRequest(user, token, 'Site/Customer',  data));
       setLoading(false);
@@ -128,7 +155,36 @@ export function Add(props){
       setLoading(false);
     }
   }
- 
+
+  const onChangeDescr = value => {
+    setDescr(value);
+    setSubBranch(allBranch?.filter(item => item?.branchCode?.includes(value?.value)));
+    cityList?.forEach(item => {
+      if(item?.districtCode?.includes(value?.value)){
+        setDescr1({value: item?.lan})
+        setDescr2({value: item?.lng})
+        setCity(item?.city)
+    }});
+  }
+
+  const onClickLocation = row => {
+    if(!descr?.value) {
+      setDescr({ value: null, error: t('profile.select') });
+      setSelect(false);
+    } else setSelect(true);
+  }
+
+  const closeLocation = (hasLocation, y, x) => {
+    setSelect(false);
+    if(hasLocation){
+      let coordinate = y + '\n' + x;
+      setLocation({value: coordinate})
+      setLat(y)
+      setLng(x)
+      setError && setError(null);
+    }
+  }
+
   const maxheight= 'calc(90vh - 105px )';
   const nameProps = { value: custName, setValue: setCustName, label: t('page.name'), placeholder: t('customer.name'), setError, length: 64  };
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, length: 8 };
@@ -138,10 +194,18 @@ export function Add(props){
   const addressProps = {  value: address, setValue: setAddress,label: t('customer.address'), placeholder: t('customer.address1'), setError, length: 192 };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
+  const cityProps = { value: descr, setValue: onChangeDescr, label: t('shop.city'), placeholder: t('shop.location1'), setError,
+  data: branch, s_value : 'branchCode', s_descr :'branchName', };
+  const districtProps = { value: subDescr, setValue: setSubDescr, label: t('shop.district'), placeholder: t('shop.location1'), setError,
+    data: subBranch, s_value : 'subBranchCode', s_descr :'subBranchName', onFocus: getBranchs };
+  const locProps = { value: location, setValue: setLocation, label: t('tax.location'), placeholder: t('tax.location'), setError, length: 250, 
+    onClick: onClickLocation, disabled: true, className: 'store_descr' };
+  const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, descr1, descr2, city };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
       {open && <Confirm {...confirmProps} />}
+      {select && <Location {...mapProps} />}
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSupervisorAccount' title={t(selected ? 'customer.edit' : 'customer.new')} isMD={true} />
@@ -150,6 +214,9 @@ export function Add(props){
               <Input {...nameProps}  />
               <Input {...phoneProps} />
               <Input {...mailProps} />
+              <Select {...cityProps} />
+              <Select {...districtProps} />
+              <IconInput {...locProps} />
               <Input {...addressProps} />
               <Input {...codeProps} />
               <Input {...descrProps} />

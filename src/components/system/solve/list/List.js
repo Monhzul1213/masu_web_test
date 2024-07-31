@@ -20,6 +20,7 @@ export function List(props){
       },
       { Header: t('tax.reg_no'), accessor: 'vatPayerNo' },
       { Header: t('tax.name'), accessor: 'vatPayerName', customStyle: { minWidth: 120 } },
+      { Header: t('tax.t_no'), accessor: 'tinID', customStyle: { minWidth: 120 } },
       {
         Header: t('tax.checked'), accessor: 'isVat', customStyle: { minWidth: 120 },
         Cell: ({ value }) => <div>{value === '1' ? t('page.yes') : t('page.no')}</div>

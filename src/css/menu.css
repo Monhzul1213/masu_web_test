@@ -445,3 +445,6 @@
   text-align: end;
   margin: 0 3px;
 }
+.ant-menu-item .ant-menu-item-icon+span, .ant-menu-item .anticon+span, .ant-menu-submenu-title .ant-menu-item-icon+span, .ant-menu-submenu-title .anticon+span{
+  margin-left: 0;
+}

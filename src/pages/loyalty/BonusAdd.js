@@ -150,7 +150,6 @@ export function BonusAdd(){
           discountValue: parseFloat(reward?.discountValue ? reward?.discountValue : 0),
         }]
       };
-      console.log(data);
       return data;
     } else {
       if(!name?.value?.trim()) setName({ value: '', error: t('error.not_empty') });

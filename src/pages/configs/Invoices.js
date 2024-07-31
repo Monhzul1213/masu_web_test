@@ -32,9 +32,9 @@ function Card(props){
     else {
       setHasData(response?.data?.empSubscriptions?.length || response?.data?.siteSubscriptions?.length);
       setHasData1(response?.data?.empSubscriptions?.length ? true : false);
-      setHasData2(response?.data?.siteSubscriptions?.length ? true : false);
+      setHasData2(response?.data?.subscriptions?.length ? true : false);
       setData1(response?.data?.empSubscriptions);
-      setData2(response?.data?.siteSubscriptions);
+      setData2(response?.data?.subscriptions);
     }
     setLoading(false);
   }
@@ -49,8 +49,8 @@ function Card(props){
         {error && <Error1 error={error} />}
         {hasData ?
           <div className='card_scroll'>
-            {hasData1 && <EmpList data={data1} hasData={hasData2} {...listProps} />}
             {hasData2 && <SiteList data={data2} hasData={hasData1} {...listProps} />}
+            {hasData1 && <EmpList data={data1} hasData={hasData2} {...listProps} />}
           </div>
         : <div style={{ width }}><Empty1 {...emptyProps} /></div>}
       </Overlay>

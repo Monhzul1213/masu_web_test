@@ -30,7 +30,7 @@ export function Header(props){
     if(!states?.length || states?.length === 1){
       setError && setError(null);
       setLoading('status');
-      const response = t('advert.types');
+      const response = t('advert.status');
       let data = [...[{label: t('order.all_status') , value: -1 }], ...response];
       setStates(data?.sort((a, b) => a.valueNum - b.valueNum));
       setLoading(null);

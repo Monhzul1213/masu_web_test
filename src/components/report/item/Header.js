@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import '../../../css/report.css';
-import { ExportExcel2 } from '../../../helpers';
+import { ExportExcel } from '../../../helpers';
 import { DynamicAIIcon } from '../../all';
 import { SearchInput } from '../../invt/inventory/list/SearchInput';
 import { IconSelect, DynamicMDIcon } from '../../all';
@@ -30,7 +30,7 @@ export function Header(props){
   
   return (
     <div className='rp_list_filter_z1'>
-        <ExportExcel2 text={t('page.export')} columns={columns} excelData={data1} fileName={excelName} />
+        <ExportExcel text={t('page.export')} columns={columns} excelData={data1} fileName={excelName} />
         <div className='rp_list_filter_z'>
           <div className='rp_list_filter_icon' style={style}><DynamicAIIcon {...searchProps} /></div>
           <SearchInput {...inputProps} />

@@ -32,6 +32,8 @@ export function List(props){
       },
       { Header: t('customer.Email'), accessor: 'email', exLabel: t('customer.Email'),
         Cell: props => <div >{props.value}</div>},
+      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), customStyle : {width: 100} },
+      { Header: t('shop.district'), accessor: 'subBranchName', exLabel: t('shop.district'), customStyle : {width: 100} },
       { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'),
         Cell: props => <div >{props.value}</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode', exLabel: t('customer.code'),

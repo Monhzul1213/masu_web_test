@@ -22,6 +22,7 @@ export function List(props){
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       { Header: t('advert.name'), accessor: 'adsName' },
+      { id: 'adsType', Header: t('advert.type'), accessor: d => { return d.adsType === 0 ? 'Зураг' : 'Видео' }},
       { Header: t('invoice.begin'), accessor: 'beginDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },      

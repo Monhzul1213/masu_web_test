@@ -181,7 +181,7 @@ export function OrderReceipt(){
   let itemsProps = { header, detail, setDetail, setEdited, setErrorMain: setError, total, setTotal, disabled, setDisabled };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), id: 'po_btns',
     text3: 'order.receipt_save', deletable, onClickDelete };
-  let subProps = { visible, setVisible, sites, setSites, onDone: onDone1, noTrial: true, noBack: true };
+  let subProps = { visible, setVisible, sites, setSites, onDone: onDone1, noTrial: true };
   let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
   
   return (

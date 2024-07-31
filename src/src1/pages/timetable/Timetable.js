@@ -6,7 +6,8 @@ import moment from 'moment';
 
 import { getList } from '../../../services';
 import { Error1, Overlay } from '../../components/all/all_m';
-import { Subscription, BigCalendar } from '../../components/timetable/list';
+import { BigCalendar } from '../../components/timetable/list';
+import { Subscription } from '../../../components/management/adjust/list/Subscription';
 
 function Screen(props){
   const { size } = props;
@@ -38,7 +39,7 @@ function Screen(props){
     let api = 'Txn/GetSchedule' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
     const response = await dispatch(getList(user, token, api, null, headers));
-    if(response?.code === 2000){
+    if(response?.code === 1000){
       // comment
       // isNew or isExpired
       // || response?.code === 1001

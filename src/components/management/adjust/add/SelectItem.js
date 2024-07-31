@@ -29,7 +29,7 @@ export function ItemSelect(props){
     if(value?.length > 3){
       setLoading(true);
       setSearch({ value: null });
-      let filter = [{ fieldName: "Name", value }, { fieldName: "SiteID", value: siteId?.value }];
+      let filter = [{ fieldName: "Name", value }, { fieldName: "SiteID", value: siteId?.value }, {fieldName : 'GetVariant', value : "Y"}];
       let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
       if(response?.error) setSearch({ value: null, error: response?.error });
       else setItems(response?.data);

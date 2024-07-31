@@ -6,7 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import { getList, sendRequest } from "../../../services";
-import { Error1, Overlay, Prompt, Confirm, ButtonRowConfirm} from "../../../components/all";
+import {
+  Error1,
+  Overlay,
+  Prompt,
+  Confirm,
+  ButtonRowConfirm,
+} from "../../../components/all";
 import { Main, CardService } from "../../components/loyalty/vaucher/add";
 
 export function VoucherAdd() {
@@ -28,7 +34,7 @@ export function VoucherAdd() {
   const [number, setNumber] = useState({ value: "" });
   const [color, setColor] = useState({ value: "006838" });
   // const [kits, setKits] = useState([]);
-  // const [dkits, setDKits] = useState([]);
+  const [dkits, setDKits] = useState([]);
   const [searchI, setSearchI] = useState({ value: null });
   const { user, token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
@@ -36,7 +42,7 @@ export function VoucherAdd() {
   const [searchParams] = useSearchParams();
   const [controlDisable, setControlDisable] = useState(false);
   const [consumer, setConsumer] = useState([]);
-  
+
   useEffect(() => {
     if (saved) onClickCancel();
     return () => {};
@@ -207,14 +213,57 @@ export function VoucherAdd() {
     // if(sure) setVisible(true);
   };
 
-  let mainProps = { setError, setEdited, name, setName, price, setPrice, qty, setQty,
-    number, setNumber, perc, setPerc, beginDate, setBeginDate, endDate, setEndDate, status,
-    setStatus, type, setType, controlDisable, color, setColor };
+  let mainProps = {
+    setError,
+    setEdited,
+    name,
+    setName,
+    price,
+    setPrice,
+    qty,
+    setQty,
+    number,
+    setNumber,
+    perc,
+    setPerc,
+    beginDate,
+    setBeginDate,
+    endDate,
+    setEndDate,
+    status,
+    setStatus,
+    type,
+    setType,
+    controlDisable,
+    color,
+    setColor,
+  };
 
-  let btnProps = { onClickCancel, onClickSave, onClickDelete, id: "vo_btn", show: false};
-  let confirmProps = { open, text: t("adjust.confirm_pay"), confirm, text1: error};
+  let btnProps = {
+    onClickCancel,
+    onClickSave,
+    onClickDelete,
+    id: "vo_btn",
+    show: false,
+  };
+  let confirmProps = {
+    open,
+    text: t("adjust.confirm_pay"),
+    confirm,
+    text1: error,
+  };
 
-  const serviceProps = {number, data: consumer, setData: setConsumer, setError, setEdited, search: searchI, setSearch: setSearchI};
+  const serviceProps = {
+    number,
+    data: consumer,
+    setData: setConsumer,
+    setError,
+    setEdited,
+    search: searchI,
+    setSearch: setSearchI,
+    setDKits,
+    dkits,
+  };
 
   return (
     <Overlay className="i_container" loading={loading}>

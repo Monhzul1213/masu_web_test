@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { PaginationTable, Table, DynamicBSIcon, IconButton, Money } from '../../../../../src1/components/all/all_m';
+import { Table, DynamicBSIcon, IconButton, Money } from '../../../../../src1/components/all/all_m';
 import { ItemSelect, SelectItem } from './SelectItem';
-import { Service } from '../../service/Service';
+import { Service } from '../../../../../src1/components/loyalty/service';
 
 
 export function Card(props){
@@ -71,8 +71,6 @@ export function Card(props){
     setVisible(false)
   }
 
- 
-
   const newItem = consumer => {
     return { consumerId: consumer.consumerId, firstName: consumer.firstName, phone: consumer.phone, email: consumer.email, 
       age: consumer.age, gender: consumer.gender, status: consumer.status  };
@@ -97,7 +95,6 @@ export function Card(props){
           <Table {...tableProps} />
         </div>
         <ItemSelect {...selectProps} />
-        <PaginationTable {...tableProps} />
     </div>
   );
 }

@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
 
-import { getList } from '../../../../services';
+import { getList, getServiceBar } from '../../../../services';
 import { Input, Button, CheckBox, DescrInput, UploadImage } from '../../../all';
 
 function Card(props){
   const { size, setError, setEdited, setLoading, regNo, setRegNo, name, setName, checked, setChecked, notes,
-          setNotes, request, image, setImage, setImage64, setImageType  } = props;
+          setNotes, request, image, setImage, setImage64, setImageType, nomer, setNomer  } = props;
   const { t } = useTranslation();
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -17,6 +17,7 @@ function Card(props){
   const changeNo = value => {
     setRegNo(value);
     setName({ value: '' });
+    setNomer({ value: '' });
     setChecked(false);
   }
 
@@ -26,13 +27,16 @@ function Card(props){
       setLoading(true);
       setError(null);
       const response = await dispatch(getList(user, token, 'Merchant/Info?regno=' + regNo?.value));
+      const response1 = await dispatch(getServiceBar('getTinInfo?regNo=' + regNo?.value));
       if(response?.error) setError(response?.error);
       else if(response?.data?.found){
         setName({ value: response?.data?.name });
+        setNomer({ value: response1?.data?.data });
         setChecked(response?.data?.vatpayer);
       } else {
         setError(t('tax.error'));
         setName({ value: '' });
+        setNomer({ value: '' });
         setChecked(false);
       }
       setLoading(false);
@@ -48,6 +52,7 @@ function Card(props){
   const checkProps = { checked, setChecked, label: 'tax.checked', style: { marginTop: 0 }, disabled: true };
   const descrProps = { value: notes, setValue: setNotes, label: t('tax.note'), placeholder: t('tax.note'), disabled: true, inRow: true };
   const imageProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'im_image' };
+  const nomerProps = { value: nomer, setValue: setNomer, label: t('tax.t_no'), placeholder: t('tax.t_no'), inRow: true, disabled: true };
 
   return (
     <div className='add_back' id={id}>
@@ -60,6 +65,8 @@ function Card(props){
         </div>
         <div id={idRow} style={{flexFlow: 'column', marginTop: 15, marginBottom: 10}}>
           <Input {...nameProps} />
+          <div className='im_gap' />
+          <Input {...nomerProps} />
           <div className='im_gap' />
           <CheckBox {...checkProps} />
         </div>

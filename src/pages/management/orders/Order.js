@@ -7,12 +7,14 @@ import '../../../css/order.css';
 import { sendRequest } from '../../../services';
 import { Overlay, Error1, Empty, Empty1 } from '../../../components/all';
 import { Header, List } from '../../../components/management/order/list';
+import { Subscription } from '../../../components/management/adjust/list';
 
 export function Order(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [filtering, setFiltering] = useState(false);
+  const [visible, setVisible] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +29,12 @@ export function Order(){
     setError(null);
     setLoading(true);
     const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get' + (query ?? '')));
+    if(response?.code === 1000){
+      // comment
+      // isNew or isExpired
+      // || response?.code === 1001
+      setVisible(true);
+    }
     if(response?.error) setError(response?.error);
     else {
       response?.data?.forEach(item => {
@@ -47,13 +55,19 @@ export function Order(){
   const onClickAdd = () => {
     navigate({ pathname: '/management/order_list/order_vendors', search: createSearchParams({ next: '/management/order_list/order_add' }).toString() });
   }
+
+  const onDone = async () => {
+    setVisible(false);
+  }
   
   const emptyProps = { icon: 'MdOutlineArticle', type: 'order', noDescr: true, onClickAdd };
   const headerProps = { onClickAdd, setError, onSearch: getData };
   const listProps = { data };
-  
+  const subProps = { visible, setVisible, onDone };
+
   return (
     <div className='s_container_i'>
+      {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :

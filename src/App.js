@@ -13,7 +13,7 @@ import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/em
 import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen, OrderReceipt } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
-import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat } from './src1/pages';
+import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat, CountAdd, Count, Package, PackageAdd } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
@@ -23,9 +23,10 @@ import { Adjust, AdjustAdd } from './pages/management/adjust';
 import { InvoiceSend } from './components/emp/employee/add/InvoiceSend';
 import { Timetable1 } from './src1/pages/timetable';
 import { EmployeeService } from './src2/pages/timetable/EmployeeService';
-import { Voucher, VoucherAdd } from './src2/pages/loyalty';
+import { GiftCard, GiftCardAdd, Voucher, VoucherAdd } from './src2/pages/loyalty';
 import { Coupon, CouponAdd } from './src1/pages/loyalty';
 import { Bonus, BonusAdd } from './pages/loyalty';
+import { ReportBuyer, ReportReceivable, ReportTime } from './src3_dadlaga/pages';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -181,6 +182,15 @@ export function App(){
                 <Route path='/loyalty/voucher/voucher_add' element={<VoucherAdd />} />
                 <Route path='/loyalty/bonus' element={<Bonus />} />
                 <Route path='/loyalty/bonus/bonus_add' element={<BonusAdd />} />
+                <Route path='/report/report_buyer' element={<ReportBuyer />} />
+                <Route path='/report/report_time' element={<ReportTime />} />
+                <Route path='/report/report_receivable' element={<ReportReceivable />} />
+                <Route path='/management/count' element={<Count />} />
+                <Route path='/management/count/count_add' element={<CountAdd />} />
+                <Route path="/loyalty/giftCard" element={<GiftCard />} />
+                <Route path="/loyalty/giftCard/giftCard_add" element={<GiftCardAdd />}/>
+                <Route path='/management/package' element={<Package />} />
+                <Route path='/management/package/package_add' element={<PackageAdd />} />
               </Routes>
             </Layout>
           </Layout>

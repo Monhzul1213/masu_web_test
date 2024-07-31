@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { withSize } from 'react-sizeme';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../components/all/all_m';
-import {Filter, List } from '../../components/report/employee'
+import { Filter, List } from '../../components/report/employee';
+
 function Screen(props){
   const { size } = props;
   const { t } = useTranslation();

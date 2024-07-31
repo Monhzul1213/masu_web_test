@@ -28,6 +28,17 @@ export function CheckBtn(props){
   );
 }
 
+export function CheckBtn1(props){
+  const { checked, onClick, disabled, className } = props;
+
+  return (
+    <div className={className ?? 'check_btn'} onClick={onClick} disabled={disabled}>
+      {checked
+        ? <ImCheckboxChecked className='check_btn_icon' id='check_all_selected' />
+        : <ImCheckboxUnchecked className='check_btn_icon' />}
+    </div>
+  );
+}
 export function CheckAll(props){
   const { type, checked, onCheckAll, style } = props;
   const { t } = useTranslation();

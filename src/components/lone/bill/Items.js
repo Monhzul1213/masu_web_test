@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Money } from '../../all';
-import { coupon } from '../../../src1/assets'
+import { bonus, coupon } from '../../../src1/assets'
 
 export function Items(props){
   const { detail, bill } = props;
@@ -21,11 +21,18 @@ export function Items(props){
         {item?.serviceCode ? <p className='bl_item_descr'>{service}</p> : null}
         <div className='dr_item_text_back'>
           <div className='dr_img_back'>
-            {item?.couponName ? <img src={coupon} className='dr_img' alt='coupon'/> : ''}
+            {item?.couponAmount ? <img src={coupon} className='dr_img' alt='coupon'/> : ''}
             <p className='dr_item_text_z2'>{ (item?.couponName ? item?.couponName : '')}</p>
           </div>
           <p className='dr_item_text_z2'>{item?.couponAmount ? <Money value={item?.couponAmount}/> : ''}</p>
         </div>
+        {item?.bonusId !== 0 ? <div className='dr_item_text_back'>
+          <div className='dr_img_back'>
+            <img src={bonus} className='dr_bonus_img' alt='coupon'/>
+            <p className='dr_item_text_z2'>{item?.bonusName}</p>
+          </div>
+          <p className='dr_item_text_z2'><Money value={item?.rewardAmount}/></p>
+        </div> : null}
       </div>
     );
   }

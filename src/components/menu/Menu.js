@@ -25,6 +25,7 @@ export function Menu(props){
   const [hideTime, setHideTime] = useState(true);
   const [hideMenu, setHideMenu] = useState(false);
   const [review, setReview] = useState(false);
+  const [subscriptionType, setSubscriptionType] = useState(false);
   const { user: { msRole, isAdmin }, isPartner, user, token } = useSelector(state => state.login);
   const { pathname } = useLocation();
   const path = pathname?.split('/') && pathname?.split('/')[1];
@@ -44,7 +45,8 @@ export function Menu(props){
     if(isAdmin) setOpenKeys(["system", "/system"]);
 
     getReview();
-
+    getConfig();
+    
     if(user?.merchantId === 66 || user?.merchantId === 135 || user?.merchantId === 383 || user?.merchantId === 631 || 
       user?.merchantId === 270 || user?.merchantId === 164 || user?.merchantId === 700 || user?.merchantId === 999)
       setHideTime(false);
@@ -65,6 +67,11 @@ export function Menu(props){
     const response = await dispatch(getList(user, token, 'Merchant/GetReviewItem'));
     const review = response?.data?.filter(item => item.isShow !== 'Y')[0];
     setReview(review);
+  }
+
+  const getConfig = async () => {
+    const response = await dispatch(getList(user, token, 'Merchant/GetConfig'));
+    setSubscriptionType(response?.data?.subscriptionType)
   }
 
   const style = {
@@ -95,9 +102,12 @@ export function Menu(props){
       getItem(t('menu.report_employee'), '/report/report_employee', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_payment'), '/report/report_payment', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_document'), '/report/report_document', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.report_buyer'), '/report/report_buyer', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.report_time'), '/report/report_time', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_edited'), '/report/report_edited', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_discount'), '/report/report_discount', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_noat'), '/report/report_noat', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.report_receivable'), '/report/report_receivable', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_cashier'), '/report/report_cashier', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_order'), '/report/report_orList', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.terms'), '/report/terms', null, null, null, msRole?.webViewSalesReport !== 'Y'),
@@ -107,14 +117,17 @@ export function Menu(props){
       getItem(t('menu.invt_category'), '/inventory/invt_category', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_modi'), '/inventory/invt_modi', null, null, null, msRole?.webManageItem !== 'Y'),
     ]),
-    getItem(t('menu.management'), '/management', <TbBuildingWarehouse />,[
-      getItem(t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.invt_remainder'), '/management/invt_remainder', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.invt_txn'), '/management/invt_txn', null, null, null, msRole?.webManageItem !== 'Y'),
+     getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.management')}</span> : t('menu.management'), '/management', 
+     <TbBuildingWarehouse style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>,[
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.suppliers')}</span> : t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_remainder')}</span> : t('menu.invt_remainder'), '/management/invt_remainder', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_txn')}</span> : t('menu.invt_txn'), '/management/invt_txn', null, null, null, msRole?.webManageItem !== 'Y'),
       {type: 'divider'},
-      getItem(t('menu.order_list'), '/management/order_list', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.adjust'), '/management/adjust', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.transfer'), '/management/transfer', null, null, null, msRole?.webManageItem !== 'Y')
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.order_list')}</span> : t('menu.order_list'), '/management/order_list', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.adjust')}</span> : t('menu.adjust'), '/management/adjust', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.transfer')}</span> : t('menu.transfer'), '/management/transfer', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.count')}</span> : t('menu.count'), '/management/count', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.package')}</span> : t('menu.package'), '/management/package', null, null, null, msRole?.webManageItem !== 'Y')
     ]),
     getItem(t('menu.employee'), '/employee', <RiContactsLine />, [
       getItem(t('menu.emp_list'), '/employee/emp_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
@@ -122,18 +135,23 @@ export function Menu(props){
       getItem(t('menu.shift_config'), '/employee/shift_config', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
-    getItem(t('menu.customer'), '/customer', <RiTeamLine />, null, null, msRole?.webManageCustomer !== 'Y'),
-    getItem(t('menu.loyalty'), '/loyalty', <RiCoupon2Line />, [
-      getItem(t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(t('menu.bonus'), '/loyalty/bonus', null, null, null, msRole?.webManageItem !== 'Y'),
+    getItem( subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer', 
+    <RiTeamLine style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, null, null, msRole?.webManageCustomer !== 'Y'),
+    getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.loyalty')}</span> : t('menu.loyalty'), '/loyalty', 
+    <RiCoupon2Line style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, [
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.coupon')}</span> : t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.voucher')}</span> : t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_discount')}</span> : t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.bonus')}</span> : t('menu.bonus'), '/loyalty/bonus', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.giftCard')}</span> : t("menu.giftCard"), "/loyalty/giftCard", null, null, null, msRole?.webManageItem !== "Y")
     ]),
-    hideTime ? null : getItem(t('timetable.time'), '/timetable', <BiCalendar />, [
-      getItem(t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
-      getItem(t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
+    hideTime ? null : getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('timetable.time')}</span> : t('timetable.time'), '/timetable', 
+    <BiCalendar style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, [
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
-    getItem(t('menu.integration'), '/integration', <BsPuzzle />, null, null, msRole?.webManageCustomer !== 'Y'),
+    getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
+    <BsPuzzle style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, null, null, msRole?.webManageCustomer !== 'Y'),
     hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :
     getItem(t('menu.config'), '/config', <BsGear />, [
       getItem(t('system_menu.additional'), '/config/additional', null, null, null, msRole?.webEditSettings !== 'Y'),
@@ -154,7 +172,7 @@ export function Menu(props){
     if(hide) setCollapsed(true);
   }
 
-  const rootSubmenuKeys = ['/report', '/inventory', '/management', '/employee', '/customer', '/integration', '/config', '/help'];
+  const rootSubmenuKeys = ['/report', '/inventory', '/management', '/employee', '/customer', '/loyalty', '/timetable', '/integration', '/config', '/help'];
 
   const onOpenChange = (keys) => {
     const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -168,7 +186,7 @@ export function Menu(props){
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style, breakpoint: 'lg', width: 300,
     onCollapse: setCollapsed };
   const drawerProps = { className: 'menu_drawer', placement: 'left', onClose: () => setCollapsed(true), closable: false, open: !collapsed };
-  const profileProps = { collapsed, setCollapsed };
+  const profileProps = { collapsed, setCollapsed, subscriptionType };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline', openKeys, onOpenChange };
   const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
   const rateProps = { review, setReview };

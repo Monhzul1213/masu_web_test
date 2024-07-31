@@ -541,6 +541,12 @@
   margin: 20px 0 0 0;
 }
 
+.rp_check_back {
+  display: flex;  
+  flex-flow: row;
+  margin-top: 5px;
+}
+
 #i_check_disabled {
   cursor: not-allowed;
 }
@@ -625,7 +631,7 @@
   display: flex;
   flex-flow: row;
   align-items: center;
-  padding: 9px 0;
+  padding: 9px 10px;
 }
 
 .role_item_check {
@@ -633,7 +639,7 @@
   box-shadow: none;
   background-color: transparent;
   padding: 0;
-  width: 40px;
+  /* width: 40px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1134,6 +1140,18 @@
   flex-flow: column;
 }
 
+.rp_header_back1 {
+  padding: 1px 0 5px 1px;
+  display: flex;
+  flex-flow: row;
+}
+
+.rp_header_back2, .rp_header_back3 {
+  padding: 1px 0 2px 1px;
+  display: flex;
+  flex-flow: column;
+}
+
 .rp_h_row1 {
   display: flex;
   flex-flow: row;
@@ -1145,6 +1163,27 @@
 }
 
 .rp_h_back2 .rp_h_row2, .rp_h_back3 .rp_h_row2 {
+  display: flex;
+  flex-flow: row;
+  margin-top: 10px;
+}
+
+.rp_header_back1 .rp_header_row2 {
+  display: flex;
+  flex-flow: row;
+}
+
+.rp_header_back2 .rp_header_row2, .rp_header_back2 .rp_header_row2 {
+  display: flex;
+  flex-flow: row;
+  margin-top: 10px;
+}
+.rp_h_back1 .rp_h_bonus_back {
+  display: flex;
+  flex-flow: row;
+}
+
+.rp_h_back2 .rp_h_bonus_back, .rp_h_back3 .rp_h_bonus_back {
   display: flex;
   flex-flow: row;
   margin-top: 10px;
@@ -1560,4 +1599,46 @@
 .cou_select_back1{
   width: 180px;
   margin: 0 15px 0 0;
+}
+
+.rep_select_back {
+  background-color: var(--root-color);
+  height: 36px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+  width: 150px;
+}
+
+.rep_select_back1 {
+  background-color: var(--root-color);
+  height: 36px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  display: flex;
+  align-items: center;
+  width: 150px;
+}
+.rep_select_back2 {
+  background-color: var(--root-color);
+  height: 36px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  width: 150px;
+}
+
+.rep_select_back2 .ant-select-selection-placeholder{
+  color: var(--text-color);
+}
+.ma_back2 {
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+  padding: var(--page-padding);
+  max-width: 500px;
 }

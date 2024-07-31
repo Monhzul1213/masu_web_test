@@ -8,11 +8,13 @@ import '../../../src1/css/loyalty.css';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Filter, List } from '../../components/loyalty/coupon/list';
+import { Subscription } from '../../../components/management/adjust/list/Subscription';
 
 export function Coupon(){
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [visible, setVisible] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,7 +34,13 @@ export function Coupon(){
     setLoading(true);
     let api = 'Site/GetCoupon' + query ?? '';
     const response = await dispatch(getList(user, token, api));
-    if(response?.error) setError(response?.error);
+    if(response?.code === 1000){
+      // comment
+      // isNew or isExpired
+      // || response?.code === 1001
+      setVisible(true);
+    }
+    else if(response?.error) setError(response?.error);
     else {
       response?.data?.coupon?.forEach(item=> {
         item.date = moment(item?.beginDate)?.format('yyyy.MM.DD') + '-' + moment(item?.endDate)?.format('yyyy.MM.DD')
@@ -44,11 +52,17 @@ export function Coupon(){
 
   const onClickAdd = () => navigate('coupon_add');
 
+  const onDone = async () => {
+    setVisible(false);
+  }
+
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
+  const subProps = { visible, setVisible, onDone };
 
   return (
     <div className='s_container_i'>
+      {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 

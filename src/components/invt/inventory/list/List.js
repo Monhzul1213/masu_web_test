@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useExpanded } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Check, DynamicFAIcon, PaginationTable, TableDetail, Money, PaginationList } from '../../../all';
+import { Check, DynamicFAIcon, PaginationTable, TableDetail, Money, PaginationList, Empty1 } from '../../../all';
 import { EditableCell, SelectableCell } from '../add/EditableCell';
 import { Detail } from './Detail';
 import { Header } from './Header';
@@ -102,16 +102,21 @@ export function List(props){
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
   const pageProps = { pageInfo, getInventory, size : true };
   const filterProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName };
+  const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
   return (
     <div>
       <Header {...filterProps} />
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <TableDetail {...tableProps} />
+      {!data?.length ? <Empty1 {...emptyProps} /> : 
+      <>
+        <div className='table_scroll' style={{overflowX: 'scroll'}}>
+          <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+            <TableDetail {...tableProps} />
+          </div>
         </div>
-      </div>
-      {filtering ? <PaginationTable {...tableProps} /> : <PaginationList {...pageProps} />}
+        {filtering ? <PaginationTable {...tableProps} /> : <PaginationList {...pageProps} />}
+      </>
+      }
     </div>
   )
 }

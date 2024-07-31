@@ -6,7 +6,7 @@ import moment from 'moment';
 import '../../../css/report.css';
 import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all';
 import { config, encrypt } from '../../../helpers';
-import { coupon } from '../../../src1/assets'
+import { bonus, coupon } from '../../../src1/assets'
 
 export function Drawer(props){
   const { selected, open, setOpen } = props;
@@ -39,11 +39,20 @@ export function Drawer(props){
         </div>
         <div className='dr_item_text_back'>
           <div className='dr_img_back'>
-            {item?.couponName ? <img src={coupon} className='dr_img' alt='coupon'/> : ''}
+            {item?.couponAmount ? <img src={coupon} className='dr_img' alt='coupon'/> : ''}
             <p className='dr_item_text_z2'>{item?.couponName ? (item?.couponName) : ''}</p>
           </div>
           <p className='dr_item_text_z2'>{item?.couponAmount ? <Money value={item?.couponAmount}/> : ''}</p>
         </div>
+        {item?.bonusID !== 0 ? 
+          <div className='dr_item_text_back'>
+            <div className='dr_img_back'>
+              {<img src={bonus} className='dr_bonus_img' alt='coupon'/>}
+              <p className='dr_item_text_z2'>{item?.bonusName}</p>
+            </div>
+            <p className='dr_item_text_z2'>{<Money value={item?.rewardAmount}/>}</p>
+          </div> 
+        : ''}
         <p className='dr_item_text'>{(item?.serviceCode !== 0 && item?.serviceCode !==null) ? ( t('report_receipt.t_emp')+ ': ' + item?.empName ) : ''}</p>
       </div>
     )

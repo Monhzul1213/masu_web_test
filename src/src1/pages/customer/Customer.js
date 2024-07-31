@@ -7,12 +7,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { Empty, Overlay, Error1 , Confirm, Empty1 } from '../../components/all/all_m';
 import { Add, List } from '../../components/customer';
-import { getList , sendRequest } from '../../../services';
+import { getList , getServiceBar, sendRequest } from '../../../services';
 import '../../css/customer.css'
+import { Subscription } from '../../../components/management/adjust/list/Subscription';
 
 export function Customer(props){
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
+  const [visible1, setVisible1] = useState(false);
   const [data, setData] = useState([]);
   const [excelName, setExcelName] = useState('');
   const [loaded, setLoaded] = useState(0);
@@ -21,6 +23,8 @@ export function Customer(props){
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
+  const [branch, setBranch] = useState([]);
+  const [allBranch, setAllBranch] = useState([]);
   const [filtering, setFiltering] = useState(false);
   const [filter,  setFilter] =   useState('');
   const { user, token }  = useSelector(state => state.login);
@@ -31,9 +35,27 @@ export function Customer(props){
   
   useEffect(() => {
     user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    getBranchs();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getBranchs = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getServiceBar('getBranchInfo'));
+    if(response?.error) setError(response?.error);
+    else {
+      let data = [];
+      response?.data?.data?.forEach(item => {
+        let index = data?.findIndex(list => item.branchCode === list.branchCode )
+        if(index === -1 ) data.push(item)
+      })
+      setBranch(data?.sort((a, b)=> a?.branchCode - b?.branchCode));
+      setAllBranch(response?.data?.data);
+    }
+    setLoading(false);
+  }
 
   const getData = async (name) => {
     setFilter(name);
@@ -43,6 +65,26 @@ export function Customer(props){
     let response = name
       ? await dispatch(getList(user, token, 'Site/GetCustomer/' + name ))
       : await dispatch(getList(user, token, 'Site/GetCustomer',null,  headers));
+    if(response?.code === 1000){
+      // comment
+      // isNew or isExpired
+      // || response?.code === 1001
+      setVisible1(true);
+    }
+    response?.data?.customers?.forEach(item => {
+      branch?.forEach(li => {
+        if(li?.branchCode?.includes(item?.branchCode)){
+          item.branchName = li?.branchName
+        }
+      })
+      allBranch?.forEach(li => {
+        if(li?.branchCode?.includes(item?.branchCode)){
+          if(li?.subBranchCode === item?.subBranchCode ){
+            item.subBranchName = li?.subBranchName
+          }
+        }
+      })
+    })
     if(response?.error) setError(response?.error);
     else {
       setData(response?.data?.customers ?? response?.data)
@@ -91,14 +133,19 @@ export function Customer(props){
     if(toGet) getData();
   }
 
+  const onDone = async () => {
+    setVisible1(false);
+  }
 
   const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , isMd : true};
-  const modalProps = { visible, closeModal, selected: item, onSearch: getData, filter, data };
+  const modalProps = { visible, closeModal, selected: item, onSearch: getData, filter, data, branch, allBranch, getBranchs };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const listProps = { data,  onClickAdd, setData , loaded, setShow, checked, setChecked, excelName , onClickDelete, show, setError, onSearch: getData};
-  
+  const subProps = { visible: visible1, setVisible: setVisible1, onDone };
+
   return (
     <div className='s_container_z'>
+      {visible1 && <Subscription {...subProps} />}
       {visible && <Add {...modalProps} />}
       <Overlay loading={loading}>
         {open && <Confirm {...confirmProps} />}

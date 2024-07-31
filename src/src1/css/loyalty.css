@@ -178,6 +178,7 @@
     margin: 0;
     font-size: 14px;
     font-weight: bold;
+    margin-top: 10px;
 }
 .coupon_image_back{
     width: 450px;
@@ -380,3 +381,23 @@
   .radio_back_dis{
     margin: 6px 5px 0 5px;
  }
+ .gift_main_back {
+  display: flex;
+  flex-flow: row;
+}
+
+.gift_add_back {
+  flex: 1;
+  background-color: var(--root-color);
+  border-radius: var(--radius);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  padding: var(--page-padding);
+  max-width: 800px;
+}
+.count_select_lbl {
+    font-size: 12px;
+    color: var(--text2-color);
+    font-weight: 500;
+    margin: 0 0 9px 0;
+};
+  

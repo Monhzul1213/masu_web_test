@@ -6,14 +6,17 @@ import moment from 'moment';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { Empty1, Error1, Overlay } from '../../components/all';
-import { Header, List } from '../../components/system/invoice/list';
+import { Error1, Overlay } from '../../components/all';
+import { List } from '../../components/system/invoice/list';
+import { useTranslation } from 'react-i18next';
 
 export function Invoice(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
+  const [excelName, setExcelName] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,7 +32,7 @@ export function Invoice(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async query => {
+  const getData = async( query, dates) => {
     setError(null);
     setLoading(true);
     let api = 'Txn/GetInvoice' + (query ?? '');
@@ -46,6 +49,7 @@ export function Invoice(){
       });
       setData(response?.data);
     }
+    if(dates) setExcelName(t('header./system/invoice') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
     setLoading(false);
     setFilter(query ?? '');
   }
@@ -55,9 +59,7 @@ export function Invoice(){
       navigate({ pathname: 'invoice_add', search: createSearchParams({ invoiceNo: row?.invoiceNo }).toString() });
   }
 
-  const headerProps = { setError, onSearch: getData, filter, data };
-  const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
-  const listProps = { data, setData, onClickAdd, getData};
+  const listProps = { data, setData, onClickAdd, getData, setError, onSearch: getData, excelName, filter};
 
   return (
     <div className='s_container_i'>
@@ -65,8 +67,7 @@ export function Invoice(){
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
           <div className='i_list_cont' id='solve_list'>
-            <Header {...headerProps} size={size} />
-            {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
+            <List {...listProps} size={size} />
           </div>
         }</SizeMe>
       </Overlay>
