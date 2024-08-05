@@ -7,7 +7,7 @@ import { getService } from '../../services';
 import { Button, ButtonRow, FloatingInput } from '../all';
 
 export function Partner(props){
-  const { partner, setPartner } = props;
+  const { partner, setPartner, className } = props;
   const { t } = useTranslation();
   const [checked, setChecked] = useState(false);
   const [open, setOpen] = useState(false);
@@ -35,7 +35,7 @@ export function Partner(props){
         <p className='l_partner_check_lbl'>{t('login.is_partner')}</p>
       </div>
       {checked && partner?.value
-        ? <Button text={text} className='l_partner_field' onClick={onPressPartner} />
+        ? <Button text={text} className={className ?? 'l_partner_field'} onClick={onPressPartner} />
         : null}
     </div>
   );

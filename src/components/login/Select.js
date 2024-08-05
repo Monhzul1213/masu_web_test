@@ -7,7 +7,7 @@ import { AddInput } from '../emp/merchant';
 const { Option } = Select;
 
 const SubSelect = props => {
-  const { value, setValue, data, onFocus} = props;
+  const { value, setValue, data, onFocus, className, classSelect } = props;
   const { t } = useTranslation();
 
   const renderItem = (item, index) => {
@@ -15,14 +15,13 @@ const SubSelect = props => {
   }
 
   return (
-    <div className='radio_select_back_z'>
+    <div className={className ?? 'radio_select_back_z'}>
       <Select
-        className='select_login'
+        className={classSelect ?? 'select_login'}
         onChange={setValue}
         value={value?.value}
         placeholder={t('profile.activity1')}
-        onFocus={() => onFocus && onFocus()}
-        >
+        onFocus={() => onFocus && onFocus()}>
         {data?.map(renderItem)}
       </Select>
     </div>
@@ -74,7 +73,7 @@ export function RadioSelect(props){
     }
   }
 
-
+  let classProps = { className: 'lg_radio_select_back_z', classSelect: 'lg_select_login' }
   let sub1Props = { value: value, setValue: setChange, label: t('profile.sale'), data: data, onFocus: onFocusSales };
   let sub2Props = { value: value, setValue: setChange1, label: t('profile.vendor'), data: data1, onFocus: onFocusVendor };
 
@@ -82,15 +81,17 @@ export function RadioSelect(props){
     <div className='radio_sign_back' >
       <p className='select_lbl_sign' >{label}</p>
       <Radio.Group className= {merchant ? 'pro_radio' : 'pro_radio_back'} onChange={onChange} value={custom}>
-          <Radio className='select_radio_check' value={'1'}>{t('profile.sale')}</Radio>
-          <div className={merchant ? 'pro_gap' : ''}/>
-          <Radio className='select_radio_check' value={'2'}>{t('profile.vendor')}</Radio>
+        <Radio className='select_radio_check' value={'1'}>{t('profile.sale')}</Radio>
+        <div className={merchant ? 'pro_gap' : ''}/>
+        <Radio className='select_radio_check' value={'2'}>{t('profile.vendor')}</Radio>
       </Radio.Group>
       <div className={(value?.value === 199 || value?.value === 205) ? 'row' : 'col'}>
-        <div className='list_scroll' style={{overflowY: 'scroll', maxHeight: 150}}>
-              {custom === '1' ? <SubSelect {...sub1Props}/> : <SubSelect {...sub2Props}/>}
+        <div style={{overflowY: 'scroll', maxHeight: 150, flex: 1}}>
+          {custom === '1' ? <SubSelect {...sub1Props} {...classProps} /> : <SubSelect {...sub2Props}  {...classProps} />}
         </div>
         {(value?.value === 199 || value?.value === 205) && <AddInput
+          classBack='lg_input_back1'
+          className='lg_m_input'
           setValue={setAddItem}
           value={addItem}
           placeholder={'Нэмж бүртгүүлэх'}
