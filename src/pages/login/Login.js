@@ -9,7 +9,7 @@ import '../../css/login.css';
 import { apiLogin, setIsLoggedIn, setLogin } from '../../services';
 import { header_image, login1, login2, login3, login4, login_image } from '../../assets';
 import { Button, DynamicAIIcon, Error, FloatingInput, FloatingInput1, FloatingPassword, FloatingPassword1 } from '../../components/all';
-import { Social, Copyright } from '../../components/login';
+import { Social, Copyright, Social1 } from '../../components/login';
 
 export function LoginOld(){
   const { t } = useTranslation();
@@ -87,7 +87,7 @@ export function LoginOld(){
   )
 }
 
-export function Login(){
+export function LoginOld2(){
   const { t } = useTranslation();
   const [email, setEmail] = useState({ value: '', error: null });
   const [password, setPassword] = useState({ value: '', error: null });
@@ -160,6 +160,86 @@ export function Login(){
       </div>
         <Social /> 
         <Copyright />
+    </div>
+  )
+}
+
+export function Login(){
+  const { t } = useTranslation();
+  const [email, setEmail] = useState({ value: '', error: null });
+  const [password, setPassword] = useState({ value: '', error: null });
+  const [error, setError] = useState(null);
+  const [checked, setChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { webUser, toRemember }  = useSelector(state => state.login);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(webUser?.mail) setEmail({ value: webUser?.mail });
+    if(toRemember && webUser?.password) setPassword({ value: webUser?.password });
+    if(toRemember) setChecked(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  const handleSubmit = async e => {
+    e?.preventDefault();
+    setError(null);
+    if(email?.value && password?.value?.trim()){
+      setLoading(true);
+      const response = await dispatch(apiLogin(email?.value, password?.value?.trim()));
+      if(response?.error) setError(response?.error);
+      else {
+        dispatch(setLogin({ toRemember: checked }));
+        dispatch(setIsLoggedIn(true));
+        window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
+        navigate({ pathname: response?.isAdmin ? '/system/invoice' : webUser?.msMerchant?.merchantType === 0 ? '/profile' : 
+        response?.viewReport ? '/report/report_sales' : '/config'});
+      }
+      setLoading(false);
+    } else {
+      if(!email?.value) setEmail({ value: '', error: t('error.not_empty') });
+      if(!password?.value?.trim()) setPassword({ value: '', error: t('error.not_empty') });
+    }
+  }
+
+  const onForgot = () => {
+    navigate({ pathname: "/recovery", search: createSearchParams({ email: email?.value }).toString()});
+  }
+
+  const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, isLogin: true, Icon: () => <DynamicAIIcon className='lg_input_icon' name='AiOutlineUser'/> };
+  const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, isLogin: true, handleEnter: handleSubmit };
+  const checkProps = { className: 'login_check', checked, onChange: e => setChecked(e?.target?.checked) };
+  const btnProps = { loading, type: 'submit', className: 'lg_login_btn', text: t('login.login1') };
+   
+  return (
+    <div className='login_container1'>
+      <div style={{padding: 20}} />
+      <img className='login_logo' src={header_image} alt='MASU LOGO' />
+      <div style={{padding: 10}} />
+      <div style={{flex: 1}} />
+      <p className='lg_title'>Welcome <span className='lg_title2'>Back</span>!</p>
+      <form onSubmit={handleSubmit} style={{width: '330px'}}>
+        <FloatingInput1 {...emailProps} className='lg_input_back' />
+        <FloatingPassword1 {...passProps} className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' />
+        {error && <Error error={error} id='lg_error' />}
+        <Button {...btnProps} />
+        <div className='login_btn_row'>
+          <Checkbox {...checkProps}>{t('login.remember')}</Checkbox>
+          <span className='lg_login_link' onClick={onForgot}>{t('login.forgot')}</span>
+        </div>
+        <div style={{padding: 10}} />
+        <div className='login_center_row'>
+          <Link className='lg_login_link' to='/sign_up'>{t('login.new_sign')}</Link>
+        </div>
+      </form>
+      <div style={{padding: 10}} />
+      <div style={{flex: 1}} />
+      <p className='lg_footer'>masu cloud platform</p>
+      <div style={{padding: 10}} />
+      <Social1 />
     </div>
   )
 }

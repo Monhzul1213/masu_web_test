@@ -103,7 +103,7 @@ export function FloatingPassword(props){
 
 export function FloatingInput1(props){
   const { t } = useTranslation();
-  const { text, value, setValue, setError, handleEnter, id, disabled, length, isLogin, Icon } = props;
+  const { text, value, setValue, setError, handleEnter, id, disabled, length, isLogin, Icon, className } = props;
 
   const onChange = e => {
     let notValid = e?.target?.value?.includes("'");
@@ -135,7 +135,7 @@ export function FloatingInput1(props){
   }
 
   const style = value?.error ? { borderColor: '#e41051' } : {};
-  const inputProps = { className: 'f_input_back1', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text, disabled };
+  const inputProps = { className: className ?? 'f_input_back1', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text, disabled };
 
   return (
     <div className='f_input_container' id={id}>
@@ -148,7 +148,7 @@ export function FloatingInput1(props){
 }
 
 export function FloatingPassword1(props){
-  const { text, value, setValue, setError, handleEnter, isLogin } = props;
+  const { text, value, setValue, setError, handleEnter, isLogin, className, classIcon, classShow } = props;
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
@@ -185,15 +185,15 @@ export function FloatingPassword1(props){
   }
 
   const style = value?.error ? { borderColor: '#e41051' } : {};
-  const inputProps = { className: 'f_input_back1', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text,
+  const inputProps = { className: className ?? 'f_input_back1', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text,
     id: visible ? null : 'm_input_password' };
 
   return (
     <div className='f_input_container'>
       {/* <label className='f_input_label' style={style1}>{text}</label> */}
-      <DynamicAIIcon className='f_input_icon' name={'AiOutlineLock'} />
+      <DynamicAIIcon className={classIcon ?? 'f_input_icon'} name={'AiOutlineLock'} />
       <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
-      <DynamicAIIcon className='f_input_show' name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
+      <DynamicAIIcon className={classShow ?? 'f_input_show'} name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
       {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : text} {value?.error}</p>}
     </div>
   )

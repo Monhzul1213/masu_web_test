@@ -3,7 +3,7 @@ import { GrFacebookOption } from 'react-icons/gr';
 import { useTranslation } from 'react-i18next';
 
 import { DynamicAIIcon } from '../all';
-import { twitter } from '../../assets';
+import { twitter, twitter2 } from '../../assets';
 
 export function Social(){
   const { t } = useTranslation();
@@ -32,4 +32,25 @@ export function Social(){
       </div>
     </div>
   )
+}
+
+export function Social1(){
+  const { t } = useTranslation();
+
+  return (
+    <div className='lg_social_back'>
+      <a className='lg_social_link' target='_blank' rel='noreferrer' href='https://www.facebook.com/masupos'>
+        <GrFacebookOption className='lg_social' style={{fontSize: 20}} />
+      </a>
+      <a className='lg_social_link' target='_blank' rel='noreferrer' href='https://twitter.com/masupos'>
+        <img style={{width: 16}} src={twitter2} alt='Twitter'/>
+      </a>
+      <a className='lg_social_link' target='_blank' rel='noreferrer' href='https://www.instagram.com/app.masu.mn/'>
+        <DynamicAIIcon name='AiFillInstagram' className='lg_social' />
+      </a>
+      <a className='lg_social_link' target='_blank' rel='noreferrer' href='https://www.youtube.com/channel/UCYbdLbekzT4LpM37KLRO0yg'>
+        <DynamicAIIcon name='AiFillYoutube' className='lg_social' />
+      </a>
+    </div>
+  );
 }

@@ -37,12 +37,14 @@ import golomt from './banks/golomt.png';
 
 import qr_holder from './qr.png';
 import twitter from './twitter.png';
+import twitter2 from './twitter2.png';
 import login1 from './1.jpg';
 import login2 from './4.jpg';
 import login3 from './3.jpg';
 import login4 from './5.png';
+import login_1 from './login_1.png';
 
-export { login_image, header_image, logo, placeholder, qr_holder, logo_image, masu, twitter, login1, login2, login3, login4 };
+export { login_image, header_image, logo, placeholder, qr_holder, logo_image, masu, twitter, twitter2, login1, login2, login3, login4, login_1 };
 export const icons = [
   icon1, icon2, icon3, icon4, icon5,
   icon6, icon7, icon8, icon9, icon10,
