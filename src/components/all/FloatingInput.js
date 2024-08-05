@@ -103,7 +103,7 @@ export function FloatingPassword(props){
 
 export function FloatingInput1(props){
   const { t } = useTranslation();
-  const { text, value, setValue, setError, handleEnter, id, disabled, length, isLogin, Icon, className } = props;
+  const { text, value, setValue, setError, handleEnter, id, disabled, length, isLogin, Icon, className, color } = props;
 
   const onChange = e => {
     let notValid = e?.target?.value?.includes("'");
@@ -134,7 +134,7 @@ export function FloatingInput1(props){
     }
   }
 
-  const style = value?.error ? { borderColor: '#e41051' } : {};
+  const style = value?.error ? { borderColor: color ?? '#e41051' } : {};
   const inputProps = { className: className ?? 'f_input_back1', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text, disabled };
 
   return (
@@ -142,13 +142,13 @@ export function FloatingInput1(props){
       {/* <label className='f_input_label' style={style1}>{text}</label> */}
       {Icon && <Icon />}
       <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
-      {value?.error && <p className='f_input_error'>{value?.noLabel || id ? '' : text} {value?.error}</p>}
+      {value?.error && <p className='f_input_error' style={{color}}>{value?.noLabel || id ? '' : text} {value?.error}</p>}
     </div>
   )
 }
 
 export function FloatingPassword1(props){
-  const { text, value, setValue, setError, handleEnter, isLogin, className, classIcon, classShow } = props;
+  const { text, value, setValue, setError, handleEnter, isLogin, className, classIcon, classShow, color } = props;
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
@@ -184,7 +184,7 @@ export function FloatingPassword1(props){
     setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
   }
 
-  const style = value?.error ? { borderColor: '#e41051' } : {};
+  const style = value?.error ? { borderColor: color ?? '#e41051' } : {};
   const inputProps = { className: className ?? 'f_input_back1', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text,
     id: visible ? null : 'm_input_password' };
 
@@ -194,7 +194,7 @@ export function FloatingPassword1(props){
       <DynamicAIIcon className={classIcon ?? 'f_input_icon'} name={'AiOutlineLock'} />
       <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
       <DynamicAIIcon className={classShow ?? 'f_input_show'} name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
-      {value?.error && <p className='f_input_error'>{value?.noLabel ? '' : text} {value?.error}</p>}
+      {value?.error && <p className='f_input_error' style={{color}}>{value?.noLabel ? '' : text} {value?.error}</p>}
     </div>
   )
 }

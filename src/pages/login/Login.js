@@ -222,8 +222,8 @@ export function Login(){
       <div style={{flex: 1}} />
       <p className='lg_title'>Welcome <span className='lg_title2'>Back</span>!</p>
       <form onSubmit={handleSubmit} style={{width: '330px'}}>
-        <FloatingInput1 {...emailProps} className='lg_input_back' />
-        <FloatingPassword1 {...passProps} className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' />
+        <FloatingInput1 {...emailProps} className='lg_input_back' color='#fff' />
+        <FloatingPassword1 {...passProps} className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' color='#fff' />
         {error && <Error error={error} id='lg_error' />}
         <Button {...btnProps} />
         <div className='login_btn_row'>
