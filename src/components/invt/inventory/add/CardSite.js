@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, CheckAll, PaginationTable, Table } from '../../../all';
+import { Check, CheckAll, Money, PaginationTable, Table } from '../../../all';
 import { EditableCell } from './EditableCell';
+import { ModalSales } from './ModalSales';
 
 export function CardSite(props){
   const { isTrack, data, setData, setEdited, checked, setChecked } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [visibleSales, setVisibleSales] = useState(false);
+  const [selected, setSelected] = useState(null);
 
   useEffect(() => {
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 72 };
@@ -30,6 +33,23 @@ export function CardSite(props){
       },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_price')}</div>, accessor: 'price', noSort: true, isMoney: true,
         customStyle: { width: 100 }, width: 100 },
+      {
+        id: 'salesprice', noSort: true, isBtn: true, customStyle: { width: 200 },
+        Header: <div style={style1}>{t('inventory.t_salesprice')}</div>,
+        Cell: ({ row, onClickSalesCheck, onClickSales }) => {
+          let checked = row?.original?.useSalesPrice === 'Y';
+          return (
+            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
+              <Check checked={checked} onClick={e => onClickSalesCheck(e, row, checked)} />
+              <div style={{marginLeft: 8, flex: 1}} onClick={e => onClickSales(e, row)}>
+                <p style={{fontSize: 14, margin: 0}}><Money value={row?.original?.salesPrice} fontSize={13} /></p>
+                {row?.original?.salesLabel ? <p style={{fontSize: 12, margin: 0}}>{row?.original?.salesLabel}</p> : null}
+                {row?.original?.salesLabel1 ? <p style={{fontSize: 12, margin: 0}}>{row?.original?.salesLabel1}</p> : null}
+              </div>
+            </div>
+          );
+        }
+      },
     ];
     if(isTrack){
       columns.push({ Header: t('inventory.t_stock'), accessor: 'stock', noSort: true, isQty: true, width: 90 });
@@ -67,6 +87,30 @@ export function CardSite(props){
     }));
   }
 
+  const onClickSalesCheck = (e, item, checked) => {
+    e?.preventDefault();
+    setEdited && setEdited(true);
+    if(checked){
+      setData(old => old.map((row, index) => {
+        if(index === item?.index) return { ...old[item?.index],
+          useSalesPrice: checked ? 'N' : 'Y', salesPrice: 0, salesLabel: null, salesLabel1: null, salesBeginDate: null, salesBeginTime: null,
+          salesEndDate: null, salesEndTime: null, salesTimeLimited: null
+        };
+        return row
+      }));
+    } else {
+      setVisibleSales(true);
+      setSelected(item);
+    }
+  }
+
+  const onClickSales = (e, item) => {
+    e?.preventDefault();
+    setEdited && setEdited(true);
+    setVisibleSales(true);
+    setSelected(item);
+  }
+
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     setData(old => old.map((row, index) => {
@@ -78,16 +122,23 @@ export function CardSite(props){
     }));
     setEdited && setEdited(true);
   }
+
+  const closeSales = () => {
+    setVisibleSales(false);
+    setSelected(null);
+  }
  
   const defaultColumn = { Cell: EditableCell };
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    updateMyData, onClickCheck, onClickNHAT }, useSortBy, usePagination, useRowSelect);
+    updateMyData, onClickCheck, onClickNHAT, onClickSalesCheck, onClickSales }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
+  const modalSalesProps = { visibleSales, closeSales, selected, data, setData };
 
   return (
     <div className='ia_back'>
+      {visibleSales && <ModalSales {...modalSalesProps} />}
       <p className='ac_title'>{t('inventory.sites')}</p>
       <div style={{padding: 5}} />
       <CheckAll {...checkProps} />

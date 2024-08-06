@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import mime from 'mime';
+import moment from 'moment';
 
 import '../../css/invt.css';
 import { urlToFile } from '../../helpers';
@@ -137,6 +138,18 @@ export function InventoryAdd(){
         if(exists){
           item.price = exists.price;
           item.useNhat = exists.useNhat;
+          item.useSalesPrice = exists.useSalesPrice;
+          item.salesPrice = exists.salesPrice;
+          item.salesBeginDate = exists.salesBeginDate;
+          item.salesEndDate = exists.salesEndDate;
+          item.salesTimeLimited = exists.salesTimeLimited;
+          item.salesBeginTime = exists.salesBeginTime;
+          item.salesEndTime = exists.salesEndTime;
+          if(exists.useSalesPrice === 'Y'){
+            item.salesLabel = moment(exists.salesBeginDate).format('yyyy.MM.DD')
+              + '-' + moment(exists.salesEndDate).format('MM.DD');
+            if(exists.salesTimeLimited === 'Y') item.salesLabel1 = exists.salesBeginTime + '-' + exists.salesEndTime;
+          }
         }
         item.rowStatus = exists ? 'U' : 'I';
       });
