@@ -11,6 +11,7 @@ export function CardSite(props){
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [visibleSales, setVisibleSales] = useState(false);
+  const [visibleWhole, setVisibleWhole] = useState(false);
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
@@ -45,6 +46,24 @@ export function CardSite(props){
                 <p style={{fontSize: 14, margin: 0}}><Money value={row?.original?.salesPrice} fontSize={13} /></p>
                 {row?.original?.salesLabel ? <p style={{fontSize: 12, margin: 0}}>{row?.original?.salesLabel}</p> : null}
                 {row?.original?.salesLabel1 ? <p style={{fontSize: 12, margin: 0}}>{row?.original?.salesLabel1}</p> : null}
+              </div>
+            </div>
+          );
+        }
+      },
+      {
+        id: 'wholeprice', noSort: true, isBtn: true, customStyle: { width: 200 },
+        Header: <div style={style1}>{t('inventory.t_wholeprice')}</div>,
+        Cell: ({ row, onClickWholeCheck, onClickWhole }) => {
+          let checked = row?.original?.useWholePrice === 'Y';
+          return (
+            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
+              <Check checked={checked} onClick={e => onClickWholeCheck(e, row, checked)} />
+              <div style={{marginLeft: 8, flex: 1}} onClick={e => onClickWhole(e, row)}>
+                <p style={{fontSize: 14, margin: 0}}>
+                  <Money value={row?.original?.wholePrice} fontSize={13} />
+                  {row?.original?.wholeQty ? (' (' + row?.original?.wholeQty + ')') : ''}
+                </p>
               </div>
             </div>
           );
@@ -111,6 +130,27 @@ export function CardSite(props){
     setSelected(item);
   }
 
+  const onClickWholeCheck = (e, item, checked) => {
+    e?.preventDefault();
+    setEdited && setEdited(true);
+    if(checked){
+      setData(old => old.map((row, index) => {
+        if(index === item?.index) return { ...old[item?.index], useWholePrice: checked ? 'N' : 'Y', wholePrice: 0, wholeQty: 0 };
+        return row
+      }));
+    } else {
+      setVisibleWhole(true);
+      setSelected(item);
+    }
+  }
+
+  const onClickWhole = (e, item) => {
+    e?.preventDefault();
+    setEdited && setEdited(true);
+    setVisibleWhole(true);
+    setSelected(item);
+  }
+
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     setData(old => old.map((row, index) => {
@@ -131,7 +171,7 @@ export function CardSite(props){
   const defaultColumn = { Cell: EditableCell };
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    updateMyData, onClickCheck, onClickNHAT, onClickSalesCheck, onClickSales }, useSortBy, usePagination, useRowSelect);
+    updateMyData, onClickCheck, onClickNHAT, onClickSalesCheck, onClickSales, onClickWholeCheck, onClickWhole }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
   const modalSalesProps = { visibleSales, closeSales, selected, data, setData };
@@ -142,8 +182,10 @@ export function CardSite(props){
       <p className='ac_title'>{t('inventory.sites')}</p>
       <div style={{padding: 5}} />
       <CheckAll {...checkProps} />
-      <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
-        <Table {...tableProps} />
+      <div className='table_scroll' style={{overflowX: 'scroll'}}>
+        <div id='paging' style={{overflowY: 'scroll', maxHeight, minWidth: 860}}>
+          <Table {...tableProps} />
+        </div>
       </div>
       <PaginationTable {...tableProps} />
     </div>

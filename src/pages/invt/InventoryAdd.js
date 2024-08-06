@@ -150,6 +150,9 @@ export function InventoryAdd(){
               + '-' + moment(exists.salesEndDate).format('MM.DD');
             if(exists.salesTimeLimited === 'Y') item.salesLabel1 = exists.salesBeginTime + '-' + exists.salesEndTime;
           }
+          item.useWholePrice = exists.useWholePrice;
+          item.wholePrice = exists.wholePrice;
+          item.wholeQty = exists.wholeQty;
         }
         item.rowStatus = exists ? 'U' : 'I';
       });
