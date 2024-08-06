@@ -5,6 +5,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { Check, CheckAll, Money, PaginationTable, Table } from '../../../all';
 import { EditableCell } from './EditableCell';
 import { ModalSales } from './ModalSales';
+import { ModalWhole } from './ModalWhole';
 
 export function CardSite(props){
   const { isTrack, data, setData, setEdited, checked, setChecked } = props;
@@ -167,6 +168,11 @@ export function CardSite(props){
     setVisibleSales(false);
     setSelected(null);
   }
+
+  const closeWhole = () => {
+    setVisibleWhole(false);
+    setSelected(null);
+  }
  
   const defaultColumn = { Cell: EditableCell };
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
@@ -175,10 +181,12 @@ export function CardSite(props){
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
   const modalSalesProps = { visibleSales, closeSales, selected, data, setData };
+  const modalWholeProps = { visibleWhole, closeWhole, selected, data, setData };
 
   return (
     <div className='ia_back'>
       {visibleSales && <ModalSales {...modalSalesProps} />}
+      {visibleWhole && <ModalWhole {...modalWholeProps} />}
       <p className='ac_title'>{t('inventory.sites')}</p>
       <div style={{padding: 5}} />
       <CheckAll {...checkProps} />

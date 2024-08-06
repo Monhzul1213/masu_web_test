@@ -44,7 +44,8 @@ export function ModalSales(props){
     let salesLabel = moment(date1?.value).format('yyyy.MM.DD') + '-' + moment(date2?.value).format('MM.DD');
     let salesLabel1 = useTime ? (salesBeginTime + '-' + salesEndTime) : '';
     let timeValid = !useTime || (useTime && beginTime?.value && endTime?.value);
-    if(timeValid && salesPrice){
+    let dateValid = checkDate(date1, date2);
+    if(timeValid && salesPrice && dateValid){
       setData(sites?.map(s => {
         if(s?.checkedS)
           return {...s, useSalesPrice: 'Y', salesPrice, salesBeginDate, salesEndDate, salesTimeLimited, salesBeginTime, salesEndTime, salesLabel, salesLabel1 };
