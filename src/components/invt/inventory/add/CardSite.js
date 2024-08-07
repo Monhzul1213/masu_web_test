@@ -110,46 +110,54 @@ export function CardSite(props){
 
   const onClickSalesCheck = (e, item, checked) => {
     e?.preventDefault();
-    setEdited && setEdited(true);
-    if(checked){
-      setData(old => old.map((row, index) => {
-        if(index === item?.index)
-          return { ...old[item?.index], useSalesPrice: checked ? 'N' : 'Y', salesPrice: 0, salesLabel: "", salesTimeLimited: "N" };
-        else
-          return row
-      }));
-    } else {
-      setVisibleSales(true);
-      setSelected(item);
+    if(item?.original?.checked){
+      setEdited && setEdited(true);
+      if(checked){
+        setData(old => old.map((row, index) => {
+          if(index === item?.index)
+            return { ...old[item?.index], useSalesPrice: checked ? 'N' : 'Y', salesPrice: 0, salesLabel: "", salesTimeLimited: "N" };
+          else
+            return row
+        }));
+      } else {
+        setVisibleSales(true);
+        setSelected(item);
+      }
     }
   }
 
   const onClickSales = (e, item) => {
     e?.preventDefault();
-    setEdited && setEdited(true);
-    setVisibleSales(true);
-    setSelected(item);
+    if(item?.original?.checked){
+      setEdited && setEdited(true);
+      setVisibleSales(true);
+      setSelected(item);
+    }
   }
 
   const onClickWholeCheck = (e, item, checked) => {
     e?.preventDefault();
-    setEdited && setEdited(true);
-    if(checked){
-      setData(old => old.map((row, index) => {
-        if(index === item?.index) return { ...old[item?.index], useWholePrice: checked ? 'N' : 'Y', wholePrice: 0, wholeQty: 0 };
-        return row
-      }));
-    } else {
-      setVisibleWhole(true);
-      setSelected(item);
+    if(item?.original?.checked){
+      setEdited && setEdited(true);
+      if(checked){
+        setData(old => old.map((row, index) => {
+          if(index === item?.index) return { ...old[item?.index], useWholePrice: checked ? 'N' : 'Y', wholePrice: 0, wholeQty: 0 };
+          return row
+        }));
+      } else {
+        setVisibleWhole(true);
+        setSelected(item);
+      }
     }
   }
 
   const onClickWhole = (e, item) => {
     e?.preventDefault();
-    setEdited && setEdited(true);
-    setVisibleWhole(true);
-    setSelected(item);
+    if(item?.original?.checked){
+      setEdited && setEdited(true);
+      setVisibleWhole(true);
+      setSelected(item);
+    }
   }
 
   const updateMyData = (rowIndex, columnId, value, e) => {

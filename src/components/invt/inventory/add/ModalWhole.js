@@ -13,7 +13,7 @@ export function ModalWhole(props){
   const [qty, setQty] = useState({ value: '' });
 
   useEffect(() => {
-    setSites(data?.map(d => {
+    setSites(data?.filter(d => d.checked)?.map(d => {
       d.checkedS = selected?.original?.siteId === d?.siteId;
       d.checkedSOrg = selected?.original?.siteId === d?.siteId;
       return d;
