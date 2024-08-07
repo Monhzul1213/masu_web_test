@@ -249,10 +249,20 @@ export function InventoryAdd(){
         if(item?.checked)
           invsales.push({
             siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0),
+            useSalesPrice: item?.useSalesPrice ?? 'N', salesPrice: parseFloat(item?.salesPrice ? item?.salesPrice : 0),
+            salesBeginDate: item?.salesBeginDate, salesEndDate: item?.salesEndDate, 
+            salesTimeLimited: item?.salesTimeLimited ?? 'N', salesBeginTime: item?.salesBeginTime, salesEndTime: item?.salesEndTime,
+            useWholePrice: item?.useWholePrice ?? 'N', wholeQty: parseFloat(item?.wholeQty ? item?.wholeQty : 0),
+            wholePrice: parseFloat(item?.wholePrice ? item?.wholePrice : 0),
             status: 0, rowStatus: item?.rowStatus ?? 'I', useNhat: item?.useNhat ?? 'N' });
         else if(item?.rowStatus === 'U')
           invsales.push({
             siteID: item?.siteId, price: parseFloat(item?.price ? item?.price : 0),
+            useSalesPrice: item?.useSalesPrice ?? 'N', salesPrice: parseFloat(item?.salesPrice ? item?.salesPrice : 0),
+            salesBeginDate: item?.salesBeginDate, salesEndDate: item?.salesEndDate, 
+            salesTimeLimited: item?.salesTimeLimited ?? 'N', salesBeginTime: item?.salesBeginTime, salesEndTime: item?.salesEndTime,
+            useWholePrice: item?.useWholePrice ?? 'N', wholeQty: parseFloat(item?.wholeQty ? item?.wholeQty : 0),
+            wholePrice: parseFloat(item?.wholePrice ? item?.wholePrice : 0),
             status: 0, rowStatus: 'D', useNhat: item?.useNhat ?? 'N' });
       });
       let data = {
