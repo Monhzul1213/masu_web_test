@@ -18,7 +18,7 @@
     "addr3": "Баг/хороо",
     "visit": "Зочлох",
     "link": "www.masu.mn",
-    "year": "2023",
+    "year": "2024",
     "sign_accept1": "Би MASU-ийн ",
     "sign_accept2": "ашиглах нөхцөл",
     "sign_accept3": "ийг хүлээн зөвшөөрч, ",
@@ -74,9 +74,12 @@
     "/report/report_employee": "Борлуулалт ажилтнаар",
     "/report/report_payment": "Борлуулалт төлбөрийн төрлөөр",
     "/report/report_document": "Борлуулалтын дэлгэрэнгүй",
+    "/report/report_buyer": "Борлуулалт худалдан авагчаар",
+    "/report/report_time": "Борлуулалт цагаар",
     "/report/report_edited": "Борлуулалт нэмэлт төлбөрөөр",
     "/report/report_discount": "Хөнгөлөлт",
     "/report/report_noat": "НӨАТ-н тайлан",
+    "/report/report_receivable": "Авлагын үлдэгдэл",
     "/report/report_cashier": "Касс хүлээлцэх",
     "/report/report_orList": "Борлуулалтын захиалга",
     "/report/terms": "Үйлчилгээний дэлгэрэнгүй",
@@ -96,6 +99,10 @@
     "/management/adjust/adjust_add": "Барааны орлого зарлага хийх",
     "/management/transfer": "Барааны хөдөлгөөн хийх",
     "/management/transfer/transfer_add": "Барааны хөдөлгөөн хийх",
+    "/management/count": "Тооллого",
+    "/management/count/count_add": "Тооллого хийх",
+    "/management/package": "Багцлалт",
+    "/management/package/package_add": "Багцлалт хийх",
     "/employee": "Ажилтан",
     "/employee/emp_list": "Ажилтны жагсаалт",
     "/employee/emp_list/emp_add": "Ажилтан нэмэх",
@@ -125,6 +132,8 @@
     "/config/store": "Салбар",
     "/config/pos": "ПОС төхөөрөмж",
     "/config/location": "Захиалга авах байршил",
+    "/config/reclam": "Реклам",
+    "/config/reclam/reclam_add": "Реклам",
     "/helpx": "Тусламж",
     "/system/request_solve": "НӨАТ хэвлэх хүсэлт шийдэх",
     "/system/request_solve/solve_add": "НӨАТ хэвлэх хүсэлт шийдэх",
@@ -158,9 +167,12 @@
     "report_employee": "Борлуулалт ажилтнаар",
     "report_payment": "Борлуулалт төлбөрийн төрлөөр",
     "report_document": "Борлуулалтын дэлгэрэнгүй",
+    "report_buyer": "Борлуулалт худалдан авагчаар",
+    "report_time": "Борлуулалт цагаар",
     "report_edited": "Борлуулалт нэмэлт төлбөрөөр",
     "report_discount": "Хөнгөлөлт",
     "report_noat": "НӨАТ-ын тайлан",
+    "report_receivable": "Авлагын үлдэгдэл",
     "report_cashier": "Касс хүлээлцэх",
     "inventory": "Бараа",
     "management": "Барааны менежмент",
@@ -201,7 +213,10 @@
     "loyalty" : "Лояалти",
     "coupon" : "Купон",
     "voucher" : "Ваучер",
-    "bonus": "Урамшуулал"
+    "bonus": "Урамшуулал",
+    "count": "Тооллого",
+    "giftCard": "Gift Card",
+    "package": "Багцлалт"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
@@ -261,7 +276,8 @@
     "go_btn": "Үргэлжлүүлэх",
     "watch_video": "Системийн ашиглах зааврыг үзэх бол доорх видеог үзнэ үү?",
     "install": "Масу ПОС програмын кассын бичилтийг суулгах бол доорх хэсгээс борлуулалтын програмаа татна.",
-    "next_btn": "Ойлголоо, үргэлжлүүлэх"
+    "next_btn": "Ойлголоо, үргэлжлүүлэх",
+    "terminal": "Терминал"
   },
   "system_menu": {
     "additional": "Нэмэлт тохиргоо",
@@ -275,7 +291,8 @@
     "order": "Захиалга авах",
     "order_location": "Захиалга авах байршил",
     "store": "Салбар",
-    "pos": "ПОС төхөөрөмж"
+    "pos": "ПОС төхөөрөмж",
+    "reclam": "Реклам"
   },
   "add_menu": {
     "cashier1": "Касс хүлээлцэх",
@@ -470,6 +487,7 @@
     "import_title": "Бараа оруулах",
     "import_link": "Барааны формат татах",
     "import_error": "Файл оруулна уу",
+    "import_error1": "Бараа олдсонгүй",
     "all": "Бүх бараа",
     "invt": " бараа"
   },
@@ -506,7 +524,7 @@
     "acct_no": "Хүлээн авах данс",
     "receive": "Хүлээн авагч",
     "txn_descr": "Гүйлгээний утга",
-    "paid": "Дансаар төлбөр төлсөн",
+    "paid": "Төлбөр төлсөн",
     "success_pay": "Төлбөр амжилттай төлөгдлөө"
   },
   "customer":{
@@ -644,6 +662,7 @@
     "all_status": "Бүх төлөв",
     "some_status": " төлөв",
     "select_date": "Огноо сонгох",
+    "select_time": "Бүх өдөр ",
     "edit": "Тохиргоо засах",
     "date1": "Огноо: Эхлэх",
     "date2": "Дуусах",
@@ -694,8 +713,10 @@
       { "label": "Нийт дүн", "value": "sale.totalAmount" },
       { "label": "Харилцагч", "value": "customer" },
       { "label": "Үйлчүүлэгч", "value": "sale.consumerDescr" },
+      { "label": "Урамшуулал", "value": "sale.useBonus" },
       { "label": "Ваучер", "value": "sale.useVoucher" },
       { "label": "Купон", "value": "sale.useCoupon" },
+      { "label": "GiftCard", "value": "sale.useGiftCard" },
       { "label": "Хөнгөлөлт", "value": "sale.totalDiscountAmount" },
       { "label": "Төлөх дүн", "value": "sale.totalSalesAmount" },
       { "label": "Бэлэн мөнгө", "value": "sale.totalCashAmount" },
@@ -852,6 +873,7 @@
     "t_stock": "Үлдэгдэл",
     "t_incoming": "Замд яваа тоо",
     "t_qty": "Захиалсан тоо",
+    "t_qty2": "Нийт_захиалсан_тоо",
     "t_qty1": "Тоо",
     "t_cost": "Өртөг",
     "t_total": "Нийт өртөг",
@@ -1016,9 +1038,13 @@
     "desc": "Тодорхойлолт",
     "title1": "Хязгаарлагдмал хандалт",
     "title2": "Зөвхөн зохих нэвтрэх эрхтэй ажилчид энэ хөнгөлөлтийг ашиглах боломжтой",
-    "types": [
+    "status": [
       { "label": "Идэвхгүй", "value": 0 },
       { "label": "Идэвхтэй", "value": 1 }
+    ],
+    "types": [
+      { "label": "Зураг", "value": 0 },
+      { "label": "Видео", "value": 1 }
     ],
     "add_success": "Сурталчилгаа амжилттай бүртгэгдлээ.",
     "delete_success": "Сурталчилгаа амжилттай устгагдлаа.",
@@ -1124,7 +1150,10 @@
     "txnId": "Гүйлгээ №",
     "t_no": "Эх гүйлгээ",
     "costDate": "Огноо",
-    "import_link" : "Барааны үлдэгдэл авах формат"
+    "import_link" : "Барааны үлдэгдэл авах формат",
+    "qpay": "QPAY",
+    "acct": "Данс",
+    "is_remain": "Үлдэгдэлтэй эсэх"
   },
   "adjust": {
     "add": "Гүйлгээ хийх",
@@ -1205,7 +1234,9 @@
     "extend": "Үйлчилгээг сунгах",
     "management":"Барааны менежмент",
     "site": "Салбар",
-    "warning": "Хэрэв та дансаар төлбөрөө шилжүүлж байгаа бол гүйлгээний утгаа зөв бөглөж, 'Дансаар төлбөр төлсөн' товчийг дараарай!"
+    "warning": "*Хэрэв та дансаар төлбөрөө шилжүүлж байгаа бол гүйлгээний утгаа зөв бөглөж, 'Дансаар төлбөр төлсөн' товчийг дараарай!",
+    "invoices": "Төлбөртэй нэмэлт үйлчилгээ",
+    "batch": "Багц"
   },
   "timetable":{
     "time": "Цаг захиалга",
@@ -1348,5 +1379,148 @@
     "t_type": "Төрөл",
     "t_use": "Цаг ашиглах"
   },
+  "report_buyer" : {
+    "customer": "Үйлчлүүлэгч",
+    "signout": "Гарах",
+    "sale": "Борлуулалт хийх",
+    "sale_sum": "Борлуулалтын дүн",
+    "return_sum": "Буцаалтын дүн",
+    "purchase_number": "Худалдан авалтын тоо",
+    "discount_amount": "Хөнгөлөлтийн дүн",
+    "vaucher_amount": "Ваучер дүн",
+    "cupon_amount": "Купон дүн",
+    "bonus_amount": "Урамшууллын дүн",
+    "sale_profits": "Борлуулалтын ашиг",
+    "discount_percentage": "Хөнгөлөлтийн хувь",
+    "sum": "Нийт"
+  },
+  "report_time": {
+    "salesAmount": "Борлуулалт",
+    "returnAmount": "Буцаалт",
+    "branch": "Салбар",
+    "salesTime": "Цаг",
+    "sales_num": "Борлуулалтын тоо",
+    "sales_amount": "Борлуулалтын дүн",
+    "return_num": "Буцаалтын тоо",
+    "return_amount": "Буцаалтын дүн",
+    "totalNetSalesAmt": "Цэвэр борлуулалт",
+    "totalReturnAmt": "Буцаалт",
+    "totalDiscAmt": "Хөнгөлөлт",
+    "totalProfitAmt": "Ашиг",
+    "sum": "Нийт"
+  },
+  "receive": {
+    "amount_beg": "Эхний үлдэгдэл",
+    "amount_receive_crea": "Авлага үүсгэсэн дүн",
+    "amount_receive_clos": "Авлага хаасан дүн",
+    "amount_final": "Эцсийн үлдэгдэл",
+    "acc_receive_report": "Авлагын үлдэгдэл тайлан",
+    "all_cust": "Бүх харилцагч",
+    "some_cust": " Харилцагч"
+  },
+  "count":{
+    "t_no": "Тооллого №",
+    "edit": "Тооллого засах",
+    "title": "Тооллого",
+    "add": "Тооллого хийх",
+    "items_error": "Тооллогод дор хаяж нэг барааг оруулна уу",
+    "add_success": "Тооллого амжилттай хийлээ.",
+    "delete_success": "Тооллого амжилттай устгагдлаа.",
+    "warning_item": "Салбар сонгоно уу",
+    "order_invt": "Захиалгын бараа",
+    "sale_site": "Борлуулагчийн салбар",
+    "date": "Огноо",
+    "status": [
+      { "label": "Тооллого үүссэн", "value": 0 },
+      { "label": "Тооллогын дүн оруулсан", "value": 1 },
+      { "label": "Тооллого хаасан", "value": 2 },
+      { "label": "Хүчингүй", "value": 3 }
+    ],
+    "status1": [
+      { "label": "Тоолоогүй", "value": 0 },
+      { "label": "Тоолсон", "value": 1 },
+      { "label": "Хүчингүй", "value": 3 }
+    ],
+    "status2": [
+      { "label": "Хүчингүй", "value": 0 },
+      { "label": "Бүртгэсэн", "value": 1 },
+      { "label": "Service тохируулсан", "value": 2 }
+    ],
+    "invt_add": "Бараа сонгох",
+    "countQty": "Тоолох тоо",
+    "countedQty": "Тоолсон тоо",
+    "varQty": "Зөрүү тоо",
+    "varCost": "Зөрүү өртөг",
+    "varAmt": "Зөрүү дүн",
+    "isEach": "Ширхэгээр эсэх",
+    "isService" : "Үйлчилгээ эсэх",
+    "category": " категори",
+    "vendor":" нийлүүлэгч",
+    "no_data":"Бараа сонгоно уу!",
+    "emp": "Ажилтан",
+    "site":"Салбар",
+    "total_amount": "Нийт дүн",
+    "all_cancel": "Бүгдийг болих"
+  },                                                                                                
+  "giftCard": {
+    "add": "GiftCard нэмэх",
+    "cardNumber": "Картын дугаар",
+    "beginDate": "Эхлэх огноо",
+    "endDate": "Дуусах огноо",
+    "status": "Төлөв",
+    "cardAmount": "Дүн",
+    "salesAmount": "Ашигласан дүн",
+    "balanceAmount": "Үлдэгдэл дүн",
+    "createdDate": "Үүсгэсэн огноо",
+    "createdUserID": "Ажилтан",
+    "add_success": "GiftCard амжилттай бүртгэгдлээ.",
+    "descr": "Тайлбар"
+  },
+  "orderCreate": {
+    "site": "Салбар",
+    "date": "Огноо",
+    "custID": "Харилцагч",
+    "orderAmt": "Захиалгын дүн",
+    "invtId": "Бараа",
+    "qty": "Тоо",
+    "price": "Үнэ",
+    "amount": "Нийт дүн",
+    "add_success": "Захиалга амжилттай үүслээ."
+  },
+  "reclam":{
+    "all": "Бүх салбар",
+    "add": "Реклам нэмэх",
+    "beginDate": "Эхлэх огноо",
+    "endDate": "Дуусах огноо",
+    "status": "Төлөв",
+    "statusl": [
+      { "label": "Идэвхгүй", "value": 0 },
+      { "label": "Идэвхтэй", "value": 1 }
+    ],
+    "name": "Рекламны нэр",
+    "link": "Рекламны холбоос",
+    "type": "Төрөл",
+    "types": [
+      { "label": "Зураг", "value": 0 },
+      { "label": "Видео", "value": 1 }
+    ],
+    "site": "Салбар",
+    "delete_success": "Реклам амжилттай устгагдлаа.",
+    "add_success": "Реклам амжилттай бүртгэгдлээ."
+  },
+  "package":{
+    "t_no": "Багцлалт №",
+    "edit": "Багцлалт засах",
+    "title": "Багцлалт",
+    "add": "Багцлалт хийх",
+    "add_success": "Багцлалт амжилттай хийлээ.",
+    "status": [
+     
+    ],
+    "type": [
+      {"label": "Багцлах", "value": 0},
+      {"label": "Задлах", "value": 1}
+    ]
+  },         
   "version": "13"
 }
