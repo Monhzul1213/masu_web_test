@@ -36,17 +36,18 @@ export function CardSite(props){
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_price')}</div>, accessor: 'price', noSort: true, isMoney: true,
         customStyle: { width: 100 }, width: 100 },
       {
-        id: 'salesprice', noSort: true, isBtn: true, customStyle: { width: 200 },
+        id: 'salesprice', noSort: true, isBtn: true, customStyle: { width: 360 },
         Header: <div style={style1}>{t('inventory.t_salesprice')}</div>,
         Cell: ({ row, onClickSalesCheck, onClickSales }) => {
           let checked = row?.original?.useSalesPrice === 'Y';
           return (
-            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
+            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center', width: 300 }}>
               <Check checked={checked} onClick={e => onClickSalesCheck(e, row, checked)} />
               <div style={{marginLeft: 8, flex: 1}} onClick={e => onClickSales(e, row)}>
-                <p style={{fontSize: 14, margin: 0}}><Money value={row?.original?.salesPrice} fontSize={13} /></p>
-                {row?.original?.salesLabel ? <p style={{fontSize: 12, margin: 0}}>{row?.original?.salesLabel}</p> : null}
-                {row?.original?.salesLabel1 ? <p style={{fontSize: 12, margin: 0}}>{row?.original?.salesLabel1}</p> : null}
+                <p style={{margin: 0}}>
+                  <Money value={row?.original?.salesPrice} fontSize={14} />
+                  <span>{row?.original?.salesLabel}</span>
+                </p>
               </div>
             </div>
           );
@@ -61,8 +62,8 @@ export function CardSite(props){
             <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
               <Check checked={checked} onClick={e => onClickWholeCheck(e, row, checked)} />
               <div style={{marginLeft: 8, flex: 1}} onClick={e => onClickWhole(e, row)}>
-                <p style={{fontSize: 14, margin: 0}}>
-                  <Money value={row?.original?.wholePrice} fontSize={13} />
+                <p style={{margin: 0}}>
+                  <Money value={row?.original?.wholePrice} fontSize={14} />
                   {row?.original?.wholeQty ? (' (' + row?.original?.wholeQty + ')') : ''}
                 </p>
               </div>
@@ -112,11 +113,10 @@ export function CardSite(props){
     setEdited && setEdited(true);
     if(checked){
       setData(old => old.map((row, index) => {
-        if(index === item?.index) return { ...old[item?.index],
-          useSalesPrice: checked ? 'N' : 'Y', salesPrice: 0, salesLabel: null, salesLabel1: null, salesBeginDate: null, salesBeginTime: null,
-          salesEndDate: null, salesEndTime: null, salesTimeLimited: null
-        };
-        return row
+        if(index === item?.index)
+          return { ...old[item?.index], useSalesPrice: checked ? 'N' : 'Y', salesPrice: 0, salesLabel: "", salesTimeLimited: "N" };
+        else
+          return row
       }));
     } else {
       setVisibleSales(true);

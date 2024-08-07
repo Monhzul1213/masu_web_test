@@ -146,9 +146,10 @@ export function InventoryAdd(){
           item.salesBeginTime = exists.salesBeginTime;
           item.salesEndTime = exists.salesEndTime;
           if(exists.useSalesPrice === 'Y'){
-            item.salesLabel = moment(exists.salesBeginDate).format('yyyy.MM.DD')
+            let salesLabel = moment(exists.salesBeginDate).format('MM.DD')
               + '-' + moment(exists.salesEndDate).format('MM.DD');
-            if(exists.salesTimeLimited === 'Y') item.salesLabel1 = exists.salesBeginTime + '-' + exists.salesEndTime;
+            if(exists.salesTimeLimited === 'Y') salesLabel += ' ' + exists.salesBeginTime?.slice(0, 5) + '-' + exists.salesEndTime?.slice(0, 5);
+            item.salesLabel = ' (' + salesLabel + ')';
           }
           item.useWholePrice = exists.useWholePrice;
           item.wholePrice = exists.wholePrice;
