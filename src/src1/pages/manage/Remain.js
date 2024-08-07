@@ -7,7 +7,7 @@ import { SizeMe } from 'react-sizeme';
 import { getList } from '../../../services';
 import { Error1, Overlay } from '../../../components/all';
 import '../../css/time.css'
-import { List } from '../../components/management/remain';
+import { Drawer, List } from '../../components/management/remain';
 import { Subscription } from '../../../components/management/adjust/list';
 import { List1 } from '../../components/management/remain/List1';
 
@@ -23,6 +23,8 @@ export function Remain(){
   const [sites, setSites] = useState([]);
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const [isDtl, setIsDtl] = useState(false);
+  const [selected, setSelected] = useState(null);
+  const [open, setOpen] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -72,20 +74,26 @@ export function Remain(){
     onSearch();
   }
 
+  const onRowClick = row => {
+    setSelected(row?.original);
+    setOpen(true);
+  }
 
-  const listProps = { data, excelName, setError, onSearch, setData, autoResetExpanded, dtlData, isDtl, setIsDtl };
+  const listProps = { data, excelName, setError, onSearch, setData, autoResetExpanded, dtlData, isDtl, setIsDtl, onRowClick };
   const subProps = { visible, setVisible, sites, setSites, onDone };
+  const drawerProps = { selected, open, setOpen };
 
   return (
     <div className='s_container_i'>
       {visible && <Subscription {...subProps} />}
+      <Drawer {...drawerProps} />
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
-              <div className='i_list_cont_zz' id='invt_list_z'>
-                {!isDtl ? <List {...listProps} size={size} /> : <List1 {...listProps} size={size}/>}
-              </div>
-          }</SizeMe> 
+          <div className='i_list_cont_zz' id='invt_list_z'>
+            {!isDtl ? <List {...listProps} size={size} /> : <List1 {...listProps} size={size}/>}
+          </div>
+        }</SizeMe>
       </Overlay>
     </div>
   );

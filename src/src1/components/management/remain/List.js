@@ -8,7 +8,7 @@ import { formatNumber } from '../../../../helpers';
 import { Detail } from './Detail';
 
 export function List(props){
-  const { data, excelName, setError, onSearch, size, setData, autoResetExpanded, isDtl, setIsDtl} = props;
+  const { data, excelName, setError, onSearch, size, setData, autoResetExpanded, isDtl, setIsDtl, onRowClick } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
@@ -90,12 +90,12 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 100000,  },}, 
     useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, Detail: props => <Detail {...props} updateData={updateMyData} />,
-  detailName: 'dtl', colSpan: 9, hasFooter: true };
+    detailName: 'dtl', colSpan: 9, hasFooter: true, onRowClick };
   const filterProps = { columns, data, setData, excelName, setError, onSearch , size, isDtl, setIsDtl };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
   return (
-    <div  >
+    <div>
       <Header {...filterProps} />
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <>
