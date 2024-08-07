@@ -405,7 +405,7 @@ export function SignUp(){
   const btnProps = { loading, type: 'submit', className: 'lg_login_btn', text: t('login.signup1'), disabled: !checked };
   const confirmProps = { visible, closeModal, number: address?.value, expire, email: email?.value };
   const partProps = { partner, setPartner };
-  const subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), allData, merchant,
+  const subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), allData,
   setError, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem, };
 
   return (

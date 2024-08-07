@@ -489,7 +489,7 @@ color: var(--logo1-color);
 .pro_radio{
     display: flex;
     flex-flow: row;
-    margin: 5px 25px;
+    margin: 5px 15px;
     /* border-bottom: 1px solid var(--line-color); */
     /* padding: 10px; */
 }

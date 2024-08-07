@@ -714,6 +714,12 @@ input::-webkit-input-placeholder {
   font-size: 13px;
 }
 
+.pro_radio_back .ant-radio + span {
+  color: var(--root-color) !important;
+  font-family: "Montserrat" !important;
+  font-size: 13px !important;
+}
+
 .radio_select_back_z {
   display: flex;
   flex-flow: column;
@@ -833,7 +839,7 @@ input::-webkit-input-placeholder {
   /* box-shadow: 0px 4px 25px 0px #00000040; */
   background-color: var(--root-color);
   font-family: "Montserrat";
-  font-weight: 300;
+  font-weight: 400;
 }
 .lg_input_back:focus {
   outline: none;
@@ -982,6 +988,7 @@ input::-webkit-input-placeholder {
   padding-left: 35px !important;
   padding-top: 7px !important;
   font-family: "Montserrat";
+  font-weight: 400;
 }
 
 .lg_select_login .ant-select-selector {
@@ -1083,9 +1090,8 @@ input::-webkit-input-placeholder {
 
 .lg_input_container {
   display: flex;
-  flex-direction: column;
-  margin: 30px 0 20px 0;
   position: relative;
+  flex-flow: column;
   background-color: var(--root-color);
   border-radius: 5px;
 }

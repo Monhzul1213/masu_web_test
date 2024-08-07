@@ -138,10 +138,12 @@ export function FloatingInput1(props){
   const inputProps = { className: className ?? 'f_input_back1', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text, disabled };
 
   return (
-    <div className={classBack ?? 'f_input_container'} id={id}>
-      {/* <label className='f_input_label' style={style1}>{text}</label> */}
-      {Icon && <Icon />}
-      <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
+    <div className='f_input_container' id={id}>
+      <div className={classBack ?? 'lg_input_container'}>
+        {/* <label className='f_input_label' style={style1}>{text}</label> */}
+        {Icon && <Icon />}
+        <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
+      </div>
       {value?.error && <p className='f_input_error' style={{color}}>{value?.noLabel || id ? '' : text} {value?.error}</p>}
     </div>
   )
@@ -189,11 +191,13 @@ export function FloatingPassword1(props){
     id: visible ? null : 'm_input_password' };
 
   return (
-    <div className={classBack ?? 'f_input_container'}>
+    <div className='f_input_container'>
       {/* <label className='f_input_label' style={style1}>{text}</label> */}
-      <DynamicAIIcon className={classIcon ?? 'f_input_icon'} name={'AiOutlineLock'} />
-      <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
-      <DynamicAIIcon className={classShow ?? 'f_input_show'} name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
+      <div className={classBack ?? 'lg_input_container'}>
+        <DynamicAIIcon className={classIcon ?? 'f_input_icon'} name={'AiOutlineLock'} />
+        <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
+        <DynamicAIIcon className={classShow ?? 'f_input_show'} name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={onClick} />
+      </div>
       {value?.error && <p className='f_input_error' style={{color}}>{value?.noLabel ? '' : text} {value?.error}</p>}
     </div>
   )
