@@ -855,5 +855,23 @@
 }
 
 .dr_image_holder {
+  background-color: var(--back-color);
+  height: 348px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.dr_image_text {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text4-color);
+}
+
+.dr_image {
+  width: 100%;
+  border: solid 1px var(--back-color);
+  border-radius: 5px;
 }
