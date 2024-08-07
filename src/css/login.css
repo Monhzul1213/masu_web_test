@@ -28,7 +28,7 @@ input:-webkit-autofill:active{
   -webkit-background-clip: text;
   -moz-background-clip: text;
   background-clip: text;
-  -webkit-text-fill-color: var(--root-color);
+  -webkit-text-fill-color: var(--text-color);
   -moz-text-fill-color: var(--text-color);
 }
 input::-webkit-input-placeholder {
@@ -89,7 +89,7 @@ input::-webkit-input-placeholder {
   font-weight: 550;
 }
 
-.f_input_container:focus-within .f_input_label {
+.f_input_container:focus-within .f_input_label, .lg_input_container:focus-within .f_input_label {
   color: var(--success-color);
 }
 
@@ -328,8 +328,9 @@ input::-webkit-input-placeholder {
 .l_term {
   margin-left: 5px;
   color: var(--root-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 450;
+  font-family: "Montserrat";
 }
 
 .l_term_link {
@@ -352,6 +353,7 @@ input::-webkit-input-placeholder {
   font-size: 13px;
   color: var(--root-color);
   margin: 0 5px 0 0;
+  font-family: "Montserrat";
 }
 
 .co_title {
@@ -447,13 +449,15 @@ input::-webkit-input-placeholder {
   display: flex;
   flex-flow: row;
   margin-top: 15px;
+  align-items: center;
 }
 
 .l_partner_check_lbl {
   margin: 0 0 0 5px;
   color: var(--root-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 450;
+  font-family: "Montserrat";
 }
 
 .l_partner_field {
@@ -555,7 +559,7 @@ input::-webkit-input-placeholder {
   border-width: 1px;
 }
 
-.login_check .ant-checkbox-checked .ant-checkbox-inner {
+.login_check .ant-checkbox-checked .ant-checkbox-inner, .lg_login_check .ant-checkbox-checked .ant-checkbox-inner {
   color: var(--logo1-color);
 }
 
@@ -591,6 +595,7 @@ input::-webkit-input-placeholder {
   font-size: var(--link-font);
   font-weight: 800;
   text-decoration: underline;
+  font-family: "Montserrat";
 }
 
 .login_link1:hover {
@@ -705,6 +710,8 @@ input::-webkit-input-placeholder {
 }
 .pro_radio_back span.ant-radio+*{
   color: var(--root-color);
+  font-family: "Montserrat";
+  font-size: 13px;
 }
 
 .radio_select_back_z {
@@ -797,8 +804,18 @@ input::-webkit-input-placeholder {
 
 .lg_title {
   color: var(--root-color);
-  font-size: 23px;
+  font-size: 30px;
   margin: 0;
+  font-family: "Montserrat";
+}
+
+.lg_title1 {
+  color: var(--root-color);
+  font-size: 20px;
+  margin: 0;
+  font-family: "Montserrat";
+  max-width: 360px;
+  text-align: center;
 }
 
 .lg_title2 {
@@ -810,11 +827,13 @@ input::-webkit-input-placeholder {
   color: var(--text-color);
   padding-left: 35px !important;
   padding-right: 5px !important;
-  font-size: 15px;
+  font-size: 14px;
   height: 48px;
   border: 2px solid var(--root-color);
   /* box-shadow: 0px 4px 25px 0px #00000040; */
   background-color: var(--root-color);
+  font-family: "Montserrat";
+  font-weight: 300;
 }
 .lg_input_back:focus {
   outline: none;
@@ -829,7 +848,7 @@ input::-webkit-input-placeholder {
   color: var(--text-color);
 }
 
-.f_input_container:focus-within .lg_input_icon {
+.f_input_container:focus-within .lg_input_icon, .lg_input_container:focus-within .lg_input_icon {
   color: var(--logo2-color);
 }
 
@@ -868,13 +887,13 @@ input::-webkit-input-placeholder {
   width: 100%;
   padding: 0 20px;
   border-radius: 5px;
-  font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 30px 0 10px 0;
   color: var(--root-color);
+  font-family: "Montserrat";
 }
 
 .lg_login_btn:hover {
@@ -887,22 +906,37 @@ input::-webkit-input-placeholder {
   cursor: not-allowed;
 }
 
-.lg_login_link {
-  color: var(--root-color);
-  font-size: var(--link-font);
-  font-weight: 700;
+.lg_login_check .ant-checkbox .ant-checkbox-inner {
+  background-color: transparent;
+  border-color: var(--back-color);
+  height: 13px;
+  width: 13px;
+  border-width: 1px;
 }
 
-.lg_login_link:hover {
+.lg_login_link, .lg_login_check > span {
+  color: var(--root-color);
+  font-size: 11px;
+  font-family: "Montserrat";
+}
+
+.lg_login_link2 {
+  color: var(--root-color);
+  font-size: 13.5px;
+  font-family: "Montserrat";
+}
+
+.lg_login_link:hover, .lg_login_link2:hover {
   color: #fffc;
   cursor: pointer;
 }
 
 .lg_footer {
   margin: 0;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--root-color);
+  font-family: "Montserrat";
 }
 
 .lg_social_back {
@@ -947,6 +981,7 @@ input::-webkit-input-placeholder {
   font-size: 15px;
   padding-left: 35px !important;
   padding-top: 7px !important;
+  font-family: "Montserrat";
 }
 
 .lg_select_login .ant-select-selector {
@@ -1035,12 +1070,30 @@ input::-webkit-input-placeholder {
 
 .lg_term_link {
   color: var(--root-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 800;
   text-decoration: underline;
+  font-family: "Montserrat";
 }
 
 .lg_term_link:hover {
   text-decoration-skip-ink: none;
   color: var(--root-color);
+}
+
+.lg_input_container {
+  display: flex;
+  flex-direction: column;
+  margin: 30px 0 20px 0;
+  position: relative;
+  background-color: var(--root-color);
+  border-radius: 5px;
+}
+
+.lg_select_lbl_sign{
+  font-size: 14px;
+  color: var(--root-color);
+  margin: 5px 0;
+  font-family: 'Montserrat';
+  font-size: 13px;
 }

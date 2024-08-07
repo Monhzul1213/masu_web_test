@@ -100,7 +100,7 @@ export function Recovery(){
       <div style={{flex: 1}} />
       <p className='lg_title'>{t('login.recovery')}</p>
       <div style={{width: 300}}>
-        <FloatingInput1 {...mailProps} className='lg_input_back' color='#fff' />
+        <FloatingInput1 {...mailProps} classBack='lg_input_container' className='lg_input_back' color='#fff' />
         <Button className='lg_login_btn' text={t('login.send')} onClick={onClick} loading={loading} />
       </div>
       <div className='co_gap' />
@@ -110,7 +110,7 @@ export function Recovery(){
         <p className='co_sent_text'>{t('login.sent')}</p>
       </div>}
       <div className='l_center_row'>
-        <Link className='lg_login_link' to='/'>{t('login.back')}</Link>
+        <Link className='lg_login_link2' to='/'>{t('login.back')}</Link>
       </div>
       <div style={{padding: 10}} />
       <div style={{flex: 1}} />

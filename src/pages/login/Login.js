@@ -211,7 +211,7 @@ export function Login(){
 
   const emailProps = { text: t('login.email'), value: email, setValue: setEmail, setError, isLogin: true, Icon: () => <DynamicAIIcon className='lg_input_icon' name='AiOutlineUser'/> };
   const passProps = { text: t('login.password'), value: password, setValue: setPassword, setError, isLogin: true, handleEnter: handleSubmit };
-  const checkProps = { className: 'login_check', checked, onChange: e => setChecked(e?.target?.checked) };
+  const checkProps = { className: 'lg_login_check', checked, onChange: e => setChecked(e?.target?.checked) };
   const btnProps = { loading, type: 'submit', className: 'lg_login_btn', text: t('login.login1') };
    
   return (
@@ -222,8 +222,8 @@ export function Login(){
       <div style={{flex: 1}} />
       <p className='lg_title'>Welcome <span className='lg_title2'>Back</span>!</p>
       <form onSubmit={handleSubmit} style={{width: '330px'}}>
-        <FloatingInput1 {...emailProps} className='lg_input_back' color='#fff' />
-        <FloatingPassword1 {...passProps} className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' color='#fff' />
+        <FloatingInput1 {...emailProps} classBack='lg_input_container' className='lg_input_back' color='#fff' />
+        <FloatingPassword1 {...passProps} classBack='lg_input_container' className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' color='#fff' />
         {error && <Error error={error} id='lg_error' />}
         <Button {...btnProps} />
         <div className='login_btn_row'>
@@ -232,7 +232,7 @@ export function Login(){
         </div>
         <div style={{padding: 10}} />
         <div className='login_center_row'>
-          <Link className='lg_login_link' to='/sign_up'>{t('login.new_sign')}</Link>
+          <Link className='lg_login_link2' to='/sign_up'>{t('login.new_sign')}</Link>
         </div>
       </form>
       <div style={{padding: 10}} />

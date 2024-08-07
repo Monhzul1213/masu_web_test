@@ -79,7 +79,7 @@ export function RadioSelect(props){
 
   return (
     <div className='radio_sign_back' >
-      <p className='select_lbl_sign' >{label}</p>
+      <p className='lg_select_lbl_sign'>{label}</p>
       <Radio.Group className= {merchant ? 'pro_radio' : 'pro_radio_back'} onChange={onChange} value={custom}>
         <Radio className='select_radio_check' value={'1'}>{t('profile.sale')}</Radio>
         <div className={merchant ? 'pro_gap' : ''}/>

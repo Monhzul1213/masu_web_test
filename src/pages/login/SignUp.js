@@ -402,7 +402,7 @@ export function SignUp(){
   const businessProps = { text: t('login.business'), value: business, setValue: setBusiness, setError, Icon: () => <DynamicMDIcon className='lg_input_icon' name='MdOutlineBusinessCenter'/> };
   const addressProps = { text: t('login.phone'), value: address, setValue: changePhone, setError, Icon: () => <DynamicAIIcon className='lg_input_icon' name='AiOutlinePhone'/> };//handleEnter: checked && handleSubmit
   const checkProps = { className: 'login_check', checked, onChange: e => setChecked(e?.target?.checked) };
-  const btnProps = { loading, type: 'submit', className: 'lg_login_btn', text: t('login.signup'), disabled: !checked };
+  const btnProps = { loading, type: 'submit', className: 'lg_login_btn', text: t('login.signup1'), disabled: !checked };
   const confirmProps = { visible, closeModal, number: address?.value, expire, email: email?.value };
   const partProps = { partner, setPartner };
   const subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), allData, merchant,
@@ -415,7 +415,7 @@ export function SignUp(){
       <img className='login_logo' src={header_image} alt='MASU LOGO' />
       <div style={{padding: 10}} />
       <div style={{flex: 1}} />
-      <p className='lg_title'>{t('login.signup_text1')}</p>
+      <p className='lg_title1'>{t('login.signup_text1')}</p>
       <form onSubmit={handleSubmit} autoComplete='off' style={{width: 400}}>
         <FloatingInput1 {...emailProps} className='lg_input_back' color='#fff' />
         <FloatingPassword1 {...passProps} className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' color='#fff' />

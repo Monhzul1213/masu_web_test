@@ -103,7 +103,7 @@ export function FloatingPassword(props){
 
 export function FloatingInput1(props){
   const { t } = useTranslation();
-  const { text, value, setValue, setError, handleEnter, id, disabled, length, isLogin, Icon, className, color } = props;
+  const { text, value, setValue, setError, handleEnter, id, disabled, length, isLogin, Icon, className, color, classBack } = props;
 
   const onChange = e => {
     let notValid = e?.target?.value?.includes("'");
@@ -138,7 +138,7 @@ export function FloatingInput1(props){
   const inputProps = { className: className ?? 'f_input_back1', value: value?.value, onChange, onKeyDown, style, onBlur, placeholder: text, disabled };
 
   return (
-    <div className='f_input_container' id={id}>
+    <div className={classBack ?? 'f_input_container'} id={id}>
       {/* <label className='f_input_label' style={style1}>{text}</label> */}
       {Icon && <Icon />}
       <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
@@ -148,7 +148,7 @@ export function FloatingInput1(props){
 }
 
 export function FloatingPassword1(props){
-  const { text, value, setValue, setError, handleEnter, isLogin, className, classIcon, classShow, color } = props;
+  const { text, value, setValue, setError, handleEnter, isLogin, className, classIcon, classShow, color, classBack } = props;
   const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
 
@@ -189,7 +189,7 @@ export function FloatingPassword1(props){
     id: visible ? null : 'm_input_password' };
 
   return (
-    <div className='f_input_container'>
+    <div className={classBack ?? 'f_input_container'}>
       {/* <label className='f_input_label' style={style1}>{text}</label> */}
       <DynamicAIIcon className={classIcon ?? 'f_input_icon'} name={'AiOutlineLock'} />
       <input {...inputProps} name={isLogin ? '' : 'notsearch_password'} />
