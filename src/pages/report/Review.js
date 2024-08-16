@@ -33,7 +33,7 @@ function Screen(props){
   useEffect(() => {
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
     else {
-      let dates = [moment()?.startOf('month'), moment()];
+      let dates = [moment(), moment()];
       let query = '?BeginDate=' + dates[0]?.format('yyyy.MM.DD') + '&EndDate=' + dates[1]?.format('yyyy.MM.DD');
       getData(query, null, dates);
     }

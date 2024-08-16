@@ -249,7 +249,7 @@ export function SignUp(){
   const [sales, setSales] = useState([]);
   const [vendor, setVendor] = useState([]);
   const { user, token } = useSelector(state => state.login);
-  const merchant = user?.msMerchant;
+  // const merchant = user?.msMerchant;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

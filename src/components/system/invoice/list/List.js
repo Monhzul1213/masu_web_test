@@ -40,6 +40,7 @@ export function List(props){
         }
       },
       { Header: t('order.status'), accessor: 'statusName', exLabel: t('order.status') },
+      { Header: t('order.bank'), accessor: 'bankName', exLabel: t('order.bank') },
       { Header: '', accessor: 'isSendVat', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
         Cell: ({ value, row, onClickLink }) => {
           let active = row?.original?.status === 3 && value !== 'Y' && row?.original?.invoiceTime !== 'TRIAL';

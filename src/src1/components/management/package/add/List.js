@@ -3,7 +3,7 @@ import { withSize } from 'react-sizeme';
 import { useBlockLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { DynamicBSIcon, Money, TableResize } from '../../../../../components/all';
+import { Money, TableResize } from '../../../../../components/all';
 import { Search } from '../../../../../components/management/order/add/Search';
 import { ItemSelect } from './SelectItem';
 
@@ -18,6 +18,10 @@ function Card(props){
         Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 200, minWidth: 90,
       },
       { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 120, minWidth: 90 },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_qty3')}</div>, accessor: 'lQty', isText: !editable, width: 130, minWidth: 80,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>
+      },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_qty1')}</div>, accessor: 'qty', isText: !editable, width: 130, minWidth: 80,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>
@@ -35,16 +39,10 @@ function Card(props){
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={15} /></div>,
       },
     ];
-    if(editable)
-      columns.push({
-        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
-        Cell: ({ row, onClickDelete }) =>
-          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      });
     setColumns(columns);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language, editable]);
+  }, [i18n?.language]);
 
   const filterFunction = useCallback((rows, ids, query) => {
     return rows.filter(row => row.values['name']?.toLowerCase()?.includes(query?.toLowerCase()) || row.values['barCode']?.includes(query));
@@ -72,7 +70,7 @@ function Card(props){
   const newItem = invt => {
     return {
       name: invt.name, invtId: invt.invtId, invtID: invt.invtId, sku: invt?.sku, barCode: invt?.barCode, allowDecimal: invt?.isEach === 'N',
-      itemType: 'RC', siteQty: invt?.siteQty, qty: 0, cost: invt.cost, origCost: invt.cost, leftQty: invt?.siteQty, totalCost: 0,
+      itemType: 'RC', siteQty: invt?.siteQty, qty: 0, cost: invt.cost, origCost: invt.cost, leftQty: invt?.siteQty, totalCost: 0, totalQty: invt?.totalQty,
       adjustItemID: 0, sourceItemID: 0, amount: 0, totalAmount: 0, notes: '', rowStatus: 'I',
     };
   }

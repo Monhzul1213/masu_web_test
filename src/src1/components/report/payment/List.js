@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { Money, PaginationTable, TableResize } from '../../all/all_m';
+import { Money, TableResize } from '../../all/all_m';
 import { formatNumber } from '../../../../helpers';
 import { Header } from './Header';
 
@@ -82,7 +82,7 @@ export function List(props){
 
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
+    initialState: { pageIndex: 0, pageSize: 250000, sortBy: [{ id: 'beginTime', desc: true }] },
       }, useSortBy, usePagination, useRowSelect,  useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, hasTotal: true , total: data?.length };
   const filterProps = {columns, data, excelName };
@@ -95,7 +95,6 @@ export function List(props){
           <TableResize {...tableProps} />
         </div>
       </div>
-      <PaginationTable {...tableProps} />
     </div>
   );
 }

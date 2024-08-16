@@ -1635,6 +1635,21 @@
 .rep_select_back2 .ant-select-selection-placeholder{
   color: var(--text-color);
 }
+
+.rep_select_back3 {
+  background-color: var(--root-color);
+  height: 36px;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  width: 200px;
+}
+
+.rep_select_back3 .ant-select-selection-placeholder{
+  color: var(--text-color);
+}
 .ma_back2 {
   background-color: var(--root-color);
   border-radius: var(--radius);

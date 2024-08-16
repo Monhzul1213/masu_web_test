@@ -35,7 +35,7 @@ export function Social(){
 }
 
 export function Social1(){
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   return (
     <div className='lg_social_back'>

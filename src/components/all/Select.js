@@ -265,3 +265,32 @@ export function InvtSelect(props){
     </div>
   );
 }
+
+export function GroupSelect(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, classLabel, bStyle, dropdownStyle, dropdownAlign } = props;
+  
+  const renderItem = (item, index) => {
+    return (<Option disabled={item?.disabled} key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  return (
+    <div className={classBack} style={bStyle}>
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={setValue}
+        value={value}
+        loading={loading}
+        onFocus={onFocus}
+        dropdownStyle={dropdownStyle}
+        dropdownAlign={dropdownAlign}
+        options={data}
+        // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' />}
+        placeholder={placeholder}>
+        {/* {data?.map(renderItem)} */}
+      </AntSelect>
+    </div>
+  );
+}

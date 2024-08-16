@@ -131,6 +131,33 @@ export function Filter(props){
     }
   }
 
+  // const onFocusFilter = async () => {
+  //   if(!discounts?.length || discounts?.length === 1){
+  //     setDiscounts([
+  //       { label: 'Урамшуулал',
+  //       options: [{ value1: 1, label: 'Урамшуулал ашигласан', value: 0},
+  //                 { value1: 0, label: 'Урамшуулал ашиглаагүй', value: 1}],
+  //       },
+  //       { label: 'Ваучер',
+  //       options: [{ value1: 1, label: 'Ваучер ашигласан', value: 2},
+  //                 { value1: 0, label: 'Ваучер ашиглаагүй', value: 3}],
+  //       },
+  //       { label: 'Купон', 
+  //         options: [{ value1: 1, label: 'Купон ашигласан', value: 4},
+  //                   { value1: 0, label: 'Купон ашиглаагүй', value: 5}]
+  //       },
+  //       { label: 'Хөнгөлөлт',
+  //         options: [{ value1: 1, label: 'Хөнгөлөлт ашигласан', value: 6},
+  //                   { value1: 0, label: 'Хөнгөлөлт ашиглаагүй', value: 7}],
+  //       },
+  //       { label: 'GiftCard',
+  //       options: [{ value1: 1, label: 'GiftCard ашигласан', value: 8},
+  //                 { value1: 0, label: 'GiftCard ашиглаагүй', value: 9}],
+  //       },
+  //     ]);
+  //   }
+  // }
+
   const onChangeBonus = value => {
     setIsBonus(value)
     onHide(value, voucher, coupon, discount)

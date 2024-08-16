@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 import { getList } from '../../../../services';
-import { DynamicAIIcon, MonthRange, MultiSelect, TimeRange } from '../../all/all_m';
+import { DynamicAIIcon, DynamicMDIcon, MonthRange, MultiSelect, TimeRange } from '../../all/all_m';
 
 export function Filter(props){
   const { setError, size, onSearch, filter1 } = props;
@@ -15,6 +15,8 @@ export function Filter(props){
   const [site, setSite] = useState([]);
   const [emps, setEmps] = useState([]);
   const [emp, setEmp] = useState([]);
+  const [types, setTypes] = useState([]);
+  const [type, setType] = useState([]);
   const [classH, setClassH] = useState('rp_h_back1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -22,6 +24,7 @@ export function Filter(props){
   useEffect(() => {
     onFocusSite();
     onFocusEmp();
+    onFocusType();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -39,6 +42,7 @@ export function Filter(props){
     if(time) query += '&BeginTime=' + time[0] + '&EndTime=' + time[1]
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
+    if(type?.length !== types?.length) type?.forEach(item => query += '&PaymentTypeID=' + item);
     onSearch && onSearch(query, filter1, date);
   }
 
@@ -70,10 +74,25 @@ export function Filter(props){
     }
   }
 
+  const onFocusType = async () => {
+    if(!types?.length){
+      setError && setError(null);
+      setLoading('types');
+      const response = await dispatch(getList(user, token, 'Txn/GetPayments'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        setTypes(response?.data?.paymenttype);
+        setType(response?.data?.paymenttype?.map(item => item.paymentTypeId));
+      }
+      setLoading(false);
+    }
+  }
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const timeProps = { value: time, setValue: setTime, onHide, classBack: 'rp_time_back', label: t('report_receipt.all_day') };
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
   const maxEmp = emp?.length === emps?.length ? t('time.all_emp') : (emp?.length + t('time.some_emp'));
+  const maxType = type?.length === types?.length ? t('time.all_constant') : (type?.length + t('time.some_constant'));
+
   const siteProps = { value: site, setValue: setSite, data: sites, s_value: 'siteId', s_descr: 'name', onHide,
     Icon: () => <DynamicAIIcon name='AiOutlineShop' className='mr_cal' />, classBack: 'rp_select_back',
     className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
@@ -82,6 +101,10 @@ export function Filter(props){
     Icon: () => <DynamicAIIcon name='AiOutlineUser' className='mr_cal' />, classBack: 'rp_select_back1',
     className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
     onFocus: onFocusEmp, loading: loading === 'emps', maxTag: maxEmp, placeholder: t('time.select_emp') };
+  const typeProps = { value: type, setValue: setType, data: types, s_value: 'paymentTypeId', s_descr: 'paymentTypeName', onHide,
+    Icon: () => <DynamicMDIcon name='MdPayment' className='mr_cal' />, classBack: 'rp_select_back2',
+    className: 'rp_select', dropdownStyle: { marginLeft: -30, minWidth: 180 }, dropdownAlign: { offset: [-30, 5] },
+    onFocus: onFocusType, loading: loading === 'types', maxTag: maxType, placeholder: t('time.select_type') };
 
   return (
     <div className={classH}>
@@ -92,6 +115,7 @@ export function Filter(props){
       <div className='rp_h_row2'>
         <MultiSelect {...siteProps} />
         <MultiSelect {...empProps} />
+        <MultiSelect {...typeProps} />
       </div>
     </div>
   );

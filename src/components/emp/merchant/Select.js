@@ -31,13 +31,13 @@ const SubSelect = props => {
 
 export function RadioSelect(props){
   const {label, value, setValue, data, data1, onFocusSales, onFocusVendor, addItem, setAddItem, merchant, allData, setEdited } = props;
-  const [custom, setCustom] = useState('1');
+  const [custom, setCustom] = useState('0');
   const { t } = useTranslation();
 
   useEffect(() => {
     let s = merchant?.merchantSubType?.toString()
-    if(s?.startsWith(1) || merchant?.merchantSubType === null || merchant === undefined) setCustom('1') 
-    else setCustom('2')
+    if(s?.startsWith(1) || merchant?.merchantSubType === null || merchant === undefined) setCustom('0') 
+    else setCustom('1')
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -50,14 +50,14 @@ export function RadioSelect(props){
 
   const setChange = item => {
     setAddItem(null)
-    setCustom('1')
+    setCustom('0')
     setValue({value: item})
     setEdited && setEdited(true);
   }
 
   const setChange1 = item => {
     setAddItem(null)
-    setCustom('2')
+    setCustom('1')
     setValue({value: item})
     setEdited && setEdited(true);
   }
@@ -82,13 +82,13 @@ export function RadioSelect(props){
     <div className='radio_back' >
       <p className='select_lbl' >{label}</p>
       <Radio.Group className= {merchant ? 'pro_radio' : 'pro_radioz'} onChange={onChange} value={custom}>
-          <Radio value={'1'}>{t('profile.sale')}</Radio>
+          <Radio value={'0'}>{t('profile.sale')}</Radio>
           <div className={merchant ? 'pro_gap' : ''}/>
-          <Radio value={'2'}>{t('profile.vendor')}</Radio>
+          <Radio value={'1'}>{t('profile.vendor')}</Radio>
       </Radio.Group>
       <div className={(value?.value === 199 || value?.value === 205) ? 'row' : 'col'}>
         <div className='list_scroll' style={{overflowY: 'scroll', maxHeight: 150}}>
-              {custom === '1' ? <SubSelect {...sub1Props}/> : <SubSelect {...sub2Props}/>}
+              {custom === '0' ? <SubSelect {...sub1Props}/> : <SubSelect {...sub2Props}/>}
         </div>
         {(value?.value === 199 || value?.value === 205) && <AddInput
           setValue={setAddItem}

@@ -61,6 +61,7 @@ export function Main(props){
     else {
       response?.data?.forEach(item => {
         item?.msInvKitItems?.forEach(list=> {
+          list.lQty= list?.qty
           list.totalCost = divide(list?.qty, list?.cost, true)
         })
         setDetail(item?.msInvKitItems)
@@ -69,10 +70,12 @@ export function Main(props){
   }
 
   const onChangeQty = (value) =>{
-    setQty(value)
+    let text = value?.value?.replace(/[^0-9]/g, '');
+    if(isNaN(text)) setQty({...value, error: 'must_number'});
+    else setQty({ value: text });
     let sum = 0;
     setDetail(old => old.map((row, index) => {
-      let qty = parseFloat(value?.value ? value?.value : 0);
+      let qty = parseFloat(value?.value ? divide(old[index]?.lQty, value?.value, true) : old[index]?.lQty);
       let totalCost = divide(old[index]?.cost, qty , true);
       sum += totalCost;
       setTotalCost({value: sum});
@@ -83,15 +86,15 @@ export function Main(props){
   };
 
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
-    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusSite, loading };
+    s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusSite, loading, disabled: !editable };
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
   const noProps = { value: packNo, setValue: setPackNo, label: t('package.title'), placeholder: t('package.title'), inRow: true, disabled: true,  };
-  const typeProps = { value: type, setValue: setType, label: t('discount.type'), placeholder: t('discount.type'), data: t('package.type'), setError, setEdited, inRow: true };
+  const typeProps = { value: type, setValue: setType, label: t('discount.type'), placeholder: t('discount.type'), data: t('package.type'), setError, setEdited, inRow: true, disabled: !editable };
   // const statusProps = { value: status, setValue: setStatus, label: t('order.status'), placeholder: t('order.status'), data: t('package.status'), setError, setEdited, inRow: true, loading };
-  const qtyProps = { value: qty, setValue: onChangeQty, label: t('order.t_qty1'), placeholder: t('order.t_qty1'), inRow: true, noBlur: true};
+  const qtyProps = { value: qty, setValue: onChangeQty, label: t('order.t_qty1'), placeholder: t('order.t_qty1'), inRow: true, noBlur: true, disabled: !editable};
   const costProps = { value: cost, setValue: setCost, label: t('orders.cost'), placeholder: t('orders.cost'), inRow: true, disabled: true,  };
   const totalCostProps = { value: totalCost, setValue: setTotalCost, label: t('orders.totalCost'), placeholder: t('orders.totalCost'), inRow: true, disabled: true,  };
-  const invtProps = { value: invt, setValue: onChangeInvt, label: t('coupon.invt'), setError, setEdited, inRow: true, disabled: siteId?.value ? false : true,
+  const invtProps = { value: invt, setValue: onChangeInvt, label: t('coupon.invt'), setError, setEdited, inRow: true, disabled: siteId?.value ? !editable : true ,
   data: invts, s_value: 'invtId', s_descr: 'name', onFocus: getInvts, placeholder: t('coupon.invt_select')};
   const dateProps = { value: date, setValue: setDate, label: t('count.date'), placeholder: t('count.date'), inRow: true, className: 'c_date', disabled: !editable };
 

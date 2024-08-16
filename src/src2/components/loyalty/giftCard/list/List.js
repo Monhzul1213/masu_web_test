@@ -19,13 +19,7 @@ export function List(props) {
         Header: t("giftCard.cardNumber"),
         accessor: "cardNumber",
         customStyle: { width: 120 },
-        Footer: (info) => {
-          return (
-            <>
-              <div style={{ textAlign: "left", paddingRight: 15 }}>Нийт</div>
-            </>
-          );
-        },
+        Footer: 'Нийт: ' + data?.length
       },
       {
         Header: t("giftCard.descr"),
@@ -167,7 +161,7 @@ export function List(props) {
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, data?.length]);
 
   useEffect(() => {
     if (size?.width >= 830)

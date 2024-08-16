@@ -9,6 +9,7 @@ import { Confirm, Error1, Overlay, Prompt } from '../../../components/all';
 import { Main, List, ButtonRow } from '../../components/management/package/add';
 import { Subscription } from '../../../components/management/adjust/list';
 import moment from 'moment';
+import { divide } from '../../../helpers';
 
 export function PackageAdd(){
   const { t } = useTranslation();
@@ -72,6 +73,7 @@ export function PackageAdd(){
         setNotes({ value: header?.descr });
         response?.data?.assemblyitem?.forEach(item => {
           item.name = item.invtName;
+          item.lQty = divide(item?.qty, header?.qty)
         });
         setDetail(response?.data?.assemblyitem);
         // setItems(response?.data?.assemblyitem);
@@ -85,7 +87,7 @@ export function PackageAdd(){
   const validateData = status => {
     let isSiteValid = siteId?.value || siteId?.value === 0;
     let length = detail?.filter(item => item?.qty)?.length;
-    if(isSiteValid && length){
+    if(isSiteValid && length && qty?.value){
       let assemblyNo = header?.assemblyNo ?? 0;
       let items = [];
       detail?.forEach(item => {
@@ -100,6 +102,7 @@ export function PackageAdd(){
       qty: qty?.value, cost: cost?.value, totalCost: totalCost?.value, descr: notes?.value, rowStatus: assemblyNo ? 'U' : 'I', items };
     } else {
       if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
+      if(!qty?.value) setQty({ value: qty?.value, error: t('error.not_empty') });
       if(!length) setSearch({ value: null, error: t('adjust.items_error') });
       return false;
     }
@@ -153,10 +156,19 @@ export function PackageAdd(){
     if(sure) setVisible(true);
   }
 
+  const onClickDelete = async () => {
+    let data = {...header, rowStatus: 'D', items: [] };
+    onLoad();
+    const response = await dispatch(sendRequest(user, token, 'Txn/ModAssembly', data));
+    console.log(data);
+    if(response?.error) onError(response?.error, true);
+    else onSuccess(t('adjust.delete_success'));
+  }
+
   let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes, editable, packNo, setPackNo, date, setDate,
                     type, setType, invt, setInvt, qty, setQty, cost, setCost, totalCost, setTotalCost, status, setStatus, setDetail };
   let listProps = { detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable};
-  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), header };
+  let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), onClickDelete, header };
   let subProps = { visible, setVisible, sites, setSites, onDone, noTrial: true };
   let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
 

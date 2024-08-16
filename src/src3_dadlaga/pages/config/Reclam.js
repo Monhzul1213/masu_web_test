@@ -8,7 +8,7 @@ import { withSize } from 'react-sizeme';
 
 import '../../../css/invt.css';
 import { getList, sendRequest } from '../../../services';
-import { Empty1, Overlay } from '../../../components/all';
+import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Header, List } from '../../components/config/reclam/list';
 import { useTranslation } from 'react-i18next';
 
@@ -77,6 +77,7 @@ export function Card (props) {
   return (
     <div className='store_tab' style={{ flex: 1 }}>
       <Overlay loading={loading}>
+            {error && <Error1 error={error} />}
             <div className='mo_container' style={{ width }}>
                 <Header {...headerProps} size={size} />
                 {!data.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}

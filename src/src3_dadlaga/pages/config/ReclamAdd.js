@@ -155,14 +155,12 @@ function Screen() {
         status: status?.value,
         rowStatus: selected ? 'U' : 'I'
       }];
-      {
-        const response = await dispatch(sendRequest(user, token, 'Site/ModAdvertisement', data));
-        if (response?.error) {
-          onError(response?.error);
-        } else {
-          onSuccess(t('reclam.add_success'));
-          navigate('/config/reclam');
-        }
+      const response = await dispatch(sendRequest(user, token, 'Site/ModAdvertisement', data));
+      if (response?.error) {
+        onError(response?.error);
+      } else {
+        onSuccess(t('reclam.add_success'));
+        navigate('/config/reclam');
       }
     }
   };
