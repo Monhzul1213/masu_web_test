@@ -160,7 +160,6 @@ export function PackageAdd(){
     let data = {...header, rowStatus: 'D', items: [] };
     onLoad();
     const response = await dispatch(sendRequest(user, token, 'Txn/ModAssembly', data));
-    console.log(data);
     if(response?.error) onError(response?.error, true);
     else onSuccess(t('adjust.delete_success'));
   }
