@@ -150,6 +150,7 @@ export function Menu(props){
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
+    getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration'),
     getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
     <BsPuzzle style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, null, null, msRole?.webManageCustomer !== 'Y'),
     hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :
