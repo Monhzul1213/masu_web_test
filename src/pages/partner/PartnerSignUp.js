@@ -7,9 +7,9 @@ import '../../css/login.css';
 import '../../css/config.css';
 import { apiRegister, getService, partnerLogin, setIsLoggedIn, setPartnerLogin } from '../../services';
 import { validateEmail, validateNumber } from '../../helpers';
-import { login_image } from '../../assets';
-import { Button, Error, FloatingInput, FloatingPassword } from '../../components/all';
-import { Confirm, Copyright } from '../../components/login';
+import { header_image } from '../../assets';
+import { Button, DynamicAIIcon, DynamicFAIcon, DynamicMDIcon, Error, FloatingInput1, FloatingPassword1 } from '../../components/all';
+import { Confirm, Social1 } from '../../components/login';
 
 export function PartnerSignUp(){
   const { t } = useTranslation();
@@ -102,37 +102,42 @@ export function PartnerSignUp(){
     setLoading(false);
   }
 
-  const codeProps = { text: t('login.partner'), value: code, setValue: setCode, setError, length: 30 };
-  const nameProps = { text: t('login.partner_name'), value: name, setValue: setName, setError };
-  const mailProps = { text: t('login.email'), value: mail, setValue: setMail, setError };
-  const phoneProps = { text: t('login.phone'), value: phone, setValue: changePhone, setError };
-  const addressProps = { text: t('login.partner_address'), value: address, setValue: setAddress, setError };
+  const codeProps = { text: t('login.partner'), value: code, setValue: setCode, setError, length: 30, Icon: () => <DynamicAIIcon className='lg_input_icon' name='AiOutlineUser'/> };
+  const nameProps = { text: t('login.partner_name'), value: name, setValue: setName, setError, Icon: () => <DynamicAIIcon className='lg_input_icon' name='AiOutlineUser'/> };
+  const mailProps = { text: t('login.email'), value: mail, setValue: setMail, setError, Icon: () => <DynamicMDIcon className='lg_input_icon' name='MdOutlineMailOutline'/> };
+  const phoneProps = { text: t('login.phone'), value: phone, setValue: changePhone, setError, Icon: () => <DynamicAIIcon className='lg_input_icon' name='AiOutlinePhone'/> };
+  const addressProps = { text: t('login.partner_address'), value: address, setValue: setAddress, setError, Icon: () => <DynamicFAIcon className='lg_input_icon' name='FaRegAddressCard'/> };
   const passProps = { text: t('login.partner_password'), value: password, setValue: setPassword, setError, handleEnter: handleSubmit };
-  const btnProps = { loading, type: 'submit', className: 'l_btn', text: t('login.signup') };
+  const btnProps = { loading, type: 'submit', className: 'lg_login_btn', text: t('login.signup1') };
   const confirmProps = { visible, closeModal, number: phone?.value, expire, email: mail?.value, fromPartner: true };
 
   return (
-    <div className='l_container'>
+    <div className='login_container1'>
       {visible && <Confirm {...confirmProps} />}
-      <div className='l_back'>
-        <img className='l_logo' src={login_image} alt='MASU LOGO' />
-        <p className='l_text'>{t('login.partner_signup')}</p>
-        <form onSubmit={handleSubmit} autoComplete='off'>
-          <FloatingInput {...codeProps} />
-          <FloatingInput {...nameProps} />
-          <FloatingInput {...mailProps} />
-          <FloatingInput {...phoneProps} />
-          <FloatingInput {...addressProps} />
-          <FloatingPassword {...passProps} />
+      <div style={{padding: 20}} />
+      <img className='login_logo' src={header_image} alt='MASU LOGO' />
+      <div style={{padding: 10}} />
+      <div style={{flex: 1}} />
+      <p className='lg_title1'>{t('login.partner_signup')}</p>
+      <form onSubmit={handleSubmit} autoComplete='off' style={{width: 400}}>
+          <FloatingInput1 {...codeProps}  className='lg_input_back' color='#fff'/>
+          <FloatingInput1 {...nameProps} className='lg_input_back' color='#fff'/>
+          <FloatingInput1 {...mailProps} className='lg_input_back' color='#fff'/>
+          <FloatingInput1 {...phoneProps} className='lg_input_back' color='#fff'/>
+          <FloatingInput1 {...addressProps} className='lg_input_back' color='#fff'/>
+          <FloatingPassword1 {...passProps} className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' color='#fff'/>
           {error && <Error error={error} />}
           <Button {...btnProps} />
-        </form>
-        <div className='l_center_row'>
-          <p className='l_link_text'>{t('login.go_login')}</p>
-          <Link className='l_link' to='/partner_sign_in'>{t('login.login')}</Link>
-        </div>
+      </form>
+      <div style={{padding: 10}} />
+      <div className='l_center_row'>
+        <p className='l_link_text'>{t('login.go_login')}</p>
+        <Link className='login_link1' to='/partner_sign_in'>{t('login.login')}</Link>
       </div>
-      <Copyright />
+      <div style={{flex: 1}} />
+      <p className='lg_footer'>masu cloud platform</p>
+      <div style={{padding: 10}} />
+      <Social1 />
     </div>
   );
 }
