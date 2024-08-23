@@ -44,7 +44,7 @@ export function Bill(){
 
   return (
     <Overlay loading={loading}>
-      <div className='bl_back'>
+      <div className='bill_back'>
         {error && <Error1 error={error} />}
         {!header ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
           <div>
