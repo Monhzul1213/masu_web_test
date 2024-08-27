@@ -11,6 +11,7 @@ import { getList, sendRequest } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Header, List } from '../../components/config/reclam/list';
 import { useTranslation } from 'react-i18next';
+import { Subscription } from '../../../components/management/adjust/list/Subscription';
 
 export function Card (props) {
   const { size } = props;
@@ -19,6 +20,7 @@ export function Card (props) {
   const [data, setData] = useState([]);
   const [show, setShow] = useState(false);
   const [checked, setChecked] = useState(false);
+  const [visible, setVisible] = useState(false);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,17 +36,16 @@ export function Card (props) {
   const getData = async (query) => {
     setError();
     setLoading(true);
-    try {
-      const api = 'Site/GetAdvertisement' + query;
-      const response = await dispatch(getList(user, token, api));
-      if (response?.error) {
-        setError(response.error);
-      } else {
-        setData(response.data?.ads);
+    const api = 'Site/GetAdvertisement' + query;
+    const response = await dispatch(getList(user, token, api));
+      if(response?.code === 1000){
+        // comment
+        // isNew or isExpired
+        // || response?.code === 1001
+        setVisible(true);
       }
-    } catch (err) {
-      setError(err.message);
-    }
+      else if(response?.error) setError(response.error);
+      else setData(response.data?.ads);
     setShow(false);
     setChecked(false);
     setLoading(false);
@@ -54,28 +55,27 @@ export function Card (props) {
     let toDelete = data.filter(item => item.checked).map(item => ({ ...item, rowStatus: 'D', image: {} }));
     setError(null);
     setLoading(true);
-    try {
       const response = await dispatch(sendRequest(user, token, '?', toDelete));
-      if (response?.error) {
-        setError(response.error);
-      } else {
-        message.success(t('reclam.delete_success'));
-      }
-    } catch (err) {
-      setError(err.message);
-    }
+      if (response?.error) setError(response.error);
+      else message.success(t('reclam.delete_success'));
     setLoading(false);
   };
 
   const onClickAdd = () => navigate('reclam_add');
 
+  const onDone = async () => {
+    setVisible(false);
+  };
+
   const width = size?.width >= 720 ? 720 : size?.width;
   const headerProps = { setError, onSearch: getData, onClickAdd, show, onClickDelete };
   const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
   const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
+  const subProps = { visible, setVisible, onDone };
 
   return (
     <div className='store_tab' style={{ flex: 1 }}>
+      {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
             {error && <Error1 error={error} />}
             <div className='mo_container' style={{ width }}>

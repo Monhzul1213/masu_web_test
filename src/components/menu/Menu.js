@@ -145,10 +145,10 @@ export function Menu(props){
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.bonus')}</span> : t('menu.bonus'), '/loyalty/bonus', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.giftCard')}</span> : t("menu.giftCard"), "/loyalty/giftCard", null, null, null, msRole?.webManageItem !== "Y")
     ]),
-    hideTime ? null : getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('timetable.time')}</span> : t('timetable.time'), '/timetable', 
-    <BiCalendar style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, [
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
+    hideTime ? null : getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('timetable.time')}</span> : t('timetable.time'), '/timetable', 
+    <BiCalendar style={subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, [
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
     getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
     <BsPuzzle style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, null, null, msRole?.webManageCustomer !== 'Y'),
@@ -162,6 +162,8 @@ export function Menu(props){
       getItem(t('system_menu.store'), '/config/store', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.order_location'), '/config/location', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('system_menu.reclam')}</span> : t('system_menu.reclam'), '/config/reclam', null, null, null, msRole?.webEditSettings !== 'Y')
+
     ]),
     getItem(t('menu.help'), '/help', <BsQuestionCircle />),
   ];

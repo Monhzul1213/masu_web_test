@@ -24,7 +24,11 @@ export function Filter(props){
   const [coupons, setCoupons] = useState([{ value: -1, label: 'Бүгд'}]);
   const [discount, setDiscount] = useState();
   const [discounts, setDiscounts] = useState([{ value: -1, label: 'Бүгд'}]);
+  const [giftCard, setGiftCard] = useState();
+  const [giftCards, setGiftCards] = useState([{ value: -1, label: 'Бүгд'}]);
   const [classH, setClassH] = useState('rp_h_back1');
+  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(true);
   const [class1, setClass1] = useState('rp_header_back1');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -37,7 +41,7 @@ export function Filter(props){
   }, []);
 
   useEffect(() => {
-    if(size?.width >= 1100) setClassH('rp_h_back1');
+    if(size?.width >= 1100) setClassH('rp_h_back2');
     else if(size?.width < 1100 && size?.width >= 500) setClassH('rp_h_back2');
     else setClassH('rp_h_back3');
     return () => {};
@@ -52,7 +56,7 @@ export function Filter(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
-  const onHide = (bonus, voucher, coupon, discount) => {
+  const onHide = (bonus, voucher, coupon, discount, giftCard) => {
     let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
     if(time) query += '&BeginTime=' + time[0] + '&EndTime=' + time[1]
     if(emp?.length !== emps?.length) emp?.forEach(item => query += '&EmpCode=' + item);
@@ -61,6 +65,7 @@ export function Filter(props){
     if(voucher !== -1 && voucher !== undefined ) query += '&useVoucher=' + voucher;
     if(coupon !== -1 && coupon !== undefined) query += '&useCoupon=' + coupon;
     if(discount !== -1 && discount !== undefined) query += '&useDiscount=' + discount;
+    if(giftCard !== -1 && giftCard !== undefined) query += '&GiftCardID=' + giftCard;
     onSearch && onSearch(query, filter1, date);
   }
 
@@ -131,53 +136,50 @@ export function Filter(props){
     }
   }
 
-  // const onFocusFilter = async () => {
-  //   if(!discounts?.length || discounts?.length === 1){
-  //     setDiscounts([
-  //       { label: 'Урамшуулал',
-  //       options: [{ value1: 1, label: 'Урамшуулал ашигласан', value: 0},
-  //                 { value1: 0, label: 'Урамшуулал ашиглаагүй', value: 1}],
-  //       },
-  //       { label: 'Ваучер',
-  //       options: [{ value1: 1, label: 'Ваучер ашигласан', value: 2},
-  //                 { value1: 0, label: 'Ваучер ашиглаагүй', value: 3}],
-  //       },
-  //       { label: 'Купон', 
-  //         options: [{ value1: 1, label: 'Купон ашигласан', value: 4},
-  //                   { value1: 0, label: 'Купон ашиглаагүй', value: 5}]
-  //       },
-  //       { label: 'Хөнгөлөлт',
-  //         options: [{ value1: 1, label: 'Хөнгөлөлт ашигласан', value: 6},
-  //                   { value1: 0, label: 'Хөнгөлөлт ашиглаагүй', value: 7}],
-  //       },
-  //       { label: 'GiftCard',
-  //       options: [{ value1: 1, label: 'GiftCard ашигласан', value: 8},
-  //                 { value1: 0, label: 'GiftCard ашиглаагүй', value: 9}],
-  //       },
-  //     ]);
-  //   }
-  // }
+  const onFocusGiftCard = async () => {
+    if(!giftCards?.length || giftCards?.length === 1){
+      setGiftCards([
+        { value: -1, label: 'Бүгд' },
+        { value: 1, label: 'GiftCard ашигласан' },
+        { value: 0, label: 'GiftCard ашиглаагүй' },
+      ]);
+    }
+  }
 
   const onChangeBonus = value => {
     setIsBonus(value)
-    onHide(value, voucher, coupon, discount)
+    onHide(value, voucher, coupon, discount, giftCard)
   }
 
   const onChangeVoucher = value => {
     setVoucher(value)
-    onHide(isBonus, value, coupon, discount)
+    onHide(isBonus, value, coupon, discount, giftCard)
   }
 
   const onChangeCoupon = value => {
     setCoupon(value)
-    onHide(isBonus, voucher, value, discount)
+    onHide(isBonus, voucher, value, discount, giftCard)
   }
 
   const onChangeDiscount = value => {
     setDiscount(value)
-    onHide(isBonus, voucher, coupon, value)
+    onHide(isBonus, voucher, coupon, value, giftCard)
   }
 
+  const onChangeGiftCard = value => {
+    setGiftCard(value)
+    onHide(isBonus, voucher, coupon, discount, value)
+  }
+
+  const onClick = () => {
+    setVisible(true);
+    setOpen(false);
+  }
+  
+  const onClick1 = () => {
+    setVisible(false);
+    setOpen(true);
+  }
   const dateProps = { value: date, setValue: setDate, onHide, classBack: 'rp_date_back', className: 'rp_date' };
   const timeProps = { value: time, setValue: setTime, onHide, classBack: 'rp_time_back', label: t('report_receipt.all_day') };
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
@@ -196,6 +198,9 @@ export function Filter(props){
   const voucherProps = { value: voucher, setValue: onChangeVoucher, data: vouchers, s_value: 'value', s_descr: 'label', onFocus: onFocusVoucher, className, classBack, dropdownStyle: { marginLeft: -30, minWidth: 160 }, placeholder: t('voucher.voucher') };
   const couponProps = { value: coupon, setValue: onChangeCoupon, data: coupons, s_value: 'value', s_descr: 'label', onFocus: onFocusCoupon, className, classBack, dropdownStyle: { marginLeft: -30, minWidth: 160 }, placeholder: t('coupon.coupon') };
   const disProps = { value: discount, setValue: onChangeDiscount, data: discounts, s_value: 'value', s_descr: 'label', onFocus: onFocusDiscount, className, classBack, dropdownStyle: { marginLeft: -30, minWidth: 190 }, dropdownAlign: { offset: [-30, 5] }, placeholder: t('discount.title') };
+  const giftProps = { value: giftCard, setValue: onChangeGiftCard, data: giftCards, s_value: 'value', s_descr: 'label', onFocus: onFocusGiftCard, className, classBack, dropdownStyle: { marginLeft: -30, minWidth: 190 }, dropdownAlign: { offset: [-30, 5] }, placeholder: t('giftCard.title') };
+  const moreProps = { name: 'AiOutlineDown', onClick, className: 'rcp_icon_back'};
+  const upProps = { name : 'AiOutlineUp', onClick: onClick1, className: 'rcp_icon_back'};
 
   return (
     <div className={classH}>
@@ -207,14 +212,16 @@ export function Filter(props){
         <div className='rp_header_row2'>
           <MultiSelect {...siteProps} />
           <MultiSelect {...empProps} />
+          {open ? <DynamicAIIcon {...moreProps} /> : <DynamicAIIcon {...upProps}/>}
         </div>
       </div>
-      <div className='rp_h_bonus_back'>
+      {visible && <div className='rp_h_bonus_back'>
         <PlainSelect {...bonusProps} />
         <PlainSelect {...voucherProps} />
         <PlainSelect {...couponProps} />
         <PlainSelect {...disProps} />
-      </div>
+        <PlainSelect {...giftProps} />
+      </div>}
     </div>
   );
 }

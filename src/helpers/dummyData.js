@@ -651,26 +651,29 @@ export const selectSubscription = [
 export const subContent = [
   { value: 0, label: 'Борлуулалтын Пос(Дэлгүүр)'}, 
   { value: 1, label: 'Борлуулалтын Пос(Ресторан)'}, 
-  { value: 2, label: 'Нэгдсэн захиалгын систем'}, 
-  { value: 3, label: 'Олон салбарын үлдэгдэл хөтлөх(Fifo)'}, 
-  { value: 4, label: 'Лояалти'}, 
-  { value: 5, label: 'Түгээлт'}, 
-  { value: 6, label: 'Integration'}, 
-  { value: 7, label: 'API'}, 
-  { value: 8, label: 'Support'}, 
-  { value: 9, label: 'Нэхэмжлэх(Soon)'}, 
-  { value: 10, label: 'Цаг захиалга(Soon)'}, 
-  { value: 11, label: 'Санхүү (Soon)'}
+  { value: 2, label: 'Түгээлтийн ПОС (Distribution)'}, 
+  { value: 3, label: 'И-Баримт холболт'}, 
+  { value: 4, label: 'Борлуулалтын тайлан, мэдээ'}, 
+  { value: 5, label: 'Бараа суртачлах самбар'}, 
+  { value: 6, label: 'Барааны үлдэгдэл хөтлөх (FIFO)'}, 
+  { value: 7, label: 'Ажилтан'}, 
+  { value: 8, label: 'Loyalty app/ Цаг захиалга'}, 
+  { value: 9, label: 'Loyalty app/ Voucher, coupon, discount'}, 
+  { value: 10, label: 'Нэгдсэн захиалгын систем'}, 
+  { value: 11, label: 'Санхүү (Accounting)'},
+  { value: 11, label: 'Нэхэмжлэх (Invoicing)'},
+  { value: 11, label: 'Integration / API'},
+  { value: 11, label: 'Дэмжлэг (Support 24/7)'}
 ];
 
 export const subContent1 = [
   { value: 0, label: 'Борлуулалтын Пос(Дэлгүүр)'}, 
   { value: 1, label: 'Борлуулалтын Пос(Ресторан)'}, 
-  { value: 2, label: 'Нэгдсэн захиалгын систем'}, 
-  { value: 3, label: 'Олон салбарын үлдэгдэл хөтлөх(Fifo)'}, 
-  { value: 4, label: 'Лояалти'}, 
-  { value: 5, label: 'Түгээлт'}, 
-  { value: 9, label: 'Нэхэмжлэх(Soon)'}, 
-  { value: 10, label: 'Цаг захиалга(Soon)'}, 
-  { value: 11, label: 'Санхүү (Soon)'}
+  { value: 2, label: 'Түгээлтийн ПОС (Distribution)'}, 
+  { value: 3, label: 'И-Баримт холболт'}, 
+  { value: 4, label: 'Борлуулалтын тайлан, мэдээ'}, 
+  { value: 5, label: 'Барааны үлдэгдэл хөтлөх (FIFO)'}, 
+  { value: 6, label: 'Ажилтан'}, 
+  { value: 7, label: 'Loyalty app/ Voucher, coupon, discount'}, 
+  { value: 8, label: 'Нэгдсэн захиалгын систем'}
 ];
