@@ -52,7 +52,7 @@ export function List(props){
             item?.value === 'sale.createdDate' ? moment(props?.value)?.format('yyyy.MM.DD HH:mm:ss') :
             <div style={{textAlign: 'right', paddingRight: 15}}>
              {item?.value === 'sale.vat_CustomerId' ? props?.value : 
-              item?.value === 'customer' ? props?.value :
+              item?.value === 'sale.customer' ? props?.value :
               item?.value === 'sale.consumerDescr' ? props?.value :
               item?.value === 'sale.useVoucher' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> ) :
               item?.value === 'sale.useCoupon' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> ) :

@@ -7,6 +7,7 @@ import moment from 'moment';
 import { Money, PaginationTable, Table } from '../../all/all_m';
 import { Detail } from './Detail';
 import { getList } from '../../../../services';
+import { EditableCell } from './EditableCell';
 
 export function List(props){
   const { data, size } = props;
@@ -26,6 +27,8 @@ export function List(props){
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       { Header: t('tax.customer'), accessor: 'customer' , customStyle: { width: 300 }},
+      { Header: t('employee.password'), accessor: 'user1' , customStyle: { width: 100 },
+        Cell: props => <div style={{ paddingRight: 15}}><EditableCell {...props} /></div>},
       {
         Header: <div style={{textAlign: 'right'}}>{t('system.site_qty')}</div>, accessor: 'siteQty', customStyle: { width: 80 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
