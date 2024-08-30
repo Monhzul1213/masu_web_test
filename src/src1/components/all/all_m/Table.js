@@ -61,7 +61,7 @@ export function FooterTable(props){
                   <span style={{flex: 1}}>{column.render('Header')}</span>
                   {!column?.noSort && <Sort data={column} />}
                 </div>
-                <div className='resizer1' />
+                {/* <div className='resizer1' /> */}
               </th>
             ))}
           </tr>

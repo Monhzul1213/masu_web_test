@@ -27,6 +27,7 @@ export function List(props){
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
       },
       { Header: t('tax.customer'), accessor: 'customer' , customStyle: { width: 300 }},
+      { Header: t('invoices.batch'), accessor: 'subscriptionType' , customStyle: { width: 300 }},
       { Header: t('employee.password'), accessor: 'user1' , customStyle: { width: 100 },
         Cell: props => <div style={{ paddingRight: 15}}><EditableCell {...props} /></div>},
       {
@@ -90,6 +91,9 @@ export function List(props){
     let query = row?.original?.merchantID;
     let api = 'Merchant/GetMerchantSales?merchantid=' + (query ?? '');
     const response = await dispatch(getList(user, token, api));
+    response?.data?.forEach(item => {
+      item.merchantID = row?.original?.merchantID;
+    })
     // if(response?.error) setError(response?.error);
     setDetail(response?.data);
     setLoading(false);
