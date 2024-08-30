@@ -254,7 +254,7 @@ tfoot > tr > th {
   height: 8px;
   border-radius: 10px;
 }
-/* .ed_input1 {
+.ed_input1 {
   border: none;
   border-radius: 0;
   background-color: transparent;
@@ -266,4 +266,4 @@ tfoot > tr > th {
 };
 .ed_show_eye:hover {
   color: var(--logo1-color);
-}; */
+};
