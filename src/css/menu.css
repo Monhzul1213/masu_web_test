@@ -81,7 +81,7 @@
 
 .side_menu .ant-menu-item-icon, .p_icon {
   width: calc(var(--side-width) - 8px) !important;
-  height: var(--menu-height) !important;
+  height: 56px !important;
   padding: 17px;
   color: var(--text2-color);
 }
