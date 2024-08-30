@@ -50,7 +50,7 @@ export function Detail(props){
   const tableInstance = useTable( { columns, data, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 25 , sortBy: [{ id: 'salesDate', desc: true }]},
   }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickDetail };
-  let detailProps = { data: detail, visible: open, closeModal: closeDtlModal, loading};
+  let detailProps = { data: detail, visible: open, closeModal: closeDtlModal, loading, data1: data};
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} onCancel = {closeModal}  centered={true} width={400}>

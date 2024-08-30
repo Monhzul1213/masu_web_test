@@ -42,7 +42,7 @@ export function Header(props){
   const width1 = !showSearch ? 0 : (size?.width > 495 ? 320 : (size?.width - 20));
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide,
     className: 'rh_date' };
-  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch, width: width1, show , className: 'rp_list_search_back_s' , filter};
+  const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch, width: width1, show , className: 'rp_list_search_back_s' , date};
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
 
   return (

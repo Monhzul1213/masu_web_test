@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { DynamicAIIcon } from '../../all/all_m';
 
 export function Search(props){
-  const { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch, width, className } = props;
+  const { showSearch, setShowSearch, handleEnter, search, setSearch , onSearch, width, className, date } = props;
   const { t } = useTranslation();
   const inputRef = useRef(null);
 
@@ -23,7 +23,8 @@ export function Search(props){
   const onClose = () => {
     setShowSearch(!showSearch);
     setSearch('');
-    onSearch();
+    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    onSearch(query);
   }
 
   return (
