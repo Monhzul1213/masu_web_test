@@ -27,6 +27,7 @@ function Card(props){
   const [edited, setEdited] = useState(false);
   const [open, setOpen] = useState(false);
   const [isPrint, setIsPrint] = useState(false);
+  const [isDescr, setIsDescr] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -90,7 +91,8 @@ function Card(props){
     getImage(data);
     setHeader({ value: data?.header ?? '' });
     setFooter({ value: data?.footer ?? '' });
-    setIsPrint(data?.isPrintBarCode === 'Y')
+    setIsPrint(data?.isPrintBarCode === 'Y');
+    setIsDescr(data?.isAddDescr === 'Y');
   }
 
   const getImage = async data => {
@@ -120,7 +122,8 @@ function Card(props){
       footer: footer?.value,
       fileRaw: { FileData: image64 ?? '', FileType: imageType ?? '' },
       rowStatus: bill ? 'U' : 'I',
-      isPrintBarCode: isPrint ? 'Y' : 'N'
+      isPrintBarCode: isPrint ? 'Y' : 'N',
+      isAddDescr: isDescr ? 'Y' : 'N'
     }
     const response = await dispatch(sendRequest(user, token, 'Site/AddBill', data));
     setLoading(false);
@@ -148,6 +151,7 @@ function Card(props){
   const btnProps = { onClickCancel, onClickSave };
   const confirmProps = { open: open ? true : false, text: 'page.back_confirm', confirm };
   const printProps = { label: t('document.isPrint'), checked: isPrint, setChecked: setIsPrint };
+  const descrProps = { label: t('document.isDescr'), checked: isDescr, setChecked: setIsDescr };
 
   return (
     <div className='store_tab' style={{flex: 1}}>
@@ -167,7 +171,10 @@ function Card(props){
               <UploadImage {...logoProps} />
               <Input {...headerProps} />
               <DescrInput {...footerProps} />
-              <CheckBox {...printProps}/>
+              <div className='row'>
+                <CheckBox {...printProps}/>
+                <CheckBox {...descrProps} style={{marginLeft: 50}}/>
+              </div>
             </div>
             <ButtonRow {...btnProps} />
           </div>
