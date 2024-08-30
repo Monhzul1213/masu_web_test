@@ -23,8 +23,8 @@ export function Search(props){
   const onClose = () => {
     setShowSearch(!showSearch);
     setSearch('');
-    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
-    onSearch(query);
+    // let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    onSearch();
   }
 
   return (
