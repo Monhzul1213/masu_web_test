@@ -44,7 +44,7 @@ export function SalesDtl(props){
               <p style={{fontSize: 16, fontWeight: 600}}>{t('menu.report_invtentory')}</p>
             </div>
             <div style={{overflowX: 'scroll'}} >
-                <div id='paging' style={{marginTop: 0, overflowY: 'scroll', maxHeight, minWidth : 220, minHeight: data1?.length > data?.length ? 250 : 550}}>
+                <div id='paging' style={{marginTop: 0, overflowY: 'scroll', maxHeight, minWidth : 220, minHeight: data1?.length > data?.length ? data1?.length*20 + 150 : ''}}>
                     <FooterTable {...tableProps} />
                 </div>
             </div>
