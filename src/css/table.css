@@ -254,16 +254,3 @@ tfoot > tr > th {
   height: 8px;
   border-radius: 10px;
 }
-/* .ed_input1 {
-  border: none;
-  border-radius: 0;
-  background-color: transparent;
-}
-.ed_show_eye{
-  color: var(--text2-color);
-  margin-left: -15px;
-  margin-top: 3px;
-};
-.ed_show_eye:hover {
-  color: var(--logo1-color);
-}; */

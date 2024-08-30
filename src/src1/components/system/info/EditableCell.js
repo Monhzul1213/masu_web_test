@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+
 import { DynamicAIIcon } from '../../all/all_m';
+import '../../../../css/system.css';
 
 export const EditableCell = props => {
   const {row, classShow } = props;
@@ -18,7 +20,7 @@ export const EditableCell = props => {
   return (
     <div className='row'>
         <input {...inputProps} />
-        <DynamicAIIcon size={18} className={classShow ?? 'ed_show_eye'} name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={visible ? onClick : onClick1} />
+        <DynamicAIIcon size={18} className={classShow ?? 'customer_show_eye'} name={visible ? 'AiOutlineEye' : 'AiOutlineEyeInvisible'} onClick={visible ? onClick : onClick1} />
     </div>
   )
 }
