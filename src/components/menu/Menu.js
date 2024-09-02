@@ -8,6 +8,7 @@ import { FiTool } from 'react-icons/fi';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { GrMoney } from "react-icons/gr";
 
 import '../../css/menu.css';
 import { getList } from '../../services';
@@ -46,9 +47,17 @@ export function Menu(props){
 
     getReview();
     getConfig();
-    
-    if(user?.merchantId === 66 || user?.merchantId === 135 || user?.merchantId === 383 || user?.merchantId === 631 || 
-      user?.merchantId === 270 || user?.merchantId === 164 || user?.merchantId === 700 || user?.merchantId === 999)
+
+    if (
+      user?.merchantId === 66 ||
+      user?.merchantId === 135 ||
+      user?.merchantId === 383 ||
+      user?.merchantId === 631 ||
+      user?.merchantId === 270 ||
+      user?.merchantId === 164 ||
+      user?.merchantId === 700 ||
+      user?.merchantId === 999
+    )
       setHideTime(false);
     else
       setHideTime(true);
@@ -150,6 +159,10 @@ export function Menu(props){
       getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
+    hideTime ? null : getItem(subscriptionType !== "STANDARD" && subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.finance")}</span>) : (t("transModel.finance")), "/finance",
+    <GrMoney style={subscriptionType !== "STANDARD" && subscriptionType !== "PREMIUM" ? { color: "#969696" } : {}}/>,[
+        getItem( subscriptionType !== "STANDARD" && subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webEditSettings !== "Y")
+      ]),
     getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
     <BsPuzzle style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, null, null, msRole?.webManageCustomer !== 'Y'),
     hideConfig ? getItem(t('menu.config'), '/config/additional', <BsGear />, null, null, msRole?.webEditSettings !== 'Y') :

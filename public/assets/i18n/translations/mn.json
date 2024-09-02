@@ -713,7 +713,7 @@
     "paid": "Төлсөн",
     "columns": [
       { "label": "Нийт дүн", "value": "sale.totalAmount" },
-      { "label": "Харилцагч", "value": "sale.customer" },
+      { "label": "Харилцагч", "value": "customer" },
       { "label": "Үйлчүүлэгч", "value": "sale.consumerDescr" },
       { "label": "Урамшуулал", "value": "sale.useBonus" },
       { "label": "Ваучер", "value": "sale.useVoucher" },
@@ -972,7 +972,7 @@
     "footer": "Хөл хэсэг",
     "success_msg": "ПОС талоны загвар амжилттай бүртгэлээ",
     "isPrint": "Баркод хэвлэх эсэх?",
-    "isDescr": "Тайлбар нэмэх хэвлэх"
+    "isDescr": "Тайлбар нэмж хэвлэх"
   },
   "invoice": {
     "invoice": "Нэхэмжлэх",
@@ -1528,6 +1528,25 @@
       {"label": "Задлах", "value": 1}
     ],
     "qty": "Х/А тоо"
-  },         
-  "version": "13"
+  },
+  "transModel": {
+    "finance": "Санхүү",
+    "title": "Гүйлгээний загвар",
+    "noCode": "НӨАТ код",
+    "noName": "НӨАТ нэр",
+    "transCode": "Мөнгөн гүйлгээний код",
+    "transName": "Мөнгөн гүйлгээний нэр",
+    "number": "Дугаар",
+    "backButton": "Гүйлгээний загварууд",
+    "add": "Гүйлгээний загвар бүртгэх",
+    "add_success": "Гүйлгээний загвар амжилттай бүртгэгдлээ.",
+    "vatSelect": "НӨАТ үзүүлэлт",
+    "cashSelect": "Мөнгөн гүйлгээний үзүүлэлт",
+    "acct": "Данс",
+    "acctName": "Дансны нэр",
+    "sub": "Дэд данс",
+    "debit": "Дэбит",
+    "formula": "Томьёо"
+  },
+  "version": "14"
 }

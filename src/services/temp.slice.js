@@ -9,6 +9,8 @@ const initialState = {
   categoryColors: [],
   systemTypes: [],
   categoryClass: [],
+  systemVat: [],
+  systemCash: [],
 };
 
 export const tempSlice = createSlice({
@@ -26,6 +28,14 @@ export const tempSlice = createSlice({
     },
     setCategoryClass: (state, action) => {
       state.categoryClass = action.payload?.sort((a, b) => a.valueNum - b.valueNum);
+    },
+    setSystemVat: (state, action) => {
+      state.systemVat = action.payload?.sort((a, b) => a.valueNum - b.valueNum);
+    },
+    setSystemCash: (state, action) => {
+      state.systemCash = action.payload?.sort(
+        (a, b) => a.valueNum - b.valueNum
+      );
     },
   }
 });
@@ -322,6 +332,6 @@ function fetchRetry(config, retries = 5) {
     });
 }
 
-export const { setIsLoggedIn, setCategoryColors, setSystemTypes, setCategoryClass } = tempSlice.actions;
+export const { setIsLoggedIn, setCategoryColors, setSystemTypes,  setSystemVat, setSystemCash, setCategoryClass } = tempSlice.actions;
 
 export const tempReducer = tempSlice.reducer;
