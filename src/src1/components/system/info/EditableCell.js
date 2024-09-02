@@ -15,7 +15,7 @@ export const EditableCell = props => {
     setVisible(true);
   };
 
-  const inputProps = { className: 'ed_input1', value: row?.original?.user1, id: visible ? null : 'm_input_password' , disabled: true, style: {width: 150}};
+  const inputProps = { className: 'customer_input1', value: row?.original?.user1, id: visible ? null : 'm_input_password' , disabled: true, style: {width: 150}};
 
   return (
     <div className='row'>
