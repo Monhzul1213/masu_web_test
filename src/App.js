@@ -26,7 +26,7 @@ import { EmployeeService } from './src2/pages/timetable/EmployeeService';
 import { GiftCard, GiftCardAdd, Voucher, VoucherAdd } from './src2/pages/loyalty';
 import { Coupon, CouponAdd } from './src1/pages/loyalty';
 import { Bonus, BonusAdd } from './pages/loyalty';
-import { ReportBuyer, ReportReceivable, ReportTime, TransactionModel, TransactionModelsAdd } from './src3_dadlaga/pages';
+import { ReportBuyer, ReportReceivable, ReportTime} from './src3_dadlaga/pages';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -191,8 +191,8 @@ export function App(){
                 <Route path="/loyalty/giftCard/giftCard_add" element={<GiftCardAdd />}/>
                 <Route path='/management/package' element={<Package />} />
                 <Route path='/management/package/package_add' element={<PackageAdd />} />
-                <Route path="/finance/template" element={<TransactionModel />}/>
-                <Route path="/finance/template/add" element={<TransactionModelsAdd />}/>
+                {/* <Route path="/finance/template" element={<TransactionModel />}/>
+                <Route path="/finance/template/add" element={<TransactionModelsAdd />}/> */}
               </Routes>
             </Layout>
           </Layout>

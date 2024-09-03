@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import '../../../css/invt.css';
-import '../../../css/order.css';
+// import '../../../css/invt.css';
+// import '../../../css/order.css';
 import { sendRequest } from '../../../services';
 import { Error1, Overlay, Prompt } from '../../../components/all';
 import { Main, Items, Additional, ButtonRow } from '../../../components/management/order/add';

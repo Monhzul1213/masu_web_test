@@ -571,7 +571,7 @@ color: var(--logo1-color);
     background-color: transparent;
   };
   
-.customer_input1 {
+/* .customer_input1 {
   border: none;
   border-radius: 0;
   background-color: transparent;
@@ -583,4 +583,4 @@ color: var(--logo1-color);
 };
 .customer_show_eye:hover {
   color: var(--logo1-color);
-};
+}; */
