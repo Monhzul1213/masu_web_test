@@ -53,7 +53,7 @@ export function Select(props){
 }
 
 export function PlainSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, classLabel, bStyle, dropdownStyle, dropdownAlign } = props;
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, classLabel, bStyle, dropdownStyle, dropdownAlign, disabled } = props;
   
   const renderItem = (item, index) => {
     return (<Option disabled={item?.disabled} key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
@@ -72,6 +72,7 @@ export function PlainSelect(props){
         onFocus={onFocus}
         dropdownStyle={dropdownStyle}
         dropdownAlign={dropdownAlign}
+        disabled={disabled}
         // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' />}
         placeholder={placeholder}>
         {data?.map(renderItem)}

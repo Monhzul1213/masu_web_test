@@ -7,7 +7,7 @@ import moment from 'moment';
 import '../../../css/invt.css';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Header, List } from '../../components/system/info';
+import { List } from '../../components/system/info';
 
 export function Info(){
   const [loading, setLoading] = useState(false);
@@ -43,17 +43,15 @@ export function Info(){
 
   }
 
-  const headerProps = { setError, onSearch: getData , filter, data };
   const emptyProps = { icon: 'MdReceipt', type: 'time', noDescr: true };
-  const listProps = { data, setData };
+  const listProps = { data, setData, setError, onSearch: getData , filter };
 
   return (
-    <div className='s_container_i'>
+    <div className='s_container_i' >
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
           <div className='i_list_cont' id='solve_list_z'>
-            <Header {...headerProps} size={size} />
             {!data?.length && filtering ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
           </div>
         }</SizeMe>

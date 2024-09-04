@@ -78,7 +78,6 @@ export function TransactionModelsAdd() {
       setUpdatable(true);
       if (response?.error) onError(response?.error, false);
       else {
-        console.log("WORKING");
         let header = response?.data?.template && response?.data?.template[0];
         setHeader(header);
         setEditable(true);
@@ -90,7 +89,6 @@ export function TransactionModelsAdd() {
           item.rowStatus = "U";
           items.push(item);
         });
-        console.log(items);
         setDetail(items);
         onSuccess();
       }
@@ -101,7 +99,6 @@ export function TransactionModelsAdd() {
     const response = await dispatch(
       getConstants(user, token, "glTemplate_VatPropertyID", setSystemVat)
     );
-    console.log(response);
     await dispatch(
       getConstants(user, token, "glTemplate_CashPropertyID", setSystemCash)
     );

@@ -1548,5 +1548,24 @@
     "debit": "Дэбит",
     "formula": "Томьёо"
   },
+  "info" : {
+    "type": "Ангилал",
+    "subtype": "Дэд ангилал",
+    "batch": "Багц",
+    "sales": "Борлуулалт",
+    "noat": "НӨАТ",
+    "columns": [
+      { "label": "Салбар", "value": "siteQty" },
+      { "label": "Пос", "value": "terminalQty" },
+      { "label": "Ажилтан", "value": "empQty" },
+      { "label": "Subscription тоо", "value": "subQty" },
+      { "label": "Subscription дүн", "value": "subAmount" },
+      { "label": "Борлуулалтын дүн", "value": "totalSales" },
+      { "label": "Борлуулалтын тоо", "value": "salesQty" },
+      { "label": "НӨАТ төлөгч?", "value": "useNuatus" },
+      { "label": "Үүсгэсэн огноо", "value": "createdDate" },
+      { "label": "Партнер", "value": "partnerCode" }
+    ]
+  },
   "version": "14"
 }
