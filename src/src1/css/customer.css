@@ -279,6 +279,7 @@
   flex-flow: row;
   align-items: center;
   border-radius: var(--radius);
+  top: 20px;
 }
 .sub_row {
   /* width: 230px;   */

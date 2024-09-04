@@ -165,8 +165,7 @@ export function Header(props){
   const classBack = 'ih_select_back3', classLabel = 'ih_select_lbl', className = 'ih_select';
   const bStyle = { maxWidth: size?.width > 780 ? 180 : ((size?.width - 52) / 2) };
 
-  const width = showSearch ? 0 : 600;
-  const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
+  const style = { overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const width1 = !showSearch ? 0 : (size?.width > 495 ? 300 : (size?.width - 20));
   const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide,
     className: 'rh_date' };
