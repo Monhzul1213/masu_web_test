@@ -15,7 +15,7 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('manage.txnId'), accessor: 'txnCostId', exLabel:t('menu.inventory'), Footer: t('report.total'), width: 110, minWidth: 90  },
+      { Header: t('manage.txnId'), accessor: 'txnCostId', exLabel:t('menu.inventory'), Footer: t('report.total') + data?.length, width: 110, minWidth: 90  },
       { Header: t('manage.t_no'), accessor: 'txnNo', exLabel:t('menu.inventory'), width: 130, minWidth: 110  },
       { Header: t('system_menu.store'), accessor: 'siteName', exLabel:t('system_menu.store'), width: 130, minWidth: 110 },
       { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), width: 130, minWidth: 110  },
@@ -75,7 +75,7 @@ export function List(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, data?.length]);
 
   
 

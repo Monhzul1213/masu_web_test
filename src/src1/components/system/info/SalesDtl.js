@@ -13,7 +13,7 @@ export function SalesDtl(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('inventory.title'), accessor: 'invtName', customStyle: { width: 200 }, Footer: <div style={{paddingLeft: 15}}>{t('report.total') }</div>},
+      { Header: t('inventory.title'), accessor: 'invtName', customStyle: { width: 200 }, Footer: <div style={{paddingLeft: 15}}>{t('report.total') + data?.length }</div>},
       { Header: t('inventory.category'), accessor: 'categoryName', customStyle: { width: 200 } },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', customStyle: { width: 100 },
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>},
@@ -28,7 +28,7 @@ export function SalesDtl(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language,]);
+  }, [i18n?.language, data?.length]);
 
   const maxHeight = size?.width > 380
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'

@@ -25,7 +25,7 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: <div style={{textAlign: 'right'}}>{t('report.salesNo')}</div> , accessor: 'salesNo', exLabel: t('report.salesNo'),
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>, width: 100, minWidth: 110 , Footer: t('report.total'),},
+      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>, width: 100, minWidth: 110 , Footer: t('report.total') + data?.length},
       { Header: t('page.date'), accessor: 'salesDate', exLabel: t('page.date'), width: 100, minWidth: 110 ,
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)}
@@ -60,7 +60,7 @@ export function List(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, data?.length]);
 
 
 

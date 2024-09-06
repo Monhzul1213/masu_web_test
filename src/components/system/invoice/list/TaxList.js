@@ -15,7 +15,7 @@ export function TaxList(props){
       { Header: <div style={{textAlign: 'center' }}>{t('page.name')}</div>, accessor: 'name', noSort: true, isBtn: true},
       { Header: <div style={{textAlign: 'center' }}>{t('system.service_name')}</div>, accessor: 'subscriptionName', noSort: true, isBtn: true,
         Cell: ({ value }) => (<div style={{ paddingLeft: 5}}>{value}</div>),    },
-      { Header: <div style={{textAlign: 'center' }}>{t('invoice.time')}</div>, accessor: 'subscriptionTimeName', Footer: <div style={{textAlign: 'right' }}>{t('report.total')}</div>, noSort: true, isBtn: true },
+      { Header: <div style={{textAlign: 'center' }}>{t('invoice.time')}</div>, accessor: 'subscriptionTimeName', Footer: <div style={{textAlign: 'right' }}>{t('report.total') + data?.length}</div>, noSort: true, isBtn: true },
       { Header: <div style={{textAlign: 'center',  paddingRight: 15}}>{t('invoice.amount')}</div>, accessor: 'amount', noSort: true, isBtn: true,
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>),
         Footer: info => {
@@ -27,7 +27,7 @@ export function TaxList(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, data?.length]);
 
   useEffect(() => {
     if(size?.width >= 660) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)');

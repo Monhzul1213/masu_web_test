@@ -26,7 +26,6 @@ function Screen(props){
   const [sites, setSites] = useState([]);
   const [saved, setSaved] = useState(false);
   const [request, setRequest] = useState(null);
-  // const [valid, setValid] = useState(false);
   const [image, setImage] = useState(null);
   const [image64, setImage64] = useState('');
   const [imageType, setImageType] = useState('');
@@ -163,7 +162,15 @@ function Screen(props){
 
   const validateData = () => {
     let length = sites?.length;
-    if(regNo?.value && name?.value && length){
+    let branchs = false, subBranchs = false;
+    sites?.map(item => {
+      if(item?.checked) {
+        branchs = item?.branchCode === null;
+        subBranchs = item?.subBranchCode === null;
+      }
+      }
+    )
+    if(regNo?.value && name?.value && length && !branchs && !subBranchs){
       // let items = sites?.filter(item => item.rowStatus === 'D');
       let vatRequestTerminalItem = [];
       sites?.map(item => {
@@ -188,7 +195,8 @@ function Screen(props){
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
-      // if(!nomer?.value) setNomer({ value: '', error: t('error.not_empty') });
+      if(branchs) setError(t('tax.branchCode_select'));
+      if(subBranchs) setError(t('tax.subBranchCode_select'));
       if(!length) setError(t('tax.length_error'));
       return false;
     }

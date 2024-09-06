@@ -25,7 +25,7 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: <div >{t('report.site')}</div>, accessor: 'siteName', width: 150, minWidth: 110 ,
-       Footer: t('report.total'), exLabel: t('report.site') },
+       Footer: t('report.total') + data?.length, exLabel: t('report.site') },
       { Header: <div >{t('time.t_emp')}</div>, accessor: 'cashierCode', customStyle: { width: 200 },  exLabel: t('time.t_emp') },
       { Header: t('report.pay_type'), accessor: 'paymentTypeName' , exLabel: t('report.pay_type') , customStyle: { width: 250 } }, 
       { Header: <div style={{textAlign: 'right'}}>{t('report.pay_trans')}</div> , accessor: 'paymentTranscation', 
@@ -77,7 +77,7 @@ export function List(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, data?.length]);
 
   
 

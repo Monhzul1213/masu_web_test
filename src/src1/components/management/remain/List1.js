@@ -15,7 +15,7 @@ export function List1(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total'), width: 140, minWidth: 80, },
+      { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total') + dtlData?.length, width: 140, minWidth: 80, },
       { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), width: 140, minWidth: 80,  },
       { Header: t('manage.costType'), accessor: 'costTypeName', exLabel:t('manage.costType'), width: 90, minWidth: 80,  },
       { Header: t('manage.costNo'), accessor: 'costNo', exLabel:t('manage.costNo'), width: 90, minWidth: 80,  },
@@ -70,7 +70,7 @@ export function List1(props){
       ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, dtlData?.length]);
 
   useEffect(() => {
     if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 67px )');

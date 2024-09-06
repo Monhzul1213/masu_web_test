@@ -28,7 +28,7 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('page.date'), accessor: 'salesDate', Footer: t('report.total'), exLabel: t('page.date'), width: 100, minWidth: 90 ,
+      { Header: t('page.date'), accessor: 'salesDate', Footer: t('report.total') + data?.length, exLabel: t('page.date'), width: 100, minWidth: 90 ,
         Cell: ({ value }) => {
           return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
         }
@@ -88,7 +88,7 @@ export function List(props){
     ])
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, + data?.length]);
 
     useEffect(() => {
     setOpen(false);

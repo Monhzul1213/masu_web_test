@@ -15,7 +15,7 @@ export function List(props){
         setColumns([
         { Header: <div style={{textAlign: 'left'}}>{t('report_buyer.customer')}</div>, accessor: 'consumerName', exLabel: t('report_buyer.customer'), 
             Cell: props => <div style={{textAlign: 'left', paddingRight: 15}}>{props?.value}</div>, width: 180, minWidth: 110, 
-            Footer: <div style={{textAlign: 'left'}}>{t('report_buyer.sum')}</div>},
+            Footer: <div style={{textAlign: 'left'}}>{t('report_buyer.sum') + data?.length}</div>},
         { Header: <div style={{textAlign: 'right'}}>{t('report_buyer.sale_sum')}</div>, accessor: 'salesAmount', exLabel: t('report_buyer.sale_sum'), width: 160, minWidth: 110, 
             Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}₮</div>,  
             Footer: info => { const total = React.useMemo(() =>
@@ -49,7 +49,7 @@ export function List(props){
         ]);
         return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [i18n?.language]);
+    }, [i18n?.language, data?.length]);
 
     const tableInstance = useTable({ columns, data, 
         autoResetPage: false,

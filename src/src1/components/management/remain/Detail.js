@@ -14,7 +14,7 @@ export function Detail(props){
     const customStyle = { width: 40 };
     setColumns([
       { id: 'expander', noSort: true, customStyle, Header: '', Cell: '' },
-      { Header: t('report.siteName'), accessor: '', exLabel:t('report.siteName'), Footer: t('report.total'), customStyle : { width: 140 }},
+      { Header: t('report.siteName'), accessor: '', exLabel:t('report.siteName'), Footer: t('report.total') + data?.length, customStyle : { width: 140 }},
       { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), customStyle : { width: 240 } },
       { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), customStyle : { width: 140 }  },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', exLabel: t('order.t_qty'), customStyle : { width: 140 }, 
@@ -35,7 +35,7 @@ export function Detail(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, data?.length]);
 
   const tableInstance = useTable({ columns, data, autoResetPage: false }, useSortBy, useRowSelect);
   const tableProps = { tableInstance, noHeader: true };

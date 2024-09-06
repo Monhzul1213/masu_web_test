@@ -16,7 +16,7 @@ export function List(props) {
             { Header: <div style={{textAlign: 'left'}}>{t('report_time.branch')}</div>, 
             accessor: 'siteName', exLabel: t('report_time.branch'), width: 200, minWidth: 110, 
             Cell: props => <div style={{ textAlign: 'left', paddingRight: 15 }}>{String(props?.value)}</div>,
-            Footer: <div style={{textAlign: 'left'}}>{t('report_time.sum')}</div>,
+            Footer: <div style={{textAlign: 'left'}}>{t('report_time.sum') + data?.length}</div>,
             },
             { Header: <div style={{textAlign: 'left'}}>{t('report_time.salesTime')}</div>, 
             accessor: 'salesTime', exLabel: t('report_time.salesTime'), width: 100, minWidth: 50, 
@@ -53,7 +53,7 @@ export function List(props) {
             }]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [i18n?.language]); 
+    }, [i18n?.language, data?.length]); 
 
     const tableInstance = useTable({
         columns,

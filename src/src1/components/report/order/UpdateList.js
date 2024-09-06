@@ -14,7 +14,7 @@ export function UpdateList(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('report_receipt.invt'), accessor: 'invtName', customStyle: { width: 200 }, Footer: t('report.total')},
+      { Header: t('report_receipt.invt'), accessor: 'invtName', customStyle: { width: 200 }, Footer: t('report.total') + data?.length},
       { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.qty')}</div>, accessor: 'qty', isQty: true,
       Cell: props => <EditableCell1 {...props} />, customStyle: { width: 60 }},
       { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.price')}</div>, accessor: 'price' , customStyle: { width: 100, minWidth: 50 },
@@ -31,7 +31,7 @@ export function UpdateList(props){
     ])
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, + data?.length]);
 
   const updateData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
