@@ -713,7 +713,7 @@
     "paid": "Төлсөн",
     "columns": [
       { "label": "Нийт дүн", "value": "sale.totalAmount" },
-      { "label": "Харилцагч", "value": "customer" },
+      { "label": "Харилцагч", "value": "sale.customer" },
       { "label": "Үйлчүүлэгч", "value": "sale.consumerDescr" },
       { "label": "Урамшуулал", "value": "sale.useBonus" },
       { "label": "Ваучер", "value": "sale.useVoucher" },

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import { Money, Table } from '../../all/all_m';
+import { FooterTable, Money } from '../../all/all_m';
 import { Detail } from './Detail';
 import { getList } from '../../../../services';
 import { EditableCell } from './EditableCell';
@@ -90,15 +90,14 @@ export function List(props){
     changeColumns(['siteQty','subAmount', 'totalSales', 'createdDate', 'partnerCode'], period);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language, period]);
+  }, [i18n?.language, period, data]);
 
 
   const changeColumns = (value) => {
     let columns = [
       { Header: <div style={{textAlign: 'right'}}>{t('system.id')}</div>, accessor: 'merchantID',
-              Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
-      },
-      { Header: t('info.type'), accessor: 'classname' , customStyle: { minWidth: 90 }},
+        Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)      },
+      { Header: t('info.type'), accessor: 'classname' , customStyle: { minWidth: 90 }, Footer: 'Нийт: ' + data?.length},
       { Header: t('info.subtype'), accessor: 'subclassname' , customStyle: { minWidth: 130 }},
       { Header: t('tax.customer'), accessor: 'customer' , customStyle: { minWidth: 150 }},
       { Header: t('invoices.batch'), accessor: 'subscriptionType' , customStyle: { minWidth: 70 }},
@@ -121,7 +120,26 @@ export function List(props){
               item?.value === 'totalSales' ? (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => props?.onClickLink(props?.row)}><Money value={props?.value} fontSize={14} /></div>) : props?.value
              } 
              </div>
-            )
+            ),
+          Footer: info => {
+            let totalSubAmt = data.reduce((sum, { subAmount }) => sum += subAmount, 0)
+            let totalSales = data.reduce((sum, { totalSales }) => sum += totalSales, 0)
+            let totalSiteQty = data.reduce((sum, { siteQty }) => sum += siteQty, 0)
+            let totalTerQty = data.reduce((sum, { terminalQty }) => sum += terminalQty, 0)
+            let totalEmpQty = data.reduce((sum, { empQty }) => sum += empQty, 0)
+            let totalsubQty = data.reduce((sum, { subQty }) => sum += subQty, 0)
+            let totalsalesQty = data.reduce((sum, { salesQty }) => sum += salesQty, 0)
+            return <> 
+              <div style={{textAlign: 'right', paddingRight: 15}}>
+                {item?.value === 'subAmount' ? <Money value= {totalSubAmt}/> : 
+                 item?.value === 'totalSales' ? <Money value= {totalSales}/> :
+                 item?.value === 'siteQty' ? totalSiteQty : 
+                 item?.value === 'terminalQty' ? totalTerQty : 
+                 item?.value === 'empQty' ? totalEmpQty :
+                 item?.value === 'subQty' ? totalsubQty :
+                 item?.value === 'salesQty' ? totalsalesQty :''}
+              </div></>
+            }
         });
       }
     });
@@ -158,8 +176,8 @@ export function List(props){
       {visible && <Detail {...detailProps} />}
       <Header {...headerProps}/>
       <div style={{overflowX: 'scroll'}}>
-        <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 700}}>
-          <Table {...tableProps} />
+        <div className='table_scroll1' id='paging' style={{marginTop: 10, overflowY: 'scroll', overflowX: 'scroll', maxHeight, minWidth: 700}}>
+          <FooterTable {...tableProps} />
         </div>
       </div>
     </div>
