@@ -3,9 +3,9 @@ import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useRe
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { Empty1, Money, TableResize } from '../../all/all_m';
 import { Header } from './Header';
 import { formatNumber } from '../../../../helpers';
+import { TableRowResize, Empty1, Money } from '../../../../components/all';
 
 export function List1(props){
   const { excelName, setError, onSearch, size, dtlData, isDtl, setIsDtl, setDtlData, onRowClick } = props;
@@ -88,7 +88,7 @@ export function List1(props){
     initialState: { pageIndex: 0, pageSize: 100000, sortBy: [{ id: 'costDate', desc: true }] },}, 
     useSortBy, useBlockLayout, useResizeColumns, usePagination, useRowSelect);
 
-  const tableProps = { tableInstance, onRowClick };
+  const tableProps = { tableInstance, onRowClick, hasFooter: true };
   const filterProps = { columns, data: dtlData, setData: setDtlData, excelName, setError, onSearch , size, isDtl, setIsDtl };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
@@ -99,7 +99,7 @@ export function List1(props){
       <>
         <div style={{overflowX: 'scroll'}}>
           <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-            {<TableResize {...tableProps}/> }
+            {<TableRowResize {...tableProps}/> }
           </div>
         </div>     
        </>

@@ -25,8 +25,7 @@ export function List(props) {
         Header: t("transModel.number"),
         accessor: "templateId",
         width: 130,
-        minWidth: 80,
-        Footer: 'Нийт: ' + data?.length
+        minWidth: 80
       },
       {
         Header: t("transModel.title"),
@@ -70,7 +69,7 @@ export function List(props) {
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language, data]);
+  }, [i18n?.language]);
 
   useEffect(() => {
     if (size?.width >= 830)

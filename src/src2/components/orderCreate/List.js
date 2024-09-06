@@ -3,10 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
 import { withSize } from "react-sizeme";
 
-import {
-  Money,
-  FooterTable,
-} from "../../../src1/components/all/all_m";
+import { Money, FooterTable } from "../../../components/all";
 import { ItemSelect, SelectItem } from "./SelectItem";
 import { EditableCell1 } from "../../../src1/components/report/order/EditableCell";
 import { divide } from "../../../helpers";
@@ -140,7 +137,7 @@ export function List(props) {
     useRowSelect
   );
 
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, hasFooter: true };
   const selectProps = {
     search,
     setSearch,

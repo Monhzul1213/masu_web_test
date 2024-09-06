@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Money, FooterTable } from '../../all/all_m';
+import { Money, FooterTable } from '../../../../components/all';
 import { EditableCell1 } from './EditableCell';
 import { divide } from '../../../../helpers';
 import { EditableCell } from '../../../../components/invt/inventory/add/EditableCell';
@@ -61,7 +61,7 @@ export function UpdateList(props){
 
   const tableInstance = useTable({ columns, data,  autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 10000 }, updateData, updateMyData}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, hasFooter: true };
 
 
   return (

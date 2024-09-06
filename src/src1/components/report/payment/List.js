@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { Money, TableResize } from '../../all/all_m';
+
+import { Money, TableRowResize } from '../../../../components/all';
 import { formatNumber } from '../../../../helpers';
 import { Header } from './Header';
 
@@ -84,7 +85,7 @@ export function List(props){
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 250000, sortBy: [{ id: 'beginTime', desc: true }] },
       }, useSortBy, usePagination, useRowSelect,  useBlockLayout, useResizeColumns);
-  const tableProps = { tableInstance, hasTotal: true , total: data?.length };
+  const tableProps = { tableInstance, hasTotal: true , total: data?.length, hasFooter: true };
   const filterProps = {columns, data, excelName };
 
   return (
@@ -92,7 +93,7 @@ export function List(props){
       <Header {...filterProps} />
       <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <TableResize {...tableProps} />
+          <TableRowResize {...tableProps} />
         </div>
       </div>
     </div>

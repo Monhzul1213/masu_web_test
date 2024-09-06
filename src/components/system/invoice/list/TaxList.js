@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Money } from '../../../all';
-import { FooterTable } from '../../../../src1/components/all/all_m';
+import { Money, FooterTable } from '../../../all';
 
 export function TaxList(props){
   const { data, size , setAmt} = props;
@@ -39,7 +38,7 @@ export function TaxList(props){
 
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, hasFooter: true };
 
   return (
       <div className='table_scroll'>

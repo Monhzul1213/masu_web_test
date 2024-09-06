@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import { FooterTable, Money } from '../../all/all_m';
+import { FooterTable, Money } from '../../../../components/all';
 import { Detail } from './Detail';
 import { getList } from '../../../../services';
 import { EditableCell } from './EditableCell';
@@ -167,7 +167,7 @@ export function List(props){
   
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 2500000, sortBy: [{ id: 'merchantID', desc: true }] }, onClickLink}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, hasTotal: true , total: data?.length };
+  const tableProps = { tableInstance, hasTotal: true , total: data?.length, hasFooter: true };
   let detailProps = { data : detail, visible, closeModal, loading};
   const headerProps = {size, setError, onSearch , filter, data, value: columns1, setValue: changeColumns, data1: t('info.columns'), className1: 'rp_list_drop'};
 

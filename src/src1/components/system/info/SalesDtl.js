@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { Modal } from 'antd';
 
-import { Money, Overlay, FooterTable } from '../../all/all_m';
+import { Money, Overlay, FooterTable } from '../../../../components/all';
 
 
 export function SalesDtl(props){
@@ -35,7 +35,7 @@ export function SalesDtl(props){
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 100px - 10px - 37px)';
   const tableInstance = useTable( { columns, data, autoResetPage: false,  
     initialState: { pageIndex: 0, pageSize: 250000 , sortBy: [{ id: 'amount', desc: true }]}}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, hasFooter: true };
 
   return (
     <Modal title={null} footer={null} open={visible} onCancel = {closeModal}  centered={true} width={550}>

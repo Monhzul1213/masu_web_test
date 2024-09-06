@@ -4,7 +4,7 @@ import { usePagination, useRowSelect, useSortBy, useTable } from "react-table";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 
-import { FooterTable, Money } from "../../../../../src1/components/all/all_m";
+import { FooterTable, Money } from "../../../../../components/all";
 
 export function List(props) {
   const { data, size } = props;
@@ -204,7 +204,7 @@ export function List(props) {
     usePagination,
     useRowSelect
   );
-  const tableProps = { tableInstance, onRowClick };
+  const tableProps = { tableInstance, onRowClick, hasFooter: true };
 
   return (
     <div>
