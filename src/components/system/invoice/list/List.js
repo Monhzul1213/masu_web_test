@@ -21,7 +21,7 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('tax.customer'), accessor: 'label1', exLabel: t('tax.customer'), Footer: <div style={{textAlign: 'left', paddingLeft: 15}}>{t('report.total') }</div>},
+      { Header: t('tax.customer'), accessor: 'label1', exLabel: t('tax.customer'), Footer: <div style={{textAlign: 'left', paddingLeft: 15}}>{t('report.total') + data?.length}</div>},
       { Header: t('invoice.invoice'), accessor: 'invoiceNo', exLabel: t('invoice.invoice') },
       {
         Header: t('page.date'), accessor: 'invoiceDate', customStyle: { minWidth: 120 }, exLabel: t('page.date'),
@@ -50,7 +50,7 @@ export function List(props){
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, data?.length]);
 
   useEffect(() => {
     if(size?.width >= 660) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)');
