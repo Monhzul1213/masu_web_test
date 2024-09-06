@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { Money, PaginationTable, Table } from '../../all/all_m';
 import moment from 'moment';
+
+import { Money, PaginationTable, Table } from '../../../../components/all';
 
 export function List(props){
   const { data, size } = props;
@@ -55,10 +56,8 @@ export function List(props){
 
   return (
     <div>
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
-        </div>
+      <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
+        <Table {...tableProps} />
       </div>
       <PaginationTable {...tableProps} />
     </div>

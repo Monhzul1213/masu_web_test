@@ -27,7 +27,7 @@ p {
 }
 
 .table_scroll::-webkit-scrollbar, #table_scroll::-webkit-scrollbar {
-  width: 0;
+  width: 5px !important;
   height: 5px !important;
   display: flex;
   background-color: var(--input-color) !important;
@@ -39,21 +39,6 @@ p {
   background-color: var(--text4-color);
   border-radius: 10px;
   height: 5px !important;
-}
-
-.table_scroll1::-webkit-scrollbar, #table_scroll1::-webkit-scrollbar {
-  width: 5px !important;
-  height: 5px !important;
-  display: flex;
-  background-color: var(--input-color) !important;
-  background: var(--input-color) !important;
-  border-radius: 10px;
-}
-
-.table_scroll1::-webkit-scrollbar-thumb, #table_scroll1::-webkit-scrollbar-thumb {
-  background-color: var(--text4-color);
-  border-radius: 10px;
-  height: 30px !important;
 }
 
 .list_scroll::-webkit-scrollbar, #list_scroll::-webkit-scrollbar {

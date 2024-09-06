@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { PaginationTable, Table, Empty1 } from '../../../components/all/all_m';
+import { Empty1 } from '../../../components/all/all_m';
 import { Header } from './Header';
+import { PaginationTable, Table } from '../../../../components/all';
 
 export function List(props){
   const { data, excelName, setError, onSearch, sites, setSites, emps, setEmps, size} = props;
@@ -29,7 +30,7 @@ export function List(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginTime', desc: true }] },
       }, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, hasTotal: true, total: data?.length };
   const filterProps = {columns, data, excelName, setError, onSearch , sites, setSites, emps, setEmps , size };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 

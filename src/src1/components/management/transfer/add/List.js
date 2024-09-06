@@ -4,7 +4,7 @@ import { useBlockLayout, useGlobalFilter, usePagination, useResizeColumns, useRo
 import { useTranslation } from 'react-i18next';
 
 import { add } from '../../../../../helpers';
-import { DynamicBSIcon, IconButton, PaginationTable } from '../../../all/all_m';
+import { DynamicBSIcon, IconButton } from '../../../all/all_m';
 import { Search } from '../../../../../components/management/order/add/Search';
 import { ItemSelect } from './SelectItem';
 import { SelectItem } from '../../../../../components/invt/inventory/add/SelectItem';
@@ -93,7 +93,7 @@ function Card(props){
 
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable({ columns, data: detail, defaultColumn, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, onClickDelete },
+    initialState: { pageIndex: 0, pageSize: 25000 }, globalFilter: filterFunction, updateMyData, onClickDelete },
     useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
@@ -108,12 +108,11 @@ function Card(props){
     <div className='po_back_invt3'>
       {visible && <Order {...modalProps}/>}
       <Search {...searchProps} />
-      <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight}}>
+      <div id='paging' className='table_scroll' style={{overflow: 'scroll', maxHeight}}>
         <TableResize {...tableProps} />
       </div>
       {editable && <ItemSelect {...selectProps} />}
       <div className={classPage}>
-        <PaginationTable {...tableProps} />
         <IconButton {...addProps}/>
       </div>
     </div>

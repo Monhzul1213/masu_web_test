@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Check, Table, Money } from "../../../../src1/components/all/all_m";
+import { Check, Table, Money } from "../../../../components/all";
 import { EmployeeServiceModal } from "./EmployeeServiceModal";
 import { getList } from "../../../../services";
-import { useDispatch, useSelector } from "react-redux";
 
 export function CreateService(props) {
   const { data, setData, setShow, checked, setChecked } = props;

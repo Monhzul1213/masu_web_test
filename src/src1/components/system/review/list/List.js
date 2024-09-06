@@ -5,8 +5,7 @@ import moment from 'moment';
 import { Rate } from 'antd';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
-import { Check, PaginationTable } from '../../../all/all_m';
-import { TableResize } from '../../../../../components/all';
+import { TableResize, Check, PaginationTable } from '../../../../../components/all';
 
 export function List(props){
   const { data, size ,setData, setShow, checked, setChecked } = props;

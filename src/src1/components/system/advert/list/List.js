@@ -3,7 +3,8 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 import { useNavigate, createSearchParams } from 'react-router-dom';
-import { Check, PaginationTable, Table } from '../../../all/all_m';
+
+import { Check, PaginationTable, Table } from '../../../../../components/all';
 
 export function List(props){
   const { data, size ,setData, setShow, checked, setChecked } = props;

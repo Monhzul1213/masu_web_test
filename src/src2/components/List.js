@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTable, usePagination, useRowSelect, useSortBy } from "react-table";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getList } from "../../services";
-import { PaginationTable, Table } from "../../src1/components/all/all_m";
+import { PaginationTable, Table } from "../../components/all";
 import { EmployeeServiceModal } from "./emp/employeeService/EmployeeServiceModal";
-import { useDispatch, useSelector } from "react-redux";
 
 export function List(props) {
   const {
@@ -174,7 +174,7 @@ export function List(props) {
     setShow,
     setVisible,
     setDialagClose,
-    dialogClose,
+    dialogClose, error
   };
 
   return (

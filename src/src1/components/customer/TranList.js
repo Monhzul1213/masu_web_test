@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import moment from 'moment';
 
-import { PaginationTable, Money, Table } from '../all/all_m';
+import { Money, Table } from '../../../components/all';
 import { config, encrypt } from '../../../helpers';
 
 
@@ -44,18 +44,18 @@ export function TranList(props){
   const maxHeight = size?.width > 380
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 210px - 10px - 37px)';
-  const tableInstance = useTable( { columns, data, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 25 , sortBy: [{ id: 'salesDate', desc: true }]},
+  const tableInstance = useTable( { columns, data, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 1000000 , sortBy: [{ id: 'salesDate', desc: true }]},
   onClickLink}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
 
   return (
     <div >
-      <div style={{overflowX: 'scroll'}} >
+      <div className='table_scroll' style={{overflow: 'scroll'}} >
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 720}}>
               <Table {...tableProps} />
         </div>
       </div>
-      <PaginationTable {...tableProps} />
+      <p className='data_size_text'>{t('info.all') + data?.length}</p>
     </div>
   )
 }

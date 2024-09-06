@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, useBlockLayout } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { PaginationTable, TableResize, Money } from '../../all/all_m';
+
+import { TableResize } from '../../all/all_m';
+import { PaginationTable, Money } from '../../../../components/all';
 import { Header } from './Header';
 import moment from 'moment';
 
@@ -72,7 +74,7 @@ export function List(props){
   return (
     <div>
       <Header {...filterProps} />
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
+      <div className='table_scroll' style={{overflow: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
         </div>

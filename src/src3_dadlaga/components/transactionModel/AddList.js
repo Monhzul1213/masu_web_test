@@ -13,7 +13,6 @@ import { useTranslation } from "react-i18next";
 import {
   Check,
   DynamicBSIcon,
-  PaginationTable,
   TableResize,
 } from "../../../components/all";
 import { DetailAdd } from "./DetailAdd";
@@ -139,10 +138,7 @@ function Card(props) {
     useResizeColumns
   );
   const tableProps = { tableInstance };
-  const maxHeight =
-    "calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))";
-  const classPage =
-    size?.width > 510 ? "ii_page_row_large" : "ii_page_row_small";
+  const maxHeight =  "calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))";
   const id = size?.width > 780 ? "ih_large" : "ih_small";
 
   return (
@@ -157,10 +153,6 @@ function Card(props) {
       >
         <TableResize {...tableProps} />
         {editable ? <DetailAdd addDetail={addDetail} /> : ""}
-      </div>
-      <div className={classPage}>
-        <PaginationTable {...tableProps} />
-        <div />
       </div>
     </div>
   );

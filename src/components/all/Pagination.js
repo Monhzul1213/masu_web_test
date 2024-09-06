@@ -85,12 +85,15 @@ export function Pagination(props){
 }
 
 export function PaginationTable(props){
-  const { tableInstance } = props;
+  const { tableInstance, total, hasTotal } = props;
   const [page, setPage] = useState(1);
   const { canPreviousPage, canNextPage, pageCount, gotoPage, nextPage, previousPage, setPageSize,
     state: { pageIndex, pageSize, size }} = tableInstance;
   const pageRange = size ? [300, 600, 1000] : [10, 25, 50, 100];
 
+  let first = pageIndex * pageSize + 1;
+  let last = (((pageIndex + 1) * pageSize) < total) ? ((pageIndex + 1) * pageSize) : total;
+  
   useEffect(() => {
     setPage(pageIndex + 1);
     const scroll = document.getElementById('paging');
@@ -129,6 +132,7 @@ export function PaginationTable(props){
         <FiChevronRight className='pg_icon' />
       </button>
       <div style={{padding: 5}} />
+      {hasTotal ? <p className='page_showing'>{first}-{last} of {total}</p> : null}
       <div className='pg_select_back'>
         <Select
           className='pg_select'

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
-import { Check, PaginationTable, Table } from '../../all/all_m';
+import { Check, PaginationTable, Table } from '../../../../components/all';
 
 export function List(props){
   const { data, setData, loaded, setShow, autoResetExpanded, checked, setChecked, size} = props;
@@ -78,11 +78,9 @@ export function List(props){
 
   return (
     <div >
-      <div className='table_scroll' style={{overflowX: 'scroll'}} >
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
               <Table {...tableProps} />
         </div>
-      </div>
       <PaginationTable {...tableProps} />
     </div>
   )

@@ -3,9 +3,8 @@ import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, use
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { PaginationTable, Money } from '../../all/all_m';
 import { Header } from './Header';
-import { TableResize } from '../../../../components/all';
+import { TableResize, PaginationTable, Money } from '../../../../components/all';
 
 export function List(props){
   const { data, excelName, size} = props;
@@ -69,11 +68,9 @@ export function List(props){
   return (
     <div>
       <Header {...filterProps} />
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
         </div>
-      </div>
       <PaginationTable {...tableProps} />
     </div>
   );

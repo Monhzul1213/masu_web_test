@@ -8,7 +8,7 @@ import {
   Money,
   PaginationTable,
   Table,
-} from "../../../../../src1/components/all/all_m";
+} from "../../../../../components/all";
 
 export function List(props) {
   const { data, size } = props;
@@ -154,7 +154,7 @@ export function List(props) {
           id="paging"
           style={{
             marginTop: 10,
-            overflowY: "scroll",
+            overflow: "scroll",
             maxHeight,
             minWidth: 720,
           }}

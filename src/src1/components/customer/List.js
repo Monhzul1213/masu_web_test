@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, PaginationTable, Money, Table } from '../all/all_m';
+import { Check, PaginationTable, Money, Table } from '../../../components/all';
 import { Transaction } from './Transaction';
 import { Header } from './Header';
 
@@ -93,8 +93,8 @@ const tableInstance = useTable( { columns, data, autoResetPage: false, initialSt
     <div >
       <Header {...filterProps} />
       {visible && <Transaction {...subProps} />}
-      <div className='table_scroll' style={{overflowX: 'scroll'}} >
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 720}}>
+      <div className='table_scroll' style={{overflow: 'scroll'}} >
+        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 520}}>
               <Table {...tableProps} />
         </div>
       </div>

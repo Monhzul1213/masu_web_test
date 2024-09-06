@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
-import { PaginationTable, Table, DynamicBSIcon } from '../../../all/all_m';
+
+import { Table, DynamicBSIcon } from '../../../../../components/all';
 import { ItemSelect, SelectItem } from './SelectItem';
 
 export function Card(props){
-  const { data, setData, search, setSearch,size, setDKits } = props;
+  const { data, setData, search, setSearch, setDKits } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -40,10 +41,8 @@ export function Card(props){
       isShow : cust?.status, address: cust?.address};
   }
 
-  const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
-
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, onClickDelete },
+  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25000 }, onClickDelete },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const selectProps = { search, setSearch, data, setData, newItem };
@@ -56,9 +55,6 @@ export function Card(props){
           <Table {...tableProps} />
         </div>
         <ItemSelect {...selectProps} />
-        <div className={classPage}>
-          <PaginationTable {...tableProps} />
-        </div>
       </>}
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePagination, useSortBy, useTable, useRowSelect } from 'react-table';
 
-import { PaginationTable, Money, Table } from '../../../src1/components/all/all_m';
+import { PaginationTable, Money, Table } from '../../../components/all';
 import { Header } from '../../../src1/components/report/employee';
 
 export function List(props) {
@@ -40,8 +40,8 @@ export function List(props) {
     return (
         <div className="rp_list">
             <Header {...exportExcelProps}/>
-            <div className="table_scroll" style={{ overflowX: 'auto' }}>
-                <div id="padding" style={{ marginTop: 10, minWidth: 720, maxHeight: 500 }}>
+            <div className="table_scroll" style={{ overflow: 'scroll' }}>
+                <div id="paging" style={{ marginTop: 10, minWidth: 720, maxHeight: 500 }}>
                     <Table {...tableProps} />
                 </div>
             </div>

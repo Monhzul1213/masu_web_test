@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { Table, DynamicBSIcon, IconButton } from '../../../all/all_m';
+import { Table, DynamicBSIcon, IconButton } from '../../../../../components/all';
 import { ItemSelect, SelectItem } from './SelectItem';
 import { Service } from '../../service/Service';
 import { config, encrypt } from '../../../../../helpers';

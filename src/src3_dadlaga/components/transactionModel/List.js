@@ -26,6 +26,7 @@ export function List(props) {
         accessor: "templateId",
         width: 130,
         minWidth: 80,
+        Footer: 'Нийт: ' + data?.length
       },
       {
         Header: t("transModel.title"),
@@ -69,7 +70,7 @@ export function List(props) {
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language]);
+  }, [i18n?.language, data]);
 
   useEffect(() => {
     if (size?.width >= 830)
@@ -125,21 +126,19 @@ export function List(props) {
   return (
     <>
       <div className="ih_header">
-        <div style={{ overflowX: "scroll" }}>
-          <div
-            className="table_scroll"
-            id="paging"
-            style={{
-              marginTop: 10,
-              overflowY: "scroll",
-              maxHeight,
-              minWidth: 720,
-            }}
-          >
-            <TableResize {...tableProps} />
-          </div>
+        <div
+          className="table_scroll"
+          id="paging"
+          style={{
+            marginTop: 10,
+            overflow: "scroll",
+            maxHeight,
+            minWidth: 720,
+          }}
+        >
+          <TableResize {...tableProps} />
         </div>
-        {/* <PaginationTable {...tableProps} /> */}
+        <p className='data_size_text'>{t('info.all') + data?.length}</p>
       </div>
     </>
   );

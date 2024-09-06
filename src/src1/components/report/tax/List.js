@@ -3,9 +3,8 @@ import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, use
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { PaginationTable, Money } from '../../all/all_m';
 import { Header } from './Header';
-import { TableRowResize } from '../../../../components/all';
+import { TableRowResize, PaginationTable, Money } from '../../../../components/all';
 
 export function List(props){
   const { data, excelName, size} = props;

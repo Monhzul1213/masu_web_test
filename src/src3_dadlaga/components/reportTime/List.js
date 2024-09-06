@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePagination, useSortBy, useTable, useBlockLayout, useResizeColumns, useRowSelect } from 'react-table';
 
-import { TableResize,PaginationTable } from '../../../src1/components/all/all_m';
+import { PaginationTable, TableRowResize } from '../../../components/all';
 import { formatNumber,  } from '../../../helpers';
 import { Header } from '../../../src1/components/report/employee';
 
@@ -66,7 +66,7 @@ export function List(props) {
         usePagination, useBlockLayout, useResizeColumns, useRowSelect
     );
 
-    const tableProps = { tableInstance };
+    const tableProps = { tableInstance, hasFooter: true, hasTotal: true, total: data?.length };
     const exportExcelProps = {data, columns, excelName };
 
     return (
@@ -74,7 +74,7 @@ export function List(props) {
             <Header {...exportExcelProps}/>
             <div className="table_scroll" style={{ overflowX: 'auto' }}>
                 <div id="padding" style={{ marginTop: 10, minWidth: 720, maxHeight: 500 }}>
-                    <TableResize {...tableProps} />
+                    <TableRowResize {...tableProps} />
                 </div>
             </div>
             <PaginationTable {...tableProps} />

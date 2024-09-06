@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { PaginationTable, Table , Money } from '../../all/all_m';
+
+import { PaginationTable, Table , Money } from '../../../../components/all';
 import { Header } from './Header';
 
 export function List(props){
@@ -59,11 +60,9 @@ export function List(props){
   return (
     <div>
       <Header {...filterProps} />
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />
         </div>
-      </div>
       <PaginationTable {...tableProps} />
     </div>
   );

@@ -3,7 +3,7 @@ import { useTable, usePagination, useRowSelect, useSortBy, useResizeColumns, use
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import { PaginationTable, TableResize, Money } from '../../all/all_m';
+import { PaginationTable, Money, TableRowResize } from '../../../../components/all';
 import { Header } from './Header';
 import { Drawer } from './Drawer';
 
@@ -112,7 +112,7 @@ export function List(props){
   const defaultColumn = useMemo(() => ({ minWidth: 60, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: true, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesNo', desc: true }] }}, useSortBy, usePagination, useRowSelect, useResizeColumns, useBlockLayout);
-  const tableProps = { tableInstance, onRowClick, hasTotal: true , total: data?.length };
+  const tableProps = { tableInstance, onRowClick, hasTotal: true , total: data?.length, hasFooter: true };
   const filterProps = {columns, data, excelName , size , filter, };
   const drawerProps = { selected, open, setOpen , data1, user, data2, setData2, tab, getData, filter};
 
@@ -120,9 +120,9 @@ export function List(props){
     <div>
       <Drawer {...drawerProps} />
       <Header {...filterProps} />
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
+      <div className='table_scroll' style={{overflow: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <TableResize {...tableProps} />
+          <TableRowResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

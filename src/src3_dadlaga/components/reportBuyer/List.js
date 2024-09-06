@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePagination, useSortBy, useTable, useBlockLayout, useResizeColumns, useRowSelect } from 'react-table';
 
-import { PaginationTable, TableResize } from '../../../src1/components/all/all_m';
+import { PaginationTable, TableRowResize } from '../../../components/all';
 import { formatNumber } from '../../../helpers';
 import { Header } from '../../../src1/components/report/employee';
 
@@ -57,16 +57,14 @@ export function List(props){
         initialState: { pageIndex:0, pageSize: 25, sortBy: [{ id:'consumerName', desc: true }] }},
         useSortBy, usePagination, useBlockLayout, useResizeColumns, useRowSelect);
 
-    const tableProps = { tableInstance };
+    const tableProps = { tableInstance, hasFooter: true };
     const exportProps = { data, columns, excelName};
 
     return (
         <div className={'rp_list'}>
             <Header {...exportProps}/>
-            <div style={{overflowX:'scroll'}}>
-                <div className='table_scroll' id='paging' style={{marginTop:10, overflowX:'scroll',minWidth:720,maxHeight:500 }}>
-                    <TableResize {...tableProps}/>
-                </div>
+            <div className='table_scroll' id='paging' style={{marginTop:10, overflow:'scroll',minWidth:720,maxHeight:500 }}>
+                <TableRowResize {...tableProps}/>
             </div>
                 <PaginationTable {...tableProps}/>
         </div>

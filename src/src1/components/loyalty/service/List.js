@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Table, Check } from '../../../components/all/all_m';
+import { Table, Check } from '../../../../components/all';
 
 
 export function List(props){

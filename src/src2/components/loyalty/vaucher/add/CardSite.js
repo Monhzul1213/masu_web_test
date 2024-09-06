@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, PaginationTable, Table } from '../../../../../src1/components/all/all_m';
+import { Check, PaginationTable, Table } from '../../../../../components/all';
 
 export function CardSite(props){
   const { isTrack, data, setData, setEdited, setChecked } = props;

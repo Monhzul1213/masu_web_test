@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
+
 import { ExportExcel } from '../../../../helpers';
-import { PaginationTable, Table, IconDropdown, DynamicMDIcon , Money } from '../../../components/all/all_m';
+import { PaginationTable, Table, DynamicMDIcon , Money } from '../../../../components/all';
+import { IconDropdown } from '../../all/all_m';
 
 export function List(props){
   const { data, excelName, size } = props;
@@ -62,11 +64,9 @@ export function List(props){
         <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
         <IconDropdown {...columnProps} />
       </div>
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />
         </div>
-      </div>
       <PaginationTable {...tableProps} />
     </div>
   );

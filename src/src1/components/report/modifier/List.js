@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { Button, PaginationTable, Table, IconDropdown, DynamicMDIcon, Money } from '../../all/all_m';
+
+import { Button, PaginationTable, Table, DynamicMDIcon, Money } from '../../../../components/all';
+import { IconDropdown } from '../../all/all_m';
 
 export function List(props){
   const { data} = props;
@@ -50,11 +52,9 @@ export function List(props){
         <Button {...exportProps} />
         <IconDropdown {...columnProps} />
       </div>
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
           <Table {...tableProps} />
         </div>
-      </div>
       <PaginationTable {...tableProps} />
     </div>
   );

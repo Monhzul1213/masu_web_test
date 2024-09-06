@@ -128,3 +128,9 @@
   background-color: var(--back-color);
   border-radius: var(--radius);
 }
+.data_size_text{
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 0;
+  margin-top: 10px;
+}

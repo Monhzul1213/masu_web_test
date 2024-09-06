@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
-import { Check, Confirm, PaginationTable , Table, Money } from '../../../../components/all/all_m';
+import { Check, Confirm, PaginationTable , Table, Money } from '../../../../../components/all';
 
 
 export function List(props){

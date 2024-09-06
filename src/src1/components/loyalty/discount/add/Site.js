@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, CheckAll, PaginationTable, Table } from '../../../all/all_m';
+import { Check, CheckAll, Table } from '../../../../../components/all';
 
 export function Site(props){
   const { data, setData, setEdited, checked, setChecked , id } = props;
@@ -42,7 +42,7 @@ export function Site(props){
   }
 
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
-  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+  const tableInstance = useTable({ columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25000 },
     onClickCheck }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
@@ -55,7 +55,6 @@ export function Site(props){
       <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
         <Table {...tableProps} />
       </div>
-      <PaginationTable {...tableProps} />
     </div>
   );
 }

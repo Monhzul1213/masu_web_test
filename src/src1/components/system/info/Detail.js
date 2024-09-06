@@ -4,7 +4,7 @@ import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { PaginationTable, Money, Table, Overlay, DynamicTBIcon } from '../../all/all_m';
+import { Money, Table, Overlay, DynamicTBIcon } from '../../../../components/all';
 import { Modal } from 'antd';
 import { SalesDtl } from './SalesDtl';
 import { getList } from '../../../../services';
@@ -47,7 +47,7 @@ export function Detail(props){
   const maxHeight = size?.width > 380
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 210px - 10px - 37px)';
-  const tableInstance = useTable( { columns, data, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 25 , sortBy: [{ id: 'salesDate', desc: true }]},
+  const tableInstance = useTable( { columns, data, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 250000 , sortBy: [{ id: 'salesDate', desc: true }]},
   }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick: onClickDetail };
   let detailProps = { data: detail, visible: open, closeModal: closeDtlModal, loading};
@@ -61,12 +61,9 @@ export function Detail(props){
               <DynamicTBIcon name='TbReportAnalytics' className='report_icon'/>
               <p style={{fontSize: 16, fontWeight: 600}}>{t('menu.report_document')}</p>
             </div>
-            <div style={{overflowX: 'scroll'}} >
-                <div id='paging' style={{marginTop: 0, overflowY: 'scroll', maxHeight, minWidth : 220}}>
-                    <Table {...tableProps} />
-                </div>
+            <div className='table_scroll' id='paging' style={{marginTop: 0, overflow: 'scroll', maxHeight, minWidth : 220}}>
+                <Table {...tableProps} />
             </div>
-            <PaginationTable {...tableProps} />
             </div>
         </Overlay>
     </Modal>

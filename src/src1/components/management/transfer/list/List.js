@@ -4,8 +4,7 @@ import { useBlockLayout, usePagination, useResizeColumns, useRowSelect, useSortB
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-import { Money, PaginationTable } from '../../../all/all_m';
-import { TableResize } from '../../../../../components/all';
+import { TableResize, Money, PaginationTable } from '../../../../../components/all';
 
 export function List(props){
   const { data, size } = props;
@@ -67,7 +66,7 @@ export function List(props){
 
   return (
     <div>
-      <div style={{overflowX: 'scroll'}}>
+      <div style={{overflow: 'scroll'}}>
         <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
         </div>

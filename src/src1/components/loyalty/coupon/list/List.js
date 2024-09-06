@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useBlockLayout, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
-import { Money, PaginationTable } from '../../../all/all_m';
-import { TableResize } from '../../../../../components/all';
+import { TableResize, Money, PaginationTable } from '../../../../../components/all';
 
 export function List(props){
   const { data, size } = props;

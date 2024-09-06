@@ -1565,7 +1565,8 @@
       { "label": "НӨАТ төлөгч?", "value": "useNuatus" },
       { "label": "Үүсгэсэн огноо", "value": "createdDate" },
       { "label": "Партнер", "value": "partnerCode" }
-    ]
+    ],
+    "all" : "Нийт: "
   },
   "version": "14"
 }
