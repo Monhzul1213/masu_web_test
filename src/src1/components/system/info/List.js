@@ -122,13 +122,13 @@ export function List(props){
              </div>
             ),
           Footer: info => {
-            let totalSubAmt = data.reduce((sum, { subAmount }) => sum += subAmount, 0)
-            let totalSales = data.reduce((sum, { totalSales }) => sum += totalSales, 0)
-            let totalSiteQty = data.reduce((sum, { siteQty }) => sum += siteQty, 0)
-            let totalTerQty = data.reduce((sum, { terminalQty }) => sum += terminalQty, 0)
-            let totalEmpQty = data.reduce((sum, { empQty }) => sum += empQty, 0)
-            let totalsubQty = data.reduce((sum, { subQty }) => sum += subQty, 0)
-            let totalsalesQty = data.reduce((sum, { salesQty }) => sum += salesQty, 0)
+            let totalSubAmt = data.reduce((sum, { subAmount }) => sum += subAmount, 0);
+            let totalSales = data.reduce((sum, { totalSales }) => sum += totalSales, 0);
+            let totalSiteQty = data.reduce((sum, { siteQty }) => sum += siteQty, 0);
+            let totalTerQty = data.reduce((sum, { terminalQty }) => sum += terminalQty, 0);
+            let totalEmpQty = data.reduce((sum, { empQty }) => sum += empQty, 0);
+            let totalsubQty = data.reduce((sum, { subQty }) => sum += subQty, 0);
+            let totalsalesQty = data.reduce((sum, { salesQty }) => sum += salesQty, 0);
             return <> 
               <div style={{textAlign: 'right', paddingRight: 15}}>
                 {item?.value === 'subAmount' ? <Money value= {totalSubAmt}/> : 
@@ -167,7 +167,7 @@ export function List(props){
   
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 2500000, sortBy: [{ id: 'merchantID', desc: true }] }, onClickLink}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, hasTotal: true , total: data?.length, hasFooter: true };
+  const tableProps = { tableInstance, hasFooter: true };
   let detailProps = { data : detail, visible, closeModal, loading};
   const headerProps = {size, setError, onSearch , filter, data, value: columns1, setValue: changeColumns, data1: t('info.columns'), className1: 'rp_list_drop'};
 
@@ -175,10 +175,8 @@ export function List(props){
     <div>
       {visible && <Detail {...detailProps} />}
       <Header {...headerProps}/>
-      <div style={{overflowX: 'scroll'}}>
-        <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', overflowX: 'scroll', maxHeight, minWidth: 700}}>
-          <FooterTable {...tableProps} />
-        </div>
+      <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', overflowX: 'scroll', maxHeight, minWidth: 400}}>
+        <FooterTable {...tableProps} />
       </div>
     </div>
   );
