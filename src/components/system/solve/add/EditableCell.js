@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Select } from 'antd';
 
 const { Option } = Select;
 
 export const SelectableCell = props => {
-  const { initialValue, row, column: { id, width }, updateMyData, disabled, data, s_value, s_descr } = props;
+  const { value: initialValue, row, column: { id, width }, updateMyData, disabled, data, s_value, s_descr } = props;
   const [value, setValue] = useState(initialValue);
 
   // useEffect(() => {

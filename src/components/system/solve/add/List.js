@@ -15,7 +15,7 @@ export function List(props){
     let columns = [
       {
         Header: t('order.status'), accessor: 'status', isBtn: true, width: 150,
-        Cell: props => <SelectableCell {...props} data={statusData} initialValue = {1} />
+        Cell: props => <SelectableCell {...props} data={statusData}/>
       },
       { Header: t('inventory.t_site'), accessor: 'siteName' },
       { Header: t('shop.city'), accessor: 'branchName' },

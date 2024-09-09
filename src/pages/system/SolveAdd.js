@@ -114,7 +114,7 @@ export function SolveAdd(){
     if(status?.value !== 4 || (lengthValid && nameValid)){
       let vatRequestTerminalItem = items?.map(item => {
         return { 
-          rowStatus: 'I',
+          rowStatus: 'U',
           siteID: item?.siteId,
           terminalID: item?.terminalId,
           status: item?.status,

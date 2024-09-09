@@ -145,7 +145,7 @@ function Screen() {
         adsID: selected ? selected?.adsId : -1,
         adsName: name?.value,
         siteIDs,
-        merchantType: user?.msMerchant?.merchantType,
+        merchantType: 1,
         merchantID: user?.msMerchant?.merchantId,
         beginDate: beginDate?.value?.format('yyyy.MM.DD'),
         endDate: endDate?.value?.format('yyyy.MM.DD'),

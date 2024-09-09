@@ -131,7 +131,6 @@ export function AdvertAdd(){
         merchantType: 0,
         merchantID: null,
         adsID: selected ? selected?.adsId : -1,
-        // merchantType: user?.msMerchant?.merchantType,
         adsName: name?.value,
         beginDate: beginDate?.value?.format('yyyy.MM.DD'),
         endDate: endDate?.value?.format('yyyy.MM.DD'),

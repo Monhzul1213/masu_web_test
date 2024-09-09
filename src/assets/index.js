@@ -44,6 +44,19 @@ import login3 from './3.jpg';
 import login4 from './5.png';
 import login_1 from './login_1.png';
 
+import image1 from './i1.png';
+import image2 from './i2.png';
+import image3 from './i3.png';
+import image4 from './i4.png';
+import image5 from './i5.png';
+import image6 from './i6.png';
+import image7 from './i7.png';
+import image8 from './i8.png';
+import image9 from './i9.png';
+import image10 from './i10.png';
+import image11 from './i11.png';
+
+export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11};
 export { login_image, header_image, logo, placeholder, qr_holder, logo_image, masu, twitter, twitter2, login1, login2, login3, login4, login_1 };
 export const icons = [
   icon1, icon2, icon3, icon4, icon5,
