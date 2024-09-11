@@ -7,8 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { logout, setIsLoggedIn } from '../../services';
 import { Button } from '../all/Button';
-import { DynamicMDIcon } from '../all';
-import { header_image } from '../../assets';
+import { header_image, image5 } from '../../assets';
 
 export function Profile(props){
   const { collapsed } = props;
@@ -64,7 +63,7 @@ export function Profile1(props){
     <div className='menu_img_container'>
       {!collapsed ? <img className='h_logo' src={header_image} alt='header_image'/> : ''}
       <button className='h_icon_btn' onClick={onClick}>
-        <DynamicMDIcon name='MdOutlineMenu' className='h_icon' />
+        <img src={image5} className='h_icon' alt='image5'/>
       </button>
     </div>
   );

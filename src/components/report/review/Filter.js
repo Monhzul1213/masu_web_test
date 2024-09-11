@@ -10,7 +10,7 @@ export function Filter(props){
   const { setError, size, onSearch, filter1 } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
-  const [date, setDate] = useState([moment(), moment()]);
+  const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [time, setTime] = useState(null);
   const [sites, setSites] = useState([]);
   const [site, setSite] = useState([]);

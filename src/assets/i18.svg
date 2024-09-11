@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 252.8 64.37">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: MontserratRoman-Medium, Montserrat;
+        font-size: 17px;
+        font-variation-settings: 'wght' 500;
+        font-weight: 500;
+        letter-spacing: -.02em;
+      }
+
+      .cls-1, .cls-2 {
+        fill: #662d91;
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <rect class="cls-3" width="252.8" height="64.37" rx="16" ry="16"/>
+    <text class="cls-1" transform="translate(75.01 36.83) scale(.9 1)"><tspan x="0" y="0">Борлуулалтын ПОС</tspan></text>
+    <path class="cls-2" d="M55.24,33.96h-11.48v-1.69h6.94c1.27,0,2.31-.91,2.31-2.02v-10.83c0-1.11-1.04-2.02-2.31-2.02H27.61c-1.27,0-2.31,.91-2.31,2.02v10.83c0,1.11,1.04,2.02,2.31,2.02h6.94v1.69h-11.48c-1.31,0-2.38,1.07-2.38,2.38v6.53c0,1.31,1.07,2.38,2.38,2.38H55.24c1.31,0,2.38-1.07,2.38-2.38v-6.53c0-1.31-1.07-2.38-2.38-2.38Zm-27.8-4.69v-8.86c0-.48,.45-.87,.99-.87h21.46c.55,0,.99,.39,.99,.87v8.86c0,.48-.45,.87-.99,.87H28.43c-.55,0-.99-.39-.99-.87Zm11.72,12.81c-1.36,0-2.47-1.11-2.47-2.47s1.11-2.47,2.47-2.47,2.47,1.11,2.47,2.47-1.11,2.47-2.47,2.47Z"/>
+  </g>
+</svg>

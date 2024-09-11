@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createBrowserHistory } from "history";
 
 import { setIsLoggedIn } from './services';
-import { Header, Menu } from './components/menu';
+import { Header1, Menu } from './components/menu';
 import { Loading, Login, SignUp, Confirm, Home, Config, Recovery } from './pages';
 import { Category, Inventory, InventoryAdd, InventoryImport, Modifier, ModifierAdd } from './pages/invt';
 import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/emp';
@@ -79,11 +79,11 @@ export function App(){
     <HistoryRouter history={createBrowserHistory()}>
       <Suspense fallback={<Loading />}>
         <Layout style={{minHeight: '100vh'}}>
-          <Header {...menuProps} />
           <SizeMe>{({ size }) => 
           <Layout>
             <Menu {...menuProps} size={size} />
             <Layout>
+              <Header1 {...menuProps} />
               <Routes>
                 <Route path='/' element={<Partner />} />
                 <Route path='*' element={<Partner />} />
@@ -104,12 +104,12 @@ export function App(){
     <HistoryRouter history={createBrowserHistory()}>
       <Suspense fallback={<Loading />}>
         <Layout style={{minHeight: '100vh'}}>
-          <Header {...menuProps} />
           <SizeMe>{({ size }) => 
           <Layout>
             <Menu {...menuProps} size={size} />
             <Chat/>
             <Layout>
+              <Header1 {...menuProps} />
               <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='*' element={<Home />} />

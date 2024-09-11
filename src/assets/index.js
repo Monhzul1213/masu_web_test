@@ -55,8 +55,20 @@ import image8 from './i8.png';
 import image9 from './i9.png';
 import image10 from './i10.png';
 import image11 from './i11.png';
+import image12 from './i12.png';
+import image13 from './i13.png';
+import image14 from './i14.png';
+import image15 from './i15.png';
+import image16 from './i16.png';
+import image17 from './i17.png';
+import image18 from './i18.svg';
+import image19 from './i19.png';
+import image20 from './i20.png';
+import image21 from './i21.png';
+import image22 from './i22.png';
 
-export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11};
+export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10,
+         image11, image12, image13, image14, image15, image16, image17, image18, image19, image20, image21, image22};
 export { login_image, header_image, logo, placeholder, qr_holder, logo_image, masu, twitter, twitter2, login1, login2, login3, login4, login_1 };
 export const icons = [
   icon1, icon2, icon3, icon4, icon5,

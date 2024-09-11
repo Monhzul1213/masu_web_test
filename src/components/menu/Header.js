@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Dropdown } from 'antd';
 
 import '../../css/menu.css';
-import { header_image } from '../../assets';
-import { DynamicMDIcon } from '../all';
+import { header_image, image16, image17, image19, image20, image21, image22 } from '../../assets';
+import { Button, DynamicBSIcon, DynamicMDIcon } from '../all';
+import { useDispatch, useSelector } from 'react-redux';
+import { getList, logout, setIsLoggedIn } from '../../services';
 
 export function Header(props){
   const { collapsed, setCollapsed } = props;
@@ -40,6 +43,11 @@ export function Header1(props){
   const { i18n, t } = useTranslation();
   const [title, setTitle] = useState('Home');
   const [hideMenu, setHideMenu] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [subscriptionType, setSubscriptionType] = useState(false);
+  const { user, isOwner, isPartner, token } = useSelector(state => state.login);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     i18n.exists('header.' + pathname) ? setTitle('header.' + pathname) : setTitle('header./');
@@ -50,10 +58,60 @@ export function Header1(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  useEffect(() => {
+    getConfig();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const getConfig = async () => {
+    const response = await dispatch(getList(user, token, 'Merchant/GetConfig'));
+    setSubscriptionType(response?.data?.subscriptionType)
+  };
+
+  const onClickAccount = e => {
+    navigate('/profile');
+    setOpen(false);
+  }
+
+  const onClickSignout = e => {
+    e?.preventDefault();
+    dispatch(logout());
+    dispatch(setIsLoggedIn(false));
+    window.sessionStorage.removeItem('CREDENTIALS_TOKEN');
+    window.localStorage.setItem('CREDENTIALS_FLUSH', Date.now().toString());
+    window.localStorage.removeItem('CREDENTIALS_FLUSH');
+    navigate(isPartner ? 'partner_sign_in' : '/');
+  }
+
+  const onClick = () => navigate('/config/type');
+
+
+  const menu = () => {
+    return (
+      <div className='p_menu'>
+        <Button className='p_menu_btn' text={t('profile.account')} onClick={onClickAccount} disabled={!isOwner} />
+        <Button className='p_menu_btn' text={t('profile.signout')} onClick={onClickSignout} />
+      </div>
+    );
+  }
+
   return hideMenu ? null : (
     <div className='menu_pro_container'>
       <p className='h_title'>{t(title)}</p>
-      <img className='h_logo' src={header_image} alt='Logo' />
+      <div className='p_btn'>
+        {<img className='img_header' src={ subscriptionType === 'PREMIUM' ?  image16 : subscriptionType === 'STANDARD' ? image21 : image22 } alt='image17'/>}
+        <div className='p_side'>
+          <div className='header_img_back'>
+            <p className='p_title'>{t('menu.profile')}</p>
+            {<img className='type_img' onClick={onClick} src={subscriptionType === 'PREMIUM' ? image17 : subscriptionType === 'STANDARD' ? image19 : image20 } alt='image16'/>}
+          </div>
+          <p className='p_user'>{user?.mail?.toLowerCase()}</p>
+        </div>
+        <Dropdown overlay={menu} trigger='click' open={open} onOpenChange={setOpen}>
+          <DynamicBSIcon onClick={e => e.preventDefault()} name='BsChevronDown' size={20} className='down_icon_back'/>
+        </Dropdown>
+      </div>
     </div>
   );
 }

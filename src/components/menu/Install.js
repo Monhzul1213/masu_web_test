@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineAppstore } from 'react-icons/ai';
 import { useTranslation } from 'react-i18next';
 // import OpenApp from "react-open-app";
 import customProtocolCheck from "custom-protocol-check";
 
 import { getOS } from '../../helpers';
+import { image15 } from '../../assets';
 
 export function Install(props){
   const { collapsed } = props;
@@ -55,7 +55,7 @@ export function Install(props){
 
   return (
     <button className='mi_btn' onClick={onClick}>
-      <AiOutlineAppstore className='mi_icon' />
+      <img src={image15} alt='image15' className='pos_image_back'/>
       {!collapsed && <p className='mi_text'>{t('menu.install')}</p>}
     </button>
   )

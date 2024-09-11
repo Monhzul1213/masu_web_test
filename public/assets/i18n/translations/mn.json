@@ -853,7 +853,9 @@
     ],
     "columns": [
       { "label": "Борлуулалт", "value": "totalSalesAmt" },
+      { "label": "Борлуулалтын тоо", "value": "salesQty" },
       { "label": "Буцаалт", "value": "totalReturnAmt" },
+      { "label": "Буцаалтын тоо", "value": "returnQty" },
       { "label": "Хөнгөлөлт", "value": "totalDiscAmt" },
       { "label": "Цэвэр борлуулалт", "value": "totalNetSalesAmt" },
       { "label": "Бэлэн", "value": "totalCashAmount" },
