@@ -51,6 +51,7 @@ export function Menu(props){
       user?.merchantId === 270 ||
       user?.merchantId === 164 ||
       user?.merchantId === 700 ||
+      user?.merchantId === 724 ||
       user?.merchantId === 999
     )
       setHideTime(false);
@@ -121,7 +122,7 @@ export function Menu(props){
       getItem(t('menu.invt_modi'), '/inventory/invt_modi', null, null, null, msRole?.webManageItem !== 'Y'),
     ]),
      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.management')}</span> : t('menu.management'), '/management', 
-     <img src={image4} alt='image4' style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>,[
+     <img src={image4} alt='image4' />,[
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.suppliers')}</span> : t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_remainder')}</span> : t('menu.invt_remainder'), '/management/invt_remainder', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_txn')}</span> : t('menu.invt_txn'), '/management/invt_txn', null, null, null, msRole?.webManageItem !== 'Y'),
@@ -139,9 +140,9 @@ export function Menu(props){
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
     getItem( subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer', 
-    <img src={image2} alt='image2' style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, null, null, msRole?.webManageCustomer !== 'Y'),
+    <img src={image2} alt='image2'/>, null, null, msRole?.webManageCustomer !== 'Y'),
     getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.loyalty')}</span> : t('menu.loyalty'), '/loyalty', 
-    <img src={image7} alt='image7' style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, [
+    <img src={image7} alt='image7' />, [
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.coupon')}</span> : t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.voucher')}</span> : t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_discount')}</span> : t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y'),
@@ -149,16 +150,17 @@ export function Menu(props){
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.giftCard')}</span> : t("menu.giftCard"), "/loyalty/giftCard", null, null, null, msRole?.webManageItem !== "Y")
     ]),
     hideTime ? null : getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('timetable.time')}</span> : t('timetable.time'), '/timetable', 
-    <img src={image8} alt='image8' style={subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, [
+    <img src={image8} alt='image8' />, [
       getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
     ]),
-    hideTime ? null : getItem(subscriptionType !== "STANDARD" && subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.finance")}</span>) : (t("transModel.finance")), "/finance",
-    <img src={image12} alt='image12' style={subscriptionType !== "STANDARD" && subscriptionType !== "PREMIUM" ? { color: "#969696" } : {}}/>,[
-        getItem( subscriptionType !== "STANDARD" && subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webEditSettings !== "Y")
+    hideTime ? null : getItem(subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.finance")}</span>) : (t("transModel.finance")), "/finance",
+    <img src={image12} alt='image12' />,[
+        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webEditSettings !== "Y"),
+        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.journal")}</span>) : (t("transModel.journal")), "/finance/journal", null, null, null,msRole?.webEditSettings !== "Y")
     ]),
     getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
-    <img src={image9} alt='image9' style={ subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? {color: '#969696'} : {}}/>, null, null, msRole?.webManageCustomer !== 'Y'),
+    <img src={image9} alt='image9' />, null, null, msRole?.webManageCustomer !== 'Y'),
     hideConfig ? getItem(t('menu.config'), '/config/additional', <img src={image10} alt='image10'/>, null, null, msRole?.webEditSettings !== 'Y') :
     getItem(t('menu.config'), '/config', <img src={image10} alt='image10'/>, [
       getItem(t('system_menu.additional'), '/config/additional', null, null, null, msRole?.webEditSettings !== 'Y'),

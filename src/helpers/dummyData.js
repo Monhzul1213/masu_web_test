@@ -654,7 +654,7 @@ export const subContent = [
   { value: 2, label: 'Түгээлтийн ПОС (Distribution)'}, 
   { value: 3, label: 'И-Баримт холболт'}, 
   { value: 4, label: 'Борлуулалтын тайлан, мэдээ'}, 
-  { value: 5, label: 'Бараа суртачлах самбар'}, 
+  { value: 5, label: 'Бараа сурталчлах самбар'}, 
   { value: 6, label: 'Барааны үлдэгдэл хөтлөх (FIFO)'}, 
   { value: 7, label: 'Ажилтан'}, 
   { value: 8, label: 'Loyalty app/ Цаг захиалга'}, 

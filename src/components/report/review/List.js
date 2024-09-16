@@ -14,7 +14,7 @@ export function List(props){
   const [columns1, setColumns1] = useState([]);
 
   useEffect(() => {
-    changeColumns(['totalSalesAmt', 'totalReturnAmt', 'totalDiscAmt', 'totalNetSalesAmt', 'totalCashAmount',
+    changeColumns(['totalSalesAmt', 'salesQty', 'totalReturnAmt', 'returnQty', 'totalDiscAmt', 'totalNetSalesAmt', 'totalCashAmount',
       'totalNonCashAmount', 'costOfGoods', 'totalProfitAmt'], period);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +40,7 @@ export function List(props){
       if(exists){
         columns.push({
           Header: <div style={{textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
-          width: 150, minWidth: 90,
+          width: 120, minWidth: 90,
           exLabel: item?.label,
           Cell: props => (
             <div style={{textAlign: 'right', paddingRight: 15}}>
