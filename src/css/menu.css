@@ -357,7 +357,7 @@ cursor: pointer;
   }
 }
 
-@media only screen and (max-width: 740px) { /* mobile */
+@media only screen and (max-width: 800px) { /* mobile */
   .menu_drawer .ant-drawer-content-wrapper{
     max-width: 300px;
   }
@@ -402,7 +402,18 @@ cursor: pointer;
     justify-content: center;
   }
 }
-
+@media only screen and (max-width: 600px) {
+  .h_title {
+    display: flex;
+    align-items: center;
+    margin: 0 10px;
+    color: var(--text-color);
+    font-size: var(--title-size-m);
+    font-weight: 550;
+    flex: 1;
+    line-height: 14px;
+  }
+}
 .mi_top {
   padding: 20px 0;
   overflow-y: scroll;

@@ -22,6 +22,12 @@
   margin-top: 5px;
 }
 
+.zone_title_back{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+
 #ih_large .ih_search_back1 {
   position: absolute;
   box-shadow: 0 2px 5px rgba(0,0,0,.15);

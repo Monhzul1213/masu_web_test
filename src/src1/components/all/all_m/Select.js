@@ -400,3 +400,45 @@ export function MultiCancelSelect(props){
     </div>
   );
 }
+
+export function ComSelect(props){
+  const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem,
+    filterOption, setError, setEdited, onSearch, setData, disabled } = props;
+
+  const handleChange = e => {
+    setValue({ value: e });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const onDropdownVisibleChange = show => {
+    if(!show) setData && setData([]);
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  // const empty = t(text?.length > 3 ? 'page.no_filter' : 'inventory.morethan');
+  
+  return (
+    <div className={classBack}>
+      <div className='input_border' style={style}>
+        {label && <p className='p_select_lbl' style={style}>{label}</p>}
+        <AntSelect
+          className={className}
+          showSearch
+          filterOption={filterOption}
+          disabled={disabled}
+          onSearch={onSearch}
+          onChange={handleChange}
+          value={value?.value}
+          loading={loading}
+          onDropdownVisibleChange={onDropdownVisibleChange}
+          onFocus={onFocus}
+          // notFoundContent={empty}
+          placeholder={placeholder}>
+          {data?.map(renderItem)}
+        </AntSelect>
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}

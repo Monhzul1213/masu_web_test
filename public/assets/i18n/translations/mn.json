@@ -156,7 +156,11 @@
     "/loyalty/voucher": "Ваучер",
     "/loyalty/voucher/voucher_add": "Ваучер бүртгэх",
     "/loyalty/bonus": "Урамшуулал",
-    "/loyalty/bonus/bonus_add": "Урамшуулал бүртгэх"
+    "/loyalty/bonus/bonus_add": "Урамшуулал бүртгэх",
+    "/finance/template": "Гүйлгээний загвар",
+    "/finance/template/add": "Гүйлгээний загвар бүртгэх",
+    "/finance/journal": "Гүйлгээ",
+    "/finance/journal/journal_add": "Гүйлгээ хийх"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -1245,7 +1249,13 @@
     "site": "Салбар",
     "warning": "*Хэрэв та дансаар төлбөрөө шилжүүлж байгаа бол гүйлгээний утгаа зөв бөглөж, 'Дансаар төлбөр төлсөн' товчийг дараарай!",
     "invoices": "Төлбөртэй нэмэлт үйлчилгээ",
-    "batch": "Багц"
+    "batch": "Багц",
+    "zone": "",
+    "location": "Байршил",
+    "qty": "Харилцагчийн тоо",
+    "date": "Ашиглах огноо",
+    "customer": "Нэмэлт харилцагч",
+    "customer_add": "Харилцагч нэмэх"
   },
   "timetable":{
     "time": "Цаг захиалга",
@@ -1572,6 +1582,16 @@
       { "label": "Партнер", "value": "partnerCode" }
     ],
     "all" : "Нийт: "
+  },
+  "journal" : {
+    "acctCode": "Дансны дугаар",
+    "add": "Гүйлгээ хийх",
+    "debit": "Дебит",
+    "credit": "Кредит",
+    "warning_item": "Данс сонгоно уу",
+    "delete_success": "Гүйлгээ амжилттай устгагдлаа.",
+    "already_added": "Энэ данс жагсаалтад нэмэгдсэн байна",
+    "backButton": "Гүйлгээний жагсаалтууд"
   },
   "version": "14"
 }
