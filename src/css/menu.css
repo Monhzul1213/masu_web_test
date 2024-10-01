@@ -91,7 +91,7 @@
 .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content{
   color: var(--root-color);
   font-size: 15px;
-  font-weight: 550;
+  font-weight: 400;
 }
 .ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
   padding: 0 !important;
@@ -151,7 +151,7 @@
 .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content{
   color: var(--root-color);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
 }
 .ant-menu-submenu, .ant-menu-submenu-inline{
   font-size: 15px;
@@ -184,7 +184,7 @@
 }
 
 .side_menu .ant-menu-sub.ant-menu-inline>.ant-menu-item>.ant-menu-title-content {
-  font-weight: 500;
+  font-weight: 400;
   font-size: 15px;
   height: 48px !important;
   line-height: 48px !important;

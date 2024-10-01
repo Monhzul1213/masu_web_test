@@ -28,6 +28,7 @@ import { Coupon, CouponAdd } from './src1/pages/loyalty';
 import { Bonus, BonusAdd } from './pages/loyalty';
 import { ReportBuyer, ReportReceivable, ReportTime, TransactionModel, TransactionModelsAdd } from './src3_dadlaga/pages';
 import { Journal, JournalAdd } from './src1/pages/finance/journal';
+import { Account } from "./src3_dadlaga/pages/account";
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -196,6 +197,7 @@ export function App(){
                 <Route path="/finance/template/add" element={<TransactionModelsAdd />}/>
                 <Route path="/finance/journal" element={<Journal />}/>
                 <Route path="/finance/journal/journal_add" element={<JournalAdd />}/>
+                <Route path="/finance/account" element={<Account />} />
               </Routes>
             </Layout>
           </Layout>

@@ -35,7 +35,7 @@ export function TransactionModel() {
       onSearch(query);
     }
     return () => {};
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSearch = async (query) => {
@@ -60,7 +60,7 @@ export function TransactionModel() {
   const onClickAdd = () => navigate("/finance/template/add");
 
   const listProps = { data, onClickAdd };
-  const headerProps = { onClickAdd, setError, onSearch };
+  const headerProps = { onClickAdd, setError, onSearch, type: "transModel" };
   const subProps = { visible, setVisible, onDone };
   return (
     <div className="s_container_i">

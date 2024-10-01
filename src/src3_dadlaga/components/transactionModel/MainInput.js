@@ -92,15 +92,17 @@ export function MainInput(props) {
         <IconButton {...backProps} />
       </div>
       <div className="ad_main">
-        <div className="ad_row">
-          <div style={{ marginTop: 0, flex: 1 }}>
+        <div>
+          <div style={{ marginTop: 0, width: "50%" }}>
             <Input {...idProps} />
           </div>
           <div className="gap" />
-          <DescrInput {...descrProps} />
+          <div style={{ marginTop: 0, width: "50%" }}>
+            <DescrInput {...descrProps} />
+          </div>
         </div>
-        <div className="ad_row" style={{ marginTop: "10px" }}>
-          <div style={{ marginTop: 0, flex: 1, width: "40%" }}>
+        <div style={{ marginTop: "10px" }}>
+          <div style={{ marginTop: 0, width: "50%" }}>
             <Select {...vatProps} />
           </div>
           <div className="gap" />

@@ -11,10 +11,10 @@ import {
 import { createSearchParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 
-import { TableResize } from "../../../components/all";
+import { CheckBox, TableResize } from "../../../components/all";
 
 export function List(props) {
-  const { data, size } = props;
+  const { data, size, setOpenModal } = props;
   const { t, i18n } = useTranslation();
   const [maxHeight, setMaxHeight] = useState("300px");
   const [columns, setColumns] = useState([]);
@@ -23,49 +23,73 @@ export function List(props) {
   useEffect(() => {
     setColumns([
       {
-        Header: t("transModel.number"),
-        accessor: "templateId",
+        Header: t("account.title"),
+        accessor: "acctName",
         width: 130,
         minWidth: 80,
       },
       {
-        Header: t("transModel.title"),
-        accessor: "templateName",
+        Header: t("account.acctCode"),
+        accessor: "acct",
         width: 200,
         minWidth: 120,
       },
       {
-        Header: t("transModel.noCode"),
-        accessor: "vatPropertyId",
+        Header: t("account.acctType"),
+        accessor: "accTypeName",
+        width: 200,
+        minWidth: 120,
+      },
+      {
+        Header: t("account.acctClass"),
+        accessor: "acctClassName",
+        width: 200,
+        minWidth: 120,
+      },
+      {
+        Header: t("account.currency"),
+        accessor: "currency",
         width: 140,
         minWidth: 90,
       },
       {
-        Header: t("transModel.noName"),
-        accessor: "vatPropertyName",
+        Header: t("account.isDebit"),
+        accessor: "isDebit",
         width: 150,
         minWidth: 80,
+        Cell: ({ value }) => (
+          <div style={{ marginTop: -17 }}>
+            <CheckBox disabled={true} checked={value === "Y"} />
+          </div>
+        ),
       },
       {
-        Header: t("transModel.transCode"),
-        accessor: "cashPropertyId",
+        Header: t("account.status"),
+        accessor: "status",
         width: 200,
         minWidth: 130,
+        Cell: ({ value }) => <div>{value === 1 ? "Идэвхтэй" : "Хүчингүй"}</div>,
       },
       {
-        Header: t("transModel.transName"),
-        accessor: "cashPropertyName",
+        Header: t("shop.title"),
+        accessor: "siteName",
+        width: 200,
+        minWidth: 120,
+      },
+      {
+        Header: t("account.lastUpdate"),
+        accessor: "lastUpdate",
         width: 200,
         minWidth: 130,
-      },
-      {
-        Header: t("adjust.t_created"),
-        accessor: "createdDate",
-        width: 140,
-        minWidth: 100,
         Cell: ({ value }) => (
           <div style={{}}>{moment(value).format("yyyy.MM.DD HH:mm")}</div>
         ),
+      },
+      {
+        Header: t("account.lastUserId"),
+        accessor: "lastUserName",
+        width: 140,
+        minWidth: 100,
       },
     ]);
     return () => {};
@@ -90,10 +114,12 @@ export function List(props) {
   }, [size?.width]);
 
   const onRowClick = (row) => {
+    const classId = row?.original.acctClassId;
+    setOpenModal(true);
     navigate({
-      pathname: "add",
       search: createSearchParams({
-        templateId: row?.original?.templateId,
+        classId: classId,
+        acct: row?.original?.acct,
       }).toString(),
     });
   };

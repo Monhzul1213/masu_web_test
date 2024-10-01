@@ -4,7 +4,7 @@ import React from "react";
 import { ButtonRowAddConfirm } from "../../../components/all";
 
 export function Filter(props) {
-  const { size, onClickAdd } = props;
+  const { size, onClickAdd, type } = props;
   // const { t } = useTranslation();
 
   // const [classH, setClassH] = useState("th_header1");
@@ -18,9 +18,24 @@ export function Filter(props) {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [size?.width]);
 
-
+  // const onHide = () => {
+  //   let query =
+  //     "?BeginDate=" +
+  //     date[0]?.format("yyyy.MM.DD") +
+  //     "&EndDate=" +
+  //     date[1]?.format("yyyy.MM.DD");
+  //   onSearch(query);
+  // };
   const id = size?.width > 870 ? "ih_large" : "ih_small";
-  const addProps = { type: "transModel", onClickAdd, show: false };
+  const addProps = { type, onClickAdd, show: false };
+  // const dateProps = {
+  //   label: t("page.date"),
+  //   value: date,
+  //   setValue: setDate,
+  //   placeholder: t("time.select_date"),
+  //   onHide: () => onHide(),
+  //   className: "rh_date",
+  // };
 
   return (
     <div className="ih_header" style={{ marginTop: 5 }} id={id}>

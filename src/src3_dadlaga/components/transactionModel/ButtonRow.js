@@ -9,13 +9,12 @@ export function ButtonRow(props) {
     onClickSave,
     onClickEdit,
     onClickDelete,
-    header,
     updatable,
+    disabled = false,
+    deletable = true,
   } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const deletable = header?.status === 0;
-  const disabled = header?.status === 1;
 
   const onDelete = () => setOpen(true);
 

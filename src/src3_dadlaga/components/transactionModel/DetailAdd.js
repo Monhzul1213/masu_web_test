@@ -1,79 +1,146 @@
 import React, { useState } from "react";
-import { EditableCell, EditableCellInput } from "./EditableCell";
-import { Check } from "../../../components/all";
-import { IoIosAddCircle } from "react-icons/io";
+import { Select } from "antd";
+import { CustomSelect } from "../../../components/all";
+import { SelectItem } from "../../../components/invt/inventory/add/SelectItem";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { getList } from "../../../services";
+import { useSelector } from "react-redux";
+const { Option } = Select;
 
-export const DetailAdd = ({ addDetail }) => {
-  const [templateDtl, setTemplateDtl] = useState({
-    acct: "",
-    acctName: "",
-    sub: "",
-    isDebit: 0,
-    formula: "",
-  });
-  const handleTemplateDtl = (name, value) => {
-    setTemplateDtl((prev) => ({ ...prev, [name]: value }));
+export const DetailAdd = ({ addDetail, detail, search, setSearch }) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { user, token } = useSelector((state) => state.login);
+  const [items, setItems] = useState([]);
+  const [searchValue, setSearchValue] = useState();
+  const onSelect = ({ value }) => {
+    const selectedItem = items?.filter((item) => item.accountId === value)[0];
+    const exists = detail?.findIndex((item) => item.accountId === value);
+    if (exists === -1) {
+      const newItem = {
+        accountId: selectedItem?.accountId,
+        acct: selectedItem?.acctCode,
+        acctName: selectedItem?.acctName,
+        isDebit: selectedItem?.isDebit,
+        formula: "",
+        isNew: true,
+      };
+      addDetail(newItem);
+      setSearch({ value: null, error: null });
+    } else {
+      setSearch({ value: null, error: "Энэ данс жагсаалтанд нэмэгдсэн байна" });
+    }
+    setSearchValue(null);
   };
-  const handleClick = () => {
-    addDetail(templateDtl);
-    setTemplateDtl({
-      acct: "",
-      acctName: "",
-      sub: "",
-      isDebit: 0,
-      formula: "",
-    });
+  const onSearch = async (value) => {
+    setSearchValue(value);
+    if (value.length >= 3) {
+      const response = await dispatch(getList(user, token, "Txn/GetAccount"));
+      setItems(response?.data);
+    } else {
+      setItems([]);
+    }
+  };
+
+  const renderItem = (item, index) => {
+    let optItem = {
+      name: item?.acctName,
+      sku: item?.acctCode,
+    };
+    return (
+      <Option
+        key={index}
+        value={item.accountId}
+        name={optItem?.name}
+        sku={optItem?.sku}
+      >
+        <SelectItem label="Дансны дугаар" item={optItem} />
+      </Option>
+    );
+  };
+
+  const filterOption = (input, option) => {
+    return (
+      option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+      option?.sku?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    );
+  };
+
+  const selectProps = {
+    value: search,
+    setValue: onSelect,
+    placeholder: t("account.search"),
+    data: items,
+    className: "kit_select",
+    classBack: "kit_search",
+    renderItem,
+    onSearch,
+    filterOption,
+    text: searchValue,
+    setData: setItems,
   };
   return (
-    <div
-      style={{
-        display: "flex",
-        margin: "15px 0",
-        overflow: "scroll",
-        width: "930px",
-      }}
-    >
-      <EditableCell
-        placeholder="Дансны дугаар"
-        value={templateDtl?.acct}
-        handleChange={(value) => {
-          handleTemplateDtl("acct", value);
-        }}
-      />
-      <div style={{ width: "3%" }} />
-      <EditableCellInput
-        placeholder="Дансны нэр"
-        value={templateDtl?.acctName}
-        handleChange={(value) => {
-          handleTemplateDtl("acctName", value);
-        }}
-      />
-      <div style={{ width: "68px" }} />
-      <Check
-        checked={templateDtl.isDebit === 1}
-        // disabled={false}
-        onClick={() => {
-          templateDtl.isDebit === 0
-            ? setTemplateDtl((prev) => ({ ...prev, isDebit: 1 }))
-            : setTemplateDtl((prev) => ({ ...prev, isDebit: 0 }));
-        }}
-      />
-      <div style={{ width: "30px" }} />
-      <EditableCellInput
-        placeholder="Томьёо"
-        value={templateDtl?.formula}
-        handleChange={(value) => {
-          handleTemplateDtl("formula", value);
-        }}
-      />
-      <div style={{ width: "95px" }} />
-      <IoIosAddCircle
-        size={25}
-        color="#4BAF4F"
-        name="BsTrashFill"
-        className="ac_delete"
-        onClick={handleClick}
-      />
+    <div style={{ width: "100%" }}>
+      <CustomSelect {...selectProps} />
     </div>
+    // <div
+    //   style={{
+    //     display: "flex",
+    //     margin: "15px 0",
+    //     overflow: "scroll",
+    //     width: "930px",
+    //   }}
+    // >
+    //   <EditableCell
+    //     placeholder="Дансны дугаар"
+    //     value={templateDtl?.acct}
+    //     handleChange={(value) => {
+    //       handleTemplateDtl("acct", value);
+    //     }}
+    //   />
+    //   <div style={{ width: "3%" }} />
+    //   <EditableCellInput
+    //     placeholder="Дансны нэр"
+    //     value={templateDtl?.acctName}
+    //     handleChange={(value) => {
+    //       handleTemplateDtl("acctName", value);
+    //     }}
+    //   />
+    //   <div style={{ width: "68px" }} />
+    //   <Check
+    //     checked={templateDtl.isDebit === 1}
+    //     onClick={() => {
+    //       templateDtl.isDebit === 0
+    //         ? setTemplateDtl((prev) => ({ ...prev, isDebit: 1 }))
+    //         : setTemplateDtl((prev) => ({ ...prev, isDebit: 0 }));
+    //     }}
+    //   />
+    //   <div style={{ width: "62px" }} />
+    //   <Check
+    //     checked={templateDtl.isDebit === 0}
+    //     onClick={() => {
+    //       templateDtl.isDebit === 0
+    //         ? setTemplateDtl((prev) => ({ ...prev, isDebit: 1 }))
+    //         : setTemplateDtl((prev) => ({ ...prev, isDebit: 0 }));
+    //     }}
+    //   />
+    //   <div style={{ width: "30px" }} />
+    //   <EditableCellInput
+    //     placeholder="Томьёо"
+    //     value={templateDtl?.formula}
+    //     handleChange={(value) => {
+    //       handleTemplateDtl("formula", value);
+    //     }}
+    //   />
+    //   <div style={{ width: "100px" }} />
+    //   <IoIosAddCircle
+    //     size={25}
+    //     color="#4BAF4F"
+    //     name="BsTrashFill"
+    //     className="ac_delete"
+    //     onClick={handleClick}
+    //   />
+    // </div>
   );
 };

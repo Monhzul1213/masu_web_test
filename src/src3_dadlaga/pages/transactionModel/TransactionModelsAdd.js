@@ -137,6 +137,12 @@ export function TransactionModelsAdd() {
 
   const onClickSave = async (status, rowStatus) => {
     let data = validateData(status, rowStatus);
+    const message =
+      rowStatus === "I"
+        ? t("transModel.add_success")
+        : rowStatus === "U"
+        ? t("transModel.edit_success")
+        : t("transModel.delete_success");
     if (data) {
       onLoad();
       const response = await dispatch(
@@ -147,7 +153,7 @@ export function TransactionModelsAdd() {
         setOpen(true);
         setSites(response?.data);
       } else if (response?.error) onError(response?.error, true);
-      else onSuccess(t("transModel.add_success"));
+      else onSuccess(message);
     }
   };
 
@@ -191,6 +197,46 @@ export function TransactionModelsAdd() {
     if (sure) setVisible(true);
   };
 
+  const handleFormula = (value, index) => {
+    setDetail((prevArr) => {
+      const newArr = [...prevArr];
+      newArr[index] = { ...newArr[index], formula: value };
+      return newArr;
+    });
+  };
+  const handleCheck = (value, index) => {
+    setDetail((prevArr) => {
+      const newArr = [...prevArr];
+      newArr[index] = { ...newArr[index], isDebit: value };
+      return newArr;
+    });
+  };
+  const debateValidation = (status, rowStatus) => {
+    if (detail.length > 0) {
+      let isDebit = false;
+      let isCredit = false;
+      detail.forEach((item) => {
+        if (item.isDebit === 0) {
+          isCredit = true;
+        } else {
+          isDebit = true;
+        }
+      });
+      if (!isDebit) {
+        setSearch({ value: null, error: "Дэбит данс оруулна уу" });
+        return;
+      }
+      if (!isCredit) {
+        setSearch({ value: null, error: "Кредит данс оруулна уу" });
+        return;
+      }
+      if (isCredit && isDebit) {
+        setSearch({ value: null, error: null });
+        onClickSave(status, rowStatus);
+      }
+    }
+  };
+
   let mainProps = {
     templateId,
     setError,
@@ -208,6 +254,8 @@ export function TransactionModelsAdd() {
     cashPropertys,
   };
   let listProps = {
+    handleFormula,
+    handleCheck,
     detail,
     setDetail,
     search,
@@ -220,11 +268,13 @@ export function TransactionModelsAdd() {
   };
   let btnProps = {
     onClickCancel,
-    onClickSave: () => onClickSave(1, "I"),
-    onClickEdit: () => onClickSave(1, "U"),
-    onClickDelete,
+    onClickSave: () => debateValidation(1, "I"),
+    onClickEdit: () => debateValidation(1, "U"),
+    onClickDelete: () => onClickSave(1, "D"),
     updatable,
     header,
+    disabled: updatable,
+    deletable: updatable,
   };
   let subProps = {
     visible,

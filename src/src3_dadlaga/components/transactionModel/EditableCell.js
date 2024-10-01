@@ -3,16 +3,11 @@ import CurrencyInput from "react-currency-input-field";
 import InputMask from "react-input-mask";
 
 export const EditableCell = (props) => {
-  const { isText, value, disabled, placeholder, handleChange } = props;
+  const { isText, value, disabled, placeholder, handleChange, index } = props;
 
   const onChange = (e) => {
     let value = e.target.value;
-    let sanitizedValue = value.replace(/[^0-9.]/g, "");
-    let parts = sanitizedValue.split(".");
-    if (parts.length > 2) {
-      sanitizedValue = parts.shift() + "." + parts.join("");
-    }
-    handleChange(sanitizedValue);
+    handleChange(value, index);
   };
   const style = { textAlign: "left", width: 150 ? 150 - 5 : 100 };
   const qtyProps = {
@@ -38,17 +33,12 @@ export const EditableCell = (props) => {
 };
 
 export function EditableCellInput(props) {
-  const { value, handleChange, placeholder, disabled, isText, error } =
+  const { value, handleChange, placeholder, disabled, isText, error, index } =
     props;
 
   const onChange = (e) => {
-    handleChange(e.target.value);
+    handleChange(e.target.value, index);
   };
-
-  // const style = value?.error
-  //   ? { borderColor: "#e41051", color: "#e41051", margin: "0" }
-  //   : { margin: "0", backgroundColor: "transparent" };
-
   return (
     <div>
       {isText ? (

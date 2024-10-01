@@ -52,7 +52,8 @@ export function Menu(props){
       user?.merchantId === 164 ||
       user?.merchantId === 700 ||
       user?.merchantId === 724 ||
-      user?.merchantId === 999
+      user?.merchantId === 999 ||
+      user?.merchantId === 1226
     )
       setHideTime(false);
     else
@@ -156,8 +157,9 @@ export function Menu(props){
     ]),
     hideTime ? null : getItem(subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.finance")}</span>) : (t("transModel.finance")), "/finance",
     <img src={image12} alt='image12' />,[
+        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("account.title")}</span>) : (t("account.title")), "/finance/account", null, null, null, msRole?.webEditSettings !== "Y"),
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webEditSettings !== "Y"),
-        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.journal")}</span>) : (t("transModel.journal")), "/finance/journal", null, null, null,msRole?.webEditSettings !== "Y")
+        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.journal")}</span>) : (t("transModel.journal")), "/finance/journal", null, null, null,msRole?.webEditSettings !== "Y"),
     ]),
     getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
     <img src={image9} alt='image9' />, null, null, msRole?.webManageCustomer !== 'Y'),

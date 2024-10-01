@@ -16,11 +16,15 @@ import {
   TableResize,
 } from "../../../components/all";
 import { DetailAdd } from "./DetailAdd";
+import { EditableCellInput } from "./EditableCell";
 
 function Card(props) {
   const {
+    handleFormula,
+    handleCheck,
     size,
     detail,
+    search,
     setSearch,
     setEdited,
     editable,
@@ -51,21 +55,49 @@ function Card(props) {
         isBtn: true,
         width: 80,
         minWidth: 60,
-        Cell: ({ value }) => (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Check
-              onClick={() => {}}
-              checked={value === "1"}
-              disabled={!editable}
-            />
-          </div>
-        ),
+        Cell: (row) => {
+          return (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Check
+                onClick={() => {
+                  handleCheck(1, row?.row.index);
+                }}
+                checked={row?.row?.original.isDebit === 1}
+              />
+            </div>
+          );
+        },
+      },
+      {
+        Header: t("account.isCredit"),
+        accessor: "isDebit2",
+        isBtn: true,
+        width: 80,
+        minWidth: 60,
+        Cell: ({ row }) => {
+          return (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Check
+                onClick={() => {
+                  handleCheck(0, row?.index);
+                }}
+                checked={row.original.isDebit === 0}
+              />
+            </div>
+          );
+        },
       },
       {
         Header: t("transModel.formula"),
@@ -73,6 +105,21 @@ function Card(props) {
         isBtn: true,
         width: 250,
         minWidth: 190,
+        Cell: ({ row }) => {
+          return (
+            <>
+              {row?.original?.isNew ? (
+                <EditableCellInput
+                  value={row.values.formula}
+                  index={row?.index}
+                  handleChange={handleFormula}
+                />
+              ) : (
+                row?.values?.formula
+              )}
+            </>
+          );
+        },
       },
     ];
     if (editable)
@@ -138,7 +185,8 @@ function Card(props) {
     useResizeColumns
   );
   const tableProps = { tableInstance };
-  const maxHeight =  "calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))";
+  const maxHeight =
+    "calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))";
   const id = size?.width > 780 ? "ih_large" : "ih_small";
 
   return (
@@ -148,11 +196,20 @@ function Card(props) {
       </div>
       <div
         id="paging"
-        className="table_scroll"
+        // className="table_scroll"
         style={{ overflowY: "scroll", maxHeight }}
       >
         <TableResize {...tableProps} />
-        {editable ? <DetailAdd addDetail={addDetail} /> : ""}
+        {editable ? (
+          <DetailAdd
+            addDetail={addDetail}
+            detail={detail}
+            search={search}
+            setSearch={setSearch}
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
