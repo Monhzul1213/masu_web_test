@@ -48,7 +48,7 @@ export function ItemSelect(props){
 
   const onSelect = value => {
     let acct = items[value?.value];
-    let exists = data?.findIndex(d => d.accountID === acct?.accountId);
+    let exists = data?.findIndex(d => d.acct === acct?.acct);
     if(exists === -1){
       let item = newItem(acct);
       setData(old => [...old, item]);

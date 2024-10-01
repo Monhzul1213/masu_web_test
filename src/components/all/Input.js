@@ -8,7 +8,7 @@ import { DynamicAIIcon, DynamicMDIcon } from './DynamicIcon';
 
 export function Input(props){
   const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, mask, maskChar, inRow,
-    length, noBlur, className, classBack } = props;
+    length, noBlur, className, classBack, inRow1 } = props;
   const { t } = useTranslation();
 
   const onChange = e => {
@@ -45,7 +45,7 @@ export function Input(props){
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
   return (
-    <div style={inRow ? { flex: 1 } : {}}>
+    <div style={inRow ? inRow1 ? {flex: 1,  maxWidth: 300 } : {flex: 1} : {}}>
       <div className={classBack ?? 'select_back'} style={backStyle}>
         {label && <p className='select_lbl' style={style}>{label}</p>}
         <InputMask

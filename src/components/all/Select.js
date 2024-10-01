@@ -8,7 +8,7 @@ const { Option } = AntSelect;
 
 export function Select(props){
   const { value, setValue, label, placeholder, data, setError, setEdited, s_value, s_descr, mode, inRow, onFocus,
-    loading, disabled, id } = props;
+    loading, disabled, id, inRow1 } = props;
   const { t } = useTranslation();
   
   let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
@@ -27,7 +27,7 @@ export function Select(props){
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
 
   return (
-    <div style={inRow ? { flex: 1 } : {}}>
+    <div style={inRow ? inRow1 ? {flex: 1,  maxWidth: 300 } : {flex: 1} : {}}>
       <div className='select_back' style={backStyle} id={id}>
         <p className='select_lbl' style={style}>{label}</p>
         <AntSelect
@@ -268,11 +268,11 @@ export function InvtSelect(props){
 }
 
 export function GroupSelect(props){
-  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, label, onFocus, loading, isIndex, classLabel, bStyle, dropdownStyle, dropdownAlign } = props;
+  const { value, setValue, placeholder, data,className, classBack, label, onFocus, loading, classLabel, bStyle, dropdownStyle, dropdownAlign } = props;
   
-  const renderItem = (item, index) => {
-    return (<Option disabled={item?.disabled} key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
-  }
+  // const renderItem = (item, index) => {
+  //   return (<Option disabled={item?.disabled} key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  // }
 
   return (
     <div className={classBack} style={bStyle}>

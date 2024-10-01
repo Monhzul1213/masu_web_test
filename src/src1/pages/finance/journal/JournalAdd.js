@@ -24,10 +24,7 @@ export function JournalAdd() {
   // const [updatable, setUpdatable] = useState(false);
   const [visible, setVisible] = useState(false);
   const [open, setOpen] = useState(false);
-  const [searchParams] = useSearchParams();
-  const { user, token } = useSelector((state) => state.login);
-  const [journalId, setJournalId] = useState();
-  const [price, setPrice] = useState({ value: '' });
+  const [price, setPrice] = useState({ value: 0 });
   const [descr,  setDescr] = useState({ value: '' });
   const [source, setSource] = useState({ value: '' });
   const [customer, setCustomer] = useState();
@@ -35,6 +32,8 @@ export function JournalAdd() {
   const [status, setStatus] = useState({ value: 0 });
   const [date, setDate] = useState({ value: moment() });
 
+  const [searchParams] = useSearchParams();
+  const { user, token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -57,13 +56,11 @@ export function JournalAdd() {
     if (journalId) {
       onLoad();
       const response = await dispatch(getList(user, token, "Txn/GetJournal?JournalID=" + journalId));
-      console.log(response);
       if(response?.error) onError(response?.error, false);
       else {
         let header = response?.data?.journal && response?.data?.journal[0];
         setHeader(header);
         // setEditable(header?.status !== 1);
-        setJournalId({ value: header?.journalId });
         setDate ({ value: moment(header?.txnDate, 'yyyy.MM.DD') })
         setPrice({ value: header?.totalAmt });
         setDescr({ value: header?.descr });
@@ -102,7 +99,6 @@ export function JournalAdd() {
   const onClickSave = async () => {
     let data = validateData();
     if (data) {
-      console.log(data);
       onLoad();
       const response = await dispatch( sendRequest(user, token, "Txn/ModJournal", data));
       if (response?.code === 1001) {
@@ -152,7 +148,7 @@ export function JournalAdd() {
     if (sure) setVisible(true);
   };
 
-  let mainProps = { setError, setEdited, journalId, setJournalId, price, setPrice, loading, setLoading, setDetail,
+  let mainProps = { setError, setEdited, price, setPrice, loading, setLoading, setDetail,
       descr,  setDescr, source, setSource, setCustomer , customer, template, setTemplate, status, setStatus, date, setDate };
   let listProps = { detail, setDetail, search, setSearch, setEdited, setDItems, onClickDelete, setPrice};
   let btnProps = { onClickCancel, onClickSave, onClickDelete, header};

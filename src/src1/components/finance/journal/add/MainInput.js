@@ -9,7 +9,7 @@ import { getList } from "../../../../../services";
 
 export function MainInput(props) {
   const { setError, setEdited, price, setPrice, descr,  setDescr, source, setSource, setCustomer , customer,
-          setJournalId, journalId, date, setDate, template, setTemplate, setLoading, status, setStatus, setDetail } = props;
+          date, setDate, template, setTemplate, setLoading, status, setStatus, setDetail } = props;
   const [states, setStates] = useState([{ value: 0, label: "Үүсгэсэн" }]);
   const [templates, setTemplates] = useState([]);
   const [custs, setCusts] = useState([]);
@@ -71,15 +71,15 @@ export function MainInput(props) {
     if(response?.error) setError(response?.error)
     else {
       response?.data?.templateitem?.forEach(item=> {
-        item.acctCode = item?.acct
-        item.itemDescr = item?.itemDescr ?? ''
+        // item.acct = item?.acct
+        item.itemDescr = item?.itemDescr ?? ""
+        item.crAmt = item?.crAmt ?? 0
+        item.drAmt = item?.drAmt ?? 0
       })
       setDetail(response?.data?.templateitem)
     } 
   };
 
-  const idProps = { value: journalId , setValue: setJournalId, label: t("transModel.number"), 
-                    placeholder: t("transModel.number"), disabled: true, inRow: true};
   const descrProps = { value: descr, setValue: setDescr, label: t("shop.descr"), placeholder: t("shop.descr"), 
                        setEdited, setError, length: 100, inRow: true};
   const backProps = { className: "ps_back_btn", text: t("journal.backButton"), icon: <MdChevronLeft className="ps_back_icon" />, 
@@ -89,11 +89,11 @@ export function MainInput(props) {
   const totalProps = { value: price, setValue: setPrice, label: t('discount.amount'), placeholder: t('discount.amount'), 
                        setEdited, setError, inRow: true };
   const sourceProps = { value: source, setValue: setSource, label: t('manage.t_no'), placeholder: t('manage.t_no'), 
-                        setError, setEdited, inRow: true, disabled: true};
+                        setError, setEdited, inRow: true, disabled: true, inRow1: true};
   const custProps = { value: customer, setValue: setCustomer, data: custs, s_value: "custId", s_descr: "custName", 
                       label: t("customer.title"), placeholder: t("customer.title"), onFocus: onFocusCust, inRow: true };
   const statusProps = { value: status, setValue: setStatus, data: states, s_value: "value", s_descr: "label", 
-                      label: t("order.status"), placeholder: t("order.status"), onFocus: onFocusStatus, inRow: true };
+                      label: t("order.status"), placeholder: t("order.status"), onFocus: onFocusStatus, inRow: true, inRow1: true };
   const templateProps = { value: template, setValue: onChangeTemplate, data: templates, s_value: "templateId", s_descr: "templateName", 
                           label: t("transModel.title"), placeholder: t("transModel.title"), onFocus: onFocusTemplate, inRow: true };
 
@@ -104,24 +104,21 @@ export function MainInput(props) {
       </div>
       <div className="ad_main">
         <div className='ad_row'>
-          <Input {...idProps}/>
-          <div className='gap' />
           <div style={{marginTop: 0, flex: 1}}><Date {...dateProps} /></div>
-        </div>
-        <div className='ad_row' style={{ marginTop: "10px" }}>
-          <MoneyInput {...totalProps}/>
           <div className='gap' />
-          <DescrInput {...descrProps}/>
-        </div>
-        <div className='ad_row' style={{ marginTop: "10px" }}>
-          <Input {...sourceProps}/>
+          <MoneyInput {...totalProps}/>
           <div className='gap' />
           <Select {...custProps}/>
         </div>
         <div className='ad_row' style={{ marginTop: "10px" }}>
           <Select {...statusProps}/>
           <div className='gap' />
+          <DescrInput {...descrProps}/>
+        </div>
+        <div className='ad_row' style={{ marginTop: "10px" }}>
           <Select {...templateProps}/>
+          <div className='gap' />
+          <Input {...sourceProps}/>
         </div>
       </div>
     </div>

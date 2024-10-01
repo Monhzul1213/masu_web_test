@@ -13,7 +13,7 @@ function Card(props) {
   const [columns, setColumns] = useState([]);
   useEffect(() => {
     let columns = [
-      { Header: t("journal.acctCode"), accessor: "acctCode", width: 180, minWidth: 150 },
+      { Header: t("journal.acctCode"), accessor: "acct", width: 180, minWidth: 150 },
       { Header: t("transModel.acctName"), accessor: "acctName", isText: true, width: 200, minWidth: 180},
       { Header: t("journal.debit"), accessor: "drAmt", isBtn: true, width: 150, minWidth: 100,
         Cell: props => <EditableCellQty {...props} />, isMoney: true},
@@ -68,7 +68,7 @@ function Card(props) {
   }
 
   const newItem = acct => {
-    return { accountID: acct?.accountId, drAmt: acct?.drAmt, crAmt: acct?.crAmt, acctCode: acct?.acctCode, acctName: acct?.acctName, 
+    return { accountID: acct?.accountId, acct: acct?.acct, drAmt: acct?.drAmt ?? 0, crAmt: acct?.crAmt ?? 0, acctCode: acct?.acctCode, acctName: acct?.acctName, 
       isDebit: acct?.isDebit, status: acct?.status, currency: acct?.currency, itemDescr: acct?.itemDescr ?? '', rowStatus: 'I'};
   }
 
@@ -101,7 +101,7 @@ function Card(props) {
       </div>
       <div
         id="paging"
-        className="table_scroll"
+        // className="table_scroll"
         style={{ overflowY: "scroll", maxHeight }}
       >
         <TableResize {...tableProps} />

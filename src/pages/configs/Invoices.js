@@ -35,10 +35,10 @@ function Card(props){
       setHasData(response?.data?.empSubscriptions?.length || response?.data?.siteSubscriptions?.length);
       setHasData1(response?.data?.empSubscriptions?.length ? true : false);
       setHasData2(response?.data?.subscriptions?.length ? true : false);
-      setHasData3(response?.data?.subscriptions?.length ? true : false);
+      setHasData3(response?.data?.custSubscriptions?.length ? true : false);
       setData1(response?.data?.empSubscriptions);
       setData2(response?.data?.subscriptions);
-      setData3(response?.data?.subscriptions);
+      setData3(response?.data?.custSubscriptions);
     }
     setLoading(false);
   }
