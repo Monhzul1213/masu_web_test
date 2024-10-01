@@ -55,7 +55,7 @@ function Card(props){
           <div className='card_scroll'>
             {hasData2 && <SiteList data={data2} hasData={hasData1} {...listProps} />}
             {hasData1 && <EmpList data={data1} hasData={hasData2} {...listProps} />}
-            {hasData3 && <ZoneList data={data3} hasData={hasData3} {...listProps} />}
+            {/* {hasData3 && <ZoneList data={data3} hasData={hasData3} {...listProps} />} */}
           </div>
         : <div style={{ width }}><Empty1 {...emptyProps} /></div>}
       </Overlay>
