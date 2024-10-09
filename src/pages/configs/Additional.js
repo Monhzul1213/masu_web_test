@@ -7,11 +7,13 @@ import moment from 'moment';
 import { sendRequest, getList } from '../../services';
 import { Overlay, ButtonRow, Error1, Prompt } from '../../components/all';
 import { Item } from '../../components/config/add';
+import { Subscription } from '../../components/management/adjust/list';
 
 export function Additional(){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [error, setError] = useState(null);
   const [checked, setChecked] = useState({});
   const [config, setConfig] = useState(null);
@@ -25,7 +27,7 @@ export function Additional(){
     { title: t('add_menu.time1'), sub_title: t('add_menu.time2'), checked: checked['time'], label: 'time', disabled },
     { title: t('add_menu.kitchen1'), sub_title: t('add_menu.kitchen2'), checked: checked['kitchen'], label: 'kitchen' },
     { title: t('add_menu.user1'), sub_title: t('add_menu.user2'), checked: checked['user'], label: 'user', disabled },
-    { title: t('add_menu.meal1'), sub_title: t('add_menu.meal2'), checked: checked['meal'], label: 'meal', disabled },
+    { title: t('add_menu.meal1'), sub_title: t('add_menu.meal2'), checked: checked['meal'], label: 'meal' },
     { title: t('add_menu.balance1'), sub_title: t('add_menu.balance2'), checked: checked['balance'], label: 'balance', disabled },
     { title: t('add_menu.info1'), sub_title: t('add_menu.info2'), checked: checked['info'], label: 'info', disabled },
     { title: t('add_menu.barcode1'), sub_title: t('add_menu.barcode2'), checked: checked['barcode'], label: 'barcode', disabled },
@@ -91,7 +93,13 @@ export function Additional(){
     }
     const response = await dispatch(sendRequest(user, token, 'Merchant/Setconfig', data));
     setLoading(false);
-    if(response?.error) setError(response?.error);
+    if(response?.code === 1000){
+      // comment
+      // isNew or isExpired
+      // || response?.code === 1001
+      setVisible(true);
+    }
+    else if(response?.error) setError(response?.error);
     else {
       setEdited(false);
       message.success(t('add_menu.success_msg'));
@@ -104,10 +112,16 @@ export function Additional(){
     return (<Item {...itemProps} />);
   }
 
+  const onDone = () => {
+    setVisible(false);
+  };
+
   const btnProps = { onClickCancel, onClickSave };
+  const subProps = { visible, setVisible, onDone };
 
   return (
     <div>
+      {visible && <Subscription {...subProps}/> }
       {error && <Error1 error={error} />}
       <Prompt edited={edited} />
       <Overlay className='co_tab' loading={loading}>

@@ -10,6 +10,7 @@ function Card(props){
   const { size } = props;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [hide, setHide] = useState(false);
   const [hasData, setHasData] = useState(false);
   const [hasData1, setHasData1] = useState(false);
   const [hasData2, setHasData2] = useState(false);
@@ -21,6 +22,26 @@ function Card(props){
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (
+      user?.merchantId === 66 ||
+      user?.merchantId === 135 ||
+      user?.merchantId === 383 ||
+      user?.merchantId === 631 ||
+      user?.merchantId === 270 ||
+      user?.merchantId === 164 ||
+      user?.merchantId === 700 ||
+      user?.merchantId === 724 ||
+      user?.merchantId === 999 ||
+      user?.merchantId === 1226
+    )
+      setHide(false);
+    else
+      setHide(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -30,6 +51,7 @@ function Card(props){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Merchant/GetSubScriptionInfo'));
+    console.log(response);
     if(response?.error) setError(response?.error);
     else {
       setHasData(response?.data?.empSubscriptions?.length || response?.data?.siteSubscriptions?.length);
@@ -55,7 +77,7 @@ function Card(props){
           <div className='card_scroll'>
             {hasData2 && <SiteList data={data2} hasData={hasData1} {...listProps} />}
             {hasData1 && <EmpList data={data1} hasData={hasData2} {...listProps} />}
-            {/* {hasData3 && <ZoneList data={data3} hasData={hasData3} {...listProps} />} */}
+            {hide ? null : hasData3 && <ZoneList data={data3} hasData={hasData3} {...listProps} />}
           </div>
         : <div style={{ width }}><Empty1 {...emptyProps} /></div>}
       </Overlay>

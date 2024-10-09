@@ -62,7 +62,7 @@ function Screen(props){
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      response?.data?.map(item => {
+      response?.data?.forEach(item => {
         item.name = item?.siteName
       })
       setSiteData(response?.data);
@@ -163,7 +163,7 @@ function Screen(props){
   const validateData = () => {
     let length = sites?.length;
     let branchs = false, subBranchs = false;
-    sites?.map(item => {
+    sites?.forEach(item => {
       if(item?.checked) {
         branchs = item?.branchCode === null;
         subBranchs = item?.subBranchCode === null;
@@ -173,7 +173,7 @@ function Screen(props){
     if(regNo?.value && name?.value && length && !branchs && !subBranchs){
       // let items = sites?.filter(item => item.rowStatus === 'D');
       let vatRequestTerminalItem = [];
-      sites?.map(item => {
+      sites?.forEach(item => {
         if(item?.checked){
           vatRequestTerminalItem.push({
               siteID: item?.siteId ?? item?.siteID, rowStatus: 'I',

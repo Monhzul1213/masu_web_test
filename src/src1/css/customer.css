@@ -281,6 +281,17 @@
   border-radius: var(--radius);
   top: 20px;
 }
+.rp_list_search_back1 {
+  position: absolute;
+  box-shadow: 0 2px 5px rgba(0,0,0,.15);
+  background-color: var(--root-color);
+  right: 0;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  border-radius: var(--radius);
+  top: 10px;
+}
 .sub_row {
   /* width: 230px;   */
   display: flex;
@@ -328,6 +339,10 @@
 
 .sub_title{
   margin: 10px 0 0 10px;
+}
+#ih_small .rp_list_filter_zz{
+  display: flex;
+  flex-flow: column;
 }
 .rp_list_filter_zz {
   display: flex;

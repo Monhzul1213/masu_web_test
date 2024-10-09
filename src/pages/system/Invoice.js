@@ -39,7 +39,7 @@ export function Invoice(){
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     else {
-      response?.data?.forEach(item => {
+      response?.data?.invoice?.forEach(item => {
         if(item?.status === 1) item.row_color = '#effd5f';
         else if(item?.status === 2) item.row_color = '#6ad6f7';
         else if(item?.status === 3) item.row_color = '#69db91';
@@ -47,7 +47,7 @@ export function Invoice(){
         else item.row_color = '#ffffff';
         item.label1 = (item.descr ?? '') + '-' + (item.empName ?? '') + '-' + (item.phone ?? '');
       });
-      setData(response?.data);
+      setData(response?.data?.invoice);
     }
     if(dates) setExcelName(t('header./system/invoice') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
     setLoading(false);

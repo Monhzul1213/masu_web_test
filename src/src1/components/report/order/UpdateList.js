@@ -31,7 +31,7 @@ export function UpdateList(props){
     ])
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language, + data?.length]);
+  }, [i18n?.language, data?.length]);
 
   const updateData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();

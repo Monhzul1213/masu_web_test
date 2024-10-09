@@ -20,16 +20,20 @@ export function ZoneList(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('invoices.zone'), accessor: 'empName' },
-      { Header: t('invoices.location'), accessor: 'invoiceNo' },
+      { Header: t('invoices.zone'), accessor: 'zoneID' },
+      { Header: t('invoices.location'), accessor: '' },
+      { Header: t('invoices.qty'), accessor: 'qty' },
       {
         Header: <div style={{textAlign: 'right'}}>{t('invoices.amt')}</div>, accessor: 'amount', customStyle: { width: 100 },
         Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={15} /></div>)
       },
-      { Header: t('invoices.qty'), accessor: 'qty' },
-      { Header: t('invoices.invoice'), accessor: 'statusName' },
+      { Header: t('invoices.invoice'), accessor: 'invoiceNo' },
       {
-        Header: t('invoices.date'), accessor: 'beginDate', customStyle: { minWidth: 110 },
+        Header: t('invoices.begin'), accessor: 'beginDate', customStyle: { minWidth: 110 },
+        Cell: ({ value }) => value ? (<div>{moment(value).format('yyyy.MM.DD')}</div>) : ''
+      },
+      {
+        Header: t('invoices.end'), accessor: 'endDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => value ? (<div>{moment(value).format('yyyy.MM.DD')}</div>) : ''
       },
       {

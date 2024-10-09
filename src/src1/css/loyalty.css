@@ -2,6 +2,11 @@
     width: 180px;
     margin: 0 15px;
 }
+
+.cou_select_back1{
+    width: 180px;
+    margin: 0 10px;
+}
 #co_btn{
     max-width: 700px;
 }

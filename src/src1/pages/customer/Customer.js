@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import { Empty, Overlay, Error1 , Confirm, Empty1 } from '../../components/all/all_m';
+import { Empty, Overlay, Error1 , Confirm } from '../../components/all/all_m';
 import { Add, List } from '../../components/customer';
 import { getList , getServiceBar, sendRequest } from '../../../services';
 import '../../css/customer.css'
@@ -57,13 +57,14 @@ export function Customer(props){
     setLoading(false);
   }
 
-  const getData = async (name) => {
-    setFilter(name);
+  const getData = async (query) => {
+    setFilter(query);
     setError(null);
     setLoading(true);
     let headers = {CustID: -1};
-    let response = name
-      ? await dispatch(getList(user, token, 'Site/GetCustomer/' + name ))
+    let api = 'Site/GetCustomer/Filter' + query ?? '';
+    let response = query
+      ? await dispatch(getList(user, token, api ))
       : await dispatch(getList(user, token, 'Site/GetCustomer',null,  headers));
     if(response?.code === 1000){
       // comment
@@ -71,20 +72,37 @@ export function Customer(props){
       // || response?.code === 1001
       setVisible1(true);
     }
-    response?.data?.customers?.forEach(item => {
-      branch?.forEach(li => {
-        if(li?.branchCode?.includes(item?.branchCode)){
-          item.branchName = li?.branchName
-        }
-      })
-      allBranch?.forEach(li => {
-        if(li?.branchCode?.includes(item?.branchCode)){
-          if(li?.subBranchCode === item?.subBranchCode ){
-            item.subBranchName = li?.subBranchName
+    if(query){
+      response?.data?.forEach(item => {
+        branch?.forEach(li => {
+          if(li?.branchCode?.includes(item?.branchCode)){
+            item.branchName = li?.branchName
           }
-        }
+        })
+        allBranch?.forEach(li => {
+          if(li?.branchCode?.includes(item?.branchCode)){
+            if(li?.subBranchCode === item?.subBranchCode ){
+              item.subBranchName = li?.subBranchName
+            }
+          }
+        })
       })
-    })
+    } else {
+      response?.data?.customers?.forEach(item => {
+        branch?.forEach(li => {
+          if(li?.branchCode?.includes(item?.branchCode)){
+            item.branchName = li?.branchName
+          }
+        })
+        allBranch?.forEach(li => {
+          if(li?.branchCode?.includes(item?.branchCode)){
+            if(li?.subBranchCode === item?.subBranchCode ){
+              item.subBranchName = li?.subBranchName
+            }
+          }
+        })
+      })
+    }
     if(response?.error) setError(response?.error);
     else {
       setData(response?.data?.customers ?? response?.data)
@@ -94,7 +112,7 @@ export function Customer(props){
     setLoading(false);
     setShow(false)
     setChecked(false)
-    setFiltering(name ? true : false);
+    setFiltering(query ? true : false);
   }
 
   const onClickDelete = () => setOpen(true);
@@ -153,7 +171,7 @@ export function Customer(props){
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <SizeMe>{({ size }) => 
             <div className='i_list_cont_z' id='solve_list'>
-              {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
+              <List {...listProps} size={size} />
             </div>}
           </SizeMe>
         }      

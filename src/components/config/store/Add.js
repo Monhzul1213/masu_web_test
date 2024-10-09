@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteRequest, getList, sendRequest } from '../../../services'
-import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select, IconInput, UploadImage } from '../../all';
+import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select, IconInput, UploadImage, CheckBox } from '../../all';
 import { cityList, districtList, urlToFile } from '../../../helpers';
 import { Location } from './Location';
 import mime from 'mime';
@@ -28,6 +28,8 @@ export function Add(props){
   const [select, setSelect] = useState(false);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
+  const [checked, setChecked] = useState(false);
+  const [useDiningOption, setUseDiningOption] = useState(false);
   const [image, setImage] = useState(null);
   const [image64, setImage64] = useState('');
   const [imageType, setImageType] = useState('');
@@ -41,6 +43,12 @@ export function Add(props){
   const dispatch = useDispatch();
 
   useEffect(() => {
+    getConfig();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if(selected){
       setName({ value: selected?.name ?? '' });
       setAddress({ value: selected?.address ?? '' });
@@ -50,12 +58,18 @@ export function Add(props){
       setLng(selected?.longitudes ? selected?.longitudes : 106.91007001230763 );
       setLocation({ value : selected?.latitudes ? selected?.latitudes + '\n' + selected?.longitudes : ''})
       setSubDescr({ value: selected?.subDescr ? selected?.subDescr : null });
+      setChecked(selected?.useKds === 'Y')
       setList(districtList?.filter(item => item?.parent?.includes(selected?.descr)));
       getImages(selected?.siteId)
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getConfig = async () => {
+    const response = await dispatch(getList(user, token, 'Merchant/GetConfig'));
+    setUseDiningOption(response?.data?.useDiningOption === 'Y')
+  }
 
   const getImages = async SiteID => {
     const response = await dispatch(getList(user, token, 'Site/GetSitePics?SiteID=' + SiteID));
@@ -129,7 +143,7 @@ export function Add(props){
       let districtCode = cityList?.filter(ct => ct.value === descr?.value)[0]?.districtCode;
       setLoading(true);
       let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
-        subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng, sitePictures };
+        subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng, sitePictures, useKds: checked ? 'Y' : 'N' };
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
@@ -233,6 +247,7 @@ export function Add(props){
   const imageProps = { image, setImage, setImage64, setImageType, setError, className: 'im_image' };
   const image1Props = { image: image1, setImage: setImage1, setImage64: setImage164, setImageType: setImageType1, setError, className: 'im_image' };
   const image2Props = { image: image2, setImage: setImage2, setImage64: setImage264, setImageType: setImageType2, setError, className: 'im_image' };
+  const checkProps = { checked, setChecked, label: 'shop.checked'};
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
@@ -249,6 +264,7 @@ export function Add(props){
               <Input {...addrProps} />
               <IconInput {...locProps} />
               <Input {...phoneProps} />
+              {useDiningOption && <CheckBox {...checkProps} />}
               {user?.useAppointment && <div>
                 <p className='image_lbl'>{t('shop.image')}</p>
                 <div className='store_image_back'>

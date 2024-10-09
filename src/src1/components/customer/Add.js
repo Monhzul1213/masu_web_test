@@ -10,7 +10,7 @@ import { IconInput, Input, Select } from '../../../components/all';
 import { Location } from '../../../components/config/store/Location';
 
 export function Add(props){
-  const { visible, selected, closeModal, onSearch, filter, getBranchs, branch, allBranch} = props;
+  const { visible, selected, closeModal, onSearch, filter, branch, allBranch} = props;
   const { t } = useTranslation();
   const [custName, setCustName] = useState({ value: '' });
   const [address, setAddress] = useState({ value: '' });
@@ -34,12 +34,6 @@ export function Add(props){
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
-
-  useEffect(() => {
-    getBranchs();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if(selected){
@@ -197,7 +191,7 @@ export function Add(props){
   const cityProps = { value: descr, setValue: onChangeDescr, label: t('shop.city'), placeholder: t('shop.location1'), setError,
   data: branch, s_value : 'branchCode', s_descr :'branchName', };
   const districtProps = { value: subDescr, setValue: setSubDescr, label: t('shop.district'), placeholder: t('shop.location1'), setError,
-    data: subBranch, s_value : 'subBranchCode', s_descr :'subBranchName', onFocus: getBranchs };
+    data: subBranch, s_value : 'subBranchCode', s_descr :'subBranchName' };
   const locProps = { value: location, setValue: setLocation, label: t('tax.location'), placeholder: t('tax.location'), setError, length: 250, 
     onClick: onClickLocation, disabled: true, className: 'store_descr' };
   const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, descr1, descr2, city };
