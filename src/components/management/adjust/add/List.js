@@ -71,7 +71,7 @@ function Card(props){
       if(index === rowIndex){
         let itemType = columnId === 'itemType' ? value : old[rowIndex]?.itemType;
         let qty = columnId === 'qty' ? parseFloat(value ? value : 0) : old[rowIndex]?.qty;
-        let leftQty = old[rowIndex]?.itemType === 'RC' ? add(qty, old[rowIndex]?.siteQty) : add(old[rowIndex]?.siteQty, qty, true);
+        let leftQty = columnId === 'itemType' ? old[rowIndex]?.itemType === 'II' ? add(qty, old[rowIndex]?.siteQty) : add(old[rowIndex]?.siteQty, qty, true): old[rowIndex]?.itemType === 'RC' ? add(qty, old[rowIndex]?.siteQty) : add(old[rowIndex]?.siteQty, qty, true);
         let cost = columnId === 'itemType' ? old[rowIndex]?.origCost : columnId === 'cost' ? parseFloat(value ? value : 0) : old[rowIndex]?.cost;
         let totalCost = divide(qty, cost, true);
         return { ...old[rowIndex], itemType, qty, leftQty, cost, totalCost, amount: qty, totalAmount: totalCost };

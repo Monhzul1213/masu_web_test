@@ -15,6 +15,7 @@ function Screen(props){
   const { size } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [orgData, setOrgData] = useState([]);
   const [error, setError] = useState(null);
   const [periodData, setPeriodData] = useState(t('report_review.periods'));
   const [date, setDate] = useState([]);
@@ -61,24 +62,38 @@ function Screen(props){
     return newPeriod;
   }
 
-  const getTop = data => {
+  const getTop = (data, filter) => {
     let top = [];
     data?.forEach(item => {
-      let index = top.findIndex(t => t.invtID === item.invtID);
-      if(index === -1) top.push(item);
-      else {
-        top[index].qty += item.qty;
-        top[index].returnQty += item.returnQty;
-        top[index].totalDiscAmt += item.totalDiscAmt;
-        top[index].totalNetSalesAmt += item.totalNetSalesAmt;
-        top[index].totalProfitAmt += item.totalProfitAmt;
-        top[index].totalReturnAmt += item.totalReturnAmt;
-        top[index].totalSalesAmt += item.totalSalesAmt;
-        top[index].totalCost += item.totalCost;
-        top[index].totalVatAmt += item.totalVatAmt;
+      if(filter?.siteID){
+        let index = top.findIndex(t => t.siteID === item.siteID && t.invtID === item.invtID );
+        if(index === -1) top.push(item);
       }
+      if(filter?.custID){
+        let index = top.findIndex(t => t.custID === item.custID && t.invtID === item.invtID );
+        if(index === -1) top.push(item);
+      }
+      else if(filter?.salesDateFull){
+        let index = top.findIndex(t => t.salesDateFull === item.salesDateFull && t.invtID === item.invtID );
+        if(index === -1) top.push(item);
+      }
+      else {
+        let index = top.findIndex(t => t.invtID === item.invtID);
+        if(index === -1) top.push(item);
+      }
+      // else {
+      //   top[index].qty += item.qty;
+      //   top[index].returnQty += item.returnQty;
+      //   top[index].totalDiscAmt += item.totalDiscAmt;
+      //   top[index].totalNetSalesAmt += item.totalNetSalesAmt;
+      //   top[index].totalProfitAmt += item.totalProfitAmt;
+      //   top[index].totalReturnAmt += item.totalReturnAmt;
+      //   top[index].totalSalesAmt += item.totalSalesAmt;
+      //   top[index].totalCost += item.totalCost;
+      //   top[index].totalVatAmt += item.totalVatAmt;
+      // }
     });
-    setData(top);
+    setOrgData(top);
     let topData = top?.sort((a, b) => b.totalNetSalesAmt - a.totalNetSalesAmt)?.slice(0, 5);
     setTop(topData);
     return topData;
@@ -151,6 +166,7 @@ function Screen(props){
     const response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     else {
+      setData(response?.data)
       let top = getTop(response?.data);
       let graph = getGraph(response?.data, top, period1);
       setGraph(graph?.length ? formatData(graph, period1, dates ?? date) : []);
@@ -168,7 +184,7 @@ function Screen(props){
   let card_id = size?.width >= 800 ? 'ri_large' : 'ri_small';
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineViewColumn' };
   let graphProps = {  bar: top, data: graph, size, period, setPeriod: changePeriod, periodData }
-  let listProps = { data, size, excelName, filter, getData, date };
+  let listProps = { data: orgData, size, excelName, filter, getData, date, getTop, data1: data };
 
   return (
     <div className='s_container_r'>

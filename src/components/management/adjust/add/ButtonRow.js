@@ -20,7 +20,7 @@ export function ButtonRow(props){
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
 
   return (
-    <div className='invt_btn_row' id='po_btns'>
+    <div className='invt_btn_row' id='po_btns1'>
       {open && <Confirm {...confirmProps} />}
       {deletable && <DynamicBSIcon className='a_btn_delete' name='BsTrash' onClick={onDelete} />}
       <Button className='invt_btn' text={t(disabled ? 'login.back' : 'page.cancel')} onClick={onClickCancel} />

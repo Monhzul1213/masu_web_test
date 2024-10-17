@@ -5,9 +5,10 @@ import { useTable, usePagination, useSortBy, useBlockLayout, useResizeColumns } 
 import '../../../css/report.css';
 import { PaginationTable, TableResize, Money } from '../../all';
 import { Header } from './Header';
+import moment from 'moment';
 
 export function List(props){
-  const { data, excelName, filter, size, getData, date } = props;
+  const { data, excelName, filter, size, getData, date, getTop, data1 } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [columns1, setColumns1] = useState([]);
@@ -22,6 +23,8 @@ export function List(props){
   const changeColumns = value => {
     let columns = [{ Header: t('report.t_item'), accessor: 'invtName', exLabel: t('report.t_item'), width: 140, minWidth: 75 }];
     setColumns1(value);
+    value?.forEach(item=> {
+      getTop(data1, {siteID: item === 'siteName', custID: item === 'custName', salesDateFull: item === 'salesDateFull'})})
     t('report.column')?.forEach(item => {
       let index = value?.findIndex(val => val === item?.value);
       if(index !== -1){
@@ -33,8 +36,8 @@ export function List(props){
           Cell: props => {
             return (
               <div style={{ textAlign, paddingRight: 15}}>
-                {item?.noformat ? props?.value : <Money value={props?.value} fontSize={14} />}
-                {/* {item?.value === 'margin' ? (+(props?.value)?.toFixed(2) + '%') : <Money value={props?.value} fontSize={14} />} */}
+                {item?.noformat ? props?.value : item?.value === 'salesDateFull' ? moment(props?.value)?.format('yyyy.MM.DD') : <Money value={props?.value} fontSize={14} />}
+                {/* {item?.value === 'salesDateFull' ? <div>{moment(value)?.format('yyyy.MM.DD')}</div> : props?.value} */}
               </div>
             )
           }

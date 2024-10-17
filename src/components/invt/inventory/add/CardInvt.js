@@ -22,8 +22,8 @@ export function Card(props){
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty', isQty: true,
         customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isText: true, customStyle: { width: 100 },
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={14} /></div>,
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isMoney: true, customStyle: { width: 100 },
+        // Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} fontSize={14} /></div>,
       },
       { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row, onClickDelete }) =>
@@ -48,11 +48,13 @@ export function Card(props){
     let total = 0;
     setData(old => old.map((row, index) => {
       if(index === rowIndex){
-        let cost = old[rowIndex]?.unitCost * parseFloat(value ? value : 0);
-        total += cost;
-        return { ...old[rowIndex], [columnId]: value, cost };
+        let qty = columnId === 'qty' ? parseFloat(value ? value : 0) : old[rowIndex]?.qty;
+        let cost = columnId === 'cost' ? parseFloat(value ? value : 0) : old[rowIndex]?.unitCost;
+        let totalCost = qty * cost;
+        total += totalCost;
+        return { ...old[rowIndex], qty, cost, totalCost };
       } else {
-        total += row.cost;
+        total += row.totalCost;
         return row;
       }
     }));

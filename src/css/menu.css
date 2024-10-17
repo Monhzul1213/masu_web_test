@@ -374,7 +374,7 @@ cursor: pointer;
   }
 
   .ant-drawer-body {
-    background-image: url('../assets/side_back.png');
+    /* background-image: url('../assets/side_back.png'); */
     padding: 0;
     overflow-x: hidden;
   }
@@ -412,6 +412,9 @@ cursor: pointer;
     font-weight: 550;
     flex: 1;
     line-height: 14px;
+  }
+  .p_side {
+    display: none;
   }
 }
 .mi_top {

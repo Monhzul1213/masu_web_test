@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu as AntMenu, Drawer } from 'antd';
+import { Layout, Menu as AntMenu } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -198,10 +198,10 @@ export function Menu(props){
 
   const siderProps = { collapsible: true, trigger: null, collapsedWidth: 'var(--side-width)', collapsed, style, breakpoint: 'lg', width: 300,
     onCollapse: setCollapsed };
-  const drawerProps = { className: 'menu_drawer', placement: 'left', onClose: () => setCollapsed(true), closable: false, open: !collapsed };
+  // const drawerProps = { className: 'menu_drawer', placement: 'left', onClose: () => setCollapsed(true), closable: false, open: !collapsed };
   const profileProps = { collapsed, setCollapsed, subscriptionType };
   const menuProps = { items, onClick, className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline', openKeys, onOpenChange };
-  const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
+  // const menu1Props = { items, onClick: e => onClick(e, true), className: 'side_menu', selectedKeys: ['/' + path, pathname], mode: 'inline' };
   const rateProps = { review, setReview };
 
   return hideMenu ? null : (
@@ -214,12 +214,12 @@ export function Menu(props){
         </div>
         {!isPartner && <Install {...profileProps} />}
       </Sider>
-      <Drawer {...drawerProps}>
+      {/* <Drawer {...drawerProps}>
         <div className='mi_top'>
           <AntMenu {...menu1Props} />
         </div>
         {!isPartner && <Install {...profileProps} />}
-      </Drawer>
+      </Drawer> */}
     </>
   )
 }

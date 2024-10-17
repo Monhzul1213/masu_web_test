@@ -51,7 +51,6 @@ function Card(props){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Merchant/GetSubScriptionInfo'));
-    console.log(response);
     if(response?.error) setError(response?.error);
     else {
       setHasData(response?.data?.empSubscriptions?.length || response?.data?.siteSubscriptions?.length);

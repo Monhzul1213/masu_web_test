@@ -23,10 +23,10 @@ export function List(props){
           <DynamicFAIcon {...row.getToggleRowExpandedProps()} name={row.isExpanded ? 'FaChevronUp': 'FaChevronDown'} className='t_expand' />
         </div>)
       },
-      { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total'), customStyle : { width: 140 } },
-      { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), customStyle : { width: 240 } },
-      { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), customStyle : { width: 140 }  },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', exLabel: t('order.t_qty'), customStyle : { width: 140 }, 
+      { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total'), customStyle : { minWidth: 100 } },
+      { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), customStyle : { minWidth: 200 } },
+      { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), customStyle : { minWidth: 100 }  },
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', exLabel: t('order.t_qty'), customStyle : { minWidth: 130 }, 
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
         Footer: info => {
           const total = React.useMemo(() =>
@@ -35,10 +35,10 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>
           }
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.c_title2')}</div>, accessor: 'salesQty', exLabel: t('order.t_qty'), customStyle : { width: 140 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.c_title2')}</div>, accessor: 'salesQty', exLabel: t('order.t_qty'), customStyle : { minWidth: 100 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'qty', exLabel: t('order.t_stock'), customStyle : { width: 140 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'qty', exLabel: t('order.t_stock'), customStyle : { minWidth: 100 }, 
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
         Footer: info => {
           const total = React.useMemo(() =>
@@ -47,10 +47,10 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>
           }
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('orders.cost')}</div>, accessor: 'cost', exLabel: t('orders.cost'),customStyle : { width: 140 },
+      { Header: <div style={{textAlign: 'right'}}>{t('orders.cost')}</div>, accessor: 'cost', exLabel: t('orders.cost'),customStyle : { minWidth: 120 },
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('orders.totalCost')}</div>, accessor: 'totalCost', exLabel: t('orders.totalCost'), customStyle : { width: 140 },
+      { Header: <div style={{textAlign: 'right'}}>{t('orders.totalCost')}</div>, accessor: 'totalCost', exLabel: t('orders.totalCost'), customStyle : { minWidth: 120 },
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
         Footer: info => {
           const total = React.useMemo(() =>
@@ -59,7 +59,20 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /></div></>
           }
       },
-      // { Header: t('supplier.title'), accessor: 'vendName', exLabel:t('supplier.title') , width: 200, minWidth: 110 },
+      { Header: <div style={{textAlign: 'right'}}>{t('report.price')}</div>, accessor: 'price', exLabel: t('report.price'), customStyle : { minWidth: 90 },
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+      },
+      { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.t_total')}</div>, accessor: 'totalPrice', 
+      exLabel: t('report_receipt.t_total'), customStyle : { minWidth: 120 },
+      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+      Footer: info => {
+        const total = React.useMemo(() =>
+          info.rows.reduce((sum, row) => row.values.totalPrice + sum, 0),
+          [info.rows]  )
+        return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /> </div></>
+        }
+      },
+      { Header: t('pos.t_status'), accessor: 'statusName', exLabel:t('pos.t_status') , customStyle : { minWidth: 90 } },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,8 +98,7 @@ export function List(props){
     // return response;
   }
 
-  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
-  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false, autoResetExpanded,
+  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, autoResetExpanded,
     initialState: { pageIndex: 0, pageSize: 100000,  },}, 
     useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, Detail: props => <Detail {...props} updateData={updateMyData} />,
@@ -99,8 +111,8 @@ export function List(props){
       <Header {...filterProps} />
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <>
-        <div style={{overflowX: 'scroll'}}>
-          <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+        <div >
+          <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
             <TableDetail {...tableProps} /> 
           </div>
         </div>     

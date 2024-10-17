@@ -45,7 +45,7 @@ export function Main(props){
   const backProps = { className: 'ps_back_btn', text: t('adjust.back'), icon: <MdChevronLeft className='ps_back_icon' />, onClick: onClickBack };
 
   return (
-    <div className='ad_back'>
+    <div className='ad_back' id='ad_back_invt1'>
       <div className='ps_menu_back'>
         <IconButton {...backProps} />
       </div>

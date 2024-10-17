@@ -88,7 +88,6 @@ export function ZoneList(props){
 
   const onClick = () => {
     setOpen(true)
-    console.log(open);
   }
 
 

@@ -805,8 +805,8 @@
     "column": [
       { "label": "Баркод", "value": "barCode", "align": "left", "noformat": true },
       { "label": "Ангилал", "value": "categoryName", "align": "left", "noformat": true },
-      { "label": "Салбар", "value": "siteID", "align": "left", "noformat": true },
-      { "label": "Харилцагч", "value": "custID", "align": "left", "noformat": true },
+      { "label": "Салбар", "value": "siteName", "align": "left", "noformat": true },
+      { "label": "Харилцагч", "value": "custName", "align": "left", "noformat": true },
       { "label": "Огноо", "value": "salesDateFull", "align": "left" },
       { "label": "Борлуулалтын дүн", "value": "totalSalesAmt" },
       { "label": "Борлуулалтын тоо", "value": "qty", "noformat": true },
@@ -1452,6 +1452,7 @@
     "title": "Тооллого",
     "add": "Тооллого хийх",
     "items_error": "Тооллогод дор хаяж нэг барааг оруулна уу",
+    "count_error": "Тооллого үүссэн байна.",
     "add_success": "Тооллого амжилттай хийлээ.",
     "delete_success": "Тооллого амжилттай устгагдлаа.",
     "warning_item": "Салбар сонгоно уу",

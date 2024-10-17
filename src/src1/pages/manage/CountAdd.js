@@ -78,8 +78,8 @@ export function CountAdd(){
 
   const validateData = () => {
     let isSiteValid = siteId?.value || siteId?.value === 0;
-    // let length = detail?.filter(item => item?.qty)?.length;
-    if(isSiteValid){
+    let countNo = header?.picountNo && status?.value === 0;
+    if(isSiteValid && !countNo){
       let picountNo = header?.picountNo ?? 0;
       let items = [];
       detail?.forEach(item => {
@@ -92,7 +92,7 @@ export function CountAdd(){
       return { picountNo, txnDate: date?.value?.format('yyyy.MM.DD'), siteID: siteId?.value, status:status?.value, descr: notes?.value, rowStatus: picountNo ? 'U' : 'I', items };
     } else {
       if(!(siteId?.value || siteId?.value === 0)) setSiteId({ value: siteId?.value, error: t('error.not_empty') });
-      // if(!length) setSearch({ value: null, error: t('count.items_error') });
+      if(countNo) setError(t('count.count_error') );
       return false;
     }
   }
@@ -114,13 +114,11 @@ export function CountAdd(){
   }
 
   const onClickDelete = async () => {
-    let inPiCount = {...header, rowStatus: 'D'};
-    let inPicountItems = items?.map(item => { return {...item, rowStatus: 'D'}});
-    let data = { inPiCount, inPicountItems };
     onLoad();
+    let data = {...header, rowStatus: 'D', items: []};
     const response = await dispatch(sendRequest(user, token, 'Txn/ModPiCount', data));
     if(response?.error) onError(response?.error, true);
-    else onSuccess(t('count.delete_success'));
+    else onSuccess(t('count.delete_success'), true);
   }
 
   const onLoad = () => {

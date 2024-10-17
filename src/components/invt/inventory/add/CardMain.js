@@ -107,8 +107,7 @@ function Card(props){
     setEdited, setError, inRow: false, className : 'radio_back_dis' };
   const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setEdited, setError,
     inRow: true, onBlur: onPriceChange };
-  const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setEdited, setError, inRow: true,
-    disabled: isKit };
+  const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setEdited, setError, inRow: true};
   const skuProps = { value: sku, setValue: setSku, label: t('inventory.sku'), placeholder: t('inventory.sku'), setEdited, setError, inRow: true, length: 30 };
   const barcodeProps = { value: barcode, setValue: changeBarcode, label: t('inventory.barcode'), placeholder: t('inventory.barcode'), setEdited, setError,
     inRow: true, length: 30 };
