@@ -5,15 +5,15 @@ import { useTranslation } from 'react-i18next';
 
 import { add, divide } from '../../../../helpers';
 import { DynamicBSIcon, Money, PaginationTable, TableResize } from '../../../all';
-import { Search } from '../../order/add/Search';
 import { ItemSelect } from './SelectItem';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { SelectableCell } from '../../../invt/inventory/add/EditableCell';
 import { EditableCell as EditableCellQty } from '../../order/add/EditableCell';
 import { EditableCell } from './EditableCell';
+import { Search } from '../../../../src1/components/management/transfer/add/Search';
 
 function Card(props){
-  const { size, detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable } = props;
+  const { size, detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable, setSiteId } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [types] = useState([{ label: 'Орлого', value: 'RC' }, { label: 'Зарлага', value: 'II' }])
@@ -103,7 +103,7 @@ function Card(props){
     useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
-  const searchProps = { handleEnter: setGlobalFilter, size };
+  const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, check: false};
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId };
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';

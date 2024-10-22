@@ -156,7 +156,7 @@ export function AdjustAdd(){
   }
 
   let mainProps = { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes, editable };
-  let listProps = { detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable };
+  let listProps = { detail, setDetail, search, setSearch, siteId, setSiteId, setEdited, setDItems, editable };
   let btnProps = { onClickCancel, onClickSave: () => onClickSave(1), onClickDraft: () => onClickSave(0), onClickDelete, header };
   let subProps = { visible, setVisible, sites, setSites, onDone, noTrial: true };
   let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
