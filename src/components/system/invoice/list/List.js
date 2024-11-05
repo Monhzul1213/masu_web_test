@@ -5,14 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { message } from 'antd';
 
-import { Money, Overlay, FooterTable, Empty1 } from '../../../all';
+import { Money, Overlay, FooterTable } from '../../../all';
 import { getList } from '../../../../services';
-import { Header } from './Header';
 import { Detail } from '../../../../src1/components/system/info/Detail';
 
 export function List(props){
-  const { onClickAdd, data, size, getData, date, setError, onSearch, excelName } = props;
-  const [columns, setColumns] = useState([]);
+  const { onClickAdd, data, size, date, onSearch, columns, setColumns } = props;
+  // const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
   const [detail, setDetail] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -120,7 +119,7 @@ export function List(props){
     else {
       message.success(t('system.success'))
       let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
-      getData(query);    
+      onSearch(query);    
     }
     setLoading(false)
   }
@@ -146,17 +145,18 @@ export function List(props){
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, onClickLink, onClickSalesLink,
     initialState: { pageIndex: 0, pageSize: 1000000, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, hasFooter: true };
-  const headerProps = {setError, onSearch, size, excelName, data, columns};
-  const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
+  // const headerProps = {setError, onSearch, size, excelName, data, columns};
   const detailProps = { data : detail, visible, closeModal, loading};
 
   return (
       <div >
         {visible && <Detail {...detailProps} />}
-        <Header {...headerProps}/>
-        <div className='list_scroll' id='paging' style={{marginTop: 10, overflowX: 'scroll', maxHeight, minWidth: 220}}>
-          {!data?.length ? <Empty1 {...emptyProps} /> :<FooterTable {...tableProps} /> }
-        </div>
+        {/* <Header {...headerProps}/> */}
+        {/* {!data?.length ? <Empty1 {...emptyProps} /> : */}
+          <div className='list_scroll' id='paging' style={{marginTop: 10, overflowX: 'scroll', maxHeight, minWidth: 220}}>
+            <FooterTable {...tableProps} />
+          </div>
+        {/* } */}
       </div>
   );
 }

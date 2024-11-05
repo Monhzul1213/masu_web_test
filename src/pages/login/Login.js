@@ -195,8 +195,8 @@ export function Login(){
         dispatch(setLogin({ toRemember: checked }));
         dispatch(setIsLoggedIn(true));
         window.sessionStorage.setItem('CREDENTIALS_TOKEN', Date.now());
-        navigate({ pathname: response?.isAdmin ? '/system/invoice' : webUser?.msMerchant?.merchantType === 0 ? '/profile' : 
-        response?.viewReport ? '/report/report_sales' : '/config'});
+        navigate({ pathname: response?.isAdmin ? '/system/invoice' : ((webUser?.msMerchant?.merchantType === 0 || webUser?.msMerchant?.adsType === null) ? '/profile' : 
+        (response?.viewReport ? '/report/report_sales' : '/config'))});
       }
       setLoading(false);
     } else {

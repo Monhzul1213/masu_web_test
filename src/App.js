@@ -13,7 +13,7 @@ import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/em
 import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen, OrderReceipt } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
-import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat, CountAdd, Count, Package, PackageAdd } from './src1/pages';
+import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat, CountAdd, Count, Package, PackageAdd, CustomerType } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
@@ -127,7 +127,8 @@ export function App(){
                 <Route path='/employee/emp_list/emp_add' element={<EmployeeAdd />} />
                 <Route path='/inventory/invt_discount' element={<Discount />} />
                 <Route path='/inventory/invt_discount/disc_add' element={<DiscountAdd />} />
-                <Route path='/customer' element={<Customer />} />
+                <Route path='/customer/customer' element={<Customer />} />
+                <Route path='/customer/customer_type' element={<CustomerType />} />
                 <Route path='/customer/customer_import' element={<CustomerImport />} />
                 <Route path='/employee/access_config' element={<Role />} />
                 <Route path='/employee/access_config/access_add' element={<RoleAdd />} />

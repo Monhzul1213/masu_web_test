@@ -8,7 +8,7 @@ const { Option } = AntSelect;
 
 export function Select(props){
   const { value, setValue, label, placeholder, data, setError, setEdited, s_value, s_descr, mode, inRow, onFocus,
-    loading, disabled, id, inRow1 } = props;
+    loading, disabled, id, inRow1, className } = props;
   const { t } = useTranslation();
   
   let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
@@ -28,7 +28,7 @@ export function Select(props){
 
   return (
     <div style={inRow ? inRow1 ? {flex: 1,  maxWidth: 300 } : {flex: 1} : {}}>
-      <div className='select_back' style={backStyle} id={id}>
+      <div className= {className ?? 'select_back'} style={backStyle} id={id}>
         <p className='select_lbl' style={style}>{label}</p>
         <AntSelect
           mode={mode}

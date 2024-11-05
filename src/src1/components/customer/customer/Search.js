@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DynamicAIIcon } from '../../components/all/all_m';
+import { DynamicAIIcon } from '../../all/all_m';
 
 export function Search(props){
   const { showSearch, setShowSearch, handleEnter, search, setSearch, width, className } = props;

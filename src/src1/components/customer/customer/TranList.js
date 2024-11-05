@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import moment from 'moment';
 
-import { Money, Table } from '../../../components/all';
-import { ExportExcel, config, encrypt } from '../../../helpers';
+import { Money, Table } from '../../../../components/all';
+import { ExportExcel, config, encrypt } from '../../../../helpers';
 
 
 export function TranList(props){

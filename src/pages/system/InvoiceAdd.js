@@ -47,7 +47,7 @@ export function InvoiceAdd(){
     setLoading(false);
     if(response?.error) setError(response?.error);
     else {
-      let request = response?.data && response?.data[0];
+      let request = response?.data && response?.data?.invoice && response?.data?.invoice[0];
       if(request){
         request.label1 = (request.descr ?? '') + '-' + (request.empName ?? '') + '-' + (request.phone ?? '');
         setApproved1(request?.approvedLevel1 === 'Y');

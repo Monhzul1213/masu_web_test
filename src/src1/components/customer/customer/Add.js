@@ -3,14 +3,15 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { cityList, validateEmail } from '../../../helpers';
-import { sendRequest } from '../../../services';
-import { ButtonRow, ModalTitle, Overlay, Error, Confirm } from '../all/all_m';
-import { IconInput, Input, Select } from '../../../components/all';
-import { Location } from '../../../components/config/store/Location';
+import { cityList, validateEmail } from '../../../../helpers';
+import { sendRequest, getList } from '../../../../services';
+import { ButtonRow, ModalTitle, Overlay, Error, Confirm } from '../../all/all_m';
+import { IconInput, Input, Select, IconButton, DynamicBSIcon } from '../../../../components/all';
+import { Location } from '../../../../components/config/store/Location';
+import { AddType } from './AddType';
 
 export function Add(props){
-  const { visible, selected, closeModal, onSearch, filter, branch, allBranch} = props;
+  const { visible, selected, closeModal, onSearch, filter, branch, allBranch, setEdited} = props;
   const { t } = useTranslation();
   const [custName, setCustName] = useState({ value: '' });
   const [address, setAddress] = useState({ value: '' });
@@ -31,9 +32,17 @@ export function Add(props){
   const [descr2, setDescr2] = useState({ value: null });
   const [city, setCity] = useState(null);
   const [open, setOpen] = useState(false);
+  const [type, setType] = useState({ value: -1 });
+  const [types, setTypes] = useState([{customerTypeID: -1, typeName: t('customer.no_type')}]);
+  const [typeVisible, setTypeVisible] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    getTypes();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if(selected){
@@ -45,6 +54,7 @@ export function Add(props){
       setCustCode({ value: selected?.custCode ?? '' });
       setDescr({value: selected?.branchCode ?? ''});
       setSubDescr({value: selected?.subBranchCode ?? ''});
+      setType({value: selected?.customerTypeId ?? -1})
       setLocation({ value : selected?.latitudes ? selected?.latitudes + '\n' + selected?.longitudes : ''})
       setSubBranch(allBranch?.filter(item => item?.branchCode?.includes(selected?.branchCode)));
       setLat( selected?.latitudes ? selected?.latitudes : 47.91452468522501 );
@@ -98,7 +108,8 @@ export function Add(props){
             branchCode: descr?.value,
             subBranchCode: subDescr?.value,
             latitudes: lat,
-            longitudes: lng
+            longitudes: lng,
+            customerTypeID: type?.value
           }]
       const response = await dispatch(sendRequest(user, token, 'Site/Customer',  data));
       setLoading(false);
@@ -179,6 +190,29 @@ export function Add(props){
     }
   }
 
+  const getTypes = async (toGet, id) => {
+    if(!types?.length || types?.length === 1 || toGet){
+      setError(null);
+      const response = await dispatch(getList(user, token, 'Site/GetCustomerType'));
+      if(response?.error) setError(response?.error);
+      else {
+        let data = [...[{customerTypeID: -1, typeName: t('customer.no_type')}], ...response?.data?.msCustomerType];
+        setTypes(data);
+        if(id) setType({ value: id });
+      }
+    }
+  }
+
+  const onClickCategory = e => {
+    e?.preventDefault();
+    setTypeVisible(true);
+  }
+
+  const closeCategory = (saved, id) => {
+    setTypeVisible(false);
+    getTypes(saved, id);
+  }
+
   const maxheight= 'calc(90vh - 105px )';
   const nameProps = { value: custName, setValue: setCustName, label: t('page.name'), placeholder: t('customer.name'), setError, length: 64  };
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, length: 8 };
@@ -195,17 +229,24 @@ export function Add(props){
   const locProps = { value: location, setValue: setLocation, label: t('tax.location'), placeholder: t('tax.location'), setError, length: 250, 
     onClick: onClickLocation, disabled: true, className: 'store_descr' };
   const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, descr1, descr2, city };
+  const categoryProps = { value: type, setValue: setType, label: t('discount.type'), setError, setEdited, inRow: false,
+  data: types, s_value: 'customerTypeID', s_descr: 'typeName', onFocus: getTypes };
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
       {open && <Confirm {...confirmProps} />}
       {select && <Location {...mapProps} />}
+      {typeVisible && <AddType visible={typeVisible} closeModal={closeCategory} />}
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSupervisorAccount' title={t(selected ? 'customer.edit' : 'customer.new')} isMD={true} />
           <div style={{ overflowY: 'scroll', maxHeight: maxheight }}>
             <form onSubmit={onClickSave}>
               <Input {...nameProps}  />
+              <div id='im_unit_row_large'>
+                <div style={{flex: 1}}><Select {...categoryProps} /></div>
+                <IconButton className='im_add_btn' onClick={onClickCategory} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
+              </div>
               <Input {...phoneProps} />
               <Input {...mailProps} />
               <Select {...cityProps} />

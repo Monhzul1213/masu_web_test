@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, PaginationTable, Money, Table, Empty1} from '../../../components/all';
+import { Check, Money, Table, Empty1} from '../../../../components/all';
 import { Transaction } from './Transaction';
 import { Header } from './Header';
 
@@ -22,18 +22,19 @@ export function List(props){
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
+      { Header: t('discount.type'), accessor: 'typeName', exLabel: t('discount.type') },
       { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name') },
       { Header: t('customer.phone1'), accessor: 'phone', exLabel: t('customer.phone1'),
         Cell: props => <div >{props.value}</div>},
-      { Header: <div style={{textAlign: 'right'}}> {t('customer.arAmt')}</div>, accessor: 'arBalance', isBtn: true, customStyle: { maxWidth: 110 }, exLabel: t('customer.arAmt'),
+      { Header: <div style={{textAlign: 'right'}}> {t('customer.receivable')}</div>, accessor: 'arBalance', isBtn: true, customStyle: { maxWidth: 110 }, exLabel: t('customer.receivable'),
         Cell: ({ value, row, onClickLink }) => {
           return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} fontSize={14} /></div>);
         }
       },
-      { Header: t('customer.Email'), accessor: 'email', exLabel: t('customer.Email'),
+      { Header: t('employee.mail'), accessor: 'email', exLabel: t('employee.mail'),
         Cell: props => <div >{props.value}</div>},
-      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), customStyle : {width: 100} },
-      { Header: t('shop.district'), accessor: 'subBranchName', exLabel: t('shop.district'), customStyle : {width: 100} },
+      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), customStyle : {minWidth: 120} },
+      { Header: t('shop.district'), accessor: 'subBranchName', exLabel: t('shop.district'), customStyle : {minWidth: 100} },
       { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'),
         Cell: props => <div >{props.value}</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode', exLabel: t('customer.code'),
@@ -83,9 +84,9 @@ export function List(props){
   const maxHeight = size?.width > 780
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
-const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 250000 },
     onClickCheckAll, checked, onClickCheck, onClickLink}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick: onClickAdd, };
+  const tableProps = { tableInstance, onRowClick: onClickAdd };
   let subProps = { visible, closeModal , selected};
   const filterProps = { columns, data, setData, excelName, size, onClickAdd, onClickDelete, show, setError, onSearch };
   const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true , isMd : true};
@@ -95,14 +96,12 @@ const tableInstance = useTable( { columns, data, autoResetPage: false, initialSt
       <Header {...filterProps} />
       {visible && <Transaction {...subProps} />}
       {!data?.length ? <Empty1 {...emptyProps} /> : 
-      <>
       <div className='table_scroll' style={{overflow: 'scroll'}} >
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 520}}>
               <Table {...tableProps} />
         </div>
-      </div>
-      <PaginationTable {...tableProps} />
-      </>}
+      </div>}
+      <p className='data_size_text'>{t('info.all') + data?.length}</p>
     </div>
   )
 }

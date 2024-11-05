@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useExpanded} from 'react-table';
 import { useTranslation } from 'react-i18next';
 
@@ -110,13 +110,9 @@ export function List(props){
     <div>
       <Header {...filterProps} />
       {!data?.length ? <Empty1 {...emptyProps} /> : 
-      <>
-        <div >
           <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
             <TableDetail {...tableProps} /> 
-          </div>
-        </div>     
-       </>
+          </div>  
       }
     </div>
   );

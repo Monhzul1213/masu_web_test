@@ -1443,6 +1443,10 @@
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
   max-width: 1550px;
 }
+#solve_list2 {
+  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
+  max-width: 1300px;
+}
 .ii_header {
   display: flex;
   flex-flow: row;

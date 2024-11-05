@@ -140,8 +140,12 @@ export function Menu(props){
       getItem(t('menu.shift_config'), '/employee/shift_config', null, null, null, msRole?.webManageEmployy !== 'Y'),
       getItem(t('menu.shift_list'), '/employee/shift_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
     ]),
-    getItem( subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer', 
-    <img src={image2} alt='image2'/>, null, null, msRole?.webManageCustomer !== 'Y'),
+    getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer', 
+    <img src={image2} alt='image2'/>, [
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer/customer', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer_type')}</span> : t('menu.customer_type'), '/customer/customer_type', null, null, null, msRole?.webManageEmployy !== 'Y'),
+
+    ]),
     getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.loyalty')}</span> : t('menu.loyalty'), '/loyalty', 
     <img src={image7} alt='image7' />, [
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.coupon')}</span> : t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),

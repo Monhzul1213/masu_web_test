@@ -9,6 +9,7 @@ import { apiLogin, getConstants, getService, sendRequest } from '../../services'
 import { currencyList, validateEmail } from '../../helpers';
 import { ButtonRowConfirm, Error1, Input, InputPassword, Overlay, Select } from '../../components/all';
 import { RadioSelect, Prompt1 } from '../../components/emp/merchant';
+import { Select1 } from '../../components/emp/merchant/Select1';
 
 export function Merchant ( props){
   const { t } = useTranslation();
@@ -22,8 +23,11 @@ export function Merchant ( props){
   const [vendor, setVendor] = useState([]);
   const [password, setPassword] = useState({ value: '' });
   const [currency, setCurrency] = useState({ value: '₮' });
+  const [market, setMarket] = useState({ value: '' });
+  const [markets, setMarkets] = useState([]);
   const [activity, setActivity] = useState({ value: null});
   const [addItem, setAddItem] = useState({ value: '' });
+  const [addItem1, setAddItem1] = useState({ value: '' });
   const [partner, setPartner] = useState({ value: '', error: null });
   const { user, token, isOwner } = useSelector(state => state.login);
   const merchant = user?.msMerchant;
@@ -34,6 +38,7 @@ export function Merchant ( props){
   useEffect(() => {
     onFocusSales()
     onFocusVendor()
+    onFocusMarket();
     !isOwner ? navigate({ pathname: '/' }) : setData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,6 +50,8 @@ export function Merchant ( props){
     setMail({ value: merchant?.email });
     setActivity({ value: merchant?.merchantSubType})
     setAddItem({ value: merchant?.addSubDescr})
+    setMarket({ value: merchant?.adsType})
+    setAddItem1({ value: merchant?.addAdsDescr})
     setCurrency({ value: merchant?.currency ? merchant?.currency : '₮' });
     if(merchant?.partnerCode) handlePartner(null, merchant?.partnerCode);
   }
@@ -54,15 +61,16 @@ export function Merchant ( props){
   }
 
   const validateData = () => {
-    let item = (activity?.value === 199 || activity?.value === 205) ? addItem?.value : !addItem?.value
+    let item = (activity?.value === 199 || activity?.value === 205) ? addItem?.value : !addItem?.value;
+    let item1 = (market?.value === 200 ) ? addItem1?.value : !addItem1?.value
     let passwordLength = 8, businessLength = 6;
     let isEmailValid = validateEmail(mail?.value);
     let isPasswordValid = !password?.value || (password?.value?.length >= passwordLength);
     let isBusinessValid = name?.value?.length >= businessLength;
     let isPartnerValid = (partner?.value && partner?.name) || (!partner?.value && !partner?.name) ? true : false;
-    if(isBusinessValid && isEmailValid && isPasswordValid && isPartnerValid && activity?.value && item ){
+    if(isBusinessValid && isEmailValid && isPasswordValid && isPartnerValid && activity?.value && market?.value  && item && item1 ){
       let data = { email: mail?.value, password: password?.value, descr: name?.value, currency: currency?.value, partnerCode: partner?.value ?? '',
-                  merchantSubType : activity?.value, addSubDescr: addItem?.value };
+                  merchantSubType : activity?.value, addSubDescr: addItem?.value, adsType: market?.value, addAdsDescr: addItem1?.value };
       return data;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
@@ -73,6 +81,8 @@ export function Merchant ( props){
       if(!isPartnerValid) setPartner({...partner, error: t('error.be_right') })
       if(!activity?.value) setActivity({ value: null, error: t('profile.select') });
       if(!addItem?.value) setAddItem({ value: '', error: t('error.not_empty') });
+      if(!market?.value) setMarket({ value: null, error: t('profile.select') });
+      if(!addItem1?.value) setAddItem1({ value: '', error: t('error.not_empty') });
       return false;
     }
   }
@@ -149,6 +159,19 @@ export function Merchant ( props){
     }
   }
 
+  const onFocusMarket = async () => {
+    if(!markets?.length || markets?.length === 1){
+      setError && setError(null);
+      setLoading('status');
+      const response = await dispatch(getConstants(user, token, 'msMerchant_AdsType'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+      setMarkets(response?.data?.sort((a, b) => a.valueNum - b.valueNum));
+      }
+      setLoading(null);
+    }
+  }
+
   let nameProps = { value: name, setValue: setName, label: t('login.business'), placeholder: t('login.business'),
     setError, inRow: true, setEdited, length: 50 };
   let mailProps = { value: mail, setValue: setMail, label: t('employee.mail'), placeholder: t('employee.mail'),
@@ -163,10 +186,12 @@ export function Merchant ( props){
   let partnerNameProps = { label: t('login.partner_name'), placeholder: t('login.partner_name'), value: { value: partner?.name ?? '' }, disabled: true };
   let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), placeholder: t('profile.activity1'), allData, merchant,
   setError, setEdited, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem };
+  let marketProps = { value: market, setValue: setMarket, label: t('profile.question'), s_value: 'valueNum', s_descr: 'valueStr1',
+    placeholder: t('profile.question'), setError, setEdited, data: markets, onFocus: onFocusMarket, className: 'select_back_z', addItem: addItem1, setAddItem: setAddItem1 };
 
-  return (
+    return (
     <Overlay className='i_container' loading={loading}>
-      <Prompt1 value={!activity?.value } edited={edited} /> 
+      <Prompt1 value={!activity?.value || !market?.value} edited={edited} /> 
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>
@@ -175,6 +200,7 @@ export function Merchant ( props){
             <Input {...mailProps} />
             <InputPassword {...passProps} />
             <RadioSelect {...subProps}/>
+            <Select1 {...marketProps} />
             <Select {...currencyProps} />
             <div id='im_input_row_large' style={{ flexFlow: 'row', alignItems: 'flex-end' }}>
               <Input {...partnerProps} />

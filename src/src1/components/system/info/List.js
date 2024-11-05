@@ -87,7 +87,7 @@ export function List(props){
 
 
   useEffect(() => {
-    changeColumns(['siteQty','subAmount', 'totalSales', 'createdDate', 'partnerCode'], period);
+    changeColumns(['siteQty','subAmount', 'totalSales', 'createdDate', 'partnerCode', 'adsTypeName'], period);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language, period, data]);

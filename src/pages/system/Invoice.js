@@ -6,8 +6,8 @@ import moment from 'moment';
 
 import '../../css/invt.css';
 import { getList } from '../../services';
-import { Error1, Overlay } from '../../components/all';
-import { List } from '../../components/system/invoice/list';
+import { Empty1, Error1, Overlay } from '../../components/all';
+import { Header, List } from '../../components/system/invoice/list';
 import { useTranslation } from 'react-i18next';
 
 export function Invoice(){
@@ -16,6 +16,7 @@ export function Invoice(){
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
+  const [columns, setColumns] = useState([]);
   const [excelName, setExcelName] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
@@ -47,7 +48,7 @@ export function Invoice(){
         else item.row_color = '#ffffff';
         item.label1 = (item.descr ?? '') + '-' + (item.empName ?? '') + '-' + (item.phone ?? '');
       });
-      setData(response?.data?.invoice);
+      setData(response?.data && response?.data?.invoice);
     }
     if(dates) setExcelName(t('header./system/invoice') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
     setLoading(false);
@@ -59,7 +60,9 @@ export function Invoice(){
       navigate({ pathname: 'invoice_add', search: createSearchParams({ invoiceNo: row?.invoiceNo }).toString() });
   }
 
-  const listProps = { data, setData, onClickAdd, getData, setError, onSearch: getData, excelName, filter};
+  const listProps = { data, setData, onClickAdd, setError, onSearch: getData, excelName, filter, columns, setColumns};
+  const headerProps = {setError, onSearch: getData, excelName, data, columns};
+  const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
 
   return (
     <div className='s_container_i'>
@@ -67,7 +70,8 @@ export function Invoice(){
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
           <div className='i_list_cont' id='solve_list1'>
-            <List {...listProps} size={size} />
+            <Header {...headerProps} size={size}/>  
+            {!data?.length ? <Empty1 {...emptyProps}/> : <List {...listProps} size={size} />}
           </div>
         }</SizeMe>
       </Overlay>

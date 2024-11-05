@@ -6,7 +6,7 @@ import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import { Empty, Overlay, Error1 , Confirm } from '../../components/all/all_m';
-import { Add, List } from '../../components/customer';
+import { Add, List } from '../../components/customer/customer';
 import { getList , getServiceBar, sendRequest } from '../../../services';
 import '../../css/customer.css'
 import { Subscription } from '../../../components/management/adjust/list/Subscription';
@@ -170,7 +170,7 @@ export function Customer(props){
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
           <SizeMe>{({ size }) => 
-            <div className='i_list_cont_z' id='solve_list'>
+            <div className='i_list_cont_z' id='solve_list2'>
               <List {...listProps} size={size} />
             </div>}
           </SizeMe>

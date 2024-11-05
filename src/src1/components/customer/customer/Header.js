@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { ButtonRowAdd, DynamicAIIcon, Button, PlainSelect } from '../all/all_m'
+import { ButtonRowAdd, DynamicAIIcon, Button, PlainSelect } from '../../all/all_m'
 import { Search } from './Search';
-import { ExportExcel } from '../../../helpers';
-import { getServiceBar } from '../../../services';
+import { ExportExcel } from '../../../../helpers';
+import { getServiceBar } from '../../../../services';
 
 export function Header(props){
   const { onClickAdd, onClickDelete, show, onSearch, size , columns, data, excelName, setError} = props;

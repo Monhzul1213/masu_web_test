@@ -208,7 +208,7 @@ function Pay(props){
     let response = await dispatch(getList(user, token, api));
     if(response?.error) setError(response?.error);
     if(!response?.error){
-      let invoice = response?.data && response?.data[0]?.status;
+      let invoice = response?.data && response?.data?.invoice && response?.data?.invoice[0]?.status;
       if(invoice === 3){
         if (setVisible1) setVisible1(true)
         else if(onDone) onDone()

@@ -43,6 +43,10 @@ import login2 from './4.jpg';
 import login3 from './3.jpg';
 import login4 from './5.png';
 import login_1 from './login_1.png';
+import flag_en from './flag_en.png';
+import flag_mn from './flag_mn.png';
+import flag_kr from './flag_kr.jpg';
+import flag_cn from './flag_cn.png';
 
 import image1 from './i1.png';
 import image2 from './i2.png';
@@ -67,9 +71,10 @@ import image20 from './i20.png';
 import image21 from './i21.png';
 import image22 from './i22.png';
 
-export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10,
+export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, 
          image11, image12, image13, image14, image15, image16, image17, image18, image19, image20, image21, image22};
-export { login_image, header_image, logo, placeholder, qr_holder, logo_image, masu, twitter, twitter2, login1, login2, login3, login4, login_1 };
+export { login_image, header_image, logo, placeholder, qr_holder, logo_image, masu, twitter, twitter2, login1, login2, login3, login4, login_1, 
+         flag_mn, flag_en, flag_cn, flag_kr };
 export const icons = [
   icon1, icon2, icon3, icon4, icon5,
   icon6, icon7, icon8, icon9, icon10,

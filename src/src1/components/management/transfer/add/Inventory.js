@@ -64,12 +64,14 @@ export function Inventory(props){
         l.name = l?.invtDescr
         l.countQty= l?.qty ? l?.qty : 0
         l.siteQty= l?.qty ? l?.qty : 0
+        l.origCost= l?.cost ? l?.cost : 0
         l.itemType= 'RC'
         l.qty = 0
         l.itemStatus = 0
         l.picountItemId= 0
         l.invtID = l?.invtId
         l.notes= ''
+        l.rowStatus = 'I'
         let check = item?.findIndex(it => it?.barCode === l?.barCode)
         if(check === -1) li.push(l)
       })

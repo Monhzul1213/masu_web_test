@@ -23,3 +23,4 @@ export * from './Chart';
 export * from './Money';
 export * from './StackedChart';
 export * from './Field';
+export * from './Language';
