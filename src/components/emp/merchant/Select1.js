@@ -54,10 +54,11 @@ export function Select1(props){
 
 
   let sub1Props = { value: value, setValue: setChange, data, onFocus, placeholder };
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {color: '#e41051'};
 
   return (
     <div className='radio_back' >
-      <p className='select_lbl' >{label}</p>
+      <p className='select_lbl' style={style}>{label}</p>
       <div className={(value?.value === 200) ? 'row' : 'col'}>
         <div className='list_scroll' style={{overflowY: 'scroll', maxHeight: 150}}>
            <SubSelect {...sub1Props}/>

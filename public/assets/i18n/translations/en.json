@@ -267,7 +267,8 @@
     "variant_error": "Selection name is duplicated",
     "error": "Please select a business activity!",
     "error1": "Please save your business activity!",
-    "ok": "OK"
+    "ok": "OK",
+    "question": "Where did you find out about MASU?"
   },
   "config": {
     "config": "Settings",

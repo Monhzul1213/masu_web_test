@@ -15,6 +15,7 @@ export function Merchant ( props){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
+  const [edited1, setEdited1] = useState(false);
   const [error, setError] = useState(null);
   const [name, setName] = useState({ value: '' });
   const [mail, setMail] = useState({ value: '' });
@@ -187,11 +188,12 @@ export function Merchant ( props){
   let subProps = { value: activity, setValue: setActivity, label: t('profile.activity'), placeholder: t('profile.activity1'), allData, merchant,
   setError, setEdited, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem };
   let marketProps = { value: market, setValue: setMarket, label: t('profile.question'), s_value: 'valueNum', s_descr: 'valueStr1',
-    placeholder: t('profile.question'), setError, setEdited, data: markets, onFocus: onFocusMarket, className: 'select_back_z', addItem: addItem1, setAddItem: setAddItem1 };
+    placeholder: t('profile.question'), setError, setEdited: setEdited1, data: markets, onFocus: onFocusMarket, className: 'select_back_z', addItem: addItem1, setAddItem: setAddItem1 };
 
     return (
     <Overlay className='i_container' loading={loading}>
-      <Prompt1 value={!activity?.value || !market?.value} edited={edited} /> 
+      <Prompt1 value={!activity?.value} edited={edited}  error2={t('profile.error')} error1={t('profile.error1')}/>
+      <Prompt1 value={!market?.value} edited={edited1} error2={t('profile.error2')} error1={t('profile.error3')}/>  
       {error && <Error1 error={error} />}
       <div className='i_scroll'>
         <form>

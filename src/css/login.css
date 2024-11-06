@@ -1139,14 +1139,6 @@ input::-webkit-input-placeholder {
   margin-top: 10px;
 }
 
-.lg_input_back1:focus-within {
-  /* border-bottom: 1px solid var(--success-color); */
-}
-
-.lg_input_back1:focus-within .select_lbl {
-  /* color: var(--success-color); */
-}
-
 .lg_m_input {
   border: none;
   color: var(--text-color);

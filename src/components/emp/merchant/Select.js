@@ -77,10 +77,11 @@ export function RadioSelect(props){
 
   let sub1Props = { value: value, setValue: setChange, label: t('profile.sale'), data: data, onFocus: onFocusSales };
   let sub2Props = { value: value, setValue: setChange1, label: t('profile.vendor'), data: data1, onFocus: onFocusVendor };
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
 
   return (
     <div className='radio_back' >
-      <p className='select_lbl' >{label}</p>
+      <p className='select_lbl' style={style}>{label}</p>
       <Radio.Group className= {merchant ? 'pro_radio' : 'pro_radioz'} onChange={onChange} value={custom}>
           <Radio value={'0'}>{t('profile.sale')}</Radio>
           <div className={merchant ? 'pro_gap' : ''}/>

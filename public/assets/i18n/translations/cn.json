@@ -267,7 +267,8 @@
     "variant_error": "选择的名称重复",
     "error": "请选择业务方向！",
     "error1": "请保存业务方向！",
-    "ok": "确定"
+    "ok": "确定",
+    "question": "您从哪里得知 MASU？"
   },
   "config": {
     "config": "配置",

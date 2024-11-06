@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ButtonRow } from './Button';
 
 export function Prompt1(props){
-  const { value, edited } = props;
+  const { value, edited, error1, error2 } = props;
   const { t } = useTranslation();
 
   return (
@@ -15,7 +15,7 @@ export function Prompt1(props){
         isActive && (
           <Modal title={null} footer={null} closable={false} open={true} centered={true} width={360}>
             <div className='m_back'>
-              <p className='m_descr'>{edited ? t('profile.error1') : t('profile.error')}</p>
+              <p className='m_descr'>{edited ? error1 : error2}</p>
             </div>
             <ButtonRow onClickCancel={onCancel} text1='profile.ok'/>
           </Modal>
