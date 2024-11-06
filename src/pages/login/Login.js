@@ -8,7 +8,7 @@ import BackgroundSlider from 'react-background-slider'
 import '../../css/login.css';
 import { apiLogin, setIsLoggedIn, setLogin } from '../../services';
 import { header_image, login1, login2, login3, login4, login_image } from '../../assets';
-import { Button, DynamicAIIcon, Error, FloatingInput, FloatingInput1, FloatingPassword, FloatingPassword1 } from '../../components/all';
+import { Button, DynamicAIIcon, Error, FloatingInput, FloatingInput1, FloatingPassword, FloatingPassword1, LanguageLogin } from '../../components/all';
 import { Social, Copyright, Social1 } from '../../components/login';
 
 export function LoginOld(){
@@ -221,6 +221,9 @@ export function Login(){
       <div style={{padding: 10}} />
       <div style={{flex: 1}} />
       <p className='lg_title'>Welcome <span className='lg_title2'>Back</span>!</p>
+      <div className='login_language_back'>
+        <LanguageLogin id='login_language' />
+      </div>
       <form onSubmit={handleSubmit} style={{width: '330px'}}>
         <FloatingInput1 {...emailProps} classBack='lg_input_container' className='lg_input_back' color='#fff' />
         <FloatingPassword1 {...passProps} classBack='lg_input_container' className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' color='#fff' />

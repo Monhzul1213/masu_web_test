@@ -9,7 +9,7 @@ import '../../css/config.css';
 import { header_image, login1, login2, login3, login4 } from '../../assets';
 import { validateEmail, validateNumber } from '../../helpers';
 import { apiLogin, apiRegister, getService, setIsLoggedIn, setLogin, getConstants } from '../../services';
-import { Button, Error, FloatingInput1, FloatingPassword1, DynamicAIIcon, DynamicMDIcon } from '../../components/all';
+import { Button, Error, FloatingInput1, FloatingPassword1, DynamicAIIcon, DynamicMDIcon, LanguageLogin } from '../../components/all';
 import { Copyright, Partner, Social1 } from '../../components/login';
 import { Confirm } from '../../components/login/Confirm';
 import { RadioSelect } from '../../components/login/Select';
@@ -413,6 +413,9 @@ export function SignUp(){
       {visible && <Confirm {...confirmProps} />}
       <div style={{padding: 20}} />
       <img className='login_logo' src={header_image} alt='MASU LOGO' />
+      <div className='login_language_back'>
+        <LanguageLogin id='login_language' />
+      </div>
       <div style={{padding: 10}} />
       <div style={{flex: 1}} />
       <p className='lg_title1'>{t('login.signup_text1')}</p>

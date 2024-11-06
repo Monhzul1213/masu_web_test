@@ -5,7 +5,7 @@ import { Dropdown } from 'antd';
 
 import '../../css/menu.css';
 import { header_image, image16, image17, image19, image20, image21, image22 } from '../../assets';
-import { Button, DynamicBSIcon, DynamicMDIcon } from '../all';
+import { Button, DynamicMDIcon, Language } from '../all';
 import { useDispatch, useSelector } from 'react-redux';
 import { getList, logout, setIsLoggedIn } from '../../services';
 
@@ -99,18 +99,21 @@ export function Header1(props){
   return hideMenu ? null : (
     <div className='menu_pro_container'>
       <p className='h_title'>{t(title)}</p>
+      <Dropdown overlay={menu} trigger='click' open={open} onOpenChange={setOpen}>
       <div className='p_btn'>
-        {<img className='img_header' src={ subscriptionType === 'PREMIUM' ?  image16 : subscriptionType === 'STANDARD' ? image21 : image22 } alt='image17'/>}
-        <div className='p_side'>
-          <div className='header_img_back'>
-            <p className='p_title'>{t('menu.profile')}</p>
-            {<img className='type_img' onClick={onClick} src={subscriptionType === 'PREMIUM' ? image17 : subscriptionType === 'STANDARD' ? image19 : image20 } alt='image16'/>}
+          {<img className='img_header' src={ subscriptionType === 'PREMIUM' ?  image16 : subscriptionType === 'STANDARD' ? image21 : image22 } alt='image17'/>}
+          <div className='p_side'>
+            <div className='header_img_back'>
+              <p className='p_title'>{t('menu.profile')}</p>
+              {<img className='type_img' onClick={onClick} src={subscriptionType === 'PREMIUM' ? image17 : subscriptionType === 'STANDARD' ? image19 : image20 } alt='image16'/>}
+            </div>
+            <p className='p_user'>{user?.mail?.toLowerCase()}</p>
+            <DynamicMDIcon onClick={e => e.preventDefault()} name='MdKeyboardArrowDown' size={20} className='down_icon_back'/>
           </div>
-          <p className='p_user'>{user?.mail?.toLowerCase()}</p>
-        </div>
-        <Dropdown overlay={menu} trigger='click' open={open} onOpenChange={setOpen}>
-          <DynamicBSIcon onClick={e => e.preventDefault()} name='BsChevronDown' size={20} className='down_icon_back'/>
-        </Dropdown>
+      </div>
+      </Dropdown>
+      <div className='login_language_back1'>
+          <Language id='login_language1' home= {true}/>
       </div>
     </div>
   );

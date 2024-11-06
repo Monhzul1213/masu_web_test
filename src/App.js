@@ -153,7 +153,7 @@ export function App(){
                 <Route path='/system/request_solve/solve_add' element={<SolveAdd />} />
                 <Route path='/report/report_noat' element={<Taxes />} />
                 <Route path='/profile' element={<Merchant />} />
-                <Route path='/report/report_invtentory' element={<ReportItem />} />
+                <Route path='/report/report_inventory' element={<ReportItem />} />
                 <Route path='/system/invoice' element={<Invoice />} />
                 <Route path='/system/invoice/invoice_add' element={<InvoiceAdd />} />
                 <Route path='/system/info' element={<Info />} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, Money, Table, Empty1} from '../../../../components/all';
+import { Check, Money, Empty1, FooterTable} from '../../../../components/all';
 import { Transaction } from './Transaction';
 import { Header } from './Header';
 
@@ -22,13 +22,19 @@ export function List(props){
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('discount.type'), accessor: 'typeName', exLabel: t('discount.type') },
+      { Header: t('discount.type'), accessor: 'typeName', exLabel: t('discount.type'), Footer: <div style={{textAlign: 'left'}}>{t('report.total') + data?.length}</div>},
       { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name') },
       { Header: t('customer.phone1'), accessor: 'phone', exLabel: t('customer.phone1'),
         Cell: props => <div >{props.value}</div>},
       { Header: <div style={{textAlign: 'right'}}> {t('customer.receivable')}</div>, accessor: 'arBalance', isBtn: true, customStyle: { maxWidth: 110 }, exLabel: t('customer.receivable'),
         Cell: ({ value, row, onClickLink }) => {
           return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} fontSize={14} /></div>);
+        },
+        Footer: info => {
+          const total = React.useMemo(() =>
+            info.rows.reduce((sum, row) => row.values.arBalance + sum, 0),
+            [info.rows]  )
+          return <><div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={total} fontSize={14} />} </div></>
         }
       },
       { Header: t('employee.mail'), accessor: 'email', exLabel: t('employee.mail'),
@@ -86,7 +92,7 @@ export function List(props){
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
 const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 250000 },
     onClickCheckAll, checked, onClickCheck, onClickLink}, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick: onClickAdd };
+  const tableProps = { tableInstance, onRowClick: onClickAdd, hasFooter: true };
   let subProps = { visible, closeModal , selected};
   const filterProps = { columns, data, setData, excelName, size, onClickAdd, onClickDelete, show, setError, onSearch };
   const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true , isMd : true};
@@ -96,12 +102,11 @@ const tableInstance = useTable( { columns, data, autoResetPage: false, initialSt
       <Header {...filterProps} />
       {visible && <Transaction {...subProps} />}
       {!data?.length ? <Empty1 {...emptyProps} /> : 
-      <div className='table_scroll' style={{overflow: 'scroll'}} >
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 520}}>
-              <Table {...tableProps} />
+      <div style={{overflow: 'scroll'}} >
+        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth : 520}}>
+              <FooterTable {...tableProps} />
         </div>
       </div>}
-      <p className='data_size_text'>{t('info.all') + data?.length}</p>
     </div>
   )
 }

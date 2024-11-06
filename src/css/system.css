@@ -584,3 +584,19 @@ color: var(--logo1-color);
 .customer_show_eye:hover {
   color: var(--logo1-color);
 }
+.cust_row{
+    display: flex;
+    flex-flow: row;
+    margin: 20px 0 0 10px;
+    align-items: center;
+}
+.cust_text{
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--text2-color);
+}
+.cust_text1{
+    font-weight: 450;
+    font-size: 15px;
+    color: var(--text-color);
+}

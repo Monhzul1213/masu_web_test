@@ -102,7 +102,7 @@ export function Menu(props){
   ] : [
     getItem(t('menu.report'), '/report', <img src={image6} alt='image6' />, [
       getItem(t('menu.report_sales'), '/report/report_sales', null, null, null, msRole?.webViewSalesReport !== 'Y'),
-      getItem(t('menu.report_invtentory'), '/report/report_invtentory', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.report_inventory'), '/report/report_inventory', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_category'), '/report/report_category', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_employee'), '/report/report_employee', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_payment'), '/report/report_payment', null, null, null, msRole?.webViewSalesReport !== 'Y'),

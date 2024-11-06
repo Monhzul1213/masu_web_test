@@ -45,7 +45,7 @@ import login4 from './5.png';
 import login_1 from './login_1.png';
 import flag_en from './flag_en.png';
 import flag_mn from './flag_mn.png';
-import flag_kr from './flag_kr.jpg';
+import flag_kr from './flag_kr.png';
 import flag_cn from './flag_cn.png';
 
 import image1 from './i1.png';

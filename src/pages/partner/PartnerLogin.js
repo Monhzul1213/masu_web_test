@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import '../../css/login.css';
 import { partnerLogin, setIsLoggedIn, setPartnerLogin } from '../../services';
 import { header_image } from '../../assets';
-import { Button, DynamicAIIcon, Error, FloatingInput1, FloatingPassword1 } from '../../components/all';
+import { Button, DynamicAIIcon, Error, FloatingInput1, FloatingPassword1, LanguageLogin } from '../../components/all';
 import { Social1 } from '../../components/login';
 
 export function PartnerLogin(){
@@ -62,6 +62,9 @@ export function PartnerLogin(){
     <div className='login_container1'>
       <div style={{padding: 20}} />
       <img className='login_logo' src={header_image} alt='MASU LOGO' />
+      <div className='login_language_back'>
+        <LanguageLogin id='login_language' />
+      </div>
       <div style={{padding: 10}} />
       <div style={{flex: 1}} />
       <p className='lg_title'>Welcome <span className='lg_title2'>Back</span>!</p>

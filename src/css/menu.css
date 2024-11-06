@@ -40,7 +40,7 @@
   flex-flow: row;
   border-bottom: 2px solid var(--text4-color);
   justify-content: space-between;
-  padding: 14px;
+  padding: 10px;
 }
 .h_icon {
   height: 18px;
@@ -222,7 +222,7 @@
 .img_header{
   height: 40px;
   margin-right: 10px;
-  margin-top: 10px;
+  margin-top: -5px;
 }
 .header_img_back{
   display: flex;
@@ -238,11 +238,36 @@
 cursor: pointer;
 }
 .down_icon_back{
-  height: 20px;
-  margin-left: 10px;
-  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  margin: -5px auto 0 auto ;
+  /* margin-left: 10px;
+  margin-top: 10px; */
 }
 .down_icon_back:hover{
+  color: #b44af7;
+}
+.down_icon_back1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  margin: 0 auto 0 auto ;
+}
+.down_icon_back1:hover{
+  color: #b44af7;
+}
+
+.down_icon_back2{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  color: var(--root-color);
+}
+.down_icon_back2:hover{
   color: #b44af7;
 }
 .pos_image_back{
@@ -252,6 +277,7 @@ cursor: pointer;
   background: transparent;
   border-radius: var(--radius);
   margin-top: -10px;
+  margin-right: 20px;
   border: none;
   box-shadow: none;
   display: flex;
@@ -272,10 +298,10 @@ cursor: pointer;
 
 .p_title {
   font-weight: 400;
-  font-size: 15.5px;
+  font-size: 14px;
   color: var(--text-color);
   margin: 0;
-  line-height: 40px;
+  line-height: 35px;
 }
 
 .p_user {

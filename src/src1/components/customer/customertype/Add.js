@@ -4,13 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { ButtonRow, ModalTitle, Overlay, Error } from '../../all/all_m';
-import { Input } from '../../../../components/all';
 import { getList, sendRequest } from '../../../../services';
 import { TypeList } from './TypeList';
 import moment from 'moment';
 
 export function Add(props){
-  const { visible, selected, closeModal, setEdited, typeName, setTypeName, onSearch} = props;
+  const { visible, selected, closeModal, setEdited, typeName, onSearch} = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -33,6 +32,7 @@ export function Add(props){
     if(response?.error) setError(response?.error);
     else {
       response?.data.forEach(item=> {
+        item.price = item?.price ? item?.price : item?.standardPrice
         if(item.useSalesPrice === 'Y'){
           let salesLabel = moment(item.salesBeginDate).format('MM.DD')
             + '-' + moment(item.salesEndDate).format('MM.DD');
@@ -66,16 +66,20 @@ export function Add(props){
   }
 
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit' };
-  const inputProps = {value: typeName, setValue: setTypeName, label: t('customer.type'), disabled: true, setEdited, setError, width:300}
+  // const inputProps = {value: typeName, setValue: setTypeName, label: t('customer.type'), disabled: true, setEdited, setError, width:300}
   const listProps = {data, setEdited, setError, setData}
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={900}>
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={1500}>
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSupervisorAccount' title={t('customer.customer_type')} isMD={true} />
-          <Input {...inputProps}/>
-          <div className='gap'/>
+          {/* <Input {...inputProps}/> */}
+          <div className='cust_row'>
+            <p className='cust_text'>{t('customer.type')}: </p>
+            <div className='gap'/>
+            <p className='cust_text1'>{typeName?.value}</p>
+          </div>
           <TypeList {...listProps}/>
           {error && <Error error={error} id = 'm_error' />}
         </div>

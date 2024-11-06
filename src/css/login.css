@@ -17,6 +17,11 @@
   --link-font: 13px;
 }
 
+.language_back{
+  display: flex;
+  flex-flow: column;
+  margin: 0;
+}
 .login_language_back {
   position: absolute;
   top: 10px;
@@ -29,7 +34,7 @@
 }
 #login_language1 {
   padding: 5px;
-  color: var(--text2-color);
+  color: var(--text-color);
   font-size: 14px;
 }
 .menu_language_back {
@@ -46,8 +51,8 @@
   align-items: center;
 }
 .menu_language_logo {
-  height: 15px;
-  margin-right: 10px;
+  height: 20px;
+  margin-right: 5px;
 }
 .menu_language_logo1 {
   height: 18px;

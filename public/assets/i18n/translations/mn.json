@@ -70,7 +70,7 @@
     "/config": "Тохиргоо",
     "/report": "Тайлан",
     "/report/report_sales": "Борлуулалтын нэгтгэл",
-    "/report/report_invtentory": "Борлуулалт бараагаар",
+    "/report/report_inventory": "Борлуулалт бараагаар",
     "/report/report_category": "Борлуулалт категори",
     "/report/report_employee": "Борлуулалт ажилтнаар",
     "/report/report_payment": "Борлуулалт төлбөрийн төрлөөр",
@@ -168,7 +168,7 @@
     "report": "Тайлан",
     "install": "Борлуулалтын ПОС",
     "report_sales": "Борлуулалтын нэгтгэл",
-    "report_invtentory": "Борлуулалт бараагаар",
+    "report_inventory": "Борлуулалт бараагаар",
     "report_category": "Борлуулалт категори",
     "report_employee": "Борлуулалт ажилтнаар",
     "report_payment": "Борлуулалт төлбөрийн төрлөөр",
@@ -567,7 +567,7 @@
     "type": "Харилцагчийн төрөл",
     "no_type": "Төрөлгүй",
     "standardPrice": "Үнэ /STANDARD/",
-    "price": "Үнэ  /Харилцагч/",
+    "price": "Үнэ /Харилцагч/",
     "customer_type": "Харилцагчийн төрлийн үнэ"
   },
   "supplier":{

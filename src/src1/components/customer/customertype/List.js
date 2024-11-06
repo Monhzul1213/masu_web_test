@@ -65,8 +65,8 @@ const tableInstance = useTable( { columns, data, autoResetPage: false, initialSt
   return (
     <div >
       {!data?.length ? <Empty1 {...emptyProps} /> : 
-      <div className='table_scroll' style={{overflow: 'scroll'}} >
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 520}}>
+      <div style={{overflow: 'scroll'}} >
+        <div className='list_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 520}}>
               <Table {...tableProps} />
         </div>
       </div>}
