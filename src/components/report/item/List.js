@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 
 import '../../../css/report.css';
-import { PaginationTable, TableResize, Money } from '../../all';
+import { Money, TableRowResize } from '../../all';
 import { Header } from './Header';
 import moment from 'moment';
 
@@ -40,6 +40,13 @@ export function List(props){
                 {/* {item?.value === 'salesDateFull' ? <div>{moment(value)?.format('yyyy.MM.DD')}</div> : props?.value} */}
               </div>
             )
+          },
+          Footer: info => {
+            const total = React.useMemo(() =>
+              info.rows.reduce((sum, row) => row.values[item?.value] + sum, 0),
+              [info.rows]  )
+            return <>{item?.value !== 'barCode' && item?.value !== 'categoryName'  && item?.value !== 'siteName' 
+                      && item?.value !== 'custName' && item?.value !== 'salesDateFull'  ? <div style={{textAlign: 'right', paddingRight: 15}}>{item?.value === 'qty' || item?.value === 'returnQty' ? total : <Money value={total} fontSize={14} />} </div> : null}</>
           }
         });
       }
@@ -49,8 +56,8 @@ export function List(props){
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)';
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useBlockLayout, useResizeColumns);
-  const tableProps = { tableInstance };
+    initialState: { pageIndex: 0, pageSize: 2500000, sortBy: [{ id: 'salesDate', desc: true }] }}, useSortBy, usePagination, useBlockLayout, useResizeColumns);
+  const tableProps = { tableInstance, hasFooter: true };
   const filterProps = { onSearch: getData, size, filter, columns, data1: data, excelName, date,
     value: columns1, setValue: changeColumns, data: t('report.column'), className: 'rp_list_drop' };
   
@@ -59,10 +66,10 @@ export function List(props){
       <Header {...filterProps} />        
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <TableResize {...tableProps} />
+          <TableRowResize {...tableProps} />
         </div>
+        <p className='coupon_text'>{t('report.total')}{data?.length}</p>
       </div>
-      <PaginationTable {...tableProps} />
     </div>
   );
 }

@@ -164,6 +164,10 @@ export function Menu(props){
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("account.title")}</span>) : (t("account.title")), "/finance/account", null, null, null, msRole?.webEditSettings !== "Y"),
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webEditSettings !== "Y"),
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.journal")}</span>) : (t("transModel.journal")), "/finance/journal", null, null, null,msRole?.webEditSettings !== "Y"),
+        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.report")}</span>) : (t("transModel.report")), "/finance/report", <div className='gap'/>, 
+        [
+          getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.generel_journal")}</span>) : (t("transModel.generel_journal")), "/finance/report/generel_journal", null, null, null,msRole?.webEditSettings !== "Y")
+        ])
     ]),
     getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
     <img src={image9} alt='image9' />, null, null, msRole?.webManageCustomer !== 'Y'),

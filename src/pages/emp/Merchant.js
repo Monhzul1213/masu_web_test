@@ -24,7 +24,7 @@ export function Merchant ( props){
   const [vendor, setVendor] = useState([]);
   const [password, setPassword] = useState({ value: '' });
   const [currency, setCurrency] = useState({ value: '₮' });
-  const [market, setMarket] = useState({ value: '' });
+  const [market, setMarket] = useState({ value: null });
   const [markets, setMarkets] = useState([]);
   const [activity, setActivity] = useState({ value: null});
   const [addItem, setAddItem] = useState({ value: '' });
@@ -98,6 +98,7 @@ export function Merchant ( props){
       if(response?.error) setError(response?.error);
       else {
         setEdited(false);
+        setEdited1(false);
         const pass = password?.value ? password?.value : user?.password;
         const response1 = await dispatch(apiLogin(mail?.value, pass));
         if(response1?.error) setError(response1?.error);

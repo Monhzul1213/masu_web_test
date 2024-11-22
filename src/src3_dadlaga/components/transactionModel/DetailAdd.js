@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Select } from "antd";
-import { CustomSelect } from "../../../components/all";
+import { CustomSelect, Overlay } from "../../../components/all";
 import { SelectItem } from "../../../components/invt/inventory/add/SelectItem";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { getList } from "../../../services";
 import { useSelector } from "react-redux";
+import { useDebounce } from "../../../helpers";
 const { Option } = Select;
 
 export const DetailAdd = ({ addDetail, detail, search, setSearch }) => {
@@ -13,7 +14,27 @@ export const DetailAdd = ({ addDetail, detail, search, setSearch }) => {
   const dispatch = useDispatch();
   const { user, token } = useSelector((state) => state.login);
   const [items, setItems] = useState([]);
-  const [searchValue, setSearchValue] = useState();
+  // const [searchValue, setSearchValue] = useState();
+  const [loading, setLoading] = useState(false);
+  const [text, setText] = useDebounce();
+
+  useEffect(() => {
+    getData();
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  
+  const getData = async () => {
+    setLoading(true);
+    setSearch({ value: null });
+    let api = 'Txn/GetAccount' //[{ fieldName: "Name", value }, { fieldName: "SiteID", value: siteId?.value }, {fieldName : 'GetVariant', value : "Y"}];
+    let response = await dispatch(getList(user, token, api ))
+    if(response?.error) setSearch({ value: null, error: response?.error });
+    else setItems(response?.data?.acct);
+    setLoading(false);
+  }
+
   const onSelect = ({ value }) => {
     const selectedItem = items?.filter((item) => item.accountId === value)[0];
     const exists = detail?.findIndex((item) => item.accountId === value);
@@ -30,16 +51,6 @@ export const DetailAdd = ({ addDetail, detail, search, setSearch }) => {
       setSearch({ value: null, error: null });
     } else {
       setSearch({ value: null, error: "Энэ данс жагсаалтанд нэмэгдсэн байна" });
-    }
-    setSearchValue(null);
-  };
-  const onSearch = async (value) => {
-    setSearchValue(value);
-    if (value.length >= 3) {
-      const response = await dispatch(getList(user, token, "Txn/GetAccount"));
-      setItems(response?.data);
-    } else {
-      setItems([]);
     }
   };
 
@@ -62,8 +73,7 @@ export const DetailAdd = ({ addDetail, detail, search, setSearch }) => {
 
   const filterOption = (input, option) => {
     return (
-      option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
-      option?.sku?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0
     );
   };
 
@@ -75,15 +85,15 @@ export const DetailAdd = ({ addDetail, detail, search, setSearch }) => {
     className: "kit_select",
     classBack: "kit_search",
     renderItem,
-    onSearch,
+    onSearch : setText, text,
+    onFocus: getData,
     filterOption,
-    text: searchValue,
     setData: setItems,
   };
   return (
-    <div style={{ width: "100%" }}>
+    <Overlay loading={loading}>
       <CustomSelect {...selectProps} />
-    </div>
+    </Overlay>
     // <div
     //   style={{
     //     display: "flex",

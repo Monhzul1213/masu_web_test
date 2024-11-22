@@ -15,20 +15,20 @@ import {
   DynamicBSIcon,
   TableResize,
 } from "../../../components/all";
-import { DetailAdd } from "./DetailAdd";
+// import { DetailAdd } from "./DetailAdd";
 import { EditableCellInput } from "./EditableCell";
+import { ItemSelect } from "../../../src1/components/finance/journal/add/SelectItem";
 
 function Card(props) {
   const {
     handleFormula,
     handleCheck,
     size,
-    detail,
+    detail,setDetail,
     search,
     setSearch,
     setEdited,
     editable,
-    addDetail,
     onClickDelete,
   } = props;
   const { t, i18n } = useTranslation();
@@ -153,6 +153,11 @@ function Card(props) {
     );
   }, []);
 
+  const newItem = acct => {
+    return { accountID: acct?.accountId, acct: acct?.acct, drAmt: acct?.drAmt ?? 0, crAmt: acct?.crAmt ?? 0, acctCode: acct?.acctCode, acctName: acct?.acctName, 
+      isDebit: acct?.isDebit, status: acct?.status, currency: acct?.currency, itemDescr: acct?.itemDescr ?? '', rowStatus: 'I', isNew : true};
+  }
+
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
 
@@ -201,9 +206,10 @@ function Card(props) {
       >
         <TableResize {...tableProps} />
         {editable ? (
-          <DetailAdd
-            addDetail={addDetail}
-            detail={detail}
+          <ItemSelect
+            newItem={newItem}
+            data={detail}
+            setData={setDetail}
             search={search}
             setSearch={setSearch}
           />

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import moment from 'moment';
 
-import { PaginationTable, TableResize, Money, DynamicBSIcon } from '../../all';
+import { Money, DynamicBSIcon, TableRowResize } from '../../all';
 import { Drawer } from './Drawer';
 import { Header } from './Header';
 
@@ -22,11 +22,13 @@ export function List(props){
       'sale.vatDdtd', 'sale.vat_CustomerId', 'sale.useBonus', 'sale.useVoucher', 'sale.useCoupon', 'sale.useGiftCard', 'sale.consumerDescr'], period);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [i18n?.language, period]);
+  }, [i18n?.language, period, data]);
 
   const changeColumns = (value) => {
     let columns = [
-      { Header: t('report_receipt.t_no'), accessor: 'sale.salesNo', exLabel: t('report_receipt.t_no'), width: 125, maxWidth: 150, minWidth: 100 },
+      { Header: t('report_receipt.t_no'), accessor: 'sale.salesNo', exLabel: t('report_receipt.t_no'), width: 125, maxWidth: 150, minWidth: 100 ,
+      Footer: <div style={{textAlign: 'left', paddingLeft: 10}}>{t('report.total') + data?.length}</div> 
+      },
       {
         Header: t('page.date'), accessor: 'sale.salesDate',
         width: 100, minWidth: 75, maxWidth: 100,
@@ -61,7 +63,16 @@ export function List(props){
               item?.value === 'sale.status' ? (props?.value === 1 ? <DynamicBSIcon className='check_icon1' name='BsCheckSquare' /> : <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> ): 
               item?.value === 'sale.vatDdtd' ? props?.value: ( <Money value={props?.value} fontSize={14} />)}
             </div>
-            )
+            ),
+            Footer: info => {
+              const total = React.useMemo(() =>
+                info.rows.reduce((sum, row) => row.values[item?.value] + sum, 0),
+                [info.rows]  )
+              return <>{item?.value !== 'sale.customer' && item?.value !== 'sale.consumerDescr'  && item?.value !== 'sale.useBonus' 
+                        && item?.value !== 'sale.useVoucher' && item?.value !== 'sale.useCoupon' && item?.value !== 'sale.useGiftCard' 
+                        && item?.value !== 'sale.vatDdtd' && item?.value !== 'sale.vat_CustomerId' && item?.value !== 'sale.createdDate' && item?.value !== 'sale.status' 
+                        ? <div style={{textAlign: 'right', paddingRight: 15}}>{item?.value === 'qty' || item?.value === 'returnQty' ? total : <Money value={total} fontSize={14} />} </div> : null}</>
+            }
         });
       }
     });
@@ -91,9 +102,9 @@ export function List(props){
   }
 
   const tableInstance = useTable({ columns, data, autoResetPage: true, autoResetSortBy: false,
-    initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'sale.salesDate', desc: true }] }},
+    initialState: { pageIndex: 0, pageSize: 2500000, sortBy: [{ id: 'sale.salesDate', desc: true }] }},
     useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
-  const tableProps = { tableInstance, onRowClick };
+  const tableProps = { tableInstance, onRowClick, hasFooter: true };
   const drawerProps = { selected, open, setOpen };
   const filterProps = { onSearch: getData, size, filter, columns, data1 : data, excelName, 
   value: columns1, setValue: changeColumns, data: t('report_receipt.columns'), className: 'rp_list_drop' };
@@ -104,10 +115,9 @@ export function List(props){
       <Header {...filterProps} />        
       <div style={{overflowX: 'scroll'}}>
         <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <TableResize {...tableProps} />
+          <TableRowResize {...tableProps} />
         </div>
       </div>
-      <PaginationTable {...tableProps} />
     </div>
   );
 }

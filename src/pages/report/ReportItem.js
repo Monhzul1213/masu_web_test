@@ -63,35 +63,39 @@ function Screen(props){
   }
 
   const getTop = (data, filter) => {
-    let top = [];
+    let top = []; // Групплэсэн өгөгдөл хадгалах массив.
+
     data?.forEach(item => {
-      if(filter?.siteID){
-        let index = top.findIndex(t => t.siteID === item.siteID && t.invtID === item.invtID );
-        if(index === -1) top.push(item);
+      let filterCondition = false;
+      
+      if (filter?.siteID) {
+        filterCondition = top.findIndex(t => t.siteID === item.siteID && t.invtID === item.invtID) === -1;
+      } else if (filter?.custID) {
+        filterCondition = top.findIndex(t => t.custID === item.custID && t.invtID === item.invtID) === -1;
+      } else if (filter?.salesDateFull) {
+        filterCondition = top.findIndex(t => t.salesDateFull === item.salesDateFull && t.invtID === item.invtID) === -1;
+      } else {
+        filterCondition = top.findIndex(t => t.invtID === item.invtID) === -1;
       }
-      if(filter?.custID){
-        let index = top.findIndex(t => t.custID === item.custID && t.invtID === item.invtID );
-        if(index === -1) top.push(item);
-      }
-      else if(filter?.salesDateFull){
-        let index = top.findIndex(t => t.salesDateFull === item.salesDateFull && t.invtID === item.invtID );
-        if(index === -1) top.push(item);
-      }
-      else {
+  
+      if (filterCondition) {
+        top.push(item); // Шинэ мөр нэмэх.
+      } else {
+        // Бүх тоон утгыг нэгтгэх.
         let index = top.findIndex(t => t.invtID === item.invtID);
-        if(index === -1) top.push(item);
+        top[index] = {
+          ...top[index],
+          qty: top[index].qty + (item.qty || 0),
+          returnQty: top[index].returnQty + (item.returnQty || 0),
+          totalDiscAmt: top[index].totalDiscAmt + (item.totalDiscAmt || 0),
+          totalNetSalesAmt: top[index].totalNetSalesAmt + (item.totalNetSalesAmt || 0),
+          totalProfitAmt: top[index].totalProfitAmt + (item.totalProfitAmt || 0),
+          totalReturnAmt: top[index].totalReturnAmt + (item.totalReturnAmt || 0),
+          totalSalesAmt: top[index].totalSalesAmt + (item.totalSalesAmt || 0),
+          totalCost: top[index].totalCost + (item.totalCost || 0),
+          totalVatAmt: top[index].totalVatAmt + (item.totalVatAmt || 0),
+        };
       }
-      // else {
-      //   top[index].qty += item.qty;
-      //   top[index].returnQty += item.returnQty;
-      //   top[index].totalDiscAmt += item.totalDiscAmt;
-      //   top[index].totalNetSalesAmt += item.totalNetSalesAmt;
-      //   top[index].totalProfitAmt += item.totalProfitAmt;
-      //   top[index].totalReturnAmt += item.totalReturnAmt;
-      //   top[index].totalSalesAmt += item.totalSalesAmt;
-      //   top[index].totalCost += item.totalCost;
-      //   top[index].totalVatAmt += item.totalVatAmt;
-      // }
     });
     setOrgData(top);
     let topData = top?.sort((a, b) => b.totalNetSalesAmt - a.totalNetSalesAmt)?.slice(0, 5);

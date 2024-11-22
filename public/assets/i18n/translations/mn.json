@@ -161,7 +161,9 @@
     "/finance/template": "Гүйлгээний загвар",
     "/finance/template/add": "Гүйлгээний загвар бүртгэх",
     "/finance/journal": "Гүйлгээ",
-    "/finance/journal/journal_add": "Гүйлгээ хийх"
+    "/finance/journal/journal_add": "Гүйлгээ хийх",
+    "/finance/report": "Тайлан",
+    "/finance/report/generel_journal": "Ерөнхий журнал"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -1581,7 +1583,9 @@
     "sub": "Дэд данс",
     "debit": "Дэбит",
     "formula": "Томьёо",
-    "journal": "Гүйлгээ"
+    "journal": "Гүйлгээ",
+    "report": "Тайлан",
+    "generel_journal": "Ерөнхий журнал"
   },
   "info" : {
     "type": "Ангилал",

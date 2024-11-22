@@ -185,6 +185,14 @@
     font-weight: bold;
     margin-top: 10px;
 }
+.coupon_text1{
+    position: absolute;
+    bottom: 18px;
+    left: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+}
 .coupon_image_back{
     width: 450px;
     height: 200px;
