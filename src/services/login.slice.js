@@ -119,7 +119,8 @@ export const apiLogin = (mail, password, fromAd) => async dispatch => {
         error: null,
         token: response?.token,
         viewReport: response?.msRole?.webViewSalesReport === 'Y',
-        isAdmin: response?.isAdmin === 'Y'
+        isAdmin: response?.isAdmin === 'Y',
+        msMerchant: response?.msMerchant
       });
     }
   } catch (err) {

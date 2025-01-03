@@ -113,6 +113,7 @@
     "/employee/shift_list": "Shift List",
     "/customer/customer": "Customer",
     "/customer/customer_type": "Customer Type, Price",
+    "/customer/customer_import": "Import Customer",
     "/partner": "Partner",
     "/integration": "Integration",
     "/help": "Help",

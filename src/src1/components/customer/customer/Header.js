@@ -101,7 +101,7 @@ export function Header(props){
     setIsAr(value);
     onHide(branch, subBranch, value, search);
   }
-  const onClickImport = () => navigate('customer_import');
+  const onClickImport = () => navigate('/customer/customer_import');
 
   const width = showSearch ? 0 : (size?.width > 780 ? 620 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 495 ? 320 : (size?.width - 20));

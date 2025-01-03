@@ -50,11 +50,11 @@ export function InvoiceAdd(){
       let request = response?.data && response?.data?.invoice && response?.data?.invoice[0];
       if(request){
         request.label1 = (request.descr ?? '') + '-' + (request.empName ?? '') + '-' + (request.phone ?? '');
-        setApproved1(request?.approvedLevel1 === 'Y');
-        setApproved2(request?.approvedLevel2 === 'Y');
+        setApproved1(request?.approved_level1 === 'Y');
+        setApproved2(request?.approved_level2 === 'Y');
         setInvoice(request);
         setEditable1(user?.approvedLevel1);
-        setEditable2(user?.approvedLevel2 && request?.approvedLevel1 === 'Y');
+        setEditable2(user?.approvedLevel2 && request?.approved_level1 === 'Y');
       }
     }
   }

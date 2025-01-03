@@ -142,17 +142,17 @@ export function Menu(props){
     ]),
     getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer', 
     <img src={image2} alt='image2'/>, [
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer/customer', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer_type')}</span> : t('menu.customer_type'), '/customer/customer_type', null, null, null, msRole?.webManageEmployy !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer/customer', null, null, null, msRole?.webManageCustomer !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer_type')}</span> : t('menu.customer_type'), '/customer/customer_type', null, null, null, msRole?.webManageCustomer !== 'Y'),
 
     ]),
     getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.loyalty')}</span> : t('menu.loyalty'), '/loyalty', 
     <img src={image7} alt='image7' />, [
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.coupon')}</span> : t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.voucher')}</span> : t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageEmployy !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_discount')}</span> : t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.bonus')}</span> : t('menu.bonus'), '/loyalty/bonus', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.giftCard')}</span> : t("menu.giftCard"), "/loyalty/giftCard", null, null, null, msRole?.webManageItem !== "Y")
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.coupon')}</span> : t('menu.coupon'), '/loyalty/coupon', null, null, null, msRole?.webManageLoyalty !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.voucher')}</span> : t('menu.voucher'), '/loyalty/voucher', null, null, null, msRole?.webManageLoyalty !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_discount')}</span> : t('menu.invt_discount'), '/inventory/invt_discount', null, null, null, msRole?.webManageLoyalty !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.bonus')}</span> : t('menu.bonus'), '/loyalty/bonus', null, null, null, msRole?.webManageLoyalty !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.giftCard')}</span> : t("menu.giftCard"), "/loyalty/giftCard", null, null, null, msRole?.webManageLoyalty !== "Y")
     ]),
     hideTime ? null : getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('timetable.time')}</span> : t('timetable.time'), '/timetable', 
     <img src={image8} alt='image8' />, [

@@ -1,308 +1,156 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SizeMe } from "react-sizeme";
-// import Html from 'react-pdf-html';
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
-import { Filter, List } from "../../../../components/finance/report/general_journal";
+import { Filter } from "../../../../components/finance/report/general_journal";
 import '../../../../css/finance.css';
-import { useSelector } from "react-redux";
+import { sendRequest } from "../../../../../services";
 
 export function GeneralJournal() {
-    const { user } = useSelector((state) => state.login);
-    
-    const html = `
-    <html>
-    <head>
-        <title>Rpt_GLJournalList</title>
-        <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"/>
-        <style type="text/css">
-            .csA04C28A0 {color:#000000;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:'Times New Roman'; font-size:11px; font-weight:normal; font-style:normal; }
-            .csB8C3774E {color:#4A55A2;background-color:#EFF1F5;border-left-style: none;border-top-style: none;border-right:#FFFFFF 1px solid;border-bottom:#FFFFFF 1px solid;font-family:Tahoma; font-size:12px; font-weight:bold; font-style:normal; padding-top:4px;padding-left:4px;padding-bottom:4px;}
-            .cs8EE453EA {color:#4A55A2;background-color:#EFF1F5;border-left-style: none;border-top-style: none;border-right:#FFFFFF 1px solid;border-bottom:#FFFFFF 1px solid;font-family:Tahoma; font-size:12px; font-weight:bold; font-style:normal; padding-top:4px;padding-left:4px;padding-right:4px;padding-bottom:4px;}
-            .cs8D49975B {color:#4A55A2;background-color:#EFF1F5;border-left-style: none;border-top-style: none;border-right:#FFFFFF 1px solid;border-bottom:#FFFFFF 1px solid;font-family:Tahoma; font-size:12px; font-weight:bold; font-style:normal; padding-top:4px;padding-left:11px;padding-bottom:4px;}
-            .csCCCC758 {color:#4A55A2;background-color:#EFF1F5;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#FFFFFF 1px solid;font-family:Tahoma; font-size:12px; font-weight:bold; font-style:normal; padding-top:4px;padding-left:4px;padding-right:4px;padding-bottom:4px;}
-            .csF7EB0CA5 {color:#4A55A2;background-color:#F5F5F5;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:bold; font-style:normal; padding-top:4px;padding-left:4px;padding-bottom:4px;}
-            .csE172C9E1 {color:#4A55A2;background-color:#F5F5F5;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:bold; font-style:normal; padding-top:4px;padding-left:4px;padding-right:4px;padding-bottom:4px;}
-            .cs26E6DE06 {color:#4A55A2;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Tahoma; font-size:12px; font-weight:normal; font-style:normal; padding-top:4px;padding-left:4px;padding-right:4px;padding-bottom:4px;}
-            .csCCCBF907 {color:#5C6476;background-color:#EFF1F5;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:9px; font-weight:normal; font-style:normal; padding-top:4px;padding-left:4px;padding-right:4px;padding-bottom:4px;}
-            .csB3335A17 {color:#5C6476;background-color:#F5F5F5;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:bold; font-style:normal; padding-top:4px;padding-left:4px;padding-bottom:4px;}
-            .cs9C1F77F0 {color:#5C6476;background-color:#F5F5F5;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:bold; font-style:normal; padding-top:4px;padding-left:4px;padding-right:4px;padding-bottom:4px;}
-            .cs376BE254 {color:#5C6476;background-color:#FFFFFF;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Tahoma; font-size:12px; font-weight:normal; font-style:normal; }
-            .csBF6B980E {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:normal; font-style:normal; padding-top:4px;padding-left:4px;padding-bottom:4px;}
-            .csA8E73E03 {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:normal; font-style:normal; padding-top:4px;padding-left:4px;padding-right:4px;padding-bottom:4px;}
-            .cs1E07F7AF {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:9px; font-weight:normal; font-style:normal; padding-top:4px;padding-left:4px;padding-right:9px;padding-bottom:4px;}
-            .cs6497CDF {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Tahoma; font-size:10px; font-weight:normal; font-style:normal;}
-            .cs6497CDF1 {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Tahoma; font-size:10px; font-weight:normal; font-style:normal; text-align:right; padding-right:20px; }
-            .csA719B1F9 {color:#FFFFFF;background-color:#4A55A2;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Tahoma; font-size:12px; font-weight:bold; font-style:normal; padding-left:2px;padding-right:2px;}
-            .csF7D3565D {height:0px;width:0px;overflow:hidden;font-size:0px;line-height:0px;}
-        </style>
-    </head>
-    <body leftMargin=10 topMargin=10 rightMargin=10 bottomMargin=10 style="background-color:#FFFFFF">
-    <table cellpadding="0" cellspacing="0" border="0" style="border-width:0px;empty-cells:show;width:100%;height:472px;position:relative;">
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:19px;"></td>
-            <td style="width:100px;"></td>
-            <td style="width:13px;"></td>
-            <td style="width:38px;"></td>
-            <td style="width:39px;"></td>
-            <td style="width:52px;"></td>
-            <td style="width:34px;"></td>
-            <td style="width:63px;"></td>
-            <td style="width:152px;"></td>
-            <td style="width:8px;"></td>
-            <td style="width:27px;"></td>
-            <td style="width:48px;"></td>
-            <td style="width:13px;"></td>
-            <td style="width:18px;"></td>
-            <td style="width:52px;"></td>
-            <td style="width:61px;"></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:16px;"></td>
-            <td class="csA04C28A0" colspan="2" rowspan="2" style="width:113px;height:38px;text-align:left;vertical-align:top;"><div style="overflow:hidden;width:113px;height:38px;">
-                <img alt="" src="logo.png" style="width:0px;height:0px;margin-top:19px;" /></div>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:22px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="cs6497CDF1" colspan="5" style="width:192px;height:22px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]-->${user?.msMerchant?.descr}</td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:19px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:30px;"></td>
-            <td class="csA719B1F9" colspan="15" style="width:714px;height:30px;line-height:14px;text-align:center;vertical-align:middle;"><nobr>ЕРӨНХИЙ&nbsp;ЖУРНАЛ</nobr></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:19px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:19px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="cs8D49975B" colspan="2" style="width:63px;height:10px;line-height:14px;text-align:left;vertical-align:middle;"><div style="overflow:hidden;width:59px;height:19px;">
-                <div style="width:59px;height:10px;overflow:hidden;display:table;">
-                    <div style="vertical-align:middle;display:table-cell;">
-                        <nobr>Огноо</nobr></div>
-                </div>
-            </div>
-            </td>
-            <td class="cs26E6DE06" colspan="4" style="width:136px;height:11px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:18px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:25px;"></td>
-            <td class="csB8C3774E" colspan="3" rowspan="2" style="width:146px;height:41px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Данс</nobr></td>
-            <td class="csB8C3774E" colspan="2" rowspan="2" style="width:86px;height:41px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Харилцагч</nobr></td>
-            <td class="csB8C3774E" colspan="3" rowspan="2" style="width:244px;height:41px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Гүйлгээний&nbsp;утга</nobr></td>
-            <td class="csCCCC758" colspan="7" style="width:219px;height:16px;line-height:13px;text-align:center;vertical-align:middle;"><nobr>Дүн</nobr></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:25px;"></td>
-            <td class="cs8EE453EA" colspan="5" style="width:105px;height:16px;line-height:13px;text-align:right;vertical-align:middle;"><nobr>Дебит</nobr></td>
-            <td class="csCCCC758" colspan="2" style="width:105px;height:16px;line-height:13px;text-align:right;vertical-align:middle;"><nobr>Кредит</nobr></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:18px;"></td>
-            <td class="csF7EB0CA5" colspan="3" style="width:147px;height:9px;line-height:11px;text-align:left;vertical-align:middle;"><nobr>Баримтын&nbsp;№&nbsp;:</nobr></td>
-            <td class="csF7EB0CA5" colspan="3" style="width:121px;height:9px;line-height:11px;text-align:left;vertical-align:middle;"><nobr>Огноо&nbsp;:</nobr></td>
-            <td class="csE172C9E1" style="width:55px;height:9px;line-height:11px;text-align:right;vertical-align:middle;"><nobr>Дүн&nbsp;:</nobr></td>
-            <td class="csF7EB0CA5" colspan="8" style="width:375px;height:9px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:19px;"></td>
-            <td class="csBF6B980E" colspan="3" style="width:147px;height:10px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]-->kk</td>
-            <td class="csBF6B980E" colspan="2" style="width:87px;height:10px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-            <td class="csBF6B980E" colspan="3" style="width:245px;height:10px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-            <td class="csA8E73E03" colspan="5" style="width:106px;height:10px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]-->ll</td>
-            <td class="csA8E73E03" colspan="2" style="width:105px;height:10px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:19px;"></td>
-            <td class="csB3335A17" colspan="8" style="width:487px;height:10px;line-height:11px;text-align:left;vertical-align:middle;"><nobr>Нийт</nobr></td>
-            <td class="cs9C1F77F0" colspan="5" style="width:106px;height:10px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-            <td class="cs9C1F77F0" colspan="2" style="width:105px;height:10px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:47px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:66px;"></td>
-            <td></td>
-            <td class="cs376BE254" colspan="13" style="width:557px;height:66px;line-height:13px;text-align:left;vertical-align:middle;"><nobr>Хөтөлсөн&nbsp;нягтлан&nbsp;бодогч&nbsp;:&nbsp;		/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	/	</nobr><br/><br/><br/><nobr>Захирал&nbsp;:&nbsp;				/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	/		</nobr><br/><nobr>		</nobr></td>
-            <td></td>
-        </tr>
-        <tr style="vertical-align:top;">
-            <td style="width:0px;height:53px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr class="footer" style="vertical-align:bottom;">
-            <td style="width:0px;height:19px;"></td>
-            <td class="cs6497CDF" colspan="4" style="width:190px;height:19px;line-height:11px;text-align:left;vertical-align:middle;"><nobr>Хэвлэсэн:&nbsp;2024.11.11&nbsp;09:13:56</nobr></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="cs6497CDF" colspan="3" style="width:131px;height:19px;line-height:11px;text-align:right;vertical-align:middle;"><nobr>1/1</nobr></td>
-        </tr>
-    </table>
-    </body>
-    </html>
-  `
-    const data = {
-            ognoo: "10010000 ",
-            barimt: "Эхлэл223",
-            dun: 910000,
-            body_data: [
-                {
-                account: "10010000 - Касс",
-                customer: "Эхлэл ХХК",
-                description: "Хангамжийн зүйлс худалдан авсан",
-                debit: 591000,
-                credit: 0,
-                },
-                {
-                account: "14050000 - Хангамж",
-                customer: "Эхлэл ХХК",
-                description: "Хангамжийн зүйлс худалдан авсан",
-                debit: 0,
-                credit: 591000,
-                },
-                {
-                    account: "14050000 - Хангамж",
-                    customer: "Эхлэл ХХК",
-                    description: "Хангамжийн ",
-                    debit: 0,
-                    credit: 591000,
-                },
-                {
-                    account: "14050000 - Хангамж",
-                    customer: "Эхлэл ХХК",
-                    description: "Хангамжийн зүйлс худалдан авсан",
-                    debit: 0,
-                    credit: 591000,
-                },
-            ]
-            }
+    const [data, setData] = useState();
+    const [balData, setBalData] = useState();
+    const [acctData, setAcctData] = useState();
+    const [journalData, setJournalData] = useState();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
+    const [date, setDate] = useState([moment().startOf('month'), moment()]);
+    const [type, setType] = useState('uspgl_JournalBalanceReport');
+    const { user, token } = useSelector((state) => state.login);
+    const dispatch = useDispatch();
 
-return (
-    <div className="s_container_r" >
-        <SizeMe>
-          {({ size }) => (
-            <div>
-            <Filter size={size} />
-            <List size={size} data={data?.body_data} html={html}/>
-            </div>
-          )}
-        </SizeMe>
-    </div>
-);
+    useEffect(() => {
+        let query = {
+            storedName: type, moduleID: "IN", 
+            business: [
+                {fieldName: "BeginDate", value: date[0]?.format('yyyy.MM.DD')},
+                {fieldName: "EndDate", value: date[1]?.format('yyyy.MM.DD')}
+        ]};
+        getData(query);
+        return () => {};
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+
+    const getData = async (query) => {
+        setLoading(true);
+        let response = query?.storedName === 'uspgl_ReportJournalList' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
+        let response1 = query?.storedName === 'uspgl_JournalBalanceReport' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
+        let response2 = query?.storedName === 'uspgl_Report_AccountStatement' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
+        let response3 = query?.storedName === 'uspgl_ReportGLJournal' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
+        // let response4 = query?.storedName === 'uspgl_WorkSheet' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
+        // console.log(response4);
+        if(response?.error) setError(response?.error );
+        else {
+            const newData = [];
+            response?.data?.header?.forEach(item => {
+                const relatedDtl = response?.data?.dtl?.filter(d => d.journalID === item.journalID);
+                const totalDr = relatedDtl.reduce((sum, item) => sum + item.drAmt, 0);
+                const totalCr = relatedDtl.reduce((sum, item) => sum + item.crAmt, 0);
+                newData.push({...item, dtl: relatedDtl, totalDr, totalCr })
+            })
+            let header = null;
+            response?.data?.company?.forEach(item => {
+                header = {cmpName: item?.companyName, dateRange: item?.dateRange}
+            })
+            setData({newData, header});
+        }
+        if(response1?.error) setError(response1?.error );
+        else {
+            let totalDr = 0, totalCr = 0, totalEDr = 0, totalECr = 0, totalBDr = 0, totalBCr = 0;
+            const newData = [];
+            response1?.data?.journal?.forEach(item => {
+                let group = newData.find(r => r.groupAcctParent === item.groupAcctParent);
+                if (!group) {
+                    group = { groupAcctParent: item.groupAcctParent, datas: [] };
+                    newData.push(group);
+                }
+                let subGroup = group.datas.find(d => d.groupAcct === item.groupAcct);
+                if (!subGroup) {
+                    subGroup = { groupAcct: item.groupAcct, totalDrAmt: 0, totalCrAmt: 0,totalEcrAmt: 0,totalEdrAmt: 0,totalBdrAmt: 0,totalBcrAmt: 0, data: [] };
+                    group.datas.push(subGroup);
+                }
+                subGroup.data.push(item);
+                subGroup.totalDrAmt += item?.drAmt;
+                subGroup.totalCrAmt += item?.crAmt;
+                subGroup.totalEcrAmt += item?.eCrAmt;
+                subGroup.totalEdrAmt += item?.eDrAmt;
+                subGroup.totalBcrAmt += item?.bCrAmt;
+                subGroup.totalBdrAmt += item?.bDrAmt;
+            });
+            newData?.forEach(group => {
+                group?.datas?.forEach(item => {
+                    totalDr += item.totalDrAmt;
+                    totalCr += item.totalCrAmt;
+                    totalEDr += item.totalEdrAmt;
+                    totalECr += item.totalEcrAmt;
+                    totalBDr += item.totalBdrAmt;
+                    totalBCr += item.totalBcrAmt;
+                });
+            })
+            let header = null;
+            response1?.data?.company?.forEach(item => {
+                header = {cmpName: item?.companyName, dateRange: item?.dateRange}
+            })
+            setBalData({data: newData, totalDr, totalCr, totalECr,totalEDr, totalBDr, totalBCr, header});
+        }
+        if(response2?.error) setError(response2?.error );
+        else {
+            const newData = [];
+            response2?.data?.detail?.forEach(item => {
+                let grpData = newData.find(g => g.acctID === item.acctID);
+                if (!grpData) {
+                    grpData = { acctID: item.acctID, acct: item?.acct, baseUldegdel: item?.baseUldegdel, 
+                                totalOrlogo:0, totalUldegdel:0, totalZarlaga: 0, curyID: item?.curyID, itemData: [] };
+                    newData.push(grpData);
+                }          
+                grpData.itemData.push(item);
+                grpData.totalOrlogo += item?.orlogo
+                grpData.totalZarlaga += item?.zarlaga
+                grpData.totalUldegdel += item?.uldegdel
+
+                grpData?.itemData.forEach((item, index) => {
+                    item.no = index + 1;
+                });   
+            });
+            let header = null;
+            response2?.data?.header?.forEach(item => {
+                header = {cmpName: item?.companyName, dateRange: item?.dateRange}
+            })
+            setAcctData({newData, header});
+        }
+        if(response3?.error) setError(response3?.error );
+        else {
+            const newData = [];
+            response3?.data?.detail?.forEach(item => {
+                // const relatedDtl = response?.data?.dtl?.filter(d => d.journalID === item.journalID);
+
+                console.log(item);
+            });
+            let header = null;
+            response3?.data?.company?.forEach(item => {
+                header = {cmpName: item?.companyName, dateRange: item?.dateRange}
+            })
+            setJournalData({newData, header});
+        }
+        setLoading(false);
+    };
+    
+    const filterProps = {date, setDate, type, setType, onSearch: getData, loading, error};
+
+    return (
+        <div className="s_container_f" >
+            <SizeMe>
+            {({ size }) => (
+                <div>
+                <Filter size={size} {...filterProps}/>
+                {/* {type === 'uspgl_JournalBalanceReport' ? <BalanceList size={size} data={balData}/> : 
+                 type === 'uspgl_Report_AccountStatement' ? <AcctList size={size} data={acctData}/> : 
+                 type === 'uspgl_ReportGLJournal' ? <JournalList size={size} data={journalData}/> : 
+                 type === 'uspgl_ReportJournalList' ? <GljournalList size={size} data={data}/> : 
+                 type === 'uspgl_WorkSheet' ? <WorkList size={size} data={data}/> : ''} */}
+                </div>
+            )}
+            </SizeMe>
+        </div>
+    );
 }

@@ -110,8 +110,8 @@ export function AccountAddModal(props) {
       getConstants(user, token, "glAccount_AcctType", setSystemCash)
     );
     const response2 = await dispatch(getList(user, token, "Site/GetSite"));
-    setSiteDatas([...(response2?.data || []), { siteId: null, name: null }]);
     if (response?.error) setError(response?.error);
+    else setSiteDatas([...(response2?.data || [])]);
   };
 
   const onClickCancel = () => {

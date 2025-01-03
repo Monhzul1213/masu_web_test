@@ -113,6 +113,7 @@
     "/employee/shift_list": "Цагийн жагсаалт",
     "/customer/customer": "Харилцагч",
     "/customer/customer_type": "Харилцагчийн төрөл, үнэ",
+    "/customer/customer_import": "Харилцагч оруулах",
     "/partner": "Партнер",
     "/integration": "Интеграци",
     "/help": "Тусламж",

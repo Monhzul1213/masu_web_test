@@ -39,15 +39,15 @@ function Card(props) {
         Header: t("transModel.acct"),
         accessor: "acct",
         customStyle: { minWidth: 150 },
-        width: 170,
+        width: 150,
         minWidth: 150,
       },
       {
         Header: t("transModel.acctName"),
         accessor: "acctName",
         isText: true,
-        width: 200,
-        minWidth: 180,
+        width: 280,
+        minWidth: 200,
       },
       {
         Header: t("transModel.debit"),

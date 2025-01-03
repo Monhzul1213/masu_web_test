@@ -1,13 +1,31 @@
 @import './color.css';
 
+.s_container_f {
+    margin: var(--page-padding) 0;
+    padding: 0 var(--page-padding);
+    overflow: scroll;
+    max-height: calc(100vh - var(--header-height) - 26px * 2);
+}
+
 .fi_pdf_back{
     padding: 10px;
-    max-width: 80%;
+    max-width: 85%;
+    max-height: calc(90vh - 100px );
     overflow-x: scroll ;
     background-color: #b8b6b678;
 }
+
+.fi_pdf_back1{
+    padding: 10px;
+    max-width: 220mm;
+    max-height: calc(90vh - 100px );
+    overflow-x: scroll ;
+    background-color: #b8b6b678;
+}
+
 .list_pdf_back{
     display: flex;
+    flex-flow: column;
     justify-content: center;
     max-height: 720px;
     overflow-y: scroll ;
@@ -21,7 +39,10 @@
     display: flex;
     justify-content: center;
 }
-
+.fi_pdf_back1:hover>.j_header_back{
+    display: flex;
+    justify-content: center;
+}
 .download_icon{
     font-size: 30px;
     color: var(--text2-color);
@@ -31,13 +52,13 @@
 }
 .a4-layout {
     width: 100%;
-    height: 297mm;
-    padding: 5mm 10mm;
+    /* height: 297mm; */
+    padding: 2mm 10mm;
     background-color: white;
     border: 0px solid #ddd;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     /* margin: auto; */
-    /* max-height: 300px; */
+    /* max-height: calc(90vh - 100px ); */
     /* overflow-y: scroll; */
 }
 .page-break {

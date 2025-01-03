@@ -113,6 +113,7 @@
     "/employee/shift_list": "时间表",
     "/customer/customer": "客户",
     "/customer/customer_type": "客户类型, 价格",
+    "/customer/customer_import": "导入客户",
     "/partner": "合作伙伴",
     "/integration": "一体化",
     "/help": "帮助",

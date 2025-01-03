@@ -113,6 +113,7 @@
     "/employee/shift_list": "근무 시간 목록",
     "/customer/customer": "고객",
     "/customer/customer_type": "고객 유형 및 가격",
+    "/customer/customer_import": "고객 가져오기",
     "/partner": "파트너",
     "/integration": "통합",
     "/help": "도움말",

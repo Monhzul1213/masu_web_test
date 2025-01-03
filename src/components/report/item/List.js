@@ -68,7 +68,7 @@ export function List(props){
         <div id='paging' className='table_scroll' style={{overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableRowResize {...tableProps} />
         </div>
-        <p className='coupon_text'>{t('report.total')}{data?.length}</p>
+        <p className='coupon_text1'>{t('report.total')}{data?.length}</p>
       </div>
     </div>
   );

@@ -25,7 +25,7 @@ export function CustomerImport(){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onClickCancel = () => navigate('/customer');
+  const onClickCancel = () => navigate('/customer/customer');
 
   const onClickSave = async () => {
     setError(null);

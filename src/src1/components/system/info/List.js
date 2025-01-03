@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import moment from 'moment';
 
-import { FooterTable, Money } from '../../../../components/all';
+import { Empty1, FooterTable, Money } from '../../../../components/all';
 import { Detail } from './Detail';
 import { getList } from '../../../../services';
 import { EditableCell } from './EditableCell';
@@ -22,61 +22,6 @@ export function List(props){
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   setColumns([
-  //     {
-  //       Header: <div style={{textAlign: 'right'}}>{t('system.id')}</div>, accessor: 'merchantID',
-  //       Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
-  //     },
-  //     { Header: t('info.type'), accessor: 'classname' , customStyle: { width: 100 }},
-  //     { Header: t('info.subtype'), accessor: 'subclassname' , customStyle: { width: 250 }},
-  //     { Header: t('tax.customer'), accessor: 'customer' , customStyle: { width: 200 }},
-  //     { Header: t('invoices.batch'), accessor: 'subscriptionType' , customStyle: { width: 100 }},
-  //     { Header: t('employee.password'), accessor: 'user1' , customStyle: { width: 100 },
-  //       Cell: props => <div style={{ paddingRight: 15}}><EditableCell {...props} /></div>},
-  //     {
-  //       Header: <div style={{textAlign: 'right'}}>{t('system.site_qty')}</div>, accessor: 'siteQty', customStyle: { width: 80 },
-  //       Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
-  //     },
-  //     {
-  //       Header: <div style={{textAlign: 'right'}}>{t('system.pos_qty')}</div>, accessor: 'terminalQty', customStyle: { width: 80 },
-  //       Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
-  //     },
-  //     {
-  //       Header: <div style={{textAlign: 'right'}}>{t('system.emp_qty')}</div>, accessor: 'empQty', customStyle: { width: 80 },
-  //       Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
-  //     },
-  //     {
-  //       Header: <div style={{textAlign: 'right'}}>{t('system.sub_qty')}</div>, accessor: 'subQty', customStyle: { width: 80 },
-  //       Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
-  //     },
-  //     {
-  //       Header: <div style={{textAlign: 'right'}}>{t('system.sub_amount')}</div>, accessor: 'subAmount', customStyle: { width: 80 },
-  //       Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>)
-  //     },
-  //     { Header: <div style={{textAlign: 'right'}}> {t('system.sales_amt')}</div>, accessor: 'totalSales',customStyle: { width: 80 },
-  //       Cell: ({ value, row, onClickLink }) => {
-  //         return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} fontSize={14} /></div>);
-  //       }
-  //     },
-  //     {
-  //       Header: <div style={{textAlign: 'right'}}>{t('system.sales_qty')}</div>, accessor: 'salesQty', customStyle: { width: 80 },
-  //       Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
-  //     },
-  //     { Header: t('system.noat'), accessor: 'useNuatus' ,
-  //     Cell: props => (<div >{props?.value === 'Y' ? t('page.yes'): t('page.no')}</div>)
-  //     },
-  //     { Header: t('system.date'), accessor: 'createdDate', customStyle: { minWidth: 80 },
-  //       Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
-  //     },
-  //     {
-  //       Header: <div style={{textAlign: 'right'}}>{t('system.partner')}</div>, accessor: 'partnerCode', customStyle: { width: 80 },
-  //       Cell: props => (<div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>)
-  //     },
-  //   ]);
-  //   return () => {};
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [i18n?.language]);
 
   useEffect(() => {
     if(size?.width >= 660) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 57px)');
@@ -170,14 +115,16 @@ export function List(props){
   const tableProps = { tableInstance, hasFooter: true };
   let detailProps = { data : detail, visible, closeModal, loading};
   const headerProps = {size, setError, onSearch , filter, data, value: columns1, setValue: changeColumns, data1: t('info.columns'), className1: 'rp_list_drop'};
+  const emptyProps = { icon: 'MdReceipt', type: 'time', noDescr: true };
 
   return (
     <div>
       {visible && <Detail {...detailProps} />}
       <Header {...headerProps}/>
+      {!data?.length ? <Empty1 {...emptyProps} /> : 
       <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', overflowX: 'scroll', maxHeight, minWidth: 400}}>
         <FooterTable {...tableProps} />
-      </div>
+      </div>}
     </div>
   );
 }
