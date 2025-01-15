@@ -34,7 +34,7 @@ export function AcctList(props){
                 .csBF6B980E {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:normal; font-style:normal; padding-top:5px;padding-left:5px;padding-bottom:5px;}
                 .csA8E73E03 {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:normal; font-style:normal; padding-top:5px;padding-left:5px;padding-right:5px;padding-bottom:5px;}
                 .cs1E07F7AF {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom:#E5E7EB 1px solid;font-family:Tahoma; font-size:10px; font-weight:normal; font-style:normal; padding-top:5px;padding-left:5px;padding-right:5px;padding-bottom:5px;}
-                .cs6497CDF {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Tahoma; font-size:12px; font-weight:normal; font-style:normal; }
+                .cs6497CDF {color:#5C6476;background-color:transparent;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Tahoma; font-size:11px; font-weight:normal; font-style:normal; }
                 .csA719B1F9 {color:#FFFFFF;background-color:#4A55A2;border-left-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;font-family:Tahoma; font-size:12px; font-weight:bold; font-style:normal; padding-left:2px;padding-right:2px;}
                 .csF7D3565D {height:0px;width:0px;overflow:hidden;font-size:0px;line-height:0px;}
             </style>
@@ -60,8 +60,8 @@ export function AcctList(props){
             </tr>
             <tr style="vertical-align:top;">
                 <td style="width:0px;height:16px;"></td>
-                <td class="csA999931B" colspan="3" rowspan="2" style="width:113px;height:38px;text-align:left;vertical-align:top;"><div style="overflow:hidden;width:113px;height:38px;">
-                    <img alt="" src="logo.png" style="width:0px;height:0px;margin-top:19px;" /></div>
+                <td class="csA999931B" colspan="5" rowspan="3" style="width:350px;height:50px;text-align:left;vertical-align:top;"><div style="overflow:hidden;width:130px;height:40px;">
+                    <img alt="" src=${login_image} style="width:100%;height:100%;margin-top:0px;" /></div>
                 </td>
                 <td></td>
                 <td></td>
@@ -212,9 +212,9 @@ export function AcctList(props){
                 <td style="width:0px;height:19px;"></td>
                 <td class="cs423AC207" colspan="5" style="width:293px;height:10px;"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]--></td>
                 <td class="cs1E07F7AF" style="width:90px;height:10px;line-height:10px;text-align:right;vertical-align:middle;"><nobr>валютаар</nobr></td>
-                <td class="cs9C1F77F0" colspan="2" style="width:98px;height:10px;line-height:11px;text-align:right;vertical-align:middle;"><nobr>None</nobr></td>
-                <td class="cs9C1F77F0" colspan="4" style="width:98px;height:10px;line-height:11px;text-align:right;vertical-align:middle;"><nobr>None</nobr></td>
-                <td class="cs9C1F77F0" colspan="2" style="width:98px;height:10px;line-height:11px;text-align:right;vertical-align:middle;"><nobr>label23</nobr></td>
+                <td class="cs9C1F77F0" colspan="2" style="width:98px;height:10px;line-height:11px;text-align:right;vertical-align:middle;"><nobr></nobr></td>
+                <td class="cs9C1F77F0" colspan="4" style="width:98px;height:10px;line-height:11px;text-align:right;vertical-align:middle;"><nobr></nobr></td>
+                <td class="cs9C1F77F0" colspan="2" style="width:98px;height:10px;line-height:11px;text-align:right;vertical-align:middle;"><nobr></nobr></td>
             </tr>` : ''}`
             ).join("")}
             <tr style="vertical-align:top;">

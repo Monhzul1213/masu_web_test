@@ -3,19 +3,22 @@ import { SizeMe } from 'react-sizeme';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 import '../../../css/order.css';
 import '../../../css/invt.css';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
-import { Filter, List } from '../../components/management/count/list';
+import { List } from '../../components/management/count/list';
 import { Subscription } from '../../../components/management/adjust/list';
 
 export function Count(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [excelName, setExcelName] = useState('');
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,6 +45,7 @@ export function Count(){
     }
     else if(response?.error) setError(response?.error);
     else setData(response?.data?.picount);
+    setExcelName(t('header./management/count'))
     setLoading(false);
   }
 
@@ -53,8 +57,9 @@ export function Count(){
     onSearch(query);
   }
 
-  const headerProps = { onClickAdd, setError, onSearch };
-  const listProps = { data, onClickAdd };
+  
+  // const headerProps = { onClickAdd, setError, onSearch };
+  const listProps = { data, onClickAdd, setError, onSearch, excelName, setData };
   const subProps = { visible, setVisible, onDone };
 
   return (
@@ -64,7 +69,7 @@ export function Count(){
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
           <div className='i_list_cont' id='invt_list'>
-            <Filter {...headerProps} size={size} />
+            {/* <Filter {...headerProps} size={size} /> */}
             {!data?.length ? <Empty1 icon='MdOutlineArticle' /> : <List {...listProps} size={size} />}
           </div>
         }</SizeMe>

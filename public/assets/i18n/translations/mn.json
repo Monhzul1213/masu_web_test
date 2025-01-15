@@ -1502,7 +1502,9 @@
     "emp": "Ажилтан",
     "site":"Салбар",
     "total_amount": "Нийт дүн",
-    "all_cancel": "Бүгдийг болих"
+    "all_cancel": "Бүгдийг болих",
+    "import_link": "Тооллогын формат татах",
+    "import_title":"Тооллогын бараа оруулах"
   },                                                                                                
   "giftCard": {
     "title": "GiftCard",

@@ -37,8 +37,8 @@ export function GeneralJournal() {
         let response1 = query?.storedName === 'uspgl_JournalBalanceReport' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
         let response2 = query?.storedName === 'uspgl_Report_AccountStatement' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
         let response3 = query?.storedName === 'uspgl_ReportGLJournal' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
-        // let response4 = query?.storedName === 'uspgl_WorkSheet' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
-        // console.log(response4);
+        let response4 = query?.storedName === 'uspgl_WorkSheet' && await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
+        console.log(response4);
         if(response?.error) setError(response?.error );
         else {
             const newData = [];
@@ -122,15 +122,18 @@ export function GeneralJournal() {
         else {
             const newData = [];
             response3?.data?.detail?.forEach(item => {
-                // const relatedDtl = response?.data?.dtl?.filter(d => d.journalID === item.journalID);
-
-                console.log(item);
+                let grpData = newData.find(g => g.acctID === item.acctID);
+                if (!grpData) {
+                    grpData = { acctID: item.acctID, acct: item?.acct, baseUldegdel: item?.beginBalance, itemData: [] };
+                    newData.push(grpData);
+                }          
+                grpData.itemData.push(item);
             });
             let header = null;
             response3?.data?.company?.forEach(item => {
                 header = {cmpName: item?.companyName, dateRange: item?.dateRange}
             })
-            setJournalData({newData, header});
+            setJournalData({data: newData, header});
         }
         setLoading(false);
     };

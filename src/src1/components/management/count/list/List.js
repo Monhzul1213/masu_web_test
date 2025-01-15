@@ -5,9 +5,10 @@ import { createSearchParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 import { TableResize, Money, PaginationTable } from '../../../../../components/all';
+import { Filter } from './Filter';
 
 export function List(props){
-  const { data, size } = props;
+  const { data, size, excelName, setData, onClickAdd, onClickDelete, show, setError, onSearch } = props;
   const { t, i18n } = useTranslation();
   const [maxHeight, setMaxHeight] = useState('300px');
   const [columns, setColumns] = useState([]);
@@ -15,46 +16,43 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('count.t_no'), accessor: 'picountNo', width: 110, minWidth: 80 },
+      { Header: t('count.t_no'), accessor: 'picountNo', width: 110, minWidth: 80, exLabel: t('count.t_no') },
       {
-        Header: t('adjust.t_date'), accessor: 'txnDate', width: 120, minWidth: 100,
+        Header: t('adjust.t_date'), accessor: 'txnDate', width: 120, minWidth: 100, exLabel: t('adjust.t_date'),
         Cell: ({ value }) => <div style={{}}>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>
-
       },
-      { Header: t('count.emp'), accessor: 'txnEmpName', width: 120, minWidth: 90 },
-      { Header: t('count.site'), accessor: 'siteName', width: 120, minWidth: 90 },
+      { Header: t('count.emp'), accessor: 'txnEmpName', width: 120, minWidth: 90, exLabel: t('count.emp') },
+      { Header: t('count.site'), accessor: 'siteName', width: 120, minWidth: 90, exLabel: t('count.site')},
+      { Header: t('adjust.t_status'), accessor: 'statusName', width: 130, minWidth: 80, exLabel: t('adjust.t_status') },
       {
-        Header: t('adjust.t_status'), accessor: 'statusName', width: 130, minWidth: 80,
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('count.countQty')}</div>, accessor: 'totalCountQty',
+        Header: <div style={{textAlign: 'right'}}>{t('count.countQty')}</div>, accessor: 'totalCountQty', exLabel: t('count.countQty'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 120, minWidth: 100,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.countedQty')}</div>, accessor: 'totalCountedQty',
+        Header: <div style={{textAlign: 'right'}}>{t('count.countedQty')}</div>, accessor: 'totalCountedQty', exLabel: t('count.countedQty'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 150, minWidth: 140,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.varQty')}</div>, accessor: 'totalVarianceQty',
+        Header: <div style={{textAlign: 'right'}}>{t('count.varQty')}</div>, accessor: 'totalVarianceQty', exLabel: t('count.varQty'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 150, minWidth: 140,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost',
+        Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost', exLabel: t('adjust.t_total_cost'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 150, minWidth: 140,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.total_amount')}</div>, accessor: 'totalAmount',
+        Header: <div style={{textAlign: 'right'}}>{t('count.total_amount')}</div>, accessor: 'totalAmount', exLabel: t('count.total_amount'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 150, minWidth: 140,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.varCost')}</div>, accessor: 'totalVarianceCost',
+        Header: <div style={{textAlign: 'right'}}>{t('count.varCost')}</div>, accessor: 'totalVarianceCost', exLabel: t('count.varCost') ,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 150, minWidth: 140,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.varAmt')}</div>, accessor: 'totalVarianceAmount',
+        Header: <div style={{textAlign: 'right'}}>{t('count.varAmt')}</div>, accessor: 'totalVarianceAmount', exLabel: t('count.varAmt'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 150, minWidth: 140,
       },
-      { Header: t('order.note'), accessor: 'descr', width: 120, minWidth: 90 }
+      { Header: t('order.note'), accessor: 'descr', width: 120, minWidth: 90, exLabel: t('order.note') }
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,10 +75,11 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'transferNo', desc: true }] }},
     useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };
-
+  const filterProps = { columns, data, setData, excelName, size, onClickAdd, onClickDelete, show, setError, onSearch };
 
   return (
     <div>
+      <Filter {...filterProps} />
       <div style={{overflow: 'scroll'}}>
         <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />

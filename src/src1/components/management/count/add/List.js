@@ -15,16 +15,16 @@ function Card(props){
   const { size, detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable, setSiteId, status } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const [types] = useState(t('count.status1'))
-  const disabled = status?.value === 0 ? true : false
+  const [types] = useState(t('count.status1'));
+  const disabled = status?.value === 0 ? true : false;
 
   useEffect(() => {
     let columns = [
       {
         Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
-        Cell: ({ row }) => (<SelectItem item={row?.original} />)
+        Cell: ({ row }) => (<SelectItem item={row?.original} />), exLabel: t('inventory.title')
       }, 
-      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90 },
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90, exLabel: t('inventory.barcode')},
       {
         Header: t('pos.t_status'), accessor: 'itemStatus', isBtn: true, width: 150, minWidth: 90,
         Cell: props => <SelectableCell {...props} data={types} disabled={disabled || !editable }/>
@@ -34,7 +34,7 @@ function Card(props){
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.countedQty')}</div>, accessor: 'countedQty', //isText: !header ? true : false,
+        Header: <div style={{textAlign: 'right'}}>{t('count.countedQty')}</div>, accessor: 'countedQty', exLabel: 'Тоолсон_тоо', //isText: !header ? true : false,
         Cell: props => <EditableCellQty {...props} disabled= {disabled || !editable}/>, width: 130, minWidth: 130, maxWidth: 130
       },
       {
@@ -100,11 +100,11 @@ function Card(props){
     setSearch({ value: null });
   }
 
-  const newItem = invt => {
+  const newItem = (invt, qty) => {
     return {
-      name: invt.name, invtId: invt.invtId, invtID: invt.invtId, barCode: invt?.barCode,
-      itemType: 0, siteQty: invt?.siteQty, qty: 0, cost: invt.cost, countQty: invt?.siteQty,
-      picountItemId: 0, notes: '', rowStatus: 'I', itemStatus: 0
+      name: invt?.name, invtId: invt?.invtId, invtID: invt?.invtId, barCode: invt?.barCode,
+      itemType: 0, siteQty: invt?.siteQty, qty: 0, cost: invt?.cost, countQty: invt?.siteQty,
+      picountItemId: 0, notes: '', rowStatus: 'I', itemStatus: 0, countedQty: invt?.countedQty ?? qty,
     };
   }
 
@@ -114,7 +114,7 @@ function Card(props){
     useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
-  const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, status};
+  const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, status, columns, newItem};
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId, setSiteId };
 

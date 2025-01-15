@@ -3,7 +3,7 @@ import html2pdf from "html2pdf.js";
 import parse from "react-html-parser";
 // import moment from 'moment';
 
-import { DynamicMDIcon, Empty, Empty1 } from '../../../../../components/all';
+import { DynamicMDIcon } from '../../../../../components/all';
 import { formatNumber2 } from '../../../../../helpers';
 import { login_image } from '../../../../../assets';
 
@@ -151,7 +151,6 @@ export function BalanceList(props){
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
                 <td class="cs8D49975B" colspan="2" style="width:63px;height:10px;line-height:14px;text-align:left;vertical-align:middle;"><div style="overflow:hidden;width:59px;height:19px;">
                     <div style="width:59px;height:10px;overflow:hidden;display:table;">
                         <div style="vertical-align:middle;display:table-cell;">
@@ -159,7 +158,7 @@ export function BalanceList(props){
                     </div>
                 </div>
                 </td>
-                <td class="cs26E6DE06" colspan="5" style="width:136px;height:11px;text-align:right"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]-->${data?.header?.dateRange}</td>
+                <td class="cs26E6DE06" colspan="6" style="width:136px;height:11px;text-align:right"><!--[if lte IE 7]><div class="csF7D3565D"></div><![endif]-->${data?.header?.dateRange}</td>
             </tr>
             <tr style="vertical-align:top;">
                 <td style="width:0px;height:18px;"></td>
@@ -333,6 +332,31 @@ export function BalanceList(props){
         </body>
         </html>`;
 
+        // const generatePdfAndView = async () => {
+        //     // HTML контентыг динамик элемент болгон үүсгэнэ
+        //     const tempDiv = document.createElement('div');
+        //     tempDiv.style.position = 'absolute';
+        //     tempDiv.style.left = '-9999px'; // Дэлгэцнээс гадна байршуулна
+        //     tempDiv.innerHTML = balanceHtml; // HTML контентыг нэмнэ
+        //     document.body.appendChild(tempDiv);
+        
+        //     // HTML-ийг canvas болгон хөрвүүлнэ
+        //     const canvas = await html2canvas(tempDiv);
+        //     document.body.removeChild(tempDiv); // Түр элементээ устгана
+        
+        //     // Canvas-ийг PDF файлд хөрвүүлнэ
+        //     const imgData = canvas.toDataURL('image/png');
+        //     const pdf = new jsPDF();
+        //     const imgWidth = 210; // A4 өргөн
+        //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        
+        //     pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        
+        //     // PDF-ийн URL үүсгэнэ
+        //     const pdfBlob = pdf.output('blob');
+        //     const pdfUrl = URL.createObjectURL(pdfBlob);
+        //     setPdfUrl(pdfUrl); // Viewer-д PDF URL дамжуулна
+        //   };
     const handleExport = () => {
         const element = document.getElementById("order_bo_pdf");
         const options = {
@@ -359,6 +383,18 @@ export function BalanceList(props){
     }
 
   return (
+//     <div>
+//         <button onClick={generatePdfAndView}>PDF Viewer-д харуулах</button>
+
+//         {/* PDF Viewer */}
+//         {pdfUrl && (
+//         <div style={{ border: '1px solid #ccc', marginTop: '20px', height: '500px' }}>
+//             <Worker workerUrl={`https://unpkg.com/pdfjs-dist/build/pdf.worker.min.js`}>
+//             <Viewer fileUrl={pdfUrl} />
+//             </Worker>
+//         </div>
+//         )}
+//   </div>
     <div className="fi_pdf_back" >
         <div className='j_header_back'>
             <button onClick={zoomIn}>+</button>
