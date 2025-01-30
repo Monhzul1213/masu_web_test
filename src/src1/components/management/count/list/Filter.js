@@ -5,10 +5,9 @@ import moment from 'moment';
 
 import { getList } from '../../../../../services';
 import { ButtonRowAddConfirm, PlainRange, PlainSelect } from '../../../all/all_m';
-import { ExportExcel } from '../../../../../helpers';
 
 export function Filter(props){
-  const { size, onClickAdd, onSearch, setError, columns, data, excelName } = props;
+  const { size, onClickAdd, onSearch, setError} = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(null);
   const [classH, setClassH] = useState('th_header1');
@@ -74,13 +73,11 @@ export function Filter(props){
     label: t('pos.site'), onFocus: onFocusSite, loading: loading === 'site', classBack, classLabel, className, bStyle };
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'value', s_descr: 'label',
     label: t('order.status'), onFocus: onFocusStatus, loading: loading === 'status', classBack, classLabel, className, bStyle };
-  const exportProps = { text: t('page.export'), columns: columns, excelData: data, fileName: excelName};
 
   return (
     <div className='ih_header' id={id}>
       <div className='ih_header1'>
         <ButtonRowAddConfirm {...addProps} />
-        <ExportExcel {...exportProps} />
       </div>
       <div className={classH}>
         <PlainRange {...dateProps} />

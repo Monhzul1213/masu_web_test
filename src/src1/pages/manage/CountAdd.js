@@ -3,12 +3,12 @@ import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 
 import { getList, sendRequest } from '../../../services';
 import { Confirm, Error1, Overlay, Prompt } from '../../../components/all';
 import { Main, List, ButtonRow } from '../../components/management/count/add';
 import { Subscription } from '../../../components/management/adjust/list';
-import moment from 'moment';
 
 export function CountAdd(){
   const { t } = useTranslation();
@@ -18,7 +18,7 @@ export function CountAdd(){
   const [header, setHeader] = useState(null);
   const [count, setCount] = useState(null);
   const [detail, setDetail] = useState([]);
-  const [items, setItems] = useState([]);
+  // const [items, setItems] = useState([]);
   const [siteId, setSiteId] = useState({ value: null });
   const [empCode, setEmpCode] = useState({ value: null });
   const [date, setDate] = useState({ value: moment() });
@@ -64,11 +64,12 @@ export function CountAdd(){
         setStatus({value: header?.status})
         setNotes({ value: header?.descr });
         response?.data?.picountitem?.forEach(item => {
+          item.name = item?.invtName
           item.invtID = item?.invtId
           item.rowStatus = 'U';
         });
         setDetail(response?.data?.picountitem);
-        setItems(response?.data?.picountitem);
+        // setItems(response?.data?.picountitem);
         onSuccess();
       }
     }

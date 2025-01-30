@@ -16,10 +16,11 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: t('manage.txnId'), accessor: 'txnCostId', exLabel:t('menu.inventory'), Footer: t('report.total') + data?.length, width: 110, minWidth: 90  },
-      { Header: t('manage.t_no'), accessor: 'txnNo', exLabel:t('menu.inventory'), width: 130, minWidth: 110  },
+      { Header: t('manage.t_no'), accessor: 'txnNo', exLabel:t('menu.t_no'), width: 130, minWidth: 110  },
       { Header: t('system_menu.store'), accessor: 'siteName', exLabel:t('system_menu.store'), width: 130, minWidth: 110 },
       { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), width: 130, minWidth: 110  },
       { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), width: 110, minWidth: 80 },
+      { Header: t('inventory.category'), accessor: 'categoryName', exLabel:t('inventory.category'), customStyle : { minWidth: 80 }  },
       { Header: t('page.date'), accessor: 'txnDate', exLabel: t('page.date'), width: 90, minWidth: 80,
       Cell: ({ value }) => {
         return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>)

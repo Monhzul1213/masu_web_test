@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment';
 
 import { ExportExcel, useDebounce } from '../../../../helpers';
 import { getList, sendRequest } from '../../../../services';
 import { MultiSelect, DynamicAIIcon, CheckBox1, DynamicMDIcon, Button } from '../../../components/all/all_m';
 import { SearchInput } from './SearchInput';
-import { InvtSelect } from '../../../../components/all';
+import { Date, InvtSelect } from '../../../../components/all';
 
 export function Header(props){
-  const { setError, onSearch, size, data, setData, columns, excelName , filter1, isDtl, setIsDtl } = props;
+  const { setError, onSearch, size, data, setData, columns, excelName , filter1, isDtl, setIsDtl, isDate, setIsDate } = props;
   const { t } = useTranslation();
   const [site, setSite] = useState([]);
   const [sites, setSites] = useState([]);
@@ -21,6 +22,7 @@ export function Header(props){
   const [loading, setLoading] = useState(false);
   const [invt, setInvt] = useState([]);
   const [invts, setInvts] = useState([]);
+  const [date, setDate] = useState({ value: moment() });
   const [text, setText] = useDebounce();
   const [classH, setClassH] = useState('th_header_mn1');
   const { user, token }  = useSelector(state => state.login);
@@ -125,9 +127,9 @@ export function Header(props){
 
   const onClickImport = () => navigate('remain_import');
 
-  const width = showSearch ? 0 : (size?.width > 780 ? 1312 : (size?.width - 30));
+  // const width = showSearch ? 0 : (size?.width > 780 ? 1200 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 370 : (size?.width - 30));
-  const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in', marginTop: 10 };
+  const style = { overflow: 'hidden', transition: 'width 0.2s ease-in', marginTop: 10 };
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
   const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
@@ -147,7 +149,8 @@ export function Header(props){
   const invtProps = { value: invt, setValue: setInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide, label: t('inventory.title'),
     classBack: 'ih_select_back', className: 'ih_select', classLabel: 'ih_select_lbl', dropdownStyle: { marginLeft: -30, minWidth: 180 },
     loading: loading === 'invts', placeholder: t('inventory.search'), onSearch: setText, text };
-   
+  // const dateCheckProps = { label: t('manage.is_date'), checked: isDate, setChecked: setIsDate };
+  const dateProps = { value: date, setValue: setDate, label: t('page.date'), inRow: true, className: 'rh_date', classBack: 'rh_select_back' };
 
   return (
     <div className='ih_header' id={id} style={{paddingTop: 0}}>
@@ -159,6 +162,8 @@ export function Header(props){
               <div className='is_dtl'>
                <CheckBox1 {...dtlProps} /> 
               </div>
+              {/* <CheckBox1 {...dateCheckProps} />  */}
+              {isDate && <Date {...dateProps}/>}
           </div>
         </div>
         <div className='th_header_mn3' style={style}>

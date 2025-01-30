@@ -324,8 +324,10 @@
     "balance2": "Цөөн буюу нөөцгүй барааны мэдээлэл авах",
     "info1": "Хасах борлуулалтын мэдээлэл",
     "info2": "Үлдэгдлээс их бараа зарагдах гэж байгааг касс дээр сануулах",
-    "barcode1": "Бар кодоос жин оруулах",
-    "barcode2": "Жин оруулсан барааны бар кодыг уншихад жин бүртгэх",
+    "barcode1": "Баркод хэвлэх жин ашиглах",
+    "barcode2": "Баркод хэвлэх жин дээр бүртгэсэн барааг борлуулалтанд ашиглах",
+    "auto1": "Автомат багцлалт",
+    "auto2": "Борлуулалт хийгдсэн бүрдлээс бүрдэх барааг салбар,өдрөөр автоматаар багцлах",
     "success_msg": "Нэмэлт тохиргоо амжилттай бүртгэлээ"
   },
   "type": {
@@ -817,7 +819,7 @@
     ],
     "column": [
       { "label": "Баркод", "value": "barCode", "align": "left", "noformat": true },
-      { "label": "Ангилал", "value": "categoryName", "align": "left", "noformat": true },
+      { "label": "Категори", "value": "categoryName", "align": "left", "noformat": true },
       { "label": "Салбар", "value": "siteName", "align": "left", "noformat": true },
       { "label": "Харилцагч", "value": "custName", "align": "left", "noformat": true },
       { "label": "Огноо", "value": "salesDateFull", "align": "left" },
@@ -1188,7 +1190,8 @@
     "import_link" : "Барааны үлдэгдэл авах формат",
     "qpay": "QPAY",
     "acct": "Данс",
-    "is_remain": "Үлдэгдэлтэй эсэх"
+    "is_remain": "Үлдэгдэлтэй эсэх",
+    "is_date": "Огноогоор харах"
   },
   "adjust": {
     "add": "Гүйлгээ хийх",

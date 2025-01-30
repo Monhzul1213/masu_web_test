@@ -23,6 +23,7 @@ export function Remain(){
   const [sites, setSites] = useState([]);
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const [isDtl, setIsDtl] = useState(false);
+  const [isDate, setIsDate] = useState(false);
   const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -79,7 +80,7 @@ export function Remain(){
     setOpen(true);
   }
 
-  const listProps = { data, excelName, setError, onSearch, setData, autoResetExpanded, dtlData, isDtl, setIsDtl, onRowClick };
+  const listProps = { data, excelName, setError, onSearch, setData, autoResetExpanded, dtlData, isDtl, setIsDtl, onRowClick, isDate, setIsDate };
   const subProps = { visible, setVisible, sites, setSites, onDone };
   const drawerProps = { selected, open, setOpen };
 

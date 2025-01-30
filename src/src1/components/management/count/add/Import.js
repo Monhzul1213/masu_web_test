@@ -5,13 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import * as XLSX from "xlsx";
 
-import { getList } from '../../../../../services';
+import { sendRequest } from '../../../../../services';
 import { ButtonRow, Error, Overlay, UploadDrag } from '../../../../../components/all';
-import { add, excelTypes } from '../../../../../helpers';
-import FormatSheet from '../../../../assets/Count_Format.xlsx';
+import { ExportExcel4, add, excelTypes } from '../../../../../helpers';
+// import FormatSheet from '../../../../assets/Count_Format.xlsx';
 
 export function Import(props){
-  const { visible, closeModal, data, setData, setVisible, newItem} = props;
+  const { visible, closeModal, data, setData, setVisible, columns, siteId} = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -51,41 +51,27 @@ export function Import(props){
   };
 
   const onSave = async (jsonData) => {
-    console.log(jsonData);
     setError(null);
     setLoading(true);
-    let response = await dispatch(getList(user, token, 'Inventory/GetInventory'))
-    response?.data?.inventoryies?.forEach(element => {
+    let filter = [{ fieldName: "SiteID", value: siteId?.value }];
+    let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
+    response?.data?.forEach(element => {
       let index = jsonData?.findIndex(item => item?.barCode?.toString() === element?.msInventory?.barCode);
       if(index !== -1){
         let exists = data?.findIndex(d => d.invtId === element?.msInventory?.invtId);
-        if(exists === -1){
-          // let orderQty1 = divide(jsonData[index]?.orderTotalQty, element?.msInventory?.batchQty ?? 1);
-          // let amt = orderQty1?.toString()?.split(".", 2 );
-          // let orderQty = amt[0];
-          // let totalCost = divide(jsonData[index]?.orderTotalQty, element?.msInventory?.cost, true);
-          // total = add(total, totalCost);
-          // setTotal1(total);     
-          let countedQty = jsonData[index]?.countedQty
-          let varianceQty = add(countedQty, jsonData[index]?.countQty, true);
-          // let itemStatus = 1;
-          let list = newItem(element?.msInventory, countedQty, varianceQty, );
-          setData(old => [...old, list ])
-        } 
-        else {
-          setData(old => old.forEach((row, ind) => {
-            if(ind === exists){
-              let countedQty = jsonData[index]?.countedQty;
-              let varianceQty = add(countedQty, old[exists]?.countQty, true);
-              console.log(old[ind]?.countQty, ind)
-              // let itemStatus = 1;
-              return { ...old[exists], countedQty, varianceQty }
+        if(exists !== -1){    
+          setData((old = []) => old.map((row, ind) => {
+            if(ind === exists && old[exists] && typeof old[exists] === "object"){
+              let countedQty = jsonData[index]?.countedQty ?? 0;
+              let varianceQty = add(countedQty, old[exists]?.countQty ?? 0, true);
+              let itemStatus = 1;
+              return { ...old[exists], countedQty, varianceQty, itemStatus }
             } 
+              return row;
           }));
         }
       } 
       else setError(t('inventory.import_error1'));
-      // setTotal(total)
       setVisible(false);
     });
     setLoading(false);
@@ -101,8 +87,8 @@ export function Import(props){
             <div className='ma_back'>
             <div className='ii_header'>
                 <p className='ii_title'>{t('count.import_title')}</p>
-                <a className='ii_link' href={FormatSheet} download='Count_Format.xlsx'>{t('count.import_link')}</a>
-                {/* <ExportExcel3 text={t('count.import_link')} columns={columns} excelData={data} fileName={'Count_Format'}/> */}
+                {/* <a className='ii_link' href={FormatSheet} download='Count_Format.xlsx'>{t('count.import_link')}</a> */}
+                <ExportExcel4 text={t('count.import_link')} columns={columns} excelData={data} fileName='Count_Format'/>
             </div>
             <UploadDrag {...uploadProps}/>
             </div>

@@ -32,6 +32,12 @@ export function List(props){
         Header: t('page.name'), accessor: 'msInventory.name', exLabel: t('page.name') 
       },
       {
+        Header: t('inventory.barcode'), accessor: 'msInventory.barCode', exLabel: t('inventory.barcode') 
+      },
+      {
+        Header: t('inventory.sku'), accessor: 'msInventory.sku', exLabel: t('inventory.sku') 
+      },
+      {
         Header: t('category.title'), accessor: 'msInventory.categoryId', customStyle: { width: 240 }, width: 220, isBtn: true, exLabel: t('category.title'),
         Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' />
       },

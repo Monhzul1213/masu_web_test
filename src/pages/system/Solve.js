@@ -61,7 +61,7 @@ export function Solve(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
-          <div className='i_list_cont' id='solve_list'>
+          <div className='i_list_cont' id='solve_list2'>
             <Header {...headerProps} size={size} />
             {!data?.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
           </div>

@@ -8,7 +8,7 @@ import { TableResize, Money, PaginationTable } from '../../../../../components/a
 import { Filter } from './Filter';
 
 export function List(props){
-  const { data, size, excelName, setData, onClickAdd, onClickDelete, show, setError, onSearch } = props;
+  const { data, size, setData, onClickAdd, onClickDelete, show, setError, onSearch } = props;
   const { t, i18n } = useTranslation();
   const [maxHeight, setMaxHeight] = useState('300px');
   const [columns, setColumns] = useState([]);
@@ -75,7 +75,7 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'transferNo', desc: true }] }},
     useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };
-  const filterProps = { columns, data, setData, excelName, size, onClickAdd, onClickDelete, show, setError, onSearch };
+  const filterProps = { columns, data, setData, size, onClickAdd, onClickDelete, show, setError, onSearch };
 
   return (
     <div>

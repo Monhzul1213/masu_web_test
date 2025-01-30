@@ -28,7 +28,7 @@ export function List(props){
         Footer: <div style={{textAlign: 'left', paddingLeft: 15}}>{t('report.total') + data?.length}</div>},
       { Header: t('invoices.batch'), accessor: 'subscription_Type', exLabel: t('invoices.batch'), width: 100, minWidth: 50},
       {
-        Header: <div style={{textAlign: 'right'}}>{t('report.pay_amt')}</div>, accessor: 'totalSalesAmt', customStyle: { width: 100 }, exLabel: t('report.pay_amt'),
+        Header: <div style={{textAlign: 'right'}}>{t('report.pay_amt')}</div>, accessor: 'totalSalesAmt', customStyle: { width: 100 }, exLabel: t('report.pay_amt'), isBtn: true,
         // Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} fontSize={14} /></div>),
         Cell: ({ value, row, onClickSalesLink }) => {
                   return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickSalesLink(row)}><Money value={value} fontSize={14} /></div>);

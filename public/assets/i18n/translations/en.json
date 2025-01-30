@@ -322,6 +322,8 @@
     "info2": "Remind Cashier of Items That Will Sell for More Than Balance",
     "barcode1": "Enter Weight from Barcode",
     "barcode2": "Register Weight by Scanning the Barcode of Weighed Items",
+    "auto1": "Automatic packaging",
+    "auto2": "Automatically group items consisting of sales by department and day",
     "success_msg": "Additional settings have been successfully registered"
   },
   "type": {

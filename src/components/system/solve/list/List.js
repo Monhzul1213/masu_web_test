@@ -13,7 +13,9 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
+      { Header: '#', accessor: 'merchantId' },
       { Header: t('tax.customer'), accessor: 'merchant' },
+      { Header: t('invoices.batch'), accessor: 'bagts' },
       {
         Header: t('tax.sent_date'), accessor: 'createdDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)

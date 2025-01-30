@@ -8,11 +8,12 @@ import { formatNumber } from '../../../../helpers';
 import { Detail } from './Detail';
 
 export function List(props){
-  const { data, excelName, setError, onSearch, size, setData, autoResetExpanded, isDtl, setIsDtl, onRowClick } = props;
+  const { data, excelName, setError, onSearch, size, setData, autoResetExpanded, isDtl, setIsDtl, onRowClick, isDate, setIsDate } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
 
+  console.log(data);
   useEffect(() => {
     const customStyle = { width: 40 };
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
@@ -26,6 +27,7 @@ export function List(props){
       { Header: t('report.siteName'), accessor: 'siteName', exLabel:t('report.siteName'), Footer: t('report.total'), customStyle : { minWidth: 100 } },
       { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), customStyle : { minWidth: 200 } },
       { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), customStyle : { minWidth: 100 }  },
+      { Header: t('inventory.category'), accessor: 'categoryName', exLabel:t('inventory.category'), customStyle : { minWidth: 100 }  },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', exLabel: t('order.t_qty'), customStyle : { minWidth: 130 }, 
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
         Footer: info => {
@@ -103,7 +105,7 @@ export function List(props){
     useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, Detail: props => <Detail {...props} updateData={updateMyData} />,
     detailName: 'dtl', colSpan: 9, hasFooter: true, onRowClick };
-  const filterProps = { columns, data, setData, excelName, setError, onSearch , size, isDtl, setIsDtl };
+  const filterProps = { columns, data, setData, excelName, setError, onSearch , size, isDtl, setIsDtl, isDate, setIsDate };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
   return (

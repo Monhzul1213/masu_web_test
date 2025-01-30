@@ -22,43 +22,43 @@ function Card(props){
     let columns = [
       {
         Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
-        Cell: ({ row }) => (<SelectItem item={row?.original} />), exLabel: t('inventory.title')
+        Cell: ({ row }) => (<SelectItem item={row?.original} />), exLabel: t('inventory.title'), exLabel1: t('inventory.title')
       }, 
-      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90, exLabel: t('inventory.barcode')},
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90, exLabel: t('inventory.barcode'), exLabel1: t('inventory.barcode')}, 
       {
-        Header: t('pos.t_status'), accessor: 'itemStatus', isBtn: true, width: 150, minWidth: 90,
+        Header: t('pos.t_status'), accessor: 'itemStatus', isBtn: true, width: 150, minWidth: 90, exLabel: t('pos.t_status'),
         Cell: props => <SelectableCell {...props} data={types} disabled={disabled || !editable }/>
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.countQty')}</div>, accessor: 'countQty', width: 100, minWidth: 90,
+        Header: <div style={{textAlign: 'right'}}>{t('count.countQty')}</div>, accessor: 'countQty', width: 100, minWidth: 90, exLabel: t('count.countQty'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.countedQty')}</div>, accessor: 'countedQty', exLabel: 'Тоолсон_тоо', //isText: !header ? true : false,
+        Header: <div style={{textAlign: 'right'}}>{t('count.countedQty')}</div>, accessor: 'countedQty', exLabel: t('count.countedQty'), exLabel1: 'Тоолсон_тоо',//isText: !header ? true : false,
         Cell: props => <EditableCellQty {...props} disabled= {disabled || !editable}/>, width: 130, minWidth: 130, maxWidth: 130
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('count.varQty')}</div>, accessor: 'varianceQty', width: 130, minWidth: 130,         
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, exLabel: t('count.varQty'),
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.descr1')}</div>, accessor: 'notes', width: 120, minWidth: 120,
-        Cell: props => <EditableCell {...props}  disabled={disabled || !editable} />, //isText: !header ? true : false
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.descr1')}</div>, accessor: 'notes', width: 120, minWidth: 120, exLabel: t('inventory.descr1'),
+        Cell: props => <EditableCell {...props}  disabled={disabled || !editable} />, //isText: !header ? true : false, 
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.total_cost')}</div>, accessor: 'totalCost', width: 150, minWidth: 80,
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.total_cost')}</div>, accessor: 'totalCost', width: 150, minWidth: 80, exLabel: t('inventory.total_cost'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.varCost')}</div>, accessor: 'totalVarianceCost', width: 150, minWidth: 80,
+        Header: <div style={{textAlign: 'right'}}>{t('count.varCost')}</div>, accessor: 'totalVarianceCost', width: 150, minWidth: 80, exLabel: t('count.varCost'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.total')}</div>, accessor: 'totalAmount', width: 150, minWidth: 80,
+        Header: <div style={{textAlign: 'right'}}>{t('order.total')}</div>, accessor: 'totalAmount', width: 150, minWidth: 80, exLabel: t('order.total'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('count.varAmt')}</div>, accessor: 'totalVarianceAmount', width: 150, minWidth: 80,
+        Header: <div style={{textAlign: 'right'}}>{t('count.varAmt')}</div>, accessor: 'totalVarianceAmount', width: 150, minWidth: 80, exLabel: t('count.varAmt'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
       },
     ];
@@ -100,11 +100,11 @@ function Card(props){
     setSearch({ value: null });
   }
 
-  const newItem = (invt, qty) => {
+  const newItem = (invt) => {
     return {
       name: invt?.name, invtId: invt?.invtId, invtID: invt?.invtId, barCode: invt?.barCode,
       itemType: 0, siteQty: invt?.siteQty, qty: 0, cost: invt?.cost, countQty: invt?.siteQty,
-      picountItemId: 0, notes: '', rowStatus: 'I', itemStatus: 0, countedQty: invt?.countedQty ?? qty,
+      picountItemId: 0, notes: '', rowStatus: 'I', itemStatus: 0, countedQty: invt?.countedQty
     };
   }
 
@@ -114,7 +114,7 @@ function Card(props){
     useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
-  const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, status, columns, newItem};
+  const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, status, columns};
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId, setSiteId };
 
