@@ -4,7 +4,7 @@ import { useBlockLayout, usePagination, useResizeColumns, useRowSelect, useSortB
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-import { TableResize, Money, PaginationTable } from '../../../../../components/all';
+import { TableResize, Money, PaginationTable, Empty1 } from '../../../../../components/all';
 import { Filter } from './Filter';
 
 export function List(props){
@@ -80,12 +80,13 @@ export function List(props){
   return (
     <div>
       <Filter {...filterProps} />
+      {!data?.length ? <Empty1 icon='MdOutlineArticle' /> :
       <div style={{overflow: 'scroll'}}>
         <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
-        </div>
-      </div>
-      <PaginationTable {...tableProps} />
+        </div>    
+        <PaginationTable {...tableProps} />
+      </div>}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import moment from 'moment';
 import '../../../css/order.css';
 import '../../../css/invt.css';
 import { getList } from '../../../services';
-import { Empty1, Error1, Overlay } from '../../../components/all';
+import { Error1, Overlay } from '../../../components/all';
 import { List } from '../../components/management/count/list';
 import { Subscription } from '../../../components/management/adjust/list';
 
@@ -66,7 +66,7 @@ export function Count(){
         <SizeMe>{({ size }) => 
           <div className='i_list_cont' id='invt_list'>
             {/* <Filter {...headerProps} size={size} /> */}
-            {!data?.length ? <Empty1 icon='MdOutlineArticle' /> : <List {...listProps} size={size} />}
+            <List {...listProps} size={size} />
           </div>
         }</SizeMe>
       </Overlay>

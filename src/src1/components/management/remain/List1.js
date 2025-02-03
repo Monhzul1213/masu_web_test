@@ -8,7 +8,7 @@ import { formatNumber } from '../../../../helpers';
 import { TableRowResize, Empty1, Money } from '../../../../components/all';
 
 export function List1(props){
-  const { excelName, setError, onSearch, size, dtlData, isDtl, setIsDtl, setDtlData, onRowClick } = props;
+  const { excelName, setError, onSearch, size, dtlData, isDtl, setIsDtl, setDtlData, onRowClick, isDate, setIsDate } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
@@ -89,7 +89,7 @@ export function List1(props){
     useSortBy, useBlockLayout, useResizeColumns, usePagination, useRowSelect);
 
   const tableProps = { tableInstance, onRowClick, hasFooter: true };
-  const filterProps = { columns, data: dtlData, setData: setDtlData, excelName, setError, onSearch , size, isDtl, setIsDtl };
+  const filterProps = { columns, data: dtlData, setData: setDtlData, excelName, setError, onSearch , size, isDtl, setIsDtl, isDate, setIsDate };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
   return (

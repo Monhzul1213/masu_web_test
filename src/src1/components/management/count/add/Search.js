@@ -59,7 +59,7 @@ export function Search(props){
       {visible && <Inventory {...modalProps}/>}
       {open && <Import {...importModalProps}/>}
       <div className='ih_header1'>
-        <p className='ac_title'>{t('inventory.title')}</p>
+        <p className='ac_title' id='ac_title'>{t('inventory.title')}</p>
         {/* <Button {...importProps} /> */}
         <ExportExcel {...exportProps} />
       </div>

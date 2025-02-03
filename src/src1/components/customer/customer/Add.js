@@ -65,8 +65,8 @@ export function Add(props){
   }, [allBranch]);
 
   const checkValid = () => {
-    let phoneLength = 8 , nameLength = 2, noteLength = 10, addressLength = 8
-    let isPhoneValid = !phone?.value?.trim() || phone?.value?.length >= phoneLength;
+    let nameLength = 2, noteLength = 10, addressLength = 8
+    let isPhoneValid = phone?.value?.trim();
     let isEmailValid = validateEmail(email?.value?.trim());
     let isNameValid = custName?.value?.length >= nameLength;
     let isNoteValid = note?.value?.length >= noteLength;
@@ -76,7 +76,6 @@ export function Add(props){
     } else {
       if(!custName?.value?.trim()) setCustName({ value: '', error: t('error.not_empty') });
       if(!phone?.value?.trim()) setPhone({ value: '', error: t('error.not_empty') });
-      if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
       if(!isNameValid) setCustName({ value: custName?.value, error: ' ' + nameLength + t('error.longer_than') });
       if(!isNoteValid) setNote({ value: note?.value, error: ' ' + noteLength + t('error.longer_than') });
       if(!isAddressValid) setAddress({ value: address?.value, error: ' ' + addressLength + t('error.longer_than') });

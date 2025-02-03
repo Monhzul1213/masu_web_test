@@ -5,6 +5,7 @@ import LiteYouTubeEmbed from 'react-lite-youtube-embed';
 import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
 import { Button, DynamicFAIcon } from '../all';
+import { useSelector } from 'react-redux';
 
 const Download = props => {
   const { icon, text2, onClick } = props;
@@ -23,6 +24,7 @@ const Download = props => {
 export function AppModal(props){
   const { visible, closeModal } = props;
   const { t } = useTranslation();
+  const { user }  = useSelector(state => state.login);
 
   const onClick = type => {
     let url = '';
@@ -38,7 +40,7 @@ export function AppModal(props){
         <p className='ap_title'>{t('config.thanks')}</p>
         <div className='app_scroll'>
           <p className='ap_text'>{t('config.watch_video')}</p>
-          <LiteYouTubeEmbed id="N0VcE6v3qcQ" title="What’s new in Material Design for the web (Chrome Dev Summit 2019)" />
+          <LiteYouTubeEmbed id={user?.msMerchant?.merchantType === 1 ? "N0VcE6v3qcQ" : "F4fHbjsSZxc"} title="What’s new in Material Design for the web (Chrome Dev Summit 2019)" />
           <div style={{padding: 5}} />
           <p className='ap_text'>{t('config.install')}</p>
           <div className='ap_row'>

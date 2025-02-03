@@ -64,6 +64,47 @@ export function Date(props){
   );
 }
 
+export function Date1(props){
+  const { inRow, value, setValue, label, setError, className, disabled, disabledDate, setEdited, allowClear, placeholder, classBack, onHide, classLabel } = props;
+
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleChange = (e, dateString) => {
+    setSelectedDate(dateString); // State шинэчлэх
+    setValue({ value: e });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  };
+
+  const handleHide = () => {
+    if (selectedDate) {
+      onHide();
+    }
+  };
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? { flex: 1 } : {}}>
+      <div className={ classBack ?? 'select_back'} style={backStyle}>
+        <p className={classLabel ?? 'select_lbl'} style={style}>{label}</p>
+        <DatePicker
+          className={className ?? 'm_date'}
+          value={value?.value}
+          disabled={disabled}
+          format='yyyy.MM.DD'
+          placeholder={placeholder ?? ''}
+          allowClear={allowClear ?? false}
+          disabledDate={disabledDate}
+          onOpenChange={(open) => !open && handleHide()}
+          onChange={handleChange} />
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}
+
 export function Time(props){
   const { inRow, disabled, value, setValue, handleEnter, setError, setEdited, label, onTime } = props;
 

@@ -13,7 +13,6 @@ export function List(props){
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
 
-  console.log(data);
   useEffect(() => {
     const customStyle = { width: 40 };
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};

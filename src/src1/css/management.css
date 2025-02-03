@@ -81,6 +81,23 @@
   align-items: center;
   /* justify-content: space-between; */
 }
+
+#ih_large .th_header_mn4 {
+  width: 300px;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+#ih_small .th_header_mn4 {
+  width: 250px;
+  display: flex;
+  flex-flow: row;
+  margin-top: 10px;
+  align-items: center;
+  /* justify-content: space-between; */
+}
 #ih_small .mn_head{
   display: flex;
   flex-flow: row;
@@ -152,15 +169,27 @@
 
 #is_check1{
   align-items: center;
-  margin: 0 0 10px 10px;
+  /* margin: 0 0 -10px 10px; */
 }
+
+.is_check3{
+  align-items: center;
+  margin: 0 0 0 10px;
+}
+
 #invt_list_z1 {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
   max-width: 1600px;
 }
-  .is_dtl{
-    margin-top: 10px;
-  }
+.is_dtl{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  /* margin-top: 10px; */
+}
+#ac_title{
+  margin-bottom: 4px;
+}
 .ih_btn_row_mn {
   display: flex;
   flex-flow: row;
@@ -295,4 +324,32 @@
 
 .select_m.ant-select-multiple .ant-select-selector:after{
   margin: 5px;
+}
+.re_select_back{
+  margin-left: 15px;
+}
+.ant-picker-suffix{
+  display: none;
+}
+
+.invoice_btn {
+  border: none;
+  box-shadow: none;
+  background-color: var(--root-color);
+  min-height: var(--t-btn-height);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 450;
+  color: var(--text-color);
+  padding: 0 15px;
+  min-width: 84px;
+  position: absolute;
+  bottom: 30px;
+  right: 100px ;
+  left: 100px;
+}
+
+.invoice_btn:hover {
+  cursor: pointer;
+  color: var(--config-color);
 }

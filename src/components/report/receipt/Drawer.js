@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
 import '../../../css/report.css';
-import { DynamicAIIcon, DynamicRIIcon, Money } from '../../all';
+import { Button, DynamicAIIcon, DynamicRIIcon, Money } from '../../all';
 import { config, encrypt } from '../../../helpers';
 import { bonus, coupon } from '../../../src1/assets'
 
@@ -87,6 +87,13 @@ export function Drawer(props){
     window.open(url);
   }
 
+  const onClickInvoice = () => {
+    let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/Invoice?invoiceNo=' + encodeURIComponent(code);
+    window.open(url);
+  }
+
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
 
   return (
@@ -154,6 +161,7 @@ export function Drawer(props){
             <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={totalAmount} fontSize={13} /></p>
           </div>
         </div>
+        <Button className='invoice_btn' id='invt_btn_save' text={t('system.invoice')} onClick={onClickInvoice}/>
       </div>
     </AntDrawer>
   );

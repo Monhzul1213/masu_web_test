@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Select as AntSelect } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Button } from './Button';
 import { BsCheckLg } from 'react-icons/bs';
+import { CheckBox1 } from './CheckAll';
 
 const { Option } = AntSelect;
 
@@ -439,6 +440,70 @@ export function ComSelect(props){
         </AntSelect>
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}
+
+export function AllSelect(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
+    dropdownStyle, dropdownAlign, inRow } = props;
+  const { t } = useTranslation();
+  const [checked, setChecked] = useState(true);
+
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  const onClick = () => {
+    if(!checked) {
+      let all = data?.map(item => item[s_value ?? 'value']);
+      setValue(all);
+    } else setValue()
+  }
+
+  const onDropdownVisibleChange = show => {
+    if(!show) onHide();
+  }
+
+  const checkProps = { label: t('time.all'), checked, setChecked, className:'multi_btn', onHide: onClick};
+
+  const dropdownRender = menu => {
+    return (
+      <>
+        <CheckBox1 {...checkProps}/>
+        {menu}
+      </>
+    );
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? { flex: 1 } : {}}>
+    <div className={classBack} style={backStyle}>
+      {Icon && <Icon />}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={setValue}
+        value={value}
+        loading={loading}
+        onFocus={onFocus}
+        mode='multiple'
+        dropdownStyle={dropdownStyle}
+        dropdownAlign={dropdownAlign}
+        menuItemSelectedIcon={<BsCheckLg />}
+        onDropdownVisibleChange={onDropdownVisibleChange}
+        dropdownRender={dropdownRender}
+        maxTagCount={0}
+        maxTagPlaceholder={maxTag}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+    </div>
     </div>
   );
 }

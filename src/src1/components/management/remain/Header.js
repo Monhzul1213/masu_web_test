@@ -6,9 +6,9 @@ import moment from 'moment';
 
 import { ExportExcel, useDebounce } from '../../../../helpers';
 import { getList, sendRequest } from '../../../../services';
-import { MultiSelect, DynamicAIIcon, CheckBox1, DynamicMDIcon, Button } from '../../../components/all/all_m';
+import { DynamicAIIcon, CheckBox1, DynamicMDIcon, Button, AllSelect, CheckBox } from '../../../components/all/all_m';
 import { SearchInput } from './SearchInput';
-import { Date, InvtSelect } from '../../../../components/all';
+import { Date1, InvtSelect } from '../../../../components/all';
 
 export function Header(props){
   const { setError, onSearch, size, data, setData, columns, excelName , filter1, isDtl, setIsDtl, isDate, setIsDate } = props;
@@ -43,8 +43,8 @@ export function Header(props){
   }, [text]);
 
   useEffect(() => {
-    if(size?.width >= 870) setClassH('th_header_mn1');
-    else if(size?.width < 870 && size?.width >= 760) setClassH('th_header_mn2');
+    if(size?.width >= 1100) setClassH('th_header_mn1');
+    else if(size?.width < 1100 && size?.width >= 760) setClassH('th_header_mn2');
     else setClassH('');
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,12 +95,13 @@ export function Header(props){
     onHide(value);
   }
 
-  const onHide = value => {
+  const onHide = (value) => {
     let query = '?='
     if(supplier?.length !== suppliers?.length) supplier?.forEach(item => query += '&VendID=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
     query += (value ? ('&InvtName=' + value) : '');
     query += (isDtl ? ('&IsDtl=' + 'Y') : '');
+    if(isDate) query += '&begindate=' + date?.value?.format('yyyy.MM.DD') + '&enddate=' + date?.value?.format('yyyy.MM.DD');
     invt?.forEach(item => query += '&InvtId=' + item);
     onSearch && onSearch(query, filter1);
   }
@@ -149,24 +150,26 @@ export function Header(props){
   const invtProps = { value: invt, setValue: setInvt, data: invts, s_value: 'invtId', s_descr: 'name', onHide, label: t('inventory.title'),
     classBack: 'ih_select_back', className: 'ih_select', classLabel: 'ih_select_lbl', dropdownStyle: { marginLeft: -30, minWidth: 180 },
     loading: loading === 'invts', placeholder: t('inventory.search'), onSearch: setText, text };
-  // const dateCheckProps = { label: t('manage.is_date'), checked: isDate, setChecked: setIsDate };
-  const dateProps = { value: date, setValue: setDate, label: t('page.date'), inRow: true, className: 'rh_date', classBack: 'rh_select_back' };
+  const dateCheckProps = { label: t('manage.is_date'), checked: isDate, setChecked: setIsDate, id: 'is_check3'};
+  const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), className: 'mn_date', classBack: 're_select_back', onHide, classLabel };
 
   return (
     <div className='ih_header' id={id} style={{paddingTop: 0}}>
         <div className={classH} >
           <div className='mn_header2'>
-              <MultiSelect {...siteProps} />
-              <MultiSelect {...suppProps} />
+              <AllSelect {...siteProps} />
+              <AllSelect {...suppProps} />
               <InvtSelect {...invtProps}/>
-              <div className='is_dtl'>
-               <CheckBox1 {...dtlProps} /> 
+          </div>
+          <div className='is_dtl'>
+              <CheckBox1 {...dtlProps} /> 
+              <div className='is_check3'>
+                <CheckBox {...dateCheckProps} /> 
               </div>
-              {/* <CheckBox1 {...dateCheckProps} />  */}
-              {isDate && <Date {...dateProps}/>}
+              {isDate && <Date1 {...dateProps}/>}
           </div>
         </div>
-        <div className='th_header_mn3' style={style}>
+        <div className='th_header_mn4' style={style}>
           <div className='ih_btn_row_mn' >
             <Button {...importProps} />
             <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />

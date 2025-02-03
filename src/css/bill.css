@@ -398,3 +398,134 @@
     display: none;
   }
 }
+
+.inv_header_t{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.inv_row{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+}
+.inv_info{
+  font-size: 13px;
+  line-height: 15px;
+  width: 120px
+}
+
+.inv_info1{
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 400px;
+}
+.inv_info2{
+  font-size: 13px;
+  line-height: 15px;
+  /* width: 120px */
+}
+.inv_header1 {
+  width: 5%;
+  border-right: 1px solid var(--text-color);
+}
+.inv_header2 {
+  width: 50%;
+  border-right: 1px solid var(--text-color);
+}
+.inv_header3 {
+  width: 10%;
+  border-right: 1px solid var(--text-color);
+  text-align: right;
+}
+.inv_header4 {
+  width: 20%;
+  border-right: 1px solid var(--text-color);
+  text-align: right;
+}
+.inv_header5 {
+  width: 20%;
+  border-right: 1px solid var(--text-color);
+  text-align: right;
+}
+.inv_footer1 {
+  font-size: 12px;
+  margin: 0;
+  padding: 1px 2px;
+  font-weight: 500;
+  width: 19%;
+  border-bottom: 1px solid var(--text-color);
+  border-right: 1px solid var(--text-color);
+}
+.inv_footer2 {
+  font-size: 12px;
+  margin: 0;
+  padding: 1px 2px;
+  font-weight: 500;
+  width: 18.9%;
+  text-align: right;
+  border-bottom: 1px solid var(--text-color);
+}
+.inv_total_back{
+  margin-bottom: 20px;
+}
+.inv_footer_back {
+  display: flex;
+  flex-flow: column;
+  position: absolute;
+  bottom: 20px;
+}
+
+.inv_item {
+  display: flex;
+  flex-flow: row;
+  border-bottom: 1px solid var(--text-color); 
+  border-left: 1px solid var(--text-color); 
+  /* border-right: 1px solid var(--text-color);  */
+}
+
+.inv_item > p {
+  font-size: 12px;
+  margin: 0;
+  padding: 1px 2px;
+}
+.inv_header {
+  display: flex;
+  flex-flow: row;
+  border-bottom: 1px solid var(--text-color); 
+  border-left: 1px solid var(--text-color); 
+  border-top: 1px solid var(--text-color);
+}
+
+.inv_header > p {
+  font-size: 12px;
+  margin: 0;
+  padding: 1px 2px;
+  font-weight: 500;
+}
+
+.inv_footer {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  border-left: 1px solid transparent; 
+  border-right: 1px solid var(--text-color);
+}
+.inv_pdf_btn {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--input1-color);
+  padding: 5px 20px;
+  color: var(--text-color);
+  bottom: -50px;
+  right: 42%;
+  position: absolute;
+}
+
+.inv_pdf_btn:hover {
+  cursor: pointer;
+  color: var(--logo1-color);
+}

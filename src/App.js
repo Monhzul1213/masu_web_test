@@ -17,7 +17,7 @@ import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Rema
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
-import { Bill, Order as OrderBill } from './pages/lone';
+import { Bill, InvoicePrint, Order as OrderBill } from './pages/lone';
 import { Integration } from './pages/integration';
 import { Adjust, AdjustAdd } from './pages/management/adjust';
 import { InvoiceSend } from './components/emp/employee/add/InvoiceSend';
@@ -71,6 +71,7 @@ export function App(){
           <Route path='/bill' element={<Bill />} />
           <Route path='/order' element={<OrderBill />} />
           <Route path='/statement' element={<InvoiceSend />} />
+          <Route path='/invoice' element={<InvoicePrint />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
@@ -94,6 +95,7 @@ export function App(){
                 <Route path='/bill' element={<Bill />} />
                 <Route path='/order' element={<OrderBill />} />
                 <Route path='/statement' element={<InvoiceSend />} />
+                <Route path='/invoice' element={<InvoicePrint />} />
               </Routes>
             </Layout>
           </Layout>
