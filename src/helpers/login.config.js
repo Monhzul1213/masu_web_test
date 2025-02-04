@@ -15,7 +15,7 @@ export const config = { // production
   otc: 'http://test-sales.apu.mn:3031/',
   ebarimt: 'https://api.ebarimt.mn/api/info/check/',
   // url: 'http://192.168.1.232:8181/',
-  // domain: 'http://192.168.1.101:3000',
+  // domain: 'http://192.168.1.189:3000',
   // url1: 'http://192.168.1.106:3434/',
   // otc: 'http://192.168.1.106:3434/',
 }
