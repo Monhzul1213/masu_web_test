@@ -95,6 +95,7 @@ export function App(){
                 <Route path='/bill' element={<Bill />} />
                 <Route path='/order' element={<OrderBill />} />
                 <Route path='/statement' element={<InvoiceSend />} />
+                <Route path='/inv_pdf' element={<InvoicePrint />} />
               </Routes>
             </Layout>
           </Layout>
