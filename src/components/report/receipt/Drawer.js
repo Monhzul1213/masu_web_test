@@ -90,7 +90,7 @@ export function Drawer(props){
   const onClickInvoice = () => {
     let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo
     let code = encrypt(msg);
-    let url = config?.domain + '/Invoice?invoiceNo=' + encodeURIComponent(code);
+    let url = config?.domain + '/nehemjleh?invoiceNo=' + encodeURIComponent(code);
     window.open(url);
   }
 
