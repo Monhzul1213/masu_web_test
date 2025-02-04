@@ -10,7 +10,7 @@ import { ButtonRow, Error, Overlay, UploadDrag } from '../../../all';
 import { ExportExcel3, add, divide, excelTypes } from '../../../../helpers';
 
 export function Import(props){
-  const { visible, closeModal, data, setData, setVisible, newItem, setTotal, columns} = props;
+  const { visible, closeModal, data, setData, setVisible, newItem, setTotal, columns, setTotal1} = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -62,8 +62,8 @@ export function Import(props){
           let amt = orderQty1?.toString()?.split(".", 2 );
           let orderQty = amt[0];
           let totalCost = divide(jsonData[index]?.orderTotalQty, element?.msInventory?.cost, true);
-          // total = add(total, totalCost);
-          // setTotal1(total);      
+          total = add(total, totalCost);
+          setTotal1(total);      
           let list = newItem(element?.msInventory, orderQty, jsonData[index]?.orderTotalQty, totalCost);
           setData(old => [...old, list])
         } else {

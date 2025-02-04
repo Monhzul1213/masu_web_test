@@ -65,7 +65,7 @@ export function InvoicePrint(){
 
   return (
     <Overlay loading={loading}>
-      <div id='invoice_back' style={{ width: "297mm", borderRadius: '2px', height: "210mm", margin: '0px',  background: "white",  display: "flex", justifyContent: "space-between" }}>
+      <div id='invoice_back' style={{ width: "297mm", height: "210mm", background: "white",  display: "flex", justifyContent: "space-between" }}>
         <div style={{ width: "49%", height: "100%", padding: "20px" }}>
           <Header/>
           <Info info={info} header={header}/>

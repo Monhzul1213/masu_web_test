@@ -9,11 +9,11 @@ export function Total(props){
 
   return (
     <div className='inv_total_back'>
-      <div className='inv_footer'>
+      {/* <div className='inv_footer'>
         <div className='bo_footer0' />
         <p className='inv_footer1'>{t('discount.amount')}</p>
         <p className='inv_footer2'><Money value={header?.pureAmount} fontSize={13} currency='₮' /></p>
-      </div>
+      </div> */}
       <div className='inv_footer'>
         <div className='bo_footer0' />
         <p className='inv_footer1'>{t('pos.t_noat')}</p>

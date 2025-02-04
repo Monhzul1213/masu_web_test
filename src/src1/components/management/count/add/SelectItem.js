@@ -10,7 +10,7 @@ import { SelectItem } from '../../../../../components/invt/inventory/add/SelectI
 const { Option } = Select;
 
 export function ItemSelect(props){
-  const { search, setSearch, data, setData, newItem, siteId } = props;
+  const { search, setSearch, data, setData, newItem, siteId, status } = props;
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -63,7 +63,7 @@ export function ItemSelect(props){
   }
 
   const selectProps = { value: search, setValue: onSelect, placeholder: disabled ? t('transfer.warning_item') : t('inventory.search'), data: items,
-    className: 'kit_select', classBack: 'kit_search', renderItem, filterOption, onSearch: setText, text, setData: setItems, disabled };
+    className: 'kit_select', classBack: 'kit_search', renderItem, filterOption, onSearch: setText, text, setData: setItems, disabled: status?.value !== 0 };
 
   return (
     <Overlay loading={loading}>

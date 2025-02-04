@@ -116,7 +116,7 @@ function Card(props){
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, status, columns};
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId, setSiteId };
+  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId, setSiteId, status };
 
   return (
     <div className='po_back_invt3'>

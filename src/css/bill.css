@@ -405,7 +405,7 @@
   justify-content: center;
   font-size: 15px;
   font-weight: bold;
-  margin-top: 10px;
+  margin-bottom: 5px;
 }
 .inv_row{
   display: flex;
@@ -414,18 +414,18 @@
 }
 .inv_info{
   font-size: 13px;
-  line-height: 15px;
+  line-height: 13px;
   width: 120px
 }
 
 .inv_info1{
   font-size: 13px;
-  line-height: 15px;
+  line-height: 13px;
   font-weight: 400px;
 }
 .inv_info2{
   font-size: 13px;
-  line-height: 15px;
+  line-height: 13px;
   /* width: 120px */
 }
 .inv_header1 {
