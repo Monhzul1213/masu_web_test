@@ -19,7 +19,7 @@ export function Header(props){
   useEffect(() => {
     i18n.exists('header.' + pathname) ? setTitle('header.' + pathname) : setTitle('header./');
     let pathname1 = pathname?.toLowerCase();
-    let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order')) || pathname1?.includes('statement') || pathname1?.includes('inv_pdf');
+    let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order')) || pathname1?.includes('statement');
     setHideMenu(hideMenu);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -52,7 +52,7 @@ export function Header1(props){
   useEffect(() => {
     i18n.exists('header.' + pathname) ? setTitle('header.' + pathname) : setTitle('header./');
     let pathname1 = pathname?.toLowerCase();
-    let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order')) || pathname1?.includes('statement');
+    let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order')) || pathname1?.includes('statement') || pathname1?.includes('inv_pdf');
     setHideMenu(hideMenu);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
