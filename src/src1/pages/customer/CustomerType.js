@@ -9,6 +9,7 @@ import { getList  } from '../../../services';
 import '../../css/customer.css'
 import { Subscription } from '../../../components/management/adjust/list/Subscription';
 import { Empty1 } from '../../../components/all';
+import { Help } from '../../../components/invt/inventory/list';
 
 export function CustomerType(props){
   const [visible, setVisible] = useState(false);
@@ -72,7 +73,9 @@ export function CustomerType(props){
   const listProps = { data, setData , setShow, checked, setChecked, show, setError, onSearch: getData, onClickAdd};
   const subProps = { visible: visible1, setVisible: setVisible1, onDone };
   const addProps = { visible, setVisible, closeModal, typeName, setTypeName, selected, onSearch: getData };
-  const headerProps = { onSearch: getData, show }
+  const headerProps = { onSearch: getData, show };
+  const videoData = [{id: "n07kE8xTJY4"}];
+
   return (
     <div className='s_container_z'>
       {visible1 && <Subscription {...subProps} />}
@@ -86,6 +89,7 @@ export function CustomerType(props){
           </div>
         }</SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

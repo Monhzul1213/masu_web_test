@@ -9,6 +9,7 @@ import '../../css/invt.css';
 import { getList, sendRequest } from '../../services';
 import { Empty, Empty1, Error1, Overlay } from '../../components/all';
 import { Header, List } from '../../components/emp/employee/list';
+import { Help } from '../../components/invt/inventory/list';
 
 export function Employee(){
   const { t } = useTranslation();
@@ -81,6 +82,7 @@ export function Employee(){
   const emptyProps = { icon: 'MdOutlinePersonOutline', type: 'employee', onClickAdd, noDescr: true };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData };
   const listProps = { data, setData, onClickAdd, setShow, checked, setChecked, onSubscribe, getData: () => getData(filter) };
+  const videoData = [{id: "_TcClY3sHEI"}]
 
   return (
     <div className='s_container_i'>
@@ -95,6 +97,7 @@ export function Employee(){
           }</SizeMe>
         }
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   )
 }

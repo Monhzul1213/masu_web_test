@@ -10,6 +10,7 @@ import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Filter, List } from '../../components/management/package/list';
 import { Subscription } from '../../../components/management/adjust/list';
+import { Help } from '../../../components/invt/inventory/list';
 
 export function Package(){
   const [loading, setLoading] = useState(false);
@@ -54,6 +55,7 @@ export function Package(){
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
   const subProps = { visible, setVisible, onDone };
+  const videoData = [{id: "XXTYubVXPsE"}, {id: '5AViHwr6pSA'}]
 
   return (
     <div className='s_container_i'>
@@ -67,6 +69,7 @@ export function Package(){
           </div>
         }</SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

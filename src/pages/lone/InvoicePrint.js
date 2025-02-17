@@ -38,7 +38,6 @@ export function InvoicePrint(){
       if(header) header.pureAmount = (header.totalSalesAmount ?? 0) - (header.totalVatAmount ?? 0) - (header.totalNhatamount ?? 0);
       setHeader(header);
       setDetail(response?.data?.retdata?.salesitem);
-      console.log(header);
       setInfo(response?.data?.retdata?.bill)
     }
     setLoading(false);

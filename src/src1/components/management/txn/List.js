@@ -81,9 +81,9 @@ export function List(props){
   
 
   useEffect(() => {
-    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 67px )');
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 110px )');
     else if(size?.width < 920 && size?.width >= 620)
-      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 230px )');
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 200px )');
     else if(size?.width < 620)
       setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 263px )');
     return () => {};

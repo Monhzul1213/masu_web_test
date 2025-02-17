@@ -6,7 +6,7 @@ import { SearchInput } from '../../../invt/inventory/list/SearchInput';
 import { Import } from './Import';
 
 export function Search(props){
-  const { handleEnter, size, data, setData, newItem, siteId, setTotal, isImport, columns, setTotal1 } = props;
+  const { handleEnter, size, data, setData, newItem, siteId, setTotal, isImport, columns, setTotal1, total1 } = props;
   const { t } = useTranslation();
   const [showSearch, setShowSearch] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -36,7 +36,7 @@ export function Search(props){
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch: changeSearch, width: width1, className: 'po_search_input' };
   const importProps = { className: 'ih_btn', text: t('page.import'), onClick: onClickVisible };
-  const modalProps = { visible, closeModal , setVisible, data, setData, newItem, setTotal, columns, setTotal1};
+  const modalProps = { visible, closeModal , setVisible, data, setData, newItem, setTotal, columns, setTotal1, total1};
 
   return (
     <div className='po_search_back' id={id}>

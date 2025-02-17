@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { DynamicAIIcon, DynamicBSIcon, IconButton } from '../../../all/all_m';
+import { Button, DynamicAIIcon, DynamicBSIcon, IconButton } from '../../../all/all_m';
 import { SearchInput } from '../../../../../components/invt/inventory/list/SearchInput';
 import { Inventory } from './Inventory';
 // import { Button } from '../../../../../components/all';
@@ -36,10 +36,10 @@ export function Search(props){
     setOpen(false)
   }
 
-  // const onClickVisible = e => {
-  //   e?.preventDefault();
-  //   setOpen(siteId?.value && (status?.value !== 0 && status?.value !== 3) ? true : false)
-  // }
+  const onClickVisible = e => {
+    e?.preventDefault();
+    setOpen(siteId?.value && (status?.value !== 0 && status?.value !== 3) ? true : false)
+  }
 
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
 
@@ -50,7 +50,7 @@ export function Search(props){
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch: changeSearch, width: width1, className: 'po_search_input' };
   const addProps = { className: 'po_add_btn', text: t('count.invt_add'), icon: <DynamicBSIcon name='BsPlusLg' className='po_add_icon' />, onClick, disabled: !siteId?.value || status?.value !== 0 ? true : false };
   const modalProps = { visible, closeModal, data , setItem: setData, setVisible, item: data, siteId, setSiteId};
-  // const importProps = {  className: 'ih_btn', text: t('page.import'), onClick: onClickVisible};
+  const importProps = {  className: 'ih_btn', text: t('page.import'), onClick: onClickVisible};
   const importModalProps = { visible: open, closeModal: closeModal1, setVisible: setOpen, data, setData, columns, siteId};
   const exportProps = { text: t('page.export'), columns: columns, excelData: data, fileName: t('header./management/count')};
 
@@ -60,7 +60,7 @@ export function Search(props){
       {open && <Import {...importModalProps}/>}
       <div className='ih_header1'>
         <p className='ac_title' id='ac_title'>{t('inventory.title')}</p>
-        {/* <Button {...importProps} /> */}
+        <Button {...importProps} />
         <ExportExcel {...exportProps} />
       </div>
       <div className='ac_row_back' style={style}>

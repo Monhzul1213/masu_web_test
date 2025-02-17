@@ -9,6 +9,7 @@ import { getList } from "../../../services";
 import { Empty1, Error1, Overlay } from "../../../components/all";
 import { Filter, List } from "../../components/loyalty/vaucher/list";
 import { Subscription } from "../../../components/management/adjust/list/Subscription";
+import { Help } from "../../../components/invt/inventory/list";
 
 export function Voucher() {
   const [loading, setLoading] = useState(false);
@@ -60,6 +61,7 @@ export function Voucher() {
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
   const subProps = { visible, setVisible, onDone };
+  const videoData = [{id: "3xrMpOAXBd8"}];
 
   return (
     <div className="s_container_i">
@@ -79,6 +81,7 @@ export function Voucher() {
           )}
         </SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

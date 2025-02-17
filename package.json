@@ -17,6 +17,7 @@
     "custom-protocol-check": "^1.4.0",
     "devexpress-reporting": "^24.1.7",
     "file-saver": "^2.0.5",
+    "framer-motion": "^12.4.1",
     "history": "^5.3.0",
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.1",

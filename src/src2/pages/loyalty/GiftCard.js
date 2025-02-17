@@ -9,6 +9,7 @@ import { getList } from "../../../services";
 import { Empty1, Error1, Overlay } from "../../../components/all";
 import { Filter, List } from "../../components/loyalty/giftCard/list";
 import { Subscription } from "../../../components/management/adjust/list/Subscription";
+import { Help } from "../../../components/invt/inventory/list";
 
 export function GiftCard() {
   const [loading, setLoading] = useState(false);
@@ -67,6 +68,8 @@ export function GiftCard() {
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
   const subProps = { visible, setVisible, onDone };
+  const videoData = [{id: "uZX_dbrWhE8"}];
+
   return (
     <div className="s_container_i">
       {visible && <Subscription {...subProps} />}
@@ -85,6 +88,7 @@ export function GiftCard() {
           )}
         </SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

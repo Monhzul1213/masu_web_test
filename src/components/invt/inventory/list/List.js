@@ -104,8 +104,8 @@ export function List(props){
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
     detailName: 'msInventoryVariants', colSpan: 7 };
   const maxHeight = size?.width > 780
-    ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
-    : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
+    ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 140px)'
+    : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 200px)';
   const pageProps = { pageInfo, getInventory, size : true };
   const filterProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
@@ -115,10 +115,8 @@ export function List(props){
       <Header {...filterProps} />
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <>
-        <div className='table_scroll' style={{overflowX: 'scroll'}}>
-          <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-            <TableDetail {...tableProps} />
-          </div>
+        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
+          <TableDetail {...tableProps} />
         </div>
         {filtering ? <PaginationTable {...tableProps} /> : <PaginationList {...pageProps} />}
       </>

@@ -161,10 +161,10 @@ function Screen(props){
   }
 
   const validateData = () => {
-    let length = sites?.length;
-    let branchs = false, subBranchs = false;
+    let length = false, branchs = false, subBranchs = false;
     sites?.forEach(item => {
       if(item?.checked) {
+        length = item?.checked;
         branchs = item?.branchCode === null;
         subBranchs = item?.subBranchCode === null;
       }
@@ -236,7 +236,7 @@ function Screen(props){
       <Overlay loading={loading}>
         <Prompt edited={edited} />
         {error && <Error1 error={error} />}
-        <div className='i_scroll'>
+        <div className='i_scroll1'>
           <form style={{ width }}>
             <Main {...mainProps} />
             <div className='gap' />

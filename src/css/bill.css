@@ -529,3 +529,52 @@
   cursor: pointer;
   color: var(--logo1-color);
 }
+          /* Help.js */
+
+.youtube_drawer_toggle {
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  right: -50px; /* Drawer-ийн хажууд үлдэнэ */
+  top: 80px;
+  transition: right 0.3s ease-in-out;
+}
+
+.youtube_drawer {
+  width: 300px;
+  /* height: auto; */
+  background: #fff;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px 0 0 12px;
+  padding: 16px;
+  position: absolute;
+  overflow-y: scroll;
+  top: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.help_header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.you_icon {
+  width: 25px;
+  height: 25px;
+}
+.help_body{
+  margin: 5px 0;
+  border-bottom: 1px solid var(--back-color);
+} 

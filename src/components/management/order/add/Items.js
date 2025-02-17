@@ -11,7 +11,7 @@ import { EditableCell } from './EditableCell';
 import { ItemSelect } from '../../adjust/add/SelectItem';
 
 function Card(props){
-  const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch, siteId, setTotal1 } = props;
+  const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch, siteId, setTotal1, total1 } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -124,7 +124,7 @@ function Card(props){
     useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const { setGlobalFilter } = tableInstance;
-  const searchProps = { handleEnter: setGlobalFilter, size, data: items, setData: setItems, newItem, siteId, setTotal, isImport: true, columns, setTotal1 };
+  const searchProps = { handleEnter: setGlobalFilter, size, data: items, setData: setItems, newItem, siteId, setTotal, isImport: true, columns, setTotal1, total1 };
   
   return (
     <div className='po_back_invt1'>

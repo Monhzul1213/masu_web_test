@@ -10,6 +10,7 @@ import { Add, List } from '../../components/customer/customer';
 import { getList , getServiceBar, sendRequest } from '../../../services';
 import '../../css/customer.css'
 import { Subscription } from '../../../components/management/adjust/list/Subscription';
+import { Help } from '../../../components/invt/inventory/list';
 
 export function Customer(props){
   const { t } = useTranslation();
@@ -160,6 +161,7 @@ export function Customer(props){
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const listProps = { data,  onClickAdd, setData , loaded, setShow, checked, setChecked, excelName , onClickDelete, show, setError, onSearch: getData};
   const subProps = { visible: visible1, setVisible: setVisible1, onDone };
+  const videoData = [{id: "v_Up6Wi08PQ"}]
 
   return (
     <div className='s_container_z'>
@@ -176,6 +178,7 @@ export function Customer(props){
           </SizeMe>
         }      
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

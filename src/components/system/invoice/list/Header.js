@@ -9,11 +9,11 @@ import { SearchInput } from '../../../invt/inventory/list/SearchInput';
 import { ExportExcel } from '../../../../helpers';
 
 export function Header(props){
-  const { setError, onSearch, size, data, excelName, columns} = props;
+  const { setError, onSearch, size, data, excelName, columns, date, setDate} = props;
   const { t } = useTranslation();
   const [status, setStatus] = useState(-1);
   const [states, setStates] = useState([{valueNum: -1, valueStr1: t('order.all_status')}]);
-  const [date, setDate] = useState([moment().startOf('month'), moment()]);
+  // const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);

@@ -9,6 +9,7 @@ import '../../../css/invt.css';
 import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Filter, List, Subscription } from '../../../components/management/adjust/list';
+import { Help } from '../../../components/invt/inventory/list';
 
 export function Adjust(){
   const [loading, setLoading] = useState(false);
@@ -53,6 +54,7 @@ export function Adjust(){
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
   const subProps = { visible, setVisible, onDone };
+  const videoData = [{id: "ZGz0whjGSJY"}]
 
   return (
     <div className='s_container_i'>
@@ -66,6 +68,7 @@ export function Adjust(){
           </div>
         }</SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

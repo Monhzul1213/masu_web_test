@@ -73,7 +73,7 @@
 }
 .s_container_di {
   margin: var(--page-padding);
-  overflow: scroll;
+  /* overflow: scroll; */
   max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
   display: flex;
 }

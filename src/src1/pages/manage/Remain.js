@@ -10,6 +10,7 @@ import '../../css/time.css'
 import { Drawer, List } from '../../components/management/remain';
 import { Subscription } from '../../../components/management/adjust/list';
 import { List1 } from '../../components/management/remain/List1';
+import { Help } from '../../../components/invt/inventory/list';
 
 
 export function Remain(){
@@ -83,6 +84,7 @@ export function Remain(){
   const listProps = { data, excelName, setError, onSearch, setData, autoResetExpanded, dtlData, isDtl, setIsDtl, onRowClick, isDate, setIsDate };
   const subProps = { visible, setVisible, sites, setSites, onDone };
   const drawerProps = { selected, open, setOpen };
+  const videoData = [{id: "-fnwH-fDwpE"}, {id: 'akg6wc-x8vk'}]
 
   return (
     <div className='s_container_i'>
@@ -96,6 +98,7 @@ export function Remain(){
           </div>
         }</SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

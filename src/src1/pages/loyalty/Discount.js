@@ -8,6 +8,7 @@ import { getList, sendRequest } from '../../../services';
 import { message } from 'antd';
 import { withSize } from 'react-sizeme';
 import { Subscription } from '../../../components/management/adjust/list/Subscription';
+import { Help } from '../../../components/invt/inventory/list';
 
  function Screen(props){
   const { size } = props;
@@ -81,6 +82,7 @@ import { Subscription } from '../../../components/management/adjust/list/Subscri
   const emptyProps = { icon: 'BsTag', type: 'discount', onClickAdd , isMd: false  };
   const headerProps = { onClickAdd, onClickDelete, show, setError, onSearch: getData, size };
   const subProps = { visible, setVisible, onDone };
+  const videoData = [{id: "hJZz3ZmFHWM"}, {id: 'O2Ov2-N5Xuk'}];
 
   return (
     <div className='s_container_di'>
@@ -94,6 +96,7 @@ import { Subscription } from '../../../components/management/adjust/list/Subscri
           </div>
         }
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
       
   )

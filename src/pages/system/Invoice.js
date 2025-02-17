@@ -18,6 +18,7 @@ export function Invoice(){
   const [filter, setFilter] = useState('');
   const [columns, setColumns] = useState([]);
   const [excelName, setExcelName] = useState('');
+  const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -60,8 +61,8 @@ export function Invoice(){
       navigate({ pathname: 'invoice_add', search: createSearchParams({ invoiceNo: row?.invoiceNo }).toString() });
   }
 
-  const listProps = { data, setData, onClickAdd, setError, onSearch: getData, excelName, filter, columns, setColumns};
-  const headerProps = {setError, onSearch: getData, excelName, data, columns};
+  const listProps = { data, setData, onClickAdd, setError, onSearch: getData, excelName, filter, columns, setColumns, date};
+  const headerProps = {setError, onSearch: getData, excelName, data, columns, date, setDate};
   const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
 
   return (

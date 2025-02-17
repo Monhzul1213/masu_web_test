@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getList } from '../../services';
 import { Empty1, Error1, Overlay } from '../../components/all';
 import { EmpList, SiteList, ZoneList } from '../../components/config/invocies';
+import { Help } from '../../components/invt/inventory/list';
 
 function Card(props){
   const { size } = props;
@@ -67,7 +68,8 @@ function Card(props){
   const width = size?.width >= 840 ? 840 : size?.width;
   const emptyProps = { icon: 'MdReceipt', text: 'invoices.empty' };
   const listProps = { width, getData, setError, setLoading };
-  
+  const videoData = [{id: "K817GPIZXhQ"}]
+
   return (
     <div className='store_tab' style={{flex: 1}}>
       <Overlay loading={loading}>
@@ -80,6 +82,7 @@ function Card(props){
           </div>
         : <div style={{ width }}><Empty1 {...emptyProps} /></div>}
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

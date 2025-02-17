@@ -10,6 +10,7 @@ import { getList } from '../../../services';
 import { Error1, Overlay } from '../../../components/all';
 import { List } from '../../components/management/count/list';
 import { Subscription } from '../../../components/management/adjust/list';
+import { Help } from '../../../components/invt/inventory/list';
 
 export function Count(){
   const [loading, setLoading] = useState(false);
@@ -57,6 +58,7 @@ export function Count(){
   // const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd, setError, onSearch, setData };
   const subProps = { visible, setVisible, onDone };
+  const videoData = [{id: "unV32OW7XOM"}, {id: 'ZRjCxlLDi7Q'}, {id: 'tV1AbkHOshg'}]
 
   return (
     <div className='s_container_i'>
@@ -70,6 +72,7 @@ export function Count(){
           </div>
         }</SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

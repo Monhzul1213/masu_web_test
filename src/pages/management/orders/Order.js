@@ -8,6 +8,7 @@ import { sendRequest } from '../../../services';
 import { Overlay, Error1, Empty, Empty1 } from '../../../components/all';
 import { Header, List } from '../../../components/management/order/list';
 import { Subscription } from '../../../components/management/adjust/list';
+import { Help } from '../../../components/invt/inventory/list';
 
 export function Order(){
   const [loading, setLoading] = useState(false);
@@ -64,6 +65,7 @@ export function Order(){
   const headerProps = { onClickAdd, setError, onSearch: getData };
   const listProps = { data };
   const subProps = { visible, setVisible, onDone };
+  const videoData = [{id: "3fOQKYe_Xco"}]
 
   return (
     <div className='s_container_i'>
@@ -79,6 +81,7 @@ export function Order(){
           }</SizeMe>
         }
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

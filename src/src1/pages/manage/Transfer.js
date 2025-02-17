@@ -10,6 +10,7 @@ import { getList } from '../../../services';
 import { Empty1, Error1, Overlay } from '../../../components/all';
 import { Filter, List } from '../../components/management/transfer/list';
 import { Subscription } from '../../../components/management/adjust/list';
+import { Help } from '../../../components/invt/inventory/list';
 
 export function Transfer(){
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,7 @@ export function Transfer(){
   const headerProps = { onClickAdd, setError, onSearch };
   const listProps = { data, onClickAdd };
   const subProps = { visible, setVisible, sites, setSites, onDone };
+  const videoData = [{id: "1U7E-fxcpoo"}]
 
   return (
     <div className='s_container_i'>
@@ -72,6 +74,7 @@ export function Transfer(){
           </div>
         }</SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

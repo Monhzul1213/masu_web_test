@@ -10,6 +10,7 @@ import { Error1, Overlay } from '../../components/all';
 import { Filter, List } from '../../components/loyalty/bonus/list';
 import { Empty1 } from '../../components/all';
 import { Subscription } from '../../components/management/adjust/list/Subscription';
+import { Help } from '../../components/invt/inventory/list';
 
 export function Bonus(){
   const [loading, setLoading] = useState(false);
@@ -66,6 +67,7 @@ export function Bonus(){
   const listProps = { data, onClickAdd };
   const subProps = { visible, setVisible, onDone };
 
+  const videoData = [{id: "xwrQJ1qLpVg"}, {id: "vmd8BI22ePI"}, {id: 'ahCIP-bRRXg'}, {id: '2sl3yLOXiFw'}]
   return (
     <div className='s_container_i'>
       {visible && <Subscription {...subProps} />}
@@ -78,6 +80,7 @@ export function Bonus(){
           </div>
         }</SizeMe>
       </Overlay>
+      <Help id="xwrQJ1qLpVg" videoData={videoData}/>
     </div>
   );
 }

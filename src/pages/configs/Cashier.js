@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { getList, sendRequest } from '../../services';
 import { ButtonRowAddConfirm, Empty, Error1, Overlay } from '../../components/all';
 import { Add, List } from '../../components/config/cashier';
+import { Help } from '../../components/invt/inventory/list';
 
 function Screen(props){
   const { size } = props;
@@ -85,7 +86,8 @@ function Screen(props){
   const emptyProps = { icon: 'MdCreditCard', type: 'cashier', onClickAdd, noDescr: true };
   const listProps = { data, setData, setShow, checked, setChecked, onClickAdd };
   const modalProps = { visible, closeModal, selected, types, fields, selects };
-  
+  const videoData = [{id: "Dezvp6IrqmM"}, {id: 'B7Ai8b_ISEo'}, {id: 'i50ESE-YIyo'}]
+
   return (
     <div className='store_tab' style={{flex: 1}}>
       <Overlay loading={loading}>
@@ -100,6 +102,7 @@ function Screen(props){
           </div>
         }
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

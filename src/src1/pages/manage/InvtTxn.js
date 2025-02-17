@@ -11,6 +11,7 @@ import '../../css/management.css'
 import { List } from '../../components/management/txn';
 import { divide } from '../../../helpers';
 import { Subscription } from '../../../components/management/adjust/list';
+import { Help } from '../../../components/invt/inventory/list';
 
 
 export function InvtTxn(){
@@ -69,6 +70,7 @@ export function InvtTxn(){
 
   const listProps = { data, excelName, setError, onSearch, setData };
   const subProps = { visible, setVisible, sites, setSites, onDone };
+  const videoData = [{id: "5mOM_Bc5Bl8"}]
 
   return (
     <div className='s_container_i'>
@@ -81,6 +83,7 @@ export function InvtTxn(){
               </div>
           }</SizeMe>
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

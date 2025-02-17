@@ -44,7 +44,6 @@ export function Additional(){
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, 'Merchant/GetConfig'));
-    console.log(response);
     if(response?.error) setError(response?.error);
     else if(response?.data){
       setConfig(response?.data);

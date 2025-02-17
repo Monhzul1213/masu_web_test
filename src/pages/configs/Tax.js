@@ -6,6 +6,7 @@ import { withSize } from 'react-sizeme';
 import { getList } from '../../services';
 import { ButtonRowAdd, Empty, Error1, Overlay } from '../../components/all';
 import { List } from '../../components/config/tax/list';
+import { Help } from '../../components/invt/inventory/list';
 
 function Card(props){
   const { size } = props;
@@ -40,6 +41,7 @@ function Card(props){
   const emptyProps = { icon: 'MdOutlineReceipt', type: 'tax', noDescr: true, onClickAdd };
   const addProps = { type: 'tax', onClickAdd };
   const listProps = { data, onClickAdd };
+  const videoData = [{id: "gI2wbJ0I504"}]
 
   return (
     <div className='store_tab' style={{flex: 1}}>
@@ -52,6 +54,7 @@ function Card(props){
           </div>
         }
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

@@ -7,8 +7,8 @@ import { message } from 'antd';
 
 import '../../css/invt.css';
 import { deleteMultiRequest, getList, sendRequest } from '../../services';
-import { Confirm, Empty2, Empty1, Error1, Overlay } from '../../components/all';
-import { List } from '../../components/invt/inventory/list';
+import { Confirm, Empty2, Error1, Overlay } from '../../components/all';
+import { Help, List } from '../../components/invt/inventory/list';
 
 export function Inventory(){
   const { t } = useTranslation();
@@ -144,6 +144,7 @@ export function Inventory(){
   const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory,
     autoResetExpanded, pageInfo, getInventory, filtering, onClickDelete, show, setError, onSearch, cats: categories, excelName};
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
+  const videoData = [{id: "8IMwbPxh-QQ"}]
 
   return (
     <div className='s_container_i'>
@@ -158,6 +159,7 @@ export function Inventory(){
           }</SizeMe>
         }
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   )
 }

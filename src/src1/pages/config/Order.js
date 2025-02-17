@@ -9,6 +9,7 @@ import { getList, sendRequest } from '../../../services';
 import { Confirm, Empty, Overlay, Prompt } from '../../../components/all';
 import { CardVariant , Message } from '../../components/config';
 import { Error1 } from '../../components/all/all_m';
+import { Help } from '../../../components/invt/inventory/list';
 
 function Card(props){
   const { size } = props;
@@ -125,6 +126,7 @@ function Card(props){
   const variantProps = { data: variants, setData: setVariants, setEdited, setDVariants,
     search: searchV, setSearch: setSearchV, disabled: disabledV, setDisabled: setDisabledV, 
     size , site , changeSite , sites , onClickCancel, onClickSave };
+  const videoData = [{id: "UZBPxipeEQQ"}]
 
   return (
       <div className='store_tab' style={{flex: 1}}>
@@ -136,6 +138,7 @@ function Card(props){
             {!sites?.length ? <Empty {...emptyProps} /> : <CardVariant {...variantProps} /> }
         </Overlay>
         : <Message {...msgProps} />}
+        <Help videoData={videoData}/>
       </div> 
   );
 }

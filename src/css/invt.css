@@ -223,7 +223,7 @@
 
 .list_back {
   overflow-y: scroll;
-  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 20px - 41px - var(--pg-height) - 10px);
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 140px);
 }
 
 .ac_back {
@@ -321,6 +321,13 @@
 
 .i_scroll {
   max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2 - 46px);
+  display: flex;
+  flex-flow: column;
+  overflow: scroll;
+}
+
+.i_scroll1 {
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2 - 90px);
   display: flex;
   flex-flow: column;
   overflow: scroll;
