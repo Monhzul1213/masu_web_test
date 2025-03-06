@@ -3,7 +3,7 @@ import moment from 'moment';
 
 
 export function Info(props){
-  const { info, header } = props;
+  const { header } = props;
 
   return (
     <div>
@@ -13,7 +13,7 @@ export function Info(props){
                 <p className='inv_info'>Нэхэмжлэгч:</p> 
                 <div style={{display: 'flex', flexFlow: 'row'}}>
                   <p className='inv_info'>Байгууллагын нэр:</p>
-                  <p className='inv_info1'>{info?.header}</p>
+                  <p className='inv_info1'>{header?.cashierName}</p>
                 </div>
                 <div style={{display: 'flex', flexFlow: 'row'}}>
                   <p className='inv_info'>Хаяг:</p>
@@ -31,7 +31,7 @@ export function Info(props){
                 <p className='inv_info'>Төлөгч:</p>
                 <div style={{display: 'flex', flexFlow: 'row'}}>
                   <p className={header?.custName ? 'inv_info' : 'inv_info2'} style={{width: 140}}>Байгууллагын нэр:</p>
-                  <p className='inv_info1'>{header?.custName ? header?.custName : '_________________'}</p>
+                  <p className='inv_info1'>{header?.note ? header?.note : '_________________'}</p>
                 </div>
                 <div style={{display: 'flex', flexFlow: 'row'}}>
                   <p className={header?.custPhone ? 'inv_info' : 'inv_info2' } style={{width: 140}}>Хаяг:</p>

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { getList } from '../../../../../services';
-import { ButtonRow, Overlay, Error, IconButton, Input, ModalTitle, Empty2, MultiCancelSelect, CheckBox } from '../../../all/all_m';
+import { ButtonRow, Overlay, Error, IconButton, Input, ModalTitle, Empty2, CheckBox, MultiSelect } from '../../../all/all_m';
 import { Select } from '../../../../../components/all';
 import { InvtList } from '../../count/add/InvtList';
 import '../../../../css/management.css';
@@ -180,10 +180,10 @@ export function Inventory(props){
               <div className='count_row'>
                 <Select {...siteProps} />
                 <div className='gap'/>
-                <MultiCancelSelect {...categoryProps} />
+                <MultiSelect {...categoryProps} />
               </div>
               <div className='count_row'>
-                <MultiCancelSelect {...vendorProps} />
+                <MultiSelect {...vendorProps} />
                 <div className='gap'/>
                 <div style={{flex: 1, display: 'flex', flexFlow: 'row', justifyContent: 'space-between'}}>
                   <CheckBox {...remainProps}/>

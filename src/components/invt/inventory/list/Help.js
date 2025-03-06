@@ -89,7 +89,7 @@ export function Help(props){
     
     return (
       <div style={{display: "flex", justifyContent: "center", right: 0, top: videoData?.length === 1 ? '40%' : videoData?.length === 2 ? '30%' : '20%', position:"absolute" }}>
-        {open && <motion.div id='table_scroll' className="youtube_drawer" style={{height: videoData?.length === 1 ? 200 : videoData?.length === 2 ? 350 : 500}} initial={{ x: 300 }} animate={{ x: open ? 0 : 300 }} transition={{ type: "spring", stiffness: 200, damping: 20 }}>
+        {open && <motion.div id='table_scroll1' className="youtube_drawer" style={{height: videoData?.length === 1 ? 200 : videoData?.length === 2 ? 350 : 500}} initial={{ x: 300 }} animate={{ x: open ? 0 : 300 }} transition={{ type: "spring", stiffness: 200, damping: 20 }}>
               {videoData?.map(renderItem)}
         </motion.div>}
         <motion.div className="youtube_drawer_toggle" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => setOpen(!open)} style={{ right: open ? 300 : 0, top: videoData?.length === 1 ? 80 : videoData?.length === 2 ? 150 : 220 }}>

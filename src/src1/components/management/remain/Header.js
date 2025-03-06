@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { ExportExcel, useDebounce } from '../../../../helpers';
 import { getList, sendRequest } from '../../../../services';
-import { DynamicAIIcon, CheckBox1, DynamicMDIcon, Button, AllSelect, CheckBox } from '../../../components/all/all_m';
+import { DynamicAIIcon, CheckBox1, DynamicMDIcon, Button, CheckBox, MultiSelect } from '../../../components/all/all_m';
 import { SearchInput } from './SearchInput';
 import { Date1, InvtSelect } from '../../../../components/all';
 
@@ -157,8 +157,8 @@ export function Header(props){
     <div className='ih_header' id={id} style={{paddingTop: 0}}>
         <div className={classH} >
           <div className='mn_header2'>
-              <AllSelect {...siteProps} />
-              <AllSelect {...suppProps} />
+              <MultiSelect {...siteProps} />
+              <MultiSelect {...suppProps} />
               <InvtSelect {...invtProps}/>
           </div>
           <div className='is_dtl'>

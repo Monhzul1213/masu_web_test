@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Select as AntSelect, Tag } from 'antd';
 import { BsCheckLg } from 'react-icons/bs';
 import { useTranslation } from 'react-i18next';
 
 import { Button } from './Button';
+import { CheckBox1 } from '../../src1/components/all/all_m';
+
 const { Option } = AntSelect;
 
 export function Select(props){
@@ -124,7 +126,7 @@ export function CustomSelect(props){
   );
 }
 
-export function MultiSelect(props){
+export function MultiOldSelect(props){
   const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
     dropdownStyle, dropdownAlign } = props;
   const { t } = useTranslation();
@@ -134,9 +136,13 @@ export function MultiSelect(props){
   }
 
   const onClick = () => {
-    let all = data?.map(item => item[s_value ?? 'value']);
-    setValue(all);
-  }
+    if (value.length === data.length) {
+      setValue([]); 
+    } else {
+      let all = data?.map(item => item[s_value ?? 'value']);
+      setValue(all);
+    }
+  };
 
   const onDropdownVisibleChange = show => {
     if(!show) onHide();
@@ -146,6 +152,65 @@ export function MultiSelect(props){
     return (
       <>
         <Button className='multi_btn' text={t('time.all')} onClick={onClick} />
+        {menu}
+      </>
+    );
+  }
+
+  return (
+    <div className={classBack}>
+      {Icon && <Icon />}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={setValue}
+        value={value}
+        loading={loading}
+        onFocus={onFocus}
+        mode='multiple'
+        dropdownStyle={dropdownStyle}
+        dropdownAlign={dropdownAlign}
+        menuItemSelectedIcon={<BsCheckLg />}
+        onDropdownVisibleChange={onDropdownVisibleChange}
+        dropdownRender={dropdownRender}
+        maxTagCount={0}
+        maxTagPlaceholder={maxTag}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+    </div>
+  );
+}
+
+export function MultiSelect(props){
+  const { value, setValue, placeholder, data, s_value, s_descr, className, classBack, classLabel, label, onFocus, loading, isIndex, maxTag, onHide, Icon,
+    dropdownStyle, dropdownAlign } = props;
+  const { t } = useTranslation();
+  const [checked, setChecked] = useState(true);
+
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={isIndex ? index : item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  const onClick = () => {
+    if(!checked) {
+      let all = data?.map(item => item[s_value ?? 'value']);
+      setValue(all);
+    } else setValue()
+  }
+
+  const onDropdownVisibleChange = show => {
+    if(!show) onHide();
+  }
+
+  const checkProps = { label: t('time.all_select'), checked, setChecked, className:'multi_btn', onHide: onClick};
+
+  const dropdownRender = menu => {
+    return (
+      <>
+        <CheckBox1 {...checkProps}/>
         {menu}
       </>
     );

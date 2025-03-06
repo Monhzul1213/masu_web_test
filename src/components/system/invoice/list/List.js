@@ -153,7 +153,7 @@ export function List(props){
         {visible && <Detail {...detailProps} />}
         {/* <Header {...headerProps}/> */}
         {/* {!data?.length ? <Empty1 {...emptyProps} /> : */}
-          <div className='list_scroll' id='paging' style={{marginTop: 10, overflowX: 'scroll', maxHeight, minWidth: 220}}>
+          <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 220}}>
             <FooterTable {...tableProps} />
           </div>
         {/* } */}

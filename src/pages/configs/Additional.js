@@ -8,6 +8,7 @@ import { sendRequest, getList } from '../../services';
 import { Overlay, ButtonRow, Error1, Prompt } from '../../components/all';
 import { Item } from '../../components/config/add';
 import { Subscription } from '../../components/management/adjust/list';
+import { Help } from '../../components/invt/inventory/list';
 
 export function Additional(){
   const { t } = useTranslation();
@@ -122,6 +123,7 @@ export function Additional(){
 
   const btnProps = { onClickCancel, onClickSave };
   const subProps = { visible, setVisible, onDone };
+  const videoData = [{id: "DclYbThnhmM"}, {id: "Bxwdue0lTaw"}, {id: "NVN0oaH3aLc"}]
 
   return (
     <div>
@@ -135,6 +137,7 @@ export function Additional(){
         </div>
         <ButtonRow {...btnProps} />
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   )
 }

@@ -10,6 +10,7 @@ import { getList, sendRequest } from '../../services';
 import { urlToFile } from '../../helpers';
 import { ButtonRow, CheckBox, Confirm, DescrInput, Empty, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage
   } from '../../components/all';
+import { Help } from '../../components/invt/inventory/list';
 
 function Card(props){
   const { size } = props;
@@ -152,6 +153,7 @@ function Card(props){
   const confirmProps = { open: open ? true : false, text: 'page.back_confirm', confirm };
   const printProps = { label: t('document.isPrint'), checked: isPrint, setChecked: setIsPrint };
   const descrProps = { label: t('document.isDescr'), checked: isDescr, setChecked: setIsDescr };
+  const videoData = [{id: "EosOGez0VVE"}]
 
   return (
     <div className='store_tab' style={{flex: 1}}>
@@ -180,6 +182,7 @@ function Card(props){
           </div>
       }
       </Overlay>
+      <Help videoData={videoData}/>
     </div>
   );
 }

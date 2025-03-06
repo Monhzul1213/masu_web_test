@@ -26,6 +26,11 @@ export function Card(props){
   }
 
   const renderCard = (item, index) => {
+
+    // const onClick = () => {
+    //   console.log(item);
+    // };
+    
     let color = getColor(1 - (index / data?.length))
     return (
       <div className='rw_card' key={index} style={{ width }}>
