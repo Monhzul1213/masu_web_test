@@ -11,7 +11,7 @@ import {
 import { createSearchParams, useNavigate } from "react-router-dom";
 import moment from "moment";
 
-import { CheckBox, TableResize } from "../../../components/all";
+import { TableResize } from "../../../components/all";
 
 export function List(props) {
   const { data, size, setOpenModal } = props;
@@ -23,22 +23,22 @@ export function List(props) {
   useEffect(() => {
     setColumns([
       {
-        Header: t("account.title"),
-        accessor: "acctName",
-        width: 130,
-        minWidth: 80,
-      },
-      {
         Header: t("account.acctCode"),
         accessor: "acct",
-        width: 200,
-        minWidth: 120,
+        width: 150,
+        minWidth: 100,
+      },
+      {
+        Header: t("account.title"),
+        accessor: "acctName",
+        width: 300,
+        minWidth: 100,
       },
       {
         Header: t("account.acctType"),
         accessor: "accTypeName",
-        width: 200,
-        minWidth: 120,
+        width: 120,
+        minWidth: 50,
       },
       {
         Header: t("account.acctClass"),
@@ -49,38 +49,38 @@ export function List(props) {
       {
         Header: t("account.currency"),
         accessor: "currency",
-        width: 140,
-        minWidth: 90,
+        width: 100,
+        minWidth: 50,
       },
-      {
-        Header: t("account.isDebit"),
-        accessor: "isDebit",
-        width: 150,
-        minWidth: 80,
-        Cell: ({ value }) => (
-          <div style={{ marginTop: -17 }}>
-            <CheckBox disabled={true} checked={value === "Y"} />
-          </div>
-        ),
-      },
+      // {
+      //   Header: t("account.isDebit"),
+      //   accessor: "isDebit",
+      //   width: 150,
+      //   minWidth: 80,
+      //   Cell: ({ value }) => (
+      //     <div style={{ marginTop: -17 }}>
+      //       <CheckBox disabled={true} checked={value === "Y"} />
+      //     </div>
+      //   ),
+      // },
       {
         Header: t("account.status"),
         accessor: "status",
-        width: 200,
-        minWidth: 130,
+        width: 120,
+        minWidth: 80,
         Cell: ({ value }) => <div>{value === 1 ? "Идэвхтэй" : "Хүчингүй"}</div>,
       },
       {
         Header: t("shop.title"),
         accessor: "siteName",
-        width: 200,
-        minWidth: 120,
+        width: 150,
+        minWidth: 80,
       },
       {
         Header: t("account.lastUpdate"),
         accessor: "lastUpdate",
-        width: 200,
-        minWidth: 130,
+        width: 180,
+        minWidth: 80,
         Cell: ({ value }) => (
           <div style={{}}>{moment(value).format("yyyy.MM.DD HH:mm")}</div>
         ),
@@ -88,8 +88,8 @@ export function List(props) {
       {
         Header: t("account.lastUserId"),
         accessor: "lastUserName",
-        width: 140,
-        minWidth: 100,
+        width: 150,
+        minWidth: 80,
       },
     ]);
     return () => {};

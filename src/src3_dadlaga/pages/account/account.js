@@ -126,7 +126,7 @@ export function Account() {
             <section className="a_cont">
               <div className="a_tree_cont">
                 <div className="a_tree_header">
-                  <h2>{t("account.acctClass")}</h2>
+                  <h2 className="a_acctTitle">{t("account.acctClass")}</h2>
                 </div>
                 <AccountTree {...treeProps} />
               </div>

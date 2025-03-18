@@ -132,7 +132,10 @@ export function AccountAddModal(props) {
       accountName.value === "" ||
       accountType.value === null
     ) {
-      setError("Бүрэн бөглөнө үү");
+      if(!accountType.value) setAccountType({ value: '', error: t('error.not_empty') });
+      if(!accountName.value) setAccountName({ value: '', error: t('error.not_empty') });
+      if(!accountCode.value) setAccountCode({ value: '', error: t('error.not_empty') });
+      // setError("Бүрэн бөглөнө үү");
       return null;
     }
     let acctClassID = searchParams?.get("classId");

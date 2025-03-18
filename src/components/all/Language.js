@@ -2,7 +2,7 @@ import React from 'react';
 import { Menu, Dropdown } from 'antd';
 import { useTranslation } from 'react-i18next';
 
-import { flag_mn, flag_en, flag_kr, flag_cn } from '../../assets';
+import { flag_mn, flag_en, flag_kr, flag_cn, flag_gr } from '../../assets';
 import { DynamicMDIcon } from './DynamicIcon';
 
 export function Language(props){
@@ -41,6 +41,12 @@ export function Language(props){
           <span className='menu_language'>CN</span>
         </div>
       </Menu.Item>
+      <Menu.Item key='gr' onClick={() => changeLanguage('gr')}>
+        <div className='menu_language_back'>
+          <img src={flag_gr} alt='Logo' className='menu_language_logo'/>
+          <span className='menu_language'>GR</span>
+        </div>
+      </Menu.Item>
     </Menu>
   );
 
@@ -49,8 +55,8 @@ export function Language(props){
       <div className='language_back'>
         <div className='menu_language_btn'>
           <span className={'menu_language_link'} onClick={e => e.preventDefault()} id={id}>
-            <img src={i18n?.language === 'mn' ? flag_mn : i18n?.language === 'en' ? flag_en : i18n?.language === 'cn' ? flag_cn : flag_kr} alt='Logo' className='menu_language_logo'/>
-            {i18n?.language === 'mn' ? 'MN' : (i18n?.language === 'en' ? 'EN' : i18n?.language === 'cn' ? 'CN' : 'KR')}
+            <img src={i18n?.language === 'mn' ? flag_mn : i18n?.language === 'en' ? flag_en : i18n?.language === 'cn' ? flag_cn : i18n?.language === 'gr' ? flag_gr : flag_kr} alt='Logo' className='menu_language_logo'/>
+            {i18n?.language === 'mn' ? 'MN' : (i18n?.language === 'en' ? 'EN' : i18n?.language === 'cn' ? 'CN' : i18n?.language === 'kr' ? 'KR' :  'GR')}
           </span>
         </div>
         <DynamicMDIcon name='MdKeyboardArrowDown' size={20} className='down_icon_back1' />
@@ -95,6 +101,12 @@ export function LanguageLogin(props){
           <span className='menu_language'>CN</span>
         </div>
       </Menu.Item>
+      <Menu.Item key='gr' onClick={() => changeLanguage('gr')}>
+        <div className='menu_language_back'>
+          <img src={flag_gr} alt='Logo' className='menu_language_logo'/>
+          <span className='menu_language'>GR</span>
+        </div>
+      </Menu.Item>
     </Menu>
   );
 
@@ -103,8 +115,8 @@ export function LanguageLogin(props){
       {/* <div className='language_back'> */}
         <div className='menu_language_btn'>
           <span className={'menu_language_link'} onClick={e => e.preventDefault()} id={id}>
-            <img src={i18n?.language === 'mn' ? flag_mn : i18n?.language === 'en' ? flag_en : i18n?.language === 'cn' ? flag_cn : flag_kr} alt='Logo' className='menu_language_logo'/>
-            {i18n?.language === 'mn' ? 'MN' : (i18n?.language === 'en' ? 'EN' : i18n?.language === 'cn' ? 'CN' : 'KR')}
+            <img src={i18n?.language === 'mn' ? flag_mn : i18n?.language === 'en' ? flag_en : i18n?.language === 'cn' ? flag_cn : i18n?.language === 'gr' ? flag_gr : flag_kr} alt='Logo' className='menu_language_logo'/>
+            {i18n?.language === 'mn' ? 'MN' : (i18n?.language === 'en' ? 'EN' : i18n?.language === 'cn' ? 'CN' : i18n?.language === 'kr' ? 'KR' : 'GR')}
           </span>
           <DynamicMDIcon name='MdKeyboardArrowDown' size={20} className='down_icon_back2' />
         </div>

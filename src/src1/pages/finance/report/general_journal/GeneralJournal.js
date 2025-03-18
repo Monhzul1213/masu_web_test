@@ -3,7 +3,7 @@ import { SizeMe } from "react-sizeme";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
-import { Filter } from "../../../../components/finance/report/general_journal";
+import { Filter, WorkList, GljournalList, JournalList, AcctList, BalanceList } from "../../../../components/finance/report/general_journal";
 import '../../../../css/finance.css';
 import { sendRequest } from "../../../../../services";
 
@@ -146,11 +146,11 @@ export function GeneralJournal() {
             {({ size }) => (
                 <div>
                 <Filter size={size} {...filterProps}/>
-                {/* {type === 'uspgl_JournalBalanceReport' ? <BalanceList size={size} data={balData}/> : 
+                {type === 'uspgl_JournalBalanceReport' ? <BalanceList size={size} data={balData}/> : 
                  type === 'uspgl_Report_AccountStatement' ? <AcctList size={size} data={acctData}/> : 
                  type === 'uspgl_ReportGLJournal' ? <JournalList size={size} data={journalData}/> : 
                  type === 'uspgl_ReportJournalList' ? <GljournalList size={size} data={data}/> : 
-                 type === 'uspgl_WorkSheet' ? <WorkList size={size} data={data}/> : ''} */}
+                 type === 'uspgl_WorkSheet' ? <WorkList size={size} data={data}/> : ''}
                 </div>
             )}
             </SizeMe>

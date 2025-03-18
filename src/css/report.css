@@ -840,6 +840,13 @@
   align-items: center;
 }
 
+.rw_card_type1 {
+  display: flex;
+  flex-flow: row;
+  /* flex: 1; */
+  align-items: center;
+}
+
 .rw_card_icon {
   font-size: 20px;
   color: var(--text4-color);

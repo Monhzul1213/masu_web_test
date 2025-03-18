@@ -164,7 +164,8 @@
     "/finance/journal": "Гүйлгээ",
     "/finance/journal/journal_add": "Гүйлгээ хийх",
     "/finance/report": "Тайлан",
-    "/finance/report/generel_journal": "Ерөнхий журнал"
+    "/finance/report/generel_journal": "Ерөнхий журнал",
+    "/finance/account": "Данс"
   },
   "menu": {
     "profile": "Хэрэглэгч",

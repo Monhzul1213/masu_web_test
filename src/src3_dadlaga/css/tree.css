@@ -25,3 +25,7 @@
 .acc_list_cont {
   min-width: calc(100% - 520px);
 }
+.a_acctTitle{
+  font-size: 17px;
+  font-weight: 500px;
+}

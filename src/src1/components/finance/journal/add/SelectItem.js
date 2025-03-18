@@ -42,9 +42,15 @@ export function ItemSelect(props){
     let api = 'Txn/GetAccount' //[{ fieldName: "Name", value }, { fieldName: "SiteID", value: siteId?.value }, {fieldName : 'GetVariant', value : "Y"}];
     let response = await dispatch(getList(user, token, api ))
     if(response?.error) setSearch({ value: null, error: response?.error });
-    else setItems(response?.data?.acct);
+    else {
+      response?.data?.acct?.map(item=> {
+        item.name = item?.acct + "-" + item?.acctName
+      })
+      setItems(response?.data?.acct);
+    }
     setLoading(false);
   }
+
 
   const onSelect = value => {
     let acct = items[value?.value];
@@ -59,7 +65,7 @@ export function ItemSelect(props){
   }
 
   const renderItem = (item, index) => {
-    let optItem = { acctName: item?.acctName, acctCode: item?.acctCode };
+    let optItem = { acctName: item?.name, acctCode: item?.acctCode };
     return (
       <Option key={index} value={index} acctCode={optItem?.acctCode} acctName={optItem?.acctName}>
         <SelectItem item={optItem} />

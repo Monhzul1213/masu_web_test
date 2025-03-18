@@ -162,7 +162,10 @@
     "/finance/template": "交易模板",
     "/finance/template/add": "注册交易模板",
     "/finance/journal": "交易",
-    "/finance/journal/journal_add": "进行交易"
+    "/finance/journal/journal_add": "进行交易",
+    "/finance/account": "账户",
+    "/finance/report": "报告",
+    "/finance/report/generel_journal": "普通期刊"
   },
   "menu": {
     "profile": "用户",
@@ -268,6 +271,8 @@
     "variant_error": "选择的名称重复",
     "error": "请选择业务方向！",
     "error1": "请保存业务方向！",
+    "error2": "您从哪里获得MASU的信息？请选择！",
+    "error3": "您从哪里获得有关 MASU 的信息？保存！",
     "ok": "确定",
     "question": "您从哪里得知 MASU？"
   },
@@ -696,7 +701,8 @@
     "t_emp": "员工",
     "t_site": "分支",
     "t_total": "总时间",
-    "time": "每日工作时间"
+    "time": "每日工作时间",
+    "all_select": "全部"
 },
 "report_receipt": {
     "c_title1": "所有文件",
@@ -1187,7 +1193,8 @@
     "import_link": "商品余额获取格式",
     "qpay": "QPAY",
     "acct": "账户",
-    "is_remain": "是否有余额"
+    "is_remain": "是否有余额",
+    "is_date": "按日期查看"
   },
   "adjust": {
     "add": "进行交易",
@@ -1501,7 +1508,9 @@
     "emp": "员工",
     "site": "分支",
     "total_amount": "总金额",
-    "all_cancel": "全部取消"
+    "all_cancel": "全部取消",
+    "import_link": "下载枚举格式",
+    "import_title":"导入库存物品"
   },
   "giftCard": {
     "title": "礼品卡",
@@ -1581,7 +1590,9 @@
     "sub": "子账户",
     "debit": "借记",
     "formula": "公式",
-    "journal": "交易"
+    "journal": "交易",
+    "report": "报告",
+    "generel_journal": "普通期刊"
   },
   "info": {
     "type": "分类",
@@ -1599,7 +1610,8 @@
       { "label": "销售数量", "value": "salesQty" },
       { "label": "增值税纳税人？", "value": "useNuatus" },
       { "label": "创建日期", "value": "createdDate" },
-      { "label": "合作伙伴", "value": "partnerCode" }
+      { "label": "合作伙伴", "value": "partnerCode" },
+      { "label": "营销类型", "value": "adsTypeName" }
     ],
     "all": "总计："
   },

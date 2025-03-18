@@ -2,7 +2,7 @@ import React from "react";
 import { MdChevronLeft } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
-import { CheckBox, IconButton, Input, Select } from "../../../components/all";
+import { IconButton, Input, Select } from "../../../components/all";
 
 export function MainInput(props) {
   const {
@@ -20,8 +20,8 @@ export function MainInput(props) {
     loading,
     currency,
     typeDatas,
-    setIsDebit,
-    isDebit,
+    // setIsDebit,
+    // isDebit,
     setAccountType,
     accountType,
     setSiteId,
@@ -136,13 +136,13 @@ export function MainInput(props) {
         <IconButton {...backProps} />
       </div>
       <div className="ad_main">
-        <div className="ad_row">
+        {/* <div className="ad_row"> */}
           <div style={{ marginTop: 0, flex: 1 }}>
-            <Input {...acctName} />
+            <Input {...acctCode} />
           </div>
           <div className="gap" />
-          <Input {...acctCode} />
-        </div>
+          <Input {...acctName} />
+        {/* </div> */}
         <div className="ad_row" style={{ marginTop: "10px" }}>
           <div style={{ marginTop: 0, flex: 1, width: "40%" }}>
             <Select {...currencyProps} />
@@ -161,7 +161,7 @@ export function MainInput(props) {
             <Select {...siteProps} />
           </div>
         </div>
-        <div className="ad_row">
+        {/* <div className="ad_row">
           <CheckBox label="Дэбит" checked={isDebit} setChecked={setIsDebit} />
           <div className="gap" />
           <CheckBox
@@ -169,7 +169,7 @@ export function MainInput(props) {
             checked={!isDebit}
             setChecked={(checked) => setIsDebit(!checked)}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

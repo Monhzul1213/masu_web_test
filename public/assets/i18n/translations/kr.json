@@ -162,7 +162,10 @@
     "/finance/template": "거래 템플릿",
     "/finance/template/add": "거래 템플릿 추가",
     "/finance/journal": "거래",
-    "/finance/journal/journal_add": "거래 추가"
+    "/finance/journal/journal_add": "거래 추가",
+    "/finance/account": "계정",
+    "/finance/report": "보고",
+    "/finance/report/generel_journal": "일반 저널"
   },
   "menu": {
     "profile": "사용자",
@@ -268,6 +271,8 @@
     "variant_error": "선택 이름이 중복됩니다",
     "error": "활동 분야를 선택하세요!",
     "error1": "활동 분야를 저장하세요!",
+    "error2": "MASU에 대한 정보를 어디서 얻었나요? 선택해주세요!",
+    "error3": "MASU에 대한 정보를 어디서 얻었나요? 저장하세요!",
     "ok": "확인",
     "question": "MASU에 대해 어디서 들어보셨나요?"
   },
@@ -696,7 +701,8 @@
     "t_emp": "직원",
     "t_site": "지점",
     "t_total": "총 시간",
-    "time": "일일 근무 시간"
+    "time": "일일 근무 시간",
+    "all_select": "모두"
   },
   "report_receipt": {
     "c_title1": "모든 영수증",
@@ -1186,7 +1192,8 @@
     "import_link": "재고 잔액 포맷",
     "qpay": "QPAY",
     "acct": "계좌",
-    "is_remain": "잔액 여부"
+    "is_remain": "잔액 여부",
+    "is_date": "날짜별로 보기"
 },
 "adjust": {
     "add": "거래 추가",
@@ -1500,7 +1507,9 @@
     "emp": "직원",
     "site": "지점",
     "total_amount": "총 금액",
-    "all_cancel": "모두 취소"
+    "all_cancel": "모두 취소",
+    "import_link": "열거 형식 다운로드",
+    "import_title": "인벤토리 아이템 가져오기"
   },
   "giftCard": {
     "title": "기프트카드",
@@ -1580,7 +1589,9 @@
     "sub": "하위 계좌",
     "debit": "차변",
     "formula": "수식",
-    "journal": "거래"
+    "journal": "거래",
+    "report": "보고",
+    "generel_journal": "일반 저널"
   },
   "info": {
     "type": "분류",
@@ -1598,7 +1609,8 @@
       { "label": "판매 수량", "value": "salesQty" },
       { "label": "부가세 납부?", "value": "useNuatus" },
       { "label": "생성 날짜", "value": "createdDate" },
-      { "label": "파트너", "value": "partnerCode" }
+      { "label": "파트너", "value": "partnerCode" },
+      { "label": "마케팅 유형", "value": "adsTypeName" }
     ],
     "all": "전체: "
   },

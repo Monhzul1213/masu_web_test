@@ -162,7 +162,10 @@
     "/finance/template": "Transaction Template",
     "/finance/template/add": "Register Transaction Template",
     "/finance/journal": "Transactions",
-    "/finance/journal/journal_add": "Make Transaction"
+    "/finance/journal/journal_add": "Make Transaction",
+    "/finance/account": "Account",
+    "/finance/report": "Report",
+    "/finance/report/generel_journal": "General journal"
   },
   "menu": {
     "profile": "User",
@@ -268,6 +271,8 @@
     "variant_error": "Selection name is duplicated",
     "error": "Please select a business activity!",
     "error1": "Please save your business activity!",
+    "error2": "Where did you get information about MASU? Please select!",
+    "error3": "Where did you get information about MASU? save!",
     "ok": "OK",
     "question": "Where did you find out about MASU?"
   },
@@ -696,7 +701,8 @@
     "t_emp": "Employee",
     "t_site": "Branch",
     "t_total": "Total Time",
-    "time": "Working Hours per Day"
+    "time": "Working Hours per Day",
+    "all_select": "All"
   },
   "report_receipt": {
     "c_title1": "All Documents",
@@ -1186,7 +1192,8 @@
     "import_link": "Format for obtaining item balances",
     "qpay": "QPAY",
     "acct": "Account",
-    "is_remain": "Is there a balance?"
+    "is_remain": "Is there a balance?",
+    "is_date": "View by date"
 },
 "adjust": {
     "add": "Make a transaction",
@@ -1500,7 +1507,9 @@
     "emp": "Employee",
     "site": "Branch",
     "total_amount": "Total Amount",
-    "all_cancel": "Cancel All"
+    "all_cancel": "Cancel All",
+    "import_link": "Download Enumeration Format",
+    "import_title":"Import inventory item"
   },
   "giftCard": {
     "title": "Gift Card",
@@ -1580,7 +1589,9 @@
     "sub": "Sub Account",
     "debit": "Debit",
     "formula": "Formula",
-    "journal": "Transaction"
+    "journal": "Transaction",
+    "report": "Report",
+    "generel_journal": "General journal"
   },
   "info": {
     "type": "Category",
@@ -1598,7 +1609,8 @@
       { "label": "Sales Count", "value": "salesQty" },
       { "label": "VAT Payer?", "value": "useNuatus" },
       { "label": "Creation Date", "value": "createdDate" },
-      { "label": "Partner", "value": "partnerCode" }
+      { "label": "Partner", "value": "partnerCode" },
+      { "label": "Marketing type", "value": "adsTypeName" }
     ],
     "all": "Total: "
   },

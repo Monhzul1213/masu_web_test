@@ -89,7 +89,7 @@ export function List(props){
     dropdownStyle: { minWidth: 200 }, dropdownAlign: { offset: [-165, 5] } };
 
   return (
-    <div>
+    <div style={{overflowX: 'scroll'}}>
       <div className='rp_list_filter'>
         <ExportExcel text={t('page.export')} columns={columns} excelData={data} fileName={excelName} />
         <IconSelect {...columnProps} />
