@@ -37,7 +37,7 @@ export function CustomerImport(){
         await dispatch(sendRequest(user, token, 'Site/Customer/AddExcel', formData, 'multipart/form-data'));
       if(response?.error) setError(response?.error);
       else {
-        message.success(t('inventory.add_success'));
+        message.success(t('customer.add_success'));
         setFile(null);
       }
       setLoading(false);

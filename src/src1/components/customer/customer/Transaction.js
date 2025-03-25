@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 
 import { getList } from '../../../../services';
 import '../../../../css/config.css'
@@ -15,13 +16,13 @@ export function Transaction(props){
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
-
+  const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if(visible){
-      let query = '?custId=' + selected?.custId
+      let query = '?BeginDate=' + moment().startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD') + '&custId=' + selected?.custId ;
       getData(query)
     }
     return () => {};
@@ -58,7 +59,7 @@ export function Transaction(props){
   }
 
 
-  const listProps = { data, selected};
+  const listProps = { data, selected, date, setDate, onSearch: getData, selected};
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} onCancel = {closeModal}  centered={true} width={770}>
@@ -71,7 +72,7 @@ export function Transaction(props){
             </div>           
             <div className='sub_row'>
               <p className='sub_row_value'>{t('customer.balance')}
-              <Money value={selected?.arBalance} fontSize={13} />
+              <Money value={selected?.arBalance ?? 0} fontSize={13} />
               </p> 
             </div>
         </div>

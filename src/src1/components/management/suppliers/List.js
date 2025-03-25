@@ -78,9 +78,11 @@ export function List(props){
 
   return (
     <div >
+      <div style={{overflowX: 'scroll'}}>
         <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
               <Table {...tableProps} />
         </div>
+      </div>
       <PaginationTable {...tableProps} />
     </div>
   )

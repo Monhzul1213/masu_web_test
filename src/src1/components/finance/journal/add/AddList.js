@@ -8,7 +8,7 @@ import { ItemSelect } from "./SelectItem";
 import { EditableCell as EditableCellQty } from './EditableCell';
 
 function Card(props) {
-  const { size, detail, setSearch, setDItems, search, setDetail, setEdited, setPrice} = props;
+  const { size, detail, setSearch, setDItems, search, setDetail, setEdited} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   useEffect(() => {
@@ -43,21 +43,21 @@ function Card(props) {
 
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
-    let total = 0;
+    // let total = 0;
     setDetail(old => old.map((row, index) => {
       if(index === rowIndex){
         let drAmt = columnId === 'drAmt' ? parseFloat(value ? value : 0) : old[rowIndex]?.drAmt;
         let crAmt = columnId === 'crAmt' ? parseFloat(value ? value : 0) : old[rowIndex]?.crAmt;
         let itemDescr = columnId === 'itemDescr' ? value : old[rowIndex]?.itemDescr;
-        let total1 = total + drAmt
-        setPrice({value: total1})
+        // let total1 = total + drAmt
+        // setPrice({value: total1})
         return { ...old[rowIndex], drAmt, crAmt, itemDescr };
       } else { 
-        total += row?.drAmt ?? 0
+        // total += row?.drAmt ?? 0
         return row;
       }
     }));
-    setEdited && setEdited(true);
+    setEdited && setEdited(true); 
     setSearch({ value: null });
   }
   
@@ -68,7 +68,7 @@ function Card(props) {
   }
 
   const newItem = acct => {
-    return { accountID: acct?.accountId, acct: acct?.acct, drAmt: acct?.drAmt ?? 0, crAmt: acct?.crAmt ?? 0, acctCode: acct?.acctCode, acctName: acct?.acctName, 
+    return { accountID: acct?.acct, acct: acct?.acct, drAmt: acct?.drAmt ?? 0, crAmt: acct?.crAmt ?? 0, acctName: acct?.acctName, 
       isDebit: acct?.isDebit, status: acct?.status, currency: acct?.currency, itemDescr: acct?.itemDescr ?? '', rowStatus: 'I'};
   }
 

@@ -17,6 +17,8 @@ export function Header(props){
   const [sites, setSites] = useState([]);
   const [supplier, setSupplier ]= useState([]);
   const [suppliers, setSuppliers] = useState([]);
+  const [category, setCategory ]= useState([]);
+  const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,6 +34,7 @@ export function Header(props){
   useEffect(() => {
     onFocusSite();
     onFocusSupplier();
+    onFocusCategory();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -78,6 +81,20 @@ export function Header(props){
     }
   }
 
+  const onFocusCategory = async () => {
+    if(!categories?.length){
+      setError(null);
+      setLoading(true);
+      const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
+      if(response?.error) setError(response?.error);
+      else {
+        setCategories(response?.data);
+        setCategory(response?.data?.map(item => item.categoryId));
+      }     
+      setLoading(false);
+    }
+  }
+
   const getData = async value => {
     if(value?.length > 3){
       setLoading(true);
@@ -99,6 +116,7 @@ export function Header(props){
     let query = '?='
     if(supplier?.length !== suppliers?.length) supplier?.forEach(item => query += '&VendID=' + item);
     if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
+    if(category?.length !== categories?.length) category?.forEach(item => query += '&CategoryID=' + item);
     query += (value ? ('&InvtName=' + value) : '');
     query += (isDtl ? ('&IsDtl=' + 'Y') : '');
     if(isDate) query += '&begindate=' + date?.value?.format('yyyy.MM.DD') + '&enddate=' + date?.value?.format('yyyy.MM.DD');
@@ -135,6 +153,7 @@ export function Header(props){
   const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const maxSite = site?.length === sites?.length ? t('time.all_shop') : (site?.length + t('time.some_shop'));
   const maxSupp = supplier?.length === suppliers?.length ? t('time.all_supp') : (supplier?.length + t('time.some_supp'));
+  const maxCategory = category?.length === categories?.length ? t('inventory.all_category') : (category?.length + t('count.category'));
 
   const siteProps = { value: site, setValue: setSite, data: sites, s_value: 'siteId', s_descr: 'name',  onHide,
     label: t('inventory.t_site'), onFocus: onFocusSite, loading: loading === 'sites', maxTag: maxSite, placeholder: t('time.select_shop'), 
@@ -142,6 +161,10 @@ export function Header(props){
   const suppProps = { value: supplier, setValue: setSupplier, data: suppliers, s_value: 'vendId', s_descr: 'vendName', onHide,
     classBack, classLabel, className ,
     label: t('supplier.title'), onFocus: onFocusSupplier, loading: loading === 'suppliers', maxTag: maxSupp, placeholder: t('time.select_supp')};
+  const cateProps = { value: category, setValue: setCategory, data: categories, s_value: 'categoryId', s_descr: 'categoryName', onHide,
+    classBack, classLabel, className ,
+    label: t('inventory.category'), onFocus: onFocusCategory, loading: loading === 'categories', maxTag: maxCategory, placeholder: t('inventory.category')};
+  
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const refreshProps = { className: 'ih_refresh', name: 'MdRefresh', onClick: onClickRefresh };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch, width: width1 };
@@ -159,6 +182,7 @@ export function Header(props){
           <div className='mn_header2'>
               <MultiSelect {...siteProps} />
               <MultiSelect {...suppProps} />
+              <MultiSelect {...cateProps} />
               <InvtSelect {...invtProps}/>
           </div>
           <div className='is_dtl'>

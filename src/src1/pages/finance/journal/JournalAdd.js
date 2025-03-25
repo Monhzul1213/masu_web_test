@@ -148,7 +148,7 @@ export function JournalAdd() {
     if (sure) setVisible(true);
   };
 
-  let mainProps = { setError, setEdited, price, setPrice, loading, setLoading, setDetail,
+  let mainProps = { setError, setEdited, price, setPrice, loading, setLoading, setDetail, header,
       descr,  setDescr, source, setSource, setCustomer , customer, template, setTemplate, status, setStatus, date, setDate };
   let listProps = { detail, setDetail, search, setSearch, setEdited, setDItems, onClickDelete, setPrice};
   let btnProps = { onClickCancel, onClickSave, onClickDelete, header};

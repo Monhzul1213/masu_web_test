@@ -4,12 +4,14 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Date, DescrInput, IconButton, Input, MoneyInput, Select } from "../../../../../components/all";
+import { Date, DescrInput, IconButton, Input, MoneyInput, MoneyInput1, Select } from "../../../../../components/all";
 import { getList } from "../../../../../services";
+import { TempSelect } from "./TempSelect";
+import { evaluate } from "mathjs";
 
 export function MainInput(props) {
   const { setError, setEdited, price, setPrice, descr,  setDescr, source, setSource, setCustomer , customer,
-          date, setDate, template, setTemplate, setLoading, status, setStatus, setDetail } = props;
+          date, setDate, template, setTemplate, setLoading, status, setStatus, setDetail, header } = props;
   const [states, setStates] = useState([{ value: 0, label: "Үүсгэсэн" }]);
   const [templates, setTemplates] = useState([]);
   const [custs, setCusts] = useState([]);
@@ -60,10 +62,57 @@ export function MainInput(props) {
     setLoading('custs');
     const response = await dispatch(getList(user, token, "Txn/GetTemplate"));
     if(response?.error) setError(response?.error)
-    else setTemplates(response?.data?.template)
+    else {
+      response?.data?.template?.forEach(item => {
+        item.template = item?.templateId + "-" + item?.templateName
+      })
+      setTemplates(response?.data?.template)
+    }
     setLoading(false);
     }
   };
+
+  const calculateWithDependencies = (items, totalAmount) => {
+    const localVars = { A1: totalAmount };
+  
+    return items.map((item, index) => {
+      const currentVar = `A${index + 2}`; // A2, A3, A4 гэх мэт автоматаар үүсгэнэ
+      let formula = item?.formula;
+  
+      // LocalVars доторх бүх хувьсагчийг орлуулна
+      for (const [key, value] of Object.entries(localVars)) {
+        formula = formula.replace(new RegExp(key, 'g'), value);
+      }
+  
+      // Томьёог бодно
+      const calcAmount = parseFloat(evaluate(formula).toFixed(2));
+  
+      // localVars-д шинэ хувьсагчаа хадгална
+      localVars[currentVar] = calcAmount;
+  
+      // Debit / Credit талд хуваарилна
+      if (item?.isDebit === 0) {
+        item.crAmt = calcAmount;
+      } else {
+        item.drAmt = calcAmount;
+      }
+  
+      return item;
+    });
+  };
+  
+  const handleEnter = async (value) => {
+    const totalAmount = value?.value ?? 0;
+    const response = await dispatch(getList(user, token, "Txn/GetTemplate?TemplateId=" + template?.value));
+  
+    if (response?.error) {
+      setError(response?.error);
+    } else {
+      const updatedItems = calculateWithDependencies(response?.data?.templateitem, totalAmount);
+      setDetail(updatedItems);
+    }
+  };
+  
 
   const onChangeTemplate = async (value) => {
     setTemplate(value)
@@ -87,14 +136,14 @@ export function MainInput(props) {
   const dateProps = { value: date, setValue: setDate, label: t('count.date'), placeholder: t('count.date'), 
                       inRow: true, className: 'c_date' };
   const totalProps = { value: price, setValue: setPrice, label: t('discount.amount'), placeholder: t('discount.amount'), 
-                       setEdited, setError, inRow: true };
+                       setEdited, setError, inRow: true, handleEnter };
   const sourceProps = { value: source, setValue: setSource, label: t('manage.t_no'), placeholder: t('manage.t_no'), 
                         setError, setEdited, inRow: true, disabled: true, inRow1: true};
   const custProps = { value: customer, setValue: setCustomer, data: custs, s_value: "custId", s_descr: "custName", 
                       label: t("customer.title"), placeholder: t("customer.title"), onFocus: onFocusCust, inRow: true };
   const statusProps = { value: status, setValue: setStatus, data: states, s_value: "value", s_descr: "label", 
                       label: t("order.status"), placeholder: t("order.status"), onFocus: onFocusStatus, inRow: true, inRow1: true };
-  const templateProps = { value: template, setValue: onChangeTemplate, data: templates, s_value: "templateId", s_descr: "templateName", 
+  const templateProps = { value: template, setValue: onChangeTemplate, data: templates,
                           label: t("transModel.title"), placeholder: t("transModel.title"), onFocus: onFocusTemplate, inRow: true };
 
   return (
@@ -103,20 +152,21 @@ export function MainInput(props) {
         <IconButton {...backProps} />
       </div>
       <div className="ad_main">
+        {header?.journalId ? <p className='ps_header_no' style={{marginBottom: 10}}>{header?.journalId}</p> : null}
         <div className='ad_row'>
-          <div style={{marginTop: 0, flex: 1}}><Date {...dateProps} /></div>
+          <div style={{marginTop: 0, flex: 0.5}}><Date {...dateProps} /></div>
           <div className='gap' />
-          <MoneyInput {...totalProps}/>
+          <TempSelect {...templateProps}/>
+        </div>
+        <div className='ad_row' style={{ marginTop: "10px" }}>
+          <MoneyInput1 {...totalProps}/>
+          <div className='gap' />
+          <Select {...statusProps}/>
           <div className='gap' />
           <Select {...custProps}/>
         </div>
         <div className='ad_row' style={{ marginTop: "10px" }}>
-          <Select {...statusProps}/>
-          <div className='gap' />
           <DescrInput {...descrProps}/>
-        </div>
-        <div className='ad_row' style={{ marginTop: "10px" }}>
-          <Select {...templateProps}/>
           <div className='gap' />
           <Input {...sourceProps}/>
         </div>

@@ -115,8 +115,10 @@ export function List(props){
       <Header {...filterProps} />
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <>
-        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
-          <TableDetail {...tableProps} />
+        <div style={{overflowX: 'scroll'}}>
+          <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
+            <TableDetail {...tableProps} />
+          </div>
         </div>
         {filtering ? <PaginationTable {...tableProps} /> : <PaginationList {...pageProps} />}
       </>

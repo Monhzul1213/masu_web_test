@@ -35,8 +35,6 @@ export function Card(props){
     return (wid - 30 - (num - 1) * 10) / num;
   }
 
-  console.log(data);
-
   const renderCard = (item, index) => {
 
     const onClick = async () => {

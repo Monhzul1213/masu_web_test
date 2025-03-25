@@ -290,3 +290,46 @@ export function IconInput(props){
     </div>
   );
 }
+
+export function MoneyInput1(props){
+  const { value, setValue, label, placeholder, disabled, setError, setEdited, handleEnter, inRow, onBlur } = props;
+  const user = useSelector(state => state.login?.user);
+  const suffix = user?.msMerchant?.currency ?? '';
+
+  const onChange = value => {
+    setValue({ value });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter"){
+      e?.preventDefault();
+      handleEnter && handleEnter(value);
+    }
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? { flex: 1 } : {}}>
+      <div className='select_back' style={backStyle}>
+        <p className='select_lbl' style={style}>{label}</p>
+        <CurrencyInput
+          className='m_input'
+          suffix={suffix}
+          allowNegativeValue={false}
+          disabled={disabled}
+          placeholder={placeholder}
+          decimalsLimit={4}
+          value={value?.value}
+          maxLength={15}
+          onBlur={onBlur}
+          onKeyDown={onKeyDown}
+          onValueChange={onChange} />
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}

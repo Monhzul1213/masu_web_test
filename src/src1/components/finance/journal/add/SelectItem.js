@@ -13,8 +13,10 @@ export function SelectItem(props){
   const { item } = props;
 
   return (
-    <div className='cs_item'>
-      <p className='cs_name'>{item?.acctName}</p>
+    <div className='cs_item' style={{display: 'flex', flexFlow: 'row', borderBottom: '1px solid #f2f2f2', height: 25}}>
+      <p className='cs_name' style={{width: 150 }}>{item?.acctCode}</p>
+      <p className='cs_name'style={{width: 500 }} >{item?.acctName}</p>
+      <p className='cs_name'>{item?.accTypeName}</p>
     </div>
   );
 }
@@ -43,8 +45,8 @@ export function ItemSelect(props){
     let response = await dispatch(getList(user, token, api ))
     if(response?.error) setSearch({ value: null, error: response?.error });
     else {
-      response?.data?.acct?.map(item=> {
-        item.name = item?.acct + "-" + item?.acctName
+      response?.data?.acct?.forEach(item=> {
+        item.name = item?.acct + "-" + item?.acctName + "-" + item?.accTypeName
       })
       setItems(response?.data?.acct);
     }
@@ -65,16 +67,16 @@ export function ItemSelect(props){
   }
 
   const renderItem = (item, index) => {
-    let optItem = { acctName: item?.name, acctCode: item?.acctCode };
+    let optItem = { acctName: item?.acctName, acctCode: item?.acct, accTypeName: item?.accTypeName };
     return (
-      <Option key={index} value={index} acctCode={optItem?.acctCode} acctName={optItem?.acctName}>
+      <Option key={index} value={index} acctCode={optItem?.acctCode} acctName={optItem?.acctName} name={item?.name}>
         <SelectItem item={optItem} />
       </Option>
     );
   }
 
   const filterOption = (input, option) => {
-    return option?.acctName?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    return option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
 
   const selectProps = { value: search, setValue: onSelect, placeholder: t('journal.warning_item'), data: items, onFocus: getData,

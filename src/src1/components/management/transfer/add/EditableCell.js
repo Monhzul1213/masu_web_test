@@ -11,8 +11,8 @@ export const EditableCell = props => {
 
   const onValueChange = e => {
     if(row?.original?.siteQty >= e){
-      let amt = e?.split(".", row?.original?.allowDecimal ? 0  : 1).join(".").replace(/[-, ]/g, "");
-      setValue(amt);
+      // let amt = e?.split(".", row?.original?.allowDecimal ? 0  : 1).join(".").replace(/[-, ]/g, "");
+      setValue(e);
     }
     else setValue(0)
   }

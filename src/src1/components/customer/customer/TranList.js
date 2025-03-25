@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import moment from 'moment';
 
-import { Money, Table } from '../../../../components/all';
+import { Money, PlainRange, Table } from '../../../../components/all';
 import { ExportExcel, config, encrypt } from '../../../../helpers';
 
 
 export function TranList(props){
-  const { data, size} = props;
+  const { data, size, date, setDate, onSearch, selected} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -41,6 +41,11 @@ export function TranList(props){
     window.open(url);
   }
 
+  const onHide = () => {
+    let query= '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD') + '&custId=' + selected?.custId;
+    onSearch(query);
+  }
+
   const maxHeight = size?.width > 380
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 210px - 10px - 37px)';
@@ -48,11 +53,15 @@ export function TranList(props){
   onClickLink}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const exportProps = { text: t('page.export'), columns: columns, excelData: data, fileName: t('system.cus_trans'), className: 'rp_list_select1'};
+  const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), onHide, className: 'rh_date'};
 
   return (
     <div >
       <div className='table_scroll' style={{overflow: 'scroll'}} >
-        <ExportExcel {...exportProps} />
+        <div style={{ display: 'flex', flexFlow: 'row', justifyContent: 'space-between'}}>
+          <PlainRange {...dateProps} />
+          <ExportExcel {...exportProps} />
+        </div>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 720}}>
               <Table {...tableProps} />
         </div>

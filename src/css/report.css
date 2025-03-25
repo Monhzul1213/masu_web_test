@@ -159,7 +159,7 @@
 .rp_list_select1 {
   border: none;
   box-shadow: none;
-  background-color: var(--back-color);
+  background-color: transparent;
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -168,9 +168,7 @@
   font-weight: 500;
   border-radius: var(--radius);
   padding: 3px 5px;
-  position: absolute;
-  top: 120px;
-  right: 20px;
+  margin-top: 10px;
 }
 
 .rp_list_select1:hover {
