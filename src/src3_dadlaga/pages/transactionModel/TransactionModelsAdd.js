@@ -113,8 +113,8 @@ export function TransactionModelsAdd() {
     let templateType = 0;
     let items = [];
     detail?.forEach((item) => {
-      item.templateId = 0;
-      item.templateDtlId = 0;
+      // item.templateId = 0;
+      // item.templateDtlId = 0;
       if (rowStatus === "I") {
         item.rowStatus = rowStatus;
       }

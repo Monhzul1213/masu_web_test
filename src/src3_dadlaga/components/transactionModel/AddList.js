@@ -29,7 +29,7 @@ function Card(props) {
     setSearch,
     setEdited,
     editable,
-    onClickDelete,
+    onClickDelete
   } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
@@ -122,28 +122,22 @@ function Card(props) {
         },
       },
     ];
-    if (editable)
-      columns.push({
-        id: "delete",
-        noSort: true,
-        Header: "",
-        width: 40,
-        minWidth: 40,
-        maxWidth: 40,
-        Cell: ({ row }) => (
-          <div className="ac_delete_back">
-            <DynamicBSIcon
-              name="BsTrashFill"
-              className="ac_delete"
-              onClick={() => onClickDelete(row)}
-            />
-          </div>
-        ),
-      });
+    columns.push({
+      id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+      Cell: ({ row, onClickDelete }) =>
+        (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+    });
     setColumns(columns);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language, editable]);
+
+  // const onClickDelete = row => {
+  //   console.log(row);
+  //   if(row?.original?.accountID !== 0) setDItems(old => [...old, row?.original]);
+  //   setDetail(detail?.filter(item => item?.accountID !== row?.original?.accountID));
+  //   setSearch({ value: null });
+  // }
 
   const filterFunction = useCallback((rows, ids, query) => {
     return rows.filter(
@@ -154,7 +148,7 @@ function Card(props) {
   }, []);
 
   const newItem = acct => {
-    return { accountID: acct?.accountId, acct: acct?.acct, drAmt: acct?.drAmt ?? 0, crAmt: acct?.crAmt ?? 0, acctCode: acct?.acctCode, acctName: acct?.acctName, 
+    return { accountID: acct?.accountId, acct: acct?.acct, drAmt: acct?.drAmt ?? 0, crAmt: acct?.crAmt ?? 0, acctName: acct?.acctName, 
       isDebit: acct?.isDebit, status: acct?.status, currency: acct?.currency, itemDescr: acct?.itemDescr ?? '', rowStatus: 'I', isNew : true};
   }
 

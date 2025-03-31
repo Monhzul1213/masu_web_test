@@ -5,12 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import { Empty, Overlay, Error1 , Confirm } from '../../components/all/all_m';
+import { Overlay, Error1 , Confirm } from '../../components/all/all_m';
 import { Add, List } from '../../components/customer/customer';
 import { getList , getServiceBar, sendRequest } from '../../../services';
 import '../../css/customer.css'
 import { Subscription } from '../../../components/management/adjust/list/Subscription';
 import { Help } from '../../../components/invt/inventory/list';
+import { Empty2 } from '../../../components/all';
 
 export function Customer(props){
   const { t } = useTranslation();
@@ -156,7 +157,9 @@ export function Customer(props){
     setVisible1(false);
   }
 
-  const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , isMd : true};
+  const onClickImport = () => navigate('/customer/customer_import');
+
+  const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, onClickAdd , isMd : true, onClickImport};
   const modalProps = { visible, closeModal, selected: item, onSearch: getData, filter, data, branch, allBranch, getBranchs };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const listProps = { data,  onClickAdd, setData , loaded, setShow, checked, setChecked, excelName , onClickDelete, show, setError, onSearch: getData};
@@ -170,7 +173,7 @@ export function Customer(props){
       <Overlay loading={loading}>
         {open && <Confirm {...confirmProps} />}
         {error && <Error1 error={error} />}
-        {!data?.length && !filtering ? <Empty {...emptyProps} /> :
+        {!data?.length && !filtering ? <Empty2 {...emptyProps} /> :
           <SizeMe>{({ size }) => 
             <div className='i_list_cont_z' id='solve_list2'>
               <List {...listProps} size={size} />

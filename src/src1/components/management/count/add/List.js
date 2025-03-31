@@ -46,11 +46,19 @@ function Card(props){
         Cell: props => <EditableCell {...props}  disabled={disabled || !editable} />, //isText: !header ? true : false, 
       },
       {
+        Header: <div style={{textAlign: 'right'}}>{t('orders.cost')}</div>, accessor: 'cost', width: 150, minWidth: 80, exLabel: t('inventory.total_cost'),
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
+      },
+      {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.total_cost')}</div>, accessor: 'totalCost', width: 150, minWidth: 80, exLabel: t('inventory.total_cost'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('count.varCost')}</div>, accessor: 'totalVarianceCost', width: 150, minWidth: 80, exLabel: t('count.varCost'),
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
+      },
+      {
+        Header: <div style={{textAlign: 'right'}}>{t('report.price')}</div>, accessor: 'amount', width: 150, minWidth: 80, exLabel: t('order.total'),
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
       },
       {
