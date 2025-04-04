@@ -36,7 +36,7 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div></>
           }
       },
-      { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.c_title2')}</div>, accessor: 'salesQty', exLabel: t('order.t_qty'), customStyle : { minWidth: 100 }, 
+      { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.c_title2')}</div>, accessor: 'salesQty' ?? 0, exLabel: t('report_receipt.c_title2'), customStyle : { minWidth: 100 }, 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
       },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'qty', exLabel: t('order.t_stock'), customStyle : { minWidth: 100 }, 

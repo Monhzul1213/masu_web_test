@@ -27,7 +27,7 @@ export function Search(props){
   const onClose = () => {
     setShowSearch(!showSearch);
     setSearch('');
-    handleEnter && handleEnter(search)
+    handleEnter && handleEnter('')
     // onSearch('');
   }
 

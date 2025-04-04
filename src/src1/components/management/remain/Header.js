@@ -11,7 +11,7 @@ import { SearchInput } from './SearchInput';
 import { Date1, InvtSelect } from '../../../../components/all';
 
 export function Header(props){
-  const { setError, onSearch, size, data, setData, columns, excelName , filter1, isDtl, setIsDtl, isDate, setIsDate } = props;
+  const { setError, onSearch, size, data, columns, excelName , filter1, isDtl, setIsDtl, isDate, setIsDate } = props;
   const { t } = useTranslation();
   const [site, setSite] = useState([]);
   const [sites, setSites] = useState([]);
@@ -134,13 +134,22 @@ export function Header(props){
 
   const onClickRefresh = async () => {
     setLoading(true);
-    let api = 'Txn/GetHandQty';
-    let headers = { merchantid: user?.merchantId };
-    const response = await dispatch(getList(user, token, api, null, headers));
-    // if(response?.error) setError(response?.error);
-    // else {
-      setData(response?.data);
-    // }
+    let query = '?='
+    if(supplier?.length !== suppliers?.length) supplier?.forEach(item => query += '&VendID=' + item);
+    if(site?.length !== sites?.length) site?.forEach(item => query += '&SiteID=' + item);
+    if(category?.length !== categories?.length) category?.forEach(item => query += '&CategoryID=' + item);
+    query += (isDtl ? ('&IsDtl=' + 'Y') : '');
+    if(isDate) query += '&begindate=' + date?.value?.format('yyyy.MM.DD') + '&enddate=' + date?.value?.format('yyyy.MM.DD');
+    invt?.forEach(item => query += '&InvtId=' + item);
+    onSearch && onSearch(query, filter1);
+    // let api = 'Txn/GetHandQty';
+    // let headers = { merchantid: user?.merchantId };
+    // const response = await dispatch(getList(user, token, api, null, headers));
+    // console.log(response);
+    // // if(response?.error) setError(response?.error);
+    // // else {
+    //   setData(response?.data);
+    // // }
     setLoading(false);  
   }
 

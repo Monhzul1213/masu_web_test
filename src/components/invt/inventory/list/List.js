@@ -120,6 +120,7 @@ export function List(props){
             <TableDetail {...tableProps} />
           </div>
         </div>
+        <p className='data_size_text'>{t('info.all') + data?.length}</p>
         {filtering ? <PaginationTable {...tableProps} /> : <PaginationList {...pageProps} />}
       </>
       }

@@ -81,8 +81,8 @@ export function Header(props){
   }
 
   const handleEnter = (value) => {
-    // let query = '?CustName=' + value;
-    // onSearch( query);
+    let query = '?CustName=' + value;
+    onSearch( query);
   }
 
   const onChangeBranch = value => {
