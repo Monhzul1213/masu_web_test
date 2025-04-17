@@ -17,11 +17,11 @@ export function List(props){
   const [data2, setData2] = useState(false);
 
   useEffect(() => {
-    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 117px - 38px - 60px)');
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 37px - 117px - 30px - 90px)');
     else if(size?.width < 920 && size?.width >= 720)
-      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 83px - 117px - 38px - 39px)');
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 90px - 140px - 100px)');
     else if(size?.width < 720)
-      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 38px - 39px)');
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 100px)');
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
@@ -120,8 +120,8 @@ export function List(props){
     <div>
       <Drawer {...drawerProps} />
       <Header {...filterProps} />
-      <div className='table_scroll' style={{overflow: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+      <div style={{overflowX: 'scroll'}}>
+        <div className='table_scroll' id='paging' style={{marginTop: 0, overflow: 'scroll', maxHeight, minWidth: 520}}>
           <TableRowResize {...tableProps} />
         </div>
       </div>

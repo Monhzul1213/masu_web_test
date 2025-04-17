@@ -94,6 +94,13 @@ export function Drawer(props){
     window.open(url);
   }
 
+  const onClickTax = () => {
+    let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/tax_pdf?invoiceNo=' + encodeURIComponent(code);
+    window.open(url);
+  }
+
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
 
   return (
@@ -161,7 +168,10 @@ export function Drawer(props){
             <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={totalAmount} fontSize={13} /></p>
           </div>
         </div>
-        <Button className='invoice_btn' id='invt_btn_save' text={t('system.invoice')} onClick={onClickInvoice}/>
+        <div className='dr_row_back'>
+          <Button className='invoice_btn' id='invt_btn_save' text={t('system.tax_print')} onClick={onClickTax}/>
+          <Button className='invoice_btn1' id='invt_btn_save' text={t('system.invoice')} onClick={onClickInvoice}/>
+        </div>
       </div>
     </AntDrawer>
   );

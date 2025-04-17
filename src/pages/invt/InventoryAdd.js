@@ -18,6 +18,7 @@ export function InventoryAdd(){
   const [descr, setDescr] = useState({ value: '' });
   const [isEach, setIsEach] = useState({ value: 'Y' });
   const [isService, setIsService] = useState(false);
+  const [isUseTime, setIsUseTime] = useState(false);
   const [price, setPrice] = useState({ value: '' });
   const [batch, setBatch] = useState({ value: '' });
   const [time, setTime] = useState({ value: '01:00' });
@@ -119,6 +120,7 @@ export function InventoryAdd(){
       if(invt?.msInventory?.vendID !== -1) setVendId({ value: invt?.msInventory?.vendID })
       setIsEach({ value: invt?.msInventory?.isEach ?? 'Y' });
       setIsService(invt?.msInventory?.isService === 'Y')
+      setIsUseTime(invt?.msInventory?.isServiceUseTime === 'Y')
       toHours(invt?.msInventory?.serviceTime)
       setDescr({ value: invt?.msInventory?.descr ?? '' });
       setPrice({ value: invt?.msInventory?.price ?? 0 });
@@ -276,7 +278,7 @@ export function InventoryAdd(){
         UseAllSite: checked ? 'Y' : 'N',
         image: { FileData: image64 ?? '', FileType: imageType ?? '' },
         isService: isService ? 'Y' : 'N', serviceTime: totalSeconds,
-        rowStatus: invt ? 'U' : 'I', batchQty: batch?.value,
+        rowStatus: invt ? 'U' : 'I', batchQty: batch?.value, isServiceUseTime: isUseTime ? 'Y' : 'N',
         invkite, invvar, invmod, invsales
       };
       if(invt){
@@ -331,7 +333,7 @@ export function InventoryAdd(){
   const mainProps = { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach,
     price, setPrice, cost, setCost, sku, setSku, setLoading, barcode, setBarcode, image, setImage, setImage64,
     setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit, vendId, setVendId,
-    isService, setIsService, time, setTime, batch, setBatch };
+    isService, setIsService, time, setTime, batch, setBatch, isUseTime, setIsUseTime };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
     search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,
@@ -346,7 +348,7 @@ export function InventoryAdd(){
     <Overlay className='i_container' loading={loading || loaded}>
       <Prompt edited={edited} />
       {error && <Error1 error={error} />}
-      <div className='i_scroll'>
+      <div className='i_scroll1'>
         <form>
           <CardMain {...mainProps} />
           <div className='gap' />

@@ -506,7 +506,8 @@
     "import_error": "请上传文件",
     "import_error1": "未找到商品",
     "all": "所有商品",
-    "invt": " 商品"
+    "invt": " 商品",
+    "use_time": "是否按小时计算?"
   },
   "modifier": {
     "title": "附加费用",

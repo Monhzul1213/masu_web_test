@@ -10,8 +10,8 @@ export const EditableCell1 = props => {
   }
 
   const onValueChange = e => {
-    let amt = e?.split(".", row?.original?.allowDecimal ? 2 : 1).join(".").replace(/[-, ]/g, "");
-    setValue(amt);
+    // let amt = e?.split(".", row?.original?.allowDecimal ? 2 : 1).join(".").replace(/[-, ]/g, "");
+    setValue(e);
   }
 
   const onKeyDown = e => {

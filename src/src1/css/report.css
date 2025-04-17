@@ -245,6 +245,15 @@
   .order_row_btn:hover {
     cursor: pointer;
   }
+  .dr_row_back{
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+  }
 
   .dr_back{
     max-height: 400px;

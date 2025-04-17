@@ -342,14 +342,28 @@
   font-weight: 450;
   color: var(--text-color);
   padding: 0 15px;
-  min-width: 84px;
-  position: absolute;
-  bottom: 30px;
-  right: 100px ;
-  left: 100px;
+  margin-right: 10px;
 }
 
 .invoice_btn:hover {
+  cursor: pointer;
+  color: var(--config-color);
+}
+
+.invoice_btn1 {
+  border: none;
+  box-shadow: none;
+  background-color: var(--root-color);
+  min-height: var(--t-btn-height);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 450;
+  color: var(--text-color);
+  padding: 0 15px;
+  min-width: 100px;
+}
+
+.invoice_btn1:hover {
   cursor: pointer;
   color: var(--config-color);
 }

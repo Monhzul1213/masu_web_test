@@ -13,8 +13,8 @@ import { ValidateInput } from '../../../../src1/components/all/all_m';
 
 function Card(props){
   const { setError, name, setName, category, setCategory, descr, setDescr, isEach, setIsEach, price, setPrice,
-    cost, setCost, sku, setSku, barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange,
-    setEdited, isKit, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId, setLoading, isService, setIsService, time, setTime, batch, setBatch } = props;
+    cost, setCost, sku, setSku, barcode, setBarcode, image, setImage, setImage64, setImageType, onPriceChange,  isUseTime, setIsUseTime,
+    setEdited, size, buyAgeLimit, setBuyAgeLimit, vendId, setVendId, setLoading, isService, setIsService, time, setTime, batch, setBatch } = props;
   const { t } = useTranslation();
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [vendors, setVendors] = useState([]);
@@ -118,6 +118,7 @@ function Card(props){
   const serviceProps = { label: t('inventory.service'), checked: isService, setChecked: setIsService , style: {width: '50%'}};
   const timeProps = { data: timeList1, value: time, setValue: setTime, label: t('timetable.service_time') };
   const batchProps = { value: batch, setValue: changeBatch, label: t('order.t_batch'), placeholder: t('order.t_batch'), setError, setEdited, className: 'invt_back', inRow: true};
+  const useTimeProps = { label: t('inventory.use_time'), checked: isUseTime, setChecked: setIsUseTime , style: {width: '50%'}};
 
   return (
     <div className='ia_back' id={id}>
@@ -140,6 +141,7 @@ function Card(props){
             <div className='gap'/>
             {isService ? <SelectableCell1 {...timeProps}/> : ''}
           </div>
+          <CheckBox {...useTimeProps}/>
         </div>
         <div className='gap' />
         <UploadImage {...imageProps} />

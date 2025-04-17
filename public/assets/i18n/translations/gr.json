@@ -513,8 +513,8 @@
     "import_error": "Bitte laden Sie eine Datei hoch",
     "import_error1": "Keine Artikel gefunden",
     "all": "Alle Artikel",
-    "invt": " Artikel"
-
+    "invt": " Artikel",
+    "use_time": "Wird es nach Stunden berechnet?"
 },
 "modifier": {
     "title": "Zusätzliche Gebühr",

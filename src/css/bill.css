@@ -451,6 +451,34 @@
   border-right: 1px solid var(--text-color);
   text-align: right;
 }
+
+.tax_header1 {
+  width: 5%;
+  border-right: 1px solid var(--text-color);
+}
+.tax_header2 {
+  width: 40%;
+  border-right: 1px solid var(--text-color);
+}
+.tax_header6 {
+  width: 20%;
+  border-right: 1px solid var(--text-color);
+}
+.tax_header3 {
+  width: 10%;
+  border-right: 1px solid var(--text-color);
+  text-align: right;
+}
+.tax_header4 {
+  width: 20%;
+  border-right: 1px solid var(--text-color);
+  text-align: right;
+}
+.tax_header5 {
+  width: 20%;
+  border-right: 1px solid var(--text-color);
+  text-align: right;
+}
 .inv_footer1 {
   font-size: 12px;
   margin: 0;
@@ -469,14 +497,31 @@
   text-align: right;
   border-bottom: 1px solid var(--text-color);
 }
+.tax_footer1 {
+  font-size: 12px;
+  margin: 0;
+  padding: 1px 2px;
+  font-weight: 500;
+  width: 14.9%;
+  border-bottom: 1px solid var(--text-color);
+  border-right: 1px solid var(--text-color);
+}
+.tax_footer2 {
+  font-size: 12px;
+  margin: 0;
+  padding: 1px 2px;
+  font-weight: 500;
+  width: 14.7%;
+  text-align: right;
+  border-bottom: 1px solid var(--text-color);
+}
 .inv_total_back{
   margin-bottom: 20px;
 }
 .inv_footer_back {
   display: flex;
   flex-flow: column;
-  position: absolute;
-  bottom: 20px;
+  
 }
 
 .inv_item {
@@ -578,3 +623,28 @@
   margin: 5px 0;
   border-bottom: 1px solid var(--back-color);
 } 
+.pay_section{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  border-top: 1px solid rgb(169, 168, 168);
+}
+
+.pay_row{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pay_label{
+  font-size: 13px;
+  width: 130px;
+  margin: 0;
+  white-space: nowrap;
+}
+.pay_value{
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+}

@@ -506,7 +506,8 @@
     "import_error": "파일을 업로드하세요.",
     "import_error1": "상품이 없습니다.",
     "all": "모든 상품",
-    "invt": " 상품"
+    "invt": " 상품",
+    "use_time": "시간제로 계산되나요?"
   },
   "modifier": {
     "title": "추가 요금",

@@ -17,7 +17,7 @@ import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Rema
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
-import { Bill, InvoicePrint, Order as OrderBill } from './pages/lone';
+import { Bill, InvoicePrint, Order as OrderBill, TaxPrint } from './pages/lone';
 import { Integration } from './pages/integration';
 import { Adjust, AdjustAdd } from './pages/management/adjust';
 import { InvoiceSend } from './components/emp/employee/add/InvoiceSend';
@@ -72,6 +72,7 @@ export function App(){
           <Route path='/order' element={<OrderBill />} />
           <Route path='/statement' element={<InvoiceSend />} />
           <Route path='/inv_pdf' element={<InvoicePrint />} />
+          <Route path='/tax_pdf' element={<TaxPrint />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
@@ -96,6 +97,7 @@ export function App(){
                 <Route path='/order' element={<OrderBill />} />
                 <Route path='/statement' element={<InvoiceSend />} />
                 <Route path='/inv_pdf' element={<InvoicePrint />} />
+                <Route path='/tax_pdf' element={<TaxPrint />} />
               </Routes>
             </Layout>
           </Layout>
@@ -168,6 +170,7 @@ export function App(){
                 <Route path='/bill' element={<Bill />} />
                 <Route path='/order' element={<OrderBill />} />
                 <Route path='/inv_pdf' element={<InvoicePrint />} />
+                <Route path='/tax_pdf' element={<TaxPrint />} />
                 <Route path='/statement' element={<InvoiceSend />} />
                 <Route path='/report/report_orList' element={<SalesOrder />} />
                 <Route path='/report/terms' element={<Terms />} />

@@ -506,7 +506,8 @@
     "import_error": "Please upload a file",
     "import_error1": "No items found",
     "all": "All Items",
-    "invt": " items"
+    "invt": " items",
+    "use_time": "Will it be calculated by the hour?"
 },
 "modifier": {
     "title": "Additional Charge",

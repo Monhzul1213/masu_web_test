@@ -7,9 +7,9 @@ import html2pdf from 'html2pdf.js';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { Error, Overlay } from '../../components/all';
-import { Footer, Header, Info, Items, ItemsHeader, Total } from '../../components/lone/invoice';
+import { Footer, Header, Info, Items, ItemsHeader, Total, Pay } from '../../components/lone/tax';
 
-export function InvoicePrint(){
+export function TaxPrint() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -21,7 +21,6 @@ export function InvoicePrint(){
 
   useEffect(() => {
     getData();
-    return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -31,6 +30,7 @@ export function InvoicePrint(){
     const invoiceNo = searchParams?.get('invoiceNo');
     const api = 'Sales/GetSalesBill?data=' + encodeURIComponent(invoiceNo);
     const response = await dispatch(getService(api, 'GET'));
+    
     if (response?.error) {
       setError(response?.error);
     } else {
@@ -44,6 +44,7 @@ export function InvoicePrint(){
     }
     setLoading(false);
   };
+
 
   const onPressExport = () => {
     const element = document.getElementById('invoice_back');
@@ -77,6 +78,7 @@ export function InvoicePrint(){
               <ItemsHeader />
               <Items detail={detail} />
               <Total header={header} />
+              <Pay info={info} header={header}/>
             </div>
             <Footer />
           </div>
@@ -99,6 +101,7 @@ export function InvoicePrint(){
               <ItemsHeader />
               <Items detail={detail} />
               <Total header={header} />
+              <Pay info={info} header={header}/>
             </div>
             <Footer />
           </div>

@@ -30,7 +30,7 @@ export function Menu(props){
 
   useEffect(() => {
     let pathname1 = pathname?.toLowerCase();
-    let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order')) || pathname1?.includes('statement') || pathname1?.includes('inv_pdf');
+    let hideMenu = pathname1?.includes('confirm') || pathname1?.includes('bill') || (!pathname1?.includes('management') && pathname1?.includes('order')) || pathname1?.includes('statement') || pathname1?.includes('inv_pdf') || pathname1?.includes('tax_pdf');
     setHideMenu(hideMenu);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,6 +107,7 @@ export function Menu(props){
       getItem(t('menu.report_employee'), '/report/report_employee', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_payment'), '/report/report_payment', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_document'), '/report/report_document', null, null, null, msRole?.webViewSalesReport !== 'Y'),
+      getItem(t('menu.report_order'), '/report/report_orList', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_buyer'), '/report/report_buyer', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_time'), '/report/report_time', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_edited'), '/report/report_edited', null, null, null, msRole?.webViewSalesReport !== 'Y'),
@@ -114,7 +115,6 @@ export function Menu(props){
       getItem(t('menu.report_noat'), '/report/report_noat', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_receivable'), '/report/report_receivable', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_cashier'), '/report/report_cashier', null, null, null, msRole?.webViewSalesReport !== 'Y'),
-      getItem(t('menu.report_order'), '/report/report_orList', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.terms'), '/report/terms', null, null, null, msRole?.webViewSalesReport !== 'Y'),
     ]),
     getItem(t('menu.inventory'), '/inventory', <img src={image3} alt='image3' />, [
