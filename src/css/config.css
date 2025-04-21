@@ -1173,7 +1173,20 @@
   cursor: pointer;
   background-color: var(--logo1-color);
 }
+.step_next1 {
+  background-color: var(--header-color);
+  border: none;
+  border-radius: var(--radius);
+  padding: 7px 25px;
+  color: var(--root-color);
+  font-size: 14px;
+  font-weight: 600;
+}
 
+.step_next1:hover {
+  cursor: pointer;
+  background-color: var(--logo1-color);
+}
 .es_sub_title {
   font-weight: 500;
   font-size: 14px;
@@ -1736,7 +1749,7 @@
   overflow-y: scroll;
 }
 .pay_back {
-  padding: 20px 60px;
+  padding: 20px 30px;
 }
 
 .pay_step_invoice {

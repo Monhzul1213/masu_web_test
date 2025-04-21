@@ -1004,7 +1004,8 @@
     "code_error": "Sie können die Anfrage erst nach der Eingabe der Bezirks- und Unterbezirksinformationen der Filiale im Menü ‘Einstellungen - Filiale’ einreichen.",
     "label": "Bild des Zertifikats der juristischen Person",
     "branchCode_select": "Bitte wählen Sie einen Bezirk / Provinz",
-    "subBranchCode_select": "Bitte wählen Sie einen Unterbezirk / Aimak"
+    "subBranchCode_select": "Bitte wählen Sie einen Unterbezirk / Aimak",
+    "receipt_send": "Art der Dokumentenübermittlung"
 },
 "document": {
     "title": "POS Quittungsvorlage",

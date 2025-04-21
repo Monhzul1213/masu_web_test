@@ -7,12 +7,12 @@ export function Info(props){
 
   return (
     <div>
-        <p className='inv_header_t'>НЭХЭМЖЛЭХ №......</p>
+        <p className='inv_header_t'>НЭХЭМЖЛЭХ №{header?.salesNo}</p>
         <div className='inv_row'>
             <div>
                 <p className='inv_info'>Нэхэмжлэгч:</p> 
                 <div style={{display: 'flex', flexFlow: 'row'}}>
-                  <p className='inv_info'>Байгууллагын нэр:</p>
+                  <p className='inv_info'>Байгууллага:</p>
                   <p className='inv_info1'>{header?.cashierName}</p>
                 </div>
                 <div style={{display: 'flex', flexFlow: 'row'}}>

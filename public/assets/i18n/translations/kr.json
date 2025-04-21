@@ -994,7 +994,8 @@
     "code_error": "‘설정 - 지점’ 메뉴에서 부가세 요청 지점의 구/동 정보를 입력한 후 요청을 발송할 수 있습니다.",
     "label": "사업자 등록증 이미지",
     "branchCode_select": "구/도 선택",
-    "subBranchCode_select": "동/읍 선택"
+    "subBranchCode_select": "동/읍 선택",
+    "receipt_send": "문서 제출 유형"
   },
   "document": {
     "title": "POS 영수증 양식",

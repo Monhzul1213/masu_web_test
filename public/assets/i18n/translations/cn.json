@@ -995,7 +995,8 @@
   "code_error": "在“设置 - 分支”菜单中输入增值税申请的分支地区和街道信息后，才能提交申请。",
   "label": "法人资格证照片",
   "branchCode_select": "请选择地区/省",
-  "subBranchCode_select": "请选择街道/乡"
+  "subBranchCode_select": "请选择街道/乡",
+  "receipt_send": "文件提交类型"
 },
 "document": {
   "title": "POS收据模板",

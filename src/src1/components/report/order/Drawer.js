@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { IoLocationOutline } from "react-icons/io5";
 
 import '../../../../css/report.css';
-import { ButtonUpdate, DynamicAIIcon, DynamicRIIcon, Money } from '../../all/all_m';
+import { Button, ButtonUpdate, DynamicAIIcon, DynamicRIIcon, Money } from '../../all/all_m';
 import { config, encrypt } from '../../../../helpers';
 import { Update } from './Update';
 
@@ -74,11 +74,18 @@ export function Drawer(props){
 
   const onClickAdd = () => {
     setVisible(true);
-  }
+  };
+
+  const onClickInvoice = () => {
+    let msg = user?.merchantId + '-' + selected?.siteId + '-' + selected?.salesNo
+    let code = encrypt(msg);
+    let url = config?.domain + '/sales_pdf?invoiceNo=' + encodeURIComponent(code);
+    window.open(url);
+  };
 
   const closeModal = () => {
     setVisible(false);
-  }
+  };
 
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
   const modalProps = { visible, closeModal, onClickLink, selected, data2, setData2, getData, filter };
@@ -151,7 +158,10 @@ export function Drawer(props){
           </div>
         </div>
       </div>
-      { tab === 0 ? <ButtonUpdate type={'report'} onClickAdd= {onClickAdd}/> : null}
+      <div className='dr_row_back'>
+        { tab === 0 ? <ButtonUpdate type={'report'} onClickAdd= {onClickAdd}/> : null}
+        <Button className='invoice_btn1' id='invt_btn_save' text={t('system.invoice')} onClick= {onClickInvoice}/>
+      </div>
     </AntDrawer>
   );
 }

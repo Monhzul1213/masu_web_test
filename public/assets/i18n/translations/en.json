@@ -994,7 +994,8 @@
     "code_error": "You can only submit the request after entering the district and sub-district information of the branch from the ‘Settings - Branch’ menu.",
     "label": "Legal Entity Certificate Image",
     "branchCode_select": "Please select a district/province",
-    "subBranchCode_select": "Please select a sub-district/aimag"
+    "subBranchCode_select": "Please select a sub-district/aimag",
+    "receipt_send": "Document submission type"
 },
 "document": {
     "title": "POS Receipt Template",

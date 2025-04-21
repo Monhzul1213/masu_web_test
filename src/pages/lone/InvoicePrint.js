@@ -73,12 +73,12 @@ export function InvoicePrint(){
           }}>
             <div>
               <Header />
-              <Info info={info} header={header} />
+              <Info header={header} />
               <ItemsHeader />
               <Items detail={detail} />
               <Total header={header} />
             </div>
-            <Footer />
+            <Footer info={info}/>
           </div>
           <div
             style={{
@@ -95,12 +95,12 @@ export function InvoicePrint(){
           }}>
             <div>
               <Header />
-              <Info info={info} header={header} />
+              <Info header={header} />
               <ItemsHeader />
               <Items detail={detail} />
               <Total header={header} />
             </div>
-            <Footer />
+            <Footer info={info}/>
           </div>
         </div>
       </div>

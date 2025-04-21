@@ -5,14 +5,13 @@ import moment from 'moment';
 export function Info(props){
   const { header } = props;
 
-  console.log(header);
   return (
     <div>
-        <p className='inv_header_t'>ЗАРЛАГЫН БАРИМТ №......</p>
+        <p className='inv_header_t'>ЗАРЛАГЫН БАРИМТ №{header?.salesNo}</p>
         <div className='inv_row'>
             <div>
                 <div style={{display: 'flex', flexFlow: 'row'}}>
-                  <p className='inv_info'>Байгууллагын нэр:</p>
+                  <p className='inv_info'>Байгууллага:</p>
                   <p className='inv_info1'>{header?.siteName}</p>
                 </div>
                 <div style={{display: 'flex', flexFlow: 'row'}}>
@@ -35,7 +34,7 @@ export function Info(props){
                 </div>
                 <div style={{display: 'flex', flexFlow: 'row'}}>
                   <p className={header?.custPhone ? 'inv_info' : 'inv_info2' } style={{width: 140}}>Төлбөрийн хэлбэр:</p>
-                  <p className='inv_info1'>{' _______________'}</p>
+                  <p className='inv_info1'>{''}</p>
                 </div>
             </div>
         </div>

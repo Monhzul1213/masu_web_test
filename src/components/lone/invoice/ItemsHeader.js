@@ -6,11 +6,11 @@ export function ItemsHeader(){
 
   return (
     <div className='inv_header'>
-      <p className='inv_header1'>{'№'}</p>
-      <p className='inv_header2'>{t('menu.inventory')}</p>
-      <p className='inv_header3'>{t('report_receipt.qty')}</p>
-      <p className='inv_header4'>{t('report_receipt.price')}</p>
-      <p className='inv_header5'>{t('report_receipt.amt')}</p>
+      <p className='inv_header1' style={{fontWeight: '600', textAlign: 'center'}}>{'№'}</p>
+      <p className='inv_header2' style={{fontWeight: '600', textAlign: 'center'}}>{t('menu.inventory')}</p>
+      <p className='inv_header3' style={{fontWeight: '600', textAlign: 'center'}}>{t('report_receipt.qty')}</p>
+      <p className='inv_header4' style={{fontWeight: '600', textAlign: 'center'}}>{t('report_receipt.price')}</p>
+      <p className='inv_header5' style={{fontWeight: '600', textAlign: 'center'}}>{t('report_receipt.amt')}</p>
     </div>
   );
 }
