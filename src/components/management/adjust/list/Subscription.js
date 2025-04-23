@@ -7,9 +7,9 @@ import QRCode from 'react-qr-code';
 
 import '../../../../css/config.css'
 import { banks, config, encrypt, formatNumber, selectSubscription, subContent, subContent1 } from '../../../../helpers';
-import { getList, sendRequest } from '../../../../services';
+import { getList, sendRequest, getServiceBarimt } from '../../../../services';
 import { qr_holder } from '../../../../assets';
-import { Button, DynamicAIIcon, DynamicMDIcon, Error1, Money, Overlay } from '../../../all';
+import { Button, DynamicAIIcon, DynamicBSIcon, DynamicMDIcon, Error1, IconButton, Input, Money, Overlay } from '../../../all';
 import { Select, Field } from './Field';
 import { Tax } from '../../../system/invoice/list/Tax';
 
@@ -25,6 +25,8 @@ export function Subscription(props){
   const [data, setData] = useState([]);
   const [length, setLength] = useState('sar');
   const navigate = useNavigate();
+  const { user, token } = useSelector(state => state.login);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     onSelect(selectSubscription && selectSubscription[0])
@@ -46,11 +48,22 @@ export function Subscription(props){
     window.open(url);
   }
 
-  const typeProps = { selected, onSelect, data, amt, setAmt, itemAmt, onDone, length, setError, setLoading, setCurrent, setTxnNo };
+  const saveInvoice = async (info) => {
+    setLoading(true);
+    setError(null);
+    const response = await dispatch(sendRequest(user, token, 'Txn/ModInvoice', info));
+    setLoading(false);
+    return response;
+  };
+  
+
+  const typeProps = { selected, onSelect, data, amt, setAmt, itemAmt, setError, setLoading, setCurrent, setTxnNo, length };
+  const receiptProps = { dataSelect: selected, amt, setCurrent, setError, setTxnNo, onDone, saveInvoice };
   const payProps = { amt, txnNo, onDone, setError, setVisible, onPressExport };
 
   const steps = [
     { title: 'Subscription', content: <Type {...typeProps} /> },
+    { title: 'Receipt', content: <Receipt {...receiptProps} /> },
     { title: 'Payment', content: <Pay {...payProps} /> }
   ];
 
@@ -60,8 +73,8 @@ export function Subscription(props){
   }
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={txnNo ? 500: 800}>
-      <Overlay loading={loading} className={txnNo ? 'pay_back': 'm_back4'} > 
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={current === 1 || current === 2 ? 500 : 800}>
+      <Overlay loading={loading} className={current === 2 ? 'pay_back': 'm_back4'} > 
         <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onClose} />
         <Steps current={current} items={steps} />
         <div>{steps[current]?.content}</div>
@@ -73,59 +86,18 @@ export function Subscription(props){
 }
 
 function Type(props){
-  const { selected, onSelect, data, setAmt, itemAmt, setError, setLoading, setTxnNo, onDone, setCurrent, length } = props;
+  const { selected, onSelect, data, setAmt, itemAmt, setCurrent, length } = props;
   const { t } = useTranslation();
-  const { user, token } = useSelector(state => state.login);
-  const dispatch = useDispatch();
 
+  const onNext = () => {
+    setAmt(selected?.amt);
+    setCurrent(1);
+  };
 
-  const onNext = async () => {
-    setError(null);
-    setLoading(true);
-    let data = {
-      invoiceNo: '',
-      invoiceType: selected?.type,
-      invoiceTime: selected?.length,
-      amount: selected?.amt,
-      rowStatus: 'I',
-    }
-    let response = await dispatch(sendRequest(user, token, 'Txn/ModInvoice', data));
-    if(response?.error) setError(response?.error);
-    else {
-      if(selected?.value === 2){
-        onDone();
-      } else {
-        setCurrent(1);
-        setTxnNo(response?.data?.invoiceNo);
-        setAmt(selected?.amt);
-      }
-    setLoading(false);
-  } 
-}
-
-const onNext1 = async () => {
-  setError(null);
-  setLoading(true);
-  let data = {
-    invoiceNo: '',
-    invoiceType: selected?.type1,
-    invoiceTime: selected?.length,
-    amount: selected?.amt1,
-    rowStatus: 'I',
-  }
-  let response = await dispatch(sendRequest(user, token, 'Txn/ModInvoice', data));
-  if(response?.error) setError(response?.error);
-  else {
-    if(selected?.value === 2){
-      onDone();
-    } else {
-      setCurrent(1);
-      setTxnNo(response?.data?.invoiceNo);
-      setAmt(selected?.amt1)
-    }
-  setLoading(false);
-} 
-}
+  const onNext1 = () => {
+    setAmt(selected?.amt1);
+    setCurrent(1);
+  };
 
   const renderContent = (item) => {
 
@@ -178,6 +150,111 @@ const onNext1 = async () => {
     </div>
   );
 }
+
+
+function Receipt(props){
+  const { setCurrent, setError, amt, saveInvoice, setTxnNo, dataSelect } = props
+  const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState(0);
+  const [regNo, setRegNo] = useState({ value: '' });
+  const [name, setName] = useState({ value: '' });
+  const dispatch = useDispatch();
+
+  const onNext = async () => {
+    if(selected === 1){
+      if(!regNo?.value){
+        setError(t('bill.rd_empty'));
+        return;
+      }
+      if(!name?.value){
+        setError(t('bill.name_empty'));
+        return;
+      }
+    };
+    let invoiceData = {
+      invoiceNo: '',
+      invoiceType: dataSelect?.type,
+      invoiceTime: dataSelect?.length,
+      amount: amt,
+      vatType: selected,
+      vatCustomerId: regNo?.value,
+      rowStatus: 'I',
+    };
+  
+    const response = await saveInvoice(invoiceData);
+    if(response?.error) setError(response?.error);
+    else {
+      setTxnNo(response?.data?.invoiceNo);
+      setCurrent(2);
+    }
+  };
+  
+
+  const onChangeRegNo = value => {
+    setRegNo(value);
+    setName({value: ''})
+  };
+
+  const handleEnter = async e => {
+    e?.preventDefault();
+    if(regNo?.value){
+      setLoading(true);
+      setError(null);
+      const response = await dispatch(getServiceBarimt('?regno=' + regNo?.value));
+      if(response?.error) setError(response?.error);
+      else if(response?.data?.found){
+        setName({ value: response?.data?.name });
+      } else {
+        setError(t('tax.error'));
+        setName({ value: '' });
+      }
+      setLoading(false);
+    } else setRegNo({ value: '', error: t('error.not_empty') });
+  };
+
+  const onClick = () => {
+    setSelected(0);
+    setName({value: ''});
+    setRegNo({value: ''});
+  }
+
+  const onClick1 = () => {
+    setSelected(1);
+  }
+
+  const noProps = { value: regNo, setValue: onChangeRegNo, placeholder: t('system.RD'), classBack : 're_select_back', handleEnter};
+  const nameProps = { value: name, setValue: setName, placeholder: t('bill.company_name'), classBack : 're_select_back', disabled: true};
+  const btnProps = { className: `re_check_btn ${name?.value ? 'active' : ''}`, onClick: handleEnter, icon: <DynamicBSIcon name='BsCheckLg' className='re_back_icon' />, loading };
+
+  return (
+    <div className='pay_scroll'>
+      <p className='es_title1'>{t('tax.receipt_send')}</p>
+      <div className='receipt_switch_container'>
+        <div className={`receipt_option ${selected === 0 ? 'active' : ''}`}  onClick={onClick}>
+          {t('bill.individual')}
+        </div>
+        <div className={`receipt_option ${selected === 1 ? 'active' : ''}`}  onClick={onClick1}>
+          {t('report_receipt.customerID')}
+        </div>
+      </div>
+      {selected === 1 ? 
+        <div style={{display: 'flex', marginTop: 15, flexFlow: 'row', alignItems: 'center'}}>
+          <div style={{display: 'flex', margin: 0, flexFlow: 'column', flex: 1}}>
+              <Input {...noProps} />
+              <Input {...nameProps} />
+          </div>
+          <div className='gap'/>
+          <IconButton {...btnProps} />
+        </div> : ''
+      }
+      <div style={{display: 'flex', justifyContent: 'center', marginTop: 20}}>
+        <Button className='re_step_next' text={t('page.next')} onClick={onNext}/>
+      </div>
+    </div>
+  );
+};
+
 
 function Pay(props){
   const { amt, txnNo, onDone, setError, setVisible, onPressExport } = props;
@@ -293,32 +370,6 @@ function Pay(props){
               <Button className='pay_step_next' text={t('employee.paid')} onClick={onDone} />
              </div>
            </div>}
-      {/* <div className='es_pay_back'>
-        <div className='es_pay_col'>
-          <p className='es_sub_title'>{t('employee.qr')}</p>
-          <Overlay loading={loading}>
-            {!qr
-              ? <img className='es_qr_holder' src={qr_holder} alt='Logo' />
-              : <QRCode
-                  size={180}
-                  style={{ margin: '5px 0' }}
-                  value={qr} />
-            }
-          </Overlay>
-          <p className='es_amt_title'>{t('employee.amt')}</p>
-          <p className='es_amt'>{formatNumber(amt)}₮</p>
-        </div>
-        <div className='es_gap' />
-        <div className='es_pay_col2'>
-          <p className='es_sub_title'>{t('employee.acct')}</p>
-          <Select {...bankProps} />
-          <Field label={t('employee.acct_no')} value={selected?.acct} />
-          <Field label={t('employee.receive')} value={selected?.name} />
-          <Field label={t('employee.amt')} value={formatNumber(amt) + '₮'} copy={amt} />
-          <Field label={t('employee.txn_descr')} value={txnNo} isBold={true} />
-          <p className='card_warning'>{t('invoices.warning')}</p>
-        </div>
-      </div> */}
     </div>
   );
 }

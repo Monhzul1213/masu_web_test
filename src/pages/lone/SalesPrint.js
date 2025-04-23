@@ -30,7 +30,6 @@ export function SalesPrint(){
     const invoiceNo = searchParams?.get('invoiceNo');
     const api = 'Sales/GetSalesBillHold?data=' + encodeURIComponent(invoiceNo);
     const response = await dispatch(getService(api, 'GET'));
-    console.log(response);
     if (response?.error) {
       setError(response?.error);
     } else {

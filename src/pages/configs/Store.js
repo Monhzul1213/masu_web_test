@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withSize } from 'react-sizeme';
+import { useNavigate } from 'react-router-dom';
 
 import { getList } from '../../services';
 import { ButtonRowAdd, Empty, Error1, Overlay } from '../../components/all';
@@ -15,9 +16,10 @@ function Card(props){
   const [item, setItem] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getData();
+    user?.msRole?.webManageSite !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

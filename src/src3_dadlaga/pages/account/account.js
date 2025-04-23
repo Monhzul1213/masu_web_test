@@ -32,7 +32,7 @@ export function Account() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.msRole?.webManageItem !== "Y") navigate({ pathname: "/" });
+    if (user?.msRole?.webFinance !== "Y") navigate({ pathname: "/" });
     else {
       const classId = searchParams?.get("classId");
       let query = classId ? `?AcctClassID=${classId}` : "";

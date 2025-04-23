@@ -114,14 +114,14 @@ export function AccountAddModal(props) {
     else setSiteDatas([...(response2?.data || [])]);
   };
 
-  const onClickCancel = () => {
+  const onClickCancel = (rowStatus) => {
     const classId = searchParams?.get("classId");
     navigate({
       search: createSearchParams({
         classId: classId,
       }).toString(),
     });
-    setOpenModal(false);
+    setOpenModal(rowStatus === "I" ? true : false);
     clearForm();
     setUpdatable(false);
   };
@@ -176,7 +176,7 @@ export function AccountAddModal(props) {
       else {
         onSuccess(message);
         onSearch(`?AcctClassID=${classId}`);
-        onClickCancel();
+        onClickCancel(rowStatus);
       }
     }
   };

@@ -41,7 +41,7 @@ export function TransferAdd(){
   }, [saved]);
 
   useEffect(() => {
-    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    user?.msRole?.webIsTransfer !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => setEdited(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

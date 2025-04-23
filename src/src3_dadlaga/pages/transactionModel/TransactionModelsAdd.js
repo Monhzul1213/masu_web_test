@@ -59,7 +59,7 @@ export function TransactionModelsAdd() {
   }, [saved]);
 
   useEffect(() => {
-    user?.msRole?.webManageItem !== "Y"
+    user?.msRole?.webFinance !== "Y"
       ? navigate({ pathname: "/" })
       : getData();
     getConstantsData();

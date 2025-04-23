@@ -44,7 +44,7 @@ export function JournalAdd() {
   }, [saved]);
 
   useEffect(() => {
-    user?.msRole?.webManageItem !== "Y"
+    user?.msRole?.webFinance !== "Y"
       ? navigate({ pathname: "/" })
       : getData();
     return () => setEdited(false);

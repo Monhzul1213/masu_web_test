@@ -14,7 +14,7 @@ export function Card(){
   const navigate = useNavigate();
   const path = pathname?.split('/') && pathname?.split('/')[2];
   const [subscriptionType, setSubscriptionType] = useState(false);
-  const { user, token } = useSelector(state => state.login);
+  const {user: { msRole }, user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,18 +29,18 @@ export function Card(){
   }
   
   const items = [
-    getItem(t('system_menu.additional'), 'additional'),
-    getItem(t('system_menu.cashier'), 'cashier'),
-    getItem(t('system_menu.tax'), 'tax'),
-    getItem(t('system_menu.document'), 'document'),
-    getItem(t('system_menu.type'), 'type'),
+    getItem(t('system_menu.additional'), 'additional', null, null, null, msRole?.webEditSettings !== 'Y'),
+    getItem(t('system_menu.cashier'), 'cashier', null, null, null, msRole?.webEditSettings !== 'Y'),
+    getItem(t('system_menu.tax'), 'tax', null, null, null, msRole?.webEditSettings !== 'Y'),
+    getItem(t('system_menu.document'), 'document', null, null, null, msRole?.webEditSettings !== 'Y'),
+    getItem(t('system_menu.type'), 'type', null, null, null, msRole?.webEditSettings !== 'Y'),
   ];
 
   const items1 = [
-    getItem(t('system_menu.store'), 'store'),
-    getItem(t('system_menu.pos'), 'pos'),
-    getItem(t('system_menu.order_location'), 'location'),
-    getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('system_menu.reclam')}</span> : t('system_menu.reclam'), 'reclam')
+    getItem(t('system_menu.store'), 'store', null, null, null, msRole?.webManageSite !== 'Y'),
+    getItem(t('system_menu.pos'), 'pos', null, null, null, msRole?.webManagePos !== 'Y'),
+    getItem(t('system_menu.order_location'), 'location', null, null, null, msRole?.webEditSettings !== 'Y'),
+    getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('system_menu.reclam')}</span> : t('system_menu.reclam'), 'reclam', null, null, null, msRole?.webEditSettings !== 'Y')
   ];
 
   const onClick = e => navigate(e?.key);

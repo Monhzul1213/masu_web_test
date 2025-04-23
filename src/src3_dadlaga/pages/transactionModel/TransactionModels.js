@@ -25,7 +25,7 @@ export function TransactionModel() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user?.msRole?.webManageItem !== "Y") navigate({ pathname: "/" });
+    if (user?.msRole?.webFinance !== "Y") navigate({ pathname: "/" });
     else {
       let query =
         "?BeginDate=" +

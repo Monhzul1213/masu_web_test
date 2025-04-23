@@ -24,7 +24,7 @@ export function EmployeeService(){
   const dispatch = useDispatch();
 
   useEffect(() => {
-    user?.msRole?.webManageEmployy !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    user?.msRole?.webAppointment  !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => { };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dialogClose]);

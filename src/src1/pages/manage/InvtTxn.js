@@ -27,7 +27,7 @@ export function InvtTxn(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
+    if(user?.msRole?.webViewItemBalance !== 'Y') navigate({ pathname: '/' });
     else {
       let dates = [moment(), moment()];
       let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');

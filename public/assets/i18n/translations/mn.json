@@ -1160,7 +1160,10 @@
     "sales_total": "Борлуулалтын дүн",
     "ddtd": "ДДТД",
     "company_regno": "Байгууллагын №",
-    "company_name": "Байгууллагын нэр"
+    "company_name": "Байгууллагын нэр",
+    "individual": "Хувь хүн",
+    "rd_empty": "Регистерийн дугаар оруулна уу!",
+    "name_empty": "Байгууллагын нэр хоосон байна."
   },
   "order_bill": {
     "powered": "Powered by Masu.mn",

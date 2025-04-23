@@ -126,14 +126,14 @@ export function Menu(props){
      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.management')}</span> : t('menu.management'), '/management', 
      <img src={image4} alt='image4' />,[
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.suppliers')}</span> : t('menu.suppliers'), '/management/suppliers', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_remainder')}</span> : t('menu.invt_remainder'), '/management/invt_remainder', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_txn')}</span> : t('menu.invt_txn'), '/management/invt_txn', null, null, null, msRole?.webManageItem !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_remainder')}</span> : t('menu.invt_remainder'), '/management/invt_remainder', null, null, null, msRole?.webViewItemBalance !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.invt_txn')}</span> : t('menu.invt_txn'), '/management/invt_txn', null, null, null, msRole?.webViewItemBalance !== 'Y'),
       {type: 'divider'},
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.order_list')}</span> : t('menu.order_list'), '/management/order_list', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.adjust')}</span> : t('menu.adjust'), '/management/adjust', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.transfer')}</span> : t('menu.transfer'), '/management/transfer', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.count')}</span> : t('menu.count'), '/management/count', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.package')}</span> : t('menu.package'), '/management/package', null, null, null, msRole?.webManageItem !== 'Y')
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.order_list')}</span> : t('menu.order_list'), '/management/order_list', null, null, null, msRole?.webIsReceipt !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.adjust')}</span> : t('menu.adjust'), '/management/adjust', null, null, null, msRole?.webIsAdjust !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.transfer')}</span> : t('menu.transfer'), '/management/transfer', null, null, null, msRole?.webIsTransfer !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.count')}</span> : t('menu.count'), '/management/count', null, null, null, msRole?.webIsPicount !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.package')}</span> : t('menu.package'), '/management/package', null, null, null, msRole?.webIsAssembly !== 'Y')
     ]),
     getItem(t('menu.employee'), '/employee', <img src={image1} alt='image1' />, [
       getItem(t('menu.emp_list'), '/employee/emp_list', null, null, null, msRole?.webManageEmployy !== 'Y'),
@@ -157,17 +157,17 @@ export function Menu(props){
     ]),
     hideTime ? null : getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('timetable.time')}</span> : t('timetable.time'), '/timetable', 
     <img src={image8} alt='image8' />, [
-      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webEditSettings !== 'Y'),
-      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webAppointment !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webAppointment !== 'Y'),
     ]),
     hideTime ? null : getItem(subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.finance")}</span>) : (t("transModel.finance")), "/finance",
     <img src={image12} alt='image12' />,[
-        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("account.title")}</span>) : (t("account.title")), "/finance/account", null, null, null, msRole?.webEditSettings !== "Y"),
-        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webEditSettings !== "Y"),
-        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.journal")}</span>) : (t("transModel.journal")), "/finance/journal", null, null, null,msRole?.webEditSettings !== "Y"),
+        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("account.title")}</span>) : (t("account.title")), "/finance/account", null, null, null, msRole?.webFinance !== "Y"),
+        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webFinance !== "Y"),
+        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.journal")}</span>) : (t("transModel.journal")), "/finance/journal", null, null, null,msRole?.webFinance !== "Y"),
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.report")}</span>) : (t("transModel.report")), "/finance/report", <div className='gap'/>, 
         [
-          getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.generel_journal")}</span>) : (t("transModel.generel_journal")), "/finance/report/generel_journal", null, null, null,msRole?.webEditSettings !== "Y")
+          getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.generel_journal")}</span>) : (t("transModel.generel_journal")), "/finance/report/generel_journal", null, null, null,msRole?.webFinance !== "Y")
         ])
     ]),
     getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.integration')}</span> : t('menu.integration'), '/integration', 
@@ -179,8 +179,8 @@ export function Menu(props){
       getItem(t('system_menu.tax'), '/config/tax', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.document'), '/config/document', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(t('system_menu.type'), '/config/type', null, null, null, msRole?.webEditSettings !== 'Y'),
-      getItem(t('system_menu.store'), '/config/store', null, null, null, msRole?.webEditSettings !== 'Y'),
-      getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webEditSettings !== 'Y'),
+      getItem(t('system_menu.store'), '/config/store', null, null, null, msRole?.webManageSite !== 'Y'),
+      getItem(t('system_menu.pos'), '/config/pos', null, null, null, msRole?.webManagePos !== 'Y'),
       getItem(t('system_menu.order_location'), '/config/location', null, null, null, msRole?.webEditSettings !== 'Y'),
       getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('system_menu.reclam')}</span> : t('system_menu.reclam'), '/config/reclam', null, null, null, msRole?.webEditSettings !== 'Y')
 

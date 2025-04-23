@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
 import { sendRequest, getList } from '../../services';
@@ -20,7 +21,7 @@ export function Additional(){
   const [config, setConfig] = useState(null);
   const { user, token } = useSelector(state => state.login);
   const dispatch = useDispatch();
-  // const disabled = true;
+  const navigate = useNavigate();
 
   const items = [
     { title: t('add_menu.order1'), sub_title: t('add_menu.order2'), checked: checked['order'], label: 'order' },
@@ -36,7 +37,7 @@ export function Additional(){
   ];
 
   useEffect(() => {
-    getData();
+    user?.msRole?.webEditSettings !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

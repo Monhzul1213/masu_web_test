@@ -20,7 +20,7 @@ function Screen(props){
   const navigate = useNavigate();
 
   useEffect(() => {
-    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    user?.msRole?.webIsReceipt !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

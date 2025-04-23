@@ -32,7 +32,7 @@ export function Remain(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(user?.msRole?.webManageEmployy !== 'Y') navigate({ pathname: '/' });
+    if(user?.msRole?.webViewItemBalance !== 'Y') navigate({ pathname: '/' });
     else { onSearch() }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

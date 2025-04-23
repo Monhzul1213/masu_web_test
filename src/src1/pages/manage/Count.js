@@ -22,7 +22,7 @@ export function Count(){
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(user?.msRole?.webManageItem !== 'Y') navigate({ pathname: '/' });
+    if(user?.msRole?.webIsPicount !== 'Y') navigate({ pathname: '/' });
     else {
       let query = '?BeginDate=' + moment()?.startOf('month')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.format('yyyy.MM.DD');
       onSearch(query);

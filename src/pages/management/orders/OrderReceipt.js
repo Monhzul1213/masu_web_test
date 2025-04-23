@@ -37,7 +37,7 @@ export function OrderReceipt(){
 
   useEffect(() => {
     let orderNo = searchParams?.get('orderNo');
-    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData(orderNo);
+    user?.msRole?.webIsReceipt !== 'Y' ? navigate({ pathname: '/' }) : getData(orderNo);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

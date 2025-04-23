@@ -48,7 +48,7 @@ export function PackageAdd(){
   }, [saved]);
 
   useEffect(() => {
-    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
+    user?.msRole?.webIsAssembly !== 'Y' ? navigate({ pathname: '/' }) : getData();
     return () => setEdited(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

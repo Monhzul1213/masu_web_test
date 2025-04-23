@@ -38,8 +38,14 @@ export function Input(props){
   }
 
   const onBlur = () => {
-    !noBlur && setValue({ value: value?.value?.trim(), error: value?.error, noLabel: value?.noLabel });
+    if (!noBlur && typeof value?.value === 'string') {
+      const trimmed = value.value.trim();
+      if (trimmed !== value.value) {
+        setValue({ value: trimmed, error: value?.error, noLabel: value?.noLabel });
+      }
+    }
   }
+  
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
   const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;

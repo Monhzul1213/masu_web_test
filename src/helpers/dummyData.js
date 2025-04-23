@@ -53,13 +53,12 @@ export const posList = [
 
 export const webList = [
   { label: 'Борлуулалтын тайлан харах', value: 'webViewSalesReport', checked: false },
-  { label: 'Борлуулалт хүчингүй болгох', value: 'webCancelReceipts', checked: false },
   { label: 'Бараа бүртгэх', value: 'webManageItem', checked: false },
   { label: 'Барааны үлдэгдэл харах', value: 'webViewItemBalance', checked: false },
   { label: 'Барааны орлого авах', value: 'webIsReceipt', checked: false },
   { label: 'Барааны хөдөлгөөн хийх', value: 'webIsTransfer', checked: false },
   { label: 'Барааны орлого зарлага хийх', value: 'webIsAdjust', checked: false },
-  { label: 'Барааны тооллого хийх', value: 'webIsPICount', checked: false },
+  { label: 'Барааны тооллого хийх', value: 'webIsPicount', checked: false },
   { label: 'Барааны багцлалт хийх', value: 'webIsAssembly', checked: false },
   { label: 'Ажилтан бүртгэх', value: 'webManageEmployy', checked: false },
   { label: 'Харилцагч бүртгэх', value: 'webManageCustomer', checked: false },

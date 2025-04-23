@@ -24,7 +24,7 @@ function Screen(props){
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(user?.msRole?.webManageItem !== 'Y') navigate({ pathname: '/' });
+    if(user?.msRole?.webAppointment !== 'Y') navigate({ pathname: '/' });
     else {
       let query = '?BeginDate=' + moment()?.startOf('week')?.format('yyyy.MM.DD') + '&EndDate=' + moment()?.endOf('week')?.format('yyyy.MM.DD');  
       getData(query);
