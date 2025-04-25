@@ -5,7 +5,7 @@ export function ItemsHeader(){
   const { t } = useTranslation();
 
   return (
-    <div className='inv_header'>
+    <div className='inv_item_header'>
       <p className='tax_header1' style={{fontWeight: '600', textAlign: 'center'}}>{'№'}</p>
       <p className='tax_header2' style={{fontWeight: '600', textAlign: 'center'}}>{t('menu.inventory')}</p>
       <p className='tax_header6' style={{fontWeight: '600', textAlign: 'center'}}>{t('inventory.barcode')}</p>

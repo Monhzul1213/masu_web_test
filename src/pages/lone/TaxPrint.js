@@ -7,7 +7,7 @@ import html2pdf from 'html2pdf.js';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { Error, Overlay } from '../../components/all';
-import { Footer, Info, Items, ItemsHeader, Total, Pay } from '../../components/lone/tax';
+import { Header, Footer, Info, Items, ItemsHeader, Total, Pay } from '../../components/lone/tax';
 
 export function TaxPrint() {
   const { t } = useTranslation();
@@ -73,7 +73,7 @@ export function TaxPrint() {
             minHeight: '190mm'
           }}>
             <div>
-              {/* <Header /> */}
+              <Header header={header}/>
               <Info header={header} />
               <ItemsHeader />
               <Items detail={detail} />
@@ -96,7 +96,7 @@ export function TaxPrint() {
             minHeight: '190mm'
           }}>
             <div>
-              {/* <Header /> */}
+              <Header header={header}/>
               <Info header={header} />
               <ItemsHeader />
               <Items detail={detail} />

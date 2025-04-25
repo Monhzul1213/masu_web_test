@@ -6,8 +6,14 @@ export function Items(props){
   const { detail } = props;
 
   const renderItem = (item, index) => {
+
+    const isEven = index % 2 === 1; 
+    const rowStyle = {
+      backgroundColor: isEven ? '#f5f5f5' : '#ffffff'
+    };
+
     return (
-        <div key={index} className='inv_item'>
+        <div key={index} className='inv_item' style={rowStyle}>
           <p className='tax_header1' style={{justifyContent: 'center'}}>{(index + 1)}</p>
           <p className='tax_header2'>{item?.invtName}</p>
           <p className='tax_header6' style={{justifyContent: 'center'}}>{item?.barCode}</p>

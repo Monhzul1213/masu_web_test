@@ -1,25 +1,30 @@
 import React from 'react';
 
 export function Footer(props){
-  const { info } = props;
 
   return (
     <div className ='inv_footer_back'>
+        <div className='iline1'/>
         <div style={{display: 'flex', flexFlow: 'row', justifyContent: 'space-between'}}>
-          <p style={{display: 'flex', width: 140, alignItems: 'center', justifyContent: 'center', fontSize: 12}}>
-            Тамга
-          </p>
-          <div style={{lineHeight: 1}}>
-            <p style={{fontSize: 12}}>Дарга ......................................................../.........................../</p>
-            <p style={{fontSize: 12}}>Нягтлан бодогч ......................................../.........................../</p>
+          <p className='inv_tamga'>Тамга</p>
+          <div >
+            <p style={{fontSize: 12, fontWeight:500}}>Дарга ...................................................../.........................../</p>
+            <p style={{fontSize: 12, fontWeight:500}}>Хүлээн авсан ........................................./.........................../</p>
+            <p style={{fontSize: 12, fontWeight:500}}>Хүлээлгэн өгсөн ..................................../.........................../</p>
+            <p style={{fontSize: 12, fontWeight:500}}>Нягтлан бодогч ....................................../.........................../</p>
           </div>
         </div>
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
+        {/* <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
             <p style={{fontSize: 12, fontWeight: 'bold'}}>{info?.footer}</p>
-        </div>
-        <div style={{display: 'flex', justifyContent: 'flex-end', flexFlow: 'row', alignItems: 'center', marginBottom: -15, marginRight: -15, marginTop: 10}}>
-          <p style={{fontSize: 11, alignItems: 'center', margin:0, fontWeight: 500}}>Powered by</p>
-          <a style={{marginLeft: 5, fontSize: 11, color: 'var(--logo1-color)'}} href='https://masu.mn'>www.masu.mn</a>
+        </div> */}
+        <div className='inv_footer_back1'>
+          <div>
+            <p style={{fontSize: 11, alignItems: 'center', margin:0, color: 'white', fontWeight: 500}}>Бидэнтэй хамтран ажилласан танд баярлалаа.</p>
+          </div>
+          <div className='row'>
+            <p style={{fontSize: 11, alignItems: 'center', margin:0, color: 'white'}}>Powered by</p>
+            <a style={{marginLeft: 5, fontSize: 11, fontWeight: 500, color: 'white'}} href='https://masu.mn'>www.masu.mn</a>
+          </div>
         </div>
     </div>
   );

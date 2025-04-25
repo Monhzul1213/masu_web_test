@@ -1163,7 +1163,9 @@
     "company_name": "Байгууллагын нэр",
     "individual": "Хувь хүн",
     "rd_empty": "Регистерийн дугаар оруулна уу!",
-    "name_empty": "Байгууллагын нэр хоосон байна."
+    "name_empty": "Байгууллагын нэр хоосон байна.",
+    "invoice_number": "Нэхэмжлэхийн дугаар",
+    "invoice_enddate" : "Нэхэмжлэхийн хүчинтэй хугацаа"
   },
   "order_bill": {
     "powered": "Powered by Masu.mn",

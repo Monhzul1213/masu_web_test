@@ -7,7 +7,7 @@ import html2pdf from 'html2pdf.js';
 import '../../css/bill.css';
 import { getService } from '../../services';
 import { Error, Overlay } from '../../components/all';
-import { Footer, Header, Info, Items, ItemsHeader, Total } from '../../components/lone/invoice';
+import { Footer, Header, Info, Items, ItemsHeader, Total, InfoBank } from '../../components/lone/invoice';
 
 export function InvoicePrint(){
   const { t } = useTranslation();
@@ -63,48 +63,39 @@ export function InvoicePrint(){
   return (
     <Overlay loading={loading}>
       {error && <Error error={error}/>}
-      <div id="invoice_back" style={{ width: "297mm", background: "white", padding: "10mm", minHeight: '210mm' }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            minHeight: '190mm'
-          }}>
-            <div>
-              <Header />
-              <Info header={header} />
-              <ItemsHeader />
-              <Items detail={detail} />
-              <Total header={header} />
-            </div>
-            <Footer info={info}/>
+      <div id="invoice_back" style={{ display: "flex", justifyContent: "space-between" , width: "297mm", background: "white", padding: "5mm 6mm", minHeight: '210mm' }}>
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '190mm'}}>
+          <div>
+            <Header header={header}/>
+            <InfoBank header={header}/>
+            <div className='iline'/>
+            <Info header={header} />
+            <ItemsHeader />
+            <Items detail={detail} />
+            <Total header={header} />
           </div>
-          <div
-            style={{
-              width: "1px",
-              background: "black",
-              margin: "0 1%",
-            }}
-          />
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            minHeight: '190mm'
-          }}>
-            <div>
-              <Header />
-              <Info header={header} />
-              <ItemsHeader />
-              <Items detail={detail} />
-              <Total header={header} />
-            </div>
-            <Footer info={info}/>
-          </div>
+          <Footer info={info}/>
         </div>
-      </div>
-
+        <div
+          style={{
+            width: "1px",
+            background: "var(--text2-color)",
+            // margin: "0 1%",
+          }}
+        />
+        <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '190mm'}}>
+          <div>
+            <Header header={header}/> 
+            <InfoBank header={header}/>
+            <div className='iline'/>
+            <Info header={header} />
+            <ItemsHeader />
+            <Items detail={detail} />
+            <Total header={header} />
+          </div>
+          <Footer info={info}/>
+        </div>
+        </div>
       <button className="inv_pdf_btn" onClick={onPressExport}>
         {t('order.pdf')}
       </button>

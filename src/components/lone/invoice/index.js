@@ -4,3 +4,4 @@ export * from './Items';
 export * from './Total';
 export * from './ItemsHeader';
 export * from './Footer';
+export * from './InfoBank';
