@@ -581,8 +581,8 @@ export const subscriptions = [
 ];
 
 export const banks = [
-  { label: 'Хаан банк', bank: 'ХААНБАНК', logo: 'haan', acct: '5011703186', name: 'МасуПОС ххк' },
-  { label: 'Худалдаа хөгжлийн банк', bank: 'ХХБ', logo: 'tdb', acct: '819006011', name: 'МасуПОС ххк' },
+  { label: 'Хаан банк', bank: 'ХААНБАНК', logo: 'haan', acct: 'MN48 0005 00 5011703186', name: 'МасуПОС ххк' },
+  { label: 'Худалдаа хөгжлийн банк', bank: 'ХХБ', logo: 'tdb', acct: 'MN25 0004000 819006011', name: 'МасуПОС ххк' },
   // { label: 'Хас банк', bank: 'ХАСБАНК', logo: 'has', acct: '5005573920', name: 'МасуПОС ххк' },
   // { label: 'Голомт банк', bank: 'ГОЛОМТБАНК', logo: 'golomt', acct: '1605231423', name: 'МасуПОС ххк' },
 ];

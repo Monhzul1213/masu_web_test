@@ -1,5 +1,5 @@
 import React from 'react';
-import { header_image } from '../../../assets';
+// import { header_image } from '../../../assets';
 
 export function Header(props){
   const { header } = props;
@@ -11,7 +11,7 @@ export function Header(props){
         <p className='inv_header_text1'>№{header?.salesNo}</p>
       </div>
       <div>
-        <img src={header_image} alt='MASU LOGO' className='inv_header_image'/>
+        {/* <img src={header_image} alt='MASU LOGO' className='inv_header_image'/> */}
       </div>
     </div>
   );
