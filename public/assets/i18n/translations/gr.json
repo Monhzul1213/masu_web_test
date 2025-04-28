@@ -168,7 +168,9 @@
     "/finance/journal/journal_add": "Transaktion durchführen",
     "/finance/account": "Konto",
     "/finance/report": "Bericht",
-    "/finance/report/generel_journal": "Allgemeines Journal"
+    "/finance/report/generel_journal": "Allgemeines Journal",
+    "/finance/account/acct_import": "Konten im Bulk importieren"
+
   },
   "menu": {
     "profile": "Benutzer",
@@ -1172,7 +1174,12 @@
     "sales_total": "Gesamtverkaufsbetrag",
     "ddtd": "DDTD",
     "company_regno": "Unternehmens-Nr.",
-    "company_name": "Unternehmensname"
+    "company_name": "Unternehmensname",
+    "individual": "Einzelperson",
+    "rd_empty": "Bitte Registrierungsnummer eingeben!",
+    "name_empty": "Firmenname darf nicht leer sein.",
+    "invoice_number": "Rechnungsnummer",
+    "invoice_enddate": "Rechnungsablaufdatum"
   },
   "order_bill": {
     "powered": "Powered by Masu.mn",
@@ -1657,7 +1664,13 @@
     "add_success": "Konto erfolgreich registriert.",
     "edit_success": "Konto erfolgreich aktualisiert.",
     "delete_success": "Konto erfolgreich gelöscht.",
-    "search": "Konto suchen"
+    "search": "Konto suchen",
+    "import_title": "Konto eingeben",
+    "import_link": "Kontovorlage herunterladen",
+    "import_error": "Bitte ein Konto eingeben",
+    "import_error1": "Konto nicht gefunden"
+    
+    
   },
   "version": "14"
 }

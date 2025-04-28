@@ -12,7 +12,7 @@ import "../../../css/order.css";
 import "../../../css/invt.css";
 import "../../css/tree.css";
 import { getList } from "../../../services";
-import { Filter } from "../../components/transactionModel";
+import { Filter } from "../../components/accounts/Filter";
 import { AccountAddModal, AccountTree, List } from "../../components/accounts";
 import { Empty1, Error1, Overlay } from "../../../components/all";
 import { Subscription } from "../../../components/management/adjust/list";
@@ -130,7 +130,7 @@ export function Account() {
                 </div>
                 <AccountTree {...treeProps} />
               </div>
-              <div className="i_list_cont acc_list_cont" id="invt_list">
+              <div className="i_list_cont acc_list_cont" id="acct_list">
                 <Filter {...headerProps} size={size} />
                 {!data?.length ? (
                   <Empty1 icon="MdOutlineArticle" />

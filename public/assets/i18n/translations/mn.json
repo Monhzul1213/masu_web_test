@@ -165,7 +165,8 @@
     "/finance/journal/journal_add": "Гүйлгээ хийх",
     "/finance/report": "Тайлан",
     "/finance/report/generel_journal": "Ерөнхий журнал",
-    "/finance/account": "Данс"
+    "/finance/account": "Данс",
+    "/finance/account/acct_import": "Данс бөөнөөр оруулах"
   },
   "menu": {
     "profile": "Хэрэглэгч",
@@ -1648,7 +1649,18 @@
     "add_success": "Данс амжилттай бүртгэгдлээ.",
     "edit_success": "Данс амжилттай засагдлаа.",
     "delete_success": "Данс амжилттай устгагдлаа.",
-    "search": "Данс хайх"
+    "search": "Данс хайх",
+    "acctTy": "Дансны төрөл",
+    "import_title": "Данс оруулах",
+    "import_link": "Дансны формат татах",
+    "import_error": "Данс оруулна уу",
+    "import_error1": "Данс олдсонгүй",
+    "acctClassId": "Дансны ангилалын код",
+    "acctClassName": "Дансны ангилал",
+    "siteId": "Салбарын дугаар",
+    "siteName": "Салбарын нэр",
+    "acct": "Дансны дугаар"
+
   },
   "version": "14"
 }

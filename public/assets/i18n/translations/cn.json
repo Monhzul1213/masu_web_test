@@ -165,7 +165,9 @@
     "/finance/journal/journal_add": "进行交易",
     "/finance/account": "账户",
     "/finance/report": "报告",
-    "/finance/report/generel_journal": "普通期刊"
+    "/finance/report/generel_journal": "普通期刊",
+    "/finance/account/acct_import": "批量导入账户"
+
   },
   "menu": {
     "profile": "用户",
@@ -1161,7 +1163,12 @@
     "sales_total": "销售总额",
     "ddtd": "DDTD",
     "company_regno": "公司编号",
-    "company_name": "公司名称"
+    "company_name": "公司名称",
+    "individual": "个人",
+    "rd_empty": "请输入注册号码！",
+    "name_empty": "公司名称不能为空。",
+    "invoice_number": "发票号码",
+    "invoice_enddate": "发票有效期"
   },
   "order_bill": {
     "powered": "由Masu.mn提供支持",
@@ -1642,7 +1649,11 @@
     "add_success": "账户成功注册。",
     "edit_success": "账户成功编辑。",
     "delete_success": "账户成功删除。",
-    "search": "搜索账户"
+    "search": "搜索账户",
+    "import_title": "输入账户",
+    "import_link": "下载账户格式",
+    "import_error": "请输入账户",
+    "import_error1": "未找到账户"
   },
   "version": "14"
 }

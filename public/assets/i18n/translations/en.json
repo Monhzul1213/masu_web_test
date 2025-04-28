@@ -1160,7 +1160,12 @@
     "sales_total": "Total Sales Amount",
     "ddtd": "DDTD",
     "company_regno": "Company No.",
-    "company_name": "Company Name"
+    "company_name": "Company Name",
+    "individual": "Individual",
+    "rd_empty": "Please enter the registration number!",
+    "name_empty": "Company name is empty.",
+    "invoice_number": "Invoice Number",
+    "invoice_enddate": "Invoice Expiry Date"
   },
   "order_bill": {
     "powered": "Powered by Masu.mn",
@@ -1641,7 +1646,14 @@
     "add_success": "Account successfully registered.",
     "edit_success": "Account successfully updated.",
     "delete_success": "Account successfully deleted.",
-    "search": "Search Account"
+    "search": "Search Account",
+      "import_title": "Enter Account",
+      "import_link": "Download Account Format",
+      "import_error": "Please enter an account",
+      "import_error1": "Account not found"
+    
+    
+
   },
   "version": "14"
 }

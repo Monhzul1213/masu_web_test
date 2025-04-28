@@ -30,6 +30,7 @@ import { ReportBuyer, ReportReceivable, ReportTime, TransactionModel, Transactio
 import { Journal, JournalAdd } from './src1/pages/finance/journal';
 import { Account } from "./src3_dadlaga/pages/account";
 import { GeneralJournal } from './src1/pages/finance/report/general_journal/GeneralJournal';
+import { AccountImport } from './src3_dadlaga/pages/account/accountImport';
 
 export function App(){
   const [collapsed, setCollapsed] = useState(false);
@@ -210,6 +211,7 @@ export function App(){
                 <Route path="/finance/journal/journal_add" element={<JournalAdd />}/>
                 <Route path="/finance/account" element={<Account />} />
                 <Route path="/finance/report/generel_journal" element={<GeneralJournal />} />
+                <Route path="/finance/account/acct_import" element={<AccountImport />} />
               </Routes>
             </Layout>
           </Layout>
