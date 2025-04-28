@@ -102,13 +102,13 @@ export function Account() {
     setVisible(false);
   };
   const onClickAdd = () => {
-    const classId = searchParams?.get("classId");
-    if (classId) {
+    // const classId = searchParams?.get("classId");
+    // if (classId) {
       setOpenModal(true);
       // navigate(`/finance/account/add?classId=${classId}`);
-    } else {
-      setError("Ангилаа сонгоно уу");
-    }
+    // } else {
+    //   setError("Ангилаа сонгоно уу");
+    // }
   };
 
   const listProps = { data, onClickAdd, setOpenModal };

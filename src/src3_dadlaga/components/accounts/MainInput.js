@@ -3,6 +3,7 @@ import { MdChevronLeft } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
 import { IconButton, Input, Select } from "../../../components/all";
+import { AcctSelect } from "./AcctSelect";
 
 export function MainInput(props) {
   const {
@@ -28,7 +29,7 @@ export function MainInput(props) {
     siteId,
     siteDatas,
     onClickCancel,
-    updatable,
+    updatable, category, setCategory, categoryDatas
   } = props;
   const { t } = useTranslation();
 
@@ -130,6 +131,23 @@ export function MainInput(props) {
     loading,
     disabled: !editable,
   };
+  const categoryProps = {
+    value: category,
+    setValue: ({ value }) => {
+      setCategory({ value: value });
+    },
+    label: t("account.acctClassName"),
+    placeholder: t("account.acctClassName"),
+    data: categoryDatas,
+    setError,
+    setEdited,
+    s_value: "classId",
+    s_descr: "descr",
+    inRow: true,
+    loading,
+    disabled: !editable,
+  };
+
   return (
     <div className="ad_back">
       <div className="ps_menu_back">
@@ -160,6 +178,9 @@ export function MainInput(props) {
           <div style={{ flex: 1, width: "50%" }}>
             <Select {...siteProps} />
           </div>
+        </div>
+        <div className="ad_row" style={{ marginTop: "10px" }}>
+          <AcctSelect {...categoryProps} />
         </div>
         {/* <div className="ad_row">
           <CheckBox label="Дэбит" checked={isDebit} setChecked={setIsDebit} />

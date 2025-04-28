@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { UploadDrag } from '../../../components/all';
-import { excelTypes, ExportExcel3 } from '../../../helpers';
-
-
-
+import { AcctExcel, excelTypes } from '../../../helpers';
+ 
+ 
+ 
 export function Format(props){
   const { data, setFile, file } = props
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-
-
+ 
+  const columnWidths = [
+    { wch: 15 }, // width for column A
+    { wch: 15 }, // width for column B
+    { wch: 20 }, // width for column C
+    { wch: 25 }, // width for column D
+    { wch: 25 }, // width for column E
+    { wch: 15 }, // width for column F
+    { wch: 15 }, // width for column G
+    { wch: 25 }, // width for column H
+  ];
+ 
   useEffect(() => {
     setColumns([
       { Header: t('account.acct'), accessor: 'acct', exLabel:t('account.acct')},
@@ -33,8 +43,8 @@ export function Format(props){
       <div className='ma_back'>
           <div className='ii_header'>
             <p className='ii_title'>{t('account.import_title')}</p>
-            <ExportExcel3 
-              text={t('account.import_link')} columns={columns}  excelData={data} fileName={'Dans_Format'} 
+            <AcctExcel
+              text={t('account.import_link')} columns={columns}  excelData={data} fileName={'Dans_Format'} width={columnWidths} applyBorder={true}
             />
           </div>
           <UploadDrag {...uploadProps} />

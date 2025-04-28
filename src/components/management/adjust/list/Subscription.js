@@ -21,6 +21,7 @@ export function Subscription(props){
   const [selected, setSelected] = useState(null);
   const [itemAmt, setItemAmt] = useState([]);
   const [amt, setAmt] = useState(0);
+  const [type, setType] = useState(0);
   const [txnNo, setTxnNo] = useState('');
   const [data, setData] = useState([]);
   const [length, setLength] = useState('sar');
@@ -57,8 +58,8 @@ export function Subscription(props){
   };
   
 
-  const typeProps = { selected, onSelect, data, amt, setAmt, itemAmt, setError, setLoading, setCurrent, setTxnNo, length };
-  const receiptProps = { dataSelect: selected, amt, setCurrent, setError, setTxnNo, onDone, saveInvoice };
+  const typeProps = { selected, onSelect, data, amt, setAmt, itemAmt, setError, setLoading, setCurrent, setTxnNo, length, setType };
+  const receiptProps = { dataSelect: selected, amt, setCurrent, setError, setTxnNo, onDone, saveInvoice , type};
   const payProps = { amt, txnNo, onDone, setError, setVisible, onPressExport };
 
   const steps = [
@@ -86,16 +87,18 @@ export function Subscription(props){
 }
 
 function Type(props){
-  const { selected, onSelect, data, setAmt, itemAmt, setCurrent, length } = props;
+  const { selected, onSelect, data, setAmt, itemAmt, setCurrent, length, setType } = props;
   const { t } = useTranslation();
 
   const onNext = () => {
     setAmt(selected?.amt);
+    setType(selected?.type);
     setCurrent(1);
   };
 
   const onNext1 = () => {
     setAmt(selected?.amt1);
+    setType(selected?.type1);
     setCurrent(1);
   };
 
@@ -153,7 +156,7 @@ function Type(props){
 
 
 function Receipt(props){
-  const { setCurrent, setError, amt, saveInvoice, setTxnNo, dataSelect } = props
+  const { setCurrent, setError, amt, saveInvoice, setTxnNo, dataSelect, type } = props
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState(0);
@@ -174,7 +177,7 @@ function Receipt(props){
     };
     let invoiceData = {
       invoiceNo: '',
-      invoiceType: dataSelect?.type,
+      invoiceType: type,
       invoiceTime: dataSelect?.length,
       amount: amt,
       vatType: selected,

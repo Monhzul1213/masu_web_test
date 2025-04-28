@@ -42,6 +42,8 @@ export function AccountAddModal(props) {
   const [accountType, setAccountType] = useState({ value: null });
   const [accountStatus, setAccountStatus] = useState({ value: 1 });
   const [accountCurrency, setAccountCurrency] = useState({ value: "MNT" });
+  const [categoryDatas, setCategoryDatas] = useState([]);
+  const [category, setCategory] = useState({ value: null });
 
   const [searchParams] = useSearchParams();
   const { user, token } = useSelector((state) => state.login);
@@ -58,6 +60,7 @@ export function AccountAddModal(props) {
   }, [saved]);
 
   useEffect(() => {
+    setCategory({value: searchParams?.get("classId")})
     user?.msRole?.webManageItem !== "Y" && navigate({ pathname: "/" });
     const acct = searchParams?.get("acct");
     if (acct) {
@@ -75,6 +78,7 @@ export function AccountAddModal(props) {
     setAccountName({ value: "" });
     setAccountStatus({ value: 1 });
     setAccountType({ value: null });
+    setCategory({ value: null });
     setAccountCurrency({ value: "MNT" });
   };
 
@@ -110,8 +114,12 @@ export function AccountAddModal(props) {
       getConstants(user, token, "glAccount_AcctType", setSystemCash)
     );
     const response2 = await dispatch(getList(user, token, "Site/GetSite"));
-    if (response?.error) setError(response?.error);
+    if (response2?.error) setError(response2?.error);
     else setSiteDatas([...(response2?.data || [])]);
+
+    const response3 = await dispatch(getList(user, token, "Txn/GetAccount"));
+    if (response3?.error) setError(response3?.error);
+    else setCategoryDatas([...(response3?.data?.accclass || [])]);
   };
 
   const onClickCancel = (rowStatus) => {
@@ -130,11 +138,13 @@ export function AccountAddModal(props) {
     if (
       accountCode.value === "" ||
       accountName.value === "" ||
-      accountType.value === null
+      accountType.value === null ||
+      category.value === null
     ) {
       if(!accountType.value) setAccountType({ value: '', error: t('error.not_empty') });
       if(!accountName.value) setAccountName({ value: '', error: t('error.not_empty') });
       if(!accountCode.value) setAccountCode({ value: '', error: t('error.not_empty') });
+      if(!category?.value) setCategory({ value: '', error: t('error.not_empty') });
       // setError("Бүрэн бөглөнө үү");
       return null;
     }
@@ -147,7 +157,7 @@ export function AccountAddModal(props) {
       status: accountStatus.value,
       siteID: siteId.value,
       acctType: accountType.value,
-      acctClassID,
+      acctClassID: acctClassID === category?.value ? acctClassID : category?.value,
       rowStatus,
     };
     return account;
@@ -235,6 +245,7 @@ export function AccountAddModal(props) {
     currency,
     typeDatas,
     siteDatas,
+    category, setCategory, categoryDatas, setCategoryDatas
   };
   let btnProps = {
     onClickCancel,
