@@ -2,7 +2,7 @@ import React from "react";
 import { MdChevronLeft } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
-import { IconButton, Input, Select } from "../../../components/all";
+import { ForwardInput, IconButton, Input, Select } from "../../../components/all";
 import { AcctSelect } from "./AcctSelect";
 
 export function MainInput(props) {
@@ -29,7 +29,7 @@ export function MainInput(props) {
     siteId,
     siteDatas,
     onClickCancel,
-    updatable, category, setCategory, categoryDatas
+    updatable, category, setCategory, categoryDatas, accountCodeRef
   } = props;
   const { t } = useTranslation();
 
@@ -55,6 +55,7 @@ export function MainInput(props) {
     disabled: updatable,
     inRow: true,
     type: "number",
+    inputRef: accountCodeRef
   };
   const backProps = {
     className: "ps_back_btn",
@@ -156,7 +157,7 @@ export function MainInput(props) {
       <div className="ad_main">
         {/* <div className="ad_row"> */}
           <div style={{ marginTop: 0, flex: 1 }}>
-            <Input {...acctCode} />
+            <ForwardInput {...acctCode} />
           </div>
           <div className="gap" />
           <Input {...acctName} />

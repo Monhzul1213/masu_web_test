@@ -1,0 +1,167 @@
+@import './color.css';
+.co_card_back {
+    display: flex;
+    flex-flow: row;
+    border-bottom: solid 1px var(--input1-color);
+    overflow: scroll;
+}
+.co_card {
+    padding: 10px 5px;
+    /* flex: 1; */
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    border-style: solid;
+    border-width: 0 0 3px 0;
+    border-color: transparent;
+    min-width: 200px;
+    background-color: transparent;
+}
+
+.co_card.active {
+    border-color: var(--config-color);
+}
+
+.co_card_label {
+    color: var(--text-color);
+    font-size: 14px;
+    margin: 0 ;
+    line-height: 16px;
+    font-weight: 450;
+}
+.co_card_label.active{
+    font-weight: 600;
+}
+
+.co_s_container {
+    box-shadow: none;
+    /* background-color: var(--root-color); */
+    padding: var(--page-padding);
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+.co_title {
+    margin: 0 0 20px 0;
+    font-size: 17px;
+    line-height: var(--title-font);
+    color: var(--text-color);
+}
+
+.co_select.ant-select .ant-select-selector {
+    box-shadow: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 14px;
+    background-color: #D1D3D4;
+    border-radius: var(--radius);
+    width: 260px;
+}
+
+.co_select .ant-select-selector {
+    box-shadow: none !important;
+}
+
+.co_select .ant-select-arrow {
+    color: var(--text4-color);
+    font-size: 16px;
+}
+.co_image {
+    width: 190px;
+    height: 190px;
+}
+
+.co_image .ant-upload.ant-upload-select-picture-card {
+    width: 190px;
+    height: 190px;
+    overflow: hidden;
+    border-color: var(--border-color);
+    background-color: var(--back-color);
+    align-self: center;
+    border-radius: 10px;
+}
+
+.co_image .ant-upload.ant-upload-select-picture-card:hover {
+    border-color: var(--config-color);
+}
+.co_input {
+    border: none;
+    color: var(--text-color);
+    font-size: 14px;
+    height: 32px;
+    padding-left: 10px;
+    background-color: #D1D3D4;
+    border-radius: 5px;
+}
+.co_select_back {
+    display: flex;
+    flex-flow: column;
+    /* border-bottom: 1px solid var(--text4-color); */
+    margin: 10px 0 0 0;
+    width: 260px;
+    /* padding: 0 0; */
+}
+
+.co_select_back:focus-within {
+    border-bottom: 1px solid var(--success-color);
+}
+
+.co_select_back:focus-within .select_lbl {
+    color: var(--success-color);
+}
+#bill_back1 {
+    background-color: none;
+    background-image: url('../../assets/crop.png');
+    background-size: cover; /* эсвэл contain, эсвэл тодорхой хэмжээгээр */
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 10px;
+    border-radius: 2px;
+    max-width: 400px;
+    width: 270px;
+    max-height: 100vh;
+    overflow: scroll;
+    min-height: 50vh;
+    display: flex;
+    flex-flow: column;
+}
+.co_btn_row {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    padding: var(--btn-margin) 7px;
+    margin-top: 5px;
+    align-items: center;
+}
+
+.co_btn {
+    border: 1px solid var(--text-color);
+    box-shadow: none;
+    background-color: transparent;
+    height: 34px;
+    border-radius: var(--radius);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-color);
+    padding: 0 35px;
+    margin-left: 15px;
+    min-width: 84px;
+}
+.co_btn:hover {
+    cursor: pointer;
+    background-color: var(--line-color);
+}
+
+#co_btn_save{
+    border: none;
+    background-color: hsl(291, 86%, 34%);
+    color: white;
+}
+#co_btn_save:hover {
+    cursor: pointer;
+    background-color: hsla(291, 83%, 45%, 0.847);
+}
+.co_check1{
+    color: var(--text2-color);
+}

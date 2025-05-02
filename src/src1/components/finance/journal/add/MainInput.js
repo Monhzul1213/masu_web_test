@@ -73,24 +73,32 @@ export function MainInput(props) {
   };
 
   const calculateWithDependencies = (items, totalAmount) => {
-    const localVars = { A1: totalAmount };
+    const localVars = { A0: totalAmount };
   
     return items.map((item, index) => {
-      const currentVar = `A${index + 2}`; // A2, A3, A4 гэх мэт автоматаар үүсгэнэ
+      const currentVar = `A${index + 1}`; // A2, A3, A4 гэх мэт автоматаар үүсгэнэ
       let formula = item?.formula;
+      let calcAmount;
   
-      // LocalVars доторх бүх хувьсагчийг орлуулна
-      for (const [key, value] of Object.entries(localVars)) {
-        formula = formula.replace(new RegExp(key, 'g'), value);
+      if (!formula || formula.toUpperCase() === "NULL") {
+        // Зөвхөн A1 дээр totalAmount онооно
+        calcAmount = totalAmount;
+      } else {
+        // LocalVars доторх бүх хувьсагчийг орлуулна
+        for (const [key, value] of Object.entries(localVars)) {
+          // RegExp ашиглан яг тухайн хувьсагчийг (A1 гэх мэт) олж солино
+          formula = formula.replace(new RegExp(`\\b${key}\\b`, 'g'), value);
+        }
+  
+        try {
+          calcAmount = parseFloat(evaluate(formula).toFixed(2));
+        } catch (e) {
+          calcAmount = 0; // Хэрвээ томьёо буруу байвал 0 болгоно
+        }
       }
-  
-      // Томьёог бодно
-      const calcAmount = parseFloat(evaluate(formula).toFixed(2));
-  
       // localVars-д шинэ хувьсагчаа хадгална
       localVars[currentVar] = calcAmount;
-  
-      // Debit / Credit талд хуваарилна
+        // Debit / Credit талд хуваарилна
       if (item?.isDebit === 0) {
         item.crAmt = calcAmount;
       } else {

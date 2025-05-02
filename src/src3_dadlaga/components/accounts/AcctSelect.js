@@ -15,12 +15,16 @@ export function AcctSelect(props){
 
   const renderItem = (item, index) => {
     return (
-      <Option key={index} value={item[s_value ?? 'value']}>
+      <Option key={index} value={item[s_value ?? 'value']} name={item?.descr}>
           <div className='cs_item' style={{display: 'flex', flexFlow: 'row', height: 25, alignItems: 'center'}}>
             <p className='cs_name' style={{width: 80 }}> {item[s_value ?? 'label']}</p>
             <p className='cs_name'style={{width: 350 }} >{item[s_descr ?? 'label']}</p>
           </div>
       </Option>);
+  }
+
+  const filterOption = (input, option) => {
+    return option?.name?.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option?.value?.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
@@ -36,7 +40,7 @@ export function AcctSelect(props){
           disabled={disabled}
           className='select_m'
           showSearch
-          filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+          filterOption={filterOption}
           onChange={handleChange}
           value={value?.value}
           onFocus={() => onFocus && onFocus()}

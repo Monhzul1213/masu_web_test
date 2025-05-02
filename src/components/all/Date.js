@@ -34,7 +34,7 @@ export function PlainRange(props){
 }
 
 export function Date(props){
-  const { inRow, value, setValue, label, setError, className, disabled, disabledDate, setEdited, allowClear, placeholder } = props;
+  const { inRow, value, setValue, label, setError, className, disabled, disabledDate, setEdited, allowClear, placeholder, classBack } = props;
 
   const handleChange = e => {
     setValue({ value: e });
@@ -47,7 +47,7 @@ export function Date(props){
 
   return (
     <div style={inRow ? { flex: 1 } : {}}>
-      <div className='select_back' style={backStyle}>
+      <div className= {classBack ?? 'select_back'} style={backStyle}>
         <p className='select_lbl' style={style}>{label}</p>
         <DatePicker
           className={className ?? 'm_date'}

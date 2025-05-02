@@ -99,11 +99,11 @@ export function List(props) {
   useEffect(() => {
     if (size?.width >= 830)
       setMaxHeight(
-        "calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)"
+        "calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 130px)"
       );
     else if (size?.width < 830 && size?.width >= 640)
       setMaxHeight(
-        "calc(100vh - var(--header-height) - var(--page-padding) * 4 - 97px - 10px - 37px)"
+        "calc(100vh - var(--header-height) - var(--page-padding) * 4 - 97px - 70px)"
       );
     else
       setMaxHeight(
@@ -137,8 +137,8 @@ export function List(props) {
       autoResetSortBy: false,
       initialState: {
         pageIndex: 0,
-        pageSize: 1000,
-        sortBy: [{ id: "templateId", desc: false }],
+        pageSize: 1000000,
+        // sortBy: [{ id: "templateId", desc: false }],
       },
     },
     useSortBy,

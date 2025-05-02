@@ -21,7 +21,7 @@ function Card(props){
   useEffect(() => {
     let columns = [
       {
-        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
+        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 380, minWidth: 200,
         Cell: ({ row }) => (<SelectItem item={row?.original} />), exLabel: t('inventory.title'), exLabel1: t('inventory.title')
       }, 
       { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90, exLabel: t('inventory.barcode'), exLabel1: t('inventory.barcode')}, 

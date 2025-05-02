@@ -1,6 +1,6 @@
 import { Modal, message } from "antd";
 import { useTranslation } from "react-i18next";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createSearchParams,
@@ -21,6 +21,7 @@ import { Subscription } from "../../../components/management/adjust/list";
 import { Confirm, Error1, Prompt } from "../../../components/all";
 
 export function AccountAddModal(props) {
+  const accountCodeRef = useRef(null);
   const { openModal, setOpenModal, onSearch } = props;
 
   const { t } = useTranslation();
@@ -54,10 +55,15 @@ export function AccountAddModal(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (saved) onClickCancel();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (saved) {
+      setTimeout(() => {
+        accountCodeRef?.current?.focus?.();
+      }, 100);
+      setSaved(false); // дахин trigger болохоос сэргийлнэ
+    }
   }, [saved]);
+  
+  
 
   useEffect(() => {
     setCategory({value: searchParams?.get("classId")})
@@ -123,10 +129,11 @@ export function AccountAddModal(props) {
   };
 
   const onClickCancel = (rowStatus) => {
-    const classId = searchParams?.get("classId");
+    // const classId = searchParams?.get("classId");
     navigate({
       search: createSearchParams({
-        classId: classId,
+        classId: 0
+        // classId: rowStatus === "D" ? 0 : (classId === category?.value ? classId : category?.value),
       }).toString(),
     });
     setOpenModal(rowStatus === "I" ? true : false);
@@ -165,8 +172,7 @@ export function AccountAddModal(props) {
 
   const onClickSave = async (rowStatus) => {
     let data = validateData(rowStatus);
-
-    let classId = searchParams?.get("classId");
+    // let classId = searchParams?.get("classId");
     const message =
       rowStatus === "I"
         ? t("account.add_success")
@@ -185,7 +191,8 @@ export function AccountAddModal(props) {
       } else if (response?.error) onError(response?.error, true);
       else {
         onSuccess(message);
-        onSearch(`?AcctClassID=${classId}`);
+        onSearch();
+        // console.log(`?AcctClassID=${rowStatus === "D" ? 0 : classId === category?.value ? classId : category?.value}`);
         onClickCancel(rowStatus);
       }
     }
@@ -245,7 +252,7 @@ export function AccountAddModal(props) {
     currency,
     typeDatas,
     siteDatas,
-    category, setCategory, categoryDatas, setCategoryDatas
+    category, setCategory, categoryDatas, setCategoryDatas, accountCodeRef
   };
   let btnProps = {
     onClickCancel,

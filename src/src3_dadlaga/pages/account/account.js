@@ -35,8 +35,8 @@ export function Account() {
     if (user?.msRole?.webFinance !== "Y") navigate({ pathname: "/" });
     else {
       const classId = searchParams?.get("classId");
-      let query = classId ? `?AcctClassID=${classId}` : "";
-      onSearch(query);
+      // let query = classId ? `?AcctClassID=${classId}` : "";
+      onSearch();
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

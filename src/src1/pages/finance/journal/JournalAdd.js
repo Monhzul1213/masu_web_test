@@ -37,11 +37,11 @@ export function JournalAdd() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (saved) onClickCancel();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [saved]);
+  // useEffect(() => {
+  //   if (saved) onClickCancel();
+  //   return () => {};
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [saved]);
 
   useEffect(() => {
     user?.msRole?.webFinance !== "Y"
@@ -82,6 +82,7 @@ export function JournalAdd() {
       let journalID = header?.journalId ?? 0;
       let items = [];
       detail?.forEach(item => {
+        console.log(item);
         // if(item?.qty){
           item.rowStatus = journalID ? 'U' : 'I';
           items.push(item);
@@ -133,7 +134,7 @@ export function JournalAdd() {
   const onSuccess = (msg) => {
     if (msg) {
       message.success(msg);
-      setSaved(true);
+      // setSaved(true);
     }
     setLoading(false);
   };

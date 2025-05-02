@@ -10,7 +10,7 @@ import { getItem } from '../../helpers';
 import { Profile1 } from './Profile';
 import { Install } from './Install';
 import { Rating } from './Rating';
-import { image1, image10, image11, image12, image13, image14, image2, image3, image4, image6, image7, image8, image9 } from '../../assets';
+import { control, image1, image10, image11, image12, image13, image14, image2, image3, image4, image6, image7, image8, image9 } from '../../assets';
 const { Sider } = Layout;
 
 export function Menu(props){
@@ -101,6 +101,7 @@ export function Menu(props){
       getItem(t('menu.rating'), '/system/rating')
     ])
   ] : [
+    // getItem(t('menu.control'), '/', <img src={control} alt='image9' />, null, null, msRole?.webManageItem !== 'Y'),
     getItem(t('menu.report'), '/report', <img src={image6} alt='image6' />, [
       getItem(t('menu.report_sales'), '/report/report_sales', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_inventory'), '/report/report_inventory', null, null, null, msRole?.webViewSalesReport !== 'Y'),
