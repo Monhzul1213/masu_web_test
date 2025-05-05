@@ -48,7 +48,7 @@ function Card(props) {
       if(index === rowIndex){
         let drAmt = columnId === 'drAmt' ? parseFloat(value ? value : 0) : old[rowIndex]?.drAmt;
         let crAmt = columnId === 'crAmt' ? parseFloat(value ? value : 0) : old[rowIndex]?.crAmt;
-        let itemDescr = columnId === 'itemDescr' ? value : old[rowIndex]?.itemDescr;
+        let itemDescr = columnId === 'itemDescr' ? value ? value : '' : old[rowIndex]?.itemDescr;
         // let total1 = total + drAmt
         // setPrice({value: total1})
         return { ...old[rowIndex], drAmt, crAmt, itemDescr };

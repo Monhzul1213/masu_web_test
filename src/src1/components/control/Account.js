@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, message } from 'antd';
+import { Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
 
 import '../../../css/config.css'
@@ -9,30 +9,30 @@ export function Account(props){
   const { visible, closeModal, setData } = props;
   const { t,  } = useTranslation();
   const [number, setNumber] = useState({ value: '' });
-  const [status, setStatus] = useState({ value: 1 });
-  const [states, setStates] = useState([{ value: 1, label: 'Хаан банк' }]);
+  const [status, setStatus] = useState({ value: 'haan' });
+  const [states, setStates] = useState([{ value: 'haan', label: 'Хаан банк' }]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const clearForm = () => {
-    setStatus({ value: 1 })
+    setStatus({ value: 'haan' })
     setNumber({value: ''})
   };
 
   const onClickSave = async e => {
     e?.preventDefault();
+    setLoading(true);
     if (!number?.value) {
       setError('Дансны дугаар оруулна уу');
       return;
     }
     const newAccount = {
       number: number?.value,
-      bank: status.label,
+      // bank: status.label,
       bankId: status?.value,
     };
-    console.log(status);
-
     setData(prev => [...(prev || []), newAccount]); 
+    setLoading(false);
     closeModal();
     clearForm();
   }
@@ -41,10 +41,11 @@ export function Account(props){
   const onFocusStatus = async () => {
     if(!states?.length || states?.length === 1){
       setStates([
-        { value: 1, label: 'Хаан банк' },
-        { value: 0, label: 'Худалдаа хөгжлийн банк' },
-        { value: 2, label: 'Голомт банк' },
-        { value: 3, label: 'Хас банк' },
+        { value: 'haan', label: 'Хаан банк' },
+        { value: 'tdb', label: 'Худалдаа хөгжлийн банк' },
+        { value: 'golomt', label: 'Голомт банк' },
+        { value: 'has', label: 'Хас банк' },
+        // { value: 4, label: 'Төрийн банк' }
       ]);
     }
   }

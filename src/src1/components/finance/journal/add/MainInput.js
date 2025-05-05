@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Date, DescrInput, IconButton, Input, MoneyInput, MoneyInput1, Select } from "../../../../../components/all";
+import { Date, DescrInput, IconButton, Input, MoneyInput1, Select } from "../../../../../components/all";
 import { getList } from "../../../../../services";
 import { TempSelect } from "./TempSelect";
 import { evaluate } from "mathjs";
@@ -101,8 +101,10 @@ export function MainInput(props) {
         // Debit / Credit талд хуваарилна
       if (item?.isDebit === 0) {
         item.crAmt = calcAmount;
+        item.itemDescr = item?.itemDescr ?? '';
       } else {
         item.drAmt = calcAmount;
+        item.itemDescr = item?.itemDescr ?? '';
       }
   
       return item;

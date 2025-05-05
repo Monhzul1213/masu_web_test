@@ -13,7 +13,7 @@ import { Employee, EmployeeAdd, Merchant, Role, RoleAdd, Time } from './pages/em
 import { Receipt, ReportItem, Review } from './pages/report';
 import { Order, OrderAdd, OrderVendors, OrderScreen, OrderReceipt } from './pages/management';
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
-import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat, CountAdd, Count, Package, PackageAdd, CustomerType } from './src1/pages';
+import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat, CountAdd, Count, Package, PackageAdd, CustomerType, Control } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
 import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
@@ -121,8 +121,9 @@ export function App(){
             <Layout>
               <Header1 {...menuProps} />
               <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='*' element={<Home />} />
+                <Route path='/' element={<Control />} />
+                <Route path='*' element={<Control />} />
+                {/* <Route path='/control' element={<Control />} /> */}
                 <Route path='/confirm' element={<Confirm />} />
                 <Route path='/config/*' element={<Config size={size} collapsed={collapsed} />} />
                 <Route path='/inventory/invt_category' element={<Category />} />

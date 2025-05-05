@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { withSize } from 'react-sizeme';
 import mime from 'mime';
 
 import { getList, sendRequest } from '../../../services';
 import { urlToFile } from '../../../helpers';
-import { Button, ButtonRowAdd, Check, CheckBox, Confirm, Date, DescrInput, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage} from '../../../components/all';
+import { ButtonRowAdd, Check, CheckBox, Confirm, Date, DescrInput, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage} from '../../../components/all';
 import { Account, Bill, InvoicePrint } from '../../components/control';
 import { ButtonRow } from '../../components/control/billComp';
-import moment from 'moment';
 
 function Card(props){
   const { size } = props;
@@ -22,6 +20,7 @@ function Card(props){
   const [site, setSite] = useState(null);
   const [site1, setSite1] = useState(null);
   const [bill, setBill] = useState(null);
+  const [invoice, setInvoice] = useState(null);
   const [image, setImage] = useState(null);
   const [image64, setImage64] = useState('');
   const [imageType, setImageType] = useState('');
@@ -34,7 +33,7 @@ function Card(props){
   const [open, setOpen] = useState(false);
   const [isPrint, setIsPrint] = useState(false);
   const [isDescr, setIsDescr] = useState(false);
-  const [date, setDate] = useState({ value: moment() });
+  const [date, setDate] = useState({ value: 0 });
   const [visible, setVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
 
@@ -106,7 +105,7 @@ function Card(props){
     const response = await dispatch(getList(user, token, 'Site/GetBill?SiteID=' + siteID));
     if(response?.error){
       setError(response?.error);
-      setBill(null);
+      setInvoice(null);
       setData1(null);
     } else {
       setData1(response?.data && response?.data[0]);
@@ -123,7 +122,10 @@ function Card(props){
   }
 
   const setData1 = data => {
-    getImage1(data);;
+    setInvoice(data);
+    getImage1(data);
+    setDate({ value: data?.invoiceDays ?? '' });
+
   }
 
   const getImage = async data => {
@@ -184,6 +186,37 @@ function Card(props){
     }
   }
 
+  const onClickInvoiceSave = async () => {
+    setError(null);
+    setLoading(true);
+    let invoiceDtls = [];
+    accounts?.forEach(item => {
+      if(item?.checked ){
+        item.bank = item?.bankId
+        item.account = item?.number
+        item.rowStatus = 'I';
+        invoiceDtls.push(item);
+      }
+    })
+    let data = {
+      siteId: site1,
+      image: '',
+      invoiceDays: date?.value,
+      fileRaw: { FileData: image164 ?? '', FileType: imageType1 ?? '' },
+      rowStatus: invoice ? 'U' : 'I',
+      isPrintBarCode: isPrint ? 'Y' : 'N', invoiceDtls
+    }
+    console.log(data);
+    // const response = await dispatch(sendRequest(user, token, 'Site/ModInvoice', data));
+    // setLoading(false);
+    // if(response?.error) setError(response?.error);
+    // else {
+    //   setEdited(false);
+    //   message.success(t('document.success_msg'));
+    //   getInvoice(site1);
+    // }
+  }
+
   const onClickAdd = () => {
     console.log('dd');
     setVisible(true)
@@ -192,6 +225,16 @@ function Card(props){
   const closeModal = () => setVisible(false);
 
   const onClickCancel = () => setData(bill);
+
+  const onClickInvoiceCancel = () => setData1(invoice);
+
+  const toggleAccount = index => {
+    const updated = [...accounts];
+    updated[index].checked = !updated[index].checked;
+    setAccounts(updated);
+  };
+
+  const selectedAccounts = accounts.filter(acc => acc.checked);
 
   const width = size?.width >= 720 ? 600 : size?.width;
   const scroll = size?.width > 480 ? 'do_large' : 'do_small';
@@ -209,10 +252,11 @@ function Card(props){
   const confirmProps = { open: open ? true : false, text: 'page.back_confirm', confirm };
   const printProps = { label: t('document.isPrint'), checked: isPrint, setChecked: setIsPrint, id: 'co_check1' };
   const descrProps = { label: t('document.isDescr'), checked: isDescr, setChecked: setIsDescr };
-  const dateProps = { value: date, setValue: setDate, label: t('bill.invoice_enddate'), classBack: 'co_select_back', className: 'co_input'};
-  const billProps = { header, footer, site, isPrint, image64, image164, date};
+  const dateProps = { value: date, setValue: setDate, label: t('bill.invoice_enddate'), placeholder: t('bill.invoice_enddate'), classBack: 'co_select_back', className: 'co_input'};
+  const billProps = { header, footer, site, isPrint, image64, image164, date, accounts: selectedAccounts};
   const addProps = { type: 'account', onClickAdd };
   const modalProps = { visible, closeModal, setData: setAccounts };
+  const invoicebtnProps = { onClickCancel: onClickInvoiceCancel, onClickSave: onClickInvoiceSave };
 
   return (
     <div className='store_tab' style={{flex: 1}}>
@@ -248,7 +292,7 @@ function Card(props){
               margin: "1% 2px",
             }}
           />
-          <div style={{ width: 900, paddingBottom: 0 }}>
+          <div style={{ width: 850, paddingBottom: 0 }}>
             <div className='co_s_container' >
               <div id={scroll}>
                 <p className='co_title'>{t('document.invoice_design')}</p>
@@ -256,16 +300,17 @@ function Card(props){
                 <div className='gap' />
                 <p className='select_lbl'>{t('document.logo')}</p>
                 <UploadImage {...logo1Props} />
-                <Date {...dateProps}/>
+                <Input {...dateProps}/>
+                {/* <Date {...dateProps}/> */}
                 {/* <p>{t('account.title')}</p> */}
                 {accounts?.length > 0 && (
                   <div style={{ marginTop: 10 }}>
                     <p className='select_lbl'>{t('account.title')}</p>
                       {accounts.map((acc, index) => (
-                        <div className='row'>
-                          <Check/>
+                        <div style={{display: 'flex', flexFlow: 'row', alignItems: 'center'}}>
+                          <Check       checked={acc.checked} onClick={() => toggleAccount(index)}/>
                           <div className='gap' />
-                          <p key={index}>{acc.number}</p>
+                          <p key={index} style={{margin: 0}}>{acc.number}</p>
                         </div>
                       ))}
                   </div>
@@ -275,7 +320,7 @@ function Card(props){
               </div>
               <InvoicePrint {...billProps}/>
             </div>
-            <ButtonRow {...btnProps} />
+            <ButtonRow {...invoicebtnProps} />
           </div>
         </div>
       </Overlay>

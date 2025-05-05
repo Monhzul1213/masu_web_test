@@ -19,7 +19,7 @@ export function JournalAdd() {
   const [detail, setDetail] = useState([]);
   const [search, setSearch] = useState({ value: null });
   const [dItems, setDItems] = useState([]);
-  const [saved, setSaved] = useState(false);
+  // const [saved, setSaved] = useState(false);
   // const [editable, setEditable] = useState(true);
   // const [updatable, setUpdatable] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -82,7 +82,6 @@ export function JournalAdd() {
       let journalID = header?.journalId ?? 0;
       let items = [];
       detail?.forEach(item => {
-        console.log(item);
         // if(item?.qty){
           item.rowStatus = journalID ? 'U' : 'I';
           items.push(item);
