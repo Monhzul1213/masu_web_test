@@ -27,9 +27,8 @@ export function Account(props){
       return;
     }
     const newAccount = {
-      number: number?.value,
-      // bank: status.label,
-      bankId: status?.value,
+      account: number?.value,
+      bank: status?.value,
     };
     setData(prev => [...(prev || []), newAccount]); 
     setLoading(false);

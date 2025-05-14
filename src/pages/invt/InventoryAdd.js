@@ -156,6 +156,8 @@ export function InventoryAdd(){
           item.useWholePrice = exists.useWholePrice;
           item.wholePrice = exists.wholePrice;
           item.wholeQty = exists.wholeQty;
+          item.useMinQty = exists.useMinQty;
+          item.minQty = exists.minQty;
         }
         item.rowStatus = exists ? 'U' : 'I';
       });
@@ -257,6 +259,7 @@ export function InventoryAdd(){
             salesTimeLimited: item?.salesTimeLimited ?? 'N', salesBeginTime: item?.salesBeginTime, salesEndTime: item?.salesEndTime,
             useWholePrice: item?.useWholePrice ?? 'N', wholeQty: parseFloat(item?.wholeQty ? item?.wholeQty : 0),
             wholePrice: parseFloat(item?.wholePrice ? item?.wholePrice : 0),
+            useMinQty: item?.useMinQty ?? 'N', minQty: parseFloat(item?.minQty ? item?.minQty : 0),
             status: 0, rowStatus: item?.rowStatus ?? 'I', useNhat: item?.useNhat ?? 'N' });
         else if(item?.rowStatus === 'U')
           invsales.push({
@@ -266,6 +269,7 @@ export function InventoryAdd(){
             salesTimeLimited: item?.salesTimeLimited ?? 'N', salesBeginTime: item?.salesBeginTime, salesEndTime: item?.salesEndTime,
             useWholePrice: item?.useWholePrice ?? 'N', wholeQty: parseFloat(item?.wholeQty ? item?.wholeQty : 0),
             wholePrice: parseFloat(item?.wholePrice ? item?.wholePrice : 0),
+            useMinQty: item?.useMinQty ?? 'N', minQty: parseFloat(item?.minQty ? item?.minQty : 0),
             status: 0, rowStatus: 'D', useNhat: item?.useNhat ?? 'N' });
       });
       let data = {

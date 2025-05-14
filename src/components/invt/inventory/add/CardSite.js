@@ -6,6 +6,7 @@ import { Check, CheckAll, Money, PaginationTable, Table } from '../../../all';
 import { EditableCell } from './EditableCell';
 import { ModalSales } from './ModalSales';
 import { ModalWhole } from './ModalWhole';
+import { ModalSafe } from './ModalSafe';
 
 export function CardSite(props){
   const { isTrack, data, setData, setEdited, checked, setChecked } = props;
@@ -13,20 +14,21 @@ export function CardSite(props){
   const [columns, setColumns] = useState([]);
   const [visibleSales, setVisibleSales] = useState(false);
   const [visibleWhole, setVisibleWhole] = useState(false);
+  const [visibleSafe, setVisibleSafe] = useState(false);
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 72 };
+    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 60 };
     const style1 = { display: 'flex', alignItems: 'center', justifyContent: 'center', maxWidth: 122 };
     let columns = [
       {
-        id: 'check', noSort: true, isBtn: true, customStyle: { width: 75 },
+        id: 'check', noSort: true, isBtn: true, customStyle: { width: 65 },
         Header: <div style={style}>{t('inventory.t_choose')}</div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       { Header: <div style={{flex: 1}}>{t('inventory.t_site')}</div>, accessor: 'name', isText: true },
       {
-        id: 'check1', noSort: true, isBtn: true, customStyle: { width: 125 },
+        id: 'check1', noSort: true, isBtn: true, customStyle: { width: 120 },
         Header: <div style={style1}>{t('inventory.t_nhat')}</div>,
         Cell: ({ row, onClickNHAT }) => {
           let checked = row?.original?.useNhat === 'Y';
@@ -34,14 +36,14 @@ export function CardSite(props){
         }
       },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.t_price')}</div>, accessor: 'price', noSort: true, isMoney: true,
-        customStyle: { width: 100 }, width: 100 },
+        customStyle: { width: 80 }, width: 80 },
       {
-        id: 'salesprice', noSort: true, isBtn: true, customStyle: { width: 360 },
+        id: 'salesprice', noSort: true, isBtn: true, customStyle: { width: 200 },
         Header: <div style={style1}>{t('inventory.t_salesprice')}</div>,
         Cell: ({ row, onClickSalesCheck, onClickSales }) => {
           let checked = row?.original?.useSalesPrice === 'Y';
           return (
-            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center', width: 300 }}>
+            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center', width: 180 }}>
               <Check checked={checked} onClick={e => onClickSalesCheck(e, row, checked)} />
               <div style={{marginLeft: 8, flex: 1}} onClick={e => onClickSales(e, row)}>
                 <p style={{margin: 0}}>
@@ -54,7 +56,7 @@ export function CardSite(props){
         }
       },
       {
-        id: 'wholeprice', noSort: true, isBtn: true, customStyle: { width: 200 },
+        id: 'wholeprice', noSort: true, isBtn: true, customStyle: { width: 150 },
         Header: <div style={style1}>{t('inventory.t_wholeprice')}</div>,
         Cell: ({ row, onClickWholeCheck, onClickWhole }) => {
           let checked = row?.original?.useWholePrice === 'Y';
@@ -65,6 +67,24 @@ export function CardSite(props){
                 <p style={{margin: 0}}>
                   <Money value={row?.original?.wholePrice} fontSize={14} />
                   {row?.original?.wholeQty ? (' (' + row?.original?.wholeQty + ')') : ''}
+                </p>
+              </div>
+            </div>
+          );
+        }
+      },
+      {
+        id: 'minQty', noSort: true, isBtn: true, customStyle: { width: 150 },
+        Header: <div style={style1}>{t('inventory.safeQty')}</div>,
+        Cell: ({ row, onClickSafeCheck, onClickSafe }) => {
+          let checked = row?.original?.useMinQty === 'Y';
+          return (
+            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center' }}>
+              <Check checked={checked} onClick={e => onClickSafeCheck(e, row, checked)} />
+              <div style={{marginLeft: 8, flex: 1}} onClick={e => onClickSafe(e, row)}>
+                <p style={{margin: 0}}>
+                  {/* <Money value={row?.original?.wholePrice} fontSize={14} /> */}
+                  {row?.original?.minQty }
                 </p>
               </div>
             </div>
@@ -160,6 +180,33 @@ export function CardSite(props){
     }
   }
 
+
+  const onClickSafeCheck = (e, item, checked) => {
+    e?.preventDefault();
+    if(item?.original?.checked){
+      setEdited && setEdited(true);
+      if(checked){
+        setData(old => old.map((row, index) => {
+          if(index === item?.index) return { ...old[item?.index], useMinQty: checked ? 'N' : 'Y', minQty: 0 };
+          return row
+        }));
+      } else {
+        setVisibleSafe(true);
+        setSelected(item);
+      }
+    }
+  }
+
+  const onClickSafe = (e, item) => {
+    console.log(item);
+    e?.preventDefault();
+    if(item?.original?.checked){
+      setEdited && setEdited(true);
+      setVisibleSafe(true);
+      setSelected(item);
+    }
+  }
+
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     setData(old => old.map((row, index) => {
@@ -181,20 +228,27 @@ export function CardSite(props){
     setVisibleWhole(false);
     setSelected(null);
   }
+
+  const closeSafe = () => {
+    setVisibleSafe(false);
+    setSelected(null);
+  }
  
   const defaultColumn = { Cell: EditableCell };
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
-    updateMyData, onClickCheck, onClickNHAT, onClickSalesCheck, onClickSales, onClickWholeCheck, onClickWhole }, useSortBy, usePagination, useRowSelect);
+    updateMyData, onClickCheck, onClickNHAT, onClickSalesCheck, onClickSales, onClickWholeCheck, onClickWhole, onClickSafeCheck, onClickSafe}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
   const modalSalesProps = { visibleSales, closeSales, selected, data, setData };
   const modalWholeProps = { visibleWhole, closeWhole, selected, data, setData };
+  const modalSafeProps = { visibleSafe, closeSafe, selected, data, setData };
 
   return (
     <div className='ia_back'>
       {visibleSales && <ModalSales {...modalSalesProps} />}
       {visibleWhole && <ModalWhole {...modalWholeProps} />}
+      {visibleSafe && <ModalSafe {...modalSafeProps} />}
       <p className='ac_title'>{t('inventory.sites')}</p>
       <div style={{padding: 5}} />
       <CheckAll {...checkProps} />

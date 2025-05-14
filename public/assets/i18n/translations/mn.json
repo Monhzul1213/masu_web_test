@@ -151,6 +151,8 @@
     "/system/notification/noti_add": "Мэдэгдэл",
     "/system/rating": "Үнэлгээ",
     "/system/rating/rating_add": "Үнэлгээ бүртгэх",
+    "/system/system_change": "Системийн өөрчлөлт",
+    "/system/system_change/syschange_add": "Системийн өөрчлөлт",
     "/timetable/timeschedule": "Цаг авах хуваарь",
     "/timetable/service": "Үйлчилгээ ажилтнаар",
     "/loyalty/coupon": "Купон",
@@ -229,7 +231,8 @@
     "giftCard": "Gift Card",
     "package": "Багцлалт",
     "customer_type": "Харилцагчийн төрөл, үнэ",
-    "control": "Үндсэн хуудас"
+    "control": "Үндсэн хуудас",
+    "system_change": "Системийн өөрчлөлт"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
@@ -509,7 +512,8 @@
     "import_error1": "Бараа олдсонгүй",
     "all": "Бүх бараа",
     "invt": " бараа",
-    "use_time": "Цагаар тооцогдох эсэх?"
+    "use_time": "Цагаар тооцогдох эсэх?",
+    "safeQty": "Аюулгүй нөөц"
   },
   "modifier": {
     "title": "Нэмэлт төлбөр",
@@ -1059,7 +1063,8 @@
     "terms": "Төлбөр төлөх хугацаа",
     "notes": "Санамж*",
     "pdf": "PDF татах",
-    "invoice": "Нэхэмжлэх татах"
+    "invoice": "Нэхэмжлэх татах",
+    "add": "Системийн өөрчлөлт нэмэх"
   },
   "advert":{
     "t_name":"Харилцагч нэр",
@@ -1662,10 +1667,9 @@
     "siteId": "Салбарын дугаар",
     "siteName": "Салбарын нэр",
     "acct": "Дансны дугаар"
-
   },
   "control" : {
-    "review": "Борлуулалтын нэгтгэл",
+    "review": "Хяналтын самбар",
     "setting": "Тохиргоо",
     "notification": "Мэдээлэл",
     "lastUpdate": "Сүүлийн өөрчлөлт"

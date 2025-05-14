@@ -15,7 +15,7 @@ import { Order, OrderAdd, OrderVendors, OrderScreen, OrderReceipt } from './page
 import { Invoice, InvoiceAdd, Solve, SolveAdd } from './pages/system';
 import { Customer, Discount, DiscountAdd, TimeList, Suppliers, SupplierAdd, Remain, RemainImport, InvtTxn, Transfer, TransferAdd, CustomerImport, Chat, CountAdd, Count, Package, PackageAdd, CustomerType, Control } from './src1/pages';
 import { SalesEmployee, SalesCategory, SalesPayment, SalesModifier, DiscountRP, Taxes, SalesOrder, Terms, Cashier } from './src1/pages/report';
-import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd } from './src1/pages/system';
+import { Info, Advert, AdvertAdd, NotiAdd, Notification, PartnerInfo, Reviews, ReviewAdd, SysChange } from './src1/pages/system';
 import { Partner, PartnerLogin, PartnerSignUp } from './pages/partner';
 import { Bill, InvoicePrint, Order as OrderBill, TaxPrint, SalesPrint } from './pages/lone';
 import { Integration } from './pages/integration';
@@ -121,8 +121,8 @@ export function App(){
             <Layout>
               <Header1 {...menuProps} />
               <Routes>
-                <Route path='/' element={<Control />} />
-                <Route path='*' element={<Control />} />
+                <Route path='/' element={<Home />} />
+                <Route path='*' element={<Home />} />
                 {/* <Route path='/control' element={<Control />} /> */}
                 <Route path='/confirm' element={<Confirm />} />
                 <Route path='/config/*' element={<Config size={size} collapsed={collapsed} />} />
@@ -213,6 +213,7 @@ export function App(){
                 <Route path="/finance/account" element={<Account />} />
                 <Route path="/finance/report/generel_journal" element={<GeneralJournal />} />
                 <Route path="/finance/account/acct_import" element={<AccountImport />} />
+                <Route path='/system/system_change' element={<SysChange />} />
               </Routes>
             </Layout>
           </Layout>

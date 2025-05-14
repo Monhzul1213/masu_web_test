@@ -10,7 +10,7 @@ export function Header(props){
         <p className='inv_header_text1' style={{fontSize: 11}}>№{header?.salesNo ?? '3930293093999'}</p>
       </div>
       <div>
-        <img src={image64} alt='LOGO' className='inv_header_image' style={{height: 25}}/>
+      {image64 ? <img src={image64} alt='LOGO' className='inv_header_image' style={{height: 25}}/> : null}
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ export function Info(props){
       </div>
       <div style={{ display: 'flex' }}>
         <p className='inv_info'>Хаяг:</p>
-        <p className='inv_info1'>{header?.address}</p>
+        <p className='inv_info1'>{header?.custAddress}</p>
       </div>
 
       <div style={{ display: 'flex' }}>

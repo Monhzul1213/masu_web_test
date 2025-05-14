@@ -7,12 +7,11 @@ import mime from 'mime';
 
 import { getList, sendRequest } from '../../../services';
 import { urlToFile } from '../../../helpers';
-import { ButtonRowAdd, Check, CheckBox, Confirm, Date, DescrInput, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage} from '../../../components/all';
+import { ButtonRowAdd, Check, CheckBox, Confirm, DescrInput, Error1, Input, Overlay, PlainSelect, Prompt, UploadImage} from '../../../components/all';
 import { Account, Bill, InvoicePrint } from '../../components/control';
 import { ButtonRow } from '../../components/control/billComp';
 
-function Card(props){
-  const { size } = props;
+function Card(){
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -102,13 +101,17 @@ function Card(props){
 
   const getInvoice = async siteID => {
     setSite1(siteID);
-    const response = await dispatch(getList(user, token, 'Site/GetBill?SiteID=' + siteID));
+    const response = await dispatch(getList(user, token, 'Site/GeInvoiceDesign?SiteID=' + siteID));
     if(response?.error){
       setError(response?.error);
       setInvoice(null);
       setData1(null);
     } else {
-      setData1(response?.data && response?.data[0]);
+      setData1(response?.data && response?.data?.invoicedesign[0]);
+      response?.data?.invoicedesigndtl?.forEach(item=> {
+        item.checked = true
+      })
+      setAccounts(response?.data && response?.data?.invoicedesigndtl)
     }
   }
 
@@ -125,7 +128,6 @@ function Card(props){
     setInvoice(data);
     getImage1(data);
     setDate({ value: data?.invoiceDays ?? '' });
-
   }
 
   const getImage = async data => {
@@ -146,7 +148,6 @@ function Card(props){
   }
 
   const getImage1 = async data => {
-    console.log(data);
     if(data?.fileRaw?.fileData){
       let type = data?.fileRaw?.fileType?.replace('.', '');
       setImageType1(type ?? '');
@@ -192,9 +193,11 @@ function Card(props){
     let invoiceDtls = [];
     accounts?.forEach(item => {
       if(item?.checked ){
-        item.bank = item?.bankId
-        item.account = item?.number
-        item.rowStatus = 'I';
+        item.rowStatus = item?.merchantId ? 'U': 'I';
+        invoiceDtls.push(item);
+      } 
+      else {
+        item.rowStatus = 'D';
         invoiceDtls.push(item);
       }
     })
@@ -206,19 +209,17 @@ function Card(props){
       rowStatus: invoice ? 'U' : 'I',
       isPrintBarCode: isPrint ? 'Y' : 'N', invoiceDtls
     }
-    console.log(data);
-    // const response = await dispatch(sendRequest(user, token, 'Site/ModInvoice', data));
-    // setLoading(false);
-    // if(response?.error) setError(response?.error);
-    // else {
-    //   setEdited(false);
-    //   message.success(t('document.success_msg'));
-    //   getInvoice(site1);
-    // }
+    const response = await dispatch(sendRequest(user, token, 'Site/ModInvoice', data));
+    setLoading(false);
+    if(response?.error) setError(response?.error);
+    else {
+      setEdited(false);
+      message.success(t('document.success_msg'));
+      getInvoice(site1);
+    }
   }
 
   const onClickAdd = () => {
-    console.log('dd');
     setVisible(true)
   };
 
@@ -236,8 +237,6 @@ function Card(props){
 
   const selectedAccounts = accounts.filter(acc => acc.checked);
 
-  const width = size?.width >= 720 ? 600 : size?.width;
-  const scroll = size?.width > 480 ? 'do_large' : 'do_small';
   const siteProps = { value: site, setValue: changeSite, data: sites, s_value: 'siteId', s_descr: 'name',
     className: 'co_select' };
   const site1Props = { value: site1, setValue: changeSite1, data: sites, s_value: 'siteId', s_descr: 'name',
@@ -266,9 +265,9 @@ function Card(props){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <div className='row'>
-          <div style={{ width, paddingBottom: 0 }}>
+          <div style={{ width: 600, paddingBottom: 0 }}>
             <div className='co_s_container' >
-              <div id={scroll}>
+              <div>
                 <p className='co_title'>{t('document.title')}</p>
                 <PlainSelect {...siteProps} />
                 <div className='gap' />
@@ -294,7 +293,7 @@ function Card(props){
           />
           <div style={{ width: 850, paddingBottom: 0 }}>
             <div className='co_s_container' >
-              <div id={scroll}>
+              <div>
                 <p className='co_title'>{t('document.invoice_design')}</p>
                 <PlainSelect {...site1Props} />
                 <div className='gap' />
@@ -308,9 +307,9 @@ function Card(props){
                     <p className='select_lbl'>{t('account.title')}</p>
                       {accounts.map((acc, index) => (
                         <div style={{display: 'flex', flexFlow: 'row', alignItems: 'center'}}>
-                          <Check       checked={acc.checked} onClick={() => toggleAccount(index)}/>
+                          <Check checked={acc.checked} onClick={() => toggleAccount(index)}/>
                           <div className='gap' />
-                          <p key={index} style={{margin: 0}}>{acc.number}</p>
+                          <p key={index} style={{margin: 0}}>{acc.account}</p>
                         </div>
                       ))}
                   </div>

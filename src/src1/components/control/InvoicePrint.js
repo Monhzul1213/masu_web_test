@@ -48,7 +48,7 @@ export function InvoicePrint(props){
   return (
     <Overlay loading={loading}>
       {/* {error && <Error error={error}/>} */}
-      <div id="invoice_back" style={{ display: "flex", width: "135mm", background: "white", padding: "5mm 6mm", minHeight: '190mm', boxShadow: '-4px 0 10px rgba(0, 0, 0, 0.20)' }}>
+      <div id="invoice_back" style={{ display: "flex", width: "135mm", background: "white", padding: "5mm 6mm", minHeight: '180mm', boxShadow: '-4px 0 10px rgba(0, 0, 0, 0.20)' }}>
         <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
           <div>
             <Header header={header} image64={image164}/>

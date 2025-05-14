@@ -99,7 +99,7 @@ export function List(props){
   const onRowClick = row => onClickAdd(row?.original?.msInventory);
   
   const tableInstance = useTable({ columns, data, autoResetPage: !filtering, autoResetSortBy: false, autoResetExpanded,
-    initialState: { pageIndex: 0, pageSize: 300, size : true },
+    initialState: { pageIndex: 0, pageSize: 300, size : true, sortBy: [{ id: 'msInventory.name', desc: true }] },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
     detailName: 'msInventoryVariants', colSpan: 7 };

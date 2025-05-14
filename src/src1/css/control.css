@@ -6,6 +6,7 @@
     overflow: scroll;
 }
 .co_card {
+    position: relative;
     padding: 10px 5px;
     /* flex: 1; */
     display: flex;
@@ -19,7 +20,7 @@
 }
 
 .co_card.active {
-    border-color: var(--config-color);
+    border-color: var(--logo1-color_dis);
 }
 
 .co_card_label {
@@ -34,13 +35,16 @@
 }
 
 .co_s_container {
-    box-shadow: none;
+    box-shadow: none;  
+    min-height: calc(100vh - var(--header-height) - var(--page-padding) * 11);
+    max-height: calc(100vh - var(--header-height) - var(--page-padding) * 13);
     /* background-color: var(--root-color); */
     padding: var(--page-padding);
     display: flex;
     flex-flow: row;
     justify-content: space-between;
     margin: 10px 0;
+    overflow: scroll;
 }
 .co_title {
     margin: 0 0 20px 0;
@@ -119,7 +123,7 @@
     background-size: cover; /* эсвэл contain, эсвэл тодорхой хэмжээгээр */
     background-repeat: no-repeat;
     background-position: center;
-    margin: 10px;
+    margin: 0px;
     border-radius: 2px;
     max-width: 400px;
     width: 270px;
@@ -134,8 +138,8 @@
     flex-flow: row;
     justify-content: center;
     padding: var(--btn-margin) 7px;
-    margin-top: 5px;
     align-items: center;
+    margin-top: 5px;
 }
 
 .co_btn {
@@ -167,4 +171,49 @@
 }
 .co_check1{
     color: var(--text2-color);
+}
+.noti_item_back{
+    display: flex;
+    flex-flow: row;
+    background-color: #e4e4e4;;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    max-width: 750px;
+    border-radius: 10px;
+}
+.noti_item_text1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #464646;
+    min-width: 130px;
+    margin: 0;
+}
+
+.noti_item_text2 {  
+    font-size: 14px;
+    font-weight: 550;
+    color: #222222;
+    margin: 0 0 6px 0;
+}
+
+.noti_item_text3 {
+    font-size: 13px;
+    font-weight: 400;
+    color: #3A3A3A;
+    margin: 0;
+    line-height: 1.5;
+}
+.notification-badge {
+    position: absolute;
+    /* top: -6px; */
+    right: 0;
+    background-color: var(--logo1-color_dis); /* ягаан өнгө (зурагт байгаа шиг) */
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 12px;
+    min-width: 10px;
+    text-align: center;
 }

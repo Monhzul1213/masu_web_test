@@ -35,10 +35,10 @@ export function InfoBank(props){
             <img
               className='es_select_icon'
               style={{ width: 15, height: 15, flexShrink: 0 }}
-              src={bank_icons[item?.bankId]}
-              alt={item?.bankId}
+              src={bank_icons[item?.bank]}
+              alt={item?.bank}
             />
-            <span className='inv_value'>{item.number}</span>
+            <span className='inv_value'>{item?.account}</span>
           </div>
         ))}
       </div>

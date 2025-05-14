@@ -1,5 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 export function CardNote(props){
   const { label, value, setValue, handleEnter, disabled , inRow, placeholder, length, setError, setEdited} = props;
@@ -30,6 +32,43 @@ export function CardNote(props){
           onKeyDown={onKeyDown}
           placeholder={placeholder}
           />
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+
+  )
+}
+
+export function CardHtmlNote(props){
+  const { label, value, setValue, handleEnter, disabled , inRow, placeholder, setError, setEdited} = props;
+  const { t } = useTranslation();
+
+
+  const handleChange = (content) => {
+    console.log(content);
+    setValue(content);     // HTML текст хадгална
+    setError && setError(null);
+    setEdited && setEdited(true);
+  };
+
+  const onKeyDown = e => {
+    if(e?.key === 'Enter') handleEnter && handleEnter(e);
+  }
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? { flex: 1 } : {}}>
+      <div className='cust_back' style={backStyle}>
+        {label && <p className='select_lbl' style={style}>{label}</p>}
+        <ReactQuill
+          disabled={disabled}
+          theme="snow"
+          value={value?.value}
+          onChange={handleChange}
+          onKeyDown={onKeyDown}
+          placeholder={placeholder}
+        />
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
     </div>
