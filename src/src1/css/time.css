@@ -14,7 +14,7 @@
   
   .rh_date_z .ant-picker-input>input {
     color: var(--text-color);
-    font-size: 14px;
+    font-size: 12px;
   }
   
   .rh_date_z.ant-picker-range .ant-picker-separator svg {

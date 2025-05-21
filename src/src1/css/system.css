@@ -44,7 +44,7 @@
 .ac_lbl_sys {
   margin: 0;
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 .select_back_sys {
@@ -59,7 +59,7 @@
 }
 .info_check{
   color: var(--success-color);
-  font-size: 15px;
+  font-size: 13px;
 }
 #dis_list {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
@@ -77,7 +77,7 @@
 .z_item_sub_title {
   /* background-color: var(--root-color); */
   color: var(--text2-color);
-  font-size: 14px;
+  font-size: 12px;
   margin-left: 10px;
   margin-top: 10px;
   /* width: 600px; */
@@ -93,7 +93,7 @@
 }
 .order_info {
   color: var(--text2-color);
-  font-size: 22px;
+  font-size: 20px;
   margin-top: 20px;
   margin-left: 10px;
 }
@@ -125,7 +125,7 @@
 
 .select_lbl_z {
   color: var(--text2-color);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 450;
   margin: 0 0 3px 10px;
 }
@@ -220,14 +220,14 @@
   /* justify-content: space-between; */
 }
 .rating_average{
-  font-size: 60px;
+  font-size: 55px;
   font-weight: 600;
   color: var(--text-color);
   margin-bottom: -20px;
 }
 .rating_text{
   display: flex;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--text2-color);
   justify-content: flex-end;
@@ -278,7 +278,7 @@
   background-color: var(--text3-color);
   }
 .table_detail_text{
-   font-size: 13px;
+   font-size: 11px;
    color: var(--text2-color);
    margin-top: -5px;
 }
@@ -311,7 +311,7 @@
   margin-top: 5px;
 }
 .report_icon{
-  font-size: 23px;
+  font-size: 21px;
   color: var(--logo1-color);
   margin-right: 10px;
 }
@@ -404,7 +404,7 @@
 
 .rp_list_drop_icon1 {
   color: var(--text2-color);
-  font-size: 28px;
+  font-size: 25px;
 }
 .info_hd1 {
   display: flex;

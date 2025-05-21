@@ -100,13 +100,13 @@ p {
 
 .error_icon {
   color: var(--danger-color);
-  font-size: 18px;
+  font-size: 16px;
   min-width: 18px;
 }
 
 .error_text {
   color: var(--danger-color);
-  font-size: 14px;
+  font-size: 12px;
   margin-left: 5px;
   line-height: 17px;
 }
@@ -181,7 +181,7 @@ p {
   padding: 0 var(--page-padding);
   background-color: var(--root-color);
   border-radius: var(--radius);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 550;
 }
 
@@ -207,12 +207,12 @@ p {
 }
 
 .add_row_icon {
-  font-size: 12px;
+  font-size: 11px;
   margin-right: 10px;
 }
 
 .add_row_delete_icon {
-  font-size: 16px;
+  font-size: 14px;
   margin-right: 6px;
 }
 
@@ -270,7 +270,7 @@ p {
 
 .check_all_lbl {
   margin: 0 0 0 20px;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   color: var(--text2-color);
 }
@@ -290,12 +290,12 @@ p {
 }
 
 #m_confirm {
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .m_descr {
   color: var(--text-color);
-  font-size: 15px;
+  font-size: 13px;
   margin: 10px 0 0 0;
 }
 
@@ -315,7 +315,7 @@ p {
   justify-content: center;
   background-color: var(--input-color);
   padding: 0 10px;
-  font-size: 24px;
+  font-size: 22px;
   height: var(--pg-height);
   border-radius: var(--radius);
   color: var(--text2-color);
@@ -347,7 +347,7 @@ p {
   padding: 0 5px;
   text-align: center;
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .pg_input:focus {
@@ -358,7 +358,7 @@ p {
 .pg_text {
   color: var(--text2-color);
   margin: 0 0 0 5px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -372,13 +372,13 @@ p {
 .pg_text2 {
   color: var(--text2-color);
   margin: 0 5px 0 0;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .pg_select .ant-select-selector {
   border: solid 1px var(--input1-color) !important;
   color: var(--text-color) !important;
-  font-size: 14px !important;
+  font-size: 12px !important;
   height: var(--pg-height) !important;
   align-items: center !important;
 }
@@ -430,7 +430,7 @@ input[type="file"] {
 }
 
 .u_file_place {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text2-color);
   border-color: var(--text3-color);
@@ -444,7 +444,7 @@ input[type="file"] {
 }
 
 .u_file_name {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--link-color);
   border-color: var(--link-color);
@@ -462,7 +462,7 @@ input[type="file"] {
 
 .cs_text {
   margin: 0;
-  font-size: 32px;
+  font-size: 29px;
   font-weight: 700;
   background: -webkit-linear-gradient(270deg, rgba(62,50,120,1) 0%, rgba(158,49,235,1) 100%);
   -webkit-background-clip: text;

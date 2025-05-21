@@ -42,7 +42,7 @@
 
 .vou_title {
   position: relative;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 550;
   color: var(--root-color);
   -webkit-line-clamp: 3;
@@ -61,7 +61,7 @@
 
 .voucher_content_title {
   width: 90%;
-  font-size: 30px;
+  font-size: 27px;
   display: flex;
   flex-direction: column;
 }
@@ -101,7 +101,7 @@
   margin: 0 3px;
   align-items: center;
   color: var(--root-color);
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .text_vo {
@@ -110,7 +110,7 @@
   justify-content: center;
   background-color: var(--root-color);
   width: 60px;
-  font-size: 12px;
+  font-size: 11px;
   border-radius: 10px;
   margin: 0;
 }

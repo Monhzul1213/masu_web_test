@@ -30,12 +30,12 @@
 
 #login_language {
   color: var(--root-color);
-  font-size: 15px;
+  font-size: 13px;
 }
 #login_language1 {
   padding: 5px;
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
 }
 .menu_language_back {
   padding: 5px;
@@ -73,11 +73,11 @@
 }
 .menu_language_arrow {
   color: var(--root-color);
-  font-size: 20px;
+  font-size: 18px;
 }
 .menu_language {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -114,7 +114,7 @@
 
 .menu_language_link {
   color: var(--text-color);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
 }
 input::-webkit-credentials-auto-fill-button {
@@ -184,7 +184,7 @@ input::-webkit-input-placeholder {
 
 .f_input_label {
   color: var(--text2-color);
-  font-size: 12px;
+  font-size: 11px;
   padding-left: 2px;
   font-weight: 550;
 }
@@ -210,7 +210,7 @@ input::-webkit-input-placeholder {
 
 .f_input_error {
   color: var(--danger-color);
-  font-size: 12px;
+  font-size: 11px;
   margin: 3px 0 0 2px;
 }
 
@@ -218,7 +218,7 @@ input::-webkit-input-placeholder {
   position: absolute;
   right: 7px;
   top: 12px;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--root-color);
 }
 
@@ -264,7 +264,7 @@ input::-webkit-input-placeholder {
   color: var(--root-color);
   border-radius: var(--radius);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -349,7 +349,7 @@ input::-webkit-input-placeholder {
 
 .social_label {
   color: var(--root-color);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   padding: 0 10px;
   margin: 0;
@@ -380,7 +380,7 @@ input::-webkit-input-placeholder {
 
 .social {
   color: var(--link-color);
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .l_center_row {
@@ -402,7 +402,7 @@ input::-webkit-input-placeholder {
 .l_copyright {
   margin: 0;
   color: #fffa;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 450;
   line-height: 22px;
 }
@@ -428,14 +428,14 @@ input::-webkit-input-placeholder {
 .l_term {
   margin-left: 5px;
   color: var(--root-color);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 450;
   font-family: "Montserrat";
 }
 
 .l_term_link {
   color: var(--logo2-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 800;
   text-decoration: underline;
 }
@@ -450,7 +450,7 @@ input::-webkit-input-placeholder {
 }
 
 .l_link_text {
-  font-size: 13px;
+  font-size: 11px;
   color: var(--root-color);
   margin: 0 5px 0 0;
   font-family: "Montserrat";
@@ -459,20 +459,20 @@ input::-webkit-input-placeholder {
 .co_title {
   color: var(--config-color );
   font-weight: 500;
-  font-size: 24px;
+  font-size: 22px;
   margin: 15px auto 0 auto;
 }
 
 .co_sub {
   color: var(--text-color);
   font-weight: 550;
-  font-size: 16px;
+  font-size: 14px;
   margin: 0 auto 10px auto;
 }
 
 .co_text {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 auto 5px auto;
 }
 
@@ -497,7 +497,7 @@ input::-webkit-input-placeholder {
 .co_sent_text {
   margin: 0;
   color: var(--success-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 450;
 }
 
@@ -505,7 +505,7 @@ input::-webkit-input-placeholder {
   background-color: var(--header-color);
   border-radius: var(--radius);
   color: var(--root-color);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   border: none;
   box-shadow: none;
@@ -535,7 +535,7 @@ input::-webkit-input-placeholder {
   background-color: var(--logo1-color);
   height: 36px;
   border-radius: var(--radius);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   color: var(--root-color);
   min-width: 80px;
@@ -555,7 +555,7 @@ input::-webkit-input-placeholder {
 .l_partner_check_lbl {
   margin: 0 0 0 5px;
   color: var(--root-color);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 450;
   font-family: "Montserrat";
 }
@@ -619,7 +619,7 @@ input::-webkit-input-placeholder {
 }
 
 .login_text {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--root-color);
   margin: 0 0 5px 0;
@@ -629,7 +629,7 @@ input::-webkit-input-placeholder {
   position: absolute;
   left: 10px;
   top: 10px;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--root-color);
 }
 
@@ -722,7 +722,7 @@ input::-webkit-input-placeholder {
   padding: 0 20px;
   border-radius: 15px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -751,7 +751,7 @@ input::-webkit-input-placeholder {
   padding: 0 20px;
   border-radius: 15px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -775,7 +775,7 @@ input::-webkit-input-placeholder {
 .co_sub1 {
   color: var(--root-color);
   font-weight: 550;
-  font-size: 16px;
+  font-size: 14px;
   margin: 0 auto 10px auto;
 }
 .cfcode_input1 {
@@ -795,7 +795,7 @@ input::-webkit-input-placeholder {
   outline: none;
 }
 .select_lbl_sign{
-  font-size: 14px;
+  font-size: 12px;
   color: var(--root-color);
   margin: 5px 0;
 }
@@ -811,13 +811,13 @@ input::-webkit-input-placeholder {
 .pro_radio_back span.ant-radio+*{
   color: var(--root-color);
   font-family: "Montserrat";
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .pro_radio_back .ant-radio + span {
   color: var(--root-color) !important;
   font-family: "Montserrat" !important;
-  font-size: 13px !important;
+  font-size: 11px !important;
 }
 
 .radio_select_back_z {
@@ -840,7 +840,7 @@ input::-webkit-input-placeholder {
   border: none;
   padding: 3px 0 0 20px;
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .select_login .ant-select-selector {
@@ -853,7 +853,7 @@ input::-webkit-input-placeholder {
 
 .select_login .ant-select-arrow {
   color: var(--text4-color);
-  font-size: 16px;
+  font-size: 14px;
   right: 2px;
 }
 
@@ -870,7 +870,7 @@ input::-webkit-input-placeholder {
   background-color: transparent;
   border: none;
   padding: 0;
-  font-size: 14px;
+  font-size: 12px;
   color: var(--root-color);
 }
 .select_login.ant-select:not(.ant-select-customize-input) .ant-select-selector{
@@ -910,14 +910,14 @@ input::-webkit-input-placeholder {
 
 .lg_title {
   color: var(--root-color);
-  font-size: 30px;
+  font-size: 27px;
   margin: 0;
   font-family: "Montserrat";
 }
 
 .lg_title1 {
   color: var(--root-color);
-  font-size: 20px;
+  font-size: 18px;
   margin: 0;
   font-family: "Montserrat";
   max-width: 360px;
@@ -933,7 +933,7 @@ input::-webkit-input-placeholder {
   color: var(--text-color);
   padding-left: 35px !important;
   padding-right: 5px !important;
-  font-size: 14px;
+  font-size: 12px;
   height: 48px;
   border: 2px solid var(--root-color);
   /* box-shadow: 0px 4px 25px 0px #00000040; */
@@ -950,7 +950,7 @@ input::-webkit-input-placeholder {
   position: absolute;
   left: 10px;
   top:14px;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--text-color);
 }
 
@@ -962,7 +962,7 @@ input::-webkit-input-placeholder {
   position: absolute;
   right: 7px;
   top: 16px;
-  font-size: 20px;
+  font-size: 18px;
   color: var(--text-color);
 }
 
@@ -973,13 +973,13 @@ input::-webkit-input-placeholder {
 
 #lg_error .error_icon {
   color: var(--root-color);
-  font-size: 18px;
+  font-size: 16px;
   min-width: 18px;
 }
 
 #lg_error .error_text {
   color: var(--root-color);
-  font-size: 14px;
+  font-size: 12px;
   margin-left: 5px;
   line-height: 17px;
 }
@@ -993,7 +993,7 @@ input::-webkit-input-placeholder {
   width: 100%;
   padding: 0 20px;
   border-radius: 5px;
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1022,7 +1022,7 @@ input::-webkit-input-placeholder {
 
 .lg_login_link, .lg_login_check > span {
   color: var(--root-color);
-  font-size: 11px;
+  font-size: 10px;
   font-family: "Montserrat";
 }
 
@@ -1069,7 +1069,7 @@ input::-webkit-input-placeholder {
 
 .lg_social {
   color: var(--root-color);
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .lg_radio_select_back_z {
@@ -1084,7 +1084,7 @@ input::-webkit-input-placeholder {
   box-shadow: none;
   border: none;
   color: var(--text-color);
-  font-size: 15px;
+  font-size: 13px;
   padding-left: 35px !important;
   padding-top: 7px !important;
   font-family: "Montserrat";
@@ -1101,7 +1101,7 @@ input::-webkit-input-placeholder {
 
 .lg_select_login .ant-select-arrow {
   color: var(--text2-color);
-  font-size: 16px;
+  font-size: 14px;
   right: 8px;
 }
 
@@ -1118,7 +1118,7 @@ input::-webkit-input-placeholder {
   background-color: var(--root-color);
   border: none;
   padding: 0;
-  font-size: 15px;
+  font-size: 13px;
   color: var(--text-color);
 }
 .lg_select_login.ant-select:not(.ant-select-customize-input) .ant-select-selector{
@@ -1142,7 +1142,7 @@ input::-webkit-input-placeholder {
 .lg_m_input {
   border: none;
   color: var(--text-color);
-  font-size: 15px;
+  font-size: 13px;
   height: 48px;
   border-radius: 5px;
   padding-left: 5px;
@@ -1153,7 +1153,7 @@ input::-webkit-input-placeholder {
   border: 2px solid var(--root-color);
   border-radius: 5px;
   color: var(--text-color);
-  font-size: 15px;
+  font-size: 13px;
   height: 48px;
   background-color: var(--root-color);
   width: 100%;
@@ -1169,7 +1169,7 @@ input::-webkit-input-placeholder {
 
 .lg_term_link {
   color: var(--root-color);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
   text-decoration: underline;
   font-family: "Montserrat";
@@ -1189,9 +1189,9 @@ input::-webkit-input-placeholder {
 }
 
 .lg_select_lbl_sign{
-  font-size: 14px;
+  font-size: 12px;
   color: var(--root-color);
   margin: 5px 0;
   font-family: 'Montserrat';
-  font-size: 13px;
+  font-size: 11px;
 }

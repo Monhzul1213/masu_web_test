@@ -121,8 +121,8 @@ export function App(){
             <Layout>
               <Header1 {...menuProps} />
               <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='*' element={<Home />} />
+                <Route path='/' element={<Control />} />
+                <Route path='*' element={<Control />} />
                 {/* <Route path='/control' element={<Control />} /> */}
                 <Route path='/confirm' element={<Confirm />} />
                 <Route path='/config/*' element={<Config size={size} collapsed={collapsed} />} />

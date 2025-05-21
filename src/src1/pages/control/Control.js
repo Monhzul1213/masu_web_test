@@ -17,6 +17,7 @@ function Screen(){
   const [error, setError] = useState(null);
   const [notiData, setNotiData] = useState([]);
   const [updateData, setUpdateData] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -35,6 +36,9 @@ function Screen(){
       setError(response?.error);
     } else {
       setNotiData(response?.data?.notif?.notif?.sort((a, b) => b.createdDate - a.createdDate))
+      const items = response?.data?.notif?.notifitem || [];
+      const unread = items.filter(item => item.isShow === 'N').length;
+      setUnreadCount(unread);
       response?.data?.versionhistory?.versionhistoryitem?.forEach(item => {
         if(item?.versionTitle !== "Шинэчлэлт") item.show = true;
       })
@@ -43,7 +47,7 @@ function Screen(){
     setLoading(false);
   };
 
-  const headerProps = {tab, setTab};
+  const headerProps = {tab, setTab, unreadCount};
   const notiProps = {data: notiData, error, loading, getData, updateData};
   const dashboardProps = {data: notiData}; 
 

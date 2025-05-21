@@ -60,7 +60,7 @@
 .ih_search1 {
   height: 32px;
   color: var(--text2-color);
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .ih_search1:hover {
@@ -113,7 +113,7 @@
   background-color: var(--config-b-color);
   height: 36px;
   border-radius: var(--radius);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   color: var(--root-color);
   min-width: 80px;
@@ -138,13 +138,13 @@
 }
 .supp_lbl {
   color: var(--text2-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 450;
   margin: 0 0 3px 0;
 }
 .supp_lbl_check {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 450;
   margin: 0 0 3px 0;
 }

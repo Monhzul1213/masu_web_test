@@ -32,7 +32,7 @@
 .co_card_label {
     font-family: 'Montserrat';
     color: var(--text-color);
-    font-size: 15px;
+    font-size: 13px;
     margin: 0 ;
     line-height: 16px;
     font-weight: 400;
@@ -56,7 +56,7 @@
 }
 .co_title {
     margin: 0 0 20px 0;
-    font-size: 16px;
+    font-size: 14px;
     line-height: var(--title-font);
     color: var(--text-color);
 }
@@ -65,7 +65,7 @@
     box-shadow: none;
     border: none;
     color: var(--text-color);
-    font-size: 13px;
+    font-size: 11px;
     background-color: #D1D3D4;
     border-radius: var(--radius);
     width: 260px;
@@ -78,7 +78,7 @@
 
 .co_select .ant-select-arrow {
     color: var(--text2-color);
-    font-size: 14px;
+    font-size: 12px;
     right: 30px;
 }
 .co_image {
@@ -102,7 +102,7 @@
 .co_input {
     border: none;
     color: var(--text-color);
-    font-size: 13px;
+    font-size: 11px;
     height: 32px;
     padding-left: 10px;
     background-color: #D1D3D4;
@@ -156,7 +156,7 @@
     background-color: transparent;
     height: 34px;
     border-radius: var(--radius);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--text-color);
     padding: 0 35px;
@@ -191,7 +191,7 @@
     border-radius: 10px;
 }
 .noti_item_text1 {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--text-color);
     min-width: 100px;
@@ -199,14 +199,14 @@
 }
 
 .noti_item_text2 {  
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 550;
     color: var(--text-color);
     margin: 0 0 6px 0;
 }
 
 .noti_item_text3 {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 400;
     color: var(--text2-color);
     margin: 0;
@@ -218,7 +218,7 @@
     right: 0;
     background-color: #92278f;
     color: white;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: bold;
     padding: 2px 7px;
     border-radius: 12px;
@@ -248,12 +248,12 @@
     align-items: center;
 }
 .menu_sub_text{
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     margin: 0 7px;
 }
 .menu_sub_btn{
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 500;
     padding: 5px 10px;
     background-color: var(--logo1-color);
@@ -267,7 +267,7 @@
     background-color: var(--main-color);
 }
 .menu_sub_text1{
-    font-size: 12px;
+    font-size: 11px;
     margin: 8px 0 10px 0;
     color: var(--text-color);
     line-height: 1;
@@ -309,7 +309,7 @@
     font-family: 'Montserrat';
     font-weight: 600;
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     color: var(--text-color);
     margin-right: 5px;
 }
@@ -318,21 +318,21 @@
     font-family: 'Montserrat';
     font-weight: 400;
     margin: 0;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--root-color);
 }
 .dash_card_count1 {
     font-family: 'Montserrat';
     font-weight: 400;
     margin: 0 0 0 2px;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--root-color);
 }
 .dash_card_amt {
     font-family: 'Montserrat';
     font-weight: 600;
     margin: 0;
-    font-size: 15px;
+    font-size: 13px;
 }
 .dash_card_row2 {
     display: flex;
@@ -369,7 +369,7 @@
 }
   
 .dash_card_icon {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--text4-color);
 }
 .dash_head_col{
@@ -379,7 +379,7 @@
     line-height: 1.2;
 }
 .dash_card_icon1 {
-    font-size: 25px;
+    font-size: 23px;
     color: var(--text-color);
     margin: 0;
 }
@@ -390,7 +390,7 @@
 .dash_card_icon2 {
     display: flex;
     justify-content: flex-end;
-    font-size: 25px;
+    font-size: 23px;
     color: var(--root-color);
     margin: 0;
 }
@@ -402,13 +402,13 @@
     font-family: 'Montserrat';
     font-weight: 400;
     margin: 0 0 0 5px;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-color);
 }
   
 .dash_card_progress .ant-progress-text {
     font-family: 'Montserrat';
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
 }
 .dash_card_progress .ant-progress-inner{
@@ -423,14 +423,14 @@
 .dash_card_basket {
     font-family: 'Montserrat';
     font-weight: 400;
-    font-size: 13px;
+    font-size: 11px;
     margin-right: 2px;
     color: var(--root-color);
 }
 .dash_card_basket1 {
     font-family: 'Montserrat';
     font-weight: 400;
-    font-size: 12px;
+    font-size: 11px;
     margin-right: 3px;
     color: var(--text-color);
 }
@@ -447,35 +447,35 @@
 .dash_head_text1{
     font-family: 'Montserrat';
     font-weight: 600;
-    font-size: 13px;
+    font-size: 11px;
     color: var(--root-color);
     margin: 0;
 }
 .dash_head_text2{
     font-family: 'Montserrat';
     font-weight: 600;
-    font-size: 25px;
+    font-size: 23px;
     color: var(--root-color);
     margin: 0;
 }
 .dash_head_text3{
     font-family: 'Montserrat';
     font-weight: 400;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--root-color);
     margin: 0;
 }
 .dash_head_text4{
     font-family: 'Montserrat';
     font-weight: 600;
-    font-size: 25px;
+    font-size: 23px;
     color: var(--text-color);
     margin: 0;
 }
 .dash_head_text5{
     font-family: 'Montserrat';
     font-weight: 400;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-color);
     margin: 0;
 }
@@ -490,7 +490,7 @@
     box-shadow: none;
     border: 1px solid #4948486b;
     color: var(--text-color);
-    font-size: 14px;
+    font-size: 12px;
     background-color: var(--back-color);
     border-radius: var(--radius);
     width: 120px;
@@ -502,7 +502,7 @@
 
 .dash_graph_select .ant-select-arrow {
     color: var(--text4-color);
-    font-size: 16px;
+    font-size: 14px;
 }
 #empty_back{
     background-color: transparent;
@@ -531,7 +531,7 @@
 .up_item_text1 {
     font-family: 'Montserrat';
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     color: var(--text-color);
     min-width: 100px;
     margin: 0;  
@@ -541,7 +541,7 @@
 .up_item_text2 {  
     font-family: 'Montserrat';
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--text-color);
     margin: 0 0 6px 0;
 }
@@ -549,7 +549,7 @@
 .up_item_text3 {
     font-family: 'Montserrat';
     font-weight: 400;
-    font-size: 13px;
+    font-size: 11px;
     color: #3a3a3a;
     margin: 0;
     line-height: 1.5;

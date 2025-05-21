@@ -648,6 +648,8 @@ export const timeList1 = [
 
 export const selectSubscription = [
   {value: 0, type: 'STANDARD', type1: 'PREMIUM', length: 'MONTH', amt: 50000, amt1: 100000, label: 'Сар', label1: 'сар'},
+  {value: 2, type: 'STANDARD', type1: 'PREMIUM', length: '3MONTH', amt: 140000, amt1: 280000, label: '3 сар', label1: '3 сар'},
+  {value: 3, type: 'STANDARD', type1: 'PREMIUM', length: '6MONTH', amt: 270000, amt1: 520000, label: '6 сар', label1: '6 сар'},
   {value: 1, type: 'STANDARD', type1: 'PREMIUM', length: 'YEAR', amt: 500000, amt1: 1000000, label: 'Жил', label1: 'жил'}
 ];
 

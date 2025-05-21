@@ -98,10 +98,11 @@ export function Menu(props){
       getItem(t('menu.system_partner'), '/system/partner'),
       getItem(t('menu.advert'), '/system/advert'),
       getItem(t('menu.noti'), '/system/notification'),
-      getItem(t('menu.rating'), '/system/rating')
+      getItem(t('menu.rating'), '/system/rating'),
+      getItem(t('menu.system_change'), '/system/system_change')
     ])
   ] : [
-    // getItem(t('menu.control'), '/', <img src={control} alt='image9' />, null, null, msRole?.webManageItem !== 'Y'),
+    getItem(t('menu.control'), '/control', <img src={control} alt='image9' />, null, null, msRole?.webManageItem !== 'Y'),
     getItem(t('menu.report'), '/report', <img src={image6} alt='image6' />, [
       getItem(t('menu.report_sales'), '/report/report_sales', null, null, null, msRole?.webViewSalesReport !== 'Y'),
       getItem(t('menu.report_inventory'), '/report/report_inventory', null, null, null, msRole?.webViewSalesReport !== 'Y'),

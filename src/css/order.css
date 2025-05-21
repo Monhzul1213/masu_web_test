@@ -38,7 +38,7 @@
   border-radius: var(--radius);
   padding: 5px 10px;
   color: var(--config-color);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   margin-left: -5px;
 }
@@ -49,7 +49,7 @@
 }
 
 .po_add_icon {
-  font-size: 13px;
+  font-size: 11px;
   margin-right: 5px;
 }
 
@@ -107,7 +107,7 @@
 
 @media only screen and (max-height: 700px) { /* mobile */
   .po_vend_title {
-    font-size: 13px;
+    font-size: 11px;
     margin: 10px 0 0 0;
     font-weight: 500;
   }
@@ -118,14 +118,14 @@
     border-radius: var(--radius);
     padding: 5px 10px;
     color: var(--root-color);
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 500;
   }
 }
 
 @media only screen and (min-height: 700px) { /* desktop */
   .po_vend_title {
-    font-size: 15px;
+    font-size: 13px;
     margin: 10px 0 0 0;
     font-weight: 500;
   }
@@ -136,7 +136,7 @@
     border-radius: var(--radius);
     padding: 5px 10px;
     color: var(--root-color);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
   }
 }
@@ -258,13 +258,13 @@
   align-items: center;
   padding: 5px 5px 5px 0;
   color: var(--text-color);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
 }
 
 .ps_back_icon {
   margin-right: 2px;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .ps_btn, .ps_dropdown {
@@ -276,7 +276,7 @@
   align-items: center;
   padding: 5px;
   color: var(--text-color);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   margin-left: 15px;
 }
@@ -297,7 +297,7 @@
 
 .po_percent {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text2-color);
   line-height: 12px;
 }
@@ -314,14 +314,14 @@
 }
 
 .ps_header_no {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 550;
   margin: 0;
   line-height: 28px;
 }
 
 .ps_header_status {
-  font-size: 15px;
+  font-size: 13px;
   margin: 0;
   line-height: 18px;
 }
@@ -351,14 +351,14 @@
 }
 
 .ps_info_label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   margin: 0;
   width: 135px;
 }
 
 .ps_info_value {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
 }
 
@@ -384,13 +384,13 @@
 }
 
 .ps_col_title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   margin: 0 0 2px 0;
 }
 
 .ps_col_text {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 0 1px 0;
 }
 
@@ -405,7 +405,7 @@
 }
 
 .ps_title {
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 450;
   margin: 0;
 }
@@ -423,13 +423,13 @@
 }
 
 .ps_footer_label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   margin: 0;
 }
 
 .ps_footer_value {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   margin: 0 0 0 30px;
   text-align: right;
@@ -444,7 +444,7 @@
 
 .po_pdf_title {
   font-weight: 550;
-  font-size: 20px;
+  font-size: 18px;
   margin: 0 0 20px 0;
 }
 
@@ -456,13 +456,13 @@
 
 .po_pdf_label {
   font-weight: 550;
-  font-size: 15px;
+  font-size: 13px;
   margin: 0;
   white-space: pre;
 }
 
 .po_pdf_value {
-  font-size: 15px;
+  font-size: 13px;
   margin: 0;
 }
 
@@ -492,7 +492,7 @@
 
 .po_pdf_table_header_text {
   font-weight: 550;
-  font-size: 15px;
+  font-size: 13px;
   width: 40%;
   text-align: right;
   margin: 0;
@@ -506,7 +506,7 @@
 }
 
 .po_pdf_table_row_text {
-  font-size: 15px;
+  font-size: 13px;
   width: 40%;
   text-align: right;
   margin: 0;
@@ -530,7 +530,7 @@
   position: absolute;
   bottom: 20px;
   margin: 0;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   left: 25px;
 }
@@ -558,12 +558,12 @@
 
 .ss_site_text {
   margin: 0 0 0 10px;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .ss_site_title {
   margin: 10px 0 0 10px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
 }
 

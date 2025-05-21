@@ -5,8 +5,7 @@ import '../../css/control.css';
 export function Header(props){
     const {tab, setTab, unreadCount} = props;
     const { t } = useTranslation();
-
-    // console.log(unreadCount);
+    
     const Card = props => {
         const { label } = props;
 

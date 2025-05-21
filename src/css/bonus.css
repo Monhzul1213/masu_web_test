@@ -14,12 +14,12 @@
 }
 
 .bt_header_title {
-  font-size: 16px;
+  font-size: 14px;
   margin: 0 0 5px 0;
 }
 
 .bt_header_descr {
-  font-size: 15px;
+  font-size: 13px;
   margin: 0;
   color: var(--text2-color);
 }

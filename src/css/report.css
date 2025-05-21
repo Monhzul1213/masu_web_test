@@ -13,7 +13,7 @@
   position: absolute;
   top: var(--page-padding);
   right: var(--page-padding);
-  font-size: 22px;
+  font-size: 20px;
   color: var(--text4-color);
 }
 
@@ -24,7 +24,7 @@
 
 .dr_title {
   color: var(--text-color);
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
   font-weight: 450;
   text-align: center;
@@ -41,7 +41,7 @@
 
 .dr_total_value {
   color: var(--text-color);
-  font-size: 34px;
+  font-size: 31px;
   margin: 0;
   font-weight: 450;
   line-height: 36px;
@@ -49,7 +49,7 @@
 
 .dr_total_label {
   color: var(--text-color);
-  font-size: 15px;
+  font-size: 13px;
   margin: 5px 0 0 0;
   line-height: 18px;
 }
@@ -61,7 +61,7 @@
 
 .dr_text {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   line-height: 22px;
 }
@@ -74,7 +74,7 @@
 
 .dr_item_title {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   flex: 1;
   line-height: 20px;
@@ -82,14 +82,14 @@
 
 .dr_item_total {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 0 0 10px;
   line-height: 20px;
 }
 
 .dr_item_price {
   color: var(--text2-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   line-height: 20px;
 }
@@ -103,7 +103,7 @@
 
 .dr_row_label, .dr_row_value {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   line-height: 20px;
   margin: 0;
 }
@@ -117,7 +117,7 @@
 
 .dr_footer_text {
   color: var(--text2-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
 }
 
@@ -139,7 +139,7 @@
   flex-flow: row;
   align-items: center;
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   border-radius: var(--radius);
   padding: 3px 5px;
@@ -164,7 +164,7 @@
   flex-flow: row;
   align-items: center;
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   border-radius: var(--radius);
   padding: 3px 5px;
@@ -287,24 +287,24 @@
 
 #rp_card_large .rp_card_icon {
   color: var(--root-color);
-  font-size: 24px;
+  font-size: 22px;
 }
 
 #rp_card_small .rp_card_icon {
   color: var(--root-color);
-  font-size: 22px;
+  font-size: 20px;
 }
 
 #rp_card_large .rp_card_label {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   line-height: 16px;
 }
 
 #rp_card_small .rp_card_label {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 0 0 3px;
   line-height: 16px;
 }
@@ -320,7 +320,7 @@
 
 #rp_card_large .rp_card_value {
   color: var(--text-color);
-  font-size: 24px;
+  font-size: 22px;
   margin: 0;
   text-align: center;
   line-height: 28px;
@@ -329,14 +329,14 @@
 }
 
 #rp_card_large .rp_card_value1 {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   margin: 0 0 0 0;
 }
 
 #rp_card_small .rp_card_value {
   color: var(--text-color);
-  font-size: 20px;
+  font-size: 18px;
   margin: 0;
   text-align: center;
   line-height: 24px;
@@ -345,7 +345,7 @@
 }
 
 #rp_card_small .rp_card_value1 {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   margin: 0 0 0 0;
 }
@@ -360,12 +360,12 @@
 .dr_field_icon {
   color: var(--text2-color);
   margin-right: 7px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .dr_field_label {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   line-height: 16px;
   width: 80px;
@@ -373,14 +373,14 @@
 
 .dr_field_label1 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 5px 0 0;
   line-height: 16px;
 }
 
 .dr_field_value {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   font-weight: 500;
   line-height: 16px;
@@ -398,7 +398,7 @@
 
 .dr_header_text1 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   margin: 0;
   width: 40%;
@@ -406,7 +406,7 @@
 
 .dr_header_text2 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   margin: 0;
   width: 10%;
@@ -415,7 +415,7 @@
 
 .dr_header_text3 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   margin: 0;
   width: 22%;
@@ -424,7 +424,7 @@
 
 .dr_header_text4 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 550;
   margin: 0;
   width: 28%;
@@ -452,20 +452,20 @@
 
 .dr_item_text {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
 }
 
 .dr_item_text1 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   width: 40%;
 }
 
 .dr_item_text2 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   width: 10%;
   text-align: right;
@@ -473,7 +473,7 @@
 
 .dr_item_text3 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   width: 22%;
   text-align: right;
@@ -481,7 +481,7 @@
 
 .dr_item_text4 {
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   width: 28%;
   text-align: right;
@@ -534,7 +534,7 @@
 
 #rr_large .rr_card_label {
   color: var(--text-color);
-  font-size: 13px;
+  font-size: 11px;
   margin: 0 0 2px 0;
   line-height: 15px;
   font-weight: 450;
@@ -542,7 +542,7 @@
 
 #rr_small .rr_card_label {
   color: var(--text-color);
-  font-size: 12px;
+  font-size: 11px;
   margin: 0 0 2px 0;
   line-height: 15px;
   font-weight: 450;
@@ -550,7 +550,7 @@
 
 #rr_large .rr_card_value {
   color: var(--text-color);
-  font-size: 24px;
+  font-size: 22px;
   line-height: 28px;
   word-break: break-all;
   text-align: center;
@@ -559,7 +559,7 @@
 
 #rr_small .rr_card_value {
   color: var(--text-color);
-  font-size: 20px;
+  font-size: 18px;
   line-height: 24px;
   word-break: break-all;
   text-align: center;
@@ -567,7 +567,7 @@
 }
 
 .rr_card_value1 {
-  font-size: 13px;
+  font-size: 11px;
   margin: 0;
   line-height: 15px;
   font-weight: 500;
@@ -586,14 +586,14 @@
 }
 
 .rr_graph_title {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 450;
   margin: 0;
   flex: 1;
 }
 
 .rr_graph_sub {
-  font-size: 13px;
+  font-size: 11px;
   margin: 0;
   font-weight: normal;
 }
@@ -614,7 +614,7 @@
   box-shadow: none;
   border: none;
   color: var(--text-color);
-  font-size: 14px;
+  font-size: 12px;
   background-color: var(--back-color);
   border-radius: var(--radius);
   width: 120px;
@@ -626,13 +626,13 @@
 
 .rr_graph_select .ant-select-arrow {
   color: var(--text4-color);
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .rp_list_drop.ant-select .ant-select-selector {
   box-shadow: none;
   border: none;
-  font-size: 14px;
+  font-size: 12px;
   background-color: transparent;
   border-radius: var(--radius);
 }
@@ -647,7 +647,7 @@
 
 .rp_list_drop_icon {
   color: var(--text2-color);
-  font-size: 28px;
+  font-size: 25px;
   margin: 0;
   padding: 0;
 }
@@ -701,13 +701,13 @@
 
 .ri_top_title {
   margin: 0;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
 }
 
 .ri_top_label {
   margin: 0;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
 }
 
@@ -742,13 +742,13 @@
 
 .ri_top_name {
   margin: 0;
-  font-size: 15px;
+  font-size: 13px;
   flex: 1;
 }
 
 .ri_top_value {
   margin: 0 0 0 10px;
-  font-size: 15px;
+  font-size: 13px;
   width: 30%;
   text-align: right;
 }
@@ -764,13 +764,13 @@
 }
 
 .ri_tooltp_lbl {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   margin: 0;
 }
 
 .ri_tooltip_item {
-  font-size: 14px;
+  font-size: 12px;
   margin: 5px 0 0 0;
 }
 
@@ -803,7 +803,7 @@
 
 .rw_card_name {
   margin: 0;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--text2-color);
   flex: 1;
   margin-right: 5px;
@@ -811,13 +811,13 @@
 
 .rw_card_count {
   margin: 0;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .rw_card_amt {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -846,24 +846,24 @@
 }
 
 .rw_card_icon {
-  font-size: 20px;
+  font-size: 18px;
   color: var(--text4-color);
 }
 
 .rw_card_cash {
   margin: 0 0 0 5px;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--text2-color);
 }
 
 .rw_card_progress .ant-progress-text {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 650;
 }
 
 .rw_card_basket {
-  font-size: 15px;
+  font-size: 13px;
   margin-right: 3px;
 }
 .rr_card_back1 {
@@ -874,7 +874,7 @@
   justify-content: center;
 }
 .rp_row_text{
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   margin-left: 5px;
 
@@ -898,7 +898,7 @@
 
 .dr_image_text {
   margin: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text4-color);
 }

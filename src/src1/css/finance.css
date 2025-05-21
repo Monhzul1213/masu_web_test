@@ -44,7 +44,7 @@
     justify-content: center;
 }
 .download_icon{
-    font-size: 30px;
+    font-size: 27px;
     color: var(--text2-color);
 }
 .download_icon:hover{

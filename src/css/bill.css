@@ -41,14 +41,14 @@
 .bl_title {
   margin: 0 0 10px 0;
   text-align: center;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
 }
 
 .bl_footer {
   margin: 10px 0 0 0;
   text-align: center;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -75,25 +75,25 @@
 }
 
 .bl_icon {
-  font-size: 20px;
+  font-size: 18px;
   margin-right: 3px;
 }
 
 .bl_icon_value {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   margin: 0;
   flex: 1;
 }
 
 .bl_label {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   width: 100px;
 }
 
 .bl_value {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   flex: 1;
 }
@@ -117,27 +117,27 @@
 
 .bl_header1 {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   width: 45%;
 }
 
 .bl_header2 {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   width: 18%;
   text-align: center;
 }
 
 .bl_header3 {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   width: 12%;
   text-align: center;
 }
 
 .bl_header4 {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   width: 25%;
   text-align: right;
 }
@@ -159,7 +159,7 @@
 
 .bl_item_descr {
   margin: 0 0 5px 0;
-  font-size: 13px;
+  font-size: 11px;
   line-height: 14px;
   color: var(--text2-color);
 }
@@ -171,17 +171,17 @@
 }
 
 .bl_total_text {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
 }
 
 .bl_total_text1 {
-  font-size: 13px;
+  font-size: 11px;
   margin: 0 0 0 10px;
 }
 
 .bl_total_text2 {
-  font-size: 13px;
+  font-size: 11px;
   margin: 0;
 }
 
@@ -201,14 +201,14 @@
 }
 
 .bl_qr_label {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   margin: 0;
   line-height: 16px;
 }
 
 .bl_qr_value {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 0 10px 0;
   flex: 1;
   word-break: break-word;
@@ -237,13 +237,13 @@
 .bo_powered {
   font-weight: 500;
   margin: 0 0 20px 0;
-  font-size: 13px;
+  font-size: 11px;
   text-align: right;
 }
 
 .bo_no {
   font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   margin: 0 0 30px 0;
 }
 
@@ -259,7 +259,7 @@
 
 .bo_label {
   font-weight: 550;
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 0 10px 0;
 }
 
@@ -269,7 +269,7 @@
 }
 
 .bo_value2 {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 0 5px 0;
 }
 
@@ -288,14 +288,14 @@
 }
 
 .bo_header > p {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   padding: 2px 5px;
   font-weight: 550;
 }
 
 .bo_item > p {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   padding: 2px 5px;
 }
@@ -344,7 +344,7 @@
 }
 
 .bo_footer1 {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   padding: 2px 5px;
   font-weight: 550;
@@ -354,7 +354,7 @@
 }
 
 .bo_footer2 {
-  font-size: 14px;
+  font-size: 12px;
   margin: 0;
   padding: 2px 5px;
   font-weight: 550;
@@ -365,7 +365,7 @@
 
 .bo_sign {
   white-space: pre;
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 0 10px 0;
   text-align: right;
 }
@@ -403,7 +403,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: bold;
   margin-bottom: 15px;
   margin-top: 5px;
@@ -418,12 +418,12 @@
 }
 
 .inv_info_h{
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
 }
 
 .inv_info{
-  font-size: 12px;
+  font-size: 11px;
   line-height: 10px;
   width: 90px;
   color: #4f4f4f;
@@ -431,7 +431,7 @@
 }
 
 .inv_info1{
-  font-size: 12px;
+  font-size: 11px;
   line-height: 10px;
   font-weight: 400px;
   color: #4f4f4f;
@@ -475,7 +475,7 @@
 }
 
 .inv_footer1 {
-  font-size: 11px;
+  font-size: 10px;
   margin: 0;
   padding: 1px 2px;
   font-weight: 500;
@@ -483,7 +483,7 @@
   text-align: center;
 }
 .inv_footer2 {
-  font-size: 11px;
+  font-size: 10px;
   margin: 0;
   padding: 1px 2px;
   font-weight: 500;
@@ -491,7 +491,7 @@
   text-align: right;
 }
 .tax_footer1 {
-  font-size: 11px;
+  font-size: 10px;
   margin: 0;
   padding: 1px 2px;
   font-weight: 500;
@@ -499,7 +499,7 @@
   text-align: center;
 }
 .tax_footer2 {
-  font-size: 11px;
+  font-size: 10px;
   margin: 0;
   padding: 1px 2px;
   font-weight: 500;
@@ -521,7 +521,7 @@
 }
 
 .inv_item > p {
-  font-size: 11px;
+  font-size: 10px;
   margin: 0;
   padding: 1px 2px;
   display: flex;
@@ -538,7 +538,7 @@
 }
 
 .inv_item_header > p {
-  font-size: 12px;
+  font-size: 11px;
   margin: 0;
   padding: 1px 2px;
   font-weight: 500;
@@ -609,7 +609,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
 }
 
@@ -635,13 +635,13 @@
 }
 
 .pay_label{
-  font-size: 11px;
+  font-size: 10px;
   width: 130px;
   margin: 0;
   white-space: nowrap;
 }
 .pay_value{
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
   margin: 0;
 }
@@ -654,7 +654,7 @@
 
 .receipt_option {
   display: flex;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text2-color);
   padding: 5px 0;
@@ -670,13 +670,13 @@
 }
 .es_title1 {
   color: var(--text-color);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 400;
   margin: 0 0 5px 0;
 }
 
 .re_back_icon {
-  font-size: 40px;
+  font-size: 36px;
 }
 
 .re_select_back {
@@ -726,7 +726,7 @@
   border-radius: 10px;
   padding: 5px 60px;
   color: var(--root-color);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
 }
 
@@ -754,13 +754,13 @@
 }
 .inv_header_text{
   color: var(--root-color);
-  font-size: 17px;
+  font-size: 15px;
   font-weight: bold;
   margin: 0 10px 0 0;
 }
 .inv_header_text1{
   color: var(--root-color);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
   margin: 0;
 }
@@ -771,13 +771,13 @@
   margin-top: 10px;
 }
 .inv_label{
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 550;
   /* width: 150px; */
   margin: 0;
 }
 .inv_value{
-  font-size: 11px;
+  font-size: 10px;
   margin: 0;
 }
 .iline{
@@ -796,7 +796,7 @@
   display: flex; 
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 11px;
   border: 1px dashed;
   padding: 40px;
   border-radius: 10px;
