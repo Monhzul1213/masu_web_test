@@ -88,7 +88,7 @@ export function SysChange(){
 
   const headerProps = { setError, onSearch: getData , onClickAdd , show , onClickDelete};
   const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
-  const listProps = { data, setData, onClickAdd , setShow, checked, setChecked   };
+  const listProps = { data, setData, onClickAdd , setShow, checked, setChecked, onClickAdd };
   const modalProps = { visible, closeModal };
 
   return (

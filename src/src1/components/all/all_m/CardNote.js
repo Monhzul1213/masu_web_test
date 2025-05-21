@@ -45,17 +45,42 @@ export function CardHtmlNote(props){
 
 
   const handleChange = (content) => {
-    console.log(content);
-    setValue(content);     // HTML текст хадгална
+    setValue && setValue({ ...value, value: content }); // HTML хадгалах
     setError && setError(null);
     setEdited && setEdited(true);
   };
 
+  const formats = [
+    'font','size',
+    'bold','italic','underline','strike',
+    'color','background',
+    'script',
+    'header','blockquote','code-block',
+    'indent','list',
+    'direction','align',
+    'link','image','video','formula',
+  ];
+
+  const modules = {
+    toolbar: [
+      [{ 'font': [] }, { 'size': [] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'header': '1' }, { 'header': '2' }, ],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }, { 'align': [] }],
+      ['link', 'formula'],
+      ['clean']
+    ]
+  };
+
   const onKeyDown = e => {
-    if(e?.key === 'Enter') handleEnter && handleEnter(e);
-  }
+    if (e?.key === 'Enter') handleEnter && handleEnter(e);
+  };
+
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
-  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+  const backStyle = inRow ? { ...style, margin: '0' } : style;
 
   return (
     <div style={inRow ? { flex: 1 } : {}}>
@@ -63,6 +88,8 @@ export function CardHtmlNote(props){
         {label && <p className='select_lbl' style={style}>{label}</p>}
         <ReactQuill
           disabled={disabled}
+          formats={formats}
+          modules={modules}
           theme="snow"
           value={value?.value}
           onChange={handleChange}
@@ -72,6 +99,5 @@ export function CardHtmlNote(props){
       </div>
       {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
     </div>
-
-  )
+  );
 }

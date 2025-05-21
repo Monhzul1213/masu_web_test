@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState, useEffect } from 'react';
 import { withSize } from 'react-sizeme';
-
-import { Error1, Overlay} from '../../../components/all';
+import { Overlay } from '../../../components/all';
 import moment from 'moment';
 
-function Card(props){
-  const { data, size, error, loading, getData} = props;
+function Card(props) {
+  const { updateData, loading, getData, size } = props;
   const [maxHeight, setMaxHeight] = useState('300px');
 
   useEffect(() => {
@@ -23,28 +22,30 @@ function Card(props){
   }, [size?.width]);
 
   const renderItem = (item, index) => {
+    const date = moment(item?.verisionDate).format('YYYY.MM.DD');
+    let fillColor = '#4baf4f', color= 'transparent';
 
     return (
-        <div key={index} className='noti_item_back'>
-          <p className='noti_item_text1'>{moment(item?.createdDate)?.format('YYYY.MM.DD')}</p>
-          <div>
-            <p className='noti_item_text2'>{item?.subject}</p>
-            <p className='noti_item_text3'>{item?.text}</p>
-          </div>
+      <div key={date} className='up_back'>
+        <div className='up_item_date_wrap'>
+          <div className='dot' style={{backgroundColor: item?.show ? color : fillColor}}/>
+          <p className='up_item_text1'>{date}</p>
         </div>
+        <div key={index} className='up_item_back'>
+          <p className='up_item_text2'>{item?.versionTitle}</p>
+          <p className='up_item_text3' style={{ whiteSpace: 'pre-line' }}>{item?.versionDescr}</p>
+        </div>
+      </div>
     )
   };
-
   return (
-    <div className='store_tab' style={{maxHeight, margin: '15px 10px'}}>
-      {/* <Prompt edited={edited} /> */}
+    <div className='store_tab' style={{maxHeight, margin: '10px 10px'}} id='list_scroll'>
       <Overlay loading={loading}>
-        {error && <Error1 error={error} />}
-        {data?.map(renderItem)}
+        {updateData?.map(renderItem)}
       </Overlay>
     </div>
   );
 }
 
 const withSizeHOC = withSize();
-export const Notification = withSizeHOC(Card);
+export const Update = withSizeHOC(Card);

@@ -6,7 +6,7 @@ import { Table, PaginationTable, Input, DynamicBSIcon, DynamicAIIcon } from '../
 import { EditableCell } from './EditableCell';
 
 export function CardVariant(props){
-  const { data, setData, setEdited, price, cost, search, setSearch, disabled, setDisabled, setDVariants } = props;
+  const { data, setData, setEdited, price, cost, search, setSearch, disabled, setDisabled, setDVariants, isUseTime } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -92,7 +92,7 @@ export function CardVariant(props){
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
     updateMyData, onClickDelete, disabled }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
-  const addProps = { value: search, setValue: setSearch, placeholder: t('inventory.add_variant'), handleEnter, inRow: true, length: 30 };
+  const addProps = { value: search, setValue: setSearch, placeholder: t('inventory.add_variant'), handleEnter, inRow: true, length: 30, disabled: isUseTime ? true : false };
 
   return (
     <>

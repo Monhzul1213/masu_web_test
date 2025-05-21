@@ -2,7 +2,7 @@ import React from 'react';
 import { Radio as AntRadio } from 'antd';
 
 export function Radio(props){
-  const { value, setValue, inRow, label, data, setError, setEdited, s_value, s_descr, className } = props;
+  const { value, setValue, inRow, label, data, setError, setEdited, s_value, s_descr, className, disabled } = props;
 
   const onChange = e => {
     setValue({ value: e.target.value });
@@ -20,7 +20,7 @@ export function Radio(props){
     <div style={inRow ? { flex: 1 } : {}}>
       <div className='select_back' style={inRow ? { margin: '0 0 0 0', borderColor: 'transparent' } : { borderColor: 'transparent' }}>
         <p className='select_lbl' style={style}>{label}</p>
-        <AntRadio.Group className={className ? className : 'radio_back'} onChange={onChange} value={value?.value}>
+        <AntRadio.Group className={className ? className : 'radio_back'} onChange={onChange} value={value?.value} disabled={disabled}>
           {data?.map(renderItem)}
         </AntRadio.Group>
       </div>

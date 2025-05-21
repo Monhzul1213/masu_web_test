@@ -104,7 +104,7 @@ function Card(props){
     data: categories, s_value: 'categoryId', s_descr: 'categoryName', onFocus: getCategories };
   const descrProps = { value: descr, setValue: setDescr, label: t('inventory.descr1'), placeholder: t('inventory.descr1'), setEdited, setError, length: 500 };
   const unitProps = { value: isEach, setValue: setIsEach, label: t('inventory.unit'), data: t('inventory.units'),
-    setEdited, setError, inRow: false, className : 'radio_back_dis' };
+    setEdited, setError, inRow: false, className : 'radio_back_dis', disabled: isUseTime ? true : false };
   const priceProps = { value: price, setValue: setPrice, label: t('inventory.price'), placeholder: t('inventory.price'), setEdited, setError,
     inRow: true, onBlur: onPriceChange };
   const costProps = { value: cost, setValue: setCost, label: t('inventory.cost'), placeholder: t('inventory.cost'), setEdited, setError, inRow: true};
@@ -115,7 +115,7 @@ function Card(props){
   const limitProps = { value: buyAgeLimit, setValue: setBuyAgeLimit, label: t('inventory.limit'), setError, setEdited, data: limitList, inRow: true };
   const vendProps = { value: vendId, setValue: setVendId, label: t('inventory.vendor'), setError, setEdited, data: vendors, inRow: true,
     s_value: 'vendId', s_descr: 'vendName', placeholder: t('inventory.vendor') };
-  const serviceProps = { label: t('inventory.service'), checked: isService, setChecked: setIsService , style: {width: '50%'}};
+  const serviceProps = { label: t('inventory.service'), checked: isService, setChecked: setIsService , style: {width: '50%'}, disabled: isUseTime ? true : false};
   const timeProps = { data: timeList1, value: time, setValue: setTime, label: t('timetable.service_time') };
   const batchProps = { value: batch, setValue: changeBatch, label: t('order.t_batch'), placeholder: t('order.t_batch'), setError, setEdited, className: 'invt_back', inRow: true};
   const useTimeProps = { label: t('inventory.use_time'), checked: isUseTime, setChecked: setIsUseTime , style: {width: '50%'}};

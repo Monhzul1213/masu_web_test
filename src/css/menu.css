@@ -90,7 +90,7 @@
 }
 .ant-menu-inline.ant-menu-root .ant-menu-submenu-title>.ant-menu-title-content{
   color: var(--root-color);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
 }
 .ant-menu-inline.ant-menu-root .ant-menu-submenu-title {
@@ -150,11 +150,11 @@
 }
 .ant-menu-inline.ant-menu-root .ant-menu-item>.ant-menu-title-content{
   color: var(--root-color);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
 }
 .ant-menu-submenu, .ant-menu-submenu-inline{
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
 }
 .side_menu .ant-menu-item-selected .ant-menu-title-content {
@@ -185,7 +185,7 @@
 
 .side_menu .ant-menu-sub.ant-menu-inline>.ant-menu-item>.ant-menu-title-content {
   font-weight: 400;
-  font-size: 15px;
+  font-size: 14px;
   height: 48px !important;
   line-height: 48px !important;
 }

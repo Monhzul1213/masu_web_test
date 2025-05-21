@@ -20,7 +20,7 @@ export function Inventory(){
   const [filtering, setFiltering] = useState(false);
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
   const [open, setOpen] = useState(false);
-  const [pageInfo, setPageInfo] = useState({ pageNumber: 1, pageSize: 300, totalPage: 1 });
+  // const [pageInfo, setPageInfo] = useState({ pageNumber: 1, pageSize: 3000000, totalPage: 1 });
   const [filter, setFilter] = useState([]);
   const [excelName, setExcelName] = useState('');
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
@@ -36,7 +36,7 @@ export function Inventory(){
 
   const getData = async () => {
     let response = await getCategories();
-    if(response) await getInventory(pageInfo);
+    if(response) await getInventory();
   }
 
   const getCategories = async () => {
@@ -66,7 +66,7 @@ export function Inventory(){
         });
       });
       setData(list);
-      if(info) setPageInfo(info);
+      // if(info) setPageInfo(info);
       const scroll = document.getElementById('paging');
       if(scroll) scroll.scrollTop = 0;
     }
@@ -75,11 +75,11 @@ export function Inventory(){
     setChecked(false);
   }
 
-  const getInventory = async (info, isEdit) => {
+  const getInventory = async (isEdit) => {
     setError(null);
     setLoading(true);
     setAutoResetExpanded(isEdit ? false : true);
-    let api = 'Inventory/GetInventory?PageNumber=' + info?.pageNumber + '&PageSize=' + info?.pageSize;
+    let api = 'Inventory/GetInventory';
     const response = await dispatch(getList(user, token, api));
     setInventory(response, response?.data?.inventoryies, response?.data?.pageInfo);
     setFiltering(false);
@@ -95,9 +95,9 @@ export function Inventory(){
       let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
       setInventory(response, response?.data);
       setFiltering(true);
-      setPageInfo({ pageNumber: 1, pageSize: 300, totalPage: 1 });
+      // setPageInfo({ pageNumber: 1, pageSize: 30000000, totalPage: 1 });
     } else 
-      getInventory(pageInfo, isEdit);
+      getInventory(isEdit);
   }
 
   const onClickAdd = row => {
@@ -142,7 +142,7 @@ export function Inventory(){
 
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd, onClickImport };
   const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory,
-    autoResetExpanded, pageInfo, getInventory, filtering, onClickDelete, show, setError, onSearch, cats: categories, excelName};
+    autoResetExpanded, filtering, onClickDelete, show, setError, onSearch, cats: categories, excelName};
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const videoData = [{id: "8IMwbPxh-QQ"}]
 

@@ -2,16 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import { useNavigate, createSearchParams } from 'react-router-dom';
 
 import { PaginationTable, Table } from '../../../../../components/all';
 
 export function List(props){
-  const { data, size  } = props;
+  const { data, size, onClickAdd  } = props;
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setColumns([
@@ -34,12 +32,9 @@ export function List(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
 
-  const onRowClick = row => {
-    navigate({ pathname: 'syschange_add', search: createSearchParams({ notifcationId: row?.original?.notifcationId}).toString() });
-  }
   const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'beginDate', desc: true }] } }, useSortBy, usePagination, useRowSelect);
-  const tableProps = { tableInstance, onRowClick,  hasTotal: true , total: data?.length };
+  const tableProps = { tableInstance, onRowClick: onClickAdd,  hasTotal: true , total: data?.length };
 
   return (
     <div>

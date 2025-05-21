@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useTable, usePagination, useRowSelect, useSortBy, useExpanded } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Check, DynamicFAIcon, PaginationTable, TableDetail, Money, PaginationList, Empty1 } from '../../../all';
+import { Check, DynamicFAIcon, TableDetail, Money, Empty1 } from '../../../all';
 import { EditableCell, SelectableCell } from '../add/EditableCell';
 import { Detail } from './Detail';
 import { Header } from './Header';
 
 export function List(props){
   const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory, autoResetExpanded,
-    size, pageInfo, getInventory, filtering, onClickDelete, show, setError, onSearch, cats, excelName } = props;
+    size, filtering, onClickDelete, show, setError, onSearch, cats, excelName } = props;
   const [columns, setColumns] = useState([]);
   const { t, i18n } = useTranslation();
 
@@ -99,14 +99,14 @@ export function List(props){
   const onRowClick = row => onClickAdd(row?.original?.msInventory);
   
   const tableInstance = useTable({ columns, data, autoResetPage: !filtering, autoResetSortBy: false, autoResetExpanded,
-    initialState: { pageIndex: 0, pageSize: 300, size : true, sortBy: [{ id: 'msInventory.name', desc: true }] },
+    initialState: { pageIndex: 0, pageSize: 3000000, size : true, sortBy: [{ id: 'msInventory.name', desc: true }] },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
     detailName: 'msInventoryVariants', colSpan: 7 };
   const maxHeight = size?.width > 780
     ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 140px)'
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 200px)';
-  const pageProps = { pageInfo, getInventory, size : true };
+  // const pageProps = { pageInfo, getInventory, size : true };
   const filterProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
@@ -121,7 +121,7 @@ export function List(props){
           </div>
         </div>
         <p className='data_size_text'>{t('info.all') + data?.length}</p>
-        {filtering ? <PaginationTable {...tableProps} /> : <PaginationList {...pageProps} />}
+        {/* {filtering ? <PaginationTable {...tableProps} /> : <PaginationList {...pageProps} />} */}
       </>
       }
     </div>

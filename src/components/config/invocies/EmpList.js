@@ -33,7 +33,8 @@ export function EmpList(props){
         Header: t('invoices.end'), accessor: 'endDate', customStyle: { minWidth: 120 },
         Cell: ({ value }) => value ? (<div>{moment(value).format('yyyy.MM.DD')}</div>) : ''
       },
-      { Header: t('invoices.status'), accessor: 'statusName' },
+      { Header: t('invoices.status'), accessor: 'statusName', customStyle: { minWidth: 120 },
+      Cell: ({ value, row }) => <div style={{ display: 'flex', fontWeight: '500', color: 'white', backgroundColor: row?.original?.status === 1 ? '#4baf4f' : row?.original?.status === 0 ?  'var(--btn-color)' : '', padding: '3px 10px', borderRadius: 20, justifyContent: 'center'}}>{value}</div> },
       {
         Header: '', accessor: 'isOwner', noSort: true, isBtn: true, customStyle: { maxWidth: 140, minWidth: 140 },
         Cell: ({ value, row, onClickLink }) => {

@@ -11,7 +11,8 @@ import { ButtonRowAdd, Check, CheckBox, Confirm, DescrInput, Error1, Input, Over
 import { Account, Bill, InvoicePrint } from '../../components/control';
 import { ButtonRow } from '../../components/control/billComp';
 
-function Card(){
+function Card(props){
+  const { size } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -214,7 +215,7 @@ function Card(){
     if(response?.error) setError(response?.error);
     else {
       setEdited(false);
-      message.success(t('document.success_msg'));
+      message.success(t('control.success_inv_msg'));
       getInvoice(site1);
     }
   }
@@ -252,7 +253,7 @@ function Card(){
   const printProps = { label: t('document.isPrint'), checked: isPrint, setChecked: setIsPrint, id: 'co_check1' };
   const descrProps = { label: t('document.isDescr'), checked: isDescr, setChecked: setIsDescr };
   const dateProps = { value: date, setValue: setDate, label: t('bill.invoice_enddate'), placeholder: t('bill.invoice_enddate'), classBack: 'co_select_back', className: 'co_input'};
-  const billProps = { header, footer, site, isPrint, image64, image164, date, accounts: selectedAccounts};
+  const billProps = { header, footer, site, isPrint, image64, image164, date, accounts: selectedAccounts, loading, error, size};
   const addProps = { type: 'account', onClickAdd };
   const modalProps = { visible, closeModal, setData: setAccounts };
   const invoicebtnProps = { onClickCancel: onClickInvoiceCancel, onClickSave: onClickInvoiceSave };
@@ -264,9 +265,9 @@ function Card(){
       <Prompt edited={edited} />
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
-        <div className='row'>
-          <div style={{ width: 600, paddingBottom: 0 }}>
-            <div className='co_s_container' >
+        <div className='row' style={{overflow: 'scroll'}} id='table_scroll'>
+          <div style={{ width: 600, paddingBottom: 0 }} >
+            <div className='co_s_container' style={size?.width > 700 ? {flexFlow: 'row'} : {flexFlow: 'column'}} id='list_scroll'>
               <div>
                 <p className='co_title'>{t('document.title')}</p>
                 <PlainSelect {...siteProps} />
@@ -292,7 +293,7 @@ function Card(){
             }}
           />
           <div style={{ width: 850, paddingBottom: 0 }}>
-            <div className='co_s_container' >
+            <div className='co_s_container' style={size?.width > 700 ? {flexFlow: 'row'} : {flexFlow: 'column'}} id='list_scroll'>
               <div>
                 <p className='co_title'>{t('document.invoice_design')}</p>
                 <PlainSelect {...site1Props} />
@@ -306,7 +307,7 @@ function Card(){
                   <div style={{ marginTop: 10 }}>
                     <p className='select_lbl'>{t('account.title')}</p>
                       {accounts.map((acc, index) => (
-                        <div style={{display: 'flex', flexFlow: 'row', alignItems: 'center'}}>
+                        <div style={{display: 'flex', flexFlow: 'row', alignItems: 'center', marginTop: 5}}>
                           <Check checked={acc.checked} onClick={() => toggleAccount(index)}/>
                           <div className='gap' />
                           <p key={index} style={{margin: 0}}>{acc.account}</p>

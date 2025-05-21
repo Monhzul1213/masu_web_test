@@ -8,7 +8,7 @@ import '../../css/menu.css';
 import { getList } from '../../services';
 import { getItem } from '../../helpers';
 import { Profile1 } from './Profile';
-import { Install } from './Install';
+import { MenuPayment } from './Install';
 import { Rating } from './Rating';
 import { control, image1, image10, image11, image12, image13, image14, image2, image3, image4, image6, image7, image8, image9 } from '../../assets';
 const { Sider } = Layout;
@@ -222,7 +222,8 @@ export function Menu(props){
         <div className='mi_top'>
           <AntMenu {...menuProps} />
         </div>
-        {!isPartner && <Install {...profileProps} />}
+        {/* {!isPartner && <Install {...profileProps} />} */}
+        {!isPartner && <MenuPayment {...profileProps} />}
       </Sider>
       {/* <Drawer {...drawerProps}>
         <div className='mi_top'>

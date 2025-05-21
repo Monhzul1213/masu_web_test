@@ -29,6 +29,14 @@ import icon22 from './masu_icons/22.png';
 import icon23 from './masu_icons/23.png';
 import icon24 from './masu_icons/24.png';
 import icon25 from './masu_icons/25.png';
+import icon26 from './masu_icons/26.png';
+import icon27 from './masu_icons/27.png';
+import icon28 from './masu_icons/28.png';
+import icon29 from './masu_icons/29.png';
+import icon30 from './masu_icons/30.png';
+import icon31 from './masu_icons/31.png';
+import icon32 from './masu_icons/32.png';
+import icon33 from './masu_icons/33.png';
 
 import haan from './banks/haan.png';
 import has from './banks/has.png';
@@ -72,9 +80,11 @@ import image20 from './i20.png';
 import image21 from './i21.png';
 import image22 from './i22.png';
 import control from './control.png';
+import image23 from './i23.png';
+import image24 from './i24.png';
+import image25 from './i25.png';
 
-
-export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, 
+export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image23, image24, image25,
          image11, image12, image13, image14, image15, image16, image17, image18, image19, image20, image21, image22, control};
 export { login_image, header_image, logo, placeholder, qr_holder, logo_image, masu, twitter, twitter2, login1, login2, login3, login4, login_1, 
          flag_mn, flag_en, flag_cn, flag_kr, flag_gr };
@@ -83,7 +93,9 @@ export const icons = [
   icon6, icon7, icon8, icon9, icon10,
   icon11, icon12, icon13, icon14, icon15,
   icon16, icon17, icon18, icon19, icon20,
-  icon21, icon22, icon23, icon24, icon25
+  icon21, icon22, icon23, icon24, icon25, 
+  icon26, icon27, icon28, icon29, icon30,
+  icon31, icon32, icon33
 ];
 
 export const icons1 = [
@@ -123,7 +135,17 @@ export const icons1 = [
   ],
   [
     { icon: icon17, value: 17 },
-  ]
+  ],
+  [
+    { icon: icon26, value: 26 },
+    { icon: icon27, value: 27 },
+    { icon: icon28, value: 28 },
+    { icon: icon29, value: 29 },
+    { icon: icon30, value: 30 },
+    { icon: icon31, value: 31 },
+    { icon: icon32, value: 32 },
+    { icon: icon33, value: 33 }
+  ],
 ]
 
 export const bank_icons = { haan, has, tdb, golomt };

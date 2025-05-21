@@ -9,7 +9,7 @@ import { ItemSelect, SelectItem } from './SelectItem';
 import { EditableCell } from './EditableCell';
 
 export function Card(props){
-  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setEdited, setCost, search, setSearch, total, setTotal, setDKits, size } = props;
+  const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setEdited, setCost, search, setSearch, total, setTotal, setDKits, size, isUseTime } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -76,7 +76,7 @@ export function Card(props){
 
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
 
-  const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack') };
+  const isPackProps = { value: isKit, setValue: onChangeKit, label: t('inventory.is_pack'), disabled: isUseTime ? true : false };
   const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };

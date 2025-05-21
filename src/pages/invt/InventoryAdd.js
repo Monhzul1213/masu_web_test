@@ -339,9 +339,9 @@ export function InventoryAdd(){
     setImageType, onPriceChange, setEdited, isKit, image64, buyAgeLimit, setBuyAgeLimit, vendId, setVendId,
     isService, setIsService, time, setTime, batch, setBatch, isUseTime, setIsUseTime };
   const invtProps = { isKit, setIsKit, isTrack, setIsTrack, data: kits, setData: setKits, setError, setEdited, setCost, setDKits,
-    search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI };
+    search: searchI, setSearch: setSearchI, total: totalI, setTotal: setTotalI, isUseTime };
   const variantProps = { data: variants, setData: setVariants, setEdited, price, cost, setDVariants,
-    search: searchV, setSearch: setSearchV, disabled: disabledV, setDisabled: setDisabledV };
+    search: searchV, setSearch: setSearchV, disabled: disabledV, setDisabled: setDisabledV, isUseTime };
   const siteProps = { isTrack, data: sites, setData: setSites, setEdited, checked, setChecked };
   const siteEmptyProps = { title: 'inventory.sites', icon: 'MdStorefront', route: '/config/store', btn: 'shop.add' };
   const modiProps = { data: modifiers, setData: setModifiers, setEdited };
