@@ -622,6 +622,21 @@
   cursor: pointer;
   color: var(--logo1-color);
 }
+.inv_pdf_btn1 {
+  border: none;
+  border-radius: 5px;
+  background-color: var(--input1-color);
+  padding: 5px 20px;
+  color: var(--text-color);
+  z-index: 1;
+  position: sticky;
+  right: 0;
+}
+
+.inv_pdf_btn1:hover {
+  cursor: pointer;
+  color: var(--logo1-color);
+}
           /* Help.js */
 
 .youtube_drawer_toggle {

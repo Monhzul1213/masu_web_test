@@ -9,12 +9,25 @@ import { config, encrypt } from '../../../helpers';
 import { bonus, coupon } from '../../../src1/assets'
 import { getService } from '../../../services';
 import { useDispatch } from 'react-redux';
+import { InvoicePrint } from '../../../pages/lone/InvoicePrint';
+import { TaxPrint } from '../../../pages/lone/TaxPrint';
+import { TaxPrintA5 } from '../../../pages/lone/TaxPrintA5';
 
 export function Drawer(props){
   const { selected, open, setOpen } = props;
   const { t } = useTranslation();
   const [pureAmount, setPureAmount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [header, setHeader] = useState(null);
+  const [detail, setDetail] = useState(null);
+  const [info, setInfo] = useState(null);
+  const [account, setAccount] = useState([]);
+  const [day, setDay] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [visible1, setVisible1] = useState(false);
+  const [visible2, setVisible2] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -83,6 +96,29 @@ export function Drawer(props){
     )
   }
 
+  const getData = async () => {
+    setLoading(true);
+    setError(null);
+    let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo;
+    let invoiceNo = encrypt(msg);
+    const api = 'Sales/GetSalesBill?data=' + encodeURIComponent(invoiceNo);
+    const response = await dispatch(getService(api, 'GET'));
+    console.log(response);
+    if (response?.error) {
+      setError(response?.error);
+    } else {
+      const header = response?.data?.retdata?.sales?.[0];
+      if (header) {
+        header.pureAmount = (header.totalSalesAmount ?? 0) - (header.totalVatAmount ?? 0) - (header.totalNhatamount ?? 0);
+      }
+      setHeader(header);
+      setDetail(response?.data?.retdata?.salesitem);
+      setInfo(response?.data?.retdata?.bill);
+      setAccount(response?.data?.retdata?.invdtl);
+      setDay(response?.data?.retdata?.inv?.[0])
+    }
+    setLoading(false);
+  };
   const onClickLink = () => {
     let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo
     let code = encrypt(msg);
@@ -90,34 +126,32 @@ export function Drawer(props){
     window.open(url);
   }
 
-  const onClickInvoice = () => {
-    let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo
-    let code = encrypt(msg);
-    let url = config?.domain + '/inv_pdf?invoiceNo=' + encodeURIComponent(code);
-    window.open(url);
-  }
-
-const onClickTax = () => {
-  let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo;
-  let code = encrypt(msg);
-  let url = config?.domain + '/taxprinta5?invoiceNo=' + encodeURIComponent(code) + '&size=a5';
-  window.open(url);
+const onClickInvoice = async() => {
+  await getData();
+  setVisible2(true);
 }
-const onClickPrintA4 = async () => {
-  let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo;
-  let code = encrypt(msg);
-  let url = config?.domain + '/tax_pdf?invoiceNo=' + encodeURIComponent(code) + '&size=a4';
-  const api = 'Sales/GetSalesBill?data=' + encodeURIComponent(code);
-  const response = await dispatch(getService(api, 'GET'));
 
-  console.log(response?.data?.retdata);
+const onClickTax = async() => {
+  // let msg = selected?.sale?.merchantId + '-' + selected?.sale?.siteId + '-' + selected?.sale?.salesNo;
+  // let code = encrypt(msg);
+  // let url = config?.domain + '/taxprinta5?invoiceNo=' + encodeURIComponent(code) + '&size=a5';
   // window.open(url);
+  await getData();
+  setVisible1(true);
+}
+
+const onClickPrintA4 = async () => {
+  await getData();
+  setVisible(true);
 }
 
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
-
+  const visibleProps = { loading, error, header, account, detail, info, day, visible, visible1, visible2}
   return (
     <AntDrawer {...drawerProps}>
+      {visible && !loading && <TaxPrint {...visibleProps}/>}
+      {visible1 && !loading && <TaxPrintA5 {...visibleProps}/>}
+      {visible2 && !loading && <InvoicePrint {...visibleProps}/>}
       <div className='dr_back'>
         <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onClose} />
         <p className='dr_title'>{selected?.sale?.salesTypeName}</p>

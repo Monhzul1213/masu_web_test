@@ -1,53 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 import '../../css/bill.css';
-import { getService } from '../../services';
 import { Error, Overlay } from '../../components/all';
 import { Header, Footer, Info, Items, ItemsHeader, Total, Pay } from '../../components/lone/tax';
+import { Modal } from 'antd';
 
 
-export function TaxPrintA5() {
+export function TaxPrintA5(props) {
+  const {loading, error, header, account, detail, info, visible1} = props;
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [header, setHeader] = useState(null);
-  const [detail, setDetail] = useState(null);
-  const [info, setInfo] = useState(null);
-  const [account, setAccount] = useState([]);
-  const [searchParams] = useSearchParams();
-  const dispatch = useDispatch();
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  // const [header, setHeader] = useState(null);
+  // const [detail, setDetail] = useState(null);
+  // const [info, setInfo] = useState(null);
+  // const [account, setAccount] = useState([]);
+  // const [searchParams] = useSearchParams();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  const getData = async () => {
-    setLoading(true);
-    setError(null);
-    const invoiceNo = searchParams?.get('invoiceNo');
-    const api = 'Sales/GetSalesBill?data=' + encodeURIComponent(invoiceNo);
-    const response = await dispatch(getService(api, 'GET'));
+  // const getData = async () => {
+  //   setLoading(true);
+  //   setError(null);
+  //   const invoiceNo = searchParams?.get('invoiceNo');
+  //   const api = 'Sales/GetSalesBill?data=' + encodeURIComponent(invoiceNo);
+  //   const response = await dispatch(getService(api, 'GET'));
     
-    if (response?.error) {
-      setError(response?.error);
-    } else {
-      const header = response?.data?.retdata?.sales?.[0];
-      if (header) {
-        header.pureAmount = (header.totalSalesAmount ?? 0) - (header.totalVatAmount ?? 0) - (header.totalNhatamount ?? 0);
-      }
-      setHeader(header);
-      setDetail(response?.data?.retdata?.salesitem);
-      setInfo(response?.data?.retdata?.bill);
-      setAccount(response?.data?.retdata?.invdtl);  
-    }
-    setLoading(false);
-  };
+  //   if (response?.error) {
+  //     setError(response?.error);
+  //   } else {
+  //     const header = response?.data?.retdata?.sales?.[0];
+  //     if (header) {
+  //       header.pureAmount = (header.totalSalesAmount ?? 0) - (header.totalVatAmount ?? 0) - (header.totalNhatamount ?? 0);
+  //     }
+  //     setHeader(header);
+  //     setDetail(response?.data?.retdata?.salesitem);
+  //     setInfo(response?.data?.retdata?.bill);
+  //     setAccount(response?.data?.retdata?.invdtl);  
+  //   }
+  //   setLoading(false);
+  // };
 
 
   const onPressExport = async () => {
@@ -97,8 +96,9 @@ export function TaxPrintA5() {
       console.error(error);
     }
   };
-  
+
   return (
+    <Modal title={null} footer={null} closable={false} open={visible1} centered={true} width={'297mm'}>
     <Overlay loading={loading}>
       {error && <Error error={error}/>}
       <div id="list_scroll" className="invoice_pdf_back1">
@@ -126,5 +126,6 @@ export function TaxPrintA5() {
         {t('order.pdf')}
       </button>
     </Overlay>
+    </Modal>
   );
 }

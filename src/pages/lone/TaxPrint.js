@@ -1,55 +1,54 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 import '../../css/bill.css';
-import { getService } from '../../services';
 import { Error, Overlay } from '../../components/all';
 import { Header, Footer, Info, Items, ItemsHeader, Total, Pay } from '../../components/lone/tax';
+import { Modal } from 'antd';
 
-export function TaxPrint() {
+export function TaxPrint(props) {
+  const {loading, error, header, account, detail, info, visible} = props;
   const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [header, setHeader] = useState(null);
-  const [detail, setDetail] = useState(null);
-  const [info, setInfo] = useState(null);
-  const [account, setAccount] = useState([]);
-  const [searchParams] = useSearchParams();
-  const dispatch = useDispatch();
+    // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  // const [header, setHeader] = useState(null);
+  // const [detail, setDetail] = useState(null);
+  // const [info, setInfo] = useState(null);
+  // const [account, setAccount] = useState([]);
+  // const [searchParams] = useSearchParams();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  const getData = async () => {
-    setLoading(true);
-    setError(null);
-    const invoiceNo = searchParams?.get('invoiceNo');
-    const api = 'Sales/GetSalesBill?data=' + encodeURIComponent(invoiceNo);
-    const response = await dispatch(getService(api, 'GET'));
+  // const getData = async () => {
+  //   setLoading(true);
+  //   setError(null);
+  //   const invoiceNo = searchParams?.get('invoiceNo');
+  //   const api = 'Sales/GetSalesBill?data=' + encodeURIComponent(invoiceNo);
+  //   const response = await dispatch(getService(api, 'GET'));
 
-    if (response?.error) {
-      setError(response?.error);
-    } else {
-      const headerData = response?.data?.retdata?.sales?.[0];
-      if (headerData) {
-        headerData.pureAmount =
-          (headerData.totalSalesAmount ?? 0) -
-          (headerData.totalVatAmount ?? 0) -
-          (headerData.totalNhatamount ?? 0);
-      }
-      setHeader(headerData);
-      setDetail(response?.data?.retdata?.salesitem);
-      setInfo(response?.data?.retdata?.bill);
-      setAccount(response?.data?.retdata?.invdtl);
-    }
-    setLoading(false);
-  };
+  //   if (response?.error) {
+  //     setError(response?.error);
+  //   } else {
+  //     const headerData = response?.data?.retdata?.sales?.[0];
+  //     if (headerData) {
+  //       headerData.pureAmount =
+  //         (headerData.totalSalesAmount ?? 0) -
+  //         (headerData.totalVatAmount ?? 0) -
+  //         (headerData.totalNhatamount ?? 0);
+  //     }
+  //     setHeader(headerData);
+  //     setDetail(response?.data?.retdata?.salesitem);
+  //     setInfo(response?.data?.retdata?.bill);
+  //     setAccount(response?.data?.retdata?.invdtl);
+  //   }
+  //   setLoading(false);
+  // };
 
   const onClickPdf = () => {
     try {
@@ -137,6 +136,11 @@ export function TaxPrint() {
   
 
   return (
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={'210mm'}>
+      <button className="inv_pdf_btn1" onClick={onClickPdf}>
+        {t('order.pdf')}
+      </button>
+      <div className='line'/>
     <Overlay loading={loading}>
       {error && <Error error={error} />}
       <div id="list_scroll" className="invoice_pdf_back">
@@ -149,12 +153,10 @@ export function TaxPrint() {
         <Pay header={header} />
         </div>
         <div id="invoice_footer">
-          <Footer info={info} accounts={account} />
+          <Footer info={info} accounts={account} isA4={true} />
         </div>
       </div>
-        <button className="inv_pdf_btn" onClick={onClickPdf}>
-          {t('order.pdf')}
-        </button>
     </Overlay>
+    </Modal>
   );
 }
