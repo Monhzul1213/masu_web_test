@@ -1,0 +1,15 @@
+{
+  "applinks": {
+      "apps": [],
+      "details": [
+           {
+             "appID": "APB46QT5G3.com.masuloyalty",
+             "paths": [
+                "/home/shop/*/*",
+                "/home/shop/invt/*/*/*",
+                "/home/shop/emp/*/*/*"
+              ]
+           }
+       ]
+   }
+}

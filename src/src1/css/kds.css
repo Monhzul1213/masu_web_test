@@ -1,0 +1,355 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+#kds_list {
+  height: calc(100vh - var(--header-height, 64px));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.table_scroll {
+  flex: 1;
+  overflow-y: auto;
+  /* padding-bottom: 4vh; */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--text4-color);
+  min-height: var(--header-height, 64px);
+  background: #fff;
+  z-index: 10;
+}
+
+.kds-header-left,
+.kds-header-center,
+.kds-header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.kds-header-center {
+  flex: 1;
+  justify-content: center;
+  min-width: 260px;
+}
+
+.kds-header-right {
+  justify-content: flex-end;
+}
+
+.kds-header-center.start-mode button {
+  padding: 10px 26px;         
+  font-size: (--btn-font);
+  font-weight: 400;           
+  background: var(--config-b-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;          
+  cursor: pointer;
+  height: 42px;                
+  white-space: nowrap;
+ 
+}
+
+.kds-header-center.start-mode button:hover {
+  background:var(--config-color);
+ 
+}
+
+.kds-not-started {
+  max-width: 480px;     
+  margin: 0 auto;        
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.kds-not-started .kds-header-left {
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.kds-not-started .kds-header-center button {
+  width: 100%;
+  max-width: 200px;
+}
+
+.kds-header-center.start-mode {
+  max-width: 400px;
+  margin: 0 auto;
+  justify-content: center !important;
+}
+
+.kds-tabs {
+  display: flex;
+  justify-content: center;     
+  align-items: center;
+  gap: 15px;                    
+  padding: 4px 0;             
+  width: 100%;
+  max-width: 300px;            
+  margin: 0 auto 5px auto;    
+}
+
+
+
+.kds-tabs div {
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;              
+  cursor: pointer;
+  border-radius: 12px;         
+  user-select: none;
+  border: 1.5px solid var(--text-color); 
+  font-size: 13px;           
+  color: var(--text-color);
+  letter-spacing: 0.2px;       
+  box-shadow: 0 1px 4px rgba(255, 109, 65, 0.05); 
+  transition: background 0.16s, color 0.18s, border 0.16s;
+}
+
+
+.kds-tabs .active {
+  font-weight: bold;
+  
+}
+
+.kds-order-list-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+  padding-bottom: 2vh;
+  
+}
+
+.kds-order-list-inner {
+  margin: 1.2vh 1.4vw;
+  column-width: 280px;
+  column-gap: 1.5vw;
+}
+
+.kds-card {
+  background: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  break-inside: avoid;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+
+.kds-card-header {
+  border-radius: 13px;
+  padding: 0.8em 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: clamp(11px, 1.2vw, 14px);
+  margin: 0.8em 1em 0 1em; 
+}
+
+
+.header-green { background: var(--config-color, #43a047); color: white; }
+.header-orange { background: #fb8c00; color: white; }
+.header-red { background: var(--danger-color, #e53935); color: white; }
+
+.kds-card-content {
+  padding: 0.01px 1.2em 1em;
+}
+
+.kds-item-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.kds-item-row {
+  padding: 0.8em 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--text-color);
+  cursor: pointer;
+  transition: background 0.13s;
+}
+
+.kds-item-row:last-child {
+  border-bottom: none;
+}
+
+.kds-item-row .qty {
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
+  background: var(--text-color);
+  color: #fff;
+  border-radius: 8px;
+  margin-right: 8px;
+  font-size: clamp(11px, 1.3vw, 13px);
+}
+
+.kds-item-row .name {
+  font-size: clamp(12px, 1.4vw, 14px);
+  color: #333;
+  flex: 1;
+}
+.kds-item-row:hover {
+  background: var(--input-color);
+}
+
+.kds-item-row.done {
+  color: var(--text4-color);
+  cursor: default;
+}
+
+.kds-item-row.done .name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: calc(100% - 50px);
+  height: 0.5px;
+  background: #b7b7b7;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .kds-tabs {
+    gap: 10px;
+    padding: 8px;
+  }
+
+  .header-container {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .kds-card-header,
+  .kds-card-content {
+    padding: 0.8em 1em;
+  }
+
+  .kds-item-row {
+    padding: 0.6em 0;
+  }
+}
+
+@media (max-height: 500px) {
+  .header-container {
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
+  .kds-tabs div {
+    font-size: 12px;
+    padding: 4px 0;
+  }
+
+  .kds-header-right {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  .kds-order-list-inner {
+    column-count: 2;
+    column-gap: 12px;
+  }
+}
+
+.kds-order-list-inner {
+  column-count: auto;
+  column-width: 280px;
+}
+
+/* .table_scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 80px;
+} */
+
+.kds-item-row.done .name {
+  position: relative;
+}
+
+.kds-item-row.done .name::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.i_list_cont.no-site {
+  height: auto;
+  min-height: var(--header-height, 64px);
+  overflow: visible;
+}
+
+.i_list_cont.no-site .table_scroll {
+  display: none;
+}
+
+
+@media (max-width: 920px), (max-height: 600px) and (orientation: landscape) {
+  .header-container,
+  .th_header_mn1,
+  .th_header_mn2 {
+    padding: 4px 8px;
+    max-height: 20px;     
+    gap: 6px;
+    border-bottom-width: 1px;
+  }
+
+  .kds-header-left .rp_select,
+  .kds-header-left .rp_select_back {
+    font-size: 13px;
+    min-height: 36px;
+  }
+
+  .kds-header-center.start-mode button {
+    padding: 6px 16px;
+    font-size: 14px;
+    height: 36px;
+    border-radius: 6px;
+  }
+
+  .kds-tabs div {
+    font-size: 12px;
+    padding: 4px 0;
+    border-radius: 8px;
+  }
+
+.kds-header-right {
+  font-size: 12px;
+  min-width: unset;    
+  padding: 0 4px;       
+  white-space: nowrap;  
+}
+
+}
+#kds_list.no-site {
+  height: auto;
+  min-height: var(--header-height, 64px);
+  overflow: visible;
+}

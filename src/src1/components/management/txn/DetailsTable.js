@@ -1,0 +1,116 @@
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment'
+
+import { Empty1, Money, TableRowResize3 } from '../../../../components/all';
+import { formatNumber } from '../../../../helpers';
+
+export function DetailsTable(props){
+  const { data, setData, excelName, setError, onSearch, size, setDetailsColumns } = props;
+  const { t, i18n } = useTranslation();
+  const [columns, setColumns] = useState([]);
+  const [maxHeight, setMaxHeight] = useState('300px');
+
+  useEffect(() => {
+    setColumns([
+      { Header: t('manage.txnId'), accessor: 'txnCostID', exLabel:t('menu.inventory'), Footer: t('report.total') + data?.length, width: 110, minWidth: 90  },
+      { Header: t('manage.t_no'), accessor: 'txnNo', exLabel:t('manage.t_no'), width: 130, minWidth: 110  },
+      { Header: t('system_menu.store'), accessor: 'siteName', exLabel:t('system_menu.store'), width: 130, minWidth: 110 },
+      { Header: t('menu.inventory'), accessor: 'itemName', exLabel:t('menu.inventory'), width: 130, minWidth: 110  },
+      { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), width: 110, minWidth: 80 },
+      { Header: t('inventory.category'), accessor: 'categoryName', exLabel:t('inventory.category'), customStyle : { minWidth: 80 }  },
+      { Header: t('page.date'), accessor: 'txnDate', exLabel: t('page.date'), width: 90, minWidth: 80,
+        Cell: ({ value }) => {
+          return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>)
+        }
+      },
+      { Header: t('manage.costType'), accessor: 'txnType', exLabel:t('report.constant'), width: 90, minWidth: 80  },
+      { Header: t('report.qty1'), accessor: 'qty', exLabel: t('report.qty1'), width: 90, minWidth: 60,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
+        Footer: info => {
+          const total = React.useMemo(() =>
+            info.rows.reduce((sum, row) => row.values.qty + sum, 0),
+            [info.rows]  )
+          return <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(total)} </div>
+        }
+      },
+      { Header: t('order.t_cost'), accessor: 'cost', exLabel: t('order.t_cost'), width: 80, minWidth: 70, 
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+      },
+      { Header: t('orders.totalCost'), accessor: 'totalCost', exLabel: t('orders.totalCost'), width: 150, minWidth: 120,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+        Footer: info => {
+          const total = React.useMemo(() =>
+            info.rows.reduce((sum, row) => row.values.totalCost + sum, 0),
+            [info.rows]  )
+          return <div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /> </div>
+        }
+      },
+      { Header: t('report.price'), accessor: 'amount', exLabel: t('report.price'), width: 100, minWidth: 80,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+      },
+      { Header: t('report_receipt.t_total'), accessor: 'totalAmount', 
+        exLabel: t('report_receipt.t_total'), width: 100, minWidth: 80,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+        Footer: info => {
+          const total = React.useMemo(() =>
+            info.rows.reduce((sum, row) => row.values.totalAmount + sum, 0),
+            [info.rows]  )
+          return <div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /> </div>
+        }
+      },
+      { Header: t('report.expireDate'), accessor: 'expireDate', exLabel: t('report.expireDate'), width: 130, minWidth: 130,
+        Cell: ({ value }) => {
+          return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>)
+        }
+      },
+      { Header: t('supplier.title'), accessor: 'vendName', exLabel:t('supplier.title') , width: 140, minWidth: 110 },
+      { Header: t('employee.title'), accessor: 'txnEmpCode', exLabel:t('supplier.title') , width: 120, minWidth: 110 },
+      { Header: t('system.date'), accessor: 'createdDate', exLabel: t('system.date'), width: 130, minWidth: 110 ,
+        Cell: ({ value }) => {
+          return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
+        }
+      },
+    ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n?.language, data?.length]);
+
+  useEffect(() => {
+    if (setDetailsColumns) setDetailsColumns(columns);
+  }, [columns, setDetailsColumns]);
+
+  useEffect(() => {
+    if(size?.width >= 920) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 110px )');
+    else if(size?.width < 920 && size?.width >= 620)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 200px )');
+    else if(size?.width < 620)
+      setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 263px )');
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size?.width]);
+
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
+    initialState: { pageIndex: 0, pageSize: 2500000, sortBy: [{ id: 'createdDate', desc: true }] },
+      }, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
+  const tableProps = { tableInstance, hasTotal: true, total: data?.length, hasFooter: true };
+  const filterProps = {columns, data, setData, excelName, setError, onSearch , size,  };
+  const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
+
+  return (
+    <div>
+      {/* <Header {...filterProps} /> */}
+      {!data?.length ? <Empty1 {...emptyProps} /> : 
+      <>
+        <div style={{overflowX: 'scroll'}}>
+          <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
+            <TableRowResize3 {...tableProps} />
+          </div>  
+        </div>  
+        {/* <PaginationTable {...tableProps} /> */}
+       </>
+      }
+    </div>
+  );
+}

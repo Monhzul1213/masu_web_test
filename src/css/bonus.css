@@ -1,0 +1,36 @@
+@import './color.css';
+
+.bt_header {
+  display: flex;
+  flex-flow: row;
+  margin-top: 20px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.bt_header1 {
+  margin-right: 10px;
+  flex: 1;
+}
+
+.bt_header_title {
+  font-size: var(--b-title-font);
+  margin: 0 0 5px 0;
+}
+
+.bt_header_descr {
+  font-size: var(--value-font);
+  margin: 0;
+  color: var(--text2-color);
+}
+
+.bt_gap {
+  padding-top: var(--page-padding);
+  padding-left: var(--page-padding);
+}
+.c_tab_title1{
+  margin: var(--title-padding) var(--page-padding);
+  font-size: var(--b-title-font-font);
+  line-height: var(--title-font);
+  color: var(--text-color);
+}

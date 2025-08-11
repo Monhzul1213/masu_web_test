@@ -1,0 +1,191 @@
+@import './color.css';
+
+.s_container_f {
+    margin: 0;
+    padding: 0;
+    background-color: var(--root-color);
+    border-radius: var(--radius);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    max-width: 220mm;
+    width: 100%;
+    min-width: 100mm;
+}
+
+.fi_pdf_back{
+    max-width: 297mm;
+    max-height: calc(82vh - 20px );
+    overflow: scroll ;
+}
+
+.fi_pdf_back1{
+    overflow: scroll;
+    max-width: 220mm;
+    max-height: calc(82vh - 20px);
+    margin-top: 10px;
+}
+
+.list_pdf_back{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    width: 100%;
+    padding: 2mm 8mm;
+    background-color: white;
+    border: none;
+    box-shadow: none;
+}
+
+.j_header_back{
+    display: none;
+}
+
+.fi_pdf_back:hover>.j_header_back{
+    display: flex;
+    justify-content: right;
+}
+
+.page-break {
+    page-break-after: always;
+}
+/* Finance report  */
+.fi_card_back {
+    background-color: var(--root-color);
+    border-radius: 5px;
+    width: 320px;
+    min-width: 320px;
+    margin-right: var(--page-padding);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    min-height:  500px;
+    max-height: calc(87vh - 20px );
+    overflow: scroll;
+    padding-bottom: 2px;
+}
+/* #fi_large.fi_card_back {
+    background-color: var(--root-color);
+    border-radius: 5px;
+    width: 370px;
+    min-width: 370px;
+    margin-right: var(--page-padding);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    max-height: calc(100vh - var(--header-height) - 200 * 2);
+    overflow: scroll;
+    padding-bottom: 2px;
+}
+#fi_small.fi_card_back {
+    background-color: var(--root-color);
+    border-radius: 5px;
+    width: 100%;
+    min-width: 370px;
+    margin-right: var(--page-padding);
+    box-shadow: 0px 2px 5px rgba(0,0,0,.15);
+    max-height: calc(100vh - var(--header-height) - var(--page-padding) * 2);
+    padding-bottom: 2px;
+} */
+
+.finance_menu {
+    margin-left: calc(var(--page-padding) * 2 + var(--config-card-icon) - 10px);
+}
+  
+.finance_menu .ant-menu-item {
+    padding: 0 0 0 10px !important;
+    height: var(--s-menu-height) !important;
+    line-height: var(--s-menu-height) !important;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    border-bottom: 1px solid var(--line-color);
+}
+
+.finance_menu .ant-menu-item:last-child {
+    border-bottom: none;
+}
+  
+.finance_menu .ant-menu-item-active {
+    background-color: var(--hover-color) !important;
+}
+  
+.finance_menu .ant-menu-item-selected {
+    position: relative;
+    background-color: transparent !important;
+  }
+  
+.finance_menu .ant-menu-item-selected ::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 10px;
+    height: calc(100% ); /* бага зэрэг зай үлдээж capsule мэт болгоно */
+    background-color: hsl(291, 86%, 34%);
+    border-top-left-radius: var(--radius);
+    border-bottom-left-radius: var(--radius);
+    z-index: 10;
+}
+  
+.finance_menu .ant-menu-item-selected .ant-menu-title-content {
+    color: var(--text-color);
+}
+  
+.finance_menu .ant-menu-title-content {
+    color: var(--text-color);
+    font-size: var(--p-input-font);
+}
+.fi_date_back {
+    background-color:var(--back-color);
+    height: 36px;
+    border-radius: var(--radius);
+    border: 1px solid #6262626b;
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+}
+.fi_show_btn{
+    padding: 0 20px;
+    border-radius: var(--radius);
+    border: 1px solid #6262626b;
+    color: var(--text-color);
+    background-color: transparent;
+    max-width: 100px;
+    width: 100%;
+}
+.fi_show_btn:hover{
+    cursor: pointer;
+    background-color:var(--back-color);
+}
+
+.download_icon_back{    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--logo1-color);
+    font-size: var(--a-btn-font);
+    font-weight: 500;
+    color: var(--root-color);
+    width: 100%;
+    max-width: 130px;
+    border-radius: var(--radius);
+    padding: 5px 10px;
+    border: none;
+    gap: 10px;
+}
+
+.download_icon_back:hover {
+    background-color: var(--logo1-color_dis);
+}
+
+.download_icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+.fi_header_back{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding: 0 5mm;
+  }
+.fi_header_back1{
+    display: flex;
+    flex-flow: column;
+    margin-top: 15px;
+    padding: 0 5mm;
+}

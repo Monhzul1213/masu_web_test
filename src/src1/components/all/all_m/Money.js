@@ -1,0 +1,16 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { formatNumber } from '../../../../helpers';
+
+export function Money(props){
+  const { value, fontSize, decimal, className } = props;
+  const user = useSelector(state => state.login?.user);
+
+  return (
+    <span className={className}>
+      {formatNumber(value, decimal)}
+      <span style={{ fontSize: fontSize ?? 13 }}>{user?.msMerchant?.currency ?? ''}</span>
+    </span>
+  )
+}
