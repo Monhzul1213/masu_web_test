@@ -16,7 +16,7 @@ export const config = { // production
   ebarimt: 'https://api.ebarimt.mn/api/info/check/',
   ebarimt1: 'https://info.ebarimt.mn/rest/merchant/info',
   // url: 'http://192.168.1.232:8181/',
-  domain: 'http://192.168.1.171:3000',
+  domain: 'http://192.168.1.189:3000',
   // url1: 'http://192.168.1.106:3434/',
   // otc: 'http://192.168.1.106:3434/',
 }
