@@ -240,6 +240,7 @@
   pointer-events: auto;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
+  z-index: 0;
 }
 
 .product_qty_big {
@@ -310,7 +311,7 @@
 .cart_item {
   display: flex;
   align-items: center;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ab47bc;
   border-radius: 10px;
   padding: 10px;
   background: #fff;
@@ -580,3 +581,273 @@
   background: #f5f5f5;
 }
 
+.payment_container {
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.payment_header {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.payment_header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.payment_amount_label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.payment_amount {
+  font-size: 20px;
+  font-weight: 700;
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 15px 20px;
+  width: 100%;
+  max-width: 350px;
+  color: #2c2c2c;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+
+.payment_methods {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 16px;
+}
+
+.payment_method {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1.5px solid #ab47bc;
+  border-radius: 12px;
+  padding: 16px 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  min-height: 110px;
+}
+
+.payment_method:hover {
+  border-color: #a200ff;
+  box-shadow: 0 2px 8px rgba(160, 0, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.method_icon_img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.method_name {
+  font-size: 13px;
+  text-align: center;
+  color: #333;
+  word-break: break-word;
+  font-weight: 500;
+}
+.bank_app_list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.bank_app_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ab47bc;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  transition: transform 0.2s;
+}
+
+.bank_app_item:hover {
+  transform: scale(1.05);
+}
+
+.bank_app_item img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
+}
+
+.qpay_qr_img_wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.qpay_qr_img {
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  border: 1px solid #ab47bc;
+}
+.product_grid {
+  padding-bottom: calc(120px + env(safe-area-inset-bottom));
+}
+.product_grid.has-cart {
+  padding-bottom: calc(120px + env(safe-area-inset-bottom));
+}
+.close_button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.close_button:hover {
+  color: #000;
+}
+
+.order_type_modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal_content {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 360px;
+  box-sizing: border-box;
+}
+
+.type_buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.option_btn {
+  border: 2px solid transparent;
+  border-radius: 15px;
+  width: 140px;
+  height: 120px;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  color: #000;
+}
+
+.option_btn .icon {
+  width: 32px;
+  height: 32px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.icon.business {
+  background-image: url("../assets/masu_icons/business.png");
+}
+
+.icon.individual {
+  background-image: url("../assets/masu_icons/person.png");
+}
+
+.option_btn.active {
+  background-color: #ab47bc;
+  color: white;
+  border: none;
+}
+
+.option_btn.active .icon {
+  filter: brightness(100);
+}
+
+.input_group {
+  position: relative;
+  width: 100%;
+}
+
+.input_group input {
+  width: 100%;
+  padding: 12px 16px;
+  padding-right: 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.input_group.success input {
+  border-color: green;
+}
+
+.check_icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-image: url("../assets/masu_icons/check.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+
+.submit_btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #ab47bc;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.close_btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  background: transparent;
+  border: none;
+  color: #333;
+  cursor: pointer;
+}
