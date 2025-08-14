@@ -11,7 +11,7 @@ export function Header(props){
         <p className='inv_header_text1'>№{header?.salesNo}</p>
       </div>
       <div>
-        {/* <img src={header_image} alt='MASU LOGO' className='inv_header_image'/> */}
+        {/* {image?.data ? <img src={`data:image/jpeg;base64,${image.data}`} alt='LOGO' className='inv_header_image' style={{height: 25}}/> : null} */}
       </div>
     </div>
   );

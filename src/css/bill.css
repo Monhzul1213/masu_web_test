@@ -565,21 +565,21 @@
   width: 100%;
   max-width: 210mm;
   box-shadow: none;  
-  min-height: calc(100vh - var(--header-height) - var(--page-padding) * 5);
-  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 10);
+  min-height: calc(100vh - var(--header-height) - var(--page-padding) * 18);
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 18);
   /* background-color: var(--root-color); */
   padding: var(--page-padding);
   margin: 10px 0;
   overflow: scroll;
 }
 #invoice_body{
-  min-height: 170mm;
+  min-height: 100mm;
 }
 .invoice_pdf_back1 {
   width: 100%;
   max-width: 297mm;
-  min-height: calc(100vh - var(--header-height) - var(--page-padding) * 6);
-  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 10);
+  min-height: calc(100vh - var(--header-height) - var(--page-padding) * 20);
+  max-height: calc(100vh - var(--header-height) - var(--page-padding) * 20);
   box-shadow: none;
   padding: var(--page-padding);
   margin: 10px 0;
@@ -622,17 +622,23 @@
   cursor: pointer;
   color: var(--logo1-color);
 }
+.inv_pdf_back{
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  position: sticky;
+}
 .inv_pdf_btn1 {
-  border: none;
+  border: 1px solid var(--input1-color);
   border-radius: 5px;
   background-color: var(--input1-color);
-  padding: 5px 20px;
   color: var(--text-color);
-  z-index: 1;
-  position: sticky;
-  right: 0;
+  font-size: 35px;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin: 15px 20px;
 }
-
 .inv_pdf_btn1:hover {
   cursor: pointer;
   color: var(--logo1-color);

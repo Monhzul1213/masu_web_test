@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 import '../../../css/bill.css';
 import { getService } from '../../../services';
-import { Error, Overlay } from '../../../components/all';
+import { Overlay } from '../../../components/all';
 import { Footer, Header, Info, Items, ItemsHeader, Total, InfoBank } from './invoiceComp';
 
 export function InvoicePrint(props){
   const {image164, date, accounts, size } = props;
-  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);

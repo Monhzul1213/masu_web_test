@@ -8,9 +8,9 @@ import '../../css/menu.css';
 import { getList, setCollapsed } from '../../services';
 import { getItem } from '../../helpers';
 import { Profile1 } from './Profile';
-import { MenuPayment } from './Install';
+// import { MenuPayment } from './Install';
 import { Rating } from './Rating';
-import { control, image1, image10, image11, image12, image13, image14, image2, image3, image4, image6, image7, image8, image9 } from '../../assets';
+import { control, image1, image10, image11, image12, image13, image14, image2, image26, image3, image4, image6, image7, image8, image9 } from '../../assets';
 const { Sider } = Layout;
 
 export function Menu(props){
@@ -124,7 +124,6 @@ export function Menu(props){
     getItem(t('menu.inventory'), '/inventory', <img src={image3} alt='image3' />, [
       getItem(t('menu.invt_list'), '/inventory/invt_list', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_category'), '/inventory/invt_category', null, null, null, msRole?.webManageItem !== 'Y'),
-      getItem('QrMenu', '/inventory/qrmenu', null, null, null, msRole?.webManageItem !== 'Y'),
       getItem(t('menu.invt_modi'), '/inventory/invt_modi', null, null, null, msRole?.webManageItem !== 'Y'),
     ]),
      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.management')}</span> : t('menu.management'), '/management', 
@@ -159,11 +158,16 @@ export function Menu(props){
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.bonus')}</span> : t('menu.bonus'), '/loyalty/bonus', null, null, null, msRole?.webManageLoyalty !== 'Y'),
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.giftCard')}</span> : t("menu.giftCard"), "/loyalty/giftCard", null, null, null, msRole?.webManageLoyalty !== "Y")
     ]),
+    hideTime ? null : getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('QrMenu')}</span> : t('QrMenu'), '/qrmenu', 
+    <img src={image26} alt='image2'/>, [
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('system_menu.order_location')}</span> : t('system_menu.order_location'), '/qrmenu/location', null, null, null, msRole?.webManageCustomer !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM'? <span style={{color: '#969696'}}>{t('qrmenu.create')}</span> : t('qrmenu.create'), '/qrmenu/qrmenu', null, null, null, msRole?.webManageCustomer !== 'Y'),
+      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM'? <span style={{color: '#969696'}}>{t('menu.kds')}</span> : t('menu.kds'), '/qrmenu/kds', null, null, null, msRole?.webManageCustomer !== 'Y'),
+    ]),
     hideTime ? null : getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('timetable.time')}</span> : t('timetable.time'), '/timetable', 
     <img src={image8} alt='image8' />, [
       getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.timetable')}</span> : t('menu.timetable'), '/timetable/timeschedule', null, null, null, msRole?.webAppointment !== 'Y'),
       getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.service')}</span> : t('menu.service'), '/timetable/service', null, null, null, msRole?.webAppointment !== 'Y'),
-      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.kds')}</span> : t('menu.kds'), '/timetable/kds', null, null, null, msRole?.webAppointment !== 'Y'),
     ]),
     hideTime ? null : getItem(subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.finance")}</span>) : (t("transModel.finance")), "/finance",
     <img src={image12} alt='image12' />,[

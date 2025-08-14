@@ -129,7 +129,7 @@ function Card(props){
   const videoData = [{id: "UZBPxipeEQQ"}]
 
   return (
-      <div className='store_tab' style={{flex: 1}}>
+      <div className='s_container_i' style={{flex: 1}}>
         <Confirm {...confirmProps} />
         <Prompt edited={edited} />
         {checked ?

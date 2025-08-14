@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React from 'react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { Modal } from 'antd';
+import { BsFillPrinterFill } from 'react-icons/bs';
+import { FaFilePdf } from 'react-icons/fa6';
+import html2pdf from 'html2pdf.js';
 
 import '../../css/bill.css';
 import { Error, Overlay } from '../../components/all';
 import { Footer, Header, Info, Items, ItemsHeader, Total, InfoBank } from '../../components/lone/invoice';
-import { Modal } from 'antd';
+
 
 
 export function InvoicePrint(props){
-  const {loading, error, header, account, detail, info, day, visible2} = props;
-  const { t } = useTranslation();
+  const {loading, error, header, account, detail, info, day, visible2, setVisible2, image} = props;
+
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState(null);
   // const [header, setHeader] = useState(null);
@@ -53,89 +56,152 @@ export function InvoicePrint(props){
   const onPressExport = async () => {
     try {
       const container = document.getElementById('table_scroll');
-      if (!container) {
-        console.error('Container элемент олдсонгүй');
-        return;
-      }
   
-      const pages = container.querySelectorAll('.invoice_page');
-      if (pages.length === 0) {
-        console.error('No invoice_page элемент олдсонгүй');
-        return;
-      }
+      const originalStyle = {
+        height: container.style.height,
+        overflow: container.style.overflow,
+        maxHeight: container.style.maxHeight,
+        flexWrap: container.style.flexWrap,
+      };
   
-      const pdf = new jsPDF('l', 'mm', 'a4'); // Landscape A4
+      container.style.height = container.scrollHeight + 'px';
+      container.style.overflow = 'visible';
+      container.style.maxHeight = 'none';
+      container.style.flexWrap = 'wrap';
+  
+      const pdf = new jsPDF('l', 'mm', 'a4');
       const pageWidthMM = 297;
       const pageHeightMM = 210;
-      const marginMM = 5;
+      const marginMM = 2;
+      const canvas = await html2canvas(container, { scale: 2, useCORS: true });
+      const imgData = canvas.toDataURL('image/png');
   
-      const a5WidthMM = pageWidthMM / 2; // 148.5
-      const a5HeightMM = pageHeightMM;   // 210
+      const pxPerMM = canvas.width / pageWidthMM;
+      const imgHeightMM = canvas.height / pxPerMM;
+      let heightLeft = imgHeightMM;
+      let position = marginMM;
   
-      for (let i = 0; i < pages.length; i += 2) {
-        if (i > 0) pdf.addPage();
-  
-        // Хоёр A5 хуудсыг canvas болгон авахад scroll-г түр хаах хэрэгтэй
-        for (const pageIndex of [i, i + 1]) {
-          if (pages[pageIndex]) {
-            pages[pageIndex].style.height = pages[pageIndex].scrollHeight + 'px';
-            pages[pageIndex].style.overflow = 'visible';
-          }
-        }
-  
-        // Footer-г зөвхөн хамгийн сүүлийн хоёр хуудасны footer-д хэвлэх болгох
-        pages.forEach((page, idx) => {
-          const footer = page.querySelector('.footer');
-          if (footer) {
-            // Зүүн ба баруун талын хамгийн сүүлийн хоёр хуудсан дээр л харуулах
-            if (idx === pages.length - 1 || idx === pages.length - 2) {
-              footer.style.display = 'block';
-            } else {
-              footer.style.display = 'none';
-            }
-          }
-        });
-  
-        // Зүүн талын A5 canvas
-        const leftPage = pages[i];
-        const leftCanvas = leftPage ? await html2canvas(leftPage, { scale: 2, useCORS: true }) : null;
-        const leftImg = leftCanvas ? leftCanvas.toDataURL('image/png') : null;
-  
-        // Баруун талын A5 canvas
-        const rightPage = pages[i + 1];
-        const rightCanvas = rightPage ? await html2canvas(rightPage, { scale: 2, useCORS: true }) : null;
-        const rightImg = rightCanvas ? rightCanvas.toDataURL('image/png') : null;
-  
-        if (i > 0) pdf.addPage();
-  
-        // Зүүн талын зураг pdf дээр байрлуулах
-        if (leftImg) {
-          pdf.addImage(leftImg, 'PNG', marginMM, marginMM, a5WidthMM - marginMM * 2, a5HeightMM - marginMM * 2);
-        }
-        // Баруун талын зураг pdf дээр байрлуулах
-        if (rightImg) {
-          pdf.addImage(rightImg, 'PNG', a5WidthMM + marginMM, marginMM, a5WidthMM - marginMM * 2, a5HeightMM - marginMM * 2);
-        }
-  
-        // Canvas дууссаны дараа scroll, height-г буцаан тохируулах
-        for (const pageIndex of [i, i + 1]) {
-          if (pages[pageIndex]) {
-            pages[pageIndex].style.height = '';
-            pages[pageIndex].style.overflow = '';
-          }
-        }
+      pdf.addImage(imgData, 'PNG', marginMM, position, pageWidthMM - marginMM * 2, imgHeightMM);
+      heightLeft -= (pageHeightMM - marginMM * 2);
+      while (heightLeft > 0) {
+        pdf.addPage();
+        position = heightLeft - imgHeightMM + marginMM;
+        pdf.addImage(imgData, 'PNG', marginMM, position, pageWidthMM - marginMM * 2, imgHeightMM);
+        heightLeft -= (pageHeightMM - marginMM * 2);
       }
+      pdf.save('Нэхэмжлэх.pdf');
   
-      pdf.save('Нэхэмжлэх_2xA5_footer_scroll.pdf');
+      container.style.height = originalStyle.height;
+      container.style.overflow = originalStyle.overflow;
+      container.style.maxHeight = originalStyle.maxHeight;
+      container.style.flexWrap = originalStyle.flexWrap;
+  
     } catch (error) {
-      console.error('PDF үүсгэхэд алдаа:', error);
+      console.error(error);
     }
   };
   
+  const onPressPrint = async () => {
+    const container = document.getElementById('table_scroll');
+    if (!container) return;
+  
+    const originalStyle = {
+      height: container.style.height,
+      maxHeight: container.style.maxHeight,
+      overflow: container.style.overflow,
+    };
+  
+    try {
+      container.style.height = container.scrollHeight + 'px';
+      container.style.maxHeight = 'none';
+      container.style.overflow = 'visible';
+  
+      await new Promise(resolve => setTimeout(resolve, 100));
+  
+      const options = {
+        margin: 0,
+        filename: 'report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+      };
+  
+      const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  
+      const blob = await html2pdf()
+        .set(options)
+        .from(container)
+        .outputPdf('blob');
+  
+      const blobUrl = URL.createObjectURL(blob);
+  
+      if (isSafari) {
+        printUsingIframe(blobUrl);
+      } else {
+        const newWin = window.open('', '_blank');
+        if (newWin) {
+          newWin.document.write(`
+            <html>
+              <head><title>Print PDF</title></head>
+              <body style="margin:0">
+                <embed src="${blobUrl}" type="application/pdf" width="100%" height="100%" />
+                <script>
+                  window.onload = function() {
+                    setTimeout(function() {
+                      window.focus();
+                      window.print();
+                    }, 500);
+                  };
+                </script>
+              </body>
+            </html>
+          `);
+          newWin.document.close();
+        } else {
+          printUsingIframe(blobUrl);
+        }
+      }
+  
+    } catch (error) {
+      console.error('PDF print error:', error);
+    } finally {
+      container.style.height = originalStyle.height;
+      container.style.maxHeight = originalStyle.maxHeight;
+      container.style.overflow = originalStyle.overflow;
+    }
+  };
+  
+  const printUsingIframe = (blobUrl) => {
+    const iframe = document.createElement('iframe');
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = 'none';
+    iframe.src = blobUrl;
+    iframe.onload = () => {
+      setTimeout(() => {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
+      }, 500);
+    };
+    document.body.appendChild(iframe);
+  };
+
+  const onCancel = () => {
+    setVisible2(false);
+  }
+
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible2} centered={true} width={'297mm'}>
+    <Modal title={null} footer={null} closable={true} open={visible2} centered={true} width={'297mm'} onCancel={onCancel}>
       <Overlay loading={loading}>
+        <div className='inv_pdf_back'>
+          <FaFilePdf className="inv_pdf_btn1" onClick={onPressExport}/>
+          <BsFillPrinterFill className="inv_pdf_btn1" onClick={onPressPrint} style={{marginLeft: 0}}/>
+        </div>
+        <div className='line' style={{marginTop: 0}}/>
         {error && <Error error={error}/>}
         {/* <div id="invoice_back" style={{ display: "flex", justifyContent: "space-between" , width: "297mm", background: "white", padding: "5mm 6mm", minHeight: '210mm' }}>
           <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '190mm'}}>
@@ -173,7 +239,7 @@ export function InvoicePrint(props){
         <div id="table_scroll" className="invoice_pdf_back1" style={{gap: 15}}>
           <div className='invoice_page' style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
               <div>
-                <Header header={header}/> 
+                <Header header={header} image={image}/> 
                 <InfoBank header={header} account={account} day={day}/>
                 <div className='iline'/>
                 <Info header={header} />
@@ -188,7 +254,7 @@ export function InvoicePrint(props){
           <div style={{ width: "1px", background: "var(--text2-color)"}}/>
           <div className='invoice_page' style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
           <div>
-              <Header header={header}/> 
+              <Header header={header} image={image}/> 
               <InfoBank header={header} account={account} day={day}/>
               <div className='iline'/>
               <Info header={header} />
@@ -201,10 +267,6 @@ export function InvoicePrint(props){
               </div>
           </div>
         </div>
-        
-        <button className="inv_pdf_btn" onClick={onPressExport} style={{right: '40%'}}>
-          {t('order.pdf')}
-        </button>
       </Overlay>
     </Modal>
   );

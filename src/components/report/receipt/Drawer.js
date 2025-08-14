@@ -28,6 +28,7 @@ export function Drawer(props){
   const [visible, setVisible] = useState(false);
   const [visible1, setVisible1] = useState(false);
   const [visible2, setVisible2] = useState(false);
+  const [image, setImage] = useState(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -103,7 +104,6 @@ export function Drawer(props){
     let invoiceNo = encrypt(msg);
     const api = 'Sales/GetSalesBill?data=' + encodeURIComponent(invoiceNo);
     const response = await dispatch(getService(api, 'GET'));
-    console.log(response);
     if (response?.error) {
       setError(response?.error);
     } else {
@@ -115,7 +115,8 @@ export function Drawer(props){
       setDetail(response?.data?.retdata?.salesitem);
       setInfo(response?.data?.retdata?.bill);
       setAccount(response?.data?.retdata?.invdtl);
-      setDay(response?.data?.retdata?.inv?.[0])
+      setDay(response?.data?.retdata?.inv?.[0]);
+      setImage(response?.data?.retdata?.data);
     }
     setLoading(false);
   };
@@ -146,7 +147,8 @@ const onClickPrintA4 = async () => {
 }
 
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
-  const visibleProps = { loading, error, header, account, detail, info, day, visible, visible1, visible2}
+  const visibleProps = { loading, error, header, account, detail, info, day, visible, visible1, visible2, setVisible, setVisible1, setVisible2, image}
+
   return (
     <AntDrawer {...drawerProps}>
       {visible && !loading && <TaxPrint {...visibleProps}/>}

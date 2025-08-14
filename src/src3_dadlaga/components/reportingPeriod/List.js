@@ -169,7 +169,6 @@ export const List = forwardRef((props, ref) => {
     ]
   };
 
-  console.log('Deleting with payload:', deletePayload);
 
   const deleteRes = await dispatch(sendRequest(user, token, 'Txn/ModJournal', deletePayload));
 
@@ -177,7 +176,6 @@ export const List = forwardRef((props, ref) => {
     return;
   }
 
-  console.log('Journal deleted successfully');
 };
 
   const handleModalClose = async (result) => {

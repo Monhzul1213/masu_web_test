@@ -28,9 +28,9 @@ import { Coupon, CouponAdd } from './src1/pages/loyalty';
 import { Bonus, BonusAdd } from './pages/loyalty';
 import { ReportBuyer, ReportReceivable, ReportTime, TransactionModel, TransactionModelsAdd } from './src3_dadlaga/pages';
 import { Journal, JournalAdd } from './src1/pages/finance/journal';
-import { Account } from "./src3_dadlaga/pages/account";
-import { AccountImport } from './src3_dadlaga/pages/account/accountImport';
+import { Account, AccountImport } from "./src3_dadlaga/pages/account";
 import { ReportingPeriod, ReportingJournalAdd } from './src3_dadlaga/pages/reportingPeriod';
+import { Order as OrderLocation} from './src1/pages/config';
 
 export function App(){
   // const [collapsed, setCollapsed] = useState(false);
@@ -132,8 +132,9 @@ export function App(){
                 <Route path='/confirm' element={<Confirm />} />
                 <Route path='/config/*' element={<Config size={size} />} />
                 <Route path='/inventory/invt_category' element={<Category />} />
-                <Route path='/inventory/qrmenu' element={<QrMenu />} />
-                <Route path="inventory/qrmenu/qrmenuadd" element={<QrMenuAdd />} />
+                <Route path='/qrmenu/qrmenu' element={<QrMenu />} />
+                <Route path="/qrmenu/qrmenu/qrmenuadd" element={<QrMenuAdd />} />
+                <Route path="/qrmenu/location" element={<OrderLocation />} />
                 <Route path='/inventory/invt_list' element={<Inventory />} />
                 <Route path='/inventory/invt_list/invt_add' element={<InventoryAdd />} />
                 <Route path='/inventory/invt_list/invt_import' element={<InventoryImport />} />
@@ -151,7 +152,7 @@ export function App(){
                 <Route path='/employee/shift_config' element={<Time />} />
                 <Route path='/employee/shift_list' element={<TimeList />} />
                 <Route path='/timetable/service' element={<EmployeeService />} />
-                <Route path='/timetable/kds' element={<Kds />} />
+                <Route path='/qrmenu/kds' element={<Kds />} />
                 <Route path='/management/suppliers' element={<Suppliers />} />
                 <Route path='/management/suppliers/supp_add' element={<SupplierAdd/>} />
                 <Route path='/management/order_list' element={<Order />} />

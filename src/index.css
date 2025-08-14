@@ -42,7 +42,10 @@ p {
   border-radius: 10px;
   height: 5px !important;
 }
-
+.table_scroll::-webkit-scrollbar-corner,
+#table_scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
 .table_scroll1::-webkit-scrollbar, #table_scroll1::-webkit-scrollbar {
   width: 9px !important;
   height: 5px !important;

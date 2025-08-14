@@ -44,7 +44,7 @@ export function CardVariant(props){
     let msg = row?.merchantId + '-' + row?.siteId + '-' + row?.ticketBinId;
     let code = encrypt(msg);
     let url = config?.domain + '/QRMenu?qr=' + encodeURIComponent(code);
-    setQRData({url, ticketBinName: row?.ticketBinName});
+    setQRData({url, ticketBinName: row?.ticketBinName, siteName: row?.siteName});
     setVisible(true)
   }
 

@@ -34,7 +34,6 @@ export function ReportPeriod(props){
   
     const fetchConfigAndLoad = async () => {
     const res = await dispatch(getList(user, token, 'Merchant/GetConfig'));
-    console.log('Merchant/GetConfig FULL response:', res);
   
     const config = res?.data;
     if (!config) {

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Drawer as AntDrawer } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { IoLocationOutline } from "react-icons/io5";
+import { useDispatch } from 'react-redux';
 
 import '../../../../css/report.css';
 import { Button, ButtonUpdate, DynamicAIIcon, DynamicRIIcon, Money } from '../../all/all_m';
 import { config, encrypt } from '../../../../helpers';
 import { Update } from './Update';
+import { getService } from '../../../../services';
+import { SalesPrint } from '../../../../pages/lone';
 
 export function Drawer(props){
   const { selected, open, setOpen, data1, user, data2, setData2, tab, getData, filter} = props;
@@ -14,6 +17,15 @@ export function Drawer(props){
   const [pureAmount, setPureAmount] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [header, setHeader] = useState(null);
+  const [detail, setDetail] = useState(null);
+  const [info, setInfo] = useState(null);
+  const [account, setAccount] = useState([]);
+  const [day, setDay] = useState(null);
+  const [visible1, setVisible1] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if(selected){
@@ -76,11 +88,31 @@ export function Drawer(props){
     setVisible(true);
   };
 
-  const onClickInvoice = () => {
+  const getData1 = async () => {
+    setLoading(true);
+    setError(null);
     let msg = user?.merchantId + '-' + selected?.siteId + '-' + selected?.salesNo
-    let code = encrypt(msg);
-    let url = config?.domain + '/sales_pdf?invoiceNo=' + encodeURIComponent(code);
-    window.open(url);
+    let invoiceNo = encrypt(msg);
+    const api = 'Sales/GetSalesBillHold?data=' + encodeURIComponent(invoiceNo);
+    const response = await dispatch(getService(api, 'GET'));
+    if (response?.error) {
+      setError(response?.error);
+    } else {
+      const header = response?.data?.retdata?.saleshold?.[0];
+      if (header) {
+        header.pureAmount = (header.totalSalesAmount ?? 0) - (header.totalVatAmount ?? 0) - (header.totalNhatamount ?? 0);
+      }
+      setHeader(header);
+      setDetail(response?.data?.retdata?.salesItemHold);
+      setAccount(response?.data?.retdata?.invdtl);
+      setDay(response?.data?.retdata?.inv?.[0])
+    }
+    setLoading(false);
+  };
+
+  const onClickInvoice = async () => {
+    await getData1();
+    setVisible1(true);
   };
 
   const closeModal = () => {
@@ -89,9 +121,11 @@ export function Drawer(props){
 
   const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
   const modalProps = { visible, closeModal, onClickLink, selected, data2, setData2, getData, filter };
+  const visibleProps = { loading, error, header, account, detail, info, day, visible1, setVisible1,}
 
   return (
     <AntDrawer {...drawerProps}>
+      {visible1 && !loading && <SalesPrint {...visibleProps}/>}
       {visible && <Update {...modalProps} />}
       <div className='dr_back' style={{overflowY: 'scroll', maxHeight: '95%'}}>
         <DynamicAIIcon className='dr_close' name='AiFillCloseCircle' onClick={onClose} />

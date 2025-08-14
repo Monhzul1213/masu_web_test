@@ -121,8 +121,9 @@
     "/inventory/invt_list": "Барааны жагсаалт",
     "/inventory/invt_list/invt_add": "Бараа нэмэх",
     "/inventory/invt_list/invt_import": "Бараа бөөнөөр оруулах",
-    "/inventory/qrmenu": "QR цэс",
-    "/inventory/qrmenu/qrmenuadd": "QR цэс нэмэх",
+    "/qrmenu/qrmenu": "QR цэс",
+    "/qrmenu/qrmenu/qrmenuadd": "QR цэс нэмэх",
+    "/qrmenu/location": "Захиалга авах байршил",
     "/inventory/invt_modi": "Нэмэлт төлбөр",
     "/inventory/invt_modi/modi_add": "Нэмэлт төлбөр үүсгэх",
     "/inventory/invt_discount": "Хөнгөлөлт",
@@ -157,7 +158,7 @@
     "/system/system_change/syschange_add": "Системийн өөрчлөлт",
     "/timetable/timeschedule": "Цаг авах хуваарь",
     "/timetable/service": "Үйлчилгээ ажилтнаар",
-    "/timetable/kds": "Kitchen display system",
+    "/qrmenu/kds": "Гал тогооны захиалга (KDS)",
 
     "/loyalty/coupon": "Купон",
     "/loyalty/coupon/coupon_add": "Купон бүртгэх",
@@ -226,7 +227,7 @@
     "shift_config": "Цагийн тохиргоо",
     "shift_list": "Цагийн жагсаалт",
     "service" : "Үйлчилгээ ажилтнаар",
-    "kds": "Kitchen display system",
+    "kds": "Гал тогооны захиалга (KDS)",
     "hours_worked": "Ажилласан цагийн лавлагаа",
     "system": "Систем",
     "solve": "НӨАТ хэвлэх хүсэлт шийдэх",
@@ -454,7 +455,8 @@
     "city": "Дүүрэг/Аймаг",
     "district": "Хороо/Сум",
     "image": "Салбарын зураг/Loyalty/",
-    "checked":"KDS ашиглах"
+    "checked":"KDS ашиглах",
+    "qrchecked":"QrMenu ашиглах"
   },
   "pos": {
     "title": "ПОС",
@@ -1269,6 +1271,7 @@
     "import_link" : "Барааны үлдэгдэл авах формат",
     "qpay": "QPAY",
     "acct": "Данс",
+    "acctName": "Данс эзэмшигчийн нэр",
     "is_remain": "Үлдэгдэлтэй эсэх",
     "is_date": "Огноогоор харах"
   },

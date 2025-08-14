@@ -92,7 +92,6 @@ export function SignUp(){
       setLoading(true);
       let api = 'Merchant/SentSMS?mobile=' + address?.value?.trim() + '&email=' + email?.value?.trim();
       let response = await dispatch(getService(api));
-      console.log(response);
       setLoading(false);
       if(response?.error) setError(response?.error);
       else {

@@ -3,7 +3,7 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { deleteRequest, getList, sendRequest } from '../../../services'
+import { deleteRequest, getConstants, getList, sendRequest } from '../../../services'
 import { ButtonRow, ModalTitle, Overlay, Input, Error, Confirm, Select, IconInput, UploadImage, CheckBox } from '../../all';
 import { cityList, districtList, urlToFile } from '../../../helpers';
 import { Location } from './Location';
@@ -29,6 +29,11 @@ export function Add(props){
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
   const [checked, setChecked] = useState(false);
+  const [qrchecked, setQrChecked] = useState(false);
+  const [bank, setBank] = useState();
+  const [banks, setBanks] = useState([]);
+  const [account, setAccount] = useState({ value: null });
+  const [accountName, setAccountName] = useState({ value: null });
   const [useDiningOption, setUseDiningOption] = useState(false);
   const [image, setImage] = useState(null);
   const [image64, setImage64] = useState('');
@@ -44,6 +49,7 @@ export function Add(props){
 
   useEffect(() => {
     getConfig();
+    onFocusBank();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -58,13 +64,30 @@ export function Add(props){
       setLng(selected?.longitudes ? selected?.longitudes : 106.91007001230763 );
       setLocation({ value : selected?.latitudes ? selected?.latitudes + '\n' + selected?.longitudes : ''})
       setSubDescr({ value: selected?.subDescr ? selected?.subDescr : null });
-      setChecked(selected?.useKds === 'Y')
+      setChecked(selected?.useKds === 'Y');
+      setQrChecked(selected?.useQrMenu === 'Y');
+      setBank({ value: selected?.bank ?? '' });
+      setAccount({ value: selected?.bankAccount ?? '' });
+      setAccountName({ value: selected?.bankAccountName ?? '' });
       setList(districtList?.filter(item => item?.parent?.includes(selected?.descr)));
       getImages(selected?.siteId)
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onFocusBank = async () => {
+    if(!banks?.length || banks?.length === 1){
+      setError && setError(null);
+      setLoading('bank');
+      const response = await dispatch(getConstants(user, token, 'msSite_Bank'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        setBanks(response?.data);
+      }
+      setLoading(null);
+    }
+  }
 
   const getConfig = async () => {
     const response = await dispatch(getList(user, token, 'Merchant/GetConfig'));
@@ -123,7 +146,10 @@ export function Add(props){
     let isNameValid = name?.value && name?.value?.length >= nameLength;
     let isAddressValid = !address?.value || address?.value?.length >= addressLength;
     let isPhoneValid = !phone?.value || phone?.value?.length >= phoneLength;
-    if(isNameValid && isAddressValid && isPhoneValid && descr?.value && subDescr?.value){
+    let isBankValid = !qrchecked || bank?.value;
+    let isAcctValid = !qrchecked || account?.value;
+    let isAcctNameValid = !qrchecked || accountName?.value;
+    if(isNameValid && isAddressValid && isPhoneValid && descr?.value && subDescr?.value && isBankValid && isAcctValid && isAcctNameValid  ){
       return true;
     } else {
       if(!name?.value) setName({ value: '', error: t('error.not_empty') });
@@ -132,6 +158,9 @@ export function Add(props){
       if(!isPhoneValid) setPhone({ value: phone?.value, error: ' ' + phoneLength + t('error.longer_than') });
       if(!descr?.value) setDescr({ value: null, error: t('error.not_empty') });
       if(!subDescr?.value) setSubDescr({ value: null, error: t('error.not_empty') });
+      if (qrchecked && !bank?.value) { setBank({ value: null, error: t('error.not_empty') })};
+      if (qrchecked && !account?.value) { setAccount({ value: null, error: t('error.not_empty') })};
+      if (qrchecked && !accountName?.value) { setAccountName({ value: null, error: t('error.not_empty') })};
       return false;
     }
   }
@@ -143,7 +172,8 @@ export function Add(props){
       let districtCode = cityList?.filter(ct => ct.value === descr?.value)[0]?.districtCode;
       setLoading(true);
       let data = { name: name?.value, address: address?.value, phone: phone?.value?.trim(), descr: descr?.value,
-        subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng, sitePictures, useKds: checked ? 'Y' : 'N' };
+        subDescr: subDescr?.value, districtCode, latitudes: lat, longtitudes: lng, sitePictures, useKds: checked ? 'Y' : 'N',
+        useQrMenu: qrchecked ? 'Y' : 'N', bank: bank?.value, bankAccount: account?.value, bankAccountName: accountName?.value };
       if(selected) data.siteID = selected.siteId;
       else data.merchantID = user?.merchantId;
       let api = selected ? 'Site/UpdateSite' : 'Site/AddSite';
@@ -212,6 +242,11 @@ export function Add(props){
     setPhone({ value: text });
   }
 
+  const changeAccount = value => {
+    let text = value?.value?.replace(/[^0-9]/g, '');
+    setAccount({ value: text });
+  }
+
   const onClickLocation = row => {
     if(!descr?.value) {
       setDescr({ value: null, error: t('profile.select') });
@@ -239,8 +274,7 @@ export function Add(props){
   const addrProps = { value: address, setValue: setAddress, label: t('shop.addr'), placeholder: t('shop.addr1'), setError, length: 250 };
   const locProps = { value: location, setValue: setLocation, label: t('tax.location'), placeholder: t('tax.location'), setError, length: 250, 
                     onClick: onClickLocation, disabled: true, className: 'store_descr' };
-  const phoneProps = { value: phone, setValue: changePhone, label: t('shop.phone'), placeholder: t('shop.phone1'), setError, length: 20,
-    handleEnter: onClickSave };
+  const phoneProps = { value: phone, setValue: changePhone, label: t('shop.phone'), placeholder: t('shop.phone1'), setError, length: 20 };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
   const mapProps = { visible: select, closeModal: closeLocation, setLat, lat, lng, setLng, descr1, descr2, city };
@@ -248,7 +282,13 @@ export function Add(props){
   const image1Props = { image: image1, setImage: setImage1, setImage64: setImage164, setImageType: setImageType1, setError, className: 'im_image' };
   const image2Props = { image: image2, setImage: setImage2, setImage64: setImage264, setImageType: setImageType2, setError, className: 'im_image' };
   const checkProps = { checked, setChecked, label: 'shop.checked'};
-
+  const qrcheckProps = { checked: qrchecked, setChecked: setQrChecked, label: 'shop.qrchecked'};
+  const bankProps = { value: bank, setValue: setBank, label: t('system.bank'), placeholder: t('system.bank'), setError, data: banks, 
+  s_value: 'constKey', s_descr: 'valueStr1', onFocus: onFocusBank};
+  const accountProps = { value: account, setValue: changeAccount, label: t('manage.acct'), placeholder: t('account.acctCode'), setError, length: 25 };
+  const accountNameProps = { value: accountName, setValue: setAccountName, label: t('manage.acctName'), placeholder: t('manage.acctName'), setError,
+  handleEnter: onClickSave };
+  
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={400}>
       {open && <Confirm {...confirmProps} />}
@@ -256,7 +296,7 @@ export function Add(props){
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdStorefront' title={t(selected ? 'shop.edit' : 'shop.new')} isMD={true} />
-          <div className='m_scroll'>
+          <div className='m_scroll' id='list_scroll'>
             <form onSubmit={onClickSave}>
               <Input {...nameProps} />
               <Select {...cityProps} />
@@ -264,7 +304,15 @@ export function Add(props){
               <Input {...addrProps} />
               <IconInput {...locProps} />
               <Input {...phoneProps} />
-              {useDiningOption && <CheckBox {...checkProps} />}
+              <div className='row'>
+                {useDiningOption && <CheckBox {...checkProps} />}
+                <CheckBox {...qrcheckProps} style={{marginLeft: 50}}/>
+              </div>
+              {qrchecked && <div>
+                <Select {...bankProps} />
+                <Input {...accountProps} />
+                <Input {...accountNameProps} />
+              </div>}
               {user?.useAppointment && <div>
                 <p className='image_lbl'>{t('shop.image')}</p>
                 <div className='store_image_back'>

@@ -51,7 +51,7 @@ export function QrMenu() {
       setLoading(false);  
     }
 
-  const onClickAdd = () => navigate('/inventory/qrmenu/qrmenuadd');
+  const onClickAdd = () => navigate('/qrmenu/qrmenu/qrmenuadd');
 
 
   const filterProps = { onSearch, onClickAdd, setError };

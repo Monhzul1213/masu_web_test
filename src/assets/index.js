@@ -80,9 +80,10 @@ import control from './control.png';
 import image23 from './i23.png';
 import image24 from './i24.png';
 import image25 from './i25.png';
+import image26 from './i26.png';
 import star from './star.png';
 
-export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image23, image24, image25, star,
+export { image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image23, image24, image25, star, image26,
          image11, image12, image13, image14, image15, image16, image17, image18, image19, image20, image21, image22, control};
 export { login_image, header_image, logo, placeholder, qr_holder, logo_image, masu, twitter, twitter2, login_1, 
          flag_mn, flag_en, flag_cn, flag_kr, flag_gr };
