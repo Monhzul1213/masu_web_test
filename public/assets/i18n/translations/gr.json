@@ -1764,14 +1764,24 @@
 
 },
 "cart": {
-  "order_number": "Ihre Bestellnummer",
-  "tap_to_go_back": "Zum Zurückgehen tippen",
-  "your_cart": "Ihr Warenkorb",
+  "empty": "Dein Warenkorb ist leer!",
+  "your_cart": "Dein Warenkorb",
   "add_item": "Artikel hinzufügen",
-  "total": "Gesamt",
-  "order": "Bestellen",
-  "order_error": "Fehler beim Speichern der Bestellung.",
-  "order_error_send": "Fehler beim Senden der Bestellung."
+  "order": "Bestellen"
+},
+"payment": {
+  "pay": "Bezahlen",
+  "qr_label": "Diesen QR-Code in Ihrer Banking-App scannen",
+  "open_with_bank_app": "Oder in der Banking-App öffnen",
+  "checking": "Zahlungsstatus wird geprüft …",
+  "order_number": "Ihre Bestellnummer",
+  "tap_to_return": "Zum Zurückkehren irgendwo tippen",
+  "qpay_invoice_error": "QPay-Rechnung konnte nicht erstellt werden.",
+  "qpay_generic_error": "Bei QPay ist ein Fehler aufgetreten.",
+  "save_order_error": "Bestellung konnte nicht gespeichert werden.",
+  "qrmenu_not_enabled": "QR-Menü ist für diese Filiale deaktiviert.",
+  "loading_site_meta": "Bitte warten: Filialdaten werden geladen.",
+  "missing_bank_settings": "Bankcode/Kontonummer sind für diese Filiale nicht konfiguriert."
 },
   "version": "14"
 }

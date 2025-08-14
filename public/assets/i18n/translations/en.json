@@ -1751,12 +1751,24 @@
 
 },
 "cart": {
-  "order_number": "Your order number",
-  "tap_to_go_back": "Tap the screen to go back",
+  "empty": "Your cart is empty!",
   "your_cart": "Your Cart",
-  "add_item": "Add Item",
-  "total": "Total",
+  "add_item": "Add item",
   "order": "Order"
+},
+"payment": {
+  "pay": "Pay",
+  "qr_label": "Scan this QR in your banking app",
+  "open_with_bank_app": "Or open with your banking app",
+  "checking": "Checking payment status...",
+  "order_number": "Your order number",
+  "tap_to_return": "Tap anywhere to return",
+  "qpay_invoice_error": "Failed to create QPay invoice.",
+  "qpay_generic_error": "Something went wrong with QPay.",
+  "save_order_error": "Failed to save order.",
+  "qrmenu_not_enabled": "QR menu is disabled for this branch.",
+  "loading_site_meta": "Please wait: loading branch info.",
+  "missing_bank_settings": "Bank code/account number not configured for this branch."
 },
   "version": "14"
 }

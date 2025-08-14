@@ -1751,14 +1751,24 @@
 
 },
 "cart": {
-  "order_number": "주문 번호",
-  "tap_to_go_back": "돌아가려면 화면을 터치하세요",
+  "empty": "장바구니가 비어 있습니다!",
   "your_cart": "장바구니",
   "add_item": "상품 추가",
-  "total": "합계",
-  "order": "주문하기",
-  "order_error": "주문 저장 중 오류가 발생했습니다.",
-  "order_error_send": "주문 전송 중 오류가 발생했습니다."
+  "order": "주문하기"
+},
+"payment": {
+  "pay": "결제",
+  "qr_label": "은행 앱으로 이 QR을 스캔하세요",
+  "open_with_bank_app": "또는 은행 앱으로 열기",
+  "checking": "결제 상태 확인 중…",
+  "order_number": "주문번호",
+  "tap_to_return": "화면을 탭하여 돌아가기",
+  "qpay_invoice_error": "QPay 청구서 생성에 실패했습니다.",
+  "qpay_generic_error": "QPay 처리 중 오류가 발생했습니다.",
+  "save_order_error": "주문 저장에 실패했습니다.",
+  "qrmenu_not_enabled": "이 지점은 QR 메뉴가 비활성화되어 있습니다.",
+  "loading_site_meta": "잠시만요: 지점 정보를 불러오는 중입니다.",
+  "missing_bank_settings": "이 지점의 은행 코드/계좌번호가 설정되지 않았습니다."
 },
   "version": "14"
 }

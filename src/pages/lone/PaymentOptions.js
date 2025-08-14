@@ -45,7 +45,7 @@ function PaymentOptions({
  
   const QPAY_MERCHANT = "fe7bde6b-f683-49ed-9325-157c54cdc0af";
   const QPAY_BEARER =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIxM2ExMTNlZC1iMmIwLTQzMjQtYmU5Yi0xZGFhYTY4ZDMyNDEiLCJzZXNzaW9uX2lkIjoiTFg5SDg1ZnU5LVF2cW9VMGFaaEFudEVrV0dZSWRqUHkiLCJ0ZXJtaW5hbF9pZCI6Ijk1MDAwMDU5IiwiaWF0IjoxNzMzMjg1MTc2LCJleHAiOjM0NjY2NTY3NTJ9.Fh3Nw-EK9D1glI25jTbNJKFu7qYjtbwASvZfFvpBpfA"; // ← танай bearer
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIxM2ExMTNlZC1iMmIwLTQzMjQtYmU5Yi0xZGFhYTY4ZDMyNDEiLCJzZXNzaW9uX2lkIjoiQVhWR2VRT3U2MnZPR0JMc1ZHc1RjUk5oaFR1WlBURE4iLCJ0ZXJtaW5hbF9pZCI6Ijk1MDAwMDU5IiwiaWF0IjoxNzU1MTUxNzkzLCJleHAiOjM1MTAzODk5ODZ9.IXDq6ojC_jK_iZyntjFwZsuBQClt20QKhe8EIYTMBU4";
   const QPAY_BASE = "https://qpay.mn";
  
   const API_BASE = "https://app.masu.mn:8082/";
@@ -70,7 +70,6 @@ function PaymentOptions({
         alert(t("payment.missing_bank_settings"));
         return;
       }
-      console.log("[PaymentOptions] customerInfo:", customerInfo);
       const customerName =
         customerInfo?.type === "business" && customerInfo?.companyName
           ? customerInfo.companyName
@@ -95,7 +94,6 @@ function PaymentOptions({
           },
         ],
       };
-      console.log( payload);
 
       const res = await fetch(`${QPAY_BASE}/v2/invoice`, {
         method: "POST",
@@ -105,7 +103,6 @@ function PaymentOptions({
         },
         body: JSON.stringify(payload),
       });
-      console.log( res);
 
       const data = await res.json();
       if (data && data.qr_image) {
@@ -117,7 +114,6 @@ function PaymentOptions({
         alert(data?.message || t("payment.qpay_invoice_error"));
       }
     } catch (error) {
-      console.error("[PaymentOptions] createQPayInvoice error", error);
       alert(t("payment.qpay_generic_error"));
     }
   };
@@ -147,10 +143,6 @@ function PaymentOptions({
       const ticketBinID = ticketBinId ? parseInt(ticketBinId) : 0;
       let resolvedPaymentTypeId = Number(paymentTypeId);
       if (!Number.isFinite(resolvedPaymentTypeId) || resolvedPaymentTypeId <= 0) {
-        console.warn(
-          "[PaymentOptions] paymentTypeId invalid -> fallback to 7",
-          paymentTypeId
-        );
         resolvedPaymentTypeId = 7;
       }
  
@@ -205,7 +197,6 @@ function PaymentOptions({
         ],
         refNo,
       };
-      console.log("[PaymentOptions] saveOrderToService salesPayload:", salesPayload);
      
       const salesRes = await fetch(`${API_BASE}Integration/AddSales`, {
         method: "POST",
@@ -217,7 +208,6 @@ function PaymentOptions({
       alert(salesResult.retdesc || t("payment.save_order_error"));
       return null;
     } catch (err) {
-      console.error("❌ Error saving order:", err);
       alert(t("payment.save_order_error"));
       return null;
     }

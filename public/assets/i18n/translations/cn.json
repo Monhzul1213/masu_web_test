@@ -1749,14 +1749,24 @@
 
 },
 "cart": {
-  "order_number": "您的订单号",
-  "tap_to_go_back": "点击屏幕返回",
-  "your_cart": "您的购物车",
+  "empty": "购物车是空的！",
+  "your_cart": "你的购物车",
   "add_item": "添加商品",
-  "total": "总计",
-  "order": "下单",
-  "order_error": "保存订单时出错。",
-  "order_error_send": "发送订单时出错。"
+  "order": "下单"
 },
+"payment": {
+  "pay": "付款",
+  "qr_label": "请使用银行App扫描此二维码",
+  "open_with_bank_app": "或使用银行App打开",
+  "checking": "正在检查支付状态…",
+  "order_number": "您的订单号",
+  "tap_to_return": "轻触任意处返回",
+  "qpay_invoice_error": "创建 QPay 账单失败。",
+  "qpay_generic_error": "QPay 出现错误。",
+  "save_order_error": "订单保存失败。",
+  "qrmenu_not_enabled": "此分店未启用 QR 菜单。",
+  "loading_site_meta": "请稍候：正在加载分店信息。",
+  "missing_bank_settings": "此分店未配置银行代码/账号。"
+  },
   "version": "14"
 }
