@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import "../../css/qr.css";
 import qpayIcon from "../../assets/banks/Qpay.png";
 import { useTranslation } from "react-i18next";
+import { qpayLogin } from "../../services/login.slice";
  
 function PaymentOptions({
   amount = 0,
@@ -15,6 +17,8 @@ function PaymentOptions({
   siteMetaFromParent,
   customerInfo,
 }) {
+  const dispatch = useDispatch();
+ 
   const [qpayQr, setQpayQr] = useState(null);
   const [invoiceId, setInvoiceId] = useState(null);
   const [polling, setPolling] = useState(false);
@@ -36,20 +40,26 @@ function PaymentOptions({
   }, [siteMetaFromParent]);
  
   const pollingRef = useRef(null);
+  const tokenRef = useRef(null);
   const { t } = useTranslation();
  
   const numericAmount =
     Number(typeof amount === "object" ? amount.amount : amount) || 0;
  
-  // const isDev = process.env.NODE_ENV === "development";
+  const isDev = process.env.NODE_ENV === "development";
  
   const QPAY_MERCHANT = "fe7bde6b-f683-49ed-9325-157c54cdc0af";
-  const QPAY_BEARER =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRfaWQiOiIxM2ExMTNlZC1iMmIwLTQzMjQtYmU5Yi0xZGFhYTY4ZDMyNDEiLCJzZXNzaW9uX2lkIjoiQVhWR2VRT3U2MnZPR0JMc1ZHc1RjUk5oaFR1WlBURE4iLCJ0ZXJtaW5hbF9pZCI6Ijk1MDAwMDU5IiwiaWF0IjoxNzU1MTUxNzkzLCJleHAiOjM1MTAzODk5ODZ9.IXDq6ojC_jK_iZyntjFwZsuBQClt20QKhe8EIYTMBU4";
-  const QPAY_BASE = "https://qpay.mn";
+  const QPAY_BASE = isDev ? "" : "https://qpay.mn";
  
   const API_BASE = "https://app.masu.mn:8082/";
   const API_AUTH = "20250722141616000AAAzaqbddsxSKJJCVd1";
+ 
+  const ensureQpayToken = async () => {
+    const { error, token } = await dispatch(qpayLogin());
+    if (error || !token) throw new Error(error || "QPay token авахад алдаа гарлаа");
+    tokenRef.current = token;
+    return token;
+  };
  
   const createQPayInvoice = async () => {
     try {
@@ -70,6 +80,9 @@ function PaymentOptions({
         alert(t("payment.missing_bank_settings"));
         return;
       }
+ 
+      const bearer = await ensureQpayToken();
+ 
       const customerName =
         customerInfo?.type === "business" && customerInfo?.companyName
           ? customerInfo.companyName
@@ -94,41 +107,71 @@ function PaymentOptions({
           },
         ],
       };
-
+ 
       const res = await fetch(`${QPAY_BASE}/v2/invoice`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${QPAY_BEARER}`,
+          Authorization: `Bearer ${bearer}`,
         },
         body: JSON.stringify(payload),
       });
-
+ 
+      if (res.status === 401 || res.status === 403) {
+        const refreshed = await ensureQpayToken();
+        const retry = await fetch(`${QPAY_BASE}/v2/invoice`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${refreshed}`,
+          },
+          body: JSON.stringify(payload),
+        });
+        const retryData = await retry.json();
+        if (retry.ok && (retryData?.qr_image || retryData?.qrcode_image)) {
+          const qr = retryData.qr_image || retryData.qrcode_image;
+          setQpayQr(qr);
+          setInvoiceId(retryData.id || retryData.invoice_id);
+          setBankUrls(retryData.urls || retryData.qr_app_urls || []);
+          startPolling(retryData.id || retryData.invoice_id);
+          return;
+        }
+        throw new Error(retryData?.message || "QPay invoice алдаа (retry)");
+      }
+ 
       const data = await res.json();
-      if (data && data.qr_image) {
-        setQpayQr(data.qr_image);
-        setInvoiceId(data.id);
-        setBankUrls(data.urls || []);
-        startPolling(data.id);
+      if (res.ok && data && (data.qr_image || data.qrcode_image)) {
+        const qr = data.qr_image || data.qrcode_image;
+        setQpayQr(qr);
+        setInvoiceId(data.id || data.invoice_id);
+        setBankUrls(data.urls || data.qr_app_urls || []);
+        startPolling(data.id || data.invoice_id);
       } else {
         alert(data?.message || t("payment.qpay_invoice_error"));
       }
     } catch (error) {
+      console.error("[PaymentOptions] createQPayInvoice error", error);
       alert(t("payment.qpay_generic_error"));
     }
   };
  
   const checkQPayPayment = async (invoiceIdToCheck) => {
     try {
-      const res = await fetch(`${QPAY_BASE}/v2/invoice/${invoiceIdToCheck}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${QPAY_BEARER}`,
-        },
-      });
+      const bearer = tokenRef.current || (await ensureQpayToken());
+      const doFetch = async (tk) =>
+        fetch(`${QPAY_BASE}/v2/invoice/${invoiceIdToCheck}`, {
+          method: "GET",
+          headers: { Authorization: `Bearer ${tk}` },
+        });
+ 
+      let res = await doFetch(bearer);
+      if (res.status === 401 || res.status === 403) {
+        const refreshed = await ensureQpayToken();
+        res = await doFetch(refreshed);
+      }
+ 
       const data = await res.json();
-
-      if (data && data.invoice_status === "PAID") {
+      if (data && (data.invoice_status === "PAID" || data.status === "PAID")) {
         stopPolling();
         const ref = await saveOrderToService();
         if (ref) setRefNo(ref);
@@ -143,6 +186,10 @@ function PaymentOptions({
       const ticketBinID = ticketBinId ? parseInt(ticketBinId) : 0;
       let resolvedPaymentTypeId = Number(paymentTypeId);
       if (!Number.isFinite(resolvedPaymentTypeId) || resolvedPaymentTypeId <= 0) {
+        console.warn(
+          "[PaymentOptions] paymentTypeId invalid -> fallback to 7",
+          paymentTypeId
+        );
         resolvedPaymentTypeId = 7;
       }
  

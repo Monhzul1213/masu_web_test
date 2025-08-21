@@ -164,19 +164,43 @@ export const apiRecovery = email => async dispatch => {
   }
 };
 
-export const qpayLogin = () => async dispatch => {
-  try {
-    const token = `TEST_MERCHANT:123456`;
-    const encodedToken = Buffer.from(token).toString('base64');
-    const session_url = 'https://merchant.qpay.mn/v2/auth/token';
-
-    const config = { method: 'POST', url: session_url, headers: { 'Authorization': 'Basic '+ encodedToken }};
-    const response = await fetchRetryLogin(config);
-    if(!response || response?.error_code){
-      return Promise.resolve({ error: response?.description ?? 'Алдаа гарлаа.' });
-    } else {
-      return Promise.resolve({ error: null, token: response?.access_token });
+export const qpayLogin = ({ terminalId, clientId, clientSecret } = {}) => async (dispatch) => {
+  const toBase64 = (str) => {
+    try {
+      if (typeof window !== "undefined" && window.btoa) return window.btoa(str);
+      return Buffer.from(str).toString("base64");
+    } catch {
+      return "";
     }
+  };
+ 
+  try {
+    const user = clientId ?? "ULTIMATE";
+    const pass = clientSecret ?? "SeWeyTRz";
+    const encodedToken = toBase64(`${user}:${pass}`);
+ 
+    const url = "https://quickqr.qpay.mn/v2/auth/token";
+    const body = JSON.stringify({
+      terminal_id: String(terminalId ?? "95000059"),
+    });
+ 
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${encodedToken}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body,
+    });
+ 
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      return Promise.resolve({ error: err?.description || err?.message || `HTTP ${res.status}` });
+    }
+ 
+    const data = await res.json();
+    return Promise.resolve({ error: null, token: data?.access_token });
   } catch (err) {
     return Promise.resolve({ error: err?.toString() });
   }

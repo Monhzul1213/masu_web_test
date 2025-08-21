@@ -131,7 +131,7 @@ export const List = forwardRef((props, ref) => {
   await GetData1(response?.data?.journal);
 
   const updated = reportingPeriods.map(p =>
-    p.id === item.id ? { ...p, journalId: null, status: 1, isLocked: 'N' } : p
+    p.id === item.id ? { ...p, journalId: null, status: 1, isLocked: 'Y' } : p
   );
   setReportingPeriods(updated);
   setEdited?.(true);

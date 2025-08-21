@@ -44,7 +44,7 @@ export function Bill(){
 
   return (
     <Overlay loading={loading}>
-      <div className='bl_back' id='bill_back'>
+      <div className='bl_back' id='table_scroll' style={{maxWidth: 500, width: '100%', maxHeight: '85vh', margin: '15px 0'}}> 
         {error && <Error1 error={error} />}
         {!header ? <DynamicBSIcon name='BsReceipt' className='bl_empty' /> :
           <div>
