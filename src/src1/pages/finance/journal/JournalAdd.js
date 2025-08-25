@@ -108,7 +108,7 @@ export function JournalAdd() {
       return { journalID, txnDate: date?.value?.format('yyyy.MM.DD'), status: status?.value, templateID: template?.value,  //sourceType: source?.value,
       custID: customer?.value, totalAmt: price?.value, descr: descr?.value, rowStatus: journalID ? 'U' : 'I', items };
     } else {
-      if(!length) setSearch({ value: null, error: t('adjust.items_error') });
+      if(!length) setSearch({ value: null, error: t('account.items_error') });
       return false;
     }
   };

@@ -62,8 +62,8 @@ function Card(props) {
   }
   
   const onClickDelete = row => {
-    if(row?.original?.journalItemId !== 0) setDItems(old => [...old, row?.original]);
-    setDetail(detail?.filter(item => item?.journalItemId !== row?.original?.journalItemId));
+    if(row?.original?.templateDtlId !== 0) setDItems(old => [...old, row?.original]);
+    setDetail(detail?.filter(item => item?.templateDtlId !== row?.original?.templateDtlId));
     setSearch({ value: null });
   }
 

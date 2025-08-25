@@ -8,13 +8,12 @@ export function ButtonRow(props) {
     onClickCancel,
     onClickSave,
     onClickDelete,
-    // header,
+    header,
   } = props;
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   // const deletable = header?.status === 0;
   // const disabled = header?.status === 1;
-
   const onDelete = () => setOpen(true);
 
   const confirm = async (sure) => {
@@ -27,13 +26,13 @@ export function ButtonRow(props) {
   return (
     <div className="invt_btn_row" id="po_btns">
       {open && <Confirm {...confirmProps} />}
-      {/* {deletable && ( */}
+      {header && (
         <DynamicBSIcon
           className="a_btn_delete"
           name="BsTrash"
           onClick={onDelete}
         />
-      {/* )} */}
+      )}
       <Button
         className="invt_btn"
         // text={t(disabled ? "login.back" : "page.cancel")}
