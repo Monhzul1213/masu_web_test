@@ -31,6 +31,7 @@ export function QRMenu() {
   const [finalAmount, setFinalAmount] = useState(0);
   const [paymentTypeId, setPaymentTypeId] = useState(null);
   const [siteMetaForPayment, setSiteMetaForPayment] = useState(null);
+  const [customerInfo, setCustomerInfo] = useState(null);
 
   const sliceSize = 50;
   const { user, token } = useSelector((state) => state.login);
@@ -250,6 +251,7 @@ export function QRMenu() {
             cart={cart}
             paymentTypeId={paymentTypeId}
             siteMetaFromParent={siteMetaForPayment}
+            customerInfo={customerInfo}
             onClose={() => {
               setShowPaymentPage(false);
               setShowCartPage(true);
@@ -268,8 +270,14 @@ export function QRMenu() {
           cart={cart}
           setCart={setCart}
           onClose={() => setShowCartPage(false)}
-          onProceedToPayment={(amount) => {
+          onProceedToPayment={(payload) => {
+            const amount =
+              typeof payload === "number" ? payload : Number(payload?.amount ?? 0);
+            const ci =
+              typeof payload === "number" ? null : payload?.customerInfo ?? null;
+
             setFinalAmount(amount);
+            if (ci) setCustomerInfo(ci);
             setShowCartPage(false);
             setShowPaymentPage(true);
           }}

@@ -851,3 +851,121 @@
   color: #333;
   cursor: pointer;
 }
+.pay_segment {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 6px 0 12px;
+}
+
+.seg_btn {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.seg_btn.active {
+  border-color: #ab47bc;
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.15) inset;
+}
+
+.qpay_qr_img_wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.qpay_qr_img {
+  max-width: 280px;
+  width: 100%;
+  height: auto;
+  border: 8px solid #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+  border-radius: 8px;
+}
+
+.bank_app_list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 8px;
+}
+
+@media (max-width: 420px) {
+  .bank_app_list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.bank_app_item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 10px;
+  text-decoration: none;
+  background: #fff;
+}
+
+.bank_app_item img {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.bank_app_item span {
+  font-size: 13px;
+  color: #111827;
+}
+
+.qpay_qr .bank_app_list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+@media (max-width: 420px) {
+  .qpay_qr .bank_app_list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.qpay_qr .bank_app_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 110px; 
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  text-decoration: none;
+  background: #fff;
+  color: #111827;
+  transition: transform 0.2s;
+}
+
+.qpay_qr .bank_app_item:hover {
+  transform: translateY(-1px);
+}
+
+.qpay_qr .bank_app_item img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.qpay_qr .bank_app_item span {
+  max-width: 100%;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

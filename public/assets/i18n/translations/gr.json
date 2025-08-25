@@ -1774,18 +1774,34 @@
   "order": "Bestellen"
 },
 "payment": {
-  "pay": "Bezahlen",
-  "qr_label": "Diesen QR-Code in Ihrer Banking-App scannen",
-  "open_with_bank_app": "Oder in der Banking-App öffnen",
-  "checking": "Zahlungsstatus wird geprüft …",
-  "order_number": "Ihre Bestellnummer",
-  "tap_to_return": "Zum Zurückkehren irgendwo tippen",
-  "qpay_invoice_error": "QPay-Rechnung konnte nicht erstellt werden.",
-  "qpay_generic_error": "Bei QPay ist ein Fehler aufgetreten.",
-  "save_order_error": "Bestellung konnte nicht gespeichert werden.",
-  "qrmenu_not_enabled": "QR-Menü ist für diese Filiale deaktiviert.",
-  "loading_site_meta": "Bitte warten: Filialdaten werden geladen.",
-  "missing_bank_settings": "Bankcode/Kontonummer sind für diese Filiale nicht konfiguriert."
-},
+    "pay": "Bezahlen",
+    "qr_label": "Scannen Sie diesen QR-Code mit Ihrer Banking-App",
+    "open_with_bank_app": "Oder mit einer Banking-App öffnen",
+    "checking": "Zahlung wird geprüft…",
+    "order_number": "Bestellnummer",
+    "tap_to_return": "Zum Zurückkehren irgendwo tippen",
+    "qpay_invoice_error": "QPay-Rechnung konnte nicht erstellt werden.",
+    "qpay_generic_error": "Bei QPay ist ein Fehler aufgetreten.",
+    "save_order_error": "Die Bestellung konnte nicht gespeichert werden.",
+    "qrmenu_not_enabled": "QR-Menü ist für diese Filiale deaktiviert.",
+    "loading_site_meta": "Bitte warten: Filialinformationen werden geladen.",
+    "missing_bank_settings": "Bankcode/Kontonummer ist für diese Filiale nicht konfiguriert.",
+    "tab_qr": "QR scannen",
+    "tab_ib": "Onlinebanking",
+    "qr_hint": "Scannen Sie den QR-Code unten mit Ihrer Banking-App",
+    "app_hint": "Wählen Sie Ihre Banking-App aus der Liste",
+    "bank_list_empty": "Keine Banking-Apps gefunden.",
+    "qpay_name": "QPay",
+    "qpay_qr_alt": "QPay-QR"
+  },
+  "orderType": {
+    "business": "Unternehmen",
+    "individual": "Privatperson",
+    "reg_placeholder": "Handelsregisternummer",
+    "company_placeholder": "Firmenname",
+    "pay_now": "Jetzt bezahlen",
+    "fill_all_fields": "Bitte alle Felder ausfüllen",
+    "close": "Schließen"
+  },
   "version": "14"
 }

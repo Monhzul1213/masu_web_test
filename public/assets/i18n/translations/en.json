@@ -1761,18 +1761,34 @@
   "order": "Order"
 },
 "payment": {
-  "pay": "Pay",
-  "qr_label": "Scan this QR in your banking app",
-  "open_with_bank_app": "Or open with your banking app",
-  "checking": "Checking payment status...",
-  "order_number": "Your order number",
-  "tap_to_return": "Tap anywhere to return",
-  "qpay_invoice_error": "Failed to create QPay invoice.",
-  "qpay_generic_error": "Something went wrong with QPay.",
-  "save_order_error": "Failed to save order.",
-  "qrmenu_not_enabled": "QR menu is disabled for this branch.",
-  "loading_site_meta": "Please wait: loading branch info.",
-  "missing_bank_settings": "Bank code/account number not configured for this branch."
-},
+    "pay": "Pay",
+    "qr_label": "Scan this QR with your banking app",
+    "open_with_bank_app": "Or open with a banking app",
+    "checking": "Checking payment...",
+    "order_number": "Order number",
+    "tap_to_return": "Tap anywhere to return",
+    "qpay_invoice_error": "Failed to create QPay invoice.",
+    "qpay_generic_error": "An error occurred with QPay.",
+    "save_order_error": "Failed to save the order.",
+    "qrmenu_not_enabled": "QR menu is disabled for this branch.",
+    "loading_site_meta": "Please wait: loading branch information.",
+    "missing_bank_settings": "Bank code/account number is not configured for this branch.",
+    "tab_qr": "Scan QR",
+    "tab_ib": "Internet banking",
+    "qr_hint": "Scan the QR code below with your banking app",
+    "app_hint": "Choose your banking app from the list below",
+    "bank_list_empty": "No banking apps found.",
+    "qpay_name": "QPay",
+    "qpay_qr_alt": "QPay QR"
+  },
+  "orderType": {
+    "business": "Business",
+    "individual": "Individual",
+    "reg_placeholder": "Company registration number",
+    "company_placeholder": "Company name",
+    "pay_now": "Pay now",
+    "fill_all_fields": "Please fill in all fields",
+    "close": "Close"
+  },
   "version": "14"
 }
