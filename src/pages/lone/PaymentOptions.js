@@ -171,7 +171,7 @@ function PaymentOptions({
  
       const res = await fetch(`${QPAY_BASE}/v2/invoice`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${bearer}` },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${bearer}`, "Access-Control-Allow-Origin": "*"},
         body: JSON.stringify(payload),
       });
  
