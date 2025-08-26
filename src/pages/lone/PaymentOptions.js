@@ -193,6 +193,7 @@ function PaymentOptions({
   };
  
   const checkQPayPayment = async (invoiceIdToCheck) => {
+    console.log(QPAY_BASE);
     try {
       const bearer = tokenRef.current || (await ensureQpayToken());
       const doFetch = (tk) =>
