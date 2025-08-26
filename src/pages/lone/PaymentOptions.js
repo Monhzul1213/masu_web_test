@@ -24,11 +24,8 @@ function PaymentOptions({
   const API_BASE = "https://app.masu.mn:8082/";
   const API_AUTH = "20250722141616000AAAzaqbddsxSKJJCVd1";
   const isDev = process.env.NODE_ENV === "development";
-  const QPAY_BASE = isDev
-    ? "https://merchant-sandbox.qpay.mn"
-    : "https://merchant.qpay.mn";
- 
   const QPAY_MERCHANT = "fe7bde6b-f683-49ed-9325-157c54cdc0af";
+  const QPAY_BASE = isDev ? "" : "https://quickqr.qpay.mn";
   const QRQMENU_URL = "http://66.181.175.6:8083/Pos/QrQmenu";
   const QRQMENU_SECRET =
     "Ba*y^*^Y:t>B:d'<F(mc6w$F0|$|p2dk=N/AyO`{oyBe>,:&O(-}c~1NqV&t]1~";
@@ -81,6 +78,7 @@ function PaymentOptions({
     try {
       w = window.open(url, "_blank", "noopener=yes");
     } catch {}
+ 
     if (!w || w.closed || typeof w.closed === "undefined") {
       const a = document.createElement("a");
       a.href = url;
@@ -105,6 +103,7 @@ function PaymentOptions({
     const code = encrypt(plain);
     const endpoint = `${API_BASE}Sales/GetSalesBill?data=${encodeURIComponent(code)}`;
     const headers = { Accept: "application/json", authorization: API_AUTH };
+ 
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     for (let i = 0; i < 60; i++) {
       try {
@@ -129,7 +128,9 @@ function PaymentOptions({
  
   const ensureQpayToken = async () => {
     const { error, token } = await dispatch(qpayLogin());
-    if (error || !token) throw new Error(error || t("payment.qpay_generic_error"));
+    if (error || !token) {
+      throw new Error(error || t("payment.qpay_generic_error"));
+    }
     tokenRef.current = token;
     return token;
   };
@@ -462,4 +463,3 @@ function PaymentOptions({
 }
  
 export default PaymentOptions;
- 
