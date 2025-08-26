@@ -1,13 +1,9 @@
 import { SizeMe } from "react-sizeme";
 import { useTranslation } from "react-i18next";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createSearchParams,
-  useNavigate,
-  // useSearchParams,
-} from "react-router-dom";
-
+import { createSearchParams, useNavigate } from "react-router-dom";
+ 
 import "../../../css/order.css";
 import "../../../css/invt.css";
 import "../../css/tree.css";
@@ -16,108 +12,154 @@ import { Filter } from "../../components/accounts/Filter";
 import { AccountAddModal, AccountTree, List } from "../../components/accounts";
 import { Empty1, Error1, Overlay } from "../../../components/all";
 import { Subscription } from "../../../components/management/adjust/list";
-
+ 
 export function Account() {
   const { t } = useTranslation();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([]);          
+  const [allAcct, setAllAcct] = useState([]);  
   const [error, setError] = useState(null);
-  // const [searchParams] = useSearchParams();
   const [treeData, setTreeData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { user, token } = useSelector((state) => state.login);
-  const maxWidth = useSelector(state => state.temp.maxWidth);
+  const maxWidth = useSelector((state) => state.temp.maxWidth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user?.msRole?.webFinance !== "Y") navigate({ pathname: "/" });
-    else {
-      // const classId = searchParams?.get("classId");
-      // let query = classId ? `?AcctClassID=${classId}` : "";
-      onSearch();
-    }
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const onSearch = async (query) => {
-    setError(null);
-    setLoading(true);
-    const response = await dispatch(
-      getList(user, token, "Txn/GetAccount" + (query ?? ""))
-    );
-    if (response?.code === 1000) {
-      setVisible(true);
-    }
-    if (response?.error) {
-      setError(response?.error);
-    } else {
-      setData(response?.data?.acct);
-      setTreeData(convertToTreeData(response?.data?.accclass));
-    }
-
-    setLoading(false);
-  };
-
-  function convertToTreeData(data) {
+ 
+  const convertToTreeData = (arr = []) => {
+    if (!Array.isArray(arr)) return [];
     const map = {};
-    data.forEach((item) => {
+    arr.forEach((item) => {
       map[item.classId] = {
-        key: item.classId,
+        key: String(item.classId),
         title: item.descr,
         children: [],
       };
     });
-    const treeData = [];
-    data.forEach((item) => {
+    const out = [];
+    arr.forEach((item) => {
       const node = map[item.classId];
-      if (item.parentId === "-1") {
-        treeData.push(node);
-      } else if (map[item.parentId]) {
-        map[item.parentId].children.push(node);
-      }
+      if (item.parentId === "-1") out.push(node);
+      else if (map[item.parentId]) map[item.parentId].children.push(node);
     });
-    return treeData;
-  }
-
+    return out;
+  };
+ 
+  const buildKeyMap = useMemo(() => {
+    return (nodes = []) => {
+      const map = {};
+      const walk = (n) => {
+        if (!n) return;
+        const k = String(n.key);
+        map[k] = n;
+        if (Array.isArray(n.children)) n.children.forEach(walk);
+      };
+      nodes.forEach(walk);
+      return map;
+    };
+  }, []);
+ 
+  const collectDescendantKeys = (rootKey, keyMap) => {
+    const res = [];
+    const seen = new Set();
+    const dfs = (k) => {
+      if (!k || seen.has(k)) return;
+      seen.add(k);
+      const node = keyMap[k];
+      if (!node) return;
+      res.push(k);
+      if (Array.isArray(node.children)) {
+        node.children.forEach((c) => dfs(String(c.key)));
+      }
+    };
+    dfs(String(rootKey));
+    return res;
+  };
+ 
+  useEffect(() => {
+    if (user?.msRole?.webFinance !== "Y") {
+      navigate({ pathname: "/" });
+    } else {
+      fetchAccounts();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+ 
+  const fetchAccounts = async (query = "") => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, "Txn/GetAccount" + (query ?? "")));
+ 
+    if (response?.code === 1000) setVisible(true);
+ 
+    if (response?.error) {
+      setError(response?.error);
+    } else if (response?.data) {
+      const acct = response?.data?.acct ?? [];
+      const classes = response?.data?.accclass ?? [];
+      setData(acct);
+      setTreeData(convertToTreeData(classes));
+ 
+      if (!query) setAllAcct(acct);
+    }
+    setLoading(false);
+  };
+ 
   const onNodeClick = (classId) => {
     if (classId === "0") {
-      navigate({
-        search: "",
-      });
-      onSearch();
+      navigate({ search: "" });
+      setData(allAcct);
       return;
     }
-    navigate({
-      search: createSearchParams({
-        classId: classId,
-      }).toString(),
-    });
-    onSearch(`?AcctClassID=${classId}`);
+ 
+    navigate({ search: createSearchParams({ classId }).toString() });
+ 
+    const keyMap = buildKeyMap(treeData);
+    const idsArr = collectDescendantKeys(String(classId), keyMap);
+    const idSet = new Set(idsArr);
+ 
+    const pickRowClassId = (row) =>
+      String(
+        row?.acctClassId ??
+        row?.acctClassID ??
+        row?.classId ??
+        row?.ClassId ??
+        row?.classid ??
+        ""
+      );
+ 
+    if (allAcct?.length) {
+      const filtered = allAcct.filter((row) => idSet.has(pickRowClassId(row)));
+      setData(filtered);
+      return;
+    }
+ 
+    const params = new URLSearchParams();
+    params.set("AcctClassID", idsArr.join(","));
+    params.set("includeChildren", "Y");
+    fetchAccounts(`?${params.toString()}`);
   };
-
+ 
   const onDone = async () => {
     setVisible(false);
   };
-  const onClickAdd = () => {
-    // const classId = searchParams?.get("classId");
-    // if (classId) {
-      setOpenModal(true);
-      // navigate(`/finance/account/add?classId=${classId}`);
-    // } else {
-    //   setError("Ангилаа сонгоно уу");
-    // }
-  };
-
+ 
+  const onClickAdd = () => setOpenModal(true);
+ 
   const listProps = { data, onClickAdd, setOpenModal };
-  const headerProps = { onClickAdd, setError, onSearch, type: "account" };
+  const headerProps = {
+    onClickAdd,
+    setError,
+    onSearch: fetchAccounts,
+    type: "account",
+  };
   const subProps = { visible, setVisible, onDone };
   const treeProps = { treeData, onNodeClick };
-  const modalProps = { openModal, setOpenModal, onSearch };
+  const modalProps = { openModal, setOpenModal, onSearch: fetchAccounts };
+ 
   return (
-    <div className="s_container_i" style={{maxWidth}}>
+    <div className="s_container_i" style={{ maxWidth }}>
       {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}

@@ -52,17 +52,17 @@ export function FinanceList(props){
 		<td style="width:29px;"></td>
 		<td style="width:94px;"></td>
 		<td style="width:38px;"></td>
-	</tr>
-	<tr style="vertical-align:top;">
+		</tr>
+		<tr style="vertical-align:top;">
 		<td style="width:0px;height:19px;"></td>
-		<td class="cs1324BC0C" colspan="3" rowspan="3" style="width:113px;height:38px;text-align:left;vertical-align:top;"><div style="overflow:hidden;width:113px;height:38px;">
-			<div style="overflow:hidden;width:130px;height:40px;">
-					<img 
-					src="${data?.header?.merchanLogo}" 
-					alt="logo" 
-					style="max-width: 200px; max-height: 45px; display: block;" 
-					/>
-				</div>
+		<td class="cs1324BC0C" colspan="3" rowspan="3" style="width:113px;height:38px;text-align:left;vertical-align:top;"><div style="overflow:hidden;width:113px;height:50px;">
+			<div style="overflow:hidden;width:130px;height:45px;">
+			<img 
+			src="${data?.header?.merchanLogo}" 
+			alt="logo" 
+			style="max-width: 100%; max-height: 100%; object-fit: contain; display: block;" 
+			/>
+		</div>
 		</div>
 		</td>
 		<td></td>

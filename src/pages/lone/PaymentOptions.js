@@ -5,7 +5,7 @@ import qpayIcon from "../../assets/banks/Qpay.png";
 import { useTranslation } from "react-i18next";
 import { qpayLogin } from "../../services/login.slice";
 import { encrypt } from "../../helpers/encrypt";
-
+ 
 function PaymentOptions({
   amount = 0,
   onSuccessClose,
@@ -19,13 +19,16 @@ function PaymentOptions({
   customerInfo,
 }) {
   const dispatch = useDispatch();
-
+ 
   const BILL_DOMAIN = "https://app.masu.mn";
   const API_BASE = "https://app.masu.mn:8082/";
   const API_AUTH = "20250722141616000AAAzaqbddsxSKJJCVd1";
   const isDev = process.env.NODE_ENV === "development";
+  const QPAY_BASE = isDev
+    ? "https://merchant-sandbox.qpay.mn"
+    : "https://merchant.qpay.mn";
+ 
   const QPAY_MERCHANT = "fe7bde6b-f683-49ed-9325-157c54cdc0af";
-  const QPAY_BASE = isDev ? "" : "https://qpay.mn";
   const QRQMENU_URL = "http://66.181.175.6:8083/Pos/QrQmenu";
   const QRQMENU_SECRET =
     "Ba*y^*^Y:t>B:d'<F(mc6w$F0|$|p2dk=N/AyO`{oyBe>,:&O(-}c~1NqV&t]1~";
@@ -41,16 +44,16 @@ function PaymentOptions({
     useQrMenu: siteMetaFromParent?.useQrMenu ?? null,
     loaded: !!siteMetaFromParent,
   });
-
+ 
   const pollingRef = useRef(null);
   const tokenRef = useRef(null);
   const savingRef = useRef(false);
   const billWindowRef = useRef(null);
   const { t } = useTranslation();
-
+ 
   const numericAmount =
     Number(typeof amount === "object" ? amount.amount : amount) || 0;
-
+ 
   useEffect(() => {
     setSiteMeta((prev) => ({
       ...prev,
@@ -58,15 +61,15 @@ function PaymentOptions({
       loaded: !!siteMetaFromParent,
     }));
   }, [siteMetaFromParent]);
-
+ 
   useEffect(() => () => stopPolling(), []);
-
+ 
   const buildBillUrl = (salesNo) => {
     const plain = `${Number(merchantId)}-${Number(siteId)}-${String(salesNo).trim()}`;
     const code = encrypt(plain);
     return `${BILL_DOMAIN}/Bill?billno=${encodeURIComponent(code)}`;
   };
-
+ 
   const openUrlSmart = (url, targetWindow = null) => {
     try {
       if (targetWindow && !targetWindow.closed) {
@@ -78,7 +81,6 @@ function PaymentOptions({
     try {
       w = window.open(url, "_blank", "noopener=yes");
     } catch {}
-
     if (!w || w.closed || typeof w.closed === "undefined") {
       const a = document.createElement("a");
       a.href = url;
@@ -97,13 +99,12 @@ function PaymentOptions({
       }
     }, 150);
   };
-
+ 
   const waitAndOpenBill = async (salesNo) => {
     const plain = `${Number(merchantId)}-${Number(siteId)}-${String(salesNo).trim()}`;
     const code = encrypt(plain);
     const endpoint = `${API_BASE}Sales/GetSalesBill?data=${encodeURIComponent(code)}`;
     const headers = { Accept: "application/json", authorization: API_AUTH };
-
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     for (let i = 0; i < 60; i++) {
       try {
@@ -125,33 +126,31 @@ function PaymentOptions({
     openUrlSmart(url, billWindowRef.current || null);
     billWindowRef.current = null;
   };
-
+ 
   const ensureQpayToken = async () => {
     const { error, token } = await dispatch(qpayLogin());
-    if (error || !token) {
-      throw new Error(error || t("payment.qpay_generic_error"));
-    }
+    if (error || !token) throw new Error(error || t("payment.qpay_generic_error"));
     tokenRef.current = token;
     return token;
   };
-
+ 
   const createQPayInvoice = async () => {
     try {
       if (!siteMeta.loaded) { alert(t("payment.loading_site_meta")); return; }
       if (siteMeta.useQrMenu && siteMeta.useQrMenu !== "Y") { alert(t("payment.qrmenu_not_enabled")); return; }
-
+ 
       const bankCode = String(siteMeta.bankCode || "").trim();
       const acctNumber = String(siteMeta.accountNumber || "").trim();
       const acctName = String(siteMeta.accountName || "").trim();
       if (!bankCode || !acctNumber) { alert(t("payment.missing_bank_settings")); return; }
-
+ 
       const bearer = await ensureQpayToken();
-
+ 
       const customerName =
         customerInfo?.type === "business" && customerInfo?.companyName
           ? customerInfo.companyName
           : customerInfo?.personName || acctName || `SITE_${siteId}`;
-
+ 
       const payload = {
         merchant_id: QPAY_MERCHANT,
         branch_code: "BRANCH_" + siteId,
@@ -168,15 +167,15 @@ function PaymentOptions({
           },
         ],
       };
-
+ 
       const res = await fetch(`${QPAY_BASE}/v2/invoice`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${bearer}` },
         body: JSON.stringify(payload),
       });
-
+ 
       const data = await res.json().catch(() => ({}));
-
+ 
       if (res.ok && (data?.qr_image || data?.qrcode_image)) {
         const qr = data.qr_image || data.qrcode_image;
         setQpayQr(qr);
@@ -191,7 +190,7 @@ function PaymentOptions({
       alert(t("payment.qpay_generic_error"));
     }
   };
-
+ 
   const checkQPayPayment = async (invoiceIdToCheck) => {
     try {
       const bearer = tokenRef.current || (await ensureQpayToken());
@@ -200,26 +199,26 @@ function PaymentOptions({
           method: "GET",
           headers: { Authorization: `Bearer ${tk}` },
         });
-
+ 
       let res = await doFetch(bearer);
       if (res.status === 401 || res.status === 403) {
         const refreshed = await ensureQpayToken();
         res = await doFetch(refreshed);
       }
-
+ 
       const data = await res.json().catch(() => ({}));
       if (data && (data.invoice_status === "PAID" || data.status === "PAID")) {
         stopPolling();
         const result = await saveOrderToService();
         if (!result?.refNo) return;
-
+ 
         setRefNo(result.refNo);
         if (result?.keys) { await fetchVatInfoFromQrQmenu(result.keys); }
         await waitAndOpenBill(result.refNo);
       }
     } catch {}
   };
-
+ 
   const startPolling = (invoiceIdParam) => {
     if (pollingRef.current) clearInterval(pollingRef.current);
     setPolling(true);
@@ -227,7 +226,7 @@ function PaymentOptions({
       checkQPayPayment(invoiceIdParam);
     }, 3000);
   };
-
+ 
   const stopPolling = () => {
     if (pollingRef.current) {
       clearInterval(pollingRef.current);
@@ -235,23 +234,23 @@ function PaymentOptions({
     }
     setPolling(false);
   };
-
+ 
   const saveOrderToService = async () => {
     try {
       if (savingRef.current) return null;
       savingRef.current = true;
-
+ 
       const CREATED_VERSION = "QR25.08.22";
       const toMoney = (v) => Number(Number(v || 0).toFixed(2));
       const toInt = (v) => parseInt(Number(v) || 0);
-
+ 
       const ticketBinID = toInt(ticketBinId);
-
+ 
       let resolvedPaymentTypeId = Number(paymentTypeId);
       if (!Number.isFinite(resolvedPaymentTypeId) || resolvedPaymentTypeId <= 0) {
         resolvedPaymentTypeId = 7;
       }
-
+ 
       const salesItems = (cart || []).map((item, idx) => {
         const qty = toMoney(item.qty);
         const price = toMoney(item.price);
@@ -265,10 +264,10 @@ function PaymentOptions({
           serviceDescr: String(item.name || "").slice(0, 200),
         };
       });
-
+ 
       const itemsTotal = toMoney(salesItems.reduce((s, it) => s + (it.amount || 0), 0));
       const finalTotal = itemsTotal > 0 ? itemsTotal : toMoney(numericAmount);
-
+ 
       const derived = {
         custType: customerInfo?.type === "business" ? "business" : "individual",
         custReg: String(customerInfo?.regNo || ""),
@@ -278,7 +277,7 @@ function PaymentOptions({
             : String(customerInfo?.personName || ""),
         VatCustomerID: customerInfo?.type === "business" ? String(customerInfo?.regNo || "").trim() : "",
       };
-
+ 
       const payload = {
         merchantID: toInt(merchantId),
         siteID: toInt(siteId),
@@ -291,23 +290,23 @@ function PaymentOptions({
         salesitems: salesItems,
         salespayments: [{ paymentTypeID: resolvedPaymentTypeId, paymentAmount: finalTotal }],
       };
-
+ 
       const headers = {
         "Content-Type": "application/json",
         Accept: "application/json",
         authorization: API_AUTH,
       };
-
+ 
       const salesRes = await fetch(`${API_BASE}Integration/AddSales`, {
         method: "POST",
         headers,
         body: JSON.stringify(payload),
       });
-
+ 
       const salesText = await salesRes.text();
       let salesResult = null;
       try { salesResult = JSON.parse(salesText); } catch {}
-
+ 
       if (!salesRes.ok) {
         alert(`AddSales HTTP ${salesRes.status}: ${salesText || "Unknown error"}`);
         savingRef.current = false;
@@ -318,16 +317,16 @@ function PaymentOptions({
         savingRef.current = false;
         return null;
       }
-
+ 
       const serverRef =
         salesResult?.retdata?.refNo ||
         salesResult?.retdata?.ticketNo ||
         salesResult?.retdata?.orderNo ||
         null;
-
+ 
       const serverKeys =
         salesResult?.retdata?.keys || salesResult?.retdata?.key || null;
-
+ 
       savingRef.current = false;
       return { refNo: serverRef, keys: serverKeys };
     } catch (err) {
@@ -336,7 +335,7 @@ function PaymentOptions({
       return null;
     }
   };
-
+ 
   const fetchVatInfoFromQrQmenu = async (keys) => {
     try {
       if (!keys) throw new Error("AddSales-с 'keys' хоосон ирлээ");
@@ -357,11 +356,11 @@ function PaymentOptions({
       return false;
     }
   };
-
+ 
   return (
     <div className="payment_container">
       <button className="close_button" onClick={onClose}>×</button>
-
+ 
       {refNo ? (
         <div
           className="order_success"
@@ -380,7 +379,7 @@ function PaymentOptions({
         <>
           <p>{t("payment.pay")}</p>
           <div className="payment_amount">{numericAmount.toLocaleString()} ₮</div>
-
+ 
           {qpayQr ? (
             <div className="qpay_qr">
               <div className="pay_segment">
@@ -399,7 +398,7 @@ function PaymentOptions({
                   {t("payment.tab_ib")}
                 </button>
               </div>
-
+ 
               {payView === "qr" ? (
                 <>
                   <p style={{ textAlign: "center", opacity: 0.8 }}>{t("payment.qr_hint")}</p>
@@ -437,7 +436,7 @@ function PaymentOptions({
                   )}
                 </>
               )}
-
+ 
               {polling && (
                 <p style={{ marginTop: 10, textAlign: "center" }}>
                   {t("payment.checking")}
@@ -461,5 +460,6 @@ function PaymentOptions({
     </div>
   );
 }
-
+ 
 export default PaymentOptions;
+ 
