@@ -25,7 +25,7 @@ function PaymentOptions({
   const API_AUTH = "20250722141616000AAAzaqbddsxSKJJCVd1";
   const isDev = process.env.NODE_ENV === "development";
   const QPAY_MERCHANT = "fe7bde6b-f683-49ed-9325-157c54cdc0af";
-  const QPAY_BASE = isDev ? "" : "https://quickqr.qpay.mn";
+  const QPAY_BASE = "https://merchant.qpay.mn";
   const QRQMENU_URL = "http://66.181.175.6:8083/Pos/QrQmenu";
   const QRQMENU_SECRET =
     "Ba*y^*^Y:t>B:d'<F(mc6w$F0|$|p2dk=N/AyO`{oyBe>,:&O(-}c~1NqV&t]1~";
