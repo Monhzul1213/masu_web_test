@@ -2,7 +2,7 @@
   "name": "masu_web",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://quickqr.qpay.mn",
+  "proxy": "https://app.masu.mn:8084",
   "dependencies": {
     "@emailjs/browser": "^3.7.0",
     "@react-pdf-viewer/core": "^3.12.0",

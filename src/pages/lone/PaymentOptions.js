@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import "../../css/qr.css";
 import qpayIcon from "../../assets/banks/Qpay.png";
 import { useTranslation } from "react-i18next";
-import { qpayLogin } from "../../services/login.slice";
 import { encrypt } from "../../helpers/encrypt";
  
 function PaymentOptions({
@@ -19,21 +18,17 @@ function PaymentOptions({
   customerInfo,
 }) {
   const dispatch = useDispatch();
- 
+  const { t } = useTranslation();
   const BILL_DOMAIN = "https://app.masu.mn";
   const API_BASE = "https://app.masu.mn:8082/";
   const API_AUTH = "20250722141616000AAAzaqbddsxSKJJCVd1";
-  const isDev = process.env.NODE_ENV === "development";
-  const QPAY_MERCHANT = "fe7bde6b-f683-49ed-9325-157c54cdc0af";
-  const QPAY_BASE = "https://merchant.qpay.mn";
-  const QRQMENU_URL = "http://66.181.175.6:8083/Pos/QrQmenu";
-  const QRQMENU_SECRET =
-    "Ba*y^*^Y:t>B:d'<F(mc6w$F0|$|p2dk=N/AyO`{oyBe>,:&O(-}c~1NqV&t]1~";
+  const MASU_BASE = "http://app.masu.mn:8084/Payment.asmx";
+  const AUTH_HEADER_KEY = "authorization";
   const [qpayQr, setQpayQr] = useState(null);
-  const [polling, setPolling] = useState(false);
   const [bankUrls, setBankUrls] = useState([]);
-  const [refNo, setRefNo] = useState(null);
   const [payView, setPayView] = useState("qr");
+  const [polling, setPolling] = useState(false);
+  const [refNo, setRefNo] = useState(null);
   const [siteMeta, setSiteMeta] = useState({
     bankCode: siteMetaFromParent?.bankCode ?? null,
     accountNumber: siteMetaFromParent?.accountNumber ?? null,
@@ -42,11 +37,13 @@ function PaymentOptions({
     loaded: !!siteMetaFromParent,
   });
  
+  const [masuToken, setMasuToken] = useState(null);
+  const [masuSalesNo, setMasuSalesNo] = useState(null);
+  const [masuLoading, setMasuLoading] = useState(false);
   const pollingRef = useRef(null);
-  const tokenRef = useRef(null);
   const savingRef = useRef(false);
   const billWindowRef = useRef(null);
-  const { t } = useTranslation();
+  const addSalesKeysRef = useRef(null);
  
   const numericAmount =
     Number(typeof amount === "object" ? amount.amount : amount) || 0;
@@ -62,7 +59,9 @@ function PaymentOptions({
   useEffect(() => () => stopPolling(), []);
  
   const buildBillUrl = (salesNo) => {
-    const plain = `${Number(merchantId)}-${Number(siteId)}-${String(salesNo).trim()}`;
+    const plain = `${Number(merchantId)}-${Number(siteId)}-${String(
+      salesNo
+    ).trim()}`;
     const code = encrypt(plain);
     return `${BILL_DOMAIN}/Bill?billno=${encodeURIComponent(code)}`;
   };
@@ -99,9 +98,13 @@ function PaymentOptions({
   };
  
   const waitAndOpenBill = async (salesNo) => {
-    const plain = `${Number(merchantId)}-${Number(siteId)}-${String(salesNo).trim()}`;
+    const plain = `${Number(merchantId)}-${Number(siteId)}-${String(
+      salesNo
+    ).trim()}`;
     const code = encrypt(plain);
-    const endpoint = `${API_BASE}Sales/GetSalesBill?data=${encodeURIComponent(code)}`;
+    const endpoint = `${API_BASE}Sales/GetSalesBill?data=${encodeURIComponent(
+      code
+    )}`;
     const headers = { Accept: "application/json", authorization: API_AUTH };
  
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -110,8 +113,12 @@ function PaymentOptions({
         const res = await fetch(endpoint, { headers });
         const text = await res.text();
         let json = null;
-        try { json = JSON.parse(text); } catch {}
-        const hasHeader = Array.isArray(json?.retdata?.sales) && json.retdata.sales.length > 0;
+        try {
+          json = JSON.parse(text);
+        } catch {}
+        const hasHeader =
+          Array.isArray(json?.retdata?.sales) &&
+          json.retdata.sales.length > 0;
         if (res.ok && hasHeader) {
           const url = buildBillUrl(salesNo);
           openUrlSmart(url, billWindowRef.current || null);
@@ -126,106 +133,176 @@ function PaymentOptions({
     billWindowRef.current = null;
   };
  
-  const ensureQpayToken = async () => {
-    const { error, token } = await dispatch(qpayLogin());
-    if (error || !token) {
-      throw new Error(error || t("payment.qpay_generic_error"));
+  const masuLogin = async () => {
+    setMasuLoading(true);
+    try {
+      const req = {
+        loginReq: {
+          UserName: "sukhnasan@gmail.com",
+          Password: "12345678",
+        },
+      };
+            console.log( req);
+ 
+      const res = await fetch(`${MASU_BASE}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json", "Access-Control-Allow-Origin": "*" },
+        body: JSON.stringify(req),
+      });
+      console.log(res, req);
+     
+      const text = await res.text();
+      let json = null;
+      try {
+        json = JSON.parse(text);
+      } catch {
+        json = { raw: text };
+      }
+      const token = json?.retdata?.token;
+      if (!res.ok || !token) {
+        alert(json?.retdesc || "Login амжилтгүй.");
+        return null;
+      }
+      setMasuToken(token);
+      return token;
+    } catch (e) {
+      alert(e?.message || "Login error");
+      return null;
+    } finally {
+      setMasuLoading(false);
     }
-    tokenRef.current = token;
-    return token;
+  };
+  const ensureSalesNoFromAddSales = async () => {
+    if (masuSalesNo) return masuSalesNo;
+    const saved = await saveOrderToService();
+    if (!saved?.refNo) {
+      alert("AddSales амжилтгүй тул SalesNo олдсонгүй.");
+      return null;
+    }
+    setMasuSalesNo(saved.refNo);
+    addSalesKeysRef.current = saved.keys || null;
+    return saved.refNo;
   };
  
   const createQPayInvoice = async () => {
     try {
-      if (!siteMeta.loaded) { alert(t("payment.loading_site_meta")); return; }
-      if (siteMeta.useQrMenu && siteMeta.useQrMenu !== "Y") { alert(t("payment.qrmenu_not_enabled")); return; }
+      const salesNo = await ensureSalesNoFromAddSales();
+      if (!salesNo) return;
  
-      const bankCode = String(siteMeta.bankCode || "").trim();
-      const acctNumber = String(siteMeta.accountNumber || "").trim();
-      const acctName = String(siteMeta.accountName || "").trim();
-      if (!bankCode || !acctNumber) { alert(t("payment.missing_bank_settings")); return; }
+      const token = masuToken || (await masuLogin());
+      console.log(token);
+     
+      if (!token) return;
  
-      const bearer = await ensureQpayToken();
- 
-      const customerName =
-        customerInfo?.type === "business" && customerInfo?.companyName
-          ? customerInfo.companyName
-          : customerInfo?.personName || acctName || `SITE_${siteId}`;
- 
-      const payload = {
-        merchant_id: QPAY_MERCHANT,
-        branch_code: "BRANCH_" + siteId,
-        amount: numericAmount,
-        currency: "MNT",
-        customer_name: customerName,
-        description: `POS ${siteId}`,
-        bank_accounts: [
-          {
-            account_bank_code: bankCode,
-            account_number: acctNumber,
-            account_name: acctName || "",
-            is_default: true,
-          },
-        ],
+      const req = {
+        paymentReq: {
+          SiteID: 368,
+          TerminalID: 687,
+          SalesNo: String(salesNo),
+          PaymentTypeID: 7,
+          Amount: Number(numericAmount) || 0,
+        },
       };
  
-      const res = await fetch(`${QPAY_BASE}/v2/invoice`, {
+      const res = await fetch(`${MASU_BASE}/callPayment`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${bearer}`, "Access-Control-Allow-Origin": "*"},
-        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          [AUTH_HEADER_KEY]: token,
+        },
+        body: JSON.stringify(req),
       });
  
-      const data = await res.json().catch(() => ({}));
- 
-      if (res.ok && (data?.qr_image || data?.qrcode_image)) {
-        const qr = data.qr_image || data.qrcode_image;
-        setQpayQr(qr);
-        const urls = data.urls || data.qr_app_urls || [];
-        setBankUrls(urls);
-        setPayView(urls.length ? "apps" : "qr");
-        startPolling(data.id || data.invoice_id);
-      } else {
-        alert(data?.message || t("payment.qpay_invoice_error"));
+      const text = await res.text();
+      let json = null;
+      try {
+        json = JSON.parse(text);
+      } catch {
+        json = { raw: text };
       }
-    } catch {
-      alert(t("payment.qpay_generic_error"));
+ 
+      if (!res.ok) {
+        alert(json?.retdesc || `callPayment HTTP ${res.status}`);
+        return;
+      }
+ 
+      const data = json?.retdata || json;
+ 
+      if (data?.qr_image || data?.qrcode_image) {
+        setQpayQr(data.qr_image || data.qrcode_image);
+      } else {
+        setQpayQr(null);
+      }
+      const urls = data?.urls || data?.qr_app_urls || [];
+      setBankUrls(urls);
+      setPayView(urls.length ? "apps" : "qr");
+ 
+      startPolling();
+    } catch (e) {
+      alert(e?.message || t("payment.qpay_generic_error"));
     }
   };
  
-  const checkQPayPayment = async (invoiceIdToCheck) => {
-    console.log(QPAY_BASE);
+  const checkQPayPayment = async () => {
     try {
-      const bearer = tokenRef.current || (await ensureQpayToken());
-      const doFetch = (tk) =>
-        fetch(`${QPAY_BASE}/v2/invoice/${invoiceIdToCheck}`, {
-          method: "GET",
-          headers: { Authorization: `Bearer ${tk}` },
-        });
+      const salesNo = masuSalesNo || (await ensureSalesNoFromAddSales());
+      if (!salesNo) return;
  
-      let res = await doFetch(bearer);
-      if (res.status === 401 || res.status === 403) {
-        const refreshed = await ensureQpayToken();
-        res = await doFetch(refreshed);
+      const token = masuToken || (await masuLogin());
+      if (!token) return;
+ 
+      const req = {
+        checkreq: {
+          SiteID: 368,
+          TerminalID: 687,
+          SalesNo: String(salesNo),
+          PaymentTypeID: 7,
+          Amount: Number(numericAmount) || 0,
+          CheckID: "",
+        },
+      };
+ 
+      const res = await fetch(`${MASU_BASE}/checkPayment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          [AUTH_HEADER_KEY]: token,
+        },
+        body: JSON.stringify(req),
+      });
+ 
+      const text = await res.text();
+      let json = null;
+      try {
+        json = JSON.parse(text);
+      } catch {
+        json = { raw: text };
       }
  
-      const data = await res.json().catch(() => ({}));
-      if (data && (data.invoice_status === "PAID" || data.status === "PAID")) {
+      const data = json?.retdata || json;
+      const status = (data?.invoice_status || data?.status || "").toString().toUpperCase();
+ 
+      if (status === "PAID") {
         stopPolling();
-        const result = await saveOrderToService();
-        if (!result?.refNo) return;
  
-        setRefNo(result.refNo);
-        if (result?.keys) { await fetchVatInfoFromQrQmenu(result.keys); }
-        await waitAndOpenBill(result.refNo);
+        setRefNo(String(salesNo));
+        if (addSalesKeysRef.current) {
+          try { await fetchVatInfoFromQrQmenu(addSalesKeysRef.current); } catch {}
+        }
+ 
+        await waitAndOpenBill(String(salesNo));
       }
-    } catch {}
+    } catch {
+    }
   };
  
-  const startPolling = (invoiceIdParam) => {
+  const startPolling = () => {
     if (pollingRef.current) clearInterval(pollingRef.current);
     setPolling(true);
     pollingRef.current = setInterval(() => {
-      checkQPayPayment(invoiceIdParam);
+      checkQPayPayment();
     }, 3000);
   };
  
@@ -267,17 +344,23 @@ function PaymentOptions({
         };
       });
  
-      const itemsTotal = toMoney(salesItems.reduce((s, it) => s + (it.amount || 0), 0));
+      const itemsTotal = toMoney(
+        salesItems.reduce((s, it) => s + (it.amount || 0), 0)
+      );
       const finalTotal = itemsTotal > 0 ? itemsTotal : toMoney(numericAmount);
  
       const derived = {
-        custType: customerInfo?.type === "business" ? "business" : "individual",
+        custType:
+          customerInfo?.type === "business" ? "business" : "individual",
         custReg: String(customerInfo?.regNo || ""),
         custName:
           customerInfo?.type === "business" && customerInfo?.companyName
             ? String(customerInfo.companyName)
             : String(customerInfo?.personName || ""),
-        VatCustomerID: customerInfo?.type === "business" ? String(customerInfo?.regNo || "").trim() : "",
+        VatCustomerID:
+          customerInfo?.type === "business"
+            ? String(customerInfo?.regNo || "").trim()
+            : "",
       };
  
       const payload = {
@@ -290,7 +373,9 @@ function PaymentOptions({
         CreatedVersion: CREATED_VERSION,
         ...derived,
         salesitems: salesItems,
-        salespayments: [{ paymentTypeID: resolvedPaymentTypeId, paymentAmount: finalTotal }],
+        salespayments: [
+          { paymentTypeID: resolvedPaymentTypeId, paymentAmount: finalTotal },
+        ],
       };
  
       const headers = {
@@ -307,7 +392,9 @@ function PaymentOptions({
  
       const salesText = await salesRes.text();
       let salesResult = null;
-      try { salesResult = JSON.parse(salesText); } catch {}
+      try {
+        salesResult = JSON.parse(salesText);
+      } catch {}
  
       if (!salesRes.ok) {
         alert(`AddSales HTTP ${salesRes.status}: ${salesText || "Unknown error"}`);
@@ -315,7 +402,12 @@ function PaymentOptions({
         return null;
       }
       if (!salesResult || salesResult.rettype !== 0) {
-        alert(salesResult?.retdesc || salesResult?.message || salesText || t("payment.save_order_error"));
+        alert(
+          salesResult?.retdesc ||
+            salesResult?.message ||
+            salesText ||
+            t("payment.save_order_error")
+        );
         savingRef.current = false;
         return null;
       }
@@ -338,6 +430,10 @@ function PaymentOptions({
     }
   };
  
+  const QRQMENU_URL = "http://66.181.175.6:8083/Pos/QrQmenu";
+  const QRQMENU_SECRET =
+    "Ba*y^*^Y:t>B:d'<F(mc6w$F0|$|p2dk=N/AyO`{oyBe>,:&O(-}c~1NqV&t]1~";
+ 
   const fetchVatInfoFromQrQmenu = async (keys) => {
     try {
       if (!keys) throw new Error("AddSales-с 'keys' хоосон ирлээ");
@@ -351,7 +447,9 @@ function PaymentOptions({
       });
       const text = await res.text();
       let data = null;
-      try { data = JSON.parse(text); } catch {}
+      try {
+        data = JSON.parse(text);
+      } catch {}
       if (!res.ok) return false;
       return true;
     } catch {
@@ -448,9 +546,9 @@ function PaymentOptions({
           ) : (
             <div className="payment_methods">
               <div
-                className={`payment_method ${siteMeta.loaded && siteMeta.useQrMenu === "N" ? "disabled" : ""}`}
+                className="payment_method"
                 onClick={createQPayInvoice}
-                title={siteMeta.loaded && siteMeta.useQrMenu === "N" ? t("payment.qrmenu_not_enabled") : t("payment.qpay_name")}
+                title={t("payment.qpay_name")}
               >
                 <img src={qpayIcon} alt={t("payment.qpay_name")} className="method_icon_img" />
                 <div className="method_name">{t("payment.qpay_name")}</div>
@@ -464,3 +562,4 @@ function PaymentOptions({
 }
  
 export default PaymentOptions;
+ 
