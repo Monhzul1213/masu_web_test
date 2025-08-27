@@ -22,7 +22,7 @@ function PaymentOptions({
   const BILL_DOMAIN = "https://app.masu.mn";
   const API_BASE = "https://app.masu.mn:8082/";
   const API_AUTH = "20250722141616000AAAzaqbddsxSKJJCVd1";
-  const MASU_BASE = "http://app.masu.mn:8084/Payment.asmx";
+  const MASU_BASE = "https://app.masu.mn:8084/Payment.asmx";
   const AUTH_HEADER_KEY = "authorization";
   const [qpayQr, setQpayQr] = useState(null);
   const [bankUrls, setBankUrls] = useState([]);
