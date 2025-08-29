@@ -1,9 +1,9 @@
-import React from "react";
+ import React, { useMemo } from "react";
 import { MdChevronLeft } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { DescrInput, IconButton, Input, Select } from "../../../components/all";
-
+ 
 export function MainInput(props) {
   const {
     setError,
@@ -20,12 +20,35 @@ export function MainInput(props) {
     vatPropertys,
     cashPropertys,
   } = props;
+ 
   const { t } = useTranslation();
   const navigate = useNavigate();
+ 
+  const sortedVat = useMemo(() => {
+    const arr = Array.isArray(vatPropertys) ? [...vatPropertys] : [];
+    return arr.sort((a, b) =>
+      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
+        numeric: true,
+        sensitivity: "base",
+      })
+    );
+  }, [vatPropertys]);
+ 
+  const sortedCash = useMemo(() => {
+    const arr = Array.isArray(cashPropertys) ? [...cashPropertys] : [];
+    return arr.sort((a, b) =>
+      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
+        numeric: true,
+        sensitivity: "base",
+      })
+    );
+  }, [cashPropertys]);
+ 
   const onClickBack = (e) => {
     e?.preventDefault();
     navigate("/finance/template");
   };
+ 
   const idProps = {
     value: { value: templateId },
     setValue: () => {},
@@ -53,39 +76,33 @@ export function MainInput(props) {
   };
   const vatProps = {
     value: vatPropertyId,
-    setValue: ({ value }) => {
-      setVatPropertyId({ value });
-    },
+    setValue: ({ value }) => setVatPropertyId({ value }),
     label: t("transModel.vatSelect"),
     placeholder: t("transModel.vatSelect"),
-    data: vatPropertys,
+    data: sortedVat,
     setError,
     setEdited,
     s_value: "constKey",
     s_descr: "valueStr1",
     inRow: true,
-    // onFocus: onFocusSite,
     loading,
     disabled: !editable,
   };
   const cashProps = {
     value: cashPropertyId,
-    setValue: ({ value }) => {
-      setCashPropertyId({ value });
-    },
+    setValue: ({ value }) => setCashPropertyId({ value }),
     label: t("transModel.cashSelect"),
     placeholder: t("transModel.cashSelect"),
-    data: cashPropertys,
+    data: sortedCash,
     setError,
     setEdited,
     s_value: "constKey",
     s_descr: "valueStr1",
     inRow: true,
-    // onFocus: onFocusSite,
     loading,
     disabled: !editable,
   };
-
+ 
   return (
     <div className="ad_back">
       <div className="ps_menu_back">

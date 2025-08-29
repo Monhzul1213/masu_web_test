@@ -30,6 +30,7 @@
     "mime": "^3.0.0",
     "moment": "^2.29.4",
     "pdfjs-dist": "^4.10.38",
+    "qrcode": "^1.5.4",
     "qrcode.react": "^4.2.0",
     "react": "^18.2.0",
     "react-background-slider": "^4.0.0-next.3",

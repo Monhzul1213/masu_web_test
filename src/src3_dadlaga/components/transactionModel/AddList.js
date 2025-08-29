@@ -140,7 +140,8 @@ function Card(props) {
   }, []);
 
   const newItem = acct => {
-    return { accountID: acct?.accountId, acct: acct?.acct, drAmt: acct?.drAmt ?? 0, crAmt: acct?.crAmt ?? 0, acctName: acct?.acctName, 
+
+    return { acct: acct?.acct, drAmt: acct?.drAmt ?? 0, crAmt: acct?.crAmt ?? 0, acctName: acct?.acctName, 
       isDebit: acct?.isDebit, status: acct?.status, currency: acct?.currency, itemDescr: acct?.itemDescr ?? '', rowStatus: 'I', isNew : true};
   }
 
@@ -177,7 +178,7 @@ function Card(props) {
   );
   const tableProps = { tableInstance };
   const maxHeight =
-    "calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))";
+    "calc(100vh - var(--header-height) - var(--page-padding) * 8 - 150px - var(--pg-height))";
   const id = size?.width > 780 ? "ih_large" : "ih_small";
 
   return (
@@ -191,7 +192,7 @@ function Card(props) {
         style={{ overflowY: "scroll", maxHeight }}
       >
         <TableResize {...tableProps} />
-        {editable ? (
+        {/* {editable ? ( */}
           <ItemSelect
             newItem={newItem}
             data={detail}
@@ -199,9 +200,9 @@ function Card(props) {
             search={search}
             setSearch={setSearch}
           />
-        ) : (
+        {/* ) : (
           ""
-        )}
+        )} */}
       </div>
     </div>
   );

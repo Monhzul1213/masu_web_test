@@ -4,10 +4,12 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Date, DescrInput, IconButton, Input, MoneyInput1, Select } from "../../../../../components/all";
+import { Date, DescrInput, DynamicBSIcon, IconButton, Input, MoneyInput1, Select } from "../../../../../components/all";
 import { getList } from "../../../../../services";
 import { TempSelect } from "./TempSelect";
 import { evaluate } from "mathjs";
+import { Add as AddCustomer } from "../../../customer/customer/Add";
+import { AddTemplate } from "./AddTemplate";
 
 export function MainInput(props) {
   const { setError, setEdited, price, setPrice, descr,  setDescr, source, setSource, setCustomer , customer,
@@ -15,19 +17,41 @@ export function MainInput(props) {
   const [states, setStates] = useState([{ value: 0, label: "Үүсгэсэн" }]);
   const [templates, setTemplates] = useState([]);
   const [custs, setCusts] = useState([]);
+  const [tempVisible, setTempVisible] = useState(false);
+  const [custVisible, setCustVisible] = useState(false);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user, token } = useSelector((state) => state.login);
 
   useEffect(() => {
-    onFocusCust();
-    onFocusTemplate();
+    // onFocusCust();
+    getData();
+    // onFocusTemplate();
     onFocusStatus();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getData = async () => {
+    setLoading(true);
+    let response = await getTemplate();
+    if(response) await getCustomer();
+    setLoading(false);
+  }
+
+  // const getCategories = async (toGet, id) => {
+  //   if(!categories?.length || categories?.length === 1 || toGet){
+  //     setError(null);
+  //     const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
+  //     if(response?.error) setError(response?.error);
+  //     else {
+  //       let data = [...[{categoryId: -1, categoryName: t('inventory.no_category')}], ...response?.data];
+  //       setCategories(data);
+  //       if(id) setCategory({ value: id });
+  //     }
+  //   }
+  // }
   const onClickBack = (e) => {
     e?.preventDefault();
     navigate("/finance/journal");
@@ -42,8 +66,8 @@ export function MainInput(props) {
     }
   };
 
-  const onFocusCust = async () => {
-    if(!custs?.length){
+  const getCustomer = async (toGet, id) => {
+    if(!custs?.length || custs?.length === 1 || toGet){
       setError && setError(null);
       setLoading('custs');
       let headers = {CustID: -1}
@@ -51,15 +75,17 @@ export function MainInput(props) {
       if(response?.error) setError && setError(response?.error);
       else {
         setCusts(response?.data?.customers);
+        if(id) setCustomer({ value: id });
       }
       setLoading(false);
     }
   }
 
-  const onFocusTemplate = async () => {
-    if(!templates?.length){
+  const getTemplate = async (toGet, id) => {
+    console.log(toGet, id);
+    if(!templates?.length || templates?.length === 1 || toGet){
     setError && setError(null);
-    setLoading('custs');
+    setLoading('templates');
     const response = await dispatch(getList(user, token, "Txn/GetTemplate"));
     if(response?.error) setError(response?.error)
     else {
@@ -67,6 +93,7 @@ export function MainInput(props) {
         item.template = item?.templateId + "-" + item?.templateName
       })
       setTemplates(response?.data?.template)
+      if(id) setTemplate({ value: id });
     }
     setLoading(false);
     }
@@ -136,6 +163,26 @@ export function MainInput(props) {
     } 
   };
 
+  const onClickTemplate = e => {
+    e?.preventDefault();
+    setTempVisible(true);
+  };
+
+  const closeTemplate = (saved, id) => {
+    setTempVisible(false);
+    getTemplate(saved, id);
+  }
+
+  const onClickCustomer = e => {
+    e?.preventDefault();
+    setCustVisible(true);
+  }
+
+  const closeCustomer = (saved, id) => {
+    setCustVisible(false);
+    getCustomer(saved, id);
+  }
+
   const descrProps = { value: descr, setValue: setDescr, label: t("shop.descr"), placeholder: t("shop.descr"), 
                        setEdited, setError, length: 100, inRow: true};
   const backProps = { className: "ps_back_btn", text: t("journal.backButton"), icon: <MdChevronLeft className="ps_back_icon" />, 
@@ -147,35 +194,43 @@ export function MainInput(props) {
   const sourceProps = { value: source, setValue: setSource, label: t('manage.t_no'), placeholder: t('manage.t_no'), 
                         setError, setEdited, inRow: true, disabled: true, inRow1: true};
   const custProps = { value: customer, setValue: setCustomer, data: custs, s_value: "custId", s_descr: "custName", 
-                      label: t("customer.title"), placeholder: t("customer.title"), onFocus: onFocusCust, inRow: true };
+                      label: t("customer.title"), placeholder: t("customer.title"), onFocus: getCustomer, inRow: true };
   const statusProps = { value: status, setValue: setStatus, data: states, s_value: "value", s_descr: "label", 
                       label: t("order.status"), placeholder: t("order.status"), onFocus: onFocusStatus, inRow: true, inRow1: true };
   const templateProps = { value: template, setValue: onChangeTemplate, data: templates,
-                          label: t("transModel.title"), placeholder: t("transModel.title"), onFocus: onFocusTemplate, inRow: true };
+                          label: t("transModel.title"), placeholder: t("transModel.title"), onFocus: getTemplate, inRow: true };
 
   return (
     <div className="ad_back">
+      {custVisible && <AddCustomer visible={custVisible} closeModal={closeCustomer} />}
+      {tempVisible && <AddTemplate visible={tempVisible} closeModal={closeTemplate} />}
       <div className="ps_menu_back">
         <IconButton {...backProps} />
       </div>
       <div className="ad_main">
         {header?.journalId ? <p className='ps_header_no' style={{marginBottom: 10}}>{header?.journalId}</p> : null}
         <div className='ad_row'>
-          <div style={{marginTop: 0, flex: 0.5}}><Date {...dateProps} /></div>
+          <div style={{marginTop: 0, flex: 0.43}}><Date {...dateProps} /></div>
           <div className='gap' />
           <TempSelect {...templateProps}/>
+          <div style={{display: 'flex', alignItems:'flex-end'}}>
+            <IconButton className='im_add_btn' onClick={onClickTemplate} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
+          </div>
         </div>
         <div className='ad_row' style={{ marginTop: "10px" }}>
-          <MoneyInput1 {...totalProps}/>
+        <div style={{marginTop: 0, flex: 0.88}}><MoneyInput1 {...totalProps}/></div>
           <div className='gap' />
           <Select {...statusProps}/>
           <div className='gap' />
           <Select {...custProps}/>
+          <div style={{display: 'flex', alignItems:'flex-end'}}>
+            <IconButton className='im_add_btn' onClick={onClickCustomer} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
+          </div>
         </div>
         <div className='ad_row' style={{ marginTop: "10px" }}>
-          <DescrInput {...descrProps}/>
+          <div style={{marginTop: 0, flex: 0.4}}><Input {...sourceProps}/></div>
           <div className='gap' />
-          <Input {...sourceProps}/>
+          <DescrInput {...descrProps}/>
         </div>
       </div>
     </div>

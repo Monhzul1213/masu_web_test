@@ -114,7 +114,8 @@ export function Add(props){
       setLoading(false);
       if(response?.error) setError(response?.error);
       else {
-        closeModal(true);
+        let id = response?.data && response?.data[0] && response?.data[0]?.custID;
+        closeModal(true, id);
         message.success(t('customer.add_success'));
         onSearch(filter)
       }
