@@ -82,7 +82,6 @@ export function MainInput(props) {
   }
 
   const getTemplate = async (toGet, id) => {
-    console.log(toGet, id);
     if(!templates?.length || templates?.length === 1 || toGet){
     setError && setError(null);
     setLoading('templates');

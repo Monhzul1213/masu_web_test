@@ -27,7 +27,6 @@ export function ProductCard({ data, onClick, qty = 0, onRemove }) {
         const blob = await res.blob();
         setImageUrl(URL.createObjectURL(blob));
       } catch (err) {
-        console.error('Image load error', err);
         setImageUrl(noImage);
       }
     };

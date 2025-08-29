@@ -25,7 +25,6 @@ export default function OrderTypeModal({ onSelect, onClose }) {
         setIsValidReg(false);
       }
     } catch (err) {
-      console.error("EBARIMT API error:", err);
       setCompanyName("");
       setIsValidReg(false);
     }

@@ -115,7 +115,6 @@ export function AddTemplate(props) {
       else {
         onSuccess(message);
         closeModal(true, response?.data?.templateId)
-        console.log(response?.data);
       }
     }
   };

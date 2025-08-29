@@ -30,7 +30,6 @@ export function WorkSheet() {
     const getData = async (query) => {
         setLoading(true);
         let response = await dispatch(sendRequest(user, token, 'Integration/ExecStrored', query));
-        console.log(response);
         if(response?.error) setError(response?.error );
         else {
             // const newData = [];
