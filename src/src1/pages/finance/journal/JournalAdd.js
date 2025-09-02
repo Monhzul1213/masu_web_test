@@ -95,6 +95,13 @@ export function JournalAdd() {
 
   const validateData = () => {
     let length = detail?.length;
+      let isDebit = false;
+      detail.forEach((item) => {
+        console.log(item);
+        if( item.isDebit ) {
+          isDebit = true;
+        }
+      });
     if(length){
       let journalID = header?.journalId ?? 0;
       let items = [];
@@ -109,6 +116,9 @@ export function JournalAdd() {
       custID: customer?.value, totalAmt: price?.value, descr: descr?.value, rowStatus: journalID ? 'U' : 'I', items };
     } else {
       if(!length) setSearch({ value: null, error: t('account.items_error') });
+      // if(!isDebit) setSearch({ value: null, error: "Дэбит дүн оруулна уу" });
+      // if(!isCredit) setSearch({ value: null, error: "Кредит дүн оруулна уу" });
+      // if(isFormula) setSearch({ value: null, error: "Томьёо оруулна уу" });
       return false;
     }
   };
@@ -167,8 +177,7 @@ export function JournalAdd() {
     setError(null);
     if (sure) setVisible(true);
   };
-
-  let mainProps = { setError, setEdited, price, setPrice, loading, setLoading, setDetail, header,
+  let mainProps = { setError, setEdited, price, setPrice, loading, setLoading, setDetail, header, detail, 
       descr,  setDescr, source, setSource, setCustomer , customer, template, setTemplate, status, setStatus, date, setDate };
   let listProps = { detail, setDetail, search, setSearch, setEdited, setDItems, onClickDelete, setPrice};
   let btnProps = { onClickCancel, onClickSave, onClickDelete, header  };

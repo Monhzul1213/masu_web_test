@@ -11,6 +11,7 @@ function Card(props) {
   const { size, detail, setSearch, setDItems, search, setDetail, setEdited} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+
   useEffect(() => {
     let columns = [
       { Header: t("journal.acctCode"), accessor: "acct", width: 180, minWidth: 150 },
@@ -62,8 +63,8 @@ function Card(props) {
   }
   
   const onClickDelete = row => {
-    if(row?.original?.templateDtlId !== 0) setDItems(old => [...old, row?.original]);
-    setDetail(detail?.filter(item => item?.templateDtlId !== row?.original?.templateDtlId));
+    if(row?.original?.acct !== 0) setDItems(old => [...old, row?.original]);
+    setDetail(detail?.filter(item => item?.acct !== row?.original?.acct));
     setSearch({ value: null });
   }
 

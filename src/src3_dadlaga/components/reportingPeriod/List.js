@@ -193,14 +193,14 @@ export const List = forwardRef((props, ref) => {
       period: Number(item.period),
       journalId: result.journalId,
       status: 0,
-      isLocked: 'N',
+      isLocked: 'Y',
     }];
  
     const saveRes = await dispatch(sendRequest(user, token, 'Merchant/ModPeriod', payload));
     if (!saveRes?.error) {
       const updated = reportingPeriods.map(p =>
         p.id === item.id
-          ? { ...p, journalId: result.journalId, status: 0, isLocked: 'N' }
+          ? { ...p, journalId: result.journalId, status: 0, isLocked: 'Y' }
           : p
       );
       setReportingPeriods(updated);
@@ -214,7 +214,7 @@ export const List = forwardRef((props, ref) => {
   const handleToggle = (id, newValue) => {
     const updated = reportingPeriods.map(item =>
       item.id === id && Number(item.status) === 1
-        ? { ...item, isLocked: newValue ? 'Y' : 'N' }
+        ? { ...item, isLocked: newValue ? 'N' : 'Y' }
         : item
     );
     setReportingPeriods(updated);
@@ -280,7 +280,7 @@ export const List = forwardRef((props, ref) => {
         Cell: ({ row }) => (
           <div style={{ textAlign: 'center' }}>
             <Switch
-              checked={row.original.isLocked === 'Y'}
+              checked={row.original.isLocked === 'N'}
               disabled={Number(row.original.status) === 0}
               onChange={val => {
                 handleToggle(row.original.id, val);

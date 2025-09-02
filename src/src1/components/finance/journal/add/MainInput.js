@@ -25,7 +25,8 @@ export function MainInput(props) {
   const { user, token } = useSelector((state) => state.login);
 
   useEffect(() => {
-    // onFocusCust();
+    getTemplate();
+    getCustomer();
     getData();
     // onFocusTemplate();
     onFocusStatus();
@@ -40,18 +41,6 @@ export function MainInput(props) {
     setLoading(false);
   }
 
-  // const getCategories = async (toGet, id) => {
-  //   if(!categories?.length || categories?.length === 1 || toGet){
-  //     setError(null);
-  //     const response = await dispatch(getList(user, token, 'Inventory/GetCategory'));
-  //     if(response?.error) setError(response?.error);
-  //     else {
-  //       let data = [...[{categoryId: -1, categoryName: t('inventory.no_category')}], ...response?.data];
-  //       setCategories(data);
-  //       if(id) setCategory({ value: id });
-  //     }
-  //   }
-  // }
   const onClickBack = (e) => {
     e?.preventDefault();
     navigate("/finance/journal");
@@ -135,19 +124,23 @@ export function MainInput(props) {
   const handleEnter = async (value) => {
     setPrice(value)
     const totalAmount = value?.value ?? 0;
-    const response = await dispatch(getList(user, token, "Txn/GetTemplate?TemplateId=" + template?.value));
-    if (response?.error) {
-      setError(response?.error);
-    } else {
-      detail?.map(li => {
-        response?.data?.templateitem?.forEach(item=> {
-          if(item?.acct === li?.acct){
-            li.formula = item?.formula
-            li.isDebit = item?.isDebit
-          }
-        })
-      })
-      const updatedItems = calculateWithDependencies(detail, totalAmount);
+    if(template?.value){
+        const response = await dispatch(getList(user, token, "Txn/GetTemplate?TemplateId=" + template?.value));
+        if (response?.error) {
+          setError(response?.error);
+        } else {
+          const updatedItems = calculateWithDependencies(response?.data?.templateitem, totalAmount);
+          setDetail(updatedItems);
+        }
+    }
+    else {
+      const updatedItems = detail.map(item => {
+        if (item.isDebit === 1 || item.isDebit === "Y") {
+          return { ...item, drAmt: totalAmount, itemDescr: item?.itemDescr ?? '' };
+        } else {
+          return { ...item, crAmt: totalAmount, itemDescr: item?.itemDescr ?? '' };
+        }
+      });
       setDetail(updatedItems);
     }
   };
@@ -158,8 +151,12 @@ export function MainInput(props) {
     const response = await dispatch(getList(user, token, "Txn/GetTemplate?TemplateId=" + value?.value));
     if(response?.error) setError(response?.error)
     else {
-      setDetail(response?.data?.templateitem)
-    } 
+      response?.data?.templateitem?.forEach(item => {
+        item.drAmt = item?.drAmt ?? 0
+        item.crAmt = item?.crAmt ?? 0
+      })
+    }
+    setDetail(response?.data?.templateitem) 
   };
 
   const onClickTemplate = e => {
@@ -217,9 +214,9 @@ export function MainInput(props) {
           </div>
         </div>
         <div className='ad_row' style={{ marginTop: "10px" }}>
-        <div style={{marginTop: 0, flex: 0.88}}><MoneyInput1 {...totalProps}/></div>
-          <div className='gap' />
-          <Select {...statusProps}/>
+        <div style={{marginTop: 0, flex: 0.43}}><MoneyInput1 {...totalProps}/></div>
+          {/* <div className='gap' />
+          <Select {...statusProps}/> */}
           <div className='gap' />
           <Select {...custProps}/>
           <div style={{display: 'flex', alignItems:'flex-end'}}>
@@ -227,7 +224,8 @@ export function MainInput(props) {
           </div>
         </div>
         <div className='ad_row' style={{ marginTop: "10px" }}>
-          <div style={{marginTop: 0, flex: 0.4}}><Input {...sourceProps}/></div>
+          {/* <div style={{marginTop: 0, flex: 0.4}}><Input {...sourceProps}/></div> */}
+          <div style={{marginTop: 0, flex: 0.4}}><Select {...statusProps}/></div>
           <div className='gap' />
           <DescrInput {...descrProps}/>
         </div>
