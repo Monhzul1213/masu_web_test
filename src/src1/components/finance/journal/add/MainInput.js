@@ -4,21 +4,23 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Date, DescrInput, DynamicBSIcon, IconButton, Input, MoneyInput1, Select } from "../../../../../components/all";
-import { getList } from "../../../../../services";
+import { Date, DescrInput, DynamicBSIcon, IconButton, MoneyInput1, Select } from "../../../../../components/all";
+import { getList, getServiceBar } from "../../../../../services";
 import { TempSelect } from "./TempSelect";
 import { evaluate } from "mathjs";
 import { Add as AddCustomer } from "../../../customer/customer/Add";
 import { AddTemplate } from "./AddTemplate";
 
 export function MainInput(props) {
-  const { setError, setEdited, price, setPrice, descr,  setDescr, source, setSource, setCustomer , customer,
+  const { setError, setEdited, price, setPrice, descr,  setDescr, setCustomer , customer,
           date, setDate, template, setTemplate, setLoading, status, setStatus, setDetail, header, detail } = props;
   const [states, setStates] = useState([{ value: 0, label: "Үүсгэсэн" }]);
   const [templates, setTemplates] = useState([]);
   const [custs, setCusts] = useState([]);
   const [tempVisible, setTempVisible] = useState(false);
   const [custVisible, setCustVisible] = useState(false);
+  const [branch, setBranch] = useState([]);
+  const [allBranch, setAllBranch] = useState([]);
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,11 +30,28 @@ export function MainInput(props) {
     getTemplate();
     getCustomer();
     getData();
-    // onFocusTemplate();
+    getBranchs();
     onFocusStatus();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const getBranchs = async () => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getServiceBar('getBranchInfo'));
+    if(response?.error) setError(response?.error);
+    else {
+      let data = [];
+      response?.data?.data?.forEach(item => {
+        let index = data?.findIndex(list => item.branchCode === list.branchCode )
+        if(index === -1 ) data.push(item)
+      })
+      setBranch(data?.sort((a, b)=> a?.branchCode - b?.branchCode));
+      setAllBranch(response?.data?.data);
+    }
+    setLoading(false);
+  }
 
   const getData = async () => {
     setLoading(true);
@@ -81,6 +100,8 @@ export function MainInput(props) {
         item.template = item?.templateId + "-" + item?.templateName
       })
       setTemplates(response?.data?.template)
+      let item = response?.data?.templateitem?.filter( item => item?.templateId === id)
+      setDetail(item)
       if(id) setTemplate({ value: id });
     }
     setLoading(false);
@@ -147,16 +168,23 @@ export function MainInput(props) {
   
 
   const onChangeTemplate = async (value) => {
-    setTemplate(value)
-    const response = await dispatch(getList(user, token, "Txn/GetTemplate?TemplateId=" + value?.value));
-    if(response?.error) setError(response?.error)
-    else {
-      response?.data?.templateitem?.forEach(item => {
-        item.drAmt = item?.drAmt ?? 0
-        item.crAmt = item?.crAmt ?? 0
-      })
+    setTemplate(value);
+    if (!value?.value) {
+      setDetail([]);
+      return;
     }
-    setDetail(response?.data?.templateitem) 
+    const response = await dispatch(
+      getList(user, token, "Txn/GetTemplate?TemplateId=" + value?.value)
+    );
+    if (response?.error) {
+      setError(response?.error);
+    } else {
+      response?.data?.templateitem?.forEach(item => {
+        item.drAmt = item?.drAmt ?? 0;
+        item.crAmt = item?.crAmt ?? 0;
+      });
+    }
+    setDetail(response?.data?.templateitem);
   };
 
   const onClickTemplate = e => {
@@ -187,18 +215,19 @@ export function MainInput(props) {
                       inRow: true, className: 'c_date' };
   const totalProps = { value: price, setValue: handleEnter, label: t('discount.amount'), placeholder: t('discount.amount'), 
                        setEdited, setError, inRow: true, handleEnter };
-  const sourceProps = { value: source, setValue: setSource, label: t('manage.t_no'), placeholder: t('manage.t_no'), 
-                        setError, setEdited, inRow: true, disabled: true, inRow1: true};
+  // const sourceProps = { value: source, setValue: setSource, label: t('manage.t_no'), placeholder: t('manage.t_no'), 
+  //                       setError, setEdited, inRow: true, disabled: true, inRow1: true};
   const custProps = { value: customer, setValue: setCustomer, data: custs, s_value: "custId", s_descr: "custName", 
-                      label: t("customer.title"), placeholder: t("customer.title"), onFocus: getCustomer, inRow: true };
+                      label: t("customer.title"), placeholder: t("customer.title"), onFocus: getCustomer, inRow: true, allowClear: true };
   const statusProps = { value: status, setValue: setStatus, data: states, s_value: "value", s_descr: "label", 
                       label: t("order.status"), placeholder: t("order.status"), onFocus: onFocusStatus, inRow: true, inRow1: true };
   const templateProps = { value: template, setValue: onChangeTemplate, data: templates,
                           label: t("transModel.title"), placeholder: t("transModel.title"), onFocus: getTemplate, inRow: true };
+  const addcustProps = {visible: custVisible, closeModal: closeCustomer, branch, allBranch, getBranchs}
 
   return (
     <div className="ad_back">
-      {custVisible && <AddCustomer visible={custVisible} closeModal={closeCustomer} />}
+      {custVisible && <AddCustomer {...addcustProps} />}
       {tempVisible && <AddTemplate visible={tempVisible} closeModal={closeTemplate} />}
       <div className="ps_menu_back">
         <IconButton {...backProps} />

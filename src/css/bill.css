@@ -57,7 +57,10 @@
   flex-flow: row;
   justify-content: space-between;
 }
-
+.bl_row1 {
+  display: flex;
+  flex-flow: row;
+}
 .bl_icon_row {
   display: flex;
   flex-flow: row;
@@ -89,7 +92,7 @@
 .bl_label {
   font-size: var(--value-font);
   margin: 0;
-  width: 100px;
+  width: 80px;
 }
 
 .bl_value {

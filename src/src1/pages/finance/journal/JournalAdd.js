@@ -27,11 +27,10 @@ export function JournalAdd() {
   const [price, setPrice] = useState({ value: 0 });
   const [descr,  setDescr] = useState({ value: '' });
   const [source, setSource] = useState({ value: '' });
-  const [customer, setCustomer] = useState();
-  const [template, setTemplate] = useState();
+  const [customer, setCustomer] = useState({ value: '' });
+  const [template, setTemplate] = useState({ value: '' });
   const [status, setStatus] = useState({ value: 0 });
   const [date, setDate] = useState({ value: moment() });
-
   const [searchParams] = useSearchParams();
   const { user, token } = useSelector((state) => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
@@ -66,9 +65,12 @@ export function JournalAdd() {
         setPrice({ value: header?.totalAmt });
         setDescr({ value: header?.descr });
         setSource({ value: header?.sourceTypeName });
-        setCustomer({ value: header?.custId });
+        setCustomer({ value: header?.custId !== 0 ? header?.custId : '' });
         setStatus({ value: header?.status });
-        setTemplate({ value: header?.templateId });
+        setTemplate({ value: header?.templateId !== 0 ? header?.templateId : '' });
+        response?.data?.journalitem?.forEach(item=> {
+          item.vatPropertyID = item?.vaId
+        })
         setDetail(response?.data?.journalitem);
         onSuccess();
       }
@@ -95,14 +97,14 @@ export function JournalAdd() {
 
   const validateData = () => {
     let length = detail?.length;
-      let isDebit = false;
+      // let isDebit = false;
+      let itemDescr = null;
       detail.forEach((item) => {
-        console.log(item);
-        if( item.isDebit ) {
-          isDebit = true;
+        if(item?.itemDescr ) {
+          itemDescr = true;
         }
       });
-    if(length){
+    if(length && itemDescr){
       let journalID = header?.journalId ?? 0;
       let items = [];
       detail?.forEach(item => {
@@ -116,9 +118,7 @@ export function JournalAdd() {
       custID: customer?.value, totalAmt: price?.value, descr: descr?.value, rowStatus: journalID ? 'U' : 'I', items };
     } else {
       if(!length) setSearch({ value: null, error: t('account.items_error') });
-      // if(!isDebit) setSearch({ value: null, error: "Дэбит дүн оруулна уу" });
-      // if(!isCredit) setSearch({ value: null, error: "Кредит дүн оруулна уу" });
-      // if(isFormula) setSearch({ value: null, error: "Томьёо оруулна уу" });
+      if(!itemDescr) setSearch({ value: null, error: "Тайлбар оруулна уу" });
       return false;
     }
   };

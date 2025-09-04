@@ -6,22 +6,50 @@ import { useTranslation } from "react-i18next";
 import { DynamicBSIcon, TableResize } from "../../../../../components/all";
 import { ItemSelect } from "./SelectItem";
 import { EditableCell as EditableCellQty } from './EditableCell';
+import { SelectableCell } from "../../../management/count/add/EditableCell";
+import { useSelector } from "react-redux";
 
 function Card(props) {
-  const { size, detail, setSearch, setDItems, search, setDetail, setEdited} = props;
+  const { size, detail, setSearch, setDItems, search, setDetail, setEdited } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const vatPropertys = useSelector((state) => state.temp.systemVat);
+  const cashPropertys = useSelector((state) => state.temp.systemCash);
+
+  const sortedVat = useMemo(() => {
+    const arr = Array.isArray(vatPropertys) ? [...vatPropertys] : [];
+    return arr.sort((a, b) =>
+      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
+        numeric: true,
+        sensitivity: "base",
+      })
+    );
+  }, [vatPropertys]);
+ 
+  const sortedCash = useMemo(() => {
+    const arr = Array.isArray(cashPropertys) ? [...cashPropertys] : [];
+    return arr.sort((a, b) =>
+      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
+        numeric: true,
+        sensitivity: "base",
+      })
+    );
+  }, [cashPropertys]);
 
   useEffect(() => {
     let columns = [
       { Header: t("journal.acctCode"), accessor: "acct", width: 180, minWidth: 150 },
       { Header: t("transModel.acctName"), accessor: "acctName", isText: true, width: 200, minWidth: 180},
-      { Header: t("journal.debit"), accessor: "drAmt", isBtn: true, width: 150, minWidth: 100,
+      { Header: t("journal.debit"), accessor: "drAmt", isBtn: true, width: 150, minWidth: 150,
         Cell: props => <EditableCellQty {...props} />, isMoney: true},
-      { Header: t("journal.credit"), accessor: "crAmt", isBtn: true, width: 150, minWidth: 100,
+      { Header: t("journal.credit"), accessor: "crAmt", isBtn: true, width: 150, minWidth: 150,
         Cell: props => <EditableCellQty {...props} />, isMoney: true},
-      { Header: t("shop.descr"), accessor: "itemDescr", isBtn: true, width: 150, minWidth: 100,
+      { Header: t("shop.descr"), accessor: "itemDescr", isBtn: true, width: 150, minWidth: 150,
         Cell: props => <EditableCellQty {...props} /> },
+      { Header: t('transModel.vatSelect'), accessor: 'vatPropertyID', isBtn: true, width: 300, minWidth: 300,
+        Cell: props =><SelectableCell {...props} data={sortedVat} s_value = "constKey" s_descr = "valueStr1"/>},
+      { Header: t('transModel.cashSelect'), accessor: 'cashPropertyID', isBtn: true, width: 300, minWidth: 300,
+          Cell: props => <SelectableCell {...props} data={sortedCash} s_value = "constKey" s_descr = "valueStr1"/>},
     ];
     // if(editable)
       columns.push({
@@ -50,9 +78,11 @@ function Card(props) {
         let drAmt = columnId === 'drAmt' ? parseFloat(value ? value : 0) : old[rowIndex]?.drAmt;
         let crAmt = columnId === 'crAmt' ? parseFloat(value ? value : 0) : old[rowIndex]?.crAmt;
         let itemDescr = columnId === 'itemDescr' ? value ? value : '' : old[rowIndex]?.itemDescr;
+        let vatPropertyID = columnId === 'vatPropertyID' ? value ? value : '' : old[rowIndex]?.vatPropertyID;
+        let cashPropertyID = columnId === 'cashPropertyID' ? value ? value : '' : old[rowIndex]?.cashPropertyID;
         // let total1 = total + drAmt
         // setPrice({value: total1})
-        return { ...old[rowIndex], drAmt, crAmt, itemDescr };
+        return { ...old[rowIndex], drAmt, crAmt, itemDescr, vatPropertyID, cashPropertyID };
       } else { 
         // total += row?.drAmt ?? 0
         return row;
@@ -73,7 +103,7 @@ function Card(props) {
       isDebit: acct?.isDebit, status: acct?.status, currency: acct?.currency, itemDescr: acct?.itemDescr ?? '', rowStatus: 'I'};
   }
 
-  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }),[]);
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 900 }),[]);
   const tableInstance = useTable(
     {
       columns,

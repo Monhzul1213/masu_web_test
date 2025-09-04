@@ -43,11 +43,11 @@ export const EditableCell = props => {
   const errorStyle = hasError ? { borderColor: '#e41051' } : {};
   const style = {...{ textAlign: 'right', width: width1 }, ...errorStyle};
   const style1 = {...{ width: width1 }, ...errorStyle};
-  const moneyProps = { className: 'ed_input', suffix, allowNegativeValue: false, decimalsLimit: 4, value, maxLength: 15, onValueChange, onBlur, style,
+  const moneyProps = { className: 'ed_input1', suffix, allowNegativeValue: false, decimalsLimit: 4, value, maxLength: 15, onValueChange, onBlur, style,
     onKeyDown, autoFocus, disabled: notEditable, id: cellID, onFocus };
-  const textProps = { className: 'ed_input', value, onChange, onBlur, onKeyDown, autoFocus, style: width ? style1 : errorStyle,
+  const textProps = { className: 'ed_input1', value, onChange, onBlur, onKeyDown, autoFocus, style: width ? style1 : errorStyle,
     disabled: notEditable, id: cellID, onFocus };
-  const qtyProps = { className: 'ed_input', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,
+  const qtyProps = { className: 'ed_input1', decimalsLimit: 2, value, maxLength: 15, onValueChange, onBlur, allowNegativeValue: false,
     disableGroupSeparators: true, style, onKeyDown, autoFocus, disabled: notEditable, id: cellID, onFocus };
 
   return isText

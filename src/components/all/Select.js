@@ -10,7 +10,7 @@ const { Option } = AntSelect;
 
 export function Select(props){
   const { value, setValue, label, placeholder, data, setError, setEdited, s_value, s_descr, mode, inRow, onFocus,
-    loading, disabled, id, inRow1, className, id1, classBack, classLabel } = props;
+    loading, disabled, id, inRow1, className, id1, classBack, classLabel, allowClear } = props;
   const { t } = useTranslation();
   
   let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
@@ -43,6 +43,7 @@ export function Select(props){
           value={value?.value}
           onFocus={() => onFocus && onFocus()}
           maxTagCount={0}
+          allowClear={allowClear}
           maxTagPlaceholder={maxTagPlaceholder}
           // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' style={style} />}
           placeholder={placeholder}>

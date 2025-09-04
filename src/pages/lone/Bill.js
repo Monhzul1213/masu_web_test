@@ -6,8 +6,10 @@ import '../../css/bill.css';
 import { getService } from '../../services';
 import { DynamicBSIcon, Error1, Overlay } from '../../components/all';
 import { Header, Info, Items, QR, Total } from '../../components/lone/bill';
+import { useTranslation } from 'react-i18next';
 
 export function Bill(){
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [header, setHeader] = useState(null);
@@ -54,6 +56,7 @@ export function Bill(){
             <Total header={header} payments={payments} />
             <QR header={header} />
             {bill?.footer ? <p className='bl_footer'>{bill?.footer}</p> : null}
+            <p className='bl_footer' style={{fontSize: 12}}>{t("bill.footer_text")}</p>
           </div>
         }
       </div>

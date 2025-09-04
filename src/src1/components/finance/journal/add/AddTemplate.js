@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getConstants, sendRequest, setSystemCash, setSystemVat } from "../../../../../services";
-import { DescrInput, Error1, Input, Overlay, Select } from "../../../../../components/all";
+import { DescrInput, Error1, Input, Overlay } from "../../../../../components/all";
 import { AddList, ButtonRow} from "../../../../../src3_dadlaga/components/transactionModel";
 
 export function AddTemplate(props) {
@@ -14,23 +14,23 @@ export function AddTemplate(props) {
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [error, setError] = useState(null);
-  const [header, setHeader] = useState(null);
+  // const [header, setHeader] = useState(null);
   const [detail, setDetail] = useState([]);
   const [templateName, setTemplateName] = useState({ value: "" });
   const [search, setSearch] = useState({ value: null });
   const [dItems, setDItems] = useState([]);
   const [saved, setSaved] = useState(false);
 //   const [visible, setVisible] = useState(false);
-  const [sites, setSites] = useState([]);
-  const [open, setOpen] = useState(false);
+  // const [sites, setSites] = useState([]);
+  // const [open, setOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const { user, token } = useSelector((state) => state.login);
-  const [templateId, setTemplateId] = useState();
-  const [vatPropertyId, setVatPropertyId] = useState();
-  const [cashPropertyId, setCashPropertyId] = useState();
-  const vatPropertys = useSelector((state) => state.temp.systemVat);
-  const cashPropertys = useSelector((state) => state.temp.systemCash);
-  const maxWidth = useSelector(state => state.temp.maxWidth);
+  // const [templateId, setTemplateId] = useState();
+  // const [vatPropertyId, setVatPropertyId] = useState();
+  // const [cashPropertyId, setCashPropertyId] = useState();
+  // const vatPropertys = useSelector((state) => state.temp.systemVat);
+  // const cashPropertys = useSelector((state) => state.temp.systemCash);
+  // const maxWidth = useSelector(state => state.temp.maxWidth);
 
   const addDetail = (newItem) => {
     setDetail((oldArray) => {
@@ -84,8 +84,8 @@ export function AddTemplate(props) {
       templateId,
       templateType,
       templateName: templateName?.value,
-      vatPropertyId: vatPropertyId?.value,
-      cashPropertyId: cashPropertyId?.value,
+      // vatPropertyId: vatPropertyId?.value,
+      // cashPropertyId: cashPropertyId?.value,
       status,
       rowStatus: rowStatus,
       items,
@@ -109,8 +109,8 @@ export function AddTemplate(props) {
       );
       if (response?.code === 1001) {
         onError(response?.error, true);
-        setOpen(true);
-        setSites(response?.data);
+        // setOpen(true);
+        // setSites(response?.data);
       } else if (response?.error) onError(response?.error, true);
       else {
         onSuccess(message);
@@ -200,25 +200,25 @@ export function AddTemplate(props) {
     }
   };
 
-  const sortedVat = useMemo(() => {
-    const arr = Array.isArray(vatPropertys) ? [...vatPropertys] : [];
-    return arr.sort((a, b) =>
-      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
-        numeric: true,
-        sensitivity: "base",
-      })
-    );
-  }, [vatPropertys]);
+  // const sortedVat = useMemo(() => {
+  //   const arr = Array.isArray(vatPropertys) ? [...vatPropertys] : [];
+  //   return arr.sort((a, b) =>
+  //     String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
+  //       numeric: true,
+  //       sensitivity: "base",
+  //     })
+  //   );
+  // }, [vatPropertys]);
  
-  const sortedCash = useMemo(() => {
-    const arr = Array.isArray(cashPropertys) ? [...cashPropertys] : [];
-    return arr.sort((a, b) =>
-      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
-        numeric: true,
-        sensitivity: "base",
-      })
-    );
-  }, [cashPropertys]);
+  // const sortedCash = useMemo(() => {
+  //   const arr = Array.isArray(cashPropertys) ? [...cashPropertys] : [];
+  //   return arr.sort((a, b) =>
+  //     String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
+  //       numeric: true,
+  //       sensitivity: "base",
+  //     })
+  //   );
+  // }, [cashPropertys]);
 
   let listProps = {
     handleFormula,
@@ -235,15 +235,15 @@ export function AddTemplate(props) {
   let btnProps = {
     onClickCancel: () => closeModal(),
     onClickSave: () => debateValidation(1, "I"),
-    header
+    // header
   };
 
-  const idProps = { value: { value: templateId }, setValue: () => {}, label: t("transModel.number"), placeholder: t("transModel.number"), disabled: true, inRow: true};
+  const idProps = { value: { value: '' }, setValue: () => {}, label: t("transModel.number"), placeholder: t("transModel.number"), disabled: true, inRow: true, edited};
   const descrProps = { value: templateName, setValue: setTemplateName, label: t("transModel.title"), placeholder: t("transModel.title"), setEdited, setError, length: 100, inRow: true};
-  const vatProps = { value: vatPropertyId, setValue: ({ value }) => setVatPropertyId({ value }), label: t("transModel.vatSelect"), placeholder: t("transModel.vatSelect"),
-                    data: sortedVat,  setError, setEdited, s_value: "constKey", s_descr: "valueStr1", inRow: true, loading};
-  const cashProps = { value: cashPropertyId, setValue: ({ value }) => setCashPropertyId({ value }), label: t("transModel.cashSelect"), placeholder: t("transModel.cashSelect"),
-                    data: sortedCash, setError, setEdited, s_value: "constKey", s_descr: "valueStr1", inRow: true, loading};
+  // const vatProps = { value: vatPropertyId, setValue: ({ value }) => setVatPropertyId({ value }), label: t("transModel.vatSelect"), placeholder: t("transModel.vatSelect"),
+  //                   data: sortedVat,  setError, setEdited, s_value: "constKey", s_descr: "valueStr1", inRow: true,  loading};
+  // const cashProps = { value: cashPropertyId, setValue: ({ value }) => setCashPropertyId({ value }), label: t("transModel.cashSelect"), placeholder: t("transModel.cashSelect"),
+  //                   data: sortedCash, setError, setEdited, s_value: "constKey", s_descr: "valueStr1", inRow: true, loading};
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={900}>
@@ -258,11 +258,11 @@ export function AddTemplate(props) {
                     <div className="gap" />
                     <DescrInput {...descrProps} />
                 </div>
-                <div className='ad_row' style={{ marginTop: "10px" }}>
+                {/* <div className='ad_row' style={{ marginTop: "10px" }}>
                     <Select {...vatProps} />
                     <div className="gap" />
                     <Select {...cashProps} />
-                </div>
+                </div> */}
             </div>
             {/* <div className="gap" /> */}
               <AddList {...listProps} />

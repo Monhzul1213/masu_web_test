@@ -16,10 +16,10 @@ const LabelIcon = props => {
 }
 
 const Label = props => {
-  const { label, value } = props;
+  const { label, value, width } = props;
 
   return value ? (
-    <div className='bl_row'>
+    <div className='bl_row' style={{width}}>
       <p className='bl_label'>{label}: </p>
       <p className='bl_value'>{value}</p>
     </div>
@@ -30,22 +30,33 @@ export function Info(props){
   const { header, bill } = props;
   const { t } = useTranslation();
   const isRefund = header?.salesType === 1;
-  const date = moment(header?.salesDate).format('yyyy.MM.DD');
+  const date = moment(header?.salesDate).format('yyyy.MM.DD HH:mm');
 
   return (
     <div>
       {bill?.header ? <p className='bl_title'>{bill?.header}</p> : null}
       {bill?.data ? <img className='bl_image' src={"data:image/" + (bill?.type?.replace('.', '') ?? 'png') + ";base64," + bill?.data} alt="Image" /> : null}
-      <p className='bl_title'>{t(isRefund ? 'bill.refund' : 'bill.sales')}</p>
+      {header?.refNo ? <p className='bl_title'>{t('payment.order_number')}: {header?.refNo}</p> : ""}
+      <p className='bl_title'>{t(isRefund ? 'bill.refund' : header?.holdDescr === 'EAT IN' ? 'bill.sales1' : header?.holdDescr === 'TAKE OUT' ? 'bill.sales2' : 'bill.sales')}</p>
       <div className='bl_row'>
         <LabelIcon icon='MdPersonOutline' value={header?.cashierName ?? header?.cashierCode} />
-        <LabelIcon icon='MdStayCurrentPortrait' value={header?.terminalName ?? header?.terminalD} />
+        <LabelIcon icon='MdStayCurrentPortrait' value={header?.terminalName ?? header?.terminalD} space={true}/>
       </div>
-      <Label label={t('bill.receipt_no')} value={header?.salesNo} />
-      <Label label={t('bill.site')} value={header?.siteName} />
-      <Label label={t('bill.address')} value={header?.address} />
-      <Label label={t('bill.phone')} value={header?.sitePhone} />
-      <Label label={t('bill.date')} value={date} />
+      <div className='bl_row1' >
+        <Label label={t('ТТД')} value={header?.tinId} width={250}/>
+        <Label label={t('Регистер')} value={header?.vatPayerNo} />
+      </div>
+      <div className='bl_row1'>
+        <Label label={t('bill.site')} value={header?.siteName} width={250}/>
+        <Label label={t('bill.receipt_no')} value={header?.salesNo} />
+      </div>
+      <div className='bl_row1'>
+        <Label label={t('bill.address')} value={header?.address} />
+      </div>
+      <div className='bl_row1'>
+        <Label label={t('bill.phone')} value={header?.phone} width={250}/>
+        <Label label={t('bill.date')} value={date} />
+      </div>
       {isRefund ? <Label label={t('bill.refund')} value={'#' + header?.sourceNo} /> : null}
       {header?.custId ? <Label label={t('bill.customer')} value={(header?.custName ?? '') + ' - ' + (header?.custPhone ?? '')} /> : null}
       <div className='bl_gap' />

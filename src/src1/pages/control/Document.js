@@ -188,35 +188,40 @@ function Card(props){
     }
   }
 
+  
   const onClickInvoiceSave = async () => {
-    setError(null);
-    setLoading(true);
-    let invoiceDtls = [];
-    accounts?.forEach(item => {
-      if(item?.checked ){
-        item.rowStatus = item?.merchantId ? 'U': 'I';
-        invoiceDtls.push(item);
-      } 
-      else {
-        item.rowStatus = 'D';
-        invoiceDtls.push(item);
-      }
-    })
-    let data = {
-      siteId: site1,
-      image: '',
-      invoiceDays: date?.value,
-      fileRaw: { FileData: image164 ?? '', FileType: imageType1 ?? '' },
-      rowStatus: invoice ? 'U' : 'I',
-      isPrintBarCode: isPrint ? 'Y' : 'N', invoiceDtls
-    }
-    const response = await dispatch(sendRequest(user, token, 'Site/ModInvoice', data));
-    setLoading(false);
-    if(response?.error) setError(response?.error);
-    else {
-      setEdited(false);
-      message.success(t('control.success_inv_msg'));
-      getInvoice(site1);
+    if(date?.value) {
+        setError(null);
+        setLoading(true);
+        let invoiceDtls = [];
+        accounts?.forEach(item => {
+          if(item?.checked ){
+            item.rowStatus = item?.merchantId ? 'U': 'I';
+            invoiceDtls.push(item);
+          } 
+          else {
+            item.rowStatus = 'D';
+            invoiceDtls.push(item);
+          }
+        })
+        let data = {
+          siteId: site1,
+          image: '',
+          invoiceDays: date?.value,
+          fileRaw: { FileData: image164 ?? '', FileType: imageType1 ?? '' },
+          rowStatus: invoice ? 'U' : 'I',
+          isPrintBarCode: isPrint ? 'Y' : 'N', invoiceDtls
+        }
+        const response = await dispatch(sendRequest(user, token, 'Site/ModInvoice', data));
+        setLoading(false);
+        if(response?.error) setError(response?.error);
+        else {
+          setEdited(false);
+          message.success(t('control.success_inv_msg'));
+          getInvoice(site1);
+        }
+    } else {
+      if(!date?.value) setDate({ value: null, error: t('оруулна уу') });
     }
   }
 

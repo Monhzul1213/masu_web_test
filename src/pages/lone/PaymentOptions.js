@@ -111,21 +111,15 @@ function PaymentOptions({
         const hasHeader = Array.isArray(json?.retdata?.sales) && json.retdata.sales.length > 0;
         if (res.ok && hasHeader) {
           const url = buildBillUrl(salesNo);
-          try {
-            const w = window.open(url, "_blank", "noopener");
-            if (!w) window.location.assign(url);
-          } catch { window.location.assign(url); }
+          window.location.assign(url);
           return;
         }
       } catch {}
       await sleep(1000);
     }
     const url = buildBillUrl(salesNo);
-    try {
-      const w = window.open(url, "_blank", "noopener");
-      if (!w) window.location.assign(url);
-    } catch { window.location.assign(url); }
-  };
+    window.location.assign(url);
+};
  
   const getFinalTotalForPayment = () => {
     const toMoney = (v) => Number(Number(v || 0).toFixed(2));

@@ -58,8 +58,8 @@ export function TempSelect(props){
           value={value?.value}
           onFocus={() => onFocus && onFocus()}
           maxTagCount={0}
+          allowClear
           maxTagPlaceholder={maxTagPlaceholder}
-          // suffixIcon={<DynamicAIIcon name='AiFillCaretDown' className='select_icon' style={style} />}
           placeholder={placeholder}>
           {data?.map(renderItem)}
         </AntSelect>

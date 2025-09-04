@@ -19,19 +19,19 @@ export function Items(props){
         </div>
         {showBarCode ? <p className='bl_item_descr'>{item?.barCode}</p> : null}
         {item?.serviceCode ? <p className='bl_item_descr'>{service}</p> : null}
-        <div className='dr_item_text_back'>
+        {item?.couponValue ? <div className='dr_item_text_back'>
           <div className='dr_img_back'>
-            {item?.couponAmount ? <img src={coupon} className='dr_img' alt='coupon'/> : ''}
-            <p className='dr_item_text_z2'>{ (item?.couponName ? item?.couponName : '')}</p>
+            <img src={coupon} className='dr_img' alt='coupon'/>
+            <p className='dr_item_text_z2'>{item?.couponName}</p>
           </div>
-          <p className='dr_item_text_z2'>{item?.couponAmount ? <Money value={item?.couponAmount}/> : ''}</p>
-        </div>
-        {item?.bonusId !== 0 ? <div className='dr_item_text_back'>
+          <p className='dr_item_text_z2'><Money value={item?.couponAmount} fontSize={11}/></p>
+        </div> : null}
+        {item?.bonusId !== 0 && item?.bonusId !== null ? <div className='dr_item_text_back'>
           <div className='dr_img_back'>
             <img src={bonus} className='dr_bonus_img' alt='coupon'/>
             <p className='dr_item_text_z2'>{item?.bonusName}</p>
           </div>
-          <p className='dr_item_text_z2'><Money value={item?.rewardAmount}/></p>
+          <p className='dr_item_text_z2'><Money value={item?.rewardAmount} fontSize={11}/></p>
         </div> : null}
       </div>
     );

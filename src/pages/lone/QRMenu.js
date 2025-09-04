@@ -244,10 +244,7 @@ export function QRMenu() {
  
       {showPaymentPage ? (
         orderNumber ? (
-          <div className="order_success">
-            <p>Таны захиалгын дугаар</p>
-            <div className="order_box">{orderNumber}</div>
-          </div>
+          null
         ) : (
           <PaymentOptions
             amount={finalAmount}

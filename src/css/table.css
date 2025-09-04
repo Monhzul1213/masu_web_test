@@ -248,7 +248,18 @@ tfoot > tr > th {
   outline: none;
   border-color: var(--config-color);
 }
+.ed_input1 {
+  border: none;
+  border-bottom: solid 1px #d2d2d2;
+  border-radius: 0;
+  background-color: transparent;
+  padding: 6px;
+}
 
+.ed_input1:focus, #hide_border:focus {
+  outline: none;
+  border-color: var(--config-color);
+}
 .t_expand {
   color: var(--text4-color);
 }
@@ -258,7 +269,7 @@ tfoot > tr > th {
 }
 
 .ed_select_back {
-  border-bottom: 1px solid var(--root-color);
+  border-bottom: 1px solid #d2d2d2;
 }
 
 .ed_select_back:focus-within {
