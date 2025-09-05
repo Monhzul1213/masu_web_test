@@ -69,7 +69,9 @@ export function List({
               onDoubleClick={() => handleOrderDoubleClick(order)}
             >
               <div className={`kds-card-header ${headerClass}`}>
-                <span>№ {String(order.ticketBinId || order.salesNo).slice(-3)}</span>
+                <span>
+                  № {order.refNo ?? String(order.salesNo).slice(-3)}
+                </span>
                 <span>{formatTimeDiff(order.createdDate)}</span>
               </div>
               <div className="kds-card-content">

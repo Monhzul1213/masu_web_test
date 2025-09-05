@@ -3,6 +3,7 @@ import "../../css/qr.css";
 import qpayIcon from "../../assets/banks/Qpay.png";
 import { useTranslation } from "react-i18next";
 import { encrypt } from "../../helpers/encrypt";
+import axios from "axios";
  
 function PaymentOptions({
   amount = 0,
@@ -98,6 +99,19 @@ function PaymentOptions({
     return { text, json };
   };
  
+  function fetchRetry(config, retries = 5) {
+  return axios(config)
+    .then(res => {
+      console.log(res);
+      return res?.data;
+    }).catch(error => {
+      if(error?.message === 'Network Error' && retries > 0){
+        console.log('retrying network', retries);
+        return fetchRetry(config, retries - 1)
+      }
+      else return { result: 444, rettype: 444, message: error?.message, retdesc: error?.message };
+    });
+}
   const waitAndOpenBill = async (salesNo) => {
     const plain = `${Number(merchantId)}-${Number(siteId)}-${String(salesNo).trim()}`;
     const code = encrypt(plain);
@@ -106,7 +120,12 @@ function PaymentOptions({
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     for (let i = 0; i < 60; i++) {
       try {
-        const res = await fetch(endpoint, { headers });
+        const config = {
+          url: endpoint,
+          headers
+        };
+        // const res = await fetch(endpoint, { headers });
+        const res = await fetchRetry(config);
         const { json } = await fetchTextJson(res);
         const hasHeader = Array.isArray(json?.retdata?.sales) && json.retdata.sales.length > 0;
         if (res.ok && hasHeader) {
@@ -364,6 +383,7 @@ const cleanBankUrls = (arr) => {
       },
       body: JSON.stringify(req),
     });
+    console.log(res, 'checkPaymentOut');
     const { json } = await fetchTextJson(res);
     return { res, json };
   };
@@ -386,10 +406,11 @@ const cleanBankUrls = (arr) => {
       setShowBlank(true);
  
       const saved = await saveOrderToService(String(salesNo));
+      console.log(saved, 'saved');
       if (saved?.keys) { addSalesKeysRef.current = saved.keys; try { await fetchVatInfoFromQrQmenu(saved.keys); } catch {} }
  
       try { onPaymentSuccess && onPaymentSuccess(String(salesNo)); } catch {}
-      await waitAndOpenBill(String(salesNo));
+      // await waitAndOpenBill(String(salesNo));
     }
   };
  
@@ -411,6 +432,7 @@ const cleanBankUrls = (arr) => {
   const QRQMENU_SECRET = "Ba*y^*^Y:t>B:d'<F(mc6w$F0|$|p2dk=N/AyO`{oyBe>,:&O(-}c~1NqV&t]1~";
  
   const fetchVatInfoFromQrQmenu = async (keys) => {
+    console.log(keys, 'keyss');
     try {
       if (!keys) throw new Error("AddSales-с 'keys' хоосон ирлээ");
       const encryptedAuth = encrypt(QRQMENU_SECRET);
@@ -421,6 +443,7 @@ const cleanBankUrls = (arr) => {
         headers: { authorization: encryptedAuth, Accept: "application/json" },
         body: formData,
       });
+      console.log(res, encryptedAuth, 'encryptedAuth');
       return res.ok;
     } catch { return false; }
   };
