@@ -65,7 +65,7 @@ export function QRMenu() {
       const merchantId = parts[0]?.trim();
       const siteIdStr = parts[1]?.trim();
       const ticketBinIdStr = parts[2]?.trim();
- 
+      console.log(qrCodeParam, parts, merchantId);
       const parsedSiteId = parseInt(siteIdStr, 10);
       if (!Number.isNaN(parsedSiteId)) {
         setSiteId(parsedSiteId);

@@ -20,7 +20,8 @@ function PaymentOptions({
   onPaymentSuccess,
 }) {
   const { t } = useTranslation();
- 
+  console.log(merchantId);
+
   const BILL_DOMAIN = "https://app.masu.mn";
   const API_BASE = "https://app.masu.mn:8082/";
   const API_AUTH = "20250722141616000AAAzaqbddsxSKJJCVd1";
@@ -233,6 +234,7 @@ function PaymentOptions({
       });
       const { text, json } = await fetchTextJson(salesRes);
  
+      console.log(salesRes, payload, text, json, merchantId);
       if (!salesRes.ok) {
         alert(`AddSales HTTP ${salesRes.status}: ${text || "Unknown error"}`);
         savingRef.current = false;
