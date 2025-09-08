@@ -430,7 +430,7 @@ const cleanBankUrls = (arr) => {
     setPolling(false);
   };
  
-  const QRQMENU_URL = "http://app.masu.mn:8083/Pos/QrQmenu";
+  const QRQMENU_URL = "https://app.masu.mn:8082/Txn/QrQMenu";
   const QRQMENU_SECRET = "Ba*y^*^Y:t>B:d'<F(mc6w$F0|$|p2dk=N/AyO`{oyBe>,:&O(-}c~1NqV&t]1~";
  
   const fetchVatInfoFromQrQmenu = async (keys) => {
