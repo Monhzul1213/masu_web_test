@@ -20,7 +20,6 @@ function PaymentOptions({
   onPaymentSuccess,
 }) {
   const { t } = useTranslation();
-  console.log(merchantId);
 
   const BILL_DOMAIN = "https://app.masu.mn";
   const API_BASE = "https://app.masu.mn:8082/";
@@ -103,11 +102,9 @@ function PaymentOptions({
   function fetchRetry(config, retries = 5) {
   return axios(config)
     .then(res => {
-      console.log(res);
       return res?.data;
     }).catch(error => {
       if(error?.message === 'Network Error' && retries > 0){
-        console.log('retrying network', retries);
         return fetchRetry(config, retries - 1)
       }
       else return { result: 444, rettype: 444, message: error?.message, retdesc: error?.message };
@@ -234,7 +231,6 @@ function PaymentOptions({
       });
       const { text, json } = await fetchTextJson(salesRes);
  
-      console.log(salesRes, payload, text, json, merchantId);
       if (!salesRes.ok) {
         alert(`AddSales HTTP ${salesRes.status}: ${text || "Unknown error"}`);
         savingRef.current = false;
@@ -385,7 +381,6 @@ const cleanBankUrls = (arr) => {
       },
       body: JSON.stringify(req),
     });
-    console.log(res, 'checkPaymentOut');
     const { json } = await fetchTextJson(res);
     return { res, json };
   };
@@ -408,11 +403,10 @@ const cleanBankUrls = (arr) => {
       setShowBlank(true);
  
       const saved = await saveOrderToService(String(salesNo));
-      console.log(saved, 'saved');
       if (saved?.keys) { addSalesKeysRef.current = saved.keys; try { await fetchVatInfoFromQrQmenu(saved.keys); } catch {} }
  
       try { onPaymentSuccess && onPaymentSuccess(String(salesNo)); } catch {}
-      // await waitAndOpenBill(String(salesNo));
+      await waitAndOpenBill(String(salesNo));
     }
   };
  
@@ -434,21 +428,16 @@ const cleanBankUrls = (arr) => {
   const QRQMENU_SECRET = "Ba*y^*^Y:t>B:d'<F(mc6w$F0|$|p2dk=N/AyO`{oyBe>,:&O(-}c~1NqV&t]1~";
  
   const fetchVatInfoFromQrQmenu = async (keys) => {
-    console.log(keys, 'keyss');
     try {
       if (!keys) throw new Error("AddSales-с 'keys' хоосон ирлээ");
       const encryptedAuth = encrypt(QRQMENU_SECRET);
       const formData = new FormData();
       formData.append("pText", String(keys));
-      const decrypted = decrypt(decodeURIComponent(keys));
-      const parts = decrypted.split("-");
-      console.log(decrypted, parts, 'decrypted');
       const res = await fetch(QRQMENU_URL, {
         method: "POST",
         headers: { authorization: encryptedAuth, Accept: "application/json" },
         body: formData,
       });
-      console.log(res, encryptedAuth, 'encryptedAuth');
       return res.ok;
     } catch { return false; }
   };
@@ -526,7 +515,6 @@ const cleanBankUrls = (arr) => {
                 </>
               )}
               {polling && (<p style={{ marginTop: 10, textAlign: "center" }}>{t("payment.checking")}</p>)}
-              {merchantId}
             </div>
           ) : (
             <div className="payment_methods">
