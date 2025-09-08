@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import "../../css/qr.css";
 import qpayIcon from "../../assets/banks/Qpay.png";
 import { useTranslation } from "react-i18next";
-import { encrypt } from "../../helpers/encrypt";
+import { encrypt, decrypt } from "../../helpers/encrypt";
 import axios from "axios";
  
 function PaymentOptions({
@@ -440,6 +440,9 @@ const cleanBankUrls = (arr) => {
       const encryptedAuth = encrypt(QRQMENU_SECRET);
       const formData = new FormData();
       formData.append("pText", String(keys));
+      const decrypted = decrypt(decodeURIComponent(keys));
+      const parts = decrypted.split("-");
+      console.log(decrypted, parts, 'decrypted');
       const res = await fetch(QRQMENU_URL, {
         method: "POST",
         headers: { authorization: encryptedAuth, Accept: "application/json" },
@@ -523,6 +526,7 @@ const cleanBankUrls = (arr) => {
                 </>
               )}
               {polling && (<p style={{ marginTop: 10, textAlign: "center" }}>{t("payment.checking")}</p>)}
+              {merchantId}
             </div>
           ) : (
             <div className="payment_methods">
