@@ -75,6 +75,7 @@ export function Customer(props){
       // || response?.code === 1001
       setVisible1(true);
     }
+    console.log(query, branch);
     if(query){
       response?.data?.forEach(item => {
         branch?.forEach(li => {

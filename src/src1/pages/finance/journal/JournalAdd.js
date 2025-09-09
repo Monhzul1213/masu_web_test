@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
-import { getList, sendRequest} from "../../../../services";
+import { getConstants, getList, sendRequest, setSystemCash, setSystemVat} from "../../../../services";
 import { Confirm, Error1, Overlay, Prompt } from "../../../../components/all";
 import { Subscription } from "../../../../components/management/adjust/list";
 import { MainInput, AddList, ButtonRow } from "../../../components/finance/journal/add";
@@ -36,8 +36,11 @@ export function JournalAdd() {
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const vatPropertys = useSelector((state) => state.temp.systemVat);
+  const cashPropertys = useSelector((state) => state.temp.systemCash);
 
   useEffect(() => {
+    getConstantsData();
     if (saved) onCancel();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -69,12 +72,26 @@ export function JournalAdd() {
         setStatus({ value: header?.status });
         setTemplate({ value: header?.templateId !== 0 ? header?.templateId : '' });
         response?.data?.journalitem?.forEach(item=> {
-          item.vatPropertyID = item?.vaId
+          item.vatPropertyID = item?.vatPropertyID !== '0' ? item?.vatPropertyID : ''
+          item.cashPropertyID = item?.cashPropertyID !== '0' ? item?.cashPropertyID : ''
         })
+        console.log(response);
         setDetail(response?.data?.journalitem);
         onSuccess();
       }
     }
+  };
+
+  const getConstantsData = async () => {
+    setLoading(true);
+    const response = await dispatch(
+      getConstants(user, token, "glTemplate_VatPropertyID", setSystemVat)
+    );
+    await dispatch(
+      getConstants(user, token, "glTemplate_CashPropertyID", setSystemCash)
+    );
+    if (response?.error) setError(response?.error);
+    setLoading(false);
   };
 
   const onClickCancel = () => navigate({ pathname: "/finance/journal" });
@@ -97,14 +114,7 @@ export function JournalAdd() {
 
   const validateData = () => {
     let length = detail?.length;
-      // let isDebit = false;
-      let itemDescr = null;
-      detail.forEach((item) => {
-        if(item?.itemDescr ) {
-          itemDescr = true;
-        }
-      });
-    if(length && itemDescr){
+    if(length){
       let journalID = header?.journalId ?? 0;
       let items = [];
       detail?.forEach(item => {
@@ -118,7 +128,6 @@ export function JournalAdd() {
       custID: customer?.value, totalAmt: price?.value, descr: descr?.value, rowStatus: journalID ? 'U' : 'I', items };
     } else {
       if(!length) setSearch({ value: null, error: t('account.items_error') });
-      if(!itemDescr) setSearch({ value: null, error: "Тайлбар оруулна уу" });
       return false;
     }
   };
@@ -179,7 +188,7 @@ export function JournalAdd() {
   };
   let mainProps = { setError, setEdited, price, setPrice, loading, setLoading, setDetail, header, detail, 
       descr,  setDescr, source, setSource, setCustomer , customer, template, setTemplate, status, setStatus, date, setDate };
-  let listProps = { detail, setDetail, search, setSearch, setEdited, setDItems, onClickDelete, setPrice};
+  let listProps = { detail, setDetail, search, setSearch, setEdited, setDItems, onClickDelete, setPrice, cashPropertys, vatPropertys};
   let btnProps = { onClickCancel, onClickSave, onClickDelete, header  };
   let subProps = { visible, setVisible, onDone, noTrial: true};
   let confirmProps = {open, text: t("adjust.confirm_pay"), confirm, text1: error};

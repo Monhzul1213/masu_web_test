@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import "../../css/qr.css";
 import qpayIcon from "../../assets/banks/Qpay.png";
 import { useTranslation } from "react-i18next";
-import { encrypt, decrypt } from "../../helpers/encrypt";
-import axios from "axios";
+import { encrypt } from "../../helpers/encrypt";
  
 function PaymentOptions({
   amount = 0,
@@ -20,7 +19,7 @@ function PaymentOptions({
   onPaymentSuccess,
 }) {
   const { t } = useTranslation();
-
+ 
   const BILL_DOMAIN = "https://app.masu.mn";
   const API_BASE = "https://app.masu.mn:8082/";
   const API_AUTH = "20250722141616000AAAzaqbddsxSKJJCVd1";
@@ -99,17 +98,6 @@ function PaymentOptions({
     return { text, json };
   };
  
-  function fetchRetry(config, retries = 5) {
-  return axios(config)
-    .then(res => {
-      return res?.data;
-    }).catch(error => {
-      if(error?.message === 'Network Error' && retries > 0){
-        return fetchRetry(config, retries - 1)
-      }
-      else return { result: 444, rettype: 444, message: error?.message, retdesc: error?.message };
-    });
-}
   const waitAndOpenBill = async (salesNo) => {
     const plain = `${Number(merchantId)}-${Number(siteId)}-${String(salesNo).trim()}`;
     const code = encrypt(plain);
@@ -118,25 +106,26 @@ function PaymentOptions({
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     for (let i = 0; i < 60; i++) {
       try {
-        const config = {
-          url: endpoint,
-          headers
-        };
-        // const res = await fetch(endpoint, { headers });
-        const res = await fetchRetry(config);
+        const res = await fetch(endpoint, { headers });
         const { json } = await fetchTextJson(res);
         const hasHeader = Array.isArray(json?.retdata?.sales) && json.retdata.sales.length > 0;
         if (res.ok && hasHeader) {
           const url = buildBillUrl(salesNo);
-          window.location.assign(url);
+          try {
+            const w = window.open(url, "_blank", "noopener");
+            if (!w) window.location.assign(url);
+          } catch { window.location.assign(url); }
           return;
         }
       } catch {}
       await sleep(1000);
     }
     const url = buildBillUrl(salesNo);
-    window.location.assign(url);
-};
+    try {
+      const w = window.open(url, "_blank", "noopener");
+      if (!w) window.location.assign(url);
+    } catch { window.location.assign(url); }
+  };
  
   const getFinalTotalForPayment = () => {
     const toMoney = (v) => Number(Number(v || 0).toFixed(2));
@@ -531,3 +520,4 @@ const cleanBankUrls = (arr) => {
 }
  
 export default PaymentOptions;
+ 

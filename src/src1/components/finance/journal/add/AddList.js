@@ -7,34 +7,11 @@ import { DynamicBSIcon, TableResize } from "../../../../../components/all";
 import { ItemSelect } from "./SelectItem";
 import { EditableCell as EditableCellQty } from './EditableCell';
 import { SelectableCell } from "../../../management/count/add/EditableCell";
-import { useSelector } from "react-redux";
 
 function Card(props) {
-  const { size, detail, setSearch, setDItems, search, setDetail, setEdited } = props;
+  const { size, detail, setSearch, setDItems, search, setDetail, setEdited, vatPropertys, cashPropertys} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
-  const vatPropertys = useSelector((state) => state.temp.systemVat);
-  const cashPropertys = useSelector((state) => state.temp.systemCash);
-
-  const sortedVat = useMemo(() => {
-    const arr = Array.isArray(vatPropertys) ? [...vatPropertys] : [];
-    return arr.sort((a, b) =>
-      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
-        numeric: true,
-        sensitivity: "base",
-      })
-    );
-  }, [vatPropertys]);
- 
-  const sortedCash = useMemo(() => {
-    const arr = Array.isArray(cashPropertys) ? [...cashPropertys] : [];
-    return arr.sort((a, b) =>
-      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
-        numeric: true,
-        sensitivity: "base",
-      })
-    );
-  }, [cashPropertys]);
 
   useEffect(() => {
     let columns = [
@@ -61,6 +38,27 @@ function Card(props) {
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language]);
+
+
+  const sortedVat = useMemo(() => {
+    const arr = Array.isArray(vatPropertys) ? [...vatPropertys] : [];
+    return arr.sort((a, b) =>
+      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
+        numeric: true,
+        sensitivity: "base",
+      })
+    );
+  }, [vatPropertys]);
+ 
+  const sortedCash = useMemo(() => {
+    const arr = Array.isArray(cashPropertys) ? [...cashPropertys] : [];
+    return arr.sort((a, b) =>
+      String(a?.valueStr1 ?? "").localeCompare(String(b?.valueStr1 ?? ""), "mn", {
+        numeric: true,
+        sensitivity: "base",
+      })
+    );
+  }, [cashPropertys]);
 
   const filterFunction = useCallback((rows, ids, query) => {
     return rows.filter(
@@ -132,7 +130,7 @@ function Card(props) {
       </div>
       <div
         id="paging"
-        // className="table_scroll"
+        className="table_scroll"
         style={{ overflowY: "scroll", maxHeight }}
       >
         <TableResize {...tableProps} />

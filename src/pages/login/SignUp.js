@@ -194,7 +194,7 @@ export function SignUp(){
   setError, data: sales, onFocusSales, onFocusVendor, data1: vendor, addItem, setAddItem, };
 
   return (
-    <div className='login_container1'>
+    <div className='login_container1' style={{ maxHeight: 500, overflow: 'scroll'}} id='list_scroll'>
       {visible && <Confirm {...confirmProps} />}
       <div style={{padding: 20}} />
       <img className='login_logo' src={header_image} alt='MASU LOGO' />
@@ -204,7 +204,7 @@ export function SignUp(){
       <div style={{padding: 10}} />
       <div style={{flex: 1}} />
       <p className='lg_title1'>{t('login.signup_text1')}</p>
-      <form onSubmit={handleSubmit} autoComplete='off' style={{maxWidth: 400, padding: '0 15px'}}>
+      <form onSubmit={handleSubmit} autoComplete='off' style={{maxWidth: 400, padding: '0 15px', maxHeight: 500, overflow: 'scroll'}} id='list_scroll'>
         <FloatingInput1 {...emailProps} className='lg_input_back' color='#fff' />
         <FloatingPassword1 {...passProps} className='lg_input_back' classIcon='lg_input_icon' classShow='lg_input_show' color='#fff' />
         <FloatingInput1 {...businessProps} className='lg_input_back' color='#fff' />
