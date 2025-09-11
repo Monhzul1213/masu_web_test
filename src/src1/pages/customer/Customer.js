@@ -29,12 +29,27 @@ export function Customer(props){
   const [allBranch, setAllBranch] = useState([]);
   const [filtering, setFiltering] = useState(false);
   const [filter,  setFilter] =   useState('');
+  const [checked, setChecked] = useState(false);
+  const [requestTime, setRequestTime] = useState(null);
+  const [responseTime, setResponseTime] = useState(null);
+  const [hideTime, setHideTime] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [checked, setChecked] = useState(false);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (
+      user?.merchantId === 135 ||
+      user?.merchantId === 383 ||
+      user?.merchantId === 270
+      )
+      setHideTime(false);
+    else
+      setHideTime(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {
     getBranchs();
     return () => {};
@@ -71,6 +86,8 @@ export function Customer(props){
     setFilter(query);
     setError(null);
     setLoading(true);
+    setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
+
     let headers = {CustID: -1};
     let api = 'Site/GetCustomer/Filter' + query ?? '';
     let response = query
@@ -123,6 +140,8 @@ export function Customer(props){
     setShow(false)
     setChecked(false)
     setFiltering(query ? true : false);
+    setResponseTime(new Date()); // авсан цаг тэмдэглэх
+
   }
 
   const onClickDelete = () => setOpen(true);
@@ -175,7 +194,7 @@ export function Customer(props){
   const videoData = [{id: "v_Up6Wi08PQ"}]
 
   return (
-    <div className='s_container_i' style={{maxWidth}}>
+    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
       {visible1 && <Subscription {...subProps} />}
       {visible && <Add {...modalProps} />}
       <Overlay loading={loading}>
@@ -190,6 +209,13 @@ export function Customer(props){
         }      
       </Overlay>
       <Help videoData={videoData}/>
+      {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
+          {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}
+          {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleTimeString()}</p>}
+          {requestTime && responseTime && (
+            <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
+          )}
+      </div>}
     </div>
   );
 }

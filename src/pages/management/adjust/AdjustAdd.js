@@ -31,10 +31,26 @@ export function AdjustAdd(){
   const [open, setOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const [date, setDate] = useState({ value: moment() });
+  const [requestTime, setRequestTime] = useState(null);
+  const [responseTime, setResponseTime] = useState(null);
+  const [hideTime, setHideTime] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (
+      user?.merchantId === 135 ||
+      user?.merchantId === 383 ||
+      user?.merchantId === 270
+      )
+      setHideTime(false);
+    else
+      setHideTime(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if(saved) onClickCancel();
@@ -52,6 +68,8 @@ export function AdjustAdd(){
     let adjustNo = searchParams?.get('adjustNo');
     if(adjustNo){
       onLoad();
+      setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
+
       const response = await dispatch(getList(user, token, 'Txn/GetAdjust?AdjustNo=' + adjustNo));
       if(response?.error) onError(response?.error, false);
       else {
@@ -72,6 +90,7 @@ export function AdjustAdd(){
         setDate({value: moment(header?.txnDate, 'YYYY.MM.DD')})
         setDetail(response?.data?.inAdjustitem);
         setItems(response?.data?.inAdjustitem);
+        setResponseTime(new Date()); // авсан цаг тэмдэглэх
         onSuccess();
       }
     }
@@ -166,7 +185,7 @@ export function AdjustAdd(){
   let confirmProps = { open, text: t('adjust.confirm_pay'), confirm, text1: error };
 
   return (
-    <div className='s_container_i' style={{maxWidth}}>
+    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
       <Overlay loading={loading}>
         <Prompt edited={edited} />
         <Confirm {...confirmProps} />
@@ -183,6 +202,13 @@ export function AdjustAdd(){
         </div>
         <ButtonRow {...btnProps} />
       </Overlay>
+      {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
+          {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}
+          {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleTimeString()}</p>}
+          {requestTime && responseTime && (
+            <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
+          )}
+      </div>}
     </div>
 
   );

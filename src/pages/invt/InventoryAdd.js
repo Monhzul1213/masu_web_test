@@ -51,10 +51,26 @@ export function InventoryAdd(){
   const [saved, setSaved] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
+  const [requestTime, setRequestTime] = useState(null);
+  const [responseTime, setResponseTime] = useState(null);
+  const [hideTime, setHideTime] = useState(false);
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      user?.merchantId === 135 ||
+      user?.merchantId === 383 ||
+      user?.merchantId === 270
+      )
+      setHideTime(false);
+    else
+      setHideTime(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
@@ -70,6 +86,8 @@ export function InventoryAdd(){
 
   const getData = async () => {
     setLoaded(true);
+    setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
+
     let invtId = searchParams?.get('invtId'), response1 = false;
     let response = await getSites();
     if(response) response1 = await getModifiers();
@@ -80,6 +98,7 @@ export function InventoryAdd(){
       let vendor = searchParams?.get('vendId');
       if(vendor) setVendId({ value: parseInt(vendor) });
     }
+    setResponseTime(new Date()); // авсан цаг тэмдэглэх
     setLoaded(false);
   }
 
@@ -350,7 +369,7 @@ export function InventoryAdd(){
   const btnProps = { onClickCancel, onClickSave, onClickDelete, type: 'submit', show: invt ? true : false };
 
   return (
-    <div className='s_container_i' style={{maxWidth}}>
+    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
       <Overlay loading={loading || loaded}>
         <Prompt edited={edited} />
         {error && <Error1 error={error} />}
@@ -369,6 +388,13 @@ export function InventoryAdd(){
         </div>
         <ButtonRowConfirm {...btnProps} />
       </Overlay>
+      {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
+          {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}
+          {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleTimeString()}</p>}
+          {requestTime && responseTime && (
+            <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
+          )}
+      </div>}
     </div>
 
   )

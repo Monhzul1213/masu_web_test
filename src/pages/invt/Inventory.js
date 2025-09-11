@@ -26,11 +26,24 @@ export function Inventory(){
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
   const [requestTime, setRequestTime] = useState(null);
   const [responseTime, setResponseTime] = useState(null);
-
+  const [hideTime, setHideTime] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (
+      user?.merchantId === 135 ||
+      user?.merchantId === 383 ||
+      user?.merchantId === 270
+      )
+      setHideTime(false);
+    else
+      setHideTime(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
@@ -155,7 +168,7 @@ export function Inventory(){
   const videoData = [{id: "8IMwbPxh-QQ"}]
 
   return (
-    <div className='s_container_i' style={{maxWidth}}>
+    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}} >
       {open && <Confirm {...confirmProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
@@ -163,18 +176,18 @@ export function Inventory(){
           <SizeMe>{({ size }) => 
             <div className='i_list_cont' id='invt_list'>
               {<List {...listProps} size={size} />}
-              <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666', display: 'flex', flexFlow: 'row' }}>
-                {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleString()}</p>}
-                {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleString()}</p>}
-                {requestTime && responseTime && (
-                  <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
-                )}
-              </div>
             </div>
           }</SizeMe>
         }
       </Overlay>
       <Help videoData={videoData}/>
+      {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
+          {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}
+          {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleTimeString()}</p>}
+          {requestTime && responseTime && (
+            <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
+          )}
+      </div>}
     </div>
   )
 }

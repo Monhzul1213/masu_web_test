@@ -27,10 +27,26 @@ export function InvtTxn(){
   const [showDetails, setShowDetails] = useState(false);
   const [columns, setColumns] = useState([]);
   const [detailsColumns, setDetailsColumns] = useState([]);
+  const [requestTime, setRequestTime] = useState(null);
+  const [responseTime, setResponseTime] = useState(null);
+  const [hideTime, setHideTime] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      user?.merchantId === 135 ||
+      user?.merchantId === 383 ||
+      user?.merchantId === 270
+      )
+      setHideTime(false);
+    else
+      setHideTime(true);
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if(user?.msRole?.webViewItemBalance !== 'Y') navigate({ pathname: '/' });
@@ -46,7 +62,8 @@ export function InvtTxn(){
   const onSearch = async (query, query1 ) => {
     setError(null);
     setLoading(true);
-  
+      setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
+
     let finalQuery = query ?? '';
     const isDtlValue = showDetails ? 'Y' : 'N';
   
@@ -79,7 +96,7 @@ export function InvtTxn(){
       setData(transformedData);
       setExcelName(t('header./management/invt_txn'));
     }
-  
+    setResponseTime(new Date()); // авсан цаг тэмдэглэх
     setLoading(false);
   };
   
@@ -108,7 +125,7 @@ export function InvtTxn(){
   const videoData = [{ id: "5mOM_Bc5Bl8" }];
 
   return (
-    <div className='s_container_i' style={{maxWidth}}>
+    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
       {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
@@ -131,6 +148,13 @@ export function InvtTxn(){
         </SizeMe>
       </Overlay>
       <Help videoData={videoData}/>
+      {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
+          {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}
+          {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleTimeString()}</p>}
+          {requestTime && responseTime && (
+            <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
+          )}
+      </div>}
     </div>
   );
 }
