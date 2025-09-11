@@ -72,7 +72,7 @@ export function JournalAdd() {
         setStatus({ value: header?.status });
         setTemplate({ value: header?.templateId !== 0 ? header?.templateId : '' });
         response?.data?.journalitem?.forEach(item=> {
-          item.vatPropertyID = item?.vatPropertyID !== '0' ? item?.vatPropertyID : ''
+          item.vatPropertyID = item?.vaId !== '0' ? item?.vaId : ''
           item.cashPropertyID = item?.cashPropertyID !== '0' ? item?.cashPropertyID : ''
         })
         console.log(response);

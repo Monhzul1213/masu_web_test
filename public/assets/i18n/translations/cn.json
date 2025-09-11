@@ -1707,7 +1707,16 @@
     "acctTy": "账户类型",
     "acctClassId": "账户分类代码",
     "acctClassName": "账户分类",
-    "acct": "账户号码"
+    "acct": "账户号码",
+    "openingBalance": "输入期初余额",
+    "tempSave": "临时保存",
+    "submitOpening": "输入期初余额",
+    "dramt": "借方金额",
+    "cramt": "贷方金额",
+    "amount": "金额",
+    "openingBalanceSuccess": "期初余额已成功保存。",
+    "dateOpening": "期初余额录入日期",
+    "debitCreditNotEqualConfirm": "借方和贷方不相等，是否继续？" 
   },
   "control": {
     "end": " 天剩余。",

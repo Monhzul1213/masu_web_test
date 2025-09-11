@@ -3,10 +3,9 @@ import { withSize } from "react-sizeme";
 import { useBlockLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from "react-table";
 import { useTranslation } from "react-i18next";
 
-import { DynamicBSIcon, TableResize } from "../../../../../components/all";
+import { DynamicBSIcon, Money, TableRowResize } from "../../../../../components/all";
 import { ItemSelect } from "./SelectItem";
-import { EditableCell as EditableCellQty } from './EditableCell';
-import { SelectableCell } from "../../../management/count/add/EditableCell";
+import { EditableCell as EditableCellQty, SelectableCell } from './EditableCell';
 
 function Card(props) {
   const { size, detail, setSearch, setDItems, search, setDetail, setEdited, vatPropertys, cashPropertys} = props;
@@ -15,18 +14,32 @@ function Card(props) {
 
   useEffect(() => {
     let columns = [
-      { Header: t("journal.acctCode"), accessor: "acct", width: 180, minWidth: 150 },
-      { Header: t("transModel.acctName"), accessor: "acctName", isText: true, width: 200, minWidth: 180},
-      { Header: t("journal.debit"), accessor: "drAmt", isBtn: true, width: 150, minWidth: 150,
-        Cell: props => <EditableCellQty {...props} />, isMoney: true},
-      { Header: t("journal.credit"), accessor: "crAmt", isBtn: true, width: 150, minWidth: 150,
-        Cell: props => <EditableCellQty {...props} />, isMoney: true},
+      { Header: t("journal.acctCode"), accessor: "acct", width: 140, minWidth: 80, Footer: <div style={{textAlign: 'left',}}>{t('report_receipt.amt')}</div>},
+      { Header: t("transModel.acctName"), accessor: "acctName", isText: true, width: 180, minWidth: 120},
+      { Header: t("journal.debit"), accessor: "drAmt", isBtn: true, width: 110, minWidth: 110,
+        Cell: props => <EditableCellQty {...props} />, isMoney: true,
+        Footer: info => {
+          const total = React.useMemo(() =>
+            info.rows.reduce((sum, row) => row.values.drAmt + sum, 0),
+            [info.rows]  )
+          return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} /></div></>
+          }
+      },
+      { Header: t("journal.credit"), accessor: "crAmt", isBtn: true, width: 110, minWidth: 110,
+        Cell: props => <EditableCellQty {...props} />, isMoney: true,
+        Footer: info => {
+          const total = React.useMemo(() =>
+            info.rows.reduce((sum, row) => row.values.crAmt + sum, 0),
+            [info.rows]  )
+          return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} /></div></>
+          }
+      },
+      { Header: t('transModel.vatSelect'), accessor: 'vatPropertyID', isBtn: true, width: 300, minWidth: 280,
+        Cell: props =><div style={{paddingRight: 10}}><SelectableCell {...props} data={sortedVat} s_value = "constKey" s_descr = "valueStr1"/></div>},
+      { Header: t('transModel.cashSelect'), accessor: 'cashPropertyID', isBtn: true, width: 300, minWidth: 280,
+        Cell: props => <div style={{paddingRight: 10}}><SelectableCell {...props} data={sortedCash} s_value = "constKey" s_descr = "valueStr1"/></div>},
       { Header: t("shop.descr"), accessor: "itemDescr", isBtn: true, width: 150, minWidth: 150,
         Cell: props => <EditableCellQty {...props} /> },
-      { Header: t('transModel.vatSelect'), accessor: 'vatPropertyID', isBtn: true, width: 300, minWidth: 300,
-        Cell: props =><SelectableCell {...props} data={sortedVat} s_value = "constKey" s_descr = "valueStr1"/>},
-      { Header: t('transModel.cashSelect'), accessor: 'cashPropertyID', isBtn: true, width: 300, minWidth: 300,
-          Cell: props => <SelectableCell {...props} data={sortedCash} s_value = "constKey" s_descr = "valueStr1"/>},
     ];
     // if(editable)
       columns.push({
@@ -119,7 +132,7 @@ function Card(props) {
     useBlockLayout,
     useResizeColumns
   );
-  const tableProps = { tableInstance };
+  const tableProps = { tableInstance, hasFooter: true };
   const maxHeight =  "calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))";
   const id = size?.width > 780 ? "ih_large" : "ih_small";
   const selectProps = {setSearch, search, data: detail, setData: setDetail, newItem}
@@ -133,7 +146,7 @@ function Card(props) {
         className="table_scroll"
         style={{ overflowY: "scroll", maxHeight }}
       >
-        <TableResize {...tableProps} />
+        <TableRowResize {...tableProps} />
         <ItemSelect {...selectProps}/>
         {/* {editable ? <DetailAdd addDetail={addDetail} /> : ""} */}
       </div>

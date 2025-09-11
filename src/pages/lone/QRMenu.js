@@ -65,7 +65,6 @@ export function QRMenu() {
       const merchantId = parts[0]?.trim();
       const siteIdStr = parts[1]?.trim();
       const ticketBinIdStr = parts[2]?.trim();
-      console.log(qrCodeParam, parts, merchantId);
       const parsedSiteId = parseInt(siteIdStr, 10);
       if (!Number.isNaN(parsedSiteId)) {
         setSiteId(parsedSiteId);
@@ -212,7 +211,10 @@ export function QRMenu() {
   };
  
   return (
-    <div className="qr_container">
+    <div className={`qr_container ${
+      cart.length > 0 && !showCartPage && !showPaymentPage ? "with-cart" : ""
+      }`}
+    >
       {!showCartPage && !showPaymentPage && (
         <div className="lang-dropdown">
           <div className="lang-selected" onClick={toggleDropdown}>

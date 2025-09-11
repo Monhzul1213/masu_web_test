@@ -237,9 +237,9 @@ export function MainInput(props) {
         <div className='ad_row'>
           <div style={{marginTop: 0, flex: 0.43}}><Date {...dateProps} /></div>
           <div className='gap' />
-          <TempSelect {...templateProps}/>
+          <Select {...custProps}/>
           <div style={{display: 'flex', alignItems:'flex-end'}}>
-            <IconButton className='im_add_btn' onClick={onClickTemplate} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
+            <IconButton className='im_add_btn' onClick={onClickCustomer} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
           </div>
         </div>
         <div className='ad_row' style={{ marginTop: "10px" }}>
@@ -247,9 +247,9 @@ export function MainInput(props) {
           {/* <div className='gap' />
           <Select {...statusProps}/> */}
           <div className='gap' />
-          <Select {...custProps}/>
+          <TempSelect {...templateProps}/>
           <div style={{display: 'flex', alignItems:'flex-end'}}>
-            <IconButton className='im_add_btn' onClick={onClickCustomer} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
+            <IconButton className='im_add_btn' onClick={onClickTemplate} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
           </div>
         </div>
         <div className='ad_row' style={{ marginTop: "10px" }}>

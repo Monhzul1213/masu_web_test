@@ -18,15 +18,15 @@ export function List(props){
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       {
-        id: 'check', noSort: true, isBtn: true,
+        id: 'check', noSort: true, isBtn: true, customStyle : {width: 40},
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('discount.type'), accessor: 'typeName', exLabel: t('discount.type'), Footer: <div style={{textAlign: 'left'}}>{t('report.total') + data?.length}</div>},
-      { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name') },
-      { Header: t('customer.phone1'), accessor: 'phone', exLabel: t('customer.phone1'),
+      { Header: t('discount.type'), accessor: 'typeName', exLabel: t('discount.type'), Footer: <div style={{textAlign: 'left'}}>{t('report.total') + data?.length}</div>, customStyle : {width: 80}},
+      { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name'), customStyle : {width: 200} },
+      { Header: t('customer.phone1'), accessor: 'phone', exLabel: t('customer.phone1'), customStyle : {width: 100},
         Cell: props => <div >{props.value}</div>},
-      { Header: <div style={{textAlign: 'right'}}> {t('customer.receivable')}</div>, accessor: 'arBalance', isBtn: true, customStyle: { maxWidth: 110 }, exLabel: t('customer.receivable'),
+      { Header: <div style={{textAlign: 'right'}}> {t('customer.receivable')}</div>, accessor: 'arBalance', isBtn: true, customStyle: {width: 100, maxWidth: 110 }, exLabel: t('customer.receivable'),
         Cell: ({ value, row, onClickLink }) => {
           return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} /></div>);
         },
@@ -37,15 +37,15 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={total} />} </div></>
         }
       },
-      { Header: t('employee.mail'), accessor: 'email', exLabel: t('employee.mail'),
+      { Header: t('employee.mail'), accessor: 'email', exLabel: t('employee.mail'), customStyle : {width: 150},
         Cell: props => <div >{props.value}</div>},
-      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), customStyle : {minWidth: 120} },
-      { Header: t('shop.district'), accessor: 'subBranchName', exLabel: t('shop.district'), customStyle : {minWidth: 100} },
-      { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'),
+      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), customStyle : {width: 100} },
+      { Header: t('shop.district'), accessor: 'subBranchName', exLabel: t('shop.district'), customStyle : {width: 100} },
+      { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'), customStyle : {width: 100},
         Cell: props => <div >{props.value}</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode', exLabel: t('customer.code'),
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value }</div>},
-      { Header: t('customer.desc'), accessor: 'note', exLabel: t('customer.desc')},
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value }</div>, customStyle : {width: 100},},
+      { Header: t('customer.desc'), accessor: 'note', exLabel: t('customer.desc'), customStyle : {width: 100},},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,8 +102,8 @@ const tableInstance = useTable( { columns, data, autoResetPage: false, initialSt
       <Header {...filterProps} />
       {visible && <Transaction {...subProps} />}
       {!data?.length ? <Empty1 {...emptyProps} /> : 
-      <div style={{overflow: 'scroll'}} >
-        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth : 520}}>
+      <div style={{overflowX: 'scroll'}}>
+        <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 520}}>
               <FooterTable {...tableProps} />
         </div>
       </div>}

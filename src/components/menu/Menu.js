@@ -174,7 +174,7 @@ export function Menu(props){
     <img src={image12} alt='image12' />,[
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.reporting_period")}</span>) : (t("transModel.reporting_period")), "/finance/reporting_period", null, null, null, msRole?.webFinance !== "Y"),
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("account.title")}</span>) : (t("account.title")), "/finance/account", null, null, null, msRole?.webFinance !== "Y"),
-        getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webFinance !== "Y"),
+        // getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.title")}</span>) : (t("transModel.title")), "/finance/template", null, null, null,msRole?.webFinance !== "Y"),
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.journal")}</span>) : (t("transModel.journal")), "/finance/journal", null, null, null,msRole?.webFinance !== "Y"),
         getItem( subscriptionType !== "PREMIUM" ? (<span style={{ color: "#969696" }}>{t("transModel.report")}</span>) : (t("transModel.report")), "/finance/report",  null, null, null, msRole?.webFinance !== 'Y' )
     ]),

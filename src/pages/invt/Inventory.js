@@ -24,6 +24,9 @@ export function Inventory(){
   const [filter, setFilter] = useState([]);
   const [excelName, setExcelName] = useState('');
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
+  const [requestTime, setRequestTime] = useState(null);
+  const [responseTime, setResponseTime] = useState(null);
+
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const navigate = useNavigate();
@@ -80,8 +83,12 @@ export function Inventory(){
     setError(null);
     setLoading(true);
     setAutoResetExpanded(isEdit ? false : true);
+    setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
+
     let api = 'Inventory/GetInventory?PageNumber=' + info?.pageNumber + '&PageSize=' + info?.pageSize;
     const response = await dispatch(getList(user, token, api));
+    setResponseTime(new Date()); // авсан цаг тэмдэглэх
+
     setInventory(response, response?.data?.inventoryies, response?.data?.pageInfo);
     setFiltering(false);
     setExcelName(t('header./inventory'))
@@ -156,6 +163,13 @@ export function Inventory(){
           <SizeMe>{({ size }) => 
             <div className='i_list_cont' id='invt_list'>
               {<List {...listProps} size={size} />}
+              <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666', display: 'flex', flexFlow: 'row' }}>
+                {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleString()}</p>}
+                {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleString()}</p>}
+                {requestTime && responseTime && (
+                  <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
+                )}
+              </div>
             </div>
           }</SizeMe>
         }

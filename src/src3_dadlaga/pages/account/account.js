@@ -2,8 +2,11 @@ import { SizeMe } from "react-sizeme";
 import { useTranslation } from "react-i18next";
 import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createSearchParams, useNavigate } from "react-router-dom";
- 
+import {
+  createSearchParams,
+  useNavigate,
+} from "react-router-dom";
+
 import "../../../css/order.css";
 import "../../../css/invt.css";
 import "../../css/tree.css";
@@ -12,7 +15,8 @@ import { Filter } from "../../components/accounts/Filter";
 import { AccountAddModal, AccountTree, List } from "../../components/accounts";
 import { Empty1, Error1, Overlay } from "../../../components/all";
 import { Subscription } from "../../../components/management/adjust/list";
- 
+import { OpeningBalanceModal } from "../../components/accounts/OpeningBalanceModal";
+
 export function Account() {
   const { t } = useTranslation();
   const [data, setData] = useState([]);          
@@ -21,12 +25,13 @@ export function Account() {
   const [treeData, setTreeData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);           
+  const [openBalanceModal, setOpenBalanceModal] = useState(false);
   const { user, token } = useSelector((state) => state.login);
   const maxWidth = useSelector((state) => state.temp.maxWidth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
- 
+
   const convertToTreeData = (arr = []) => {
     if (!Array.isArray(arr)) return [];
     const map = {};
@@ -45,7 +50,7 @@ export function Account() {
     });
     return out;
   };
- 
+
   const buildKeyMap = useMemo(() => {
     return (nodes = []) => {
       const map = {};
@@ -59,7 +64,7 @@ export function Account() {
       return map;
     };
   }, []);
- 
+
   const collectDescendantKeys = (rootKey, keyMap) => {
     const res = [];
     const seen = new Set();
@@ -85,14 +90,14 @@ export function Account() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
- 
+
   const fetchAccounts = async (query = "") => {
     setError(null);
     setLoading(true);
     const response = await dispatch(getList(user, token, "Txn/GetAccount" + (query ?? "")));
- 
+
     if (response?.code === 1000) setVisible(true);
- 
+
     if (response?.error) {
       setError(response?.error);
     } else if (response?.data) {
@@ -100,25 +105,25 @@ export function Account() {
       const classes = response?.data?.accclass ?? [];
       setData(acct);
       setTreeData(convertToTreeData(classes));
- 
+
       if (!query) setAllAcct(acct);
     }
     setLoading(false);
   };
- 
+
   const onNodeClick = (classId) => {
     if (classId === "0") {
       navigate({ search: "" });
       setData(allAcct);
       return;
     }
- 
+
     navigate({ search: createSearchParams({ classId }).toString() });
- 
+
     const keyMap = buildKeyMap(treeData);
     const idsArr = collectDescendantKeys(String(classId), keyMap);
     const idSet = new Set(idsArr);
- 
+
     const pickRowClassId = (row) =>
       String(
         row?.acctClassId ??
@@ -128,36 +133,35 @@ export function Account() {
         row?.classid ??
         ""
       );
- 
+
     if (allAcct?.length) {
       const filtered = allAcct.filter((row) => idSet.has(pickRowClassId(row)));
       setData(filtered);
       return;
     }
- 
+
     const params = new URLSearchParams();
     params.set("AcctClassID", idsArr.join(","));
     params.set("includeChildren", "Y");
     fetchAccounts(`?${params.toString()}`);
   };
- 
-  const onDone = async () => {
-    setVisible(false);
-  };
- 
+
+  const onDone = async () => setVisible(false);
   const onClickAdd = () => setOpenModal(true);
- 
+
   const listProps = { data, onClickAdd, setOpenModal };
   const headerProps = {
     onClickAdd,
     setError,
     onSearch: fetchAccounts,
     type: "account",
+
+    onOpenBalance: () => setOpenBalanceModal(true),
   };
   const subProps = { visible, setVisible, onDone };
   const treeProps = { treeData, onNodeClick };
   const modalProps = { openModal, setOpenModal, onSearch: fetchAccounts };
- 
+
   return (
     <div className="s_container_i" style={{ maxWidth }}>
       {visible && <Subscription {...subProps} />}
@@ -184,7 +188,13 @@ export function Account() {
           )}
         </SizeMe>
       </Overlay>
+
       <AccountAddModal {...modalProps} />
+
+      <OpeningBalanceModal
+        open={openBalanceModal}
+        onClose={() => setOpenBalanceModal(false)}
+      />
     </div>
   );
 }

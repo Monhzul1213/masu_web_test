@@ -260,6 +260,12 @@ tfoot > tr > th {
   outline: none;
   border-color: var(--config-color);
 }
+
+.ed_input:focus, #hide_border2:focus {
+  outline: none;
+  border-color: var(--config-color);
+}
+
 .t_expand {
   color: var(--text4-color);
 }
@@ -277,6 +283,9 @@ tfoot > tr > th {
 }
 
 .table_row:hover .ed_select_back, .table_row_selected:hover .ed_select_back, .table_row:hover #hide_border, .table_row_selected:hover #hide_border {
+  border-color: var(--text4-color);
+}
+.table_row:hover .ed_select_back, .table_row_selected:hover .ed_select_back, .table_row:hover #hide_border2, .table_row_selected:hover #hide_border2 {
   border-color: var(--text4-color);
 }
 
@@ -308,6 +317,10 @@ tfoot > tr > th {
 
 #hide_border {
   border-color: var(--root-color);
+}
+#hide_border2{
+  border-color: #d6d6d6;
+  text-align: end;
 }
 
 .resizer {

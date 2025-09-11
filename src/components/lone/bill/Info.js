@@ -35,27 +35,39 @@ export function Info(props){
   return (
     <div>
       {bill?.header ? <p className='bl_title'>{bill?.header}</p> : null}
-      {bill?.data ? <img className='bl_image' src={"data:image/" + (bill?.type?.replace('.', '') ?? 'png') + ";base64," + bill?.data} alt="Image" /> : null}
+      {bill?.data ? <img className='bl_image' src={"data:image/" + (bill?.type?.replace('.', '') ?? 'png') + ";base64," + bill?.data} alt={t('bill.logo')}  /> : null}
       {header?.refNo ? <p className='bl_title'>{t('payment.order_number')}: {header?.refNo}</p> : ""}
       <p className='bl_title'>{t(isRefund ? 'bill.refund' : header?.holdDescr === 'EAT IN' ? 'bill.sales1' : header?.holdDescr === 'TAKE OUT' ? 'bill.sales2' : 'bill.sales')}</p>
       <div className='bl_row'>
         <LabelIcon icon='MdPersonOutline' value={header?.cashierName ?? header?.cashierCode} />
         <LabelIcon icon='MdStayCurrentPortrait' value={header?.terminalName ?? header?.terminalD} space={true}/>
       </div>
-      <div className='bl_row1' >
-        <Label label={t('ТТД')} value={header?.tinId} width={250}/>
-        <Label label={t('Регистер')} value={header?.vatPayerNo} />
+      <div className="bl_row2col">
+        <div className="bl_col">
+          <Label label={t('ТТД')} value={header?.tinId} />
+        </div>
+        <div className="bl_col">
+          <Label label={t('Регистер')} value={header?.vatPayerNo} />
+        </div>
       </div>
-      <div className='bl_row1'>
-        <Label label={t('bill.site')} value={header?.siteName} width={250}/>
-        <Label label={t('bill.receipt_no')} value={header?.salesNo} />
+      <div className="bl_row2col">
+        <div className="bl_col">
+          <Label label={t('bill.site')} value={header?.siteName} />
+        </div>
+        <div className="bl_col">
+          <Label label={t('bill.receipt_no')} value={header?.salesNo} />
+        </div>
       </div>
-      <div className='bl_row1'>
+      <div className='bl_row2col'>
         <Label label={t('bill.address')} value={header?.address} />
       </div>
-      <div className='bl_row1'>
-        <Label label={t('bill.phone')} value={header?.phone} width={250}/>
-        <Label label={t('bill.date')} value={date} />
+      <div className="bl_row2col">
+        <div className="bl_col">
+          <Label label={t('bill.phone')} value={header?.phone} />
+        </div>
+        <div className="bl_col">
+          <Label label={t('bill.date')} value={date} />
+        </div>
       </div>
       {isRefund ? <Label label={t('bill.refund')} value={'#' + header?.sourceNo} /> : null}
       {header?.custId ? <Label label={t('bill.customer')} value={(header?.custName ?? '') + ' - ' + (header?.custPhone ?? '')} /> : null}

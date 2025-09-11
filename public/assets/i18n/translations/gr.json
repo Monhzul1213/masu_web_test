@@ -1722,7 +1722,16 @@
     "acctTy": "Kontotyp",
     "acctClassId": "Kontoklassencode",
     "acctClassName": "Kontoklassifikation",
-    "acct": "Kontonummer"
+    "acct": "Kontonummer",
+    "openingBalance": "Kontostand eingeben",
+    "tempSave": "Zwischenspeichern",
+    "submitOpening": "Anfangssaldo eingeben",
+    "dramt": "Sollbetrag",
+    "cramt": "Habenbetrag",
+    "amount": "Betrag",
+    "openingBalanceSuccess": "Eröffnungsbilanz wurde erfolgreich gespeichert.",
+    "dateOpening": "Datum der Eröffnungsbilanzbuchung",
+    "debitCreditNotEqualConfirm": "Soll und Haben sind nicht gleich. Möchten Sie fortfahren?"
   },
   "control": {
     "end": " Tage verbleiben.",

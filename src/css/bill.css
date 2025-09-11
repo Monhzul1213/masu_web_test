@@ -92,7 +92,7 @@
 .bl_label {
   font-size: var(--value-font);
   margin: 0;
-  width: 80px;
+  width: 60px;
 }
 
 .bl_value {
@@ -103,6 +103,18 @@
 
 .bl_gap {
   padding: 5px 5px 0 0;
+}
+.bl_row2col {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.bl_row2col > .bl_col {
+  flex-wrap: wrap;
+  flex: 0 0 50%;
+  display: flex;
 }
 
 .bl_dash {

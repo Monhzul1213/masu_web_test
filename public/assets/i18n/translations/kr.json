@@ -1709,7 +1709,16 @@
     "acctTy": "계좌 유형",
     "acctClassId": "계좌 분류 코드",
     "acctClassName": "계좌 분류",
-    "acct": "계좌 번호"
+    "acct": "계좌 번호",
+    "openingBalance": "잔액 입력",
+    "tempSave": "임시 저장",
+    "submitOpening": "초기 잔액 입력",
+    "dramt": "차변 금액",
+    "cramt": "대변 금액",
+    "amount": "금액",
+    "openingBalanceSuccess": "기초 잔액이 성공적으로 저장되었습니다.",
+    "dateOpening": "기초 잔액 입력일",
+    "debitCreditNotEqualConfirm": "차변과 대변이 일치하지 않습니다. 계속하시겠습니까?"
   },
   "control": {
     "end": "일 남았습니다.",

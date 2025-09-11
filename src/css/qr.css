@@ -968,3 +968,50 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+:root {
+  --cart-bar-h: 64px;
+  --cart-bar-gap: 10px;
+}
+
+.qr_container.with-cart {
+  padding-bottom: calc(var(--cart-bar-h) + var(--cart-bar-gap) + env(safe-area-inset-bottom));
+}
+:root{
+  --cart-footer-h: 64px;
+  --cart-footer-gap: 20px;
+}
+
+.cart_page{
+  min-height: 100vh;
+  padding: 20px 16px;
+  padding-bottom: calc(var(--cart-footer-h) + var(--cart-footer-gap) + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.cart_items{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+  padding-bottom: calc(var(--cart-footer-h) + var(--cart-footer-gap));
+}
+
+.cart_footer_bar{
+  min-height: var(--cart-footer-h);
+}
+:root{
+  --pay-safe-gap: 80px;
+}
+
+.payment_container{
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: calc(var(--pay-safe-gap) + env(safe-area-inset-bottom));
+}
+
+.qpay_qr .bank_app_list{
+  padding-bottom: var(--pay-safe-gap);
+}

@@ -1709,7 +1709,16 @@
     "acctTy": "Account Type",
     "acctClassId": "Account Class Code",
     "acctClassName": "Account Classification",
-    "acct": "Account Number"
+    "acct": "Account Number",
+    "openingBalance": "Enter account balance",
+     "tempSave": "Save Draft",
+    "submitOpening": "Enter Initial Balance",
+    "dramt": "Debit amount",
+    "cramt": "Credit amount",
+    "amount": "Amount",
+    "openingBalanceSuccess": "Opening balance has been successfully saved.",
+    "dateOpening": "Opening balance entry date",
+    "debitCreditNotEqualConfirm": "Debit and Credit are not equal. Do you want to continue?"
   },
   "control": {
     "end": " days remaining.",

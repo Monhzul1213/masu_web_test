@@ -11,8 +11,6 @@ export function Cart({ cart, setCart, onClose, onProceedToPayment }) {
   const didTriggerEmptyAction = useRef(false);
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const { t } = useTranslation();
-  const fixedToken = "20250722141616000AAAzaqbddsxSKJJCVd1";
-  const [imageCache, setImageCache] = useState({});
   const [showOrderType, setShowOrderType] = useState(false);
  
   useEffect(() => {
@@ -22,29 +20,12 @@ export function Cart({ cart, setCart, onClose, onProceedToPayment }) {
     }
   }, [cart, onClose]);
  
-  useEffect(() => {
-    cart.forEach(async (item) => {
-      if (!item.image || imageCache[item.invtId]) return;
- 
-      try {
-        const encodedPath = encodeURIComponent(item.image);
-        const res = await fetch(
-          `https://app.masu.mn:8082/Integration/DownloadFile?filepath=${encodedPath}`,
-          { headers: { authorization: fixedToken } }
-        );
- 
-        if (!res.ok) throw new Error("Image fetch failed");
-        const blob = await res.blob();
-        const url = URL.createObjectURL(blob);
- 
-        setImageCache((prev) => ({ ...prev, [item.invtId]: url }));
-      } catch (err) {
-        console.error("Image load error", err);
-      }
-    });
-  }, [cart, imageCache]);
- 
-  const getImageUrl = (item) => imageCache[item.invtId] || noImage;
+  const getImageUrl = (item) => {
+    if (!item?.image) return noImage;
+    let url = item.image.replace(/^C:\\MasuFiles\\?/, "https://app.masu.mn:8082/");
+    url = url.replace(/\\/g, "/");
+    return url || noImage;
+  };
  
   const incrementQty = (id) => {
     setCart((prev) =>

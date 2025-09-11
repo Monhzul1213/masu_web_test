@@ -9,33 +9,13 @@ export function ProductCard({ data, onClick, qty = 0, onRemove }) {
       setImageUrl(noImage);
       return;
     }
-
-    const fetchImage = async () => {
-      try {
-        const encodedPath = encodeURIComponent(data.image);
-        const res = await fetch(
-          `https://app.masu.mn:8082/Integration/DownloadFile?filepath=${encodedPath}`,
-          {
-            headers: {
-              authorization: "20250722141616000AAAzaqbddsxSKJJCVd1",
-            },
-          }
-        );
-
-        if (!res.ok) throw new Error('Image fetch failed');
-
-        const blob = await res.blob();
-        setImageUrl(URL.createObjectURL(blob));
-      } catch (err) {
-        setImageUrl(noImage);
-      }
-    };
-
-    fetchImage();
+    const normalizedPath = data.image.replace(/^C:\\MasuFiles\\?/, "https://app.masu.mn:8082/");
+    const finalUrl = normalizedPath.replace(/\\/g, "/");
+    setImageUrl(finalUrl);
   }, [data?.image]);
-
+ 
   if (!data) return null;
-
+ 
   return (
     <div className="product_card" onClick={() => onClick && onClick(data)}>
       {qty > 0 && (
@@ -52,7 +32,7 @@ export function ProductCard({ data, onClick, qty = 0, onRemove }) {
           </button>
         </div>
       )}
-
+ 
       <img
         src={imageUrl}
         alt={data.name || 'No name'}

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CurrencyInput from 'react-currency-input-field';
+import { Select } from 'antd';
+
+const { Option } = Select;
 
 
 export const EditableCell = props => {
@@ -57,4 +60,37 @@ export const EditableCell = props => {
       : isQty
         ? (<CurrencyInput {...qtyProps} />)
         : (<input {...textProps} />)
+}
+
+export const SelectableCell = props => {
+  const { value: initialValue, row, column: { id, minWidth }, updateMyData, disabled, data, s_value, s_descr } = props;
+  const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
+
+  const onChange = e => {
+    // setValue(e);
+    updateMyData(row?.index, id, e)
+  }
+
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  return (
+    <div className='ed_select_back' style={{ minWidth }}>
+      <Select
+        className='ed_select'
+        showSearch
+        style={{ minWidth }}
+        disabled={disabled}
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        onChange={onChange}
+        value={value}>
+        {data?.map(renderItem)}
+      </Select>
+    </div>
+  )
 }

@@ -7,30 +7,60 @@ import { ButtonRow } from './ButtonRow';
 import { Button } from './Button';
 
 export function Confirm(props){
-  const { open, text, confirm, text1 } = props;
+  const { open, text, confirm, text1, ...modalProps } = props;
   const { t } = useTranslation();
 
   return (
-    <Modal title={null} footer={null} closable={false} open={open} centered={true} width={360}>
+    <Modal
+      title={null}
+      footer={null}
+      closable={false}
+      open={open}
+      centered
+      width={360}
+      
+      getContainer={modalProps.getContainer ?? (() => document.body)}
+      zIndex={modalProps.zIndex ?? 2000}
+      maskClosable={modalProps.maskClosable ?? false}
+      keyboard={modalProps.keyboard ?? false}
+      destroyOnClose
+    >
       <div className='m_back'>
         <p className='m_title' id='m_confirm'>{t('page.confirm')}</p>
-        {text1 ? <p className='m_descr'>{text1}</p> : ''}
+        {text1 ? <p className='m_descr'>{text1}</p> : null}
         <p className='m_descr'>{t(text)}</p>
       </div>
-      <ButtonRow onClickCancel={() => confirm(false)} onClickSave={() => confirm(true)} text1='page.no' text2='page.yes' />
+      <ButtonRow
+        onClickCancel={() => confirm(false)}
+        onClickSave={() => confirm(true)}
+        text1='page.no'
+        text2='page.yes'
+      />
     </Modal>
   );
 }
 
 export function Prompt(props){
-  const { edited } = props;
+  const { edited, ...modalProps } = props;
   const { t } = useTranslation();
 
   return (
     <ReactRouterPrompt when={edited}>
       {({ isActive, onConfirm, onCancel }) =>
         isActive && (
-          <Modal title={null} footer={null} closable={false} open={true} centered={true} width={360}>
+          <Modal
+            title={null}
+            footer={null}
+            closable={false}
+            open
+            centered
+            width={360}
+            getContainer={modalProps.getContainer ?? (() => document.body)}
+            zIndex={modalProps.zIndex ?? 2000}
+            maskClosable={modalProps.maskClosable ?? false}
+            keyboard={modalProps.keyboard ?? false}
+            destroyOnClose
+          >
             <div className='m_back'>
               <p className='m_title' id='m_confirm'>{t('page.confirm')}</p>
               <p className='m_descr'>{t('page.back_confirm')}</p>
@@ -44,45 +74,68 @@ export function Prompt(props){
 }
 
 export function PromptSave(props){
-  const { edited, onClickSave, setEdited } = props;
+  const { edited, onClickSave, setEdited, ...modalProps } = props;
   const { t } = useTranslation();
 
   return (
     <ReactRouterPrompt when={edited}>
-    {({ isActive, onConfirm, onCancel }) =>
-      isActive && (
-        <Modal title={null} footer={null} closable={false} open centered width={360}>
-          <div className="m_back">
-            <p className="m_title" id="m_confirm">
-              {t('page.confirm')}
-            </p>
-            <p className="m_descr">{t('reporting.period.back_confirm')}</p>
-          </div>
-          <ButtonRow
-            onClickCancel={onCancel}
-            onClickSave={async () => {
-              const success = await onClickSave();
-              if (success) {
-                setEdited(false);
-                await new Promise((resolve) => setTimeout(resolve, 100));
-                onConfirm();
-              }
-            }}
-            text1="page.no"
-            text2="page.yes"
-          />
-        </Modal>
-      )
-    }
-  </ReactRouterPrompt>
+      {({ isActive, onConfirm, onCancel }) =>
+        isActive && (
+          <Modal
+            title={null}
+            footer={null}
+            closable={false}
+            open
+            centered
+            width={360}
+            getContainer={modalProps.getContainer ?? (() => document.body)}
+            zIndex={modalProps.zIndex ?? 2000}
+            maskClosable={modalProps.maskClosable ?? false}
+            keyboard={modalProps.keyboard ?? false}
+            destroyOnClose
+          >
+            <div className="m_back">
+              <p className="m_title" id="m_confirm">{t('page.confirm')}</p>
+              <p className="m_descr">{t('reporting.period.back_confirm')}</p>
+            </div>
+            <ButtonRow
+              onClickCancel={onCancel}
+              onClickSave={async () => {
+                const success = await onClickSave();
+                if (success) {
+                  setEdited(false);
+                  await new Promise((r) => setTimeout(r, 100));
+                  onConfirm();
+                }
+              }}
+              text1="page.no"
+              text2="page.yes"
+            />
+          </Modal>
+        )
+      }
+    </ReactRouterPrompt>
   );
 }
+
 export function Warning(props){
-  const { open, text, close } = props;
+  const { open, text, close, ...modalProps } = props;
   const { t } = useTranslation();
 
   return (
-    <Modal title={null} footer={null} closable={false} open={open} centered={true} width={360}>
+    <Modal
+      title={null}
+      footer={null}
+      closable={false}
+      open={open}
+      centered
+      width={360}
+      getContainer={modalProps.getContainer ?? (() => document.body)}
+      zIndex={modalProps.zIndex ?? 2000}
+      maskClosable={modalProps.maskClosable ?? false}
+      keyboard={modalProps.keyboard ?? false}
+      destroyOnClose
+    >
       <div className='m_back'>
         <p className='m_descr'>{t(text)}</p>
       </div>

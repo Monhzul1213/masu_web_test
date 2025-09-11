@@ -35,13 +35,20 @@ export function Customer(props){
   const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
 
-  
   useEffect(() => {
-    user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
     getBranchs();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  
+  useEffect(() => {
+    if (branch.length > 0 && user?.msRole?.webManageItem === 'Y') {
+      getData();
+    }
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [branch]);
+  
 
   const getBranchs = async () => {
     setError(null);
@@ -75,7 +82,6 @@ export function Customer(props){
       // || response?.code === 1001
       setVisible1(true);
     }
-    console.log(query, branch);
     if(query){
       response?.data?.forEach(item => {
         branch?.forEach(li => {
