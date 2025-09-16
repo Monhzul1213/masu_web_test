@@ -1791,15 +1791,21 @@
     "qpay_qr_alt": "QPay QR"
   },
   "orderType": {
-    "business": "사업자",
-    "individual": "개인",
-    "reg_placeholder": "사업자등록번호",
-    "company_placeholder": "회사명",
-    "pay_now": "결제하기",
-    "fill_all_fields": "모든 항목을 입력해 주세요",
-    "close": "닫기",
-    "unavailable": "주문 불가", 
-    "unavailable_aria": "주문 불가"
-  },
+      "business": "사업자",
+      "individual": "개인",
+      "reg_placeholder": "사업자등록번호",
+      "company_placeholder": "회사명",
+      "phone_placeholder": "전화번호",
+      "note_placeholder": "추가 정보",
+      "contact_info": "연락처 정보",
+      "pay_now": "지금 결제",
+      "fill_all_fields": "모든 항목을 입력해 주세요",
+      "close": "닫기",
+      "required": "필수 입력",
+      "invalid_phone": "전화번호가 올바르지 않습니다",
+      "unavailable": "주문 불가",
+      "unavailable_aria": "주문 불가",
+      "enter_phone": "전화번호를 입력해 주세요"
+    },
   "version": "14"
 }

@@ -1845,11 +1845,17 @@
     "individual": "Хувь хүн",
     "reg_placeholder": "Аж ахуйн нэгжийн регистерийн дугаар",
     "company_placeholder": "Компанийн нэр",
+    "phone_placeholder": "Утасны дугаар",
+    "note_placeholder": "Нэмэлт мэдээлэл",
+    "contact_info": "Харилцах мэдээлэл",
     "pay_now": "Төлбөр төлөх",
     "fill_all_fields": "Бүх талбарыг бөглөнө үү",
     "close": "Хаах",
-    "unavailable": "Захиалах боломжгүй", 
-    "unavailable_aria": "Захиалах боломжгүй"
+    "required": "Заавал бөглөх шаардлагатай",
+    "invalid_phone": "Утасны дугаар буруу байна",
+    "unavailable": "Захиалах боломжгүй",
+    "unavailable_aria": "Захиалах боломжгүй",
+    "enter_phone": "Утасны дугаар оруулна уу"
   },
-  "version": "2025.09.15"
+  "version": "2025.09.08"
 }

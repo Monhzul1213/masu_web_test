@@ -2,29 +2,29 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SizeMe } from 'react-sizeme';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
+ 
 import { Overlay, Error1 } from '../../../src1/components/all/all_m';
 import { Header } from '../../../src1/components/timetable/kds/Header';
 import { List } from '../../../src1/components/timetable/kds/List';
-
+ 
 import { getList } from '../../../services';
-
+ 
 export function Kds() {
   const navigate = useNavigate();
   const { user, token } = useSelector(state => state.login);
-
+ 
   const [activeTab, setActiveTab] = useState('doing');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [retdata, setData] = useState({ saleshold: [] });
   const [siteId, setSiteId] = useState(null);
-
+ 
   const searchParamsRef = useRef(null);
   const dispatch = useDispatch();
-
+ 
   const normalizeKdsData = (data, prevData) => {
     if (!data) return { saleshold: [], salesitemhold: [] };
-
+ 
     const prevMap = {};
     if (prevData?.saleshold) {
       prevData.saleshold.forEach(o => {
@@ -36,14 +36,14 @@ export function Kds() {
         prevMap[o.salesNo] = o.lastUpdateLocal || o.lastUpdate || o.createdDate;
       });
     }
-
+ 
     const normalizeOrders = (arr) =>
       (arr || []).map(o => ({
         ...o,
         kdsStatus: o.kdsStatus ?? 0,
         lastUpdateLocal: prevMap[o.salesNo] || o.lastUpdate || o.createdDate
       }));
-
+ 
     return {
       ...data,
       saleshold: normalizeOrders(data.saleshold),
@@ -58,11 +58,11 @@ export function Kds() {
       }))
     };
   };
-
+ 
   useEffect(() => {
     if (user?.msRole?.webViewItemBalance !== 'Y') navigate({ pathname: '/' });
   }, []);
-
+ 
   useEffect(() => {
     if (!siteId) return;
     const interval = setInterval(() => {
@@ -72,7 +72,7 @@ export function Kds() {
     }, 5000);
     return () => clearInterval(interval);
   }, [siteId]);
-
+ 
   const onSearch = async (query, opts) => {
     const selectedSiteId = query?.siteId || query?.SiteID;
     if (!selectedSiteId) {
@@ -82,16 +82,16 @@ export function Kds() {
     }
     if (!opts?.silent) setLoading(true);
     setError(null);
-
+ 
     setSiteId(selectedSiteId);
     searchParamsRef.current = query;
-
+ 
     let api = `Integration/GetKdsOder?SiteID=${selectedSiteId}`;
     let headers = { authorization: token };
-
+ 
     const response = await dispatch(getList(user, token, api, null, headers));
     const apiData = response?.data;
-
+ 
     if (response?.error) {
       setError(response?.error);
     } else if (response?.rettype !== undefined && response?.rettype !== 0) {
@@ -100,24 +100,24 @@ export function Kds() {
       const merged = normalizeKdsData(apiData, retdata);
       setData(merged);
     }
-
+ 
     if (!opts?.silent) setLoading(false);
   };
-
+ 
   const onItemStatusChange = (order, item) => {
     const invtID = item.invtID || item.invtId;
     const siteID = order.siteID || order.siteId;
     const salesNo = order.salesNo;
-
+ 
     if (!invtID) return;
-
+ 
     const newItemStatus = item.itemStatus === 2 ? 1 : 2;
-
+ 
     setData(prev => {
       const cloned = structuredClone(prev);
       const listKey = activeTab === 'doing' ? 'salesitemhold' : 'salesitemhold_statustwo';
       const itemList = cloned[listKey];
-
+ 
       const match = itemList.find(
         it =>
           String(it.salesNo) === String(salesNo) &&
@@ -126,11 +126,11 @@ export function Kds() {
       if (match) match.itemStatus = newItemStatus;
       return cloned;
     });
-
+ 
     const allDone = order.items
       .filter(it => (it.invtID || it.invtId) !== invtID)
       .every(it => it.itemStatus === newItemStatus);
-
+ 
     const payload = {
       saleshold: {
         salesNo,
@@ -146,25 +146,25 @@ export function Kds() {
       ],
     };
     if (!allDone) delete payload.saleshold.kdsStatus;
-
+ 
     fetch('https://app.masu.mn:8082/Integration/SetKDSOrderStatus', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', authorization: token },
       body: JSON.stringify(payload),
     }).catch(console.error);
   };
-
+ 
   const onOrderStatusChange = (order) => {
     const siteID = order.siteID || order.siteId;
     const salesNo = order.salesNo;
     const newKdsStatus = activeTab === 'ready' ? 1 : 2;
-
+ 
     const itemsWithInvtId = order.items?.filter(item => !!(item.invtID || item.invtId)) || [];
     if (itemsWithInvtId.length !== order.items.length) {
       alert('Зарим бараанд invtID байхгүй байна!');
       return;
     }
-
+ 
     setData(prev => {
       const cloned = structuredClone(prev);
       const holdKey = activeTab === 'doing' ? 'saleshold' : 'saleshold_statustwo';
@@ -176,7 +176,7 @@ export function Kds() {
       }
       return cloned;
     });
-
+ 
     const payload = {
       saleshold: {
         salesNo,
@@ -189,7 +189,7 @@ export function Kds() {
         itemStatus: item.itemStatus,
       })),
     };
-
+ 
     fetch('https://app.masu.mn:8082/Integration/SetKDSOrderStatus', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', authorization: token },
@@ -200,7 +200,7 @@ export function Kds() {
       })
       .catch(console.error);
   };
-
+ 
   let orders = [];
   if (activeTab === 'doing') {
     orders = (retdata.saleshold || [])
@@ -208,6 +208,9 @@ export function Kds() {
         ...order,
         items: (retdata.salesitemhold || []).filter(
           item => String(item.salesNo) === String(order.salesNo)
+        ),
+        consumerinfo: (retdata.consumerinfo || []).filter(
+          c => String(c.salesNo) === String(order.salesNo)
         )
       }))
       .sort((a, b) => {
@@ -221,11 +224,14 @@ export function Kds() {
         ...order,
         items: (retdata.salesitemhold_statustwo || []).filter(
           item => String(item.salesNo) === String(order.salesNo)
+        ),
+        consumerinfo: (retdata.consumerinfo || []).filter(
+          c => String(c.salesNo) === String(order.salesNo)
         )
       }))
       .sort((a, b) => new Date(b.lastUpdateLocal) - new Date(a.lastUpdateLocal));
   }
-
+ 
   const filteredOrders = orders.filter(order => {
     const status = order.kdsStatus;
     if (activeTab === 'doing') {
@@ -235,7 +241,7 @@ export function Kds() {
     }
     return false;
   });
-
+ 
   return (
     <div className="s_container_i">
       <Overlay loading={loading}>
@@ -251,7 +257,7 @@ export function Kds() {
                 setActiveTab={setActiveTab}
                 kdsData={retdata}
               />
-
+ 
               {siteId && (
                 <div className="table_scroll">
                   <div id="paging">
@@ -273,4 +279,3 @@ export function Kds() {
     </div>
   );
 }
-  

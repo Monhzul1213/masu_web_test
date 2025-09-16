@@ -1804,15 +1804,21 @@
     "qpay_qr_alt": "QPay-QR"
   },
   "orderType": {
-    "business": "Unternehmen",
-    "individual": "Privatperson",
-    "reg_placeholder": "Handelsregisternummer",
-    "company_placeholder": "Firmenname",
-    "pay_now": "Jetzt bezahlen",
-    "fill_all_fields": "Bitte alle Felder ausfüllen",
-    "close": "Schließen",
-    "unavailable": "Nicht bestellbar", 
-    "unavailable_aria": "Nicht bestellbar"
-  },
+      "business": "Unternehmen",
+      "individual": "Privatperson",
+      "reg_placeholder": "Handelsregisternummer",
+      "company_placeholder": "Firmenname",
+      "phone_placeholder": "Telefonnummer",
+      "note_placeholder": "Zusätzliche Informationen",
+      "contact_info": "Kontaktinformationen",
+      "pay_now": "Jetzt bezahlen",
+      "fill_all_fields": "Bitte alle Felder ausfüllen",
+      "close": "Schließen",
+      "required": "Erforderlich",
+      "invalid_phone": "Ungültige Telefonnummer",
+      "unavailable": "Bestellung nicht möglich",
+      "unavailable_aria": "Bestellung nicht möglich",
+      "enter_phone": "Bitte geben Sie eine Telefonnummer ein"
+    },
   "version": "14"
 }

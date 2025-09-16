@@ -17,6 +17,7 @@ function PaymentOptions({
   customerInfo,
   terminalId,
   onPaymentSuccess,
+  useDelivery,
 }) {
   const { t } = useTranslation();
  
@@ -193,21 +194,43 @@ function PaymentOptions({
             : String(customerInfo?.personName || ""),
         VatCustomerID: customerInfo?.type === "business" ? String(customerInfo?.regNo || "").trim() : "",
       };
- 
+      const useDeliveryFlag = String(useDelivery || "").toUpperCase() === "Y";
+   const shouldAttachConsumer = useDeliveryFlag && !!customerInfo;
+   const consumerinfo = shouldAttachConsumer
+     ? {
+         salesNo: Number(overrideSalesNo) || 0,
+         merchantId: Number(merchantId) || 0,
+         name: "",
+         age: "",
+         gender: "",
+         nationality: "",
+         passportNo: "",
+         seatNo: "",
+         destinationCountry: "",
+         createdDate: new Date().toISOString(),
+         createdUserId: 0,
+         isUseAssist: "",
+         consumerId: 0,
+         phone: String(customerInfo?.phone || ""),
+         address: "",
+         addDescr: String(customerInfo?.note || ""),
+       }
+     : null;
+
       const payload = {
         merchantID: toInt(merchantId),
         siteID: toInt(siteId),
-        SalesNo: String(overrideSalesNo),
+        salesNo: String(overrideSalesNo),
         totalAmount: finalTotal,
         totalSalesAmount: finalTotal,
         ticketBinID,
         ticketDescr: "",
-        CreatedVersion: CREATED_VERSION,
+        createdVersion: CREATED_VERSION,
         ...derived,
         salesitems: salesItems,
         salespayments: [{ paymentTypeID: resolvedPaymentTypeId, paymentAmount: finalTotal }],
+        ...(consumerinfo ? { consumerinfo } : {}),
       };
- 
       const headers = {
         "Content-Type": "application/json",
         Accept: "application/json",

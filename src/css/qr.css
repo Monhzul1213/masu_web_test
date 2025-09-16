@@ -1053,3 +1053,45 @@
   text-decoration: line-through;
   opacity: 0.8;
 }
+
+.input_group.error input {
+  border-color: #ef4444 !important;
+}
+
+.input_group.error input::placeholder {
+  color: #ef4444;
+  opacity: 1;
+}
+
+.input_group input,
+.input_group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  padding: 12px 14px;
+  border: 1px solid #e5e5ea;
+  border-radius: 10px;
+  background: #fff;
+  color: #111;
+  outline: none;
+}
+
+.input_group textarea {
+  height: 84px;   
+  resize: none;    
+}
+
+.input_group input:focus,
+.input_group textarea:focus {
+  border-color: #ab47bc;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+}
+
+.input_group input::placeholder,
+.input_group textarea::placeholder {
+  color: #9aa0a6;
+}

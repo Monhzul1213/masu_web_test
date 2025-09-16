@@ -1789,15 +1789,21 @@
     "qpay_qr_alt": "QPay 二维码"
   },
   "orderType": {
-    "business": "企业",
-    "individual": "个人",
-    "reg_placeholder": "统一社会信用代码 / 注册号",
-    "company_placeholder": "公司名称",
-    "pay_now": "立即支付",
-    "fill_all_fields": "请填写所有字段",
-    "close": "关闭",
-    "unavailable": "不可下单", 
-    "unavailable_aria": "不可下单"
-  },
+      "business": "企业",
+      "individual": "个人",
+      "reg_placeholder": "工商注册号",
+      "company_placeholder": "公司名称",
+      "phone_placeholder": "电话号码",
+      "note_placeholder": "附加信息",
+      "contact_info": "联系信息",
+      "pay_now": "立即付款",
+      "fill_all_fields": "请填写所有字段",
+      "close": "关闭",
+      "required": "必填",
+      "invalid_phone": "电话号码无效",
+      "unavailable": "无法下单",
+      "unavailable_aria": "无法下单",
+      "enter_phone": "请输入电话号码"
+    },
   "version": "14"
 }

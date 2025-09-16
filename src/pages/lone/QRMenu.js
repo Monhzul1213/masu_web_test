@@ -32,14 +32,14 @@ export function QRMenu() {
   const [paymentTypeId, setPaymentTypeId] = useState(null);
   const [siteMetaForPayment, setSiteMetaForPayment] = useState(null);
   const [customerInfo, setCustomerInfo] = useState(null);
- 
+
   const { user, token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const qrCodeParam = new URLSearchParams(window.location.search).get("qr");
   const loaderRef = useRef(null);
   const { t, i18n } = useTranslation();
   const [dropdownOpen, setDropdownOpen] = useState(false);
- 
+  const [useDelivery, setUseDelivery] = useState(null);
   const languages = [
     { code: "en", flag: flagEn, label: "English" },
     { code: "mn", flag: flagMn, label: "Монгол" },
@@ -49,7 +49,7 @@ export function QRMenu() {
   ];
  
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
- 
+  
   const changeLanguage = (lang) => {
     i18n.changeLanguage(lang);
     localStorage.setItem("selectedLanguage", lang);
@@ -60,15 +60,15 @@ export function QRMenu() {
    const sel = Number(selectedCategoryId);
    return products.filter(p => p && Number(p.categoryId) === sel);
  }, [products, selectedCategoryId]);
- 
+
  const hasMore = visibleProducts.length < baseProducts.length;
- 
+
  const sliceSize = 50;
  const isLoadingMoreRef = useRef(false);
  const loadMore = useCallback(() => {
   if (isLoadingMoreRef.current) return;
   isLoadingMoreRef.current = true;
- 
+
   setVisibleProducts(prev => {
     const start = prev.length;
     const end = start + sliceSize;
@@ -77,15 +77,15 @@ export function QRMenu() {
     }
     return [...prev, ...baseProducts.slice(start, end)];
   });
- 
+
   requestAnimationFrame(() => { isLoadingMoreRef.current = false; });
 }, [baseProducts, sliceSize]);
- 
+
   useEffect(() => {
    isLoadingMoreRef.current = false;
    setVisibleProducts(baseProducts.slice(0, sliceSize));
  }, [baseProducts, sliceSize]);
- 
+
   useEffect(() => {
     if (!qrCodeParam) return;
     try {
@@ -124,7 +124,10 @@ export function QRMenu() {
       authorization: fixedToken,
     })
   );
- 
+
+ const apiUseDelivery = res?.data?.config?.[0]?.useDelivery ?? null;
+ setUseDelivery(typeof apiUseDelivery === "string" ? apiUseDelivery.toUpperCase() : null);
+
   if (Array.isArray(res?.data?.inventory)) {
   const normalized = res.data.inventory.map(it => {
     const inv = it?.inv ?? it ?? {};
@@ -135,7 +138,7 @@ export function QRMenu() {
         : (typeof inv.price === 'string'
             ? Number(inv.price.replace(/[^\d.-]/g, ''))
             : null);
- 
+
     return {
       ...inv,
       price,
@@ -143,17 +146,17 @@ export function QRMenu() {
       __menuStatus: it?.menuitem?.status ?? it?.status ?? 1,
     };
   });
- 
+
   normalized.sort((a, b) => {
     const sa = Number(a.__menuStatus ?? 1);
     const sb = Number(b.__menuStatus ?? 1);
     if (sb !== sa) return sb - sa;
     return (a.name || '').localeCompare(b.name || '');
   });
- 
+
   setProducts(normalized);
 }
- 
+
     if (res?.data?.category) {
       setCategories(res.data.category);
       setSelectedCategoryId(null);
@@ -226,7 +229,7 @@ export function QRMenu() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [decryptedData, siteId]);
- 
+  
   useEffect(() => {
    if (!loaderRef.current || !hasMore) return;
   const el = loaderRef.current;
@@ -310,6 +313,8 @@ export function QRMenu() {
             paymentTypeId={paymentTypeId}
             siteMetaFromParent={siteMetaForPayment}
             customerInfo={customerInfo}
+            useDelivery={useDelivery}
+            debugFrom="QRMenu"
             onClose={() => {
               setShowPaymentPage(false);
               setShowCartPage(true);
@@ -328,6 +333,7 @@ export function QRMenu() {
           cart={cart}
           setCart={setCart}
           onClose={() => setShowCartPage(false)}
+          useDelivery={useDelivery}
           onProceedToPayment={(payload) => {
             const amount =
               typeof payload === "number" ? payload : Number(payload?.amount ?? 0);
@@ -335,7 +341,7 @@ export function QRMenu() {
               typeof payload === "number" ? null : payload?.customerInfo ?? null;
  
             setFinalAmount(amount);
-            if (ci) setCustomerInfo(ci);
+            setCustomerInfo(ci ?? null);
             setShowCartPage(false);
             setShowPaymentPage(true);
           }}

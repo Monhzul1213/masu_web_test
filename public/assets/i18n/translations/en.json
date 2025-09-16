@@ -1791,15 +1791,21 @@
     "qpay_qr_alt": "QPay QR"
   },
   "orderType": {
-    "business": "Business",
-    "individual": "Individual",
-    "reg_placeholder": "Company registration number",
-    "company_placeholder": "Company name",
-    "pay_now": "Pay now",
-    "fill_all_fields": "Please fill in all fields",
-    "close": "Close",
-    "unavailable": "Unavailable", 
-    "unavailable_aria": "Unavailable"
-  },
+      "business": "Business",
+      "individual": "Individual",
+      "reg_placeholder": "Business registration number",
+      "company_placeholder": "Company name",
+      "phone_placeholder": "Phone number",
+      "note_placeholder": "Additional information",
+      "contact_info": "Contact information",
+      "pay_now": "Pay now",
+      "fill_all_fields": "Please fill in all fields",
+      "close": "Close",
+      "required": "This field is required",
+      "invalid_phone": "Invalid phone number",
+      "unavailable": "Unavailable to order",
+      "unavailable_aria": "Unavailable to order",
+      "enter_phone": "Please enter a phone number"
+    },
   "version": "14"
 }
