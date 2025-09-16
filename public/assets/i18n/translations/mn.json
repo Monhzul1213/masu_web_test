@@ -123,7 +123,7 @@
     "/inventory/invt_list/invt_import": "Бараа бөөнөөр оруулах",
     "/qrmenu/qrmenu": "QR цэс",
     "/qrmenu/qrmenu/qrmenuadd": "QR цэс нэмэх",
-    "/qrmenu/location": "Захиалга авах байршил",
+    "/qrmenu/location": "QR байршил",
     "/inventory/invt_modi": "Нэмэлт төлбөр",
     "/inventory/invt_modi/modi_add": "Нэмэлт төлбөр үүсгэх",
     "/inventory/invt_discount": "Хөнгөлөлт",
@@ -137,7 +137,7 @@
     "/config/order": "Захиалга",
     "/config/store": "Салбар",
     "/config/pos": "ПОС төхөөрөмж",
-    "/config/location": "Захиалга авах байршил",
+    "/config/location": "QR байршил",
     "/config/reclam": "Реклам",
     "/config/reclam/reclam_add": "Реклам",
     "/helpx": "Тусламж",
@@ -334,7 +334,7 @@
     "meal": "Хоолны төлөв",
     "kitchen": "Гал тогооны захиалга",
     "order": "Захиалга авах",
-    "order_location": "Захиалга авах байршил",
+    "order_location": "QR байршил",
     "store": "Салбар",
     "pos": "ПОС төхөөрөмж",
     "reclam": "Реклам"
@@ -1192,10 +1192,10 @@
   "orders" : {
     "add_location" : "Байршил нэмэх",
     "location" : "Байршил",
-    "success_msg": "Захиалга авах байршил амжилттай бүртгэлээ",
+    "success_msg": "QR байршил амжилттай бүртгэлээ",
     "kit_error": "Байршлын жагсаалт хоосон байж болохгүй",
-    "title": "Захиалга авах байршил",
-    "descr": "Захиалга авах байршил бүртгэхийн тулд салбар нэмнэ үү",
+    "title": "QR байршил",
+    "descr": "QR байршил бүртгэхийн тулд салбар нэмнэ үү",
     "add": "Салбар нэмэх",
     "variant_error" :"Байршлын нэр давхардаж байна",
     "msg":  "Тохиргоо-Нэмэлт тохиргоо-Захиалга авах  тохиргоог ашиглана уу!",
@@ -1841,13 +1841,15 @@
     "qpay_qr_alt": "QPay QR"
   },
   "orderType": {
-    "business": "Аж ахуйн НЭГЖ",
+    "business": "Аж ахуйн нэгж",
     "individual": "Хувь хүн",
     "reg_placeholder": "Аж ахуйн нэгжийн регистерийн дугаар",
     "company_placeholder": "Компанийн нэр",
     "pay_now": "Төлбөр төлөх",
     "fill_all_fields": "Бүх талбарыг бөглөнө үү",
-    "close": "Хаах"
+    "close": "Хаах",
+    "unavailable": "Захиалах боломжгүй", 
+    "unavailable_aria": "Захиалах боломжгүй"
   },
-  "version": "2025.09.08"
+  "version": "2025.09.15"
 }

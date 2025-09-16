@@ -1797,7 +1797,9 @@
     "company_placeholder": "회사명",
     "pay_now": "결제하기",
     "fill_all_fields": "모든 항목을 입력해 주세요",
-    "close": "닫기"
+    "close": "닫기",
+    "unavailable": "주문 불가", 
+    "unavailable_aria": "주문 불가"
   },
   "version": "14"
 }

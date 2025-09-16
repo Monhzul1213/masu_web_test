@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SizeMe } from 'react-sizeme';
-import { useNavigate, createSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { message } from 'antd';
@@ -9,6 +9,7 @@ import '../../css/invt.css';
 import { deleteMultiRequest, getList, sendRequest } from '../../services';
 import { Confirm, Empty2, Error1, Overlay } from '../../components/all';
 import { Help, List } from '../../components/invt/inventory/list';
+import { InventoryAdd } from './InventoryAdd';
 
 export function Inventory(){
   const { t } = useTranslation();
@@ -27,6 +28,8 @@ export function Inventory(){
   const [requestTime, setRequestTime] = useState(null);
   const [responseTime, setResponseTime] = useState(null);
   const [hideTime, setHideTime] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const navigate = useNavigate();
@@ -34,7 +37,6 @@ export function Inventory(){
 
   useEffect(() => {
     if (
-      user?.merchantId === 135 ||
       user?.merchantId === 383 ||
       user?.merchantId === 270
       )
@@ -121,9 +123,20 @@ export function Inventory(){
       getInventory(pageInfo, isEdit);
   }
 
+  // const onClickAdd = row => {
+  //   if(row) navigate({ pathname: 'invt_add', search: createSearchParams({ invtId: row?.invtId }).toString() });
+  //   else navigate({ pathname: 'invt_add' });
+  // }
+
   const onClickAdd = row => {
-    if(row) navigate({ pathname: 'invt_add', search: createSearchParams({ invtId: row?.invtId }).toString() });
-    else navigate({ pathname: 'invt_add' });
+    setVisible(true);
+    setSelected(row);
+  }
+
+  const closeModal = toGet => {
+    setVisible(false);
+    setSelected(null);
+    if(toGet === true) getData();
   }
 
   const confirm = async sure => {
@@ -166,10 +179,12 @@ export function Inventory(){
     autoResetExpanded, filtering, onClickDelete, show, setError, onSearch, cats: categories, excelName, pageInfo, getInventory};
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const videoData = [{id: "8IMwbPxh-QQ"}]
+  const modalProps = { visible, closeModal, selected };
 
   return (
-    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}} >
+    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
       {open && <Confirm {...confirmProps} />}
+      {visible && <InventoryAdd {...modalProps} />}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty2 {...emptyProps} /> :

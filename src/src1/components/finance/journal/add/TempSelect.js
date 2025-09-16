@@ -68,3 +68,70 @@ export function TempSelect(props){
     </div>
   );
 }
+
+
+export function SelectItem1(props){
+  const { item } = props;
+
+  return (
+    <div className='cs_item' style={{display: 'flex', flexFlow: 'row'}}>
+      <p className='cs_name' style={{minWidth: 100 }} >{item?.label}</p>
+      <p className='cs_name' >{item?.value}</p>
+    </div>
+  );
+}
+
+export function CustSelect(props){
+  const { value, setValue, label, placeholder, data, setError, setEdited, mode, inRow, onFocus,
+    loading, disabled, id, inRow1, className, s_value, s_descr } = props;
+  const { t } = useTranslation();
+  
+  let maxTagPlaceholder = value?.value?.length === data?.length ? t('cashier.pay_shop3') : (value?.value?.length + t('cashier.pay_shop4'));
+
+  const handleChange = e => {
+    setValue({ value: e });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const renderItem = (item, index) => {
+
+    let optItem = { value: item?.phone, label: item?.custName};
+    return (
+      <Option key={index} value={s_value} templateName={s_descr} templateId= {s_value}>
+          <SelectItem1 item={optItem} />
+      </Option>);
+  }
+
+  const filterOption = (input, option) => {
+    return option?.template?.toLowerCase().indexOf(input.toLowerCase()) >= 0
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+  const backStyle = inRow ? {...style, ...{ margin: '0 0 0 0' }} : style;
+
+  return (
+    <div style={inRow ? inRow1 ? {flex: 1,  maxWidth: 300 } : {flex: 1} : {}}>
+      <div className= {className ?? 'select_back'} style={backStyle} id={id}>
+        <p className='select_lbl' style={style}>{label}</p>
+        <AntSelect
+          mode={mode}
+          loading={loading}
+          disabled={disabled}
+          className='select_m'
+          showSearch
+          filterOption={filterOption}
+          onChange={handleChange}
+          value={value?.value}
+          onFocus={() => onFocus && onFocus()}
+          maxTagCount={0}
+          allowClear
+          maxTagPlaceholder={maxTagPlaceholder}
+          placeholder={placeholder}>
+          {data?.map(renderItem)}
+        </AntSelect>
+      </div>
+      {value?.error && <p className='f_input_error'>{label} {value?.error}</p>}
+    </div>
+  );
+}

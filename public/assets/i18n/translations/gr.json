@@ -1810,7 +1810,9 @@
     "company_placeholder": "Firmenname",
     "pay_now": "Jetzt bezahlen",
     "fill_all_fields": "Bitte alle Felder ausfüllen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "unavailable": "Nicht bestellbar", 
+    "unavailable_aria": "Nicht bestellbar"
   },
   "version": "14"
 }

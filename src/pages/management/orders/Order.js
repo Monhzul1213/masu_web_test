@@ -26,7 +26,6 @@ export function Order(){
 
   useEffect(() => {
     if (
-      user?.merchantId === 135 ||
       user?.merchantId === 383 ||
       user?.merchantId === 270
       )
@@ -91,6 +90,7 @@ export function Order(){
   return (
     <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
       {visible && <Subscription {...subProps} />}
+      <div style={{flex: '0 0 80%'}}>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
@@ -102,6 +102,7 @@ export function Order(){
           }</SizeMe>
         }
       </Overlay>
+      </div>
       <Help videoData={videoData}/>
       {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
           {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}

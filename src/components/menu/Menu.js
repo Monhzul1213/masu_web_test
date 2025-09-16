@@ -56,7 +56,8 @@ export function Menu(props){
       user?.merchantId === 724 ||
       user?.merchantId === 999 ||
       user?.merchantId === 1226||
-      user?.merchantId === 1816
+      user?.merchantId === 1816 || 
+      user?.merchantId === 1526
       )
       setHideTime(false);
     else

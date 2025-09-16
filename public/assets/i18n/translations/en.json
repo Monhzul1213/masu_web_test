@@ -1797,7 +1797,9 @@
     "company_placeholder": "Company name",
     "pay_now": "Pay now",
     "fill_all_fields": "Please fill in all fields",
-    "close": "Close"
+    "close": "Close",
+    "unavailable": "Unavailable", 
+    "unavailable_aria": "Unavailable"
   },
   "version": "14"
 }

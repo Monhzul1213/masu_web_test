@@ -1795,7 +1795,9 @@
     "company_placeholder": "公司名称",
     "pay_now": "立即支付",
     "fill_all_fields": "请填写所有字段",
-    "close": "关闭"
+    "close": "关闭",
+    "unavailable": "不可下单", 
+    "unavailable_aria": "不可下单"
   },
   "version": "14"
 }

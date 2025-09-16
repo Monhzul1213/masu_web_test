@@ -97,6 +97,18 @@ export function Drawer(props){
     )
   }
 
+  const Field1= props => {
+    const {label, value } = props;
+    
+    return (
+      <div className='dr_field'>
+        <p className='dr_field_label' style={{width: 120}}>{t(label)}</p>
+        <p className='dr_field_label1'>:</p>
+        <p className='dr_field_value'>{value}</p>
+      </div>
+    )
+  }
+
   const getData = async () => {
     setLoading(true);
     setError(null);
@@ -146,7 +158,7 @@ const onClickPrintA4 = async () => {
   setVisible(true);
 }
 
-  const drawerProps = { className: 'rp_drawer', placement: 'right', onClose, closable: false, open, mask: false };
+  const drawerProps = { className: 'rp_drawer1', placement: 'right', onClose, closable: false, open, mask: false };
   const visibleProps = { loading, error, header, account, detail, info, day, visible, visible1, visible2, setVisible, setVisible1, setVisible2, image}
 
   return (
@@ -217,6 +229,13 @@ const onClickPrintA4 = async () => {
             <p className='dr_row_value' style={{fontWeight: 'bold'}}><Money value={totalAmount} /></p>
           </div>
         </div>
+        {selected?.sale?.consumerID && selected?.sale?.terminalD ? 
+        <div style={{backgroundColor: '#f1f1f1', padding: '3px', borderRadius: 5, flex: 1, position: 'sticky', bottom:0}}>
+          <p style={{fontSize: 13, fontWeight: 'bold'}}>{t('coupon.consumer')}</p>
+          <Field1 label={'menu.order'} value= {selected?.sale?.refNo + ' / ' + selected?.sale?.ticketBinName}/>
+          <Field1 label={t('coupon.consumer')} value= {selected?.sale?.phone}/>
+          <Field1 label='Нэмэлт мэдэлээл' value= {selected?.sale?.addDescr}/>
+        </div> : null}
         <div className='dr_row_back'>
           <Button className='invoice_btn2' id='invt_btn_save' text={t('system.print_a4')} onClick={onClickPrintA4} />
           <Button className='invoice_btn' id='invt_btn_save' text={t('system.tax_print')} onClick={onClickTax} />

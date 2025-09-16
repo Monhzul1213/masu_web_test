@@ -9,6 +9,13 @@
   padding: 0;
 }
 
+.rp_drawer1 .ant-drawer-body {
+  margin: var(--page-padding);
+  padding: 0;
+}
+.rp_drawer1 .ant-drawer-wrapper-body{
+  height: 93%;
+}
 .dr_close {
   position: absolute;
   top: var(--page-padding);

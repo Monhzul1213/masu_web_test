@@ -41,7 +41,6 @@ export function AdjustAdd(){
 
   useEffect(() => {
     if (
-      user?.merchantId === 135 ||
       user?.merchantId === 383 ||
       user?.merchantId === 270
       )

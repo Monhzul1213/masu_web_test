@@ -165,7 +165,7 @@ export function QrMenuAdd() {
     }
   };
 
-  const onClickCancel = () => navigate('/inventory/qrmenu');
+  const onClickCancel = () => navigate('/qrmenu/qrmenu');
 
   const onClickSave = async () => {
     const body = validate();

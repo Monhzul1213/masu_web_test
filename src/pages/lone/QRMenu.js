@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
  
@@ -33,7 +33,6 @@ export function QRMenu() {
   const [siteMetaForPayment, setSiteMetaForPayment] = useState(null);
   const [customerInfo, setCustomerInfo] = useState(null);
  
-  const sliceSize = 50;
   const { user, token } = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const qrCodeParam = new URLSearchParams(window.location.search).get("qr");
@@ -56,6 +55,36 @@ export function QRMenu() {
     localStorage.setItem("selectedLanguage", lang);
     setDropdownOpen(false);
   };
+  const baseProducts = useMemo(() => {
+   if (selectedCategoryId == null) return products;
+   const sel = Number(selectedCategoryId);
+   return products.filter(p => p && Number(p.categoryId) === sel);
+ }, [products, selectedCategoryId]);
+ 
+ const hasMore = visibleProducts.length < baseProducts.length;
+ 
+ const sliceSize = 50;
+ const isLoadingMoreRef = useRef(false);
+ const loadMore = useCallback(() => {
+  if (isLoadingMoreRef.current) return;
+  isLoadingMoreRef.current = true;
+ 
+  setVisibleProducts(prev => {
+    const start = prev.length;
+    const end = start + sliceSize;
+    if (start >= baseProducts.length) {
+      return prev;
+    }
+    return [...prev, ...baseProducts.slice(start, end)];
+  });
+ 
+  requestAnimationFrame(() => { isLoadingMoreRef.current = false; });
+}, [baseProducts, sliceSize]);
+ 
+  useEffect(() => {
+   isLoadingMoreRef.current = false;
+   setVisibleProducts(baseProducts.slice(0, sliceSize));
+ }, [baseProducts, sliceSize]);
  
   useEffect(() => {
     if (!qrCodeParam) return;
@@ -96,15 +125,39 @@ export function QRMenu() {
     })
   );
  
-  if (res?.data?.inventory) {
-    setProducts(res.data.inventory);
-    setVisibleProducts(res.data.inventory.slice(0, sliceSize));
-  }
+  if (Array.isArray(res?.data?.inventory)) {
+  const normalized = res.data.inventory.map(it => {
+    const inv = it?.inv ?? it ?? {};
+    const categoryId = Number(inv.categoryId ?? inv.categoryID ?? inv.catid);
+    const price =
+      typeof inv.price === 'number'
+        ? inv.price
+        : (typeof inv.price === 'string'
+            ? Number(inv.price.replace(/[^\d.-]/g, ''))
+            : null);
  
-  if (res?.data?.category) {
-    setCategories(res.data.category);
-    setSelectedCategoryId(null);
-  }
+    return {
+      ...inv,
+      price,
+      categoryId: Number.isFinite(categoryId) ? categoryId : null,
+      __menuStatus: it?.menuitem?.status ?? it?.status ?? 1,
+    };
+  });
+ 
+  normalized.sort((a, b) => {
+    const sa = Number(a.__menuStatus ?? 1);
+    const sb = Number(b.__menuStatus ?? 1);
+    if (sb !== sa) return sb - sa;
+    return (a.name || '').localeCompare(b.name || '');
+  });
+ 
+  setProducts(normalized);
+}
+ 
+    if (res?.data?.category) {
+      setCategories(res.data.category);
+      setSelectedCategoryId(null);
+    }
  
   if (res?.data?.paymentTypeID != null) {
     setPaymentTypeId(Number(res.data.paymentTypeID));
@@ -153,9 +206,15 @@ export function QRMenu() {
   );
 };
  
-  const filteredCategories = useMemo(() => {
-    const productCategoryIds = new Set(products.map((p) => p.categoryId));
-    return categories.filter((cat) => productCategoryIds.has(cat.categoryId));
+    const filteredCategories = useMemo(() => {
+    const productCategoryIds = new Set(
+      products
+        .map(p => Number(p?.categoryId))
+        .filter(n => Number.isFinite(n))
+    );
+    return categories.filter(cat =>
+      productCategoryIds.has(Number(cat?.categoryId))
+    );
   }, [categories, products]);
  
   useEffect(() => {
@@ -169,30 +228,24 @@ export function QRMenu() {
   }, [decryptedData, siteId]);
  
   useEffect(() => {
-    if (!loaderRef.current) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) loadMore();
-      },
-      { rootMargin: "200px" }
-    );
-    observer.observe(loaderRef.current);
-    return () => observer.disconnect();
-  }, [products]);
- 
-  const loadMore = () => {
-    const start = visibleProducts.length;
-    const end = start + sliceSize;
-    if (start < products.length) {
-      setVisibleProducts((prev) => [...prev, ...products.slice(start, end)]);
-    }
+   if (!loaderRef.current || !hasMore) return;
+  const el = loaderRef.current;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        loadMore();
+      }
+    },
+    { rootMargin: "200px" }
+  );
+  observer.observe(el);
+  return () => {
+    observer.unobserve(el);
+    observer.disconnect();
   };
+}, [hasMore, loadMore]);
  
-  const filteredProducts = useMemo(() => {
-    return visibleProducts.filter(
-      (p) => p && (!selectedCategoryId || p.categoryId === selectedCategoryId)
-    );
-  }, [visibleProducts, selectedCategoryId]);
+  const filteredProducts = visibleProducts;
  
   const handleAddToCart = (product) => {
     setCart((prevCart) => {
@@ -300,7 +353,7 @@ export function QRMenu() {
           <div className={`product_grid ${cart.length > 0 ? "has-cart" : ""}`}>
             {filteredProducts.map((product, i) => (
               <ProductCard
-                key={i}
+                key={product?.invtId ?? i}
                 data={product}
                 qty={cart.find((item) => item.invtId === product.invtId)?.qty || 0}
                 onClick={() => handleAddToCart(product)}
@@ -309,7 +362,7 @@ export function QRMenu() {
             ))}
           </div>
  
-          {visibleProducts.length < products.length && (
+          {hasMore && (
             <div ref={loaderRef} style={{ textAlign: "center", padding: "20px" }}>
               {t("loading")}
             </div>

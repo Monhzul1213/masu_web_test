@@ -44,7 +44,6 @@ export function JournalAdd() {
 
   useEffect(() => {
     if (
-      user?.merchantId === 135 ||
       user?.merchantId === 383 ||
       user?.merchantId === 270
       )
@@ -56,13 +55,13 @@ export function JournalAdd() {
   }, []);
 
   useEffect(() => {
-    getConstantsData();
     if (saved) onCancel();
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [saved]);
 
   useEffect(() => {
+    getConstantsData();
     user?.msRole?.webFinance !== "Y"
       ? navigate({ pathname: "/" })
       : getData();
