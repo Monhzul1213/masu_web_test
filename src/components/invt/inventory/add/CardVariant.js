@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Table, PaginationTable, Input, DynamicBSIcon, DynamicAIIcon } from '../../../all';
+import { Table, Input, DynamicBSIcon, DynamicAIIcon } from '../../../all';
 import { EditableCell } from './EditableCell';
 
 export function CardVariant(props){
@@ -89,7 +89,7 @@ export function CardVariant(props){
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };
-  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 250000 },
     updateMyData, onClickDelete, disabled }, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const addProps = { value: search, setValue: setSearch, placeholder: t('inventory.add_variant'), handleEnter, inRow: true, length: 30, disabled: isUseTime ? true : false };
@@ -103,8 +103,6 @@ export function CardVariant(props){
         </div>
         <div style={{padding: 2}} />
         <Input {...addProps} />
-        <div style={{padding: 5}} />
-        <PaginationTable {...tableProps} />
       </div>
       <div  className='order_sub1'>
         <DynamicAIIcon name='AiOutlineInfoCircle' className='order_info'  />

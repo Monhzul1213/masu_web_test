@@ -137,7 +137,7 @@
     "/config/order": "Захиалга",
     "/config/store": "Салбар",
     "/config/pos": "ПОС төхөөрөмж",
-    "/config/location": "QR байршил",
+    "/config/location": "Захиалга авах байршил",
     "/config/reclam": "Реклам",
     "/config/reclam/reclam_add": "Реклам",
     "/helpx": "Тусламж",
@@ -334,7 +334,7 @@
     "meal": "Хоолны төлөв",
     "kitchen": "Гал тогооны захиалга",
     "order": "Захиалга авах",
-    "order_location": "QR байршил",
+    "order_location": "Захиалга авах байршил",
     "store": "Салбар",
     "pos": "ПОС төхөөрөмж",
     "reclam": "Реклам"
@@ -543,7 +543,9 @@
     "invt": " бараа",
     "use_time": "Цагаар тооцогдох эсэх?",
     "safeQty": "Аюулгүй нөөц",
-    "products": "Бүтээгдэхүүнүүд"
+    "products": "Бүтээгдэхүүнүүд",
+    "copy": "Хуулах",
+    "success_copy": "Амжилттай хууллаа."
   },
   "qrmenu": {
     "add": "QR цэс нэмэх",

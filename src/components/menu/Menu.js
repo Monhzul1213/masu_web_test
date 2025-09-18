@@ -160,11 +160,11 @@ export function Menu(props){
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.bonus')}</span> : t('menu.bonus'), '/loyalty/bonus', null, null, null, msRole?.webManageLoyalty !== 'Y'),
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.giftCard')}</span> : t("menu.giftCard"), "/loyalty/giftCard", null, null, null, msRole?.webManageLoyalty !== "Y")
     ]),
-    hideTime ? null : getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('QrMenu')}</span> : t('QrMenu'), '/qrmenu', 
+    getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('QrMenu')}</span> : t('QrMenu'), '/qrmenu', 
     <img src={image26} alt='image2'/>, [
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('system_menu.order_location')}</span> : t('system_menu.order_location'), '/qrmenu/location', null, null, null, msRole?.webManageCustomer !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM'? <span style={{color: '#969696'}}>{t('qrmenu.create')}</span> : t('qrmenu.create'), '/qrmenu/qrmenu', null, null, null, msRole?.webManageCustomer !== 'Y'),
-      getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM'? <span style={{color: '#969696'}}>{t('menu.kds')}</span> : t('menu.kds'), '/qrmenu/kds', null, null, null, msRole?.webManageCustomer !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('orders.title')}</span> : t('orders.title'), '/qrmenu/location', null, null, null, msRole?.webManageCustomer !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM'? <span style={{color: '#969696'}}>{t('qrmenu.create')}</span> : t('qrmenu.create'), '/qrmenu/qrmenu', null, null, null, msRole?.webManageCustomer !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM'? <span style={{color: '#969696'}}>{t('menu.kds')}</span> : t('menu.kds'), '/qrmenu/kds', null, null, null, msRole?.webManageCustomer !== 'Y'),
     ]),
     hideTime ? null : getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('timetable.time')}</span> : t('timetable.time'), '/timetable', 
     <img src={image8} alt='image8' />, [

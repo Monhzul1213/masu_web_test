@@ -124,7 +124,7 @@ export function CardVariant(props){
       {visible && <QR visible={visible} closeModal={closeModal} qrData={qrData}/>}
       <div className='mo_container' style={{ width, paddingBottom: 0 }}>
         <div className='ih_header' id={id}>
-                <p className='do_title'>{t('system_menu.order_location')}</p>
+                <p className='do_title'>{t('orders.title')}</p>
                 <PlainSelect {...siteProps} />
         </div>
         <div id='paging' style={{overflowY: 'scroll', maxHeight}}>

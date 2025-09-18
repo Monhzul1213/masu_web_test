@@ -358,7 +358,7 @@ export function InventoryAdd(props){
       <Overlay loading={loading || loaded}>
         <Prompt edited={edited} />
         {error && <Error1 error={error} />}
-        <div className='i_scroll1' id='list_scroll'>
+        <div className='i_scroll1' id='list_scroll' style={{marginTop: 15}}>
           <form>
             <CardMain {...mainProps} />
             <div className='gap' />

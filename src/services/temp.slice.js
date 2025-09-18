@@ -13,6 +13,8 @@ const initialState = {
   systemCash: [],
   maxWidth: 'calc(100vw - 320px)',
   collapsed: false,
+  items: [],
+  copiedItems: [],
 };
 
 export const tempSlice = createSlice({
@@ -42,6 +44,18 @@ export const tempSlice = createSlice({
     setCollapsed: (state, action) => {
       state.collapsed = action.payload;
       state.maxWidth = 'calc(100vw - ' + (action.payload ? '92px' : '320px') + ')';
+    },
+    setItems: (state, action) => {
+      state.items = action.payload;
+    },
+    copyItems: (state, action) => {
+      state.copiedItems = action.payload;
+    },
+    clearCopied: (state) => {
+      state.copiedItems = [];
+    },
+    pasteItems: (state) => {
+      state.items = [...state.items, ...state.copiedItems];
     }
   }
 });
@@ -353,6 +367,6 @@ function fetchRetry(config, retries = 5) {
     });
 }
 
-export const { setIsLoggedIn, setCategoryColors, setSystemTypes,  setSystemVat, setSystemCash, setCategoryClass, setCollapsed } = tempSlice.actions;
+export const { setIsLoggedIn, setCategoryColors, setSystemTypes,  setSystemVat, setSystemCash, setCategoryClass, setCollapsed, setItems, copyItems, clearCopied, pasteItems } = tempSlice.actions;
 
 export const tempReducer = tempSlice.reducer;

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 import { withSize } from 'react-sizeme';
 
-import { PaginationTable, Table, DynamicBSIcon, Money } from '../../../all';
+import { Table, DynamicBSIcon, Money } from '../../../all';
 import { SwitchLabel } from './SwitchLabel';
 import { ItemSelect, SelectItem } from './SelectItem';
 import { EditableCell } from './EditableCell';
@@ -79,7 +79,7 @@ export function Card(props){
   const isTrackProps = { value: isTrack, setValue: setIsTrack, label: t('inventory.is_track') };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = { Cell: EditableCell };
-  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }, updateMyData, onClickDelete },
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 250000 }, updateMyData, onClickDelete },
     useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const selectProps = { search, setSearch, data, setData, newItem };
@@ -90,12 +90,11 @@ export function Card(props){
       <SwitchLabel {...isPackProps} />
       {!isKit && false && <SwitchLabel {...isTrackProps} />}
       {!isKit ? null : <>
-        <div id='paging' style={{overflowY: 'scroll', maxHeight}}>
+        <div id='paging' style={{overflowY: 'scroll', maxHeight, marginTop: 10}}>
           <Table {...tableProps} />
         </div>
         <ItemSelect {...selectProps} />
         <div className={classPage}>
-          <PaginationTable {...tableProps} />
           <p className='ac_page_total'>{t('inventory.total_cost')} : <Money value={total} /></p>
         </div>
       </>}

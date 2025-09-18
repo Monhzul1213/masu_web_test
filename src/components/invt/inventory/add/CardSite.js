@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
 
-import { Check, CheckAll, Money, PaginationTable, Table } from '../../../all';
+import { Check, CheckAll, Money, Table } from '../../../all';
 import { EditableCell } from './EditableCell';
 import { ModalSales } from './ModalSales';
 import { ModalWhole } from './ModalWhole';
@@ -234,7 +234,7 @@ export function CardSite(props){
  
   const defaultColumn = { Cell: EditableCell };
   const checkProps = { type: 'inventory', checked, onCheckAll, style: {border: 'none'} };
-  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 250000 },
     updateMyData, onClickCheck, onClickNHAT, onClickSalesCheck, onClickSales, onClickWholeCheck, onClickWhole, onClickSafeCheck, onClickSafe}, useSortBy, usePagination, useRowSelect);
   const tableProps = { tableInstance };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 120px - var(--pg-height))';
@@ -255,7 +255,6 @@ export function CardSite(props){
           <Table {...tableProps} />
         </div>
       </div>
-      <PaginationTable {...tableProps} />
     </div>
   );
 }

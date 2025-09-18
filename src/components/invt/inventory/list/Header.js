@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { getList } from '../../../../services';
-import { Button, ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
+import { copyItems, getList } from '../../../../services';
+import { Button, ButtonRowAdd, DynamicAIIcon, IconButton, PlainSelect } from '../../../all';
 import { SearchInput } from './SearchInput';
 import { InventoryExcel } from '../../../../helpers';
+import { message } from 'antd';
 
 export function Header(props){
   const { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName } = props;
@@ -68,6 +69,12 @@ export function Header(props){
 
   const onClickImport = () => navigate('invt_import');
 
+  const onClickCopy = () => {
+    const selected = data?.filter(d => d.checked);
+    dispatch(copyItems(selected));
+    message.success(t('inventory.success_copy'))
+  };
+
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
   const width = showSearch ? 0 : (size?.width > 780 ? 412 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
@@ -90,6 +97,7 @@ export function Header(props){
     <div className='ih_header' id={id}>
       <div className='ih_header1'>
         <ButtonRowAdd {...addProps} />
+        {show && <IconButton className='add_row_btn' text={t('inventory.copy')} id='add_row_copy' onClick={onClickCopy} /> }       
         <div className='ih_btn_row'>
           <Button {...importProps} />
           <InventoryExcel {...exportProps} />
