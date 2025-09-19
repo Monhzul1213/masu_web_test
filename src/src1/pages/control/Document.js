@@ -36,7 +36,7 @@ function Card(props){
   const [date, setDate] = useState({ value: 0 });
   const [visible, setVisible] = useState(false);
   const [accounts, setAccounts] = useState([]);
-
+  const [selected, setSelected] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
@@ -225,11 +225,15 @@ function Card(props){
     }
   }
 
-  const onClickAdd = () => {
+  const onClickAdd = (row) => {
+    setSelected(row);
     setVisible(true)
-  };
+  }; 
 
-  const closeModal = () => setVisible(false);
+  const closeModal = () => {
+    setVisible(false);
+    setSelected()
+  }
 
   const onClickCancel = () => setData(bill);
 
@@ -258,9 +262,9 @@ function Card(props){
   const printProps = { label: t('document.isPrint'), checked: isPrint, setChecked: setIsPrint, id: 'co_check1' };
   const descrProps = { label: t('document.isDescr'), checked: isDescr, setChecked: setIsDescr };
   const dateProps = { value: date, setValue: setDate, label: t('bill.invoice_enddate'), placeholder: t('bill.invoice_enddate'), classBack: 'co_select_back', className: 'co_input'};
-  const billProps = { header, footer, site, isPrint, image64, image164, date, accounts: selectedAccounts, loading, error, size};
+  const billProps = { header, footer, site, isPrint, image64, image164, date, accounts: selectedAccounts, loading, size};
   const addProps = { type: 'account', onClickAdd };
-  const modalProps = { visible, closeModal, setData: setAccounts };
+  const modalProps = { visible, closeModal, setData: setAccounts, selected, setSelected };
   const invoicebtnProps = { onClickCancel: onClickInvoiceCancel, onClickSave: onClickInvoiceSave };
 
   return (
@@ -306,18 +310,24 @@ function Card(props){
                 <p className='select_lbl'>{t('document.logo')}</p>
                 <UploadImage {...logo1Props} />
                 <Input {...dateProps}/>
-                {accounts?.length > 0 && (
-                  <div style={{ marginTop: 10 }}>
-                    <p className='select_lbl'>{t('account.title')}</p>
-                      {accounts.map((acc, index) => (
-                        <div style={{display: 'flex', flexFlow: 'row', alignItems: 'center', marginTop: 5}}>
-                          <Check checked={acc.checked} onClick={() => toggleAccount(index)}/>
-                          <div className='gap' />
-                          <p key={index} style={{margin: 0, fontSize: 11}}>{acc.account}</p>
+                {/* {accounts?.length > 0 && ( */}
+                  <div className="account-list">
+                    <p className="select_lbl">{t('account.title')}</p>
+                    {accounts.map((acc, index) => (
+                      <div key={index} className="account_item">
+                        <Check
+                          checked={acc.checked}
+                          onClick={e => {toggleAccount(index)}}
+                        />
+                        <div className="account-info" onClick={() => onClickAdd(acc)}>
+                          <span className="account-number">{acc.account}</span>
+                          <span className="account-name">{acc.accountName}</span>
+                          {/* <span className="account-phone">{acc.phone}</span> */}
                         </div>
-                      ))}
+                      </div>
+                    ))}
                   </div>
-                )}
+                {/* )} */}
                 <div className='gap' />
                 <ButtonRowAdd {...addProps}/>
               </div>

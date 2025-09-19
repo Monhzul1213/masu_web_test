@@ -105,7 +105,7 @@ function Card(props) {
   
   const onClickDelete = row => {
     if(row?.original?.acct !== 0) setDItems(old => [...old, row?.original]);
-    setDetail(detail?.filter(item => item?.acct !== row?.original?.acct));
+    setDetail(prev => prev.filter(item => item?.acct !== row?.original?.acct));
     setSearch({ value: null });
   }
 

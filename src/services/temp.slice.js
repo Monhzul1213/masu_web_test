@@ -15,6 +15,7 @@ const initialState = {
   collapsed: false,
   items: [],
   copiedItems: [],
+  queryDate: '',
 };
 
 export const tempSlice = createSlice({
@@ -56,6 +57,10 @@ export const tempSlice = createSlice({
     },
     pasteItems: (state) => {
       state.items = [...state.items, ...state.copiedItems];
+    },
+    setFilter: (state, action) => {
+      state.filtered = action.payload;
+      state.queryDate = '?BeginDate=' + action.payload[0]?.format('yyyy.MM.DD') + '&EndDate=' + action.payload[1]?.format('yyyy.MM.DD');
     }
   }
 });
@@ -367,6 +372,6 @@ function fetchRetry(config, retries = 5) {
     });
 }
 
-export const { setIsLoggedIn, setCategoryColors, setSystemTypes,  setSystemVat, setSystemCash, setCategoryClass, setCollapsed, setItems, copyItems, clearCopied, pasteItems } = tempSlice.actions;
+export const { setIsLoggedIn, setCategoryColors, setSystemTypes,  setSystemVat, setSystemCash, setCategoryClass, setCollapsed, copyItems, clearCopied, pasteItems, setFilter } = tempSlice.actions;
 
 export const tempReducer = tempSlice.reducer;

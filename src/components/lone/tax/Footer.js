@@ -9,7 +9,7 @@ const { accounts, isA4 } = props;
         <div className='iline1'/>
         <div style={{display: 'flex', flexFlow: 'row', justifyContent: 'space-between'}}>
           <p className='inv_tamga'>Тамга</p>
-          <div style={{display: 'flex', flexFlow: 'column', justifyContent: 'flex-end'}}>
+          <div style={{display: 'flex', flexFlow: 'column', justifyContent: 'flex-middle',marginRight: 20, }}>
             {isA4 && accounts && accounts.slice(0, 3).map((item, idx) => (
             <div key={idx} className="footer-bank-row">
              <img
@@ -20,8 +20,8 @@ const { accounts, isA4 } = props;
             <span>{item?.account}</span>
              </div>
              ))}
-            <p style={{fontSize: 12, fontWeight:500}}>Хүлээн авсан ...................................../.........................../</p>
-            <p style={{fontSize: 12, fontWeight:500}}>Хүлээлгэн өгсөн ................................./.........................../</p>
+            <p style={{fontSize: 12, fontWeight:500, margin: '14px 14'}}>Хүлээн авсан ...................................../.........................../</p>
+            <p style={{fontSize: 12, fontWeight:500, margin: '14px 14'}}>Хүлээлгэн өгсөн ................................./.........................../</p>
           </div>
         </div>
         {/* <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10}}>

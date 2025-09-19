@@ -41,7 +41,9 @@ export function JournalAdd() {
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const journalId = searchParams?.get("journalId");
+  const isNew = !journalId;
+  
   useEffect(() => {
     if (
       user?.merchantId === 383 ||
@@ -55,12 +57,6 @@ export function JournalAdd() {
   }, []);
 
   useEffect(() => {
-    if (saved) onCancel();
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [saved]);
-
-  useEffect(() => {
     getConstantsData();
     user?.msRole?.webFinance !== "Y"
       ? navigate({ pathname: "/" })
@@ -69,33 +65,47 @@ export function JournalAdd() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (saved) {
+      if (isNew) {
+        // Шинэ баримт -> form clear
+        clearForm();
+        setSaved(false);
+      } else {
+        // Хуучин баримт -> Journal list руу буцаах
+        onClickCancel()
+      }
+    }
+  }, [saved, isNew]);
+  
+
   const getData = async () => {
     let journalId = searchParams?.get("journalId");
     if (journalId) {
       onLoad();
-    setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
-
+      setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
       const response = await dispatch(getList(user, token, "Txn/GetJournal?JournalID=" + journalId));
       if(response?.error) onError(response?.error, false);
       else {
         let header = response?.data?.journal && response?.data?.journal[0];
         setHeader(header);
         // setEditable(header?.status !== 1);
-        setDate ({ value: moment(header?.txnDate, 'yyyy.MM.DD') })
+        setDate ({ value: moment(header?.txnDate, 'YYYY.MM.DD') })
         setPrice({ value: header?.totalAmt });
         setDescr({ value: header?.descr });
         setSource({ value: header?.sourceTypeName });
         setCustomer({ value: header?.custId !== 0 ? header?.custId : '' });
         setStatus({ value: header?.status });
         setTemplate({ value: header?.templateId !== 0 ? header?.templateId : '' });
-        response?.data?.journalitem?.forEach(item=> {
-          item.vatPropertyID = item?.vaId !== '0' ? item?.vaId : ''
-          item.cashPropertyID = item?.cashPropertyID !== '0' ? item?.cashPropertyID : ''
-        })
-        setDetail(response?.data?.journalitem);
+        const items = response?.data?.journalitem?.map(item => ({
+          ...item,
+          vatPropertyID: item?.vaId !== '0' ? item?.vaId : '',
+          cashPropertyID: item?.cashPropertyID !== '0' ? item?.cashPropertyID : ''
+        }));
+        setDetail(items ?? []);
         onSuccess();
-        setResponseTime(new Date()); // авсан цаг тэмдэглэх
       }
+      setResponseTime(new Date()); // авсан цаг тэмдэглэх
     }
   };
 
@@ -126,7 +136,6 @@ export function JournalAdd() {
     setStatus();
     setTemplate();
     setDetail([]);
-    
   };
 
   const validateData = () => {
@@ -141,7 +150,7 @@ export function JournalAdd() {
         // }
       })
       dItems?.forEach(it => items?.push({...it, rowStatus: 'D'}));
-      return { journalID, txnDate: date?.value?.format('yyyy.MM.DD'), status: status?.value, templateID: template?.value,  //sourceType: source?.value,
+      return { journalID, txnDate: date?.value?.format('YYYY.MM.DD'), status: status?.value, templateID: template?.value,  //sourceType: source?.value,
       custID: customer?.value, totalAmt: price?.value, descr: descr?.value, rowStatus: journalID ? 'U' : 'I', items };
     } else {
       if(!length) setSearch({ value: null, error: t('account.items_error') });

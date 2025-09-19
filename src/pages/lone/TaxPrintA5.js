@@ -166,7 +166,7 @@ export function TaxPrintA5(props) {
       <div id="table_scroll" className="invoice_pdf_back1">
         <div className="invoice_page">
           <Header header={header} isA4={true} />
-          <Info header={header} isA4={true} />
+          <Info header={header} accounts={account} isA4={true} />
           <ItemsHeader />
           <Items detail={detail} />
           <Total header={header} />
@@ -176,7 +176,7 @@ export function TaxPrintA5(props) {
         <div style={{ width: "1px", background: "var(--text2-color)"}}/>
         <div className="invoice_page">
           <Header header={header} isA4={true} />
-          <Info header={header} isA4={true} />
+          <Info header={header} accounts={account} isA4={true} />
           <ItemsHeader />
           <Items detail={detail} />
           <Total header={header} />

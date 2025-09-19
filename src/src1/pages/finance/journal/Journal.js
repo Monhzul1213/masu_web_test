@@ -21,6 +21,7 @@ export function Journal() {
   const [hideTime, setHideTime] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
+  const queryDate = useSelector(state => state.temp.queryDate);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -40,7 +41,7 @@ export function Journal() {
     if (user?.msRole?.webFinance !== "Y") navigate({ pathname: "/" });
     else {
       let query = "?BeginDate=" + moment().startOf('month')?.format("yyyy.MM.DD") + "&EndDate=" + moment()?.format("yyyy.MM.DD");
-      onSearch(query);
+      onSearch(queryDate ? queryDate : query);
     }
     return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -436,7 +436,10 @@
   grid-template-columns: 1fr 1fr;
   column-gap: 20px;
   margin-top: 15px;
+  margin-bottom: 11px;
   max-width: 1020px;
+  margin-right: 0px;
+  margin-left: 8px;
 }
 .inv_info_h{
   font-size: var(--item-font);
@@ -459,7 +462,6 @@
   word-break: break-word; /* text урт байвал дараагийн мөр рүү шилжинэ */
   flex: 1;
 }
-
 .inv_header1 {
   width: 5%;
 }
@@ -487,6 +489,7 @@
 }
 .tax_header3 {
   width: 9%;
+ 
 }
 .tax_header4 {
   width: 12%;
@@ -557,7 +560,7 @@
 
 .inv_item_header > p {
   font-size: var(--item-font);
-  margin: 0;
+  margin: 0px;
   padding: 1px 2px;
   font-weight: 500;
   color: var(--root-color);
@@ -711,6 +714,8 @@
   display: flex;
   flex-flow: row;
   justify-content: space-between;
+  margin-left : 8px;
+  margin-right : 20px;
 }
 
 .pay_row{
@@ -896,15 +901,16 @@
   padding: 40px;
   border-radius: 10px;
   color: var(--text2-color);
+  margin-left: 15px;
 }
-.inv_footer_back1{
+.inv_footer_back1 {
   background-color: var(--logo1-color);
   display: flex;
-  justify-content: space-between;
-  flex-flow: row;
+  justify-content: space-between; 
   align-items: center;
-  padding: 3px 5px;
+  padding: 1px 10px; 
 }
+
 .footer-bank-row {
   display: flex;
   align-items: center;
@@ -912,9 +918,73 @@
   font-size: 10px;
   gap: 6px;
 }
+
 .footer-bank-row img {
   width: 16px;
   height: 16px;
   margin-right: 4px;
   flex-shrink: 0;
 }
+.info-label{
+  font-size: var(--footer-font);
+  font-weight: 550;
+  color: #4f4f4f;
+  width: 150px;
+  margin-right : 0px;
+  font-size: 10px;
+}
+:root{ --inv-icon-size: 14px; }    
+.inv_info1 img{
+  width: var(--inv-icon-size) !important;
+  height: var(--inv-icon-size) !important;
+  max-width: none !important;       
+  display: inline-block;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 6px;              
+}
+:root { --inv-icon-size: 14px; }
+
+.info-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.inv_info {
+  width: 120px;
+  flex-shrink: 0;
+}
+
+.inv_info1 {
+  flex: 1;
+}
+
+.bank-list {
+  display: flex;
+  flex-direction: column; /* банк бүр тусдаа мөрөнд */
+  gap: 4px; /* мөр хоорондын зай */
+}
+
+.bank-row {
+  display: flex;
+  align-items: center;
+  white-space: nowrap; /* мөр хугарахгүй */
+}
+
+.bank-icon {
+  width: 20px; 
+  height: 20px;
+  object-fit: contain;
+  margin-right: 6px; /* icon ба text-ийн зай */
+  border-radius: 4px; /* бүх icon-ийг адилхан хүрээтэй болгоно */
+}
+
+.bank-text {
+  white-space: nowrap; /* текст урт байсан ч дараагийн мөр рүү шилжихгүй */
+}
+
+
+
+
+
+

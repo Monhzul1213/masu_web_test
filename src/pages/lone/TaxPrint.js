@@ -241,15 +241,15 @@ export function TaxPrint(props) {
         {error && <Error error={error} />}
         <div id="table_scroll" className="invoice_pdf_back">
           <div id="invoice_body">
-          <Header header={header} isA4={true} />
-          <Info header={header} isA4={true} />
+          <Header header={header} accounts={account} isA4={true} />
+          <Info header={header}  accounts={account}  isA4={true} />
           <ItemsHeader />
           <Items detail={detail} />
           <Total header={header} />
           <Pay header={header} />
           </div>
           <div id="invoice_footer">
-            <Footer info={info} accounts={account} isA4={true} />
+            <Footer info={info}  isA4={true} />
           </div>
         </div>
       </Overlay>

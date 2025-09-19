@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ButtonRowAddConfirm, DynamicAIIcon, PlainRange, PlainSelect } from '../../../all/all_m';
 import { SearchInput } from '../../../../../components/invt/inventory/list/SearchInput';
+import { setFilter } from '../../../../../services';
 
 export function Filter(props){
   const { size, onClickAdd, onSearch } = props;
   const { t } = useTranslation();
   const [classH, setClassH] = useState('th_header1');
-  const [date, setDate] = useState([moment().startOf('month'), moment()]);
   const [status, setStatus] = useState(-1);
   const [states, setStates] = useState([{valueNum: -1, valueStr1: t('order.all_status')}]);
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
+  const dispatch = useDispatch();
+  const queryDate = useSelector(state => state.temp.queryDate);
+  const filtered = useSelector(state => state.temp.filtered);
+  const [date, setDate] = useState(filtered?.length ? filtered : [moment().startOf('month'), moment()]);
+
 
   useEffect(() => {
     if(size?.width >= 870) setClassH('th_header1');
@@ -34,7 +40,7 @@ export function Filter(props){
   }
 
   const onHide = (status, name) => {
-    let query = '?BeginDate=' + date[0]?.format('yyyy.MM.DD') + '&EndDate=' + date[1]?.format('yyyy.MM.DD');
+    let query = queryDate;
     if(status !== -1) query += '&Status=' + status;
     query += name ? '&Text=' + name : '';
     onSearch(query);
@@ -49,6 +55,12 @@ export function Filter(props){
     onHide( status, value);
   }
 
+  const onChangeDate = value => {
+    setDate(value);
+    let query = value;
+    dispatch(setFilter(query))
+  }
+
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
   const width = showSearch ? 0 : (size?.width > 780 ? 462 : (size?.width - 30));
   const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
@@ -58,7 +70,7 @@ export function Filter(props){
 
   const onClickSearch = () => setShowSearch(!showSearch);
   const addProps = { type: 'journal', onClickAdd, show: false };
-  const dateProps = { label: t('page.date'), value: date, setValue: setDate, placeholder: t('time.select_date'), 
+  const dateProps = { label: t('page.date'), value: date, setValue: onChangeDate, placeholder: t('time.select_date'), 
     onHide: () => onHide(status), className: 'rh_date'};
   const statProps = { value: status, setValue: onChangeStatus, data: states, s_value: 'valueNum', s_descr: 'valueStr1',
     label: t('order.status'), onFocus: onFocusStatus, classBack, classLabel, className, bStyle };

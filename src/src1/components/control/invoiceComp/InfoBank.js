@@ -38,7 +38,9 @@ export function InfoBank(props){
               src={bank_icons[item?.bank]}
               alt={item?.bank}
             />
-            <span className='inv_value'>{item?.account}</span>
+            <span className='inv_value' style={{fontWeight: 600, width: item?.account?.length <= 10 ? 80: 120}}>{item?.account}</span>
+            <span className='inv_value' style={{color: '#555', marginLeft: 5}}>{item?.accountName}</span>
+            {/* <span className='inv_value' style={{color: '#555', marginLeft: 5}}>{'(' + item?.phone + ')'}</span> */}
           </div>
         ))}
       </div>

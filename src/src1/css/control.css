@@ -111,7 +111,7 @@
     /* border-bottom: 1px solid var(--text4-color); */
     margin: 10px 0 0 0;
     width: 260px;
-    max-width: 90%;
+    /* max-width: 90%; */
     /* padding: 0 0; */
 }
 
@@ -571,3 +571,46 @@
 .ql-size-huge {
     font-size: var(--large-font);
 }
+
+.account-list {
+    margin-top: 10px;
+}
+  
+.account_item {
+    display: flex;
+    align-items: center;
+    padding: 6px 5px;
+    border: 1px solid var(--line-color);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    background: #D1D3D4;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+  
+  .account_item:hover {
+    background: #f5f7fa;
+  }
+  
+  .account-info {
+    display: flex;
+    flex: 1;
+    margin-left: 5px;
+    gap: 5px;
+    font-size: 12px;
+  }
+  
+  .account-number {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .account-name {
+    width: 80px;
+    color: #555;
+  }
+  
+  .account-phone {
+    color: #888;
+  }
+  
