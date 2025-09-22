@@ -97,7 +97,7 @@ export function Header(props){
     <div className='ih_header' id={id}>
       <div className='ih_header1'>
         <ButtonRowAdd {...addProps} />
-        {show && <IconButton className='add_row_btn' text={t('inventory.copy')} id='add_row_copy' onClick={onClickCopy} /> }       
+        {/* {show && <IconButton className='add_row_btn' text={t('inventory.copy')} id='add_row_copy' onClick={onClickCopy} /> }        */}
         <div className='ih_btn_row'>
           <Button {...importProps} />
           <InventoryExcel {...exportProps} />

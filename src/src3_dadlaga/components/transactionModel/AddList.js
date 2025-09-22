@@ -17,6 +17,7 @@ import {
 } from "../../../components/all";
 import { EditableCellInput } from "./EditableCell";
 import { ItemSelect } from "../../../src1/components/finance/journal/add/SelectItem";
+import { Formula } from "../../../src1/components/finance/journal/add/Formula";
 
 function Card(props) {
   const {
@@ -32,6 +33,8 @@ function Card(props) {
   } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
+  const [visible, setVisible] = useState(false);
+
   useEffect(() => {
     let columns = [
       {
@@ -145,6 +148,15 @@ function Card(props) {
       isDebit: acct?.isDebit, status: acct?.status, currency: acct?.currency, itemDescr: acct?.itemDescr ?? '', rowStatus: 'I', isNew : true};
   }
 
+
+  const onClick = () => {
+    setVisible(true);
+  }
+
+  const closeModal = () => {
+    setVisible(false);
+  }
+
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
 
@@ -183,8 +195,10 @@ function Card(props) {
 
   return (
     <div className="po_back_invt3">
+      {visible && <Formula visible={visible} closeModal = {closeModal}/>}
       <div className="po_search_back" id={id}>
         <p className="ac_title">{t("transModel.acct")}</p>
+        <p className="ac_title" style={{fontSize: 13, fontWeight: 500, cursor: "pointer"}} onClick={onClick}>{t("Томьёо тайлбар")}</p>
       </div>
       <div
         id="paging"

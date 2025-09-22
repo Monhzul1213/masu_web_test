@@ -8,7 +8,7 @@ import { ItemSelect } from "./SelectItem";
 import { EditableCell as EditableCellQty, SelectableCell } from './EditableCell';
 
 function Card(props) {
-  const { size, detail, setSearch, setDItems, search, setDetail, setEdited, vatPropertys, cashPropertys} = props;
+  const { size, detail, setSearch, setDItems, search, setDetail, setEdited, vatPropertys, cashPropertys, setPrice} = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
 
@@ -83,25 +83,29 @@ function Card(props) {
 
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
-    // let total = 0;
-    setDetail(old => old.map((row, index) => {
-      if(index === rowIndex){
-        let drAmt = columnId === 'drAmt' ? parseFloat(value ? value : 0) : old[rowIndex]?.drAmt;
-        let crAmt = columnId === 'crAmt' ? parseFloat(value ? value : 0) : old[rowIndex]?.crAmt;
-        let itemDescr = columnId === 'itemDescr' ? value ? value : '' : old[rowIndex]?.itemDescr;
-        let vatPropertyID = columnId === 'vatPropertyID' ? value ? value : '' : old[rowIndex]?.vatPropertyID;
-        let cashPropertyID = columnId === 'cashPropertyID' ? value ? value : '' : old[rowIndex]?.cashPropertyID;
-        // let total1 = total + drAmt
-        // setPrice({value: total1})
-        return { ...old[rowIndex], drAmt, crAmt, itemDescr, vatPropertyID, cashPropertyID };
-      } else { 
-        // total += row?.drAmt ?? 0
+    setDetail(old => {
+      const newData = old.map((row, index) => {
+        if (index === rowIndex) {
+          let drAmt = columnId === 'drAmt' ? parseFloat(value || 0) : row.drAmt;
+          let crAmt = columnId === 'crAmt' ? parseFloat(value || 0) : row.crAmt;
+          let itemDescr = columnId === 'itemDescr' ? value || '' : row.itemDescr;
+          let vatPropertyID = columnId === 'vatPropertyID' ? value || '' : row.vatPropertyID;
+          let cashPropertyID = columnId === 'cashPropertyID' ? value || '' : row.cashPropertyID;
+          return { ...row, drAmt, crAmt, itemDescr, vatPropertyID, cashPropertyID };
+        }
         return row;
-      }
-    }));
+      });
+      const total = newData.reduce((sum, r) => sum + (parseFloat(r.drAmt) || 0), 0);
+      const total1 = newData.reduce((sum, r) => sum + (parseFloat(r.crAmt) || 0), 0);
+
+      setPrice({ value: total ?? total1 });
+      return newData;
+    });
+  
     setEdited && setEdited(true); 
     setSearch({ value: null });
-  }
+  };
+  
   
   const onClickDelete = row => {
     if(row?.original?.acct !== 0) setDItems(old => [...old, row?.original]);

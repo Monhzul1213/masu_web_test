@@ -29,7 +29,6 @@ export function MainInput(props) {
   useEffect(() => {
     getTemplate();
     getCustomer();
-    getData();
     getBranchs();
     onFocusStatus();
     return () => {};
@@ -50,13 +49,6 @@ export function MainInput(props) {
       setBranch(data?.sort((a, b)=> a?.branchCode - b?.branchCode));
       setAllBranch(response?.data?.data);
     }
-    setLoading(false);
-  }
-
-  const getData = async () => {
-    setLoading(true);
-    let response = await getTemplate();
-    if(response) await getCustomer();
     setLoading(false);
   }
 
@@ -145,26 +137,30 @@ export function MainInput(props) {
   const handleEnter = async (value) => {
     setPrice(value)
     const totalAmount = value?.value ?? 0;
-    if(template?.value){
-        const response = await dispatch(getList(user, token, "Txn/GetTemplate?TemplateId=" + template?.value));
-        if (response?.error) {
-          setError(response?.error);
-        } else {
-          const updatedItems = calculateWithDependencies(response?.data?.templateitem, totalAmount);
-          setDetail(updatedItems);
-        }
-    }
-    else {
-      const updatedItems = detail.map(item => {
-        if (item.isDebit === 1 || item.isDebit === "Y") {
-          return { ...item, drAmt: totalAmount, itemDescr: item?.itemDescr ?? '' };
-        } else {
-          return { ...item, crAmt: totalAmount, itemDescr: item?.itemDescr ?? '' };
-        }
-      });
+    if (template?.value) {
+      const response = await dispatch( getList(user, token, "Txn/GetTemplate?TemplateId=" + template?.value));
+      if (response?.error) {
+        setError(response?.error);
+      } else {
+        const updatedItems = calculateWithDependencies(response?.data?.templateitem ?? [], totalAmount);
+        setDetail(old => old.map(item => { 
+          const match = updatedItems.find(u => u.acct === item.acct);
+          console.log(match);
+          return match ? { ...item, ...match } : item;
+      }));
+       }
+    } else {
+        const updatedItems = detail.map(item => {
+          if (item.isDebit === 1 || item.isDebit === "Y") {
+            return { ...item, drAmt: totalAmount, itemDescr: item?.itemDescr ?? '' };
+            } else {
+              return { ...item, crAmt: totalAmount, itemDescr: item?.itemDescr ?? '' };
+            }
+          });
       setDetail(updatedItems);
     }
   };
+   
   
 
   const onChangeTemplate = async (value) => {
