@@ -21,6 +21,11 @@
     font-size: var(--p-input-font);
     padding: 10px 0;
   }
+  .table_cell_text {
+    color: var(--text-color);
+    font-size: var(--p-input-font);
+    padding: 2px 0;
+  }
 
   .table_cell_text_resize {
     color: var(--text-color);
@@ -41,6 +46,12 @@
     /* padding: var(--page-padding) 0; */
   }
 
+  .table_cell_text {
+    color: var(--text-color);
+    font-size: var(--p-input-font);
+    padding: 2px 0;
+  }
+  
   .table_cell_text_resize {
     color: var(--text-color);
     font-size: var(--p-input-font);
@@ -181,12 +192,6 @@ tfoot > tr > th {
   border-color: var(--line-color);
   cursor: pointer;
   background-color: var(--config-t-color);
-}
-
-.table_cell_text {
-  color: var(--text-color);
-  font-size: var(--p-input-font);
-  padding: var(--page-padding) 0;
 }
 
 .table_back, .table_back_resize {

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
- 
+
 function isOrderDone(order) {
   return Array.isArray(order.items) &&
     order.items.length > 0 &&
     order.items.every(item => item.itemStatus === 2);
 }
- 
+
 function getHeaderColorClass(order) {
   if (isOrderDone(order)) return 'header-green';
   const startTime = order.createdDate;
@@ -19,20 +19,20 @@ function getHeaderColorClass(order) {
   if (mins < 15) return 'header-orange';
   return 'header-red';
 }
- 
+
 function formatTimeDiff(startTime) {
   if (!startTime) return '';
   const created = new Date(startTime);
   const now = new Date();
   let diff = Math.floor((now - created) / 1000);
   if (diff < 0) diff = 0;
- 
+
   const hh = String(Math.floor(diff / 3600)).padStart(2, '0');
   const mm = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
   const ss = String(diff % 60).padStart(2, '0');
   return `${hh}:${mm}:${ss}`;
 }
- 
+
 export function List({
   orders,
   onItemStatusChange,
@@ -40,23 +40,23 @@ export function List({
   activeTab,
 }) {
   const { t } = useTranslation();
- 
+
   if (!orders || !orders.length) {
     return <div className="kds-order-list-wrapper">{t('kds.no_order')}</div>;
   }
- 
+
   const handleItemDoubleClick = (order, item) => {
     if (activeTab === 'doing' && typeof onItemStatusChange === 'function') {
       onItemStatusChange(order, item);
     }
   };
- 
+
   const handleOrderDoubleClick = (order) => {
     if (typeof onOrderStatusChange === 'function') {
       onOrderStatusChange(order);
     }
   };
- 
+
   return (
     <div className="kds-order-list-wrapper">
       <div className="kds-order-list-inner">
@@ -96,7 +96,10 @@ export function List({
                 </ul>
                 {order.consumerinfo?.[0]?.addDescr && (
                   <div className="kds-adddescr">
-                    {order.consumerinfo[0].addDescr}
+                    {order.consumerinfo?.[0]?.phone && (
+                      <div>{order.consumerinfo[0].phone}</div>
+                    )}
+                    <div>{order.consumerinfo[0].addDescr}</div>
                   </div>
                 )}
               </div>

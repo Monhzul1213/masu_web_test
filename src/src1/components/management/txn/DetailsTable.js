@@ -3,7 +3,7 @@ import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useRe
 import { useTranslation } from 'react-i18next';
 import moment from 'moment'
 
-import { Empty1, Money, TableRowResize3 } from '../../../../components/all';
+import { Empty1, Money, TableRowResize } from '../../../../components/all';
 import { formatNumber } from '../../../../helpers';
 
 export function DetailsTable(props){
@@ -105,7 +105,7 @@ export function DetailsTable(props){
       <>
         <div style={{overflowX: 'scroll'}}>
           <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
-            <TableRowResize3 {...tableProps} />
+            <TableRowResize {...tableProps} />
           </div>  
         </div>  
         {/* <PaginationTable {...tableProps} /> */}

@@ -751,6 +751,7 @@
   border: none;
   background-color: var(--back-color);
   border-radius: var(--radius);
+  padding: 7px 10px;
 }
 
 .rh_date .ant-picker-input>input {

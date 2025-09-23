@@ -65,8 +65,8 @@ export function List(props) {
         {
           Header: t('report.beginBalance'),
           disableSortBy: true,
-          width: 110,    
-          minWidth: 80,
+          width: 130,    
+          minWidth: 100,
           columns: [
             {
               Header: t('order.t_qty1'),
@@ -83,8 +83,8 @@ export function List(props) {
                   </div>
                 );
               },
-              width: 100,
-              minWidth: 80
+              width: 110,
+              minWidth: 90
             },
             {
               Header: t('order.t_amt'),
@@ -101,8 +101,8 @@ export function List(props) {
                   </div>
                 );
               },
-              width: 100,
-              minWidth: 80,
+              width: 120,
+              minWidth: 100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
                   <Money value={props?.value} fontSize={14} />
@@ -734,7 +734,7 @@ export function List(props) {
                   </div>
                 );
               },
-              width:110,
+              width:130,
               minWidth:100, 
             },
             {
@@ -751,7 +751,7 @@ export function List(props) {
                   </div>
                 );
               },
-              width:110,
+              width:130,
               minWidth:100, 
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
@@ -814,7 +814,7 @@ export function List(props) {
             id="paging"
             style={{ marginTop: 18, overflow: 'auto', maxHeight, minWidth: 520 }}
           >
-            <TableRowResize2 {...tableProps} />
+            <TableRowResize2 bodyHeight={550}{...tableProps} />
           </div>
         </div>
       )}

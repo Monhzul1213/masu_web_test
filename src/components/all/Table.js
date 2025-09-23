@@ -110,7 +110,7 @@ export function TableRow(props){
 }
 
 export function TableDetail(props){
-  const { tableInstance, onRowClick, colSpan, Detail, detailName } = props;
+  const { tableInstance, onRowClick, colSpan, Detail, detailName, className } = props;
 
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } = tableInstance;
 
@@ -143,7 +143,7 @@ export function TableDetail(props){
                 {row.cells.map(cell => {
                   let style = cell?.column?.customStyle ?? { };
                   return (
-                    <td className='table_cell_text1' {...cell.getCellProps()} style={style}
+                    <td className={className ?? 'table_cell_text1'} {...cell.getCellProps()} style={style}
                       onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
                       {cell.render('Cell')}
                     </td>
@@ -336,8 +336,11 @@ const listHeight = visibleRows * rowHeight;
 	
   return (
     <div className="tablerowresize2_wrapper">
-      <table {...getTableProps()} className="table_back_resize">
-        {/* Header */}
+      <table
+        {...getTableProps()}
+        className="table_back_resize"
+        style={{ width: 'max-content', tableLayout: 'auto' }}
+      >
         <thead style={{ top: 0, zIndex: 1, position: 'sticky', background: 'var(--root-color)' }}>
           {headerGroups.map((headerGroup, headerGroupIndex) => (
             <tr key={headerGroupIndex} {...headerGroup.getHeaderGroupProps()}>
@@ -366,22 +369,22 @@ const listHeight = visibleRows * rowHeight;
 
                 const headerSpanStyle =
                   headerGroupIndex === 0 ? { fontSize: '14px' } : { fontSize: '11px' };
-                   
+
                 const classList = [
                   'table_header_text_resize',
                   columnClass.includes('noBottomBorder') ? 'no-bottom-border' : '',
-                  columnClass // original className like income-group, etc.
-                ].join(' ');
+                  columnClass,
+                ]
+                  .filter(Boolean)
+                  .join(' ');
 
                 return (
-                  
                   <th
                     key={index}
                     className={classList}
                     id={column.isResizing ? 'resizing_th' : ''}
                     {...column.getHeaderProps()}
                   >
-            
                     <div
                       className="table_header_cell"
                       {...column.getSortByToggleProps()}
@@ -394,7 +397,7 @@ const listHeight = visibleRows * rowHeight;
                             : 'start',
                       }}
                     >
-                      <span style={{ ...headerSpanStyle }}>{column.render('Header')}</span>
+                      <span style={headerSpanStyle}>{column.render('Header')}</span>
                       {isLastHeaderGroup &&
                         isHeaderText &&
                         !column.disableSortBy &&
@@ -411,48 +414,46 @@ const listHeight = visibleRows * rowHeight;
                           </div>
                         )}
                     </div>
-                    {column.canResize && column.getResizerProps && !column.className?.includes('noResizer') && (
-                      <div
-                        {...column.getResizerProps()}
-                        className="resizer1"
-                        id={column.isResizing ? 'resizing' : ''}
-                      />
-                    )}
+
+                    {column.canResize &&
+                      column.getResizerProps &&
+                      !column.className?.includes('noResizer') && (
+                        <div
+                          {...column.getResizerProps()}
+                          className="resizer1"
+                          id={column.isResizing ? 'resizing' : ''}
+                        />
+                      )}
                   </th>
                 );
               })}
             </tr>
           ))}
         </thead>
-        {/* Body */}
-        <tbody className='table_body_back' {...getTableBodyProps()} style={{ position: "relative", zIndex: 0 }}>
-              <VirtualList
-                height={listHeight}
-                itemCount={rows.length}
-                itemSize={rowHeight}
-                width="100%"
-              >
 
+        <tbody className="table_body_back" {...getTableBodyProps()} style={{ position: 'relative', zIndex: 0 }}>
+          <VirtualList height={listHeight} itemCount={rows.length} itemSize={rowHeight} width="100%">
             {({ index, style }) => {
               const row = rows[index];
               prepareRow(row);
               return (
-                 <tr className="table_row_resize" {...row.getRowProps({style})}>
-                {row.cells.map((cell) => (
-                  <td
-                    className={`table_cell_text_resize ${cell.column.className || ''}`}
-                    {...cell.getCellProps()}
-                    onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}
-                  >
-                    {cell.render('Cell')}
-                  </td>
-                ))}
-              </tr>
+                <tr className="table_row_resize" {...row.getRowProps({ style })}>
+                  {row.cells.map((cell, cIdx) => (
+                    <td
+                      key={cIdx}
+                      className={`table_cell_text_resize ${cell.column.className || ''}`}
+                      {...cell.getCellProps()}
+                      onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}
+                    >
+                      {cell.render('Cell')}
+                    </td>
+                  ))}
+                </tr>
               );
             }}
           </VirtualList>
         </tbody>
-        {/* Footer */}
+
         {hasFooter && (
           <tfoot style={{ position: 'sticky', bottom: 0, zIndex: 0 }}>
             {footerGroups.slice(0, -2).map((footerGroup) => {
@@ -465,11 +466,9 @@ const listHeight = visibleRows * rowHeight;
                   return '';
                 }
               });
-
-              const allEmpty = renderedColumns.every(
-                (content) => content == null || content === ''
-              );
+              const allEmpty = renderedColumns.every((c) => c == null || c === '');
               if (allEmpty) return null;
+
               return (
                 <tr {...footerGroup.getFooterGroupProps()}>
                   {footerGroup.headers.map((column, idx) => (

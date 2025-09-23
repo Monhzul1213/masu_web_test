@@ -20,6 +20,7 @@ export function Inventory(){
   const [checked, setChecked] = useState(false);
   const [filtering, setFiltering] = useState(false);
   const [categories, setCategories] = useState([{categoryId: -1, categoryName: t('inventory.no_category')}]);
+  const [vendors, setVendors] = useState([]);
   const [open, setOpen] = useState(false);
   const [pageInfo, setPageInfo] = useState({ pageNumber: 1, pageSize: 1000, totalPage: 1 });
   const [filter, setFilter] = useState([]);
@@ -54,6 +55,7 @@ export function Inventory(){
   }, []);
 
   const getData = async () => {
+    await getVendors();
     let response = await getCategories();
     if(response) await getInventory(pageInfo);
   }
@@ -69,6 +71,19 @@ export function Inventory(){
     } else {
       let data = [...[{categoryId: -1, categoryName: t('inventory.no_category')}], ...response?.data];
       setCategories(data);
+      return true;
+    }
+  }
+
+  const getVendors = async id => {
+    setError(null);
+    const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
+    console.log(response);
+    if(response?.error){
+      setError(response?.error);
+      return false;
+    } else {
+      setVendors(response?.data);
       return true;
     }
   }
@@ -176,7 +191,7 @@ export function Inventory(){
 
   const emptyProps = { icon: 'MdOutlineShoppingBasket', type: 'inventory', onClickAdd, onClickImport };
   const listProps = { data, setData, categories, onClickAdd, setShow, checked, setChecked, updateInventory,
-    autoResetExpanded, filtering, onClickDelete, show, setError, onSearch, cats: categories, excelName, pageInfo, getInventory};
+    autoResetExpanded, filtering, onClickDelete, show, setError, onSearch, cats: categories, excelName, pageInfo, getInventory, vendors};
   const confirmProps = { open, text: t('page.delete_confirm'), confirm };
   const videoData = [{id: "8IMwbPxh-QQ"}]
   const modalProps = { visible, closeModal, selected };

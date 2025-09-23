@@ -9,7 +9,7 @@ import { Header } from './Header';
 
 export function List(props){
   const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory, autoResetExpanded,
-    size, filtering, onClickDelete, show, setError, onSearch, cats, excelName, pageInfo, getInventory} = props;
+    size, filtering, onClickDelete, show, setError, onSearch, cats, excelName, pageInfo, getInventory, vendors} = props;
   const [columns, setColumns] = useState([]);
   const { t, i18n } = useTranslation();
 
@@ -35,11 +35,12 @@ export function List(props){
         Header: t('inventory.barcode'), accessor: 'msInventory.barCode', exLabel: t('inventory.barcode') 
       },
       {
-        Header: t('inventory.sku'), accessor: 'msInventory.sku', exLabel: t('inventory.sku') 
+        Header: t('category.title'), accessor: 'msInventory.categoryId', customStyle: { width: 240 }, width: 220, isBtn: true, exLabel: t('category.title'),
+        Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' cellID='hide_border'/>
       },
       {
-        Header: t('category.title'), accessor: 'msInventory.categoryId', customStyle: { width: 240 }, width: 220, isBtn: true, exLabel: t('category.title'),
-        Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' />
+        Header: t('order.vend'), accessor: 'msInventory.vendId', customStyle: { width: 240 }, width: 220, isBtn: true, exLabel: t('order.vend'),
+        Cell: props => <SelectableCell {...props} data={vendors} s_value='vendId' s_descr='vendName' cellID='hide_border'/>
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price', customStyle: { width: 100 }, exLabel: t('inventory.price'),
@@ -65,9 +66,10 @@ export function List(props){
 
   const updateMyData = async (row, column, value, e, invvar, isEdit, isExpand) => {
     let item = data[row]?.msInventory;
-    let newData = { invtID: item?.invtId, categoryID: item?.categoryId, cost: item?.cost };
+    let newData = { invtID: item?.invtId, categoryID: item?.categoryId, cost: item?.cost, vendId: item?.vendId };
     if(column === 'msInventory.categoryId') newData.categoryID = value;
     else if(column === 'msInventory.cost') newData.cost = parseFloat(value ? value : 0);
+    else if(column === 'msInventory.vendId') newData.vendId = value;
     else if(invvar) newData.invvar = invvar;
     const response = await updateInventory(newData, isEdit, isExpand);
     return response;
@@ -102,7 +104,7 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 1000, size : true, sortBy: [{ id: 'msInventory.name', desc: true }] },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
-    detailName: 'msInventoryVariants', colSpan: 7 };
+    detailName: 'msInventoryVariants', colSpan: 9, className: 'table_cell_text'};
   const maxHeight = size?.width > 780
     ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 180px)'
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 220px)';

@@ -1068,10 +1068,8 @@
   width: 100%;
   box-sizing: border-box;
   display: block;
-
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.4;
-
   padding: 12px 14px;
   border: 1px solid #e5e5ea;
   border-radius: 10px;
