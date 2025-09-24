@@ -145,7 +145,6 @@ export function MainInput(props) {
         const updatedItems = calculateWithDependencies(response?.data?.templateitem ?? [], totalAmount);
         setDetail(old => old.map(item => { 
           const match = updatedItems.find(u => u.acct === item.acct);
-          console.log(match);
           return match ? { ...item, ...match } : item;
       }));
        }

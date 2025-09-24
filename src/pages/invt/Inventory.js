@@ -78,7 +78,6 @@ export function Inventory(){
   const getVendors = async id => {
     setError(null);
     const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
-    console.log(response);
     if(response?.error){
       setError(response?.error);
       return false;

@@ -85,7 +85,6 @@ export function Header(props){
 
   const onClickCopy = async () => {
     const selected = data?.filter(d => d.checked);
-    console.log(selected);
     // dispatch(copyItems(selected));
 
     // message.success(t('inventory.success_copy'))
