@@ -147,11 +147,9 @@ tfoot > tr > th {
 .tablerowresize2_wrapper td
  {
   height: 29px;
-  /* padding-top: 10px; */
- 
   vertical-align: middle;
 }
-.table_row_resize,
+
 .table_row,
 tr.table_row_selected {
   height: 30px;
