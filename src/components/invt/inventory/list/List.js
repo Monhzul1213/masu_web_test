@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy, useExpanded } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useExpanded, useResizeColumns } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Check, DynamicFAIcon, TableDetail, Money, Empty1, PaginationTable, PaginationList } from '../../../all';
+import { Check, DynamicFAIcon, Money, Empty1, PaginationTable, PaginationList, TableDetailResize } from '../../../all';
 import { EditableCell, SelectableCell } from '../add/EditableCell';
 import { Detail } from './Detail';
 import { Header } from './Header';
@@ -14,48 +14,48 @@ export function List(props){
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    const customStyle = { width: 40 };
-    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
+    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', width: 40, marginTop: 2 };
     setColumns([
-      { id: 'expander', noSort: true, isBtn: true, customStyle, Header: '',
+      { id: 'expander', noSort: true, isBtn: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
         Cell: ({ row }) => !row?.original?.msInventoryVariants?.length ? '' :
           (<div style={style}>
             <DynamicFAIcon {...row.getToggleRowExpandedProps()} name={row.isExpanded ? 'FaChevronUp': 'FaChevronDown'} className='t_expand' />
           </div>)
       },
       {
-        id: 'check', noSort: true, isBtn: true, customStyle,
+        id: 'check', noSort: true, isBtn: true, width: 50, minWidth: 40, maxWidth: 40,
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       {
-        Header: t('page.name'), accessor: 'msInventory.name', exLabel: t('page.name') 
+        Header: t('page.name'), accessor: 'msInventory.name', exLabel: t('page.name'), width: 350, minWidth: 90
       },
       {
-        Header: t('inventory.barcode'), accessor: 'msInventory.barCode', exLabel: t('inventory.barcode') 
+        Header: t('inventory.barcode'), accessor: 'msInventory.barCode', exLabel: t('inventory.barcode'), width: 150, minWidth: 90
       },
       {
-        Header: t('category.title'), accessor: 'msInventory.categoryId', customStyle: { width: 240 }, width: 220, isBtn: true, exLabel: t('category.title'),
+        Header: t('category.title'), accessor: 'msInventory.categoryId', width: 220, minWidth: 150, isBtn: true, exLabel: t('category.title'),
         Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' cellID='hide_border'/>
       },
+      // {
+      //   Header: t('order.vend'), accessor: 'msInventory.vendId',  width: 220, minWidth: 150, isBtn: true, exLabel: t('order.vend'),
+      //   Cell: props => <SelectableCell {...props} data={vendors} s_value='vendId' s_descr='vendName' cellID='hide_border'/>
+      // },
       {
-        Header: t('order.vend'), accessor: 'msInventory.vendId', customStyle: { width: 240 }, width: 220, isBtn: true, exLabel: t('order.vend'),
-        Cell: props => <SelectableCell {...props} data={vendors} s_value='vendId' s_descr='vendName' cellID='hide_border'/>
-      },
-      {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price', customStyle: { width: 100 }, exLabel: t('inventory.price'),
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price',  width: 150, minWidth: 90, exLabel: t('inventory.price'),
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' :
-          (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} /></div>)
+          (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={11}/></div>)
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'msInventory.cost',
-        customStyle: { width: 100 }, width: 80, isBtn: true, exLabel: t('inventory.cost'),
+        width: 150, minWidth: 90, isBtn: true, exLabel: t('inventory.cost'),
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' : props?.row?.original?.msInventory?.isKit === 'Y'
-          ? (<div style={{textAlign: 'right', paddingRight: 10}}><Money value={props?.value}/></div>)
-          : <EditableCell {...props} cellID='hide_border' />, isMoney: true,
+          ? (<div style={{textAlign: 'right', paddingRight: 10}}><Money value={props?.value} fontSize={11}/></div>)
+          : <div style={{textAlign: 'right', paddingRight: 10}}><EditableCell {...props} cellID='hide_border' /></div>, isMoney: true,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.margin')}</div>, accessor: 'msInventory.margin', customStyle: { width: 90 }, exLabel: t('inventory.margin'),
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.margin')}</div>, accessor: 'msInventory.margin',  width: 150, minWidth: 90, 
+        exLabel: t('inventory.margin'),
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' :
           <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>
       },
@@ -99,12 +99,12 @@ export function List(props){
   }
 
   const onRowClick = row => onClickAdd(row?.original?.msInventory);
-  
-  const tableInstance = useTable({ columns, data, autoResetPage: !filtering, autoResetSortBy: false, autoResetExpanded,
+  const defaultColumn = useMemo(() => ({ minWidth: 40, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: !filtering, autoResetSortBy: false, autoResetExpanded,
     initialState: { pageIndex: 0, pageSize: 1000, size : true, sortBy: [{ id: 'msInventory.name', desc: true }] },
-    onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect);
+    onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect, useResizeColumns);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
-    detailName: 'msInventoryVariants', colSpan: 9, className: 'table_cell_text'};
+    detailName: 'msInventoryVariants', colSpan: 8, className: 'table_cell_text'};
   const maxHeight = size?.width > 780
     ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 180px)'
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 220px)';
@@ -118,8 +118,8 @@ export function List(props){
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <>
         <div style={{overflowX: 'scroll'}}>
-          <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
-            <TableDetail {...tableProps} />
+          <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 120}}>
+            <TableDetailResize {...tableProps} />
           </div>
         </div>
         <p className='data_size_text'>{t('info.all') + data?.length}</p>

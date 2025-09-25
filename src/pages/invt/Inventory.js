@@ -26,27 +26,12 @@ export function Inventory(){
   const [filter, setFilter] = useState([]);
   const [excelName, setExcelName] = useState('');
   const [autoResetExpanded, setAutoResetExpanded] = useState(false);
-  const [requestTime, setRequestTime] = useState(null);
-  const [responseTime, setResponseTime] = useState(null);
-  const [hideTime, setHideTime] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(null);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (
-      user?.merchantId === 383 ||
-      user?.merchantId === 270
-      )
-      setHideTime(false);
-    else
-      setHideTime(true);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     user?.msRole?.webManageItem !== 'Y' ? navigate({ pathname: '/' }) : getData();
@@ -112,12 +97,8 @@ export function Inventory(){
     setError(null);
     setLoading(true);
     setAutoResetExpanded(isEdit ? false : true);
-    setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
-
     let api = 'Inventory/GetInventory?PageNumber=' + info?.pageNumber + '&PageSize=' + info?.pageSize;
     const response = await dispatch(getList(user, token, api));
-    setResponseTime(new Date()); // авсан цаг тэмдэглэх
-
     setInventory(response, response?.data?.inventoryies, response?.data?.pageInfo);
     setFiltering(false);
     setExcelName(t('header./inventory'))
@@ -196,7 +177,7 @@ export function Inventory(){
   const modalProps = { visible, closeModal, selected };
 
   return (
-    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
+    <div className='s_container_i' style={{maxWidth}}>
       {open && <Confirm {...confirmProps} />}
       {visible && <InventoryAdd {...modalProps} />}
       <Overlay loading={loading}>
@@ -210,13 +191,6 @@ export function Inventory(){
         }
       </Overlay>
       <Help videoData={videoData}/>
-      {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
-          {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}
-          {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleTimeString()}</p>}
-          {requestTime && responseTime && (
-            <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
-          )}
-      </div>}
     </div>
   )
 }

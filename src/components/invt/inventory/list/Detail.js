@@ -19,17 +19,17 @@ export function Detail(props){
       { id: 'expander', noSort: true, customStyle, Header: '', Cell: '' },
       { id: 'check', noSort: true, customStyle, Header: '', Cell: '' },
       { Header: t('page.name'), accessor: 'variantName' },
-      { id: 'category', noSort: true, Header: '', Cell: '', customStyle: { width: 240 } },
+      { id: 'category', noSort: true, Header: '', Cell: '', customStyle: { width: 350 } },
       {
-        Header: t('inventory.price'), accessor: 'price', customStyle: { width: 100 },
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 5}}><Money value={value} /></div>
+        Header: t('inventory.price'), accessor: 'price', customStyle: { width: 120 },
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 5}}><Money value={value} fontSize={11}/></div>
       },
       {
-        Header: t('inventory.cost'), accessor: 'cost', customStyle: { width: 100 }, width: 80, isBtn: true,
+        Header: t('inventory.cost'), accessor: 'cost', customStyle: { width: 120 }, isBtn: true,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 5}}><EditableCell {...props} cellID='hide_border' /></div>, isMoney: true
       },
       {
-        Header: t('inventory.margin'), accessor: 'margin', customStyle: { width: 90 },
+        Header: t('inventory.margin'), accessor: 'margin', customStyle: { width: 100 },
         Cell: props => <div style={{textAlign: 'right', paddingRight: 5}}>{props?.value}</div>
       },
     ]);

@@ -3,28 +3,28 @@ import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useRe
 import { useTranslation } from 'react-i18next';
 import { Empty1, TableRowResize2, Money } from '../../../../components/all';
 import { formatNumber } from '../../../../helpers';
-import { min } from 'moment';
+
 export function List(props) {
-  const { data, setData, excelName, setError, onSearch, size, columns, setColumns } = props;
+  const { data, size, columns, setColumns } = props;
   const { t, i18n } = useTranslation();
   const [maxHeight, setMaxHeight] = useState('300px');
-
+ 
   useEffect(() => {
   setColumns([
     {
-      Header: '\u200B', 
+      Header: '\u200B',
       accessor: 'example',
       canResize: true,
       className: 'noBottomBorder noResizer',
       columns :[
         {
-          Header: '\u200B', 
+          Header: '\u200B',
           accessor: 'example',
           canResize: true,
           columns :[
             {
               Header: t('system_menu.store'),
-              
+             
               accessor: 'siteName',
               Footer: () => t('report.total') + ' ' + data?.length,
               width: 110,
@@ -51,12 +51,12 @@ export function List(props) {
               width: 110,
               minWidth: 80
             }
-    
+   
           ]
         }]
     },
     {
-      Header: '\u200B', 
+      Header: '\u200B',
       accessor: 'example2',
       canResize: true,
       // className: 'extend-resizer-up',
@@ -97,7 +97,7 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total}  />
                   </div>
                 );
               },
@@ -105,7 +105,7 @@ export function List(props) {
               minWidth: 100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value}  />
                 </div>
               )
             }
@@ -114,29 +114,29 @@ export function List(props) {
       ]
     },
    
-    
+   
     {
       Header: t('report.income'),
       disableSortBy: true,
       className: 'income-group',
-      
+     
       columns: [
         {
           Header: t('report.salesReturn'),
           disableSortBy: true,
           className:'income-column',
           width: 220,          
-          minWidth: 200, 
+          minWidth: 200,
           columns: [
             {
               Header: t('order.t_qty1'),
               accessor: 'pscM_Qty',
               className:'income-column',
               width: 110,          
-              minWidth: 100, 
-        
+              minWidth: 100,
+       
               Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
-
+ 
               Footer: info => {
                 const total = React.useMemo(
                   () => info.rows.reduce((sum, row) => (row.values.pscM_Qty || 0) + sum, 0),
@@ -148,7 +148,7 @@ export function List(props) {
                   </div>
                 );
               },
-              
+             
             },
             {
               Header: t('order.t_amt'),
@@ -163,14 +163,14 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
-            
+           
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -190,7 +190,7 @@ export function List(props) {
               width:110,
               minWidth:100,
               Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
-
+ 
               Footer: info => {
                 const total = React.useMemo(
                   () => info.rows.reduce((sum, row) => (row.values.rcQty || 0) + sum, 0),
@@ -202,7 +202,7 @@ export function List(props) {
                   </div>
                 );
               },
-              
+             
             },
             {
               Header: t('order.t_amt'),
@@ -217,14 +217,14 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
              
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -244,7 +244,7 @@ export function List(props) {
               width:110,
               minWidth:100,
               Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{formatNumber(props?.value)}</div>,
-
+ 
               Footer: info => {
                 const total = React.useMemo(
                   () => info.rows.reduce((sum, row) => (row.values.ajrC_Qty || 0) + sum, 0),
@@ -256,7 +256,7 @@ export function List(props) {
                   </div>
                 );
               },
-              
+             
             },
             {
               Header: t('order.t_amt'),
@@ -271,13 +271,13 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -308,7 +308,7 @@ export function List(props) {
                   </div>
                 );
               },
-              
+             
             },
             {
               Header: t('order.t_amt'),
@@ -323,14 +323,14 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
-              
+             
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -370,7 +370,7 @@ export function List(props) {
               className:'income-column',
               width:110,
               minWidth:100,
-              Footer: 
+              Footer:
               info => {
                 const total = React.useMemo(
                   () => info.rows.reduce((sum, row) => (row.values.assemblyRC_Cost || 0) + sum, 0),
@@ -378,14 +378,14 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    
-                    <Money value={total} fontSize={14} />
+                   
+                    <Money value={total} />
                   </div>
                 );
               },
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             },
@@ -428,15 +428,15 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
               width:110,
-              minWidth:100, 
+              minWidth:100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -486,7 +486,7 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
@@ -494,7 +494,7 @@ export function List(props) {
               minWidth:100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -537,7 +537,7 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
@@ -545,7 +545,7 @@ export function List(props) {
               minWidth:100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -588,7 +588,7 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
@@ -596,7 +596,7 @@ export function List(props) {
               minWidth:100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -639,15 +639,15 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
               width:110,
-              minWidth:100, 
+              minWidth:100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -690,15 +690,15 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
               width:110,
-              minWidth:100, 
+              minWidth:100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -707,7 +707,7 @@ export function List(props) {
       ]
     },
     {
-      Header: '\u200B', 
+      Header: '\u200B',
       accessor: 'example2',
       canResize: true,
       // className: 'extend-resizer-up',
@@ -717,7 +717,7 @@ export function List(props) {
           Header: t('report.endBalance'),
           disableSortBy: true,
           width: 220,          
-          minWidth: 200, 
+          minWidth: 200,
           columns: [
             {
               Header: t('order.t_qty1'),
@@ -735,7 +735,7 @@ export function List(props) {
                 );
               },
               width:130,
-              minWidth:100, 
+              minWidth:100,
             },
             {
               Header: t('order.t_amt'),
@@ -747,15 +747,15 @@ export function List(props) {
                 );
                 return (
                   <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                    <Money value={total} fontSize={14} />
+                    <Money value={total} />
                   </div>
                 );
               },
               width:130,
-              minWidth:100, 
+              minWidth:100,
               Cell: props => (
                 <div style={{ textAlign: 'right', paddingRight: 15 }}>
-                  <Money value={props?.value} fontSize={14} />
+                  <Money value={props?.value} />
                 </div>
               )
             }
@@ -763,11 +763,11 @@ export function List(props) {
         }
       ]
     },
-    
+   
   ]);
-
+ 
   }, [i18n.language, data, setColumns, t]);
-
+ 
   useEffect(() => {
     if (size?.width >= 920)
       setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 6 - 110px)');
@@ -776,7 +776,7 @@ export function List(props) {
     else if (size?.width < 620)
       setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 4 - 263px)');
   }, [size?.width]);
-
+ 
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable(
     {
@@ -793,16 +793,16 @@ export function List(props) {
     useBlockLayout,
     useResizeColumns
   );
-
+ 
   const tableProps = {
     tableInstance,
     hasTotal: true,
     total: data?.length,
     hasFooter: true
   };
-
+ 
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
-
+ 
   return (
     <div>
       {!data?.length ? (
@@ -814,11 +814,10 @@ export function List(props) {
             id="paging"
             style={{ marginTop: 18, overflow: 'auto', maxHeight, minWidth: 520 }}
           >
-            <TableRowResize2 bodyHeight={550}{...tableProps} />
+            <TableRowResize2 {...tableProps} />
           </div>
         </div>
       )}
     </div>
   );
 }
-            

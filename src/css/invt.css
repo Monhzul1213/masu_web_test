@@ -400,12 +400,12 @@
 
 #invt_list {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: 1260px;
+  /* max-width: 1260px; */
 }
 
 #invt_list1 {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: 1350px;
+  /* max-width: 1350px; */
 }
 
 .kit_search {
@@ -1379,7 +1379,7 @@
 }
 
 .rp_list {
-  max-width: 1260px;
+  /* max-width: 1260px; */
   margin: 1px 0 2px 1px;
   display: flex;
   background-color: var(--root-color);

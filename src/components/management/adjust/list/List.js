@@ -15,24 +15,24 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('adjust.t_no'), accessor: 'adjustNo', width: 130, minWidth: 80 },
+      { Header: t('adjust.t_no'), accessor: 'adjustNo', width: 150, minWidth: 80 },
       {
-        Header: t('adjust.t_date'), accessor: 'txnDate', width: 105, minWidth: 100,
+        Header: t('adjust.t_date'), accessor: 'txnDate', width: 120, minWidth: 100,
         Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD')}</div>
       },
-      { Header: t('adjust.t_site'), accessor: 'siteName', width: 140, minWidth: 90 },
+      { Header: t('adjust.t_site'), accessor: 'siteName', width: 150, minWidth: 90 },
       {
-        Header: t('adjust.t_status'), accessor: 'statusName', width: 150, minWidth: 80,
+        Header: t('adjust.t_status'), accessor: 'statusName', width: 160, minWidth: 80,
         Cell: ({ value, row }) => {
           let status = row?.original?.status;
           let color = status !== 1 ? 'var(--text-color)' : 'var(--text2-color)';
           return <span style={{ color }}>{value}</span>
         }
       },
-      { Header: t('adjust.t_emp'), accessor: 'txnEmpNme', width: 120, minWidth: 100 },
+      { Header: t('adjust.t_emp'), accessor: 'txnEmpNme', width: 150, minWidth: 100 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_qty')}</div>, accessor: 'totalQty',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 110, minWidth: 100,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 120, minWidth: 100,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost',

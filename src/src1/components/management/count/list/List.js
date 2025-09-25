@@ -16,7 +16,7 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('count.t_no'), accessor: 'picountNo', width: 110, minWidth: 80, exLabel: t('count.t_no') },
+      { Header: t('count.t_no'), accessor: 'picountNo', width: 100, minWidth: 80, exLabel: t('count.t_no') },
       {
         Header: t('adjust.t_date'), accessor: 'txnDate', width: 120, minWidth: 100, exLabel: t('adjust.t_date'),
         Cell: ({ value }) => <div style={{}}>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>
@@ -26,31 +26,31 @@ export function List(props){
       { Header: t('adjust.t_status'), accessor: 'statusName', width: 130, minWidth: 80, exLabel: t('adjust.t_status') },
       {
         Header: <div style={{textAlign: 'right'}}>{t('count.countQty')}</div>, accessor: 'totalCountQty', exLabel: t('count.countQty'),
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 120, minWidth: 100,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 110, minWidth: 100,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('count.countedQty')}</div>, accessor: 'totalCountedQty', exLabel: t('count.countedQty'),
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 150, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 110, minWidth: 140,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('count.varQty')}</div>, accessor: 'totalVarianceQty', exLabel: t('count.varQty'),
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 150, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 110, minWidth: 140,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost', exLabel: t('adjust.t_total_cost'),
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 150, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 120, minWidth: 140,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('count.total_amount')}</div>, accessor: 'totalAmount', exLabel: t('count.total_amount'),
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 150, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 120, minWidth: 140,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('count.varCost')}</div>, accessor: 'totalVarianceCost', exLabel: t('count.varCost') ,
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 150, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 120, minWidth: 140,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('count.varAmt')}</div>, accessor: 'totalVarianceAmount', exLabel: t('count.varAmt'),
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 150, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 120, minWidth: 140,
       },
       { Header: t('order.note'), accessor: 'descr', width: 120, minWidth: 90, exLabel: t('order.note') }
     ]);

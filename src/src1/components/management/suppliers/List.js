@@ -27,7 +27,7 @@ export function List(props){
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       {
-        id: 'check', noSort: true, isBtn: true,
+        id: 'check', noSort: true, isBtn: true, customStyle: {width: 40},
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
@@ -35,9 +35,9 @@ export function List(props){
       { Header: t('supplier.contact'), accessor: 'contact',
         Cell: props => <div >{props.value}</div>},
       { Header: t('page.phone'), accessor: 'phone' , 
-        Cell: props => <div style={{fontSize: 13, paddingRight: 15}}>{props.value}</div>},
+        Cell: props => <div>{props.value}</div>},
       { Header: t('page.email'), accessor: 'email',
-        Cell: props => <div style={{fontSize: 13, paddingRight: 15}}>{props.value}</div> },
+        Cell: props => <div >{props.value}</div> },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

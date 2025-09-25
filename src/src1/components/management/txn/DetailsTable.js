@@ -7,7 +7,7 @@ import { Empty1, Money, TableRowResize } from '../../../../components/all';
 import { formatNumber } from '../../../../helpers';
 
 export function DetailsTable(props){
-  const { data, setData, excelName, setError, onSearch, size, setDetailsColumns } = props;
+  const { data, size, setDetailsColumns } = props;
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
   const [maxHeight, setMaxHeight] = useState('300px');
@@ -36,28 +36,28 @@ export function DetailsTable(props){
         }
       },
       { Header: t('order.t_cost'), accessor: 'cost', exLabel: t('order.t_cost'), width: 80, minWidth: 70, 
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} /></div>,
       },
       { Header: t('orders.totalCost'), accessor: 'totalCost', exLabel: t('orders.totalCost'), width: 150, minWidth: 120,
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} /></div>,
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.totalCost + sum, 0),
             [info.rows]  )
-          return <div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /> </div>
+          return <div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={13} /> </div>
         }
       },
       { Header: t('report.price'), accessor: 'amount', exLabel: t('report.price'), width: 100, minWidth: 80,
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} /></div>,
       },
       { Header: t('report_receipt.t_total'), accessor: 'totalAmount', 
         exLabel: t('report_receipt.t_total'), width: 100, minWidth: 80,
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={14} /></div>,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} /></div>,
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.totalAmount + sum, 0),
             [info.rows]  )
-          return <div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={14} /> </div>
+          return <div style={{textAlign: 'right', paddingRight: 15}}><Money value={total} fontSize={13} /> </div>
         }
       },
       { Header: t('report.expireDate'), accessor: 'expireDate', exLabel: t('report.expireDate'), width: 130, minWidth: 130,
@@ -95,7 +95,7 @@ export function DetailsTable(props){
     initialState: { pageIndex: 0, pageSize: 2500000, sortBy: [{ id: 'createdDate', desc: true }] },
       }, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, hasTotal: true, total: data?.length, hasFooter: true };
-  const filterProps = {columns, data, setData, excelName, setError, onSearch , size,  };
+  // const filterProps = {columns, data, setData, excelName, setError, onSearch , size,  };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
 
   return (

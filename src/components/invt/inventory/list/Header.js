@@ -123,7 +123,7 @@ export function Header(props){
       <div className='ih_header2' style={style}>
         <PlainSelect {...siteProps} />
         <PlainSelect {...categoryProps} />
-        <PlainSelect {...vendProps} />
+        {/* <PlainSelect {...vendProps} /> */}
         <DynamicAIIcon {...searchProps} />
       </div>
       <SearchInput {...inputProps} />

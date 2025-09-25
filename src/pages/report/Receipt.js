@@ -22,25 +22,11 @@ function Screen(props){
   const [filter1, setFilter1] = useState('');
   const [total, setTotal] = useState(null);
   const [excelName, setExcelName] = useState('');
-  const [requestTime, setRequestTime] = useState(null);
-  const [responseTime, setResponseTime] = useState(null);
-  const [hideTime, setHideTime] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (
-      user?.merchantId === 383 ||
-      user?.merchantId === 270
-      )
-      setHideTime(false);
-    else
-      setHideTime(true);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     if(user?.msRole?.webViewSalesReport !== 'Y') navigate({ pathname: '/' });
@@ -55,8 +41,6 @@ function Screen(props){
 
   const getData = async (query, query1, dates) => {
     setError(null);
-    setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
-
     setLoading(true);
     let api = 'Sales/GetSales' + (query ?? '') + (query1 ?? '');
     let headers = { merchantid: user?.merchantId };
@@ -84,7 +68,6 @@ function Screen(props){
         : setFilteredData(response?.data?.salesResp?.filter(item => item?.sale?.salesType === tab));
     }
     setLoading(false);
-    setResponseTime(new Date()); // авсан цаг тэмдэглэх
     setFilter(query);
     setFilter1(query1 ?? '');
     if(dates) setExcelName(t('header./report/report_document') + ' ' + dates[0]?.format('yyyy.MM.DD') + '-' + dates[1]?.format('yyyy.MM.DD'));
@@ -102,7 +85,7 @@ function Screen(props){
   let emptyProps = { id: 'rp_empty', icon: 'MdOutlineReceiptLong' };
 
   return (
-    <div className='s_container_r' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
+    <div className='s_container_r' style={{maxWidth}}>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
@@ -111,13 +94,6 @@ function Screen(props){
           {filteredData?.length ? <List {...cardProps} /> : <Empty1 {...emptyProps} />}
         </div>
       </Overlay>
-      {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
-          {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}
-          {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleTimeString()}</p>}
-          {requestTime && responseTime && (
-            <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
-          )}
-      </div>}
     </div>
   );
 }

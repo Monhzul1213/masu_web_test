@@ -18,52 +18,56 @@
 @media only screen and (max-height: 700px) { /* mobile */
   .table_cell_text1 {
     color: var(--text-color);
-    font-size: var(--p-input-font);
-    padding: 10px 0;
+    font-size: 11px;
+    padding: 2px 0;
   }
   .table_cell_text {
     color: var(--text-color);
-    font-size: var(--p-input-font);
+    font-size: 11px;
     padding: 2px 0;
   }
 
   .table_cell_text_resize {
     color: var(--text-color);
-    font-size: var(--p-input-font);
-    padding: 10px 0;
+    font-size: 11px;
+    padding: 2px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 5px;
+    align-items: center;
   }
 }
 
 @media only screen and (min-height: 700px) { /* desktop */
   .table_cell_text1 {
     color: var(--text-color);
-    font-size: var(--value-font);
-    padding: 10px 0;
-    /* padding: var(--page-padding) 0; */
+    font-size: 11px;
+    padding: 2px 0;
   }
 
   .table_cell_text {
     color: var(--text-color);
-    font-size: var(--p-input-font);
+    font-size: 11px;
     padding: 2px 0;
   }
   
   .table_cell_text_resize {
     color: var(--text-color);
-    font-size: var(--p-input-font);
-    padding: 10px 0;
-    /* padding: var(--page-padding) 0; */
+    font-size: 11px;
+    padding: 2px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 5px;
   }
 }
-
+.ed_select_back .ant-select-arrow{
+  font-size: 10px;
+}
+.ed_select_back .ant-select-single .ant-select-selector .ant-select-selection-item{
+  line-height: 18px;
+}
 .table_row:hover, .table_row_resize:hover {
   background-color: var(--input-color);
 }
@@ -71,8 +75,8 @@
 .table_header_text, .table_header_text_resize {
   color: var(--text2-color);
   text-align: left;
-  padding: var(--page-padding) 0;
-  font-size: var(--item-font);
+  padding: 10px 0;
+  font-size: 10px;
   font-weight: 600;
   position: sticky;
   top: 0;
@@ -140,7 +144,20 @@ tfoot > tr > th {
   border-bottom: solid 0 transparent !important;
 }
 
-
+.tablerowresize2_wrapper td
+ {
+  height: 29px;
+  /* padding-top: 10px; */
+ 
+  vertical-align: middle;
+}
+.table_row_resize,
+.table_row,
+tr.table_row_selected {
+  height: 30px;
+  min-height: 30px;
+  max-height: 30px;
+}
 .tablerowresize2_wrapper th.income-group,
 .tablerowresize2_wrapper th.income-column {
   background-color:#f4f4f4;
@@ -293,18 +310,19 @@ tfoot > tr > th {
 .table_row:hover .ed_select_back, .table_row_selected:hover .ed_select_back, .table_row:hover #hide_border2, .table_row_selected:hover #hide_border2 {
   border-color: var(--text4-color);
 }
-
+.table_row_resize:hover #hide_border {
+  border-color: var(--text4-color);
+}
 .ed_select.ant-select .ant-select-selector {
   box-shadow: none;
   border: none;
   color: var(--text-color);
-  font-size: var(--p-input-font);
+  font-size: 11px;
   background-color: transparent;
   padding: 0;
-}
-
-.ed_select.ant-select .ant-select-selector {
   box-shadow: none !important;
+  margin: 0;
+  height: 18px;
 }
 
 .ed_select .ant-select-selector {
@@ -331,7 +349,7 @@ tfoot > tr > th {
 .resizer {
   display: inline-block;
   background: var(--input-color);
-  width: 1px;
+  width: 2px;
   height: calc(100% - 20px);
   position: absolute;
   right: 5px;

@@ -18,13 +18,13 @@ export function List(props){
     setColumns([
       { Header: t('order.t_no'), accessor: 'poOrder.orderNo', width: 115, minWidth: 110 },
       {
-        Header: t('order.date'), accessor: 'poOrder.orderDate', width: 145, minWidth: 140,
+        Header: t('order.date'), accessor: 'poOrder.orderDate', width: 150, minWidth: 140,
         Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD')}</div>
       },
-      { Header: t('order.vend'), accessor: 'poOrder.vendName', width: 130, minWidth: 100 },
+      { Header: t('order.vend'), accessor: 'poOrder.vendName', width: 150, minWidth: 100 },
       { Header: t('order.site'), accessor: 'poOrder.siteName', width: 150, minWidth: 80 },
       {
-        Header: t('order.status'), accessor: 'poOrder.statusName', width: 140, minWidth: 60,
+        Header: t('order.status'), accessor: 'poOrder.statusName', width: 150, minWidth: 60,
         Cell: ({ value, row }) => {
           let status = row?.original?.poOrder?.status;
           let color = status === 0 ? 'var(--danger-color)' : status === 1 ? 'var(--text-color)' : 'var(--text2-color)';
@@ -36,7 +36,7 @@ export function List(props){
         Cell: props => <Progress order={props?.row?.original?.poOrder} width={130} />
       },
       {
-        Header: t('order.req'), accessor: 'poOrder.reqDate', width: 140, minWidth: 137,
+        Header: t('order.req'), accessor: 'poOrder.reqDate', width: 150, minWidth: 137,
         Cell: ({ value, row }) => {
           let expired = moment().add(-1, 'day').isAfter(moment(value, 'yyyy.MM.DD'));
           let danger = expired && (row?.original?.poOrder?.status === 0 || row?.original?.poOrder?.status === 1);

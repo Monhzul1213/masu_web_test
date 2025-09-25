@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getList, sendRequest } from '../../../../../services';
-import { Date, DescrInput, Input, MoneyInput, Select } from '../../../../../components/all';
+import { Date, DescrInput, IconButton, Input, MoneyInput, Select } from '../../../../../components/all';
 import { divide } from '../../../../../helpers';
+import { MdChevronLeft } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 export function Main(props){
   const { setError, setEdited, header, siteId, setSiteId, notes, setNotes, editable, packNo, setPackNo, date, setDate,
@@ -15,6 +17,7 @@ export function Main(props){
   const [loading, setLoading] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(header) onFocusSite();
@@ -85,6 +88,11 @@ export function Main(props){
     }))
   };
 
+  const onClickBack = e => {
+    e?.preventDefault();
+    navigate('/management/package');
+  }
+
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
     s_value: 'siteId', s_descr: 'name', inRow: true, onFocus: onFocusSite, loading, disabled: !editable };
   const descrProps = { value: notes, setValue: setNotes, label: t('order.note'), placeholder: t('order.note'), setEdited, setError, length: 100, disabled: !editable };
@@ -97,9 +105,13 @@ export function Main(props){
   const invtProps = { value: invt, setValue: onChangeInvt, label: t('coupon.invt'), setError, setEdited, inRow: true, disabled: siteId?.value ? !editable : true ,
   data: invts, s_value: 'invtId', s_descr: 'name', onFocus: getInvts, placeholder: t('coupon.invt_select')};
   const dateProps = { value: date, setValue: setDate, label: t('count.date'), placeholder: t('count.date'), inRow: true, className: 'c_date', disabled: !editable };
+  const backProps = { className: 'ps_back_btn', text: t('adjust.back1'), icon: <MdChevronLeft className='ps_back_icon' />, onClick: onClickBack };
 
   return (
     <div className='ad_back'>
+      <div className='ps_menu_back'>
+        <IconButton {...backProps} />
+      </div>
       <div className='ad_main'>
         <div className='ad_row'>
           <Input {...noProps}/>

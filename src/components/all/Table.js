@@ -109,41 +109,37 @@ export function TableRow(props){
   );
 }
 
-export function TableDetail(props){
-  const { tableInstance, onRowClick, colSpan, Detail, detailName, className } = props;
+export function TableDetailResize(props){
+  const { tableInstance, onRowClick, Detail, detailName } = props;
 
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } = tableInstance;
 
   return (
-    <table className='table_back' {...getTableProps()}>
-      <thead>
+    <table {...getTableProps()} className="table_back_resize">
+      <thead style={{ position: "sticky", top: 0, alignSelf: "flex-start", zIndex: 1}}>
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => {
-              let style = column?.customStyle ?? { };
-              let style1 = column?.isSorted11 ? { color: '#8cc748', flex: 1 } : { flex: 1};
-              return (
-                <th className='table_header_text' {...column.getHeaderProps(column.getSortByToggleProps())} style={style}>
-                  <div className='table_header_cell'>
-                    <span style={style1}>{column.render('Header')}</span>
-                    {!column?.noSort && <Sort data={column} />}
-                  </div>
-                </th>
-              )
-            })}
+            {headerGroup.headers.map(column => (
+              <th className="table_header_text_resize" id={column.isResizing ? 'resizing_th' : ''} {...column.getHeaderProps()} style={{ width: column.width, minWidth: column.minWidth, maxWidth: column.maxWidth }}>
+                <div className='table_header_cell' {...column.getSortByToggleProps()}>
+                  <span style={{flex: 1}} className='table_header_cell_resize'>{column.render("Header")}</span>
+                  {!column?.noSort && <Sort data={column} />}
+                </div>
+                <div {...column.getResizerProps()} className='resizer' id={column.isResizing ? 'resizing' : ''} />
+              </th>
+            ))}
           </tr>
         ))}
       </thead>
-      <tbody className='table_body_back' {...getTableBodyProps()}>
+      <tbody className='table_body_back' {...getTableBodyProps()} style={{ position: "relative", zIndex: 0 }}>
         {page.map((row, i) => {
           prepareRow(row);
           return (
             <>
-              <tr className={row?.isSelected ? 'table_row_selected' : 'table_row'}  {...row.getRowProps()}>
+              <tr className='table_row_resize'  {...row.getRowProps()}>
                 {row.cells.map(cell => {
-                  let style = cell?.column?.customStyle ?? { };
                   return (
-                    <td className={className ?? 'table_cell_text1'} {...cell.getCellProps()} style={style}
+                    <td className={'table_cell_text_resize'} {...cell.getCellProps()}
                       onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
                       {cell.render('Cell')}
                     </td>
@@ -151,7 +147,7 @@ export function TableDetail(props){
                 })}
               </tr>
               {row?.isExpanded ?
-                <tr colSpan={colSpan}><td colSpan={colSpan}>
+                <tr><td colSpan={headerGroups[0].headers.length}>
                   <Detail data={row?.original && row?.original[detailName]} index={row?.index} />
                 </td></tr>
               : null}
@@ -329,11 +325,12 @@ export function TableRowResize2(props) {
     rows,
     footerGroups,
   } = tableInstance;
-  const rowHeight = 40;
-const maxRowsToShow = 10;
-const visibleRows = Math.min(rows.length, maxRowsToShow);
-const listHeight = visibleRows * rowHeight;
-	
+ 
+  const rowHeight = 30;
+  const maxRowsToShow = 10;
+  const visibleRows = Math.min(rows.length, maxRowsToShow);
+  const listHeight = visibleRows * rowHeight;
+ 
   return (
     <div className="tablerowresize2_wrapper">
       <table
@@ -349,7 +346,7 @@ const listHeight = visibleRows * rowHeight;
                   typeof column.Header === 'string' && column.Header.trim() !== '';
                 const isLastHeaderGroup = headerGroupIndex === headerGroups.length - 1;
                 const columnClass = column.className || '';
-
+ 
                 const headerCellStyle =
                   headerGroupIndex === 2
                     ? {
@@ -366,10 +363,10 @@ const listHeight = visibleRows * rowHeight;
                         width: '100%',
                       }
                     : {};
-
+ 
                 const headerSpanStyle =
                   headerGroupIndex === 0 ? { fontSize: '14px' } : { fontSize: '11px' };
-
+ 
                 const classList = [
                   'table_header_text_resize',
                   columnClass.includes('noBottomBorder') ? 'no-bottom-border' : '',
@@ -377,7 +374,7 @@ const listHeight = visibleRows * rowHeight;
                 ]
                   .filter(Boolean)
                   .join(' ');
-
+ 
                 return (
                   <th
                     key={index}
@@ -414,7 +411,7 @@ const listHeight = visibleRows * rowHeight;
                           </div>
                         )}
                     </div>
-
+ 
                     {column.canResize &&
                       column.getResizerProps &&
                       !column.className?.includes('noResizer') && (
@@ -430,7 +427,7 @@ const listHeight = visibleRows * rowHeight;
             </tr>
           ))}
         </thead>
-
+ 
         <tbody className="table_body_back" {...getTableBodyProps()} style={{ position: 'relative', zIndex: 0 }}>
           <VirtualList height={listHeight} itemCount={rows.length} itemSize={rowHeight} width="100%">
             {({ index, style }) => {
@@ -453,7 +450,7 @@ const listHeight = visibleRows * rowHeight;
             }}
           </VirtualList>
         </tbody>
-
+ 
         {hasFooter && (
           <tfoot style={{ position: 'sticky', bottom: 0, zIndex: 0 }}>
             {footerGroups.slice(0, -2).map((footerGroup) => {
@@ -468,7 +465,7 @@ const listHeight = visibleRows * rowHeight;
               });
               const allEmpty = renderedColumns.every((c) => c == null || c === '');
               if (allEmpty) return null;
-
+ 
               return (
                 <tr {...footerGroup.getFooterGroupProps()}>
                   {footerGroup.headers.map((column, idx) => (
@@ -494,8 +491,6 @@ const listHeight = visibleRows * rowHeight;
     </div>
   );
 }
-
-
 
 export function FooterTable(props){
   const { tableInstance, onRowClick, noHeader, hasFooter } = props;

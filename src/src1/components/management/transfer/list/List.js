@@ -21,8 +21,8 @@ export function List(props){
         Cell: ({ value }) => <div style={{}}>{value !== null ? moment(value)?.format('yyyy.MM.DD'): ''}</div>
 
       },
-      { Header: t('transfer.from_site'), accessor: 'fromSiteName', width: 200, minWidth: 90 },
-      { Header: t('transfer.to_site'), accessor: 'toSiteName', width: 200, minWidth: 90 },
+      { Header: t('transfer.from_site'), accessor: 'fromSiteName', width: 210, minWidth: 90 },
+      { Header: t('transfer.to_site'), accessor: 'toSiteName', width: 210, minWidth: 90 },
       {
         Header: t('adjust.t_status'), accessor: 'statusName', width: 160, minWidth: 80,
         Cell: ({ value, row }) => {
@@ -31,10 +31,10 @@ export function List(props){
           return <span style={{ color }}>{value}</span>
         }
       },
-      { Header: t('adjust.t_emp'), accessor: 'txnEmpName', width: 140, minWidth: 100 },
+      { Header: t('adjust.t_emp'), accessor: 'txnEmpName', width: 150, minWidth: 100 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_qty')}</div>, accessor: 'totalQty',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 120, minWidth: 100,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 150, minWidth: 100,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost',

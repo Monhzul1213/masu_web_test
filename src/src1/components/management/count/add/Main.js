@@ -3,7 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getList } from '../../../../../services';
-import { DescrInput, Date, Input, Select } from '../../../../../components/all';
+import { DescrInput, Date, Input, Select, IconButton } from '../../../../../components/all';
+import { MdChevronLeft } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 export function Main(props){
   const { setError, setEdited, header, detail, siteId, setSiteId, notes, setNotes, editable, empCode, setEmpCode,
@@ -16,6 +18,7 @@ export function Main(props){
   const dispatch = useDispatch();
   const disabled = detail?.length ? true : false;
   const disabled1 = !header ? true : false;
+  const navigate = useNavigate();
 
   useEffect(() => {
     onFocusSite();
@@ -53,6 +56,11 @@ export function Main(props){
     return item;
   });
   
+  const onClickBack = e => {
+    e?.preventDefault();
+    navigate('/management/count');
+  }
+
   const empProps = { value: empCode, setValue: setEmpCode, label: t('employee.title'), placeholder: t('employee.title'), data: emps, setError, setEdited,
   s_value: 'empCode', s_descr: 'empName', inRow: true, onFocus: onFocusEmp, loading, disabled: true };
   const siteProps = { value: siteId, setValue: setSiteId, label: t('order.site'), placeholder: t('order.site'), data: sites, setError, setEdited,
@@ -62,9 +70,13 @@ export function Main(props){
   const dateProps = { value: date, setValue: setDate, label: t('count.date'), placeholder: t('count.date'), inRow: true, className: 'c_date', disabled: !editable };
   const statusProps = { value: status, setValue: setStatus, label: t('order.status'), placeholder: t('order.status'), data: transformedStatusData, setError, setEdited,
      inRow: true, loading, disabled: disabled1 || status?.value === 2 ||  status?.value === 3};
+  const backProps = { className: 'ps_back_btn', text: t('adjust.back1'), icon: <MdChevronLeft className='ps_back_icon' />, onClick: onClickBack };
 
   return (
     <div className='ad_back'>
+      <div className='ps_menu_back'>
+        <IconButton {...backProps} />
+      </div>
       <div className='ad_main'>
         <div className='ad_row'>
           <Input {...noProps}/>
