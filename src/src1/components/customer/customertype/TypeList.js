@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 
-import { Check, Money, Table } from '../../../../components/all';
+import { Check, Money, TableResize } from '../../../../components/all';
 import { EditableCell } from '../../../../components/invt/inventory/add/EditableCell';
 import { ModalSales } from './ModalSales';
 import { ModalWhole } from './ModalWhole';
@@ -19,21 +19,23 @@ export function TypeList(props){
   useEffect(() => {
     const style1 = {margin: 0};
     setColumns([
-      { Header: t('inventory.title'), accessor: 'invtName', customStyle: {minWidth: 180}, isText: true},
-      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true},
-      { Header: t('inventory.category'), accessor: 'categoryName', customStyle: {minWidth: 150}, isText: true},
-      { Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', customStyle: {minWidth: 80},
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} /></div>},
-        { Header: <div style={{textAlign: 'right'}}>{t('customer.standardPrice')}</div>, accessor: 'standardPrice', customStyle: {minWidth: 140},
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value}/></div>},
-        { Header: <div style={{textAlign: 'right'}}>{t('customer.price')}</div>, accessor: 'price', width: 130, isMoney: true},
+      { Header: t('inventory.title'), accessor: 'invtName', width: 200, isText: true},
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 120,},
+      { Header: t('inventory.category'), accessor: 'categoryName', width: 150, isText: true},
+      { Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', width: 80,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 10}}><Money value={props?.value} /></div>},
+      { Header: <div style={{textAlign: 'right'}}>{t('customer.standardPrice')}</div>, accessor: 'standardPrice', width: 140,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 10}}><Money value={props?.value}/></div>},
+      { Header: <div style={{textAlign: 'right'}}>{t('customer.price')}</div>, accessor: 'price', width: 140, minWidth:120, isMoney: true,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 10}}><EditableCell {...props} cellID='hide_border' /></div>
+      },
       {
-        id: 'salesprice', isBtn: true, customStyle: { width: 200 },
+        id: 'salesprice', isBtn: true, width: 210,
         Header: <div style={{textAlign: 'right'}}>{t('inventory.t_salesprice')}</div>,
         Cell: ({ row, onClickSalesCheck, onClickSales }) => {
           let checked = row?.original?.useSalesPrice === 'Y';
           return (
-            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center', textAlign: 'right', width: 200, marginLeft:10 }}>
+            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center', textAlign: 'right', marginLeft:10 }}>
               <Check checked={checked} onClick={e => onClickSalesCheck(e, row, checked)} />
               <div style={{marginRight: 10, flex: 1, marginTop: 3}} onClick={e => onClickSales(e, row)}>
                 <p style={style1}>
@@ -46,12 +48,12 @@ export function TypeList(props){
         }
       },
       {
-        id: 'wholeprice', isBtn: true, customStyle: { width: 200 },
+        id: 'wholeprice', isBtn: true, width: 210,
         Header: <div style={{textAlign: 'right'}}>{t('inventory.t_wholeprice')}</div>,
         Cell: ({ row, onClickWholeCheck, onClickWhole }) => {
           let checked = row?.original?.useWholePrice === 'Y';
           return (
-            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center', textAlign: 'right', width: 130, marginLeft:10 }}>
+            <div style={{ display: 'flex', flexFlow: 'row', alignItems: 'center', textAlign: 'right', marginLeft:10 }}>
               <Check checked={checked} onClick={e => onClickWholeCheck(e, row, checked)} />
               <div style={{marginRight: 10, flex: 1, marginTop: 3}} onClick={e => onClickWhole(e, row)}>
                 <p style={style1}>
@@ -141,9 +143,9 @@ export function TypeList(props){
   const maxHeight = size?.width > 380
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 210px - 10px - 37px)';
-  const defaultColumn = { Cell: EditableCell };
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable( { columns, data, defaultColumn, autoResetPage: false,  initialState: { pageIndex: 0, pageSize: 1000000 , sortBy: [{ id: 'invtName', desc: true }]},
-  updateMyData, onClickSales, onClickWhole, onClickWholeCheck, onClickSalesCheck }, useSortBy, usePagination, useRowSelect);
+  updateMyData, onClickSales, onClickWhole, onClickWholeCheck, onClickSalesCheck }, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance };
   const modalSalesProps = { visibleSales, closeSales, selected, data, setData };
   const modalWholeProps = { visibleWhole, closeWhole, selected, data, setData };
@@ -153,8 +155,8 @@ export function TypeList(props){
       {visibleSales && <ModalSales {...modalSalesProps} />}
       {visibleWhole && <ModalWhole {...modalWholeProps} />}
       <div style={{overflow: 'scroll'}} >
-        <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 900}}>
-              <Table {...tableProps} />
+        <div className='table_scroll' id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth : 700}}>
+              <TableResize {...tableProps} />
         </div>
       </div>
       <p className='data_size_text'>{t('info.all') + data?.length}</p>

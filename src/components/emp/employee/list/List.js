@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { Check, CheckBtn, PaginationTable, Table } from '../../../all';
+import { Check, CheckBtn, PaginationTable, Table, TableResize } from '../../../all';
 import { Subscription } from '../add';
 
 export function List(props){
@@ -16,28 +16,27 @@ export function List(props){
   const { user: { mail } } = useSelector(state => state.login);
 
   useEffect(() => {
-    const customStyle = { width: 40 };
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       {
-        id: 'check', noSort: true, isBtn: true, customStyle,
+        id: 'check', noSort: true, isBtn: true, width: 40, minWidth: 40, maxWidth: 40,
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => {
           let disabled = row?.original?.isOwner === 'Y' || row?.original?.email?.toLowerCase() === mail?.toLowerCase();
           return (<div style={style}><CheckBtn checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} disabled={disabled} /></div>)
         }
       },
-      { Header: t('page.name'), accessor: 'empName' },
-      { Header: t('employee.mail'), accessor: 'email' },
-      { Header: t('page.phone'), accessor: 'phone' },
-      { Header: t('employee.role'), accessor: 'roleName' },
-      { Header: '', accessor: 'status', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
+      { Header: t('page.name'), accessor: 'empName', width: 200, minWidth: 40},
+      { Header: t('employee.mail'), accessor: 'email', width: 200, minWidth: 40, },
+      { Header: t('page.phone'), accessor: 'phone', width: 150, minWidth: 40 },
+      { Header: t('employee.role'), accessor: 'roleName', width: 150, minWidth: 40, },
+      { Header: '', accessor: 'status', noSort: true, isBtn: true, width: 150, minWidth: 40,
         Cell: ({ value, row, onClickLink }) => {
           let active = value === 0;
           return active && (<div className='table_link' onClick={() => onClickLink(row)}>{t('employee.pay')}</div>);
         }
       },
-      { Header: t('order.status'), accessor: 'statusName' }
+      { Header: t('order.status'), accessor: 'statusName', width: 150, minWidth: 40, }
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -95,12 +94,12 @@ export function List(props){
     onSubscribe(emp);
     onBack();
   }
-  
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const maxHeight = size?.width > 440
     ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 65px)'
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 65px)';
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
-    onClickCheckAll, checked, onClickCheck, onClickLink }, useSortBy, usePagination, useRowSelect);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false, initialState: { pageIndex: 0, pageSize: 25 },
+    onClickCheckAll, checked, onClickCheck, onClickLink }, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };
   let subProps = { visible, invNo, emp, onBack, onDone, onPay, getData };
 
@@ -109,7 +108,7 @@ export function List(props){
       {visible && <Subscription {...subProps} />}
       <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

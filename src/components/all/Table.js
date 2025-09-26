@@ -110,7 +110,7 @@ export function TableRow(props){
 }
 
 export function TableDetailResize(props){
-  const { tableInstance, onRowClick, Detail, detailName } = props;
+  const { tableInstance, onRowClick, Detail, detailName, className1 } = props;
 
   const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } = tableInstance;
 
@@ -139,7 +139,7 @@ export function TableDetailResize(props){
               <tr className='table_row_resize'  {...row.getRowProps()}>
                 {row.cells.map(cell => {
                   return (
-                    <td className={'table_cell_text_resize'} {...cell.getCellProps()}
+                    <td className={className1 ?? 'table_cell_text_resize'} {...cell.getCellProps()}
                       onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
                       {cell.render('Cell')}
                     </td>

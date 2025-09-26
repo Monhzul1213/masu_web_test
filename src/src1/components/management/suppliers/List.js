@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import { useNavigate, createSearchParams } from 'react-router-dom';
 
-import { Check, PaginationTable, Table } from '../../../../components/all';
+import { Check, PaginationTable, Table, TableResize } from '../../../../components/all';
 
 export function List(props){
   const { data, setData, loaded, setShow, autoResetExpanded, checked, setChecked, size} = props;
@@ -27,16 +27,16 @@ export function List(props){
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       {
-        id: 'check', noSort: true, isBtn: true, customStyle: {width: 40},
+        id: 'check', noSort: true, isBtn: true, width: 40, minWidth: 40, maxWidth: 40,
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('supplier.name'), accessor: 'vendName' },
-      { Header: t('supplier.contact'), accessor: 'contact',
+      { Header: t('supplier.name'), accessor: 'vendName', width: 300, minWidth: 40, },
+      { Header: t('supplier.contact'), accessor: 'contact', width: 200, minWidth: 40,
         Cell: props => <div >{props.value}</div>},
-      { Header: t('page.phone'), accessor: 'phone' , 
+      { Header: t('page.phone'), accessor: 'phone' , width: 150, minWidth: 40,
         Cell: props => <div>{props.value}</div>},
-      { Header: t('page.email'), accessor: 'email',
+      { Header: t('page.email'), accessor: 'email', width: 200, minWidth: 40,
         Cell: props => <div >{props.value}</div> },
     ]);
     return () => {};
@@ -71,16 +71,16 @@ export function List(props){
   const onRowClick = row => {
     navigate({ pathname: 'supp_add', search: createSearchParams({ vendId: row?.original?.vendId }).toString() });
   }
-
-  const tableInstance = useTable( { columns, data, autoResetPage: false, autoResetExpanded, initialState: { pageIndex: 0, pageSize: 25 },
-    onClickCheckAll, checked, onClickCheck}, useSortBy, usePagination, useRowSelect);
+  const defaultColumn = useMemo(() => ({ minWidth: 40, width: 150, maxWidth: 400 }), []);
+  const tableInstance = useTable( { columns, data, defaultColumn, autoResetPage: false, autoResetExpanded, initialState: { pageIndex: 0, pageSize: 25 },
+    onClickCheckAll, checked, onClickCheck}, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick ,  hasTotal: true , total: data?.length  };
 
   return (
     <div >
       <div style={{overflowX: 'scroll'}}>
         <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 720}}>
-              <Table {...tableProps} />
+              <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

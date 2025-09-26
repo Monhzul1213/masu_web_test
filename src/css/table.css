@@ -19,15 +19,26 @@
   .table_cell_text1 {
     color: var(--text-color);
     font-size: 11px;
-    padding: 2px 0;
+    padding: 3px 0;
   }
   .table_cell_text {
     color: var(--text-color);
     font-size: 11px;
-    padding: 2px 0;
+    padding: 3px 0;
   }
 
   .table_cell_text_resize {
+    color: var(--text-color);
+    font-size: 11px;
+    padding: 3px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 5px;
+    align-items: center;
+  }
+
+  .table_cell_text_resize1 {
     color: var(--text-color);
     font-size: 11px;
     padding: 2px 0;
@@ -43,16 +54,25 @@
   .table_cell_text1 {
     color: var(--text-color);
     font-size: 11px;
-    padding: 2px 0;
+    padding: 3px 0;
   }
 
   .table_cell_text {
     color: var(--text-color);
     font-size: 11px;
-    padding: 2px 0;
+    padding: 3px 0;
   }
   
   .table_cell_text_resize {
+    color: var(--text-color);
+    font-size: 11px;
+    padding: 3px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 5px;
+  }
+  .table_cell_text_resize1 {
     color: var(--text-color);
     font-size: 11px;
     padding: 2px 0;
@@ -60,6 +80,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 5px;
+    align-items: center;
   }
 }
 .ed_select_back .ant-select-arrow{
@@ -230,7 +251,7 @@ tr.table_row_selected {
   border-top: 1px solid var(--text4-color);
   color: var(--text-color);
   padding: 10px 0;
-  font-size: var(--p-input-font);
+  font-size: var(--item-font);
   font-weight: 600;
   background-color: var(--root-color);
 }

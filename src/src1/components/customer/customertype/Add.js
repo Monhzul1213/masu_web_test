@@ -70,7 +70,7 @@ export function Add(props){
   const listProps = {data, setEdited, setError, setData}
 
   return (
-    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={1500}>
+    <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={1000}>
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSupervisorAccount' title={t('customer.customer_type')} isMD={true} />

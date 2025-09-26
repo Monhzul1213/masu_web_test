@@ -55,7 +55,7 @@ export function Order(){
   }
 
   const onClickAdd = () => {
-    navigate({ pathname: '/management/order_list/order_vendors', search: createSearchParams({ next: '/management/order_list/order_add' }).toString() });
+    navigate({ pathname: '/management/order_list/order_add', search: createSearchParams({ next: '/management/order_list/order_add' }).toString() });
   }
 
   const onDone = async () => {

@@ -15,9 +15,9 @@ function Card(props){
   }, []);
 
   useEffect(() => {
-    if(size?.width >= 870) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 49px - 10px - 37px)');
-    else if(size?.width < 870 && size?.width >= 660) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 113px - 10px - 37px)');
-    else setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 162px - 10px - 37px)');
+    if(size?.width >= 870) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 70px)');
+    else if(size?.width < 870 && size?.width >= 660) setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 70px)');
+    else setMaxHeight('calc(100vh - var(--header-height) - var(--page-padding) * 3 - 70px)');
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size?.width]);
@@ -36,7 +36,7 @@ function Card(props){
   };
 
   return (
-    <div className='store_tab' style={{maxHeight, margin: '15px 10px'}}>
+    <div className='store_tab' style={{maxHeight, margin: '15px 10px'}} id='list_scroll'>
       {/* <Prompt edited={edited} /> */}
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}

@@ -149,11 +149,26 @@ function PaymentOptions({
     return false;
   };
  
-  const generateSalesNoAfter2023 = () => {
-    const base = new Date("2023-01-01T00:00:00Z").getTime();
-    const now = Date.now();
-    return String(Math.max(now, base));
+  const BASE = Date.parse("2023-01-01T00:00:00+08:00");
+ 
+  const makeSalesNoGen = () => {
+    let lastSec = -1;
+    let seq = 0;
+   
+    return () => {
+      const now = Math.max(Date.now(), BASE);
+      const sec = Math.floor((now - BASE) / 1000);  
+      if (sec === lastSec) {
+        seq = (seq + 1) % 100;                  
+      } else {
+        lastSec = sec;
+        seq = 0;
+      }
+      return String(sec).padStart(9, "0") + String(seq).padStart(2, "0");
+    };
   };
+   
+  const generateSalesNoAfter2023 = makeSalesNoGen();
  
   const saveOrderToService = async (overrideSalesNo) => {
     try {

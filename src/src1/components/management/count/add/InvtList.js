@@ -13,16 +13,17 @@ export function InvtList(props){
   useEffect(() => {
     const style = {display: 'flex', alignItems: 'center', justifyContent: 'center' };
     setColumns([
-      {  id: 'check', noSort: true, isBtn: true, width: 50,
+      {  id: 'check', noSort: true, isBtn: true, width: 40,
       Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
       Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('inventory.title'), accessor: 'invtDescr', customStyle: { minWidth: 150 }, width: 120, minWidth: 90},
+      { Header: t('inventory.title'), accessor: 'invtDescr', width: 200, minWidth: 90},
       { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 100, minWidth: 90 },
       { Header: t('inventory.category'), accessor: 'categoryName', isBtn: true, width: 100},
-      { Header: t('inventory.vendor'), accessor: 'vendName', isBtn: true, width: 100},
-      { Header: <div style={{textAlign: 'right'}}>{t('count.isEach')}</div>, accessor: 'isEach', width: 100, minWidth: 80,
-        Cell: ({ value }) => <div style={{textAlign: 'center'}}>{ value === 'Y' ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' />}</div>
+      { Header: t('inventory.vendor'), accessor: 'vendName', isBtn: true, width: 120},
+      { Header: <div style={{textAlign: 'right'}}>{t('count.isEach')}</div>, accessor: 'isEach', width: 120, minWidth: 80,
+        Cell: ({ value }) => <div style={{textAlign: 'center'}}>{ value === 'Y' ? <DynamicBSIcon className='check_icon1' name='BsCheckSquareFill' style={{color: 'var(--config-color)'}}/>   
+        : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' />}</div>
       },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_batch')}</div>, accessor: 'batchQty', width: 100, minWidth: 90,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>},
@@ -32,8 +33,9 @@ export function InvtList(props){
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={value}/>}</div> },
       { Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'price', width: 130, 
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={value}/>}</div>},
-      { Header: <div style={{textAlign: 'right'}}>{t('count.isService')}</div>, accessor: 'isService', width: 100, minWidth: 80,
-        Cell: ({ value }) => <div style={{textAlign: 'center'}}>{ value === 'Y' ? <DynamicBSIcon className='check_icon' name='BsCheckSquareFill' /> : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' />}</div>
+      { Header: <div style={{textAlign: 'right'}}>{t('count.isService')}</div>, accessor: 'isService', width: 120, minWidth: 80,
+        Cell: ({ value }) => <div style={{textAlign: 'center'}}>{ value === 'Y' ? <DynamicBSIcon className='check_icon1' name='BsCheckSquareFill' style={{color: 'var(--config-color)'}}/> 
+        : <DynamicBSIcon className='check_icon1' name='BsCheckSquare' />}</div>
       },
     ]);
     return () => {};

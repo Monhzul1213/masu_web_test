@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 
-import { Check, Money, Empty1, FooterTable} from '../../../../components/all';
+import { Check, Money, Empty1, TableRowResize} from '../../../../components/all';
 import { Transaction } from './Transaction';
 import { Header } from './Header';
 
@@ -18,17 +18,17 @@ export function List(props){
     const style = { display: 'flex', alignItems: 'center', justifyContent: 'center'};
     setColumns([
       {
-        id: 'check', noSort: true, isBtn: true, customStyle : {width: 40},
+        id: 'check', noSort: true, isBtn: true, width: 40, minWidth: 40,
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('discount.type'), accessor: 'typeName', exLabel: t('discount.type'), Footer: <div style={{textAlign: 'left'}}>{t('report.total') + data?.length}</div>, customStyle : {width: 80}},
-      { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name'), customStyle : {width: 200} },
-      { Header: t('customer.phone1'), accessor: 'phone', exLabel: t('customer.phone1'), customStyle : {width: 100},
+      { Header: t('discount.type'), accessor: 'typeName', exLabel: t('discount.type'), Footer: <div style={{textAlign: 'left'}}>{t('report.total') + data?.length}</div>,  width: 100, minWidth: 40},
+      { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name'),  width: 300, minWidth: 100, },
+      { Header: t('customer.phone1'), accessor: 'phone', exLabel: t('customer.phone1'),  width: 100, minWidth: 40,
         Cell: props => <div >{props.value}</div>},
-      { Header: <div style={{textAlign: 'right'}}> {t('customer.receivable')}</div>, accessor: 'arBalance', isBtn: true, customStyle: {width: 100, maxWidth: 110 }, exLabel: t('customer.receivable'),
+      { Header: <div style={{textAlign: 'right'}}> {t('customer.receivable')}</div>, accessor: 'arBalance', isBtn: true, width: 120, minWidth: 40, exLabel: t('customer.receivable'),
         Cell: ({ value, row, onClickLink }) => {
-          return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} /></div>);
+          return  (<div style={{textAlign: 'right', paddingRight: 15, fontSize: 11}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} /></div>);
         },
         Footer: info => {
           const total = React.useMemo(() =>
@@ -37,15 +37,15 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={total} />} </div></>
         }
       },
-      { Header: t('employee.mail'), accessor: 'email', exLabel: t('employee.mail'), customStyle : {width: 150},
+      { Header: t('employee.mail'), accessor: 'email', exLabel: t('employee.mail'), width: 180, minWidth: 40,
         Cell: props => <div >{props.value}</div>},
-      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), customStyle : {width: 100} },
-      { Header: t('shop.district'), accessor: 'subBranchName', exLabel: t('shop.district'), customStyle : {width: 100} },
-      { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'), customStyle : {width: 100},
+      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), width: 150, minWidth: 40,},
+      { Header: t('shop.district'), accessor: 'subBranchName', exLabel: t('shop.district'), width: 150, minWidth: 40,},
+      { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'), width: 150, minWidth: 40,
         Cell: props => <div >{props.value}</div>},
       { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode', exLabel: t('customer.code'),
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value }</div>, customStyle : {width: 100},},
-      { Header: t('customer.desc'), accessor: 'note', exLabel: t('customer.desc'), customStyle : {width: 100},},
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value }</div>, width: 120, minWidth: 40,},
+      { Header: t('customer.desc'), accessor: 'note', exLabel: t('customer.desc'), width: 150, minWidth: 40,},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,12 +86,12 @@ export function List(props){
   const closeModal = () => {
     setVisible(false);
   }
-
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
   const maxHeight = size?.width > 780
   ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 51px - 10px - 37px)'
   : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 7px - 105px - 10px - 37px)';
-const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 250000 },
-    onClickCheckAll, checked, onClickCheck, onClickLink}, useSortBy, usePagination, useRowSelect);
+const tableInstance = useTable( { columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 250000 },
+    onClickCheckAll, checked, onClickCheck, onClickLink}, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick: onClickAdd, hasFooter: true };
   let subProps = { visible, closeModal , selected};
   const filterProps = { columns, data, setData, excelName, size, onClickAdd, onClickDelete, show, setError, onSearch };
@@ -104,7 +104,7 @@ const tableInstance = useTable( { columns, data, autoResetPage: false, initialSt
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <div style={{overflowX: 'scroll'}}>
         <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 520}}>
-              <FooterTable {...tableProps} />
+            <TableRowResize {...tableProps} />
         </div>
       </div>}
     </div>

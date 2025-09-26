@@ -204,10 +204,10 @@
   border-radius: var(--radius);
   box-shadow: 0px 2px 5px rgba(0,0,0,.15);
   padding: var(--page-padding);
-  max-width: 850px;
+  max-width: 960px;
 }
 #tr_btns {
-  max-width: 850px;
+  max-width: 960px;
 }
 #co_btns {
   max-width: 960px;

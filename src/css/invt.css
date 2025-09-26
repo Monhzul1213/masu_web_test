@@ -464,7 +464,7 @@
 .cs_name {
   color: var(--text-color);
   margin: 0;
-  font-size: var(--value-font);
+  font-size: var(--item-font);
   line-height: 18px;
   white-space: nowrap;
   overflow: hidden;
@@ -474,7 +474,7 @@
 .cs_sku {
   color: var(--text2-color);
   margin: 0;
-  font-size: var(--item-font);
+  font-size: var(--footer-font);
   line-height: 16px;
 }
 
@@ -1515,7 +1515,7 @@
 }
 #solve_list2 {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: 1300px;
+  /* max-width: 1300px; */
 }
 .ii_header {
   display: flex;

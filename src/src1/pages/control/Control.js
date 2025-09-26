@@ -70,7 +70,7 @@ function Screen(){
   const dashboardProps = {data: notiData}; 
 
   return (
-    <div className='s_container_r' style={{maxWidth}}>
+    <div className='s_container_r' style={{maxWidth, overflow: 'hidden'}}>
       <Overlay loading={loading}>
         <Header {...headerProps}/>
         {tab === 'review' ? <Dashboard {...dashboardProps}/> : 

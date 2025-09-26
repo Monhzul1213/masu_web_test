@@ -17,25 +17,10 @@ export function OrderScreen(){
   const [items, setItems] = useState([]);
   const [adds, setAdds] = useState([]);
   const [searchParams] = useSearchParams();
-  const [requestTime, setRequestTime] = useState(null);
-  const [responseTime, setResponseTime] = useState(null);
-  const [hideTime, setHideTime] = useState(false);
   const { user, token }  = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (
-      user?.merchantId === 383 ||
-      user?.merchantId === 270
-      )
-      setHideTime(false);
-    else
-      setHideTime(true);
-    return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   
   useEffect(() => {
     let orderNo = searchParams?.get('orderNo');
@@ -58,7 +43,6 @@ export function OrderScreen(){
   const getData = async orderNo => {
     if(orderNo){
       onLoad()
-      setRequestTime(new Date()); // илгээсэн цаг тэмдэглэх
       const response = await dispatch(sendRequest(user, token, 'Txn/Order/Get?OrderNo=' + orderNo));
       if(response?.error) onDone(true, response?.error);
       else {
@@ -80,7 +64,6 @@ export function OrderScreen(){
           setItems(order?.poOrderItems);
           setAdds(order?.poOrderAddCosts);
         }
-        setResponseTime(new Date()); // авсан цаг тэмдэглэх
         onDone();
       }
     }
@@ -92,7 +75,7 @@ export function OrderScreen(){
   const addProps = { data: adds };
 
   return (
-    <div className='ps_container' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
+    <div className='ps_container' style={{maxWidth}}>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
@@ -109,13 +92,6 @@ export function OrderScreen(){
           </div>
         }</SizeMe>
       </Overlay>
-      {hideTime ? null : <div className="time-log" style={{ padding: '8px', fontSize: '12px', color: '#666',}}>
-          {requestTime && <p>Илгээсэн цаг: {requestTime.toLocaleTimeString()}</p>}
-          {responseTime && <p>Хүлээн авсан цаг: {responseTime.toLocaleTimeString()}</p>}
-          {requestTime && responseTime && (
-            <p>Хугацаа: {(responseTime - requestTime) / 1000} секунд</p>
-          )}
-      </div>}
     </div>
 
   );

@@ -20,7 +20,7 @@ export function Header(props){
     };
 
   return (
-    <div className={'dashboard_header_back'} style={{display:'flex', flexFlow: 'row', borderBottom: '1px solid var(--input1-color)', overflow: 'scroll'}}>
+    <div className='dashboard_header_back' style={{display:'flex', flexFlow: 'row', borderBottom: '1px solid var(--input1-color)', overflow: 'scroll'}}>
         <Card label='review' />
         <Card label='setting' />
         <Card label='notification' />

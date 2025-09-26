@@ -21,17 +21,17 @@ function Card(props){
   useEffect(() => {
     let columns = [
       {
-        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 200 }, width: 200, minWidth: 90,
+        Header: t('inventory.title'), accessor: 'name', width: 230, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       }, 
-      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 140, minWidth: 90 },
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 150, minWidth: 90 },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', width: 120, minWidth: 90,
+        Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'siteQty', width: 150, minWidth: 90,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_qty1')}</div>, accessor: 'qty', isText: !editable,
-        Cell: props => <EditableCellQty {...props} />, width: 130, minWidth: 130, maxWidth: 130,
+        Cell: props => <EditableCellQty {...props} />, width: 150, minWidth: 130, maxWidth: 150,
       },  
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_left')}</div>, accessor: 'leftQty', width: 180, minWidth: 80,

@@ -31,7 +31,7 @@ export function Search(props){
   
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
 
-  const width = showSearch ? 0 : 220;
+  const width = showSearch ? 0 : 160;
   const width1 = !showSearch ? 0 : (size?.width > 430 ? 320 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };

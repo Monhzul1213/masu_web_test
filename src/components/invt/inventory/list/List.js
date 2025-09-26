@@ -104,7 +104,7 @@ export function List(props){
     initialState: { pageIndex: 0, pageSize: 1000, size : true, sortBy: [{ id: 'msInventory.name', desc: true }] },
     onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect, useResizeColumns);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
-    detailName: 'msInventoryVariants', colSpan: 8, className: 'table_cell_text'};
+    detailName: 'msInventoryVariants', colSpan: 8, className: 'table_cell_text', className1: 'table_cell_text_resize1'};
   const maxHeight = size?.width > 780
     ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 180px)'
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 220px)';
