@@ -14,7 +14,6 @@ export function QrMenu() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
-  const [visible, setVisible] = useState(false);
   const { user, token } = useSelector(state => state.login);
   const maxWidth = useSelector(state => state.temp.maxWidth);
   const dispatch = useDispatch();
@@ -35,13 +34,7 @@ export function QrMenu() {
       setLoading(true);
       let api = 'Integration/GetQrMenu' + query ?? '';
       const response = await dispatch(getList(user, token, api));
-      if(response?.code === 1000){
-        // comment
-        // isNew or isExpired
-        // || response?.code === 1001
-        setVisible(true);
-      }
-      else if(response?.error) setError(response?.error);
+      if(response?.error) setError(response?.error);
       else {
         response?.data?.menuitem?.forEach(item=> {
           item.date = moment(item?.beginDate)?.format('yyyy.MM.DD') + '-' + moment(item?.endDate)?.format('yyyy.MM.DD')
@@ -63,7 +56,7 @@ export function QrMenu() {
         {error && <Error1 error={error} />}
         <SizeMe>
           {({ size }) => (
-            <div className="i_list_cont" id="invt_list" style={{maxWidth: 1000}}>
+            <div className="i_list_cont" id="invt_list">
               <Filter {...filterProps} size={size} />
               {!data?.length ? <Empty1 icon="MdQrCode" /> : <List {...listProps} size={size} />}
             </div>

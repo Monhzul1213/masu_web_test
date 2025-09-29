@@ -812,7 +812,7 @@ export function List(props) {
           <div
             className="table_scroll"
             id="paging"
-            style={{ marginTop: 18, overflow: 'auto', maxHeight, minWidth: 520 }}
+            style={{ marginTop: 18, overflow: 'scroll', maxHeight, minWidth: 520 }}
           >
             <TableRowResize2 {...tableProps} />
           </div>

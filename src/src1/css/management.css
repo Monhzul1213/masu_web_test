@@ -133,10 +133,6 @@
   fill: rgba(0,0,0,0) !important;
 }
 
-#invt_list_z {
-  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: 1400px;
-}
 .ih_btn_row_z {
   display: flex;
   flex-flow: row;
@@ -177,10 +173,6 @@
   margin: 0 0 0 10px;
 }
 
-#invt_list_z1 {
-  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: 1400px;
-}
 .is_dtl{
   display: flex;
   flex-flow: row;

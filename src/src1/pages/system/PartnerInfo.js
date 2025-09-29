@@ -52,7 +52,7 @@ export function PartnerInfo(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
-          <div className='i_list_cont' id='solve_list'>
+          <div className='i_list_cont' id='invt_list'>
             <Header {...headerProps} size={size} />
             {!data?.length && filtering ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
           </div>

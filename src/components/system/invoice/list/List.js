@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import React, { useState, useEffect, useMemo } from 'react';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { message } from 'antd';
 
-import { Money, Overlay, FooterTable } from '../../../all';
+import { Money, Overlay, TableRowResize } from '../../../all';
 import { getList } from '../../../../services';
 import { Detail } from '../../../../src1/components/system/info/Detail';
 
@@ -23,76 +23,76 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: '#', accessor: 'merchantID', exLabel: '#', width: 50, minWidth: 50},
-      { Header: t('tax.customer'), accessor: 'label1', exLabel: t('tax.customer'), width: 220, minWidth: 100,
+      { Header: '#', accessor: 'merchantID', exLabel: '#', width: 60, minWidth: 60},
+      { Header: t('tax.customer'), accessor: 'label1', exLabel: t('tax.customer'), width: 350, minWidth: 100,
         Footer: <div style={{textAlign: 'left', paddingLeft: 15}}>{t('report.total') + data?.length}</div>},
       { Header: t('invoices.batch'), accessor: 'subscription_Type', exLabel: t('invoices.batch'), width: 100, minWidth: 50},
       {
-        Header: <div style={{textAlign: 'right'}}>{t('report.pay_amt')}</div>, accessor: 'totalSalesAmt', customStyle: { width: 100 }, exLabel: t('report.pay_amt'), isBtn: true,
+        Header: <div style={{textAlign: 'right'}}>{t('report.pay_amt')}</div>, accessor: 'totalSalesAmt', width: 140 , exLabel: t('report.pay_amt'), isBtn: true,
         Cell: ({ value, row, onClickSalesLink }) => {
-                  return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickSalesLink(row)}><Money value={value} /></div>);
+                  return  (<div style={{textAlign: 'right', paddingRight: 15, fontSize: 11}} className='table_link' onClick={() => onClickSalesLink(row)}><Money value={value} /></div>);
                 },
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.totalSalesAmt + sum, 0),
             [info.rows]  )
-          return <><div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={total} />} </div></>
+          return <><div style={{textAlign: 'right', paddingRight: 10}}>{<Money value={total} />} </div></>
         }
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('report.pay_trans')}</div>, accessor: 'totalSalesQty', customStyle: { width: 100 }, exLabel: t('report.pay_trans'),
+        Header: <div style={{textAlign: 'right'}}>{t('report.pay_trans')}</div>, accessor: 'totalSalesQty', width: 100 , exLabel: t('report.pay_trans'),
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>),
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.totalSalesQty + sum, 0),
             [info.rows]  )
-          return <><div style={{textAlign: 'right', paddingRight: 15}}>{total} </div></>
+          return <><div style={{textAlign: 'right', paddingRight: 10}}>{total} </div></>
         }
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('invoice.siteQty')}</div>, accessor: 'siteQty', width: 120, minWidth: 50, exLabel: t('invoice.siteQty'),
+        Header: <div style={{textAlign: 'right'}}>{t('invoice.siteQty')}</div>, accessor: 'siteQty', width: 100, minWidth: 50, exLabel: t('invoice.siteQty'),
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>),
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.siteQty + sum, 0),
             [info.rows]  )
-          return <><div style={{textAlign: 'right', paddingRight: 15}}>{total} </div></>
+          return <><div style={{textAlign: 'right', paddingRight: 10}}>{total} </div></>
         }
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('invoice.invtQty')}</div>, accessor: 'inventoryQty', customStyle: { width: 100 }, exLabel: t('invoice.invtQty'),
+        Header: <div style={{textAlign: 'right'}}>{t('invoice.invtQty')}</div>, accessor: 'inventoryQty', width: 100, exLabel: t('invoice.invtQty'),
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>),
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.inventoryQty + sum, 0),
             [info.rows]  )
-          return <><div style={{textAlign: 'right', paddingRight: 15}}>{total} </div></>
+          return <><div style={{textAlign: 'right', paddingRight: 10}}>{total} </div></>
         }
       },
-      { Header: t('invoice.invoice'), accessor: 'invoiceNo', exLabel: t('invoice.invoice') },
+      { Header: t('invoice.invoice'), accessor: 'invoiceNo', exLabel: t('invoice.invoice'), width: 120 },
       {
-        Header: t('page.date'), accessor: 'invoiceDate', customStyle: { minWidth: 120 }, exLabel: t('page.date'),
+        Header: t('page.date'), accessor: 'invoiceDate', width: 100, exLabel: t('page.date'),
         Cell: ({ value }) => (<div>{moment(value).format('yyyy.MM.DD')}</div>)
       },
-      { Header: t('invoice.type'), accessor: 'invoiceType', exLabel: t('invoice.type'), },
-      { Header: t('invoice.time'), accessor: 'invoiceTime', exLabel: t('invoice.time'), },
+      { Header: t('invoice.type'), accessor: 'invoiceType', exLabel: t('invoice.type'), width: 100 },
+      { Header: t('invoice.time'), accessor: 'invoiceTime', exLabel: t('invoice.time'),  width: 100 },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('invoice.amount')}</div>, accessor: 'amount', customStyle: { width: 100 }, exLabel: t('invoice.amount'),
+        Header: <div style={{textAlign: 'right'}}>{t('invoice.amount')}</div>, accessor: 'amount',  width: 120, exLabel: t('invoice.amount'),
         Cell: ({ value }) => (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>),
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.amount + sum, 0),
             [info.rows]  )
-          return <><div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={total}/>} </div></>
+          return <><div style={{textAlign: 'right', paddingRight: 10}}>{<Money value={total}/>} </div></>
         }
       },
-      { Header: t('order.status'), accessor: 'statusName', exLabel: t('order.status') },
+      { Header: t('order.status'), accessor: 'statusName', exLabel: t('order.status'),  width: 150 },
       { Header: t('order.bank'), accessor: 'bankName', exLabel: t('order.bank') },
-      { Header: t('system.partner'), accessor: 'partnerQty', exLabel: t('system.partner') },
-      { Header: '', accessor: 'isSendVat', noSort: true, isBtn: true, customStyle: { maxWidth: 110 },
+      { Header: t('system.partner'), accessor: 'partnerQty', exLabel: t('system.partner'),  width: 100 },
+      { Header: '', accessor: 'isSendVat', noSort: true, isBtn: true,  width: 110,
         Cell: ({ value, row, onClickLink }) => {
           let active = row?.original?.status === 3 && value !== 'Y' && row?.original?.invoiceTime !== 'TRIAL';
-          return active && (<div className='table_link' onClick={() => onClickLink(row)}><Overlay loading= {loading}>{t('system.tax_sent')}</Overlay></div>);
+          return active && (<div style={{fontSize: 11}} className='table_link' onClick={() => onClickLink(row)}><Overlay loading= {loading}>{t('system.tax_sent')}</Overlay></div>);
         }
       },
     ]);
@@ -140,9 +140,9 @@ export function List(props){
   const closeModal = () => {
     setVisible(false);
   };
-
-  const tableInstance = useTable({ columns, data, autoResetPage: false, autoResetSortBy: false, onClickLink, onClickSalesLink,
-    initialState: { pageIndex: 0, pageSize: 1000000, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect);
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 120, maxWidth: 400 }), []);
+  const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false, onClickLink, onClickSalesLink,
+    initialState: { pageIndex: 0, pageSize: 1000000, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick, hasFooter: true };
   // const headerProps = {setError, onSearch, size, excelName, data, columns};
   const detailProps = { data : detail, visible, closeModal, loading};
@@ -153,7 +153,7 @@ export function List(props){
         {/* <Header {...headerProps}/> */}
         {/* {!data?.length ? <Empty1 {...emptyProps} /> : */}
           <div className='table_scroll' id='paging' style={{marginTop: 10, overflow: 'scroll', maxHeight, minWidth: 220}}>
-            <FooterTable {...tableProps} />
+            <TableRowResize {...tableProps} />
           </div>
         {/* } */}
       </div>

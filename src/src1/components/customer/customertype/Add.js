@@ -3,32 +3,46 @@ import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { ButtonRow, ModalTitle, Overlay, Error } from '../../all/all_m';
+import { ButtonRow, ModalTitle, Overlay, Error, PlainSelect } from '../../all/all_m';
 import { getList, sendRequest } from '../../../../services';
 import { TypeList } from './TypeList';
 import moment from 'moment';
 
 export function Add(props){
-  const { visible, selected, closeModal, setEdited, typeName, onSearch} = props;
+  const { visible, selected, closeModal, setEdited, typeId, onSearch, setTypeId} = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState([]);
+  const [custdata, setCustData] = useState([]);
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if(visible){
-      getData()
+      onFocusType();
+      getData(selected?.customerTypeID)
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
-  const getData = async () => {
+  const onFocusType = async () => {
     setError(null);
     setLoading(true);
-    const response = await dispatch(getList(user, token, 'Site/GetCustomerTypePrice?CustomerTypeId=' + selected?.customerTypeID));
+    let api = 'Site/GetCustomerType';
+    const response = await dispatch(getList(user, token, api));
+    if(response?.error) setError(response?.error);
+    else {
+      setCustData(response?.data?.msCustomerType)
+    }
+    setLoading(false);
+  }
+
+  const getData = async (customerTypeID) => {
+    setError(null);
+    setLoading(true);
+    const response = await dispatch(getList(user, token, 'Site/GetCustomerTypePrice?CustomerTypeId=' + customerTypeID));
     if(response?.error) setError(response?.error);
     else {
       response?.data.forEach(item=> {
@@ -52,7 +66,7 @@ export function Add(props){
     let sendData = []
       setLoading(true);
       data?.forEach(item => {
-          sendData.push({...item, merchantId : user?.merchantId, customerTypeID: selected?.customerTypeID, status: 1})
+          sendData.push({...item, merchantId : user?.merchantId, customerTypeID: typeId, status: 1})
       })
       const response = await dispatch(sendRequest(user, token, 'Site/ModCustomerTypePrice',  sendData));
       setLoading(false);
@@ -65,21 +79,23 @@ export function Add(props){
     // } 
   }
 
+  const onChangeType = (value) => {
+    setTypeId(value);
+    getData(value)
+  };
+  const bStyle = { width: 250 };
+  const classBack = 'ih_select_back', classLabel = 'ih_select_lbl', className = 'ih_select';
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit' };
-  // const inputProps = {value: typeName, setValue: setTypeName, label: t('customer.type'), disabled: true, setEdited, setError, width:300}
   const listProps = {data, setEdited, setError, setData}
+  const typeProps = { value: typeId, setValue: onChangeType, data: custdata, s_value: 'customerTypeID', s_descr: 'typeName', label: t('customer.type'),
+  classBack, classLabel, className, bStyle, onFocus: onFocusType};
 
   return (
     <Modal title={null} footer={null} closable={false} open={visible} centered={true} width={1000}>
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSupervisorAccount' title={t('customer.customer_type')} isMD={true} />
-          {/* <Input {...inputProps}/> */}
-          <div className='cust_row'>
-            <p className='cust_text'>{t('customer.type')}: </p>
-            <div className='gap'/>
-            <p className='cust_text1'>{typeName?.value}</p>
-          </div>
+          <PlainSelect {...typeProps}/>
           <TypeList {...listProps}/>
           {error && <Error error={error} id = 'm_error' />}
         </div>

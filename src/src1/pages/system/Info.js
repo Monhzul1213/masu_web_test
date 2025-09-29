@@ -50,7 +50,7 @@ export function Info(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
-          <div className='i_list_cont' id='solve_list_z'>
+          <div className='i_list_cont' id='invt_list'>
             {/* {!data?.length && filtering ? <Empty1 {...emptyProps} /> : */}
              <List {...listProps} size={size} />
           </div>

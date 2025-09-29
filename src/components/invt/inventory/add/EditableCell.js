@@ -62,7 +62,7 @@ export const EditableCell = props => {
 }
 
 export const SelectableCell = props => {
-  const { value: initialValue, row, column: { id, width }, updateMyData, disabled, data, s_value, s_descr, cellID } = props;
+  const { value: initialValue, row, column: { id, width, width1 }, updateMyData, disabled, data, s_value, s_descr, cellID } = props;
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export const SelectableCell = props => {
   }
 
   return (
-    <div className='ed_select_back' style={{ width }} id={cellID}>
+    <div className='ed_select_back' style={{ width: width1 ?? width }} id={cellID}>
       <Select
         className='ed_select'
         showSearch

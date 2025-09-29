@@ -3,11 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { copyItems, getList } from '../../../../services';
-import { Button, ButtonRowAdd, DynamicAIIcon, IconButton, PlainSelect } from '../../../all';
+import { getList } from '../../../../services';
+import { Button, ButtonRowAdd, DynamicAIIcon, PlainSelect } from '../../../all';
 import { SearchInput } from './SearchInput';
 import { InventoryExcel } from '../../../../helpers';
-import { message } from 'antd';
 
 export function Header(props){
   const { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName, vendors } = props;
@@ -16,8 +15,8 @@ export function Header(props){
   const [site, setSite] = useState(-1);
   const [categories, setCategories] = useState([{categoryId: -2, categoryName: t('inventory.all_category')}]);
   const [category, setCategory] = useState(-2);
-  const [vends, setVends] = useState([]);
-  const [vend, setVend] = useState();
+  const [vends, setVends] = useState([{vendId: -3, vendName: t('order.all_vendor')}]);
+  const [vend, setVend] = useState(-3);
   const [loading, setLoading] = useState(null);
   const [search, setSearch] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -47,7 +46,7 @@ export function Header(props){
 
   const onFocusVendor = async () => {
     if(!vends?.length || vends?.length === 1){
-      setVends([...[{vendId: -2, vendName: t('inventory.all_vendor')}], ...vendors])
+      setVends([...[{vendId: -3, vendName: t('order.all_vendor')}], ...vendors])
     }
   }
 
@@ -55,7 +54,7 @@ export function Header(props){
     let data = [];
     if(site1 !== -1) data.push({ fieldName: 'SiteID', value: site1 });
     if(cat1 !== -2) data.push({ fieldName: 'CategoryID', value: cat1 });
-    if(vend1 !== -2) data.push({ fieldName: 'VendID', value: vend1 });
+    if(vend1 !== -3) data.push({ fieldName: 'VendID', value: vend1 });
     if(name1) data.push({ fieldName: 'Name', value: name1 });
     onSearch(data);
   }
@@ -72,7 +71,7 @@ export function Header(props){
 
   const onChangeVendor = value => {
     setVend(value);
-    setFilter(site, value, '', value);
+    setFilter(site, category, '', value);
   }
 
   const handleEnter = value => {
@@ -83,16 +82,16 @@ export function Header(props){
 
   const onClickImport = () => navigate('invt_import');
 
-  const onClickCopy = async () => {
-    const selected = data?.filter(d => d.checked);
+  // const onClickCopy = async () => {
+  //   const selected = data?.filter(d => d.checked);
     // dispatch(copyItems(selected));
 
     // message.success(t('inventory.success_copy'))
-  };
+  // };
 
   const id = size?.width > 780 ? 'ih_large' : 'ih_small';
-  const width = showSearch ? 0 : (size?.width > 780 ? 412 : (size?.width - 30));
-  const width1 = !showSearch ? 0 : (size?.width > 470 ? 412 : (size?.width - 30));
+  const width = showSearch ? 0 : (size?.width > 780 ? 552 : (size?.width - 30));
+  const width1 = !showSearch ? 0 : (size?.width > 470 ? 552 : (size?.width - 30));
   const style = { width, overflow: 'hidden', transition: 'width 0.2s ease-in' };
   const bStyle = { maxWidth: size?.width > 780 ? 180 : ((size?.width - 52) / 2) };
   const excelWidth = [{ wpx: 400 }, { wpx: 70 }, { wpx: 70 }, { wpx: 70 }, { wpx: 70 } ];
@@ -114,7 +113,7 @@ export function Header(props){
     <div className='ih_header' id={id}>
       <div className='ih_header1'>
         <ButtonRowAdd {...addProps} />
-        {show && <IconButton className='add_row_btn' text={t('inventory.copy')} id='add_row_copy' onClick={onClickCopy} /> }       
+        {/* {show && <IconButton className='add_row_btn' text={t('inventory.copy')} id='add_row_copy' onClick={onClickCopy} /> }        */}
         <div className='ih_btn_row'>
           <Button {...importProps} />
           <InventoryExcel {...exportProps} />
@@ -123,7 +122,7 @@ export function Header(props){
       <div className='ih_header2' style={style}>
         <PlainSelect {...siteProps} />
         <PlainSelect {...categoryProps} />
-        {/* <PlainSelect {...vendProps} /> */}
+        <PlainSelect {...vendProps} />
         <DynamicAIIcon {...searchProps} />
       </div>
       <SearchInput {...inputProps} />

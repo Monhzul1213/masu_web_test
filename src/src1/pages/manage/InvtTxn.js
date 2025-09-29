@@ -106,14 +106,14 @@ export function InvtTxn(){
   const videoData = [{ id: "5mOM_Bc5Bl8" }];
 
   return (
-    <div className='s_container_i' style={{maxWidth, display: 'flex', flexFlow: 'row'}}>
+    <div className='s_container_i' style={{maxWidth}}>
       {visible && <Subscription {...subProps} />}
       <div style={{flex: '0 0 85%'}}>
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>
           {({ size }) => (
-            <div className='i_list_cont_zz' id='invt_list_z1'>
+            <div className='i_list_cont_zz' id='invt_list'>
               <Header
                 {...sharedProps}
                 currentColumns={showDetails ? detailsColumns : columns}

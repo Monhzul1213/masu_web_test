@@ -6,41 +6,50 @@ import { Check, DynamicFAIcon, Money, Empty1, PaginationTable, PaginationList, T
 import { EditableCell, SelectableCell } from '../add/EditableCell';
 import { Detail } from './Detail';
 import { Header } from './Header';
+import { Image } from './Image';
 
 export function List(props){
   const { data, setData, onClickAdd, categories, setShow, checked, setChecked, updateInventory, autoResetExpanded,
     size, filtering, onClickDelete, show, setError, onSearch, cats, excelName, pageInfo, getInventory, vendors} = props;
   const [columns, setColumns] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [selected, setSelected] = useState();
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', width: 40, marginTop: 2 };
+    const style = { display: 'flex', alignItems: 'center', justifyContent: 'center', width: 40, };
     setColumns([
-      { id: 'expander', noSort: true, isBtn: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+      { id: 'expander', noSort: true, isBtn: true, Header: '', width: 30, minWidth: 40, maxWidth: 50,
         Cell: ({ row }) => !row?.original?.msInventoryVariants?.length ? '' :
           (<div style={style}>
             <DynamicFAIcon {...row.getToggleRowExpandedProps()} name={row.isExpanded ? 'FaChevronUp': 'FaChevronDown'} className='t_expand' />
           </div>)
       },
       {
-        id: 'check', noSort: true, isBtn: true, width: 50, minWidth: 40, maxWidth: 40,
+        id: 'check', noSort: true, isBtn: true, width: 45, minWidth: 40, maxWidth: 45,
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
+      { id: 'logo', noSort: true, isBtn: true, Header: '', width: 40, minWidth: 30, maxWidth: 40,
+        Cell: ({ row, onClickModal }) => !row?.original?.msInventory?.image ? '' :
+          (<div style={style}>
+            <DynamicFAIcon name={'FaImage'} className='t_image' onClick={e => onClickModal(e, row)}/>
+          </div>)
+      },
       {
-        Header: t('page.name'), accessor: 'msInventory.name', exLabel: t('page.name'), width: 350, minWidth: 90
+        Header: t('page.name'), accessor: 'msInventory.name', exLabel: t('page.name'), width: 300, minWidth: 90
       },
       {
         Header: t('inventory.barcode'), accessor: 'msInventory.barCode', exLabel: t('inventory.barcode'), width: 150, minWidth: 90
       },
       {
-        Header: t('category.title'), accessor: 'msInventory.categoryId', width: 220, minWidth: 150, isBtn: true, exLabel: t('category.title'),
+        Header: t('category.title'), accessor: 'msInventory.categoryId', width: 200, width1: 180, minWidth: 150, isBtn: true, exLabel: t('category.title'),
         Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' cellID='hide_border'/>
       },
-      // {
-      //   Header: t('order.vend'), accessor: 'msInventory.vendId',  width: 220, minWidth: 150, isBtn: true, exLabel: t('order.vend'),
-      //   Cell: props => <SelectableCell {...props} data={vendors} s_value='vendId' s_descr='vendName' cellID='hide_border'/>
-      // },
+      {
+        Header: t('order.vend'), accessor: 'msInventory.vendId',  width: 200, width1: 180, minWidth: 150, isBtn: true, exLabel: t('order.vend'),
+        Cell: props => <SelectableCell {...props} data={vendors} s_value='vendId' s_descr='vendName' cellID='hide_border'/>
+      },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price',  width: 150, minWidth: 90, exLabel: t('inventory.price'),
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' :
@@ -98,22 +107,35 @@ export function List(props){
     }));
   }
 
+  const onClickModal = (e, row) => {
+    e?.preventDefault();
+    setVisible(true);
+    setSelected(row?.original?.msInventory)
+  }
+
+  const closeModal = e => {
+    e?.preventDefault();
+    setVisible(false);
+  }
+
   const onRowClick = row => onClickAdd(row?.original?.msInventory);
   const defaultColumn = useMemo(() => ({ minWidth: 40, width: 150, maxWidth: 400 }), []);
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: !filtering, autoResetSortBy: false, autoResetExpanded,
     initialState: { pageIndex: 0, pageSize: 1000, size : true, sortBy: [{ id: 'msInventory.name', desc: true }] },
-    onClickCheckAll, checked, onClickCheck, updateMyData }, useSortBy, useExpanded, usePagination, useRowSelect, useResizeColumns);
+    onClickCheckAll, checked, onClickCheck, updateMyData, onClickModal }, useSortBy, useExpanded, usePagination, useRowSelect, useResizeColumns);
   const tableProps = { tableInstance, onRowClick, Detail: props => <Detail {...props} updateData={updateMyData} />,
-    detailName: 'msInventoryVariants', colSpan: 8, className: 'table_cell_text', className1: 'table_cell_text_resize1'};
+    detailName: 'msInventoryVariants', colSpan: 9, className: 'table_cell_text', className1: 'table_cell_text_resize1'};
   const maxHeight = size?.width > 780
     ? 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 180px)'
     : 'calc(100vh - var(--header-height) - var(--page-padding) * 3 - 220px)';
   const pageProps = { pageInfo, getInventory, size : true };
-  const filterProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName };
+  const filterProps = { onClickAdd, onClickDelete, show, setError, onSearch, cats, size,  columns, data, excelName, vendors };
   const emptyProps = { icon: 'MdSchedule', type: 'time', noDescr: true };
+  const imageProps = { visible, closeModal , selected};
 
   return (
     <div>
+      {visible && <Image {...imageProps} />}
       <Header {...filterProps} />
       {!data?.length ? <Empty1 {...emptyProps} /> : 
       <>

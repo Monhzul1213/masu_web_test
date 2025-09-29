@@ -19,7 +19,7 @@ export function CustomerType(props){
   const [loading, setLoading] = useState(false);
   const [edited, setEdited] = useState(false);
   const [show, setShow] = useState(false);
-  const [typeName, setTypeName] = useState({ value: '' });
+  const [typeId, setTypeId] = useState({ value: '' });
   const [selected, setSelected] = useState(null);
   const [checked, setChecked] = useState(false);
   const { user, token }  = useSelector(state => state.login);
@@ -58,7 +58,7 @@ export function CustomerType(props){
 
   const onClickAdd = row => {
     setVisible(true);
-    setTypeName({value: row?.typeName})
+    setTypeId({value: row?.customerTypeID})
     setSelected(row);
   }
 
@@ -74,7 +74,7 @@ export function CustomerType(props){
 //   const emptyProps = { icon: 'MdSupervisorAccount', type: 'customer', noDescr: true, isMd : true};
   const listProps = { data, setData , setShow, checked, setChecked, show, setError, onSearch: getData, onClickAdd};
   const subProps = { visible: visible1, setVisible: setVisible1, onDone };
-  const addProps = { visible, setVisible, closeModal, typeName, setTypeName, selected, onSearch: getData, setEdited, edited };
+  const addProps = { visible, setVisible, closeModal, typeId, setTypeId, selected, onSearch: getData, setEdited, edited };
   const headerProps = { onSearch: getData, show };
   const videoData = [{id: "n07kE8xTJY4"}];
 

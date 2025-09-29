@@ -225,9 +225,15 @@ export function TableRowResize(props){
       </thead>
       <tbody className='table_body_back' {...getTableBodyProps()} style={{ position: "relative", zIndex: 0 }}>
         {rows.map((row, i) => {
+          let style = row?.original?.row_color ? {backgroundColor: row?.original?.row_color, borderColor: '#fff'} : {};
           prepareRow(row);
           return (
-            <tr className='table_row_resize' {...row.getRowProps()}>
+            <tr className='table_row_resize'  {...row.getRowProps({
+              style: {
+                ...row.getRowProps().style,
+                ...style                   
+              }
+            })} >
               {row.cells.map(cell => {
                 return (
                   <td className='table_cell_text_resize' {...cell.getCellProps()} onClick={() => !cell?.column?.isBtn && onRowClick && onRowClick(row)}>
@@ -251,6 +257,7 @@ export function TableRowResize(props){
     </table>
   );
 }
+
 export function TableRowResize3(props){
   const { tableInstance, onRowClick, hasFooter } = props;
 

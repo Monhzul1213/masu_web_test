@@ -403,11 +403,6 @@
   /* max-width: 1260px; */
 }
 
-#invt_list1 {
-  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  /* max-width: 1350px; */
-}
-
 .kit_search {
   margin: 5px 0 10px 0;
 }
@@ -1504,15 +1499,6 @@
   padding: 0;
 }
 
-#solve_list {
-  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: 1080px;
-}
-
-#solve_list1 {
-  padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
-  max-width: 1550px;
-}
 #solve_list2 {
   padding: 7px var(--page-padding) var(--page-padding) var(--page-padding);
   /* max-width: 1300px; */

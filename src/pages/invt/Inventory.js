@@ -40,9 +40,9 @@ export function Inventory(){
   }, []);
 
   const getData = async () => {
-    await getVendors();
+    let response1 = await getVendors();
     let response = await getCategories();
-    if(response) await getInventory(pageInfo);
+    if(response1 && response) await getInventory(pageInfo);
   }
 
   const getCategories = async () => {
@@ -60,7 +60,7 @@ export function Inventory(){
     }
   }
 
-  const getVendors = async id => {
+  const getVendors = async () => {
     setError(null);
     const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
     if(response?.error){
@@ -82,6 +82,9 @@ export function Inventory(){
           let margin = +((vart.price - vart.cost) / (vart.price ? vart.price : 1) * 100).toFixed(2);
           vart.margin = (isNaN(margin) ? 0 : margin) + '%';
         });
+        if(item.msInventory.vendId === -1){
+          item.msInventory.vendId = null;
+        }
       });
       setData(list);
       if(info) setPageInfo(info);
@@ -111,6 +114,9 @@ export function Inventory(){
       setLoading(true);
       setAutoResetExpanded(isEdit ? false : true);
       let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
+      response?.data?.forEach(item =>{
+        item.msInventory.vendId = item.msInventory.vendID;
+      })
       setInventory(response, response?.data);
       setFiltering(true);
       setPageInfo({ pageNumber: 1, pageSize: 1000, totalPage: 1 });

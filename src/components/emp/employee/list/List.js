@@ -3,7 +3,7 @@ import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useRe
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { Check, CheckBtn, PaginationTable, Table, TableResize } from '../../../all';
+import { Check, CheckBtn, PaginationTable, TableResize } from '../../../all';
 import { Subscription } from '../add';
 
 export function List(props){

@@ -64,7 +64,7 @@ export function Adjust(){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <SizeMe>{({ size }) => 
-          <div className='i_list_cont' id='invt_list1'>
+          <div className='i_list_cont' id='invt_list'>
             <Filter {...headerProps} size={size} />
             {!data?.length ? <Empty1 icon='MdOutlineArticle' /> : <List {...listProps} size={size} />}
           </div>
