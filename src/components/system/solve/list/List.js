@@ -43,7 +43,7 @@ export function List(props){
   
   const onRowClick = row => onClickAdd(row?.original);
 
-  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 120, maxWidth: 400 }), []);
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 120, maxWidth: 600 }), []);
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25, sortBy: [{ id: 'createdDate', desc: true }] }}, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick };

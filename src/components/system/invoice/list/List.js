@@ -140,7 +140,7 @@ export function List(props){
   const closeModal = () => {
     setVisible(false);
   };
-  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 120, maxWidth: 400 }), []);
+  const defaultColumn = useMemo(() => ({ minWidth: 30, width: 120, maxWidth: 600 }), []);
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, autoResetSortBy: false, onClickLink, onClickSalesLink,
     initialState: { pageIndex: 0, pageSize: 1000000, sortBy: [{ id: 'invoiceDate', desc: true }] }}, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick, hasFooter: true };

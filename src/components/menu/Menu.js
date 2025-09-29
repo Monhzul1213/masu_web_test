@@ -150,6 +150,7 @@ export function Menu(props){
     <img src={image2} alt='image2'/>, [
       getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer')}</span> : t('menu.customer'), '/customer/customer', null, null, null, msRole?.webManageCustomer !== 'Y'),
       getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer_type')}</span> : t('menu.customer_type'), '/customer/customer_type', null, null, null, msRole?.webManageCustomer !== 'Y'),
+      getItem(subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.customer_sales')}</span> : t('menu.customer_sales'), '/customer/customer_sales', null, null, null, msRole?.webManageCustomer !== 'Y'),
 
     ]),
     getItem(subscriptionType !== 'STANDARD' && subscriptionType !== 'PREMIUM' ? <span style={{color: '#969696'}}>{t('menu.loyalty')}</span> : t('menu.loyalty'), '/loyalty', 

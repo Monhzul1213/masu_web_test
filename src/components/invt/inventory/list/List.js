@@ -43,27 +43,27 @@ export function List(props){
         Header: t('inventory.barcode'), accessor: 'msInventory.barCode', exLabel: t('inventory.barcode'), width: 150, minWidth: 90
       },
       {
-        Header: t('category.title'), accessor: 'msInventory.categoryId', width: 200, width1: 180, minWidth: 150, isBtn: true, exLabel: t('category.title'),
+        Header: t('category.title'), accessor: 'msInventory.categoryId', width: 180, width1: 170, minWidth: 150, isBtn: true, exLabel: t('category.title'),
         Cell: props => <SelectableCell {...props} data={categories} s_value='categoryId' s_descr='categoryName' cellID='hide_border'/>
       },
       {
-        Header: t('order.vend'), accessor: 'msInventory.vendId',  width: 200, width1: 180, minWidth: 150, isBtn: true, exLabel: t('order.vend'),
+        Header: t('order.vend'), accessor: 'msInventory.vendId',  width: 180, width1: 170, minWidth: 120, isBtn: true, exLabel: t('order.vend'),
         Cell: props => <SelectableCell {...props} data={vendors} s_value='vendId' s_descr='vendName' cellID='hide_border'/>
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price',  width: 150, minWidth: 90, exLabel: t('inventory.price'),
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>, accessor: 'msInventory.price',  width: 120, minWidth: 90, exLabel: t('inventory.price'),
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' :
           (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} fontSize={11}/></div>)
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'msInventory.cost',
-        width: 150, minWidth: 90, isBtn: true, exLabel: t('inventory.cost'),
+        width: 120, minWidth: 90, isBtn: true, exLabel: t('inventory.cost'),
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' : props?.row?.original?.msInventory?.isKit === 'Y'
           ? (<div style={{textAlign: 'right', paddingRight: 10}}><Money value={props?.value} fontSize={11}/></div>)
           : <div style={{textAlign: 'right', paddingRight: 10}}><EditableCell {...props} cellID='hide_border' /></div>, isMoney: true,
       },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('inventory.margin')}</div>, accessor: 'msInventory.margin',  width: 150, minWidth: 90, 
+        Header: <div style={{textAlign: 'right'}}>{t('inventory.margin')}</div>, accessor: 'msInventory.margin',  width: 100, minWidth: 90, 
         exLabel: t('inventory.margin'),
         Cell: props => props?.row?.original?.msInventoryVariants?.length ? '' :
           <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>

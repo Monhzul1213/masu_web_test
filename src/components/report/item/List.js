@@ -37,7 +37,7 @@ export function List(props){
           Cell: props => {
             return (
               <div style={{ textAlign, paddingRight: 15}}>
-                {item?.noformat ? props?.value : item?.value === 'salesDateFull' ? moment(props?.value)?.format('yyyy.MM.DD') : <Money value={props?.value} />}
+                {item?.noformat ? item?.value === 'qty' || item?.value === 'returnQty' ? props?.value?.toFixed(2) : props?.value : item?.value === 'salesDateFull' ? moment(props?.value)?.format('yyyy.MM.DD') : <Money value={props?.value} />}
                 {/* {item?.value === 'salesDateFull' ? <div>{moment(value)?.format('yyyy.MM.DD')}</div> : props?.value} */}
               </div>
             )
@@ -47,7 +47,7 @@ export function List(props){
               info.rows.reduce((sum, row) => row.values[item?.value] + sum, 0),
               [info.rows]  )
             return <>{item?.value !== 'barCode' && item?.value !== 'categoryName'  && item?.value !== 'siteName' 
-                      && item?.value !== 'custName' && item?.value !== 'salesDateFull'  ? <div style={{textAlign: 'right', paddingRight: 15}}>{item?.value === 'qty' || item?.value === 'returnQty' ? total : <Money value={total}/>} </div> : null}</>
+                      && item?.value !== 'custName' && item?.value !== 'salesDateFull'  ? <div style={{textAlign: 'right', paddingRight: 15}}>{item?.value === 'qty' || item?.value === 'returnQty' ? total?.toFixed(2) : <Money value={total}/>} </div> : null}</>
           }
         });
       }

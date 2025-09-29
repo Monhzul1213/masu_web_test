@@ -113,6 +113,7 @@
     "/employee/shift_list": "Цагийн жагсаалт",
     "/customer/customer": "Харилцагч",
     "/customer/customer_type": "Харилцагчийн төрөл, үнэ",
+    "/customer/customer_sales": "Борлуулалтын мэдээ (НӨАТ)",
     "/customer/customer_import": "Харилцагч оруулах",
     "/partner": "Партнер",
     "/integration": "Интеграци",
@@ -253,7 +254,8 @@
     "package": "Багцлалт",
     "customer_type": "Харилцагчийн төрөл, үнэ",
     "control": "Үндсэн хуудас",
-    "system_change": "Системийн өөрчлөлт"
+    "system_change": "Системийн өөрчлөлт",
+    "customer_sales": "Борлуулалтын мэдээ (НӨАТ)"
   },
   "page": {
     "more": "Дэлгэрэнгүй",
