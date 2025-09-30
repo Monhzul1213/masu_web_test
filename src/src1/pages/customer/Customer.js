@@ -61,8 +61,8 @@ export function Customer(props){
         let index = data?.findIndex(list => item.branchCode === list.branchCode )
         if(index === -1 ) data.push(item)
       })
-      setBranch(data?.sort((a, b)=> a?.branchCode - b?.branchCode));
-      setAllBranch(response?.data?.data);
+      setBranch(data?.sort((a, b)=> b?.branchCode - a?.branchCode));
+      setAllBranch(response?.data?.data?.sort((a, b)=> a?.subBranchCode - b?.subBranchCode));
     }
     setLoading(false);
   }

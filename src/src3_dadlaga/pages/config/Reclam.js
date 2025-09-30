@@ -67,7 +67,7 @@ export function Card (props) {
     setVisible(false);
   };
 
-  const width = size?.width >= 720 ? 720 : size?.width;
+  // const width = size?.width >= 720 ? 720 : size?.width;
   const headerProps = { setError, onSearch: getData, onClickAdd, show, onClickDelete };
   const emptyProps = { icon: 'MdReceipt', type: 'time', onClickAdd, noDescr: true };
   const listProps = { data, setData, onClickAdd, setShow, checked, setChecked };
@@ -78,7 +78,7 @@ export function Card (props) {
       {visible && <Subscription {...subProps} />}
       <Overlay loading={loading}>
             {error && <Error1 error={error} />}
-            <div className='mo_container' style={{ width }}>
+            <div className='mo_container' >
                 <Header {...headerProps} size={size} />
                 {!data.length ? <Empty1 {...emptyProps} /> : <List {...listProps} size={size} />}
             </div>

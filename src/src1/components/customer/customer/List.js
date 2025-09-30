@@ -23,29 +23,40 @@ export function List(props){
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
       { Header: t('discount.type'), accessor: 'typeName', exLabel: t('discount.type'), Footer: <div style={{textAlign: 'left'}}>{t('report.total') + data?.length}</div>,  width: 100, minWidth: 40},
-      { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name'),  width: 300, minWidth: 100, },
+      { Header: t('customer.t_name'), accessor: 'custName', exLabel: t('customer.t_name'),  width: 250, minWidth: 100, },
+      { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode', exLabel: t('customer.code'),
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value }</div>, width: 120, minWidth: 40,},
       { Header: t('customer.phone1'), accessor: 'phone', exLabel: t('customer.phone1'),  width: 100, minWidth: 40,
         Cell: props => <div >{props.value}</div>},
+      { Header: <div style={{textAlign: 'right'}}> {t('customer.receivable_limit')}</div>, accessor: 'arBalanceMaxLimit', isBtn: true, width: 120, minWidth: 40, exLabel: t('customer.receivable_limit'),
+        Cell: ({ value, row, onClickLink }) => {
+          return  (<div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>);
+        },
+        Footer: info => {
+          const total = React.useMemo(() =>
+            info.rows.reduce((sum, row) => row.values.arBalanceMaxLimit + sum, 0),
+            [info.rows]  )
+          return <><div style={{textAlign: 'right', paddingRight: 10}}>{<Money value={total} />} </div></>
+        }
+      },
       { Header: <div style={{textAlign: 'right'}}> {t('customer.receivable')}</div>, accessor: 'arBalance', isBtn: true, width: 120, minWidth: 40, exLabel: t('customer.receivable'),
         Cell: ({ value, row, onClickLink }) => {
-          return  (<div style={{textAlign: 'right', paddingRight: 15, fontSize: 11}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} /></div>);
+          return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickLink(row)}><Money value={value} /></div>);
         },
         Footer: info => {
           const total = React.useMemo(() =>
             info.rows.reduce((sum, row) => row.values.arBalance + sum, 0),
             [info.rows]  )
-          return <><div style={{textAlign: 'right', paddingRight: 15}}>{<Money value={total} />} </div></>
+          return <><div style={{textAlign: 'right', paddingRight: 10}}>{<Money value={total} />} </div></>
         }
       },
-      { Header: t('employee.mail'), accessor: 'email', exLabel: t('employee.mail'), width: 180, minWidth: 40,
-        Cell: props => <div >{props.value}</div>},
-      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), width: 150, minWidth: 40,},
+      { Header: t('shop.city'), accessor: 'branchName', exLabel: t('shop.city'), width: 140, minWidth: 40,},
       { Header: t('shop.district'), accessor: 'subBranchName', exLabel: t('shop.district'), width: 150, minWidth: 40,},
-      { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'), width: 150, minWidth: 40,
+      { Header: t('customer.address'), accessor: 'address', exLabel: t('customer.address'), width: 120, minWidth: 40,
         Cell: props => <div >{props.value}</div>},
-      { Header: <div style={{textAlign: 'right'}}>{t('customer.code')}</div>, accessor: 'custCode', exLabel: t('customer.code'),
-        Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value }</div>, width: 120, minWidth: 40,},
-      { Header: t('customer.desc'), accessor: 'note', exLabel: t('customer.desc'), width: 150, minWidth: 40,},
+      { Header: t('employee.mail'), accessor: 'email', exLabel: t('employee.mail'), width: 150, minWidth: 40,
+        Cell: props => <div >{props.value}</div>},
+      { Header: t('order.note'), accessor: 'note', exLabel: t('order.note'), width: 120, minWidth: 40,},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

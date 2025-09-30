@@ -16,6 +16,9 @@
 .rp_drawer1 .ant-drawer-wrapper-body{
   height: 93%;
 }
+.rp_drawer2 .ant-drawer-wrapper-body{
+  height: 75%;
+}
 .dr_close {
   position: absolute;
   top: var(--page-padding);

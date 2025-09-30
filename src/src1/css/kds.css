@@ -315,8 +315,8 @@ html, body {
   .header-container,
   .th_header_mn1,
   .th_header_mn2 {
-    padding: 4px 8px;
-    max-height: 20px;     
+    padding: 0px 8px;
+    /* max-height: 20px;      */
     gap: 6px;
     border-bottom-width: 1px;
   }

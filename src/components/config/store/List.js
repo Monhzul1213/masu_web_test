@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useTable, usePagination, useRowSelect, useSortBy } from 'react-table';
+import { useTable, usePagination, useRowSelect, useSortBy, useBlockLayout, useResizeColumns } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { PaginationTable, Table } from '../../all';
+import { PaginationTable, TableResize } from '../../all';
 // import { SubscriptionSite } from '../../management/adjust/list';
 
 export function List(props){
@@ -14,10 +14,10 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('shop.t_name'), accessor: 'name' },
-      { Header: t('shop.t_addr'), accessor: 'address_text' },
+      { Header: t('shop.t_name'), accessor: 'name', width: 200, minWidth: 100 },
+      { Header: t('shop.t_addr'), accessor: 'address_text', width: 350, minWidth: 100 },
       {
-        Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'posQty',
+        Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'posQty', width: 150, minWidth: 100,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}</div>
       }
     ]);
@@ -38,7 +38,7 @@ export function List(props){
 
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 36px - 10px - var(--pg-height) - 40px)';
   const tableInstance = useTable( { columns, data, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 }},
-    useSortBy, usePagination, useRowSelect);
+    useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);
   const tableProps = { tableInstance, onRowClick: onClickAdd };
   // const subProps = { visible, setVisible, site, onDone, noTrial: true, noBack: true, fromSite: true }; 
 
@@ -47,7 +47,7 @@ export function List(props){
       {/* {visible && <SubscriptionSite {...subProps} />} */}
       <div className='table_scroll' style={{overflowX: 'scroll'}}>
         <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 540}}>
-          <Table {...tableProps} />
+          <TableResize {...tableProps} />
         </div>
       </div>
       <PaginationTable {...tableProps} />

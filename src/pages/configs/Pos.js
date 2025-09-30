@@ -106,7 +106,7 @@ function Screen(props){
     if(toGet) getPos(site);
   }
 
-  const width = size?.width >= 720 ? 720 : size?.width;
+  // const width = size?.width >= 720 ? 720 : size?.width;
   const id = size?.width > 380 ? 'mo_large' : 'mo_small';
   const emptyProps = { icon: 'MdStayCurrentPortrait', type: showPos ? 'pos' : 'pos1', onClickAdd: showPos ? onClickAdd : onClickShop };
   const addProps = { type: 'pos', onClickAdd, show, onClickDelete };
@@ -120,7 +120,7 @@ function Screen(props){
         {error && <Error1 error={error} />}
         {visible && <Add {...modalProps} />}
         {!data?.length && !filtering ? <Empty {...emptyProps} /> :
-          <div className='mo_container' style={{ width }}>
+          <div className='mo_container'>
             <div className='ih_header' id={id}>
               <ButtonRowAddConfirm {...addProps} />
               <PlainSelect {...siteProps} />

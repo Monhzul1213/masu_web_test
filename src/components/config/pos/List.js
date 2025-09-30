@@ -18,11 +18,11 @@ export function List(props){
         Header: ({ onClickCheckAll, checked }) => <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row, onClickCheck }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('pos.t_name'), accessor: 'descr', width: 160, minWidth: 90 },
-      { Header: t('pos.t_site'), accessor: 'name', width: 145, minWidth: 90 },
-      { Header: t('pos.t_status'), accessor: 'statusDescr.valueStr1', width: 100, minWidth: 90 },
-      { Header: t('pos.t_system'), accessor: 'systemTypeDescr.valueStr1', width: 100, minWidth: 90 },
-      { Header: t('pos.t_noat'), accessor: 'noat', width: 140, minWidth: 90 },
+      { Header: t('pos.t_name'), accessor: 'descr', width: 200, minWidth: 90 },
+      { Header: t('pos.t_site'), accessor: 'name', width: 160, minWidth: 90 },
+      { Header: t('pos.t_status'), accessor: 'statusDescr.valueStr1', width: 120, minWidth: 90 },
+      { Header: t('pos.t_system'), accessor: 'systemTypeDescr.valueStr1', width: 120, minWidth: 90 },
+      { Header: t('pos.t_noat'), accessor: 'noat', width: 150, minWidth: 90 },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

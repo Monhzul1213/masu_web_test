@@ -632,6 +632,7 @@
     "import_error": "Файл оруулна уу",
     "salesNo": "Борлуулалтын дугаар",
     "receivable" : "Авлага",
+    "receivable_limit" : "Авлагын лимит",
     "type": "Харилцагчийн төрөл",
     "no_type": "Төрөлгүй",
     "standardPrice": "Үнэ /STANDARD/",

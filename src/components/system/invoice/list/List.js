@@ -30,7 +30,7 @@ export function List(props){
       {
         Header: <div style={{textAlign: 'right'}}>{t('report.pay_amt')}</div>, accessor: 'totalSalesAmt', width: 140 , exLabel: t('report.pay_amt'), isBtn: true,
         Cell: ({ value, row, onClickSalesLink }) => {
-                  return  (<div style={{textAlign: 'right', paddingRight: 15, fontSize: 11}} className='table_link' onClick={() => onClickSalesLink(row)}><Money value={value} /></div>);
+                  return  (<div style={{textAlign: 'right', paddingRight: 15}} className='table_link' onClick={() => onClickSalesLink(row)}><Money value={value} /></div>);
                 },
         Footer: info => {
           const total = React.useMemo(() =>
@@ -92,7 +92,7 @@ export function List(props){
       { Header: '', accessor: 'isSendVat', noSort: true, isBtn: true,  width: 110,
         Cell: ({ value, row, onClickLink }) => {
           let active = row?.original?.status === 3 && value !== 'Y' && row?.original?.invoiceTime !== 'TRIAL';
-          return active && (<div style={{fontSize: 11}} className='table_link' onClick={() => onClickLink(row)}><Overlay loading= {loading}>{t('system.tax_sent')}</Overlay></div>);
+          return active && (<div className='table_link' onClick={() => onClickLink(row)}><Overlay loading= {loading}>{t('system.tax_sent')}</Overlay></div>);
         }
       },
     ]);

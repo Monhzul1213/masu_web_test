@@ -234,7 +234,7 @@ const onClickPrintA4 = async () => {
           <p style={{fontSize: 13, fontWeight: 'bold'}}>{t('coupon.consumer')}</p>
           <Field1 label={'menu.order'} value= {selected?.sale?.refNo + ' / ' + selected?.sale?.ticketBinName}/>
           <Field1 label={t('coupon.consumer')} value= {selected?.sale?.phone}/>
-          <Field1 label='Нэмэлт мэдэлээл' value= {selected?.sale?.addDescr}/>
+          <Field1 label={t('order.note')} value= {selected?.sale?.addDescr}/>
         </div> : null}
         <div className='dr_row_back'>
           <Button className='invoice_btn2' id='invt_btn_save' text={t('system.print_a4')} onClick={onClickPrintA4} />

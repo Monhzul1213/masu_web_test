@@ -11,17 +11,17 @@ export function Detail(props){
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
-    const customStyle = { width: 40 };
+    const customStyle = { width: 30 };
     setColumns([
       { id: 'expander', noSort: true, customStyle, Header: '', Cell: '' },
-      { Header: t('report.siteName'), accessor: '', exLabel:t('report.siteName'), Footer: t('report.total') + data?.length, customStyle : { width: 140 }},
+      { Header: t('report.siteName'), accessor: '', exLabel:t('report.siteName'), Footer: t('report.total') + data?.length, customStyle : { width: 120 }},
       { Header: t('menu.inventory'), accessor: 'invtName', exLabel:t('menu.inventory'), customStyle : { width: 240 } },
       { Header: t('inventory.barcode'), accessor: 'barCode', exLabel:t('inventory.barcode'), customStyle : { width: 140 }  },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_qty')}</div>, accessor: 'orderQty', exLabel: t('order.t_qty'), customStyle : { width: 140 }, 
         Cell: props => <div style={{textAlign: 'right', paddingRight: 10}}>{formatNumber(props?.value)}</div>
       },
       { Header: <div style={{textAlign: 'right'}}>{t('report_receipt.c_title2')}</div>, accessor: 'salesQty', exLabel: t('order.t_qty'), customStyle : { width: 140 }, 
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 10}}>{formatNumber(props?.value)}</div>,
+        Cell: props => <div style={{textAlign: 'right', paddingRight: 10}}>{formatNumber(props?.value)}</div>,
       },
       { Header: <div style={{textAlign: 'right'}}>{t('order.t_stock')}</div>, accessor: 'qty', exLabel: t('order.t_stock'), customStyle : { width: 140 }, 
         Cell: props => <div style={{textAlign: 'right', paddingRight: 5}}>{formatNumber(props?.value)}</div>

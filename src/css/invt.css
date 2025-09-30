@@ -1574,7 +1574,7 @@
 .table_link {
   color: var(--link-color);
   font-weight: 500;
-  font-size: var(--value-font);
+  font-size: var(--item-font);
   text-decoration: underline;
   text-decoration-skip-ink: none;
 }

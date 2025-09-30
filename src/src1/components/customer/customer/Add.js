@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { cityList, validateEmail } from '../../../../helpers';
 import { sendRequest, getList } from '../../../../services';
 import { ButtonRow, ModalTitle, Overlay, Error, Confirm } from '../../all/all_m';
-import { IconInput, Input, Select, IconButton, DynamicBSIcon } from '../../../../components/all';
+import { IconInput, Input, Select, IconButton, DynamicBSIcon, MoneyInput } from '../../../../components/all';
 import { Location } from '../../../../components/config/store/Location';
 import { AddType } from './AddType';
 
@@ -16,6 +16,7 @@ export function Add(props){
   const [custName, setCustName] = useState({ value: '' });
   const [address, setAddress] = useState({ value: '' });
   const [phone, setPhone] = useState({ value: '' });
+  const [limit, setLimit] = useState({ value: '' });
   const [email, setEmail] = useState({ value: '' });
   const [custCode, setCustCode] = useState({ value: '' });
   const [note, setNote] = useState({ value: '' });
@@ -59,6 +60,7 @@ export function Add(props){
       setSubBranch(allBranch?.filter(item => item?.branchCode?.includes(selected?.branchCode)));
       setLat( selected?.latitudes ? selected?.latitudes : 47.91452468522501 );
       setLng(selected?.longitudes ? selected?.longitudes : 106.91007001230763 );
+      setLimit({value: selected?.arBalanceMaxLimit ?? ''});
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,7 +110,8 @@ export function Add(props){
             subBranchCode: subDescr?.value,
             latitudes: lat,
             longitudes: lng,
-            customerTypeID: type?.value
+            customerTypeID: type?.value,
+            arBalanceMaxLimit: limit?.value
           }]
       const response = await dispatch(sendRequest(user, token, 'Site/Customer',  data));
       setLoading(false);
@@ -216,9 +219,10 @@ export function Add(props){
   const maxheight= 'calc(90vh - 105px )';
   const nameProps = { value: custName, setValue: setCustName, label: t('page.name'), placeholder: t('customer.name'), setError, length: 64  };
   const phoneProps = { value: phone, setValue: changePhone, label: t('page.phone'), placeholder: t('customer.phone'), setError, length: 8 };
+  const limitProps = { value: limit, setValue: setLimit, label: t('customer.receivable_limit'), placeholder: t('customer.receivable_limit'), setError};
   const mailProps = { value: email, setValue: setEmail, label: t('page.email'), placeholder: t('customer.email'), setError, length: 100};
   const codeProps = { value: custCode, setValue: setCustCode, label: t('page.code'), placeholder: t('customer.code'), setError,  };
-  const descrProps = { value: note, setValue: setNote, label: t('customer.desc'), placeholder: t('customer.desc'), setError , length: 255};
+  const descrProps = { value: note, setValue: setNote, label: t('order.note'), placeholder: t('order.note'), setError , length: 255};
   const addressProps = {  value: address, setValue: setAddress,label: t('customer.address'), placeholder: t('customer.address1'), setError, length: 192 };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
@@ -247,13 +251,18 @@ export function Add(props){
                 <div style={{flex: 1}}><Select {...categoryProps} /></div>
                 <IconButton className='im_add_btn' onClick={onClickCategory} icon={<DynamicBSIcon name='BsPlusLg' className='im_add_btn_icon' />} />
               </div>
-              <Input {...phoneProps} />
-              <Input {...mailProps} />
-              <Select {...cityProps} />
-              <Select {...districtProps} />
-              <IconInput {...locProps} />
-              <Input {...addressProps} />
               <Input {...codeProps} />
+              <Input {...phoneProps} />
+              <MoneyInput {...limitProps} />
+              <div className='ad_row'>
+                <div style={{flex: 1}}><Select {...cityProps} /></div>
+                  <div className='gap'/>
+                <div style={{flex: 1}}>  <Select {...districtProps} /></div>
+              </div>
+
+              <Input {...addressProps} />
+              <IconInput {...locProps} />
+              <Input {...mailProps} />
               <Input {...descrProps} />
               <div className='gap'/>
             </form>

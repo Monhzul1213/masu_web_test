@@ -158,7 +158,8 @@ const onClickPrintA4 = async () => {
   setVisible(true);
 }
 
-  const drawerProps = { className: 'rp_drawer1', placement: 'right', onClose, closable: false, open, mask: false };
+console.log(selected);
+  const drawerProps = { className: selected?.sale?.consumerID && selected?.sale?.terminalD ? 'rp_drawer2' : 'rp_drawer1', placement: 'right', onClose, closable: false, open, mask: false };
   const visibleProps = { loading, error, header, account, detail, info, day, visible, visible1, visible2, setVisible, setVisible1, setVisible2, image}
 
   return (
@@ -230,11 +231,11 @@ const onClickPrintA4 = async () => {
           </div>
         </div>
         {selected?.sale?.consumerID && selected?.sale?.terminalD ? 
-        <div style={{backgroundColor: '#f1f1f1', padding: '3px', borderRadius: 5, flex: 1, position: 'sticky', bottom:0}}>
+        <div style={{backgroundColor: '#f1f1f1', padding: '3px', borderRadius: 5, position: 'absolute', bottom: 60, left: 20, right: 20}}>
           <p style={{fontSize: 13, fontWeight: 'bold'}}>{t('coupon.consumer')}</p>
           <Field1 label={'menu.order'} value= {selected?.sale?.refNo + ' / ' + selected?.sale?.ticketBinName}/>
           <Field1 label={t('coupon.consumer')} value= {selected?.sale?.phone}/>
-          <Field1 label='Нэмэлт мэдэлээл' value= {selected?.sale?.addDescr}/>
+          <Field1 label={t('order.note')} value= {selected?.sale?.addDescr}/>
         </div> : null}
         <div className='dr_row_back'>
           <Button className='invoice_btn2' id='invt_btn_save' text={t('system.print_a4')} onClick={onClickPrintA4} />

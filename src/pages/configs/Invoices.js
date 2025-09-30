@@ -67,7 +67,7 @@ function Card(props){
 
   const width = size?.width >= 840 ? 900 : size?.width;
   const emptyProps = { icon: 'MdReceipt', text: 'invoices.empty' };
-  const listProps = { width, getData, setError, setLoading };
+  const listProps = { getData, setError, setLoading };
   const videoData = [{id: "K817GPIZXhQ"}]
 
   return (

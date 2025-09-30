@@ -320,6 +320,7 @@ tr.table_row_selected {
 }
 
 .t_image:hover {
+  cursor: pointer;
   color: var(--config-color);
 }
 .ed_select_back {

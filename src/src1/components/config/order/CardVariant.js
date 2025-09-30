@@ -16,9 +16,9 @@ export function CardVariant(props){
   const [qrData, setQRData] = useState(null);
 
   useEffect(() => {
-    const width = size?.width >= 400 ? 550 : (size?.width -20 );
+    // const width = size?.width >= 400 ? 550 : (size?.width -20 );
     setColumns([
-      { Header: t('orders.location'), accessor: 'ticketBinName', width: width-20, length: 50 },
+      { Header: t('orders.location'), accessor: 'ticketBinName', width: '95%', length: 50 },
       { id: 'qr', noSort: true, Header: '', customStyle: { width: 40 },
         Cell: ({ row }) => {
           const item = row?.original;
@@ -107,7 +107,7 @@ export function CardVariant(props){
     }
   }
 
-  const width = size?.width >= 420 ? 620 : size?.width;
+  // const width = size?.width >= 420 ? 620 : size?.width;
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height) - 90px)';
   const defaultColumn = { Cell: EditableCell };
   const tableInstance = useTable({ columns, data, defaultColumn, autoResetPage: false, initialState: { pageIndex: 0, pageSize: 25 },
@@ -122,7 +122,7 @@ export function CardVariant(props){
   return (
     <div>
       {visible && <QR visible={visible} closeModal={closeModal} qrData={qrData}/>}
-      <div className='mo_container' style={{ width, paddingBottom: 0 }}>
+      <div className='mo_container' style={{ paddingBottom: 0 }}>
         <div className='ih_header' id={id}>
                 <p className='do_title'>{t('orders.title')}</p>
                 <PlainSelect {...siteProps} />
@@ -136,7 +136,7 @@ export function CardVariant(props){
         <PaginationTable {...tableProps} />
         <ButtonRow {...btnProps} />
       </div>
-      <div  className='order_sub'>
+      <div  className='order_sub' style={{maxWidth: '100%'}}>
         <DynamicAIIcon name='AiOutlineInfoCircle' className='order_info'  />
         <p className='z_item_sub_title'>{t('orders.error')}</p>
       </div>      
