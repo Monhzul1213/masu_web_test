@@ -66,7 +66,7 @@ export function Add(props){
     let sendData = []
       setLoading(true);
       data?.forEach(item => {
-          sendData.push({...item, merchantId : user?.merchantId, customerTypeID: typeId, status: 1})
+          sendData.push({...item, merchantId : user?.merchantId, customerTypeID: typeId?.value, status: 1})
       })
       const response = await dispatch(sendRequest(user, token, 'Site/ModCustomerTypePrice',  sendData));
       setLoading(false);

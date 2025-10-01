@@ -361,3 +361,64 @@ export function GroupSelect(props){
     </div>
   );
 }
+
+export function MultiSelect1(props){
+  const { classBack, classLabel, className, Icon, label, label1, data, value, setValue, loading, onFocus, onHide, placeholder, s_value, s_descr, width } = props;
+  const { t } = useTranslation();
+  const [checked, setChecked] = useState(true);
+  const maxTag = (value?.length === data?.length ? t('page.all1') : value?.length) + label1;
+
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  const onCheck = () => {
+    if(!checked) {
+      let all = data?.map(item => item[s_value ?? 'value']);
+      setValue(all);
+    } else
+      setValue([]);
+  }
+
+  const onChange = value1 => {
+    setValue(value1);
+    setChecked(value1?.length === data?.length);
+  }
+
+  const onDropdownVisibleChange = show => {
+    if(!show) onHide && onHide();
+  }
+
+  const dropdownRender = menu => {
+    return (
+      <>
+        <CheckBox1 className='multi_btn' label={t('page.all')} checked={checked} setChecked={setChecked} onCheck={onCheck} />
+        {menu}
+      </>
+    );
+  }
+
+  return (
+    <div className={classBack} style={{ width }}>
+      {Icon && <Icon />}
+      {label && <p className={classLabel ?? 'ih_select_lbl'}>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        value={value}
+        onChange={onChange}
+        loading={loading}
+        onFocus={onFocus}
+        mode='multiple'
+        menuItemSelectedIcon={<BsCheckLg />}
+        onOpenChange={onDropdownVisibleChange}
+        popupRender={dropdownRender}
+        maxTagCount={0}
+        maxTagPlaceholder={maxTag}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+    </div>
+  );
+}

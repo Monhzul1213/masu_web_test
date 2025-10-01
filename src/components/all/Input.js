@@ -402,3 +402,60 @@ export function ForwardInput(props) {
     </div>
   );
 };
+
+export function Input1(props){
+  const { classBack, className, width, label, value, setValue, length, setError, setEdited, handleEnter, placeholder, noBlur, disabled } = props;
+  const { t } = useTranslation();
+
+  const onChange = e => {
+    let notValid = e?.target?.value?.includes("'");
+    if(notValid)
+      setValue({ value: value?.value, error: ' ' + t('error.valid_character'), noLabel: true })
+    else if(e?.target?.value?.length > length)
+      setValue({ value: value?.value, error: ' ' + length + t('error.shorter_than') })
+    else 
+      setValue({ value: e.target.value });
+    setError && setError(null);
+    setEdited && setEdited(true);
+  }
+
+  const onKeyDown = e => {
+    if(e?.key?.toLowerCase() === "enter"){
+      if(handleEnter) handleEnter(e);
+      else {
+        const form = e.target.form;
+        if(form){
+          const index = [...form].indexOf(e.target);
+          form.elements[index + 1]?.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  }
+
+  const onBlur = () => {
+    if (!noBlur && typeof value?.value === 'string') {
+      const trimmed = value.value.trim();
+      if (trimmed !== value.value) {
+        setValue({ value: trimmed, error: value?.error, noLabel: value?.noLabel });
+      }
+    }
+  }
+
+  const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
+
+  return (
+    <div className={classBack ?? 'inv_select_back'} style={{ width }}>
+      {label && <p className='inv_select_lbl' style={style}>{label}</p>}
+      <input
+        className={className ?? 'inv_input'}
+        disabled={disabled}
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
+        placeholder={placeholder ?? label}
+        value={value?.value}
+        onChange={onChange} />
+      {value?.error && <p className='f_input_error1'>{value?.noLabel ? '' : label} {value?.error}</p>}
+    </div>
+  );
+}
