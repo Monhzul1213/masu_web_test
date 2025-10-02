@@ -10,7 +10,7 @@ import { SelectItem } from '../../../../../components/invt/inventory/add/SelectI
 const { Option } = Select;
 
 export function ItemSelect(props){
-  const { search, setSearch, data, setData, newItem, disabled } = props;
+  const { search, setSearch, data, setData, newItem, disabled, siteId } = props;
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -26,17 +26,19 @@ export function ItemSelect(props){
 
   const getData = async value => {
     // if(value){
+      let query = siteId?.value ? ('?SiteID=' + siteId?.value) : '?=';
+      query += value ? '&Descr=' + value : ''
       setLoading(true);
       setSearch({ value: null });
-      const api = `Integration/GetInventoryList?Descr=${encodeURIComponent(value)}`;
+      const api = `Integration/GetInventoryList` + query ?? '';
       let response = await dispatch(getList(user, token, api))
       if(response?.error) setSearch({ value: null, error: response?.error });
       else {
         response?.data?.forEach(item => {
           item.name = item?.descr;
           item.itemStatus = 0;
-          item.countQty= item?.qty ? item?.qty : 0
-          item.siteQty= item?.qty ? item?.qty : 0
+          item.countQty= item?.handQty ? item?.handQty : 0
+          item.siteQty= item?.handQty ? item?.handQty : 0
           item.origCost= item?.cost ? item?.cost : 0
           // item.itemType= 'RC'
           item.picountItemId= 0

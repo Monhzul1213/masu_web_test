@@ -74,7 +74,7 @@ function Card(props){
   const newItem = invt => {
     return {
       name: invt.name, invtId: invt.invtId, invtID: invt.invtId, sku: invt?.sku, barCode: invt?.barCode, allowDecimal: invt?.isEach === 'N',
-      itemType: 'RC', siteQty: invt?.siteQty, qty: 0, cost: invt.cost, origCost: invt.cost, leftQty: invt?.siteQty, totalCost: 0, totalQty: invt?.totalQty,
+      itemType: 'RC', handQty: invt?.handQty, qty: 0, cost: invt.cost, origCost: invt.cost, leftQty: invt?.siteQty, totalCost: 0, totalQty: invt?.totalQty,
       adjustItemID: 0, sourceItemID: 0, amount: 0, totalAmount: 0, notes: '', rowStatus: 'I',
     };
   }
@@ -87,7 +87,7 @@ function Card(props){
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size };
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId };
+  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId, disabled : siteId?.value ? false : true};
 
   return (
     <div className='po_back_invt3'>

@@ -21,6 +21,10 @@ function Card(props){
   useEffect(() => {
     let columns = [
       {
+        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+        Cell: ({ row, onClickDelete }) => <div className='ac_delete_back'><DynamicBSIcon name='BsDashCircleFill' className='v2_ac_delete' onClick={() => onClickDelete(row)} /></div>
+      },
+      {
         Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
@@ -50,12 +54,6 @@ function Card(props){
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
       },
     ];
-    if(editable)
-      columns.push({
-        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
-        Cell: ({ row, onClickDelete }) =>
-          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      });
     setColumns(columns);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -105,7 +103,7 @@ function Card(props){
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, check: false};
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, disabled : siteId?.value ? false : true  };
+  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, disabled : siteId?.value ? false : true, siteId  };
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
 
   return (

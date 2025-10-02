@@ -118,7 +118,7 @@ function Card(props){
   // const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
   const defaultColumn = useMemo(() => ({ minWidth: 30, width: 150, maxWidth: 400 }), []);
-  const selectProps = { search, setSearch, data: items, setData: setItems, newItem, siteId };
+  const selectProps = { search, setSearch, data: items, setData: setItems, newItem, siteId, disabled : siteId?.value ? false : true };
   const tableInstance = useTable({ columns, data: items, defaultColumn, autoResetPage: false, autoResetGlobalFilter: false, autoResetSortBy: false,
     initialState: { pageIndex: 0, pageSize: 25 }, globalFilter: filterFunction, updateMyData, onClickDelete },
     useGlobalFilter, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns);

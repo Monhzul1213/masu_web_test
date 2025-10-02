@@ -214,6 +214,9 @@ tr.table_row_selected {
   border-bottom: none !important;
 }
 
+.table_row_resize {
+  align-items: center;
+}
 
 .table_row {
   border-style: solid;

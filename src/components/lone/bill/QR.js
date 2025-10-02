@@ -29,7 +29,7 @@ export function QR(props){
           : <Label label={t('bill.lottery')} value={header?.vatLotteryNo} />}
         {header?.vatCustomerId
           ? <Label label={t('bill.company_name')} value={header?.vatCustomerName} />
-          : <Label label={t('bill.sales_total')} value={<Money value={header?.paidAmount} currency='₮' />} />}
+          : <Label label={t('bill.sales_total')} value={<Money value={header?.totalSalesAmount} currency='₮' />} />}
       </div>
     </div>
   ) : null;

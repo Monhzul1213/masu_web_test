@@ -103,7 +103,7 @@ function Card(props){
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId: fromSiteId, setSiteId: setFromSiteId, check: true};
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, fromSiteId, toSiteId };
+  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId: fromSiteId, toSiteId, disabled : fromSiteId?.value ? false : true };
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
   const addProps = { className: 'po_add_btn', text: t('transfer.order_invt'), icon: <DynamicBSIcon name='BsPlusLg' className='po_add_icon' />, onClick};
   const modalProps = { visible, closeModal, item: detail , setItem: setDetail, setVisible, toSiteId, setToSiteId};
