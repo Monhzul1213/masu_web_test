@@ -86,8 +86,8 @@ export function PlainSelect(props){
 
 export function CustomSelect(props){
   const { value, setValue, placeholder, data, className, classBack, label, onFocus, loading, renderItem,
-    filterOption, setError, setEdited, onSearch, text, setData, disabled } = props;
-  const { t } = useTranslation();
+    filterOption, setError, setEdited, onSearch, setData, disabled } = props;
+  // const { t } = useTranslation();
 
   const handleChange = e => {
     setValue({ value: e });
@@ -100,7 +100,7 @@ export function CustomSelect(props){
   }
 
   const style = value?.error ? { borderColor: '#e41051', color: '#e41051' } : {};
-  const empty = t(text?.length > 3 ? 'page.no_filter' : 'inventory.morethan');
+  // const empty = t(text?.length > 3 ? 'page.no_filter' : 'inventory.morethan');
   
   return (
     <div className={classBack}>
@@ -117,7 +117,7 @@ export function CustomSelect(props){
           loading={loading}
           onDropdownVisibleChange={onDropdownVisibleChange}
           onFocus={onFocus}
-          notFoundContent={empty}
+          // notFoundContent={empty}
           placeholder={placeholder}>
           {data?.map(renderItem)}
         </AntSelect>
@@ -392,7 +392,7 @@ export function MultiSelect1(props){
   const dropdownRender = menu => {
     return (
       <>
-        <CheckBox1 className='multi_btn' label={t('page.all')} checked={checked} setChecked={setChecked} onCheck={onCheck} />
+        <CheckBox1 className='multi_btn' label={t('time.all_select')} checked={checked} setChecked={setChecked} onHide={onCheck} />
         {menu}
       </>
     );
@@ -412,10 +412,37 @@ export function MultiSelect1(props){
         onFocus={onFocus}
         mode='multiple'
         menuItemSelectedIcon={<BsCheckLg />}
-        onOpenChange={onDropdownVisibleChange}
-        popupRender={dropdownRender}
+        onDropdownVisibleChange={onDropdownVisibleChange}
+        dropdownRender={dropdownRender}
         maxTagCount={0}
         maxTagPlaceholder={maxTag}
+        placeholder={placeholder}>
+        {data?.map(renderItem)}
+      </AntSelect>
+    </div>
+  );
+}
+
+export function PlainSelect1(props){
+  const { classBack, bStyle, Icon, label, classLabel, className, value, setValue, loading, onFocus, placeholder, data, s_value, s_descr, disabled } = props;
+
+  const renderItem = (item, index) => {
+    return (<Option key={index} value={item[s_value ?? 'value']}>{item[s_descr ?? 'label']}</Option>);
+  }
+
+  return (
+    <div className={classBack} style={bStyle}>
+      {Icon && <Icon />}
+      {label && <p className={classLabel ?? 'p_select_lbl'}>{label}</p>}
+      <AntSelect
+        className={className}
+        showSearch
+        filterOption={(input, option) => option.children?.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+        value={value}
+        onChange={setValue}
+        loading={loading}
+        onFocus={onFocus}
+        disabled={disabled}
         placeholder={placeholder}>
         {data?.map(renderItem)}
       </AntSelect>

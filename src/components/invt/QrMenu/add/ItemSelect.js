@@ -15,8 +15,7 @@ export function ItemSelect({
   data,
   setData,
   newItem,
-  siteId,                
-  disabled = false,
+  disabled
 }) {
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
@@ -102,7 +101,7 @@ export function ItemSelect({
         if (seqRef.current === mySeq) setLoading(false);
       }
     })();
-  }, [text, siteId, dispatch, setSearch, token, t, user, cacheFirst]);
+  }, [text, dispatch, setSearch, token, t, user, cacheFirst]);
  
   const onSelect = useCallback(
     (value) => {
@@ -154,7 +153,7 @@ export function ItemSelect({
       <CustomSelect
         value={search}
         setValue={onSelect}
-        placeholder={`${t('inventory.search')}`}
+        placeholder={t('inventory.search')}
         data={items}
         className="kit_select"
         classBack="kit_search"

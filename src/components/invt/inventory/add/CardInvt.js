@@ -5,8 +5,9 @@ import { withSize } from 'react-sizeme';
 
 import { Table, DynamicBSIcon, Money } from '../../../all';
 import { SwitchLabel } from './SwitchLabel';
-import { ItemSelect, SelectItem } from './SelectItem';
+import { SelectItem } from './SelectItem';
 import { EditableCell } from './EditableCell';
+import { ItemSelect } from '../../../../src1/components/management/count/add/SelectItem';
 
 export function Card(props){
   const { isKit, setIsKit, isTrack, setIsTrack, data, setData, setEdited, setCost, search, setSearch, total, setTotal, setDKits, size, isUseTime } = props;
@@ -16,6 +17,10 @@ export function Card(props){
   useEffect(() => {
     setColumns([
       {
+        id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
+        Cell: ({ row, onClickDelete }) => <div className='ac_delete_back'><DynamicBSIcon name='BsDashCircleFill' className='v2_ac_delete' onClick={() => onClickDelete(row)} /></div>
+      },
+      {
         Header: t('inventory.t_comp'), accessor: 'name',
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
       },
@@ -23,11 +28,7 @@ export function Card(props){
         customStyle: { width: 100, paddingRight: 18 }, width: 80 },//, autoFocus: true
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost', isMoney: true, customStyle: { width: 100 },
-      },
-      { id: 'delete', noSort: true, Header: '', customStyle: { width: 40 },
-        Cell: ({ row, onClickDelete }) =>
-          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      },
+      }
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

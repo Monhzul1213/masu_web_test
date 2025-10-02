@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "antd";
-// import { IoCheckbox, IoCheckboxOutline } from "react-icons/io5";
-// import { createColumnHelper, getCoreRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import useMeasure from "react-use-measure";
 
 import '../../../../../css/table.css';
 import { getList } from "../../../../../services";
-import { Button, ButtonRow, Check, Empty1, Error, Input1, ModalTitle, Money, MultiSelect, MultiSelect1, Overlay, TableRowResize } from "../../../../../components/all";
+import { Button, ButtonRow, CheckBox, Empty1, Error, Input1, ModalTitle, MultiSelect1, Overlay, PlainSelect1 } from "../../../../../components/all";
+import { InvtList } from "./InvtList";
 
 export function AddInventory(props){
-  const { visible, setVisible, invoice, items, setItems, setError1 } = props;
+  const { visible, setVisible, items, setItems, setError1, siteId, disabled } = props;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [loading1, setLoading1] = useState(false);
@@ -21,6 +20,11 @@ export function AddInventory(props){
   const [barCode, setBarCode] = useState({ value: '' });
   const [category, setCategory] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [vendor, setVendor] = useState([]);
+  const [vendors, setVendors] = useState([]);
+  const [site, setSite] = useState(siteId?.value);
+  const [sites, setSites] = useState([]);  
+  const [isRemain, setIsRemain] = useState(false);
   const [data, setData] = useState([]);
   const [checked, setChecked] = useState(true);
   const [ref, bounds] = useMeasure();
@@ -31,11 +35,15 @@ export function AddInventory(props){
   useEffect(() => {
     if(visible) onSearch();
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   useEffect(() => {
     onFocusCategory();
+    onFocusVendor();
+    onFocusSite();
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -43,6 +51,7 @@ export function AddInventory(props){
     else if(pgWidth < 710 && pgWidth >= 540) setWidth((pgWidth - 60) / 3);
     else if(pgWidth < 540) setWidth((pgWidth - 50) / 2);
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pgWidth]);
 
   const onClickCancel = () => setVisible(false);
@@ -61,10 +70,45 @@ export function AddInventory(props){
     }
   }
 
+  const onFocusVendor = async () => {
+    if(!vendors?.length || vendors?.length === 1){
+      setError && setError(null);
+      setLoading('vendor');
+      const response = await dispatch(getList(user, token, 'Merchant/vendor/getvendor'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        setVendors(response?.data);
+        setVendor(response?.data?.map(item => item.vendId));
+      }
+      setLoading(null);
+    }
+  }
+
+  const onFocusSite = async () => {
+    if(!sites?.length || sites?.length === 1){
+      setError && setError(null);
+      setLoading('site');
+      const response = await dispatch(getList(user, token, 'Site/GetSite'));
+      if(response?.error) setError && setError(response?.error);
+      else {
+        let datas = [];
+        response?.data?.forEach(item => {
+          if(item?.siteId === siteId?.value) datas.push(item)
+        })
+        let data = [...[{siteId: -1, name: t('pos.all')}], ...datas];
+        setSites(data);
+      }
+      setLoading(null);
+    }
+  }
+
   const onSearch = async () => {
     let query = name?.value ? ('?InvtDescr=' + name?.value) : '?=';
     query += barCode?.value ? '&BarCode=' + barCode?.value : ''
+    query += site !== -1 ? '&SiteID=' + site : '';
+    query += isRemain ? '&IsBalance=' + 'Y' : '';
     if(category?.length !== categories?.length) category?.forEach(item => query += '&CategoryID=' + item);
+    if(vendor?.length !== vendors?.length) vendor?.forEach(item => query += '&VendID=' + item);
     setLoading(true);
     setError(null);
     let response = await dispatch(getList(user, token, 'Inventory/SelectInventory' + query));
@@ -88,10 +132,22 @@ export function AddInventory(props){
     else {
       setError(null);
       let li = [];
-      list?.forEach(l => {
-        let check = items?.findIndex(it => it?.invtId === l?.invtId);
-        if(check === -1) li.push({...l, qty: 0, amount: 0, rowStatus: 'I', invoiceID: invoice?.invoiceID ?? invoice?.invoiceId ?? 0 });
-      });
+      list?.forEach(l=> {
+        l.name = l?.invtDescr
+        l.countQty= l?.qty ? l?.qty : 0
+        l.siteQty= l?.qty ? l?.qty : 0
+        l.origCost= l?.cost ? l?.cost : 0
+        l.itemType= 'RC'
+        l.qty = 0
+        l.itemStatus = 0
+        l.picountItemId= 0
+        l.invtID = l?.invtId
+        l.notes= ''
+        l.rowStatus = 'I'
+        l.status = 1
+        let check = items?.findIndex(it => it?.barCode === l?.barCode)
+        if(check === -1) li.push(l)
+      })
       setItems(old => [...old, ...li]);
       setError1 && setError1(null);
       setVisible(false);
@@ -125,11 +181,40 @@ export function AddInventory(props){
                 value={category}
                 setValue={setCategory}
                 data={categories}
-                placeholder={t('invoice.choose_category')}
+                placeholder={t('coupon.category_select')}
                 label1={t('count.category')}
                 loading={loading1}
                 onFocus={onFocusCategory}
                 s_value='categoryId' s_descr='categoryName' />
+              <MultiSelect1
+                classBack='filter_select_back'
+                className='filter_select'
+                width={width}
+                value={vendor}
+                setValue={setVendor}
+                data={vendors}
+                placeholder={t('order.all_vendor')}
+                label1={t('count.vendor')}
+                loading={loading1}
+                onFocus={onFocusCategory}
+                s_value='vendId' s_descr='vendName' />
+              <PlainSelect1
+                classBack='filter_select_back'
+                className='filter_select'
+                width={width}
+                value={site}
+                setValue={setSite}
+                data={sites}
+                placeholder={t('report_receipt.dr_site')}
+                loading={loading1}
+                onFocus={onFocusSite}
+                disabled={disabled}
+                s_value='siteId' s_descr='name' />
+              <CheckBox
+                label={ t('manage.is_remain')}
+                checked={isRemain}
+                setChecked={setIsRemain}
+                style={{width: 180, margin: 0, padding: 5}}/>
               <Button
                 text={t('page.search')}
                 width={width}
@@ -137,7 +222,7 @@ export function AddInventory(props){
                 onClick={onSearch} />
             </div>
             {error && <Error error={error} id='m_error' />}
-            {/* {data?.length ? <List {...listProps}/> : <Empty1 icon='MdAllInbox' />} */}
+            {data?.length ? <InvtList {...listProps}/> : <Empty1 icon='MdAllInbox' />}
           </div>
         </div>
         <ButtonRow text2='inventory.t_choose' onClickCancel={onClickCancel} onClickSave={onClickSave} /> 
@@ -145,85 +230,3 @@ export function AddInventory(props){
     </Modal>
   );
 }
-
-// function List(props){
-//   const { data, setData, checked, setChecked } = props;
-//   const { t, i18n } = useTranslation();
-//   const columnHelper = createColumnHelper();
-//   const [columns, setColumns] = useState([columnHelper.accessor('invtDescr', { header: t('inventory.title'), size: 120, minSize: 90 }),]);
-
-//   useEffect(() => {
-//     setColumns([
-//       columnHelper.accessor('checked', {
-//         id: 'select-col', size: 50, minSize: 50, maxSize: 50,
-//         header: ({ table }) => (
-//           <div className="cell_center">
-//             <Check checked={table?.options?.meta?.checked} onClick={e => table?.options?.meta?.onClickCheckAll(e)} />
-//           </div>
-//         ),
-//         cell: ({ row, table }) => (
-//           <div className="cell_center" style={{ width: 45 }}>
-//             <Check checked={row?.original?.checked} onClick={e => table?.options?.meta?.onClickCheck(e, row)} />
-//           </div>
-//         ),
-//         enableSorting: false,
-//       }),
-//       columnHelper.accessor('invtDescr', { header: t('inventory.title'), size: 120, minSize: 90 }),
-//       columnHelper.accessor('barCode', { header: t('inventory.barcode'), size: 100, minSize: 90 }),
-//       columnHelper.accessor('categoryName', { header: t('inventory.category'), size: 100, minSize: 90 }),
-//       columnHelper.accessor('cost', {
-//         header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>,
-//         cell: props => <div style={{textAlign: 'right', flex: 1, paddingRight: 15}}><Money value={props?.getValue()} fontSize={12} /></div>,
-//       }),
-//       columnHelper.accessor('price', {
-//         header: <div style={{textAlign: 'right'}}>{t('inventory.price')}</div>,
-//         cell: props => <div style={{textAlign: 'right', flex: 1, paddingRight: 15}}><Money value={props?.getValue()} fontSize={12} /></div>,
-//       }),
-//       columnHelper.accessor('isService', {
-//         header: <div className="cell_center">{t('inventory.service')}</div>,
-//         cell: ({ row, table }) => {
-//           let checked = row?.original?.isService === 'Y';
-//           return <div className="cell_center">{checked ? <IoCheckbox className="cell_check1" /> : <IoCheckboxOutline className="cell_check2" />}</div>;
-//         },
-//         enableSorting: false,
-//       }),
-//     ]);
-//     return () => {};
-//   }, [i18n?.language]);
-
-//   const onClickCheck = (e, item) => {
-//     e?.preventDefault();
-//     setChecked(false);
-//     setData(old => old.map((row, index) => {
-//       if(index === item?.index) return { ...old[item?.index], checked: !row?.checked };
-//       return row
-//     }));
-//   }
-
-//   const onClickCheckAll = e => {
-//     setChecked(!checked);
-//     setData(old => old.map((row, index) => {
-//       return { ...old[index], checked: !checked };
-//     }));
-//   }
-
-//   const tableInstance = useReactTable({
-//     data, columns,
-//     columnResizeMode: 'onChange',
-//     defaultColumn: { size: 135, minSize: 90 },
-//     getCoreRowModel: getCoreRowModel(),
-//     getSortedRowModel: getSortedRowModel(),
-//     initialState: { sorting: [{ id: 'invtDescr', desc: false }] },
-//     meta: { checked, onClickCheck, onClickCheckAll }
-//   });
-//   const tableProps = { tableInstance };
-
-//   return (
-//     <div>
-//       <div id='paging' className='table_scroll' style={{ overflowY: 'scroll', maxHeight: 'calc(90vh - 185px)', marginTop: 5 }}>
-//         <TableRowResize {...tableProps} />
-//       </div>
-//       <p className='inv_total'>{t('customer.total')}{data?.length}</p>
-//     </div>
-//   );
-// }

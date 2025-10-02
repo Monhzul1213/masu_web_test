@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, DynamicAIIcon, DynamicBSIcon, IconButton } from '../../../all/all_m';
 import { SearchInput } from '../../../../../components/invt/inventory/list/SearchInput';
-import { Inventory } from './Inventory';
+import { AddInventory } from './AddInventory';
 // import { Button } from '../../../../../components/all';
 import { Import } from './Import';
 import { ExportExcel } from '../../../../../helpers';
@@ -49,14 +49,14 @@ export function Search(props){
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch: changeSearch, width: width1, className: 'po_search_input' };
   const addProps = { className: 'po_add_btn', text: t('count.invt_add'), icon: <DynamicBSIcon name='BsPlusLg' className='po_add_icon' />, onClick, disabled: !siteId?.value || status?.value !== 0 ? true : false };
-  const modalProps = { visible, closeModal, data , setItem: setData, setVisible, item: data, siteId, setSiteId};
+  const modalProps = { visible, closeModal, data , setItems: setData, setVisible, items: data, siteId, setSiteId};
   const importProps = {  className: 'ih_btn', text: t('page.import'), onClick: onClickVisible};
   const importModalProps = { visible: open, closeModal: closeModal1, setVisible: setOpen, data, setData, columns, siteId};
   const exportProps = { text: t('page.export'), columns: columns, excelData: data, fileName: t('header./management/count')};
 
   return (
     <div className='po_search_back' id={id}>
-      {visible && <Inventory {...modalProps}/>}
+      {visible && <AddInventory {...modalProps}/>}
       {open && <Import {...importModalProps}/>}
       <div className='ih_header1'>
         <p className='ac_title' id='ac_title'>{t('inventory.title')}</p>

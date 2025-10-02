@@ -2,15 +2,15 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { withSize } from 'react-sizeme';
 import {useTable,usePagination,useSortBy,useGlobalFilter,useResizeColumns,useRowSelect,useBlockLayout} from 'react-table';
 import { useTranslation } from 'react-i18next';
-import { TableResize } from '../../../all';
+
+import { DynamicBSIcon, TableResize } from '../../../all';
 import { Search } from './Search';
 // import { EditableCell as EditableCellQty } from './EditableCell';
-import { ItemSelect } from './ItemSelect';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { SelectableCell } from '../../inventory/add/EditableCell';
-// import { status } from '../../../../helpers';
+import { ItemSelect } from '../../../../src1/components/management/count/add/SelectItem';
 
-function Card({size,detail,setDetail,search,setSearch,siteId,setEdited,setDItems,editable,setSiteId}) 
+function Card({size,detail,setDetail,search,setSearch, setEdited,setDItems,editable}) 
 {
   const { t, i18n } = useTranslation();
   const [columns, setColumns] = useState([]);
@@ -41,6 +41,10 @@ function Card({size,detail,setDetail,search,setSearch,siteId,setEdited,setDItems
 
   useEffect(() => {
     const cols = [
+      {
+        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+        Cell: ({ row, onClickDelete }) => <div className='ac_delete_back'><DynamicBSIcon name='BsDashCircleFill' className='v2_ac_delete' onClick={() => onClickDelete(row)} /></div>
+      },
       {
         Header: t('inventory.title'),
         accessor: 'name',
@@ -77,24 +81,8 @@ function Card({size,detail,setDetail,search,setSearch,siteId,setEdited,setDItems
         Cell: props => <SelectableCell {...props} data={types} disabled={!editable} />
       },
     ];
-
-    if (editable) {
-      cols.push({
-        id: 'delete',
-        Header: '',
-        width: 40,
-        Cell: ({ row }) => (
-          <div className="ac_delete_back">
-            <i
-              className="fa fa-trash ac_delete"
-              onClick={() => onClickDelete(row)}
-            />
-          </div>
-        ),
-      });
-    }
-
     setColumns(cols);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [i18n?.language, editable]);
 
 
@@ -140,7 +128,7 @@ function Card({size,detail,setDetail,search,setSearch,siteId,setEdited,setDItems
       updateMyData,
       autoResetPage: false,
       autoResetGlobalFilter: false,
-      initialState: { pageIndex: 0, pageSize: 250000 },
+      initialState: { pageIndex: 0, pageSize: 250000 }, onClickDelete
     },
     useGlobalFilter,
     useSortBy,
@@ -155,8 +143,6 @@ function Card({size,detail,setDetail,search,setSearch,siteId,setEdited,setDItems
     size,
     data: detail,
     setData: setDetail,
-    siteId,
-    setSiteId,
     check: false,
   };
 
@@ -168,8 +154,8 @@ function Card({size,detail,setDetail,search,setSearch,siteId,setEdited,setDItems
       <div className="table_scroll" style={{ maxHeight, overflowY: 'auto' }}>
         <TableResize tableInstance={tableInstance} />
       </div>
-      {editable && ( <ItemSelect search={search}setSearch={setSearch}data={detail}setData={(data) => { setDetail(data); setEdited && setEdited(true); }}newItem={newItem}siteId={siteId}/>
-
+      {editable && ( <ItemSelect search={search} setSearch={setSearch} data={detail} setData={(data) => { setDetail(data); setEdited && setEdited(true); }} 
+                      newItem={newItem} />
       )}
     </div>
   );

@@ -166,6 +166,8 @@
     "/loyalty/voucher/voucher_add": "Ваучер бүртгэх",
     "/loyalty/bonus": "Урамшуулал",
     "/loyalty/bonus/bonus_add": "Урамшуулал бүртгэх",
+    "/loyalty/giftCard": "Gift Card",
+    "/loyalty/giftCard/giftCard_add": "Gift Card",
     "/finance/template": "Гүйлгээний загвар",
     "/finance/template/add": "Гүйлгээний загвар бүртгэх",
     "/finance/journal": "Гүйлгээ",
@@ -286,7 +288,8 @@
     "month": " сар",
     "prev": "Буцах",
     "next": "Дараах",
-    "done": "Дуусах"
+    "done": "Дуусах",
+    "all1": "Бүх"
   },
   "profile": {
     "account": "Хэрэглэгч",

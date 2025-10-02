@@ -4,20 +4,19 @@ import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useDebounce } from '../../../../../helpers';
-import { sendRequest } from '../../../../../services';
-import { CustomSelect, Overlay } from '../../../all/all_m';
+import { getList } from '../../../../../services';
+import { CustomSelect, Overlay } from '../../../../../components/all';
 import { SelectItem } from '../../../../../components/invt/inventory/add/SelectItem';
 const { Option } = Select;
 
 export function ItemSelect(props){
-  const { search, setSearch, data, setData, newItem, siteId, status } = props;
+  const { search, setSearch, data, setData, newItem, disabled } = props;
   const { t } = useTranslation();
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [text, setText] = useDebounce();
   const { user, token }  = useSelector(state => state.login);
   const dispatch = useDispatch();
-  const disabled = siteId?.value ? false : true;
 
   useEffect(() => {
     getData(text);
@@ -26,19 +25,33 @@ export function ItemSelect(props){
   }, [text]);
 
   const getData = async value => {
-    if(value?.length > 3){
+    // if(value){
       setLoading(true);
       setSearch({ value: null });
-      let filter = [{ fieldName: "Name", value }, { fieldName: "SiteID", value: siteId?.value }];
-      let response = await dispatch(sendRequest(user, token, 'Inventory/GetInventory/Custom', filter))
+      const api = `Integration/GetInventoryList?Descr=${encodeURIComponent(value)}`;
+      let response = await dispatch(getList(user, token, api))
       if(response?.error) setSearch({ value: null, error: response?.error });
-      else setItems(response?.data);
+      else {
+        response?.data?.forEach(item => {
+          item.name = item?.descr;
+          item.itemStatus = 0;
+          item.countQty= item?.qty ? item?.qty : 0
+          item.siteQty= item?.qty ? item?.qty : 0
+          item.origCost= item?.cost ? item?.cost : 0
+          // item.itemType= 'RC'
+          item.picountItemId= 0
+          item.invtID = item?.invtId
+          item.notes= ''
+          item.rowStatus = 'I'
+        })
+        setItems(response?.data);
+      }
       setLoading(false);
-    }
+    // }
   }
 
   const onSelect = value => {
-    let invt = items[value?.value]?.msInventory;
+    let invt = items[value?.value];
     let exists = data?.findIndex(d => d.invtId === invt?.invtId);
     if(exists === -1){
       let item = newItem(invt);
@@ -50,7 +63,7 @@ export function ItemSelect(props){
   }
 
   const renderItem = (item, index) => {
-    let optItem = { name: item?.msInventory?.name, sku: item?.msInventory?.sku };
+    let optItem = { name: item?.name, sku: item?.sku };
     return (
       <Option key={index} value={index} name={optItem?.name} sku={optItem?.sku}>
         <SelectItem item={optItem} />
@@ -63,7 +76,7 @@ export function ItemSelect(props){
   }
 
   const selectProps = { value: search, setValue: onSelect, placeholder: disabled ? t('transfer.warning_item') : t('inventory.search'), data: items,
-    className: 'kit_select', classBack: 'kit_search', renderItem, filterOption, onSearch: setText, text, setData: setItems, disabled: status?.value !== 0 };
+    className: 'kit_select', classBack: 'kit_search', renderItem, filterOption, onSearch: setText, text, setData: setItems, disabled};
 
   return (
     <Overlay loading={loading}>

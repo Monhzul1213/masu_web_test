@@ -226,9 +226,9 @@ export function Add(props){
   const addressProps = {  value: address, setValue: setAddress,label: t('customer.address'), placeholder: t('customer.address1'), setError, length: 192 };
   const btnProps = { onClickCancel: () => closeModal(), onClickSave, type: 'submit', show: selected ? true : false, onClickDelete };
   const confirmProps = { open, text: t('page.delete_confirm'), confirm: onDelete };
-  const cityProps = { value: descr, setValue: onChangeDescr, label: t('shop.city'), placeholder: t('shop.location1'), setError,
+  const cityProps = { value: descr, setValue: onChangeDescr, label: t('shop.city'), placeholder: t('shop.city'), setError,
   data: branch, s_value : 'branchCode', s_descr :'branchName', };
-  const districtProps = { value: subDescr, setValue: setSubDescr, label: t('shop.district'), placeholder: t('shop.location1'), setError,
+  const districtProps = { value: subDescr, setValue: setSubDescr, label: t('shop.district'), placeholder: t('shop.district'), setError,
     data: subBranch, s_value : 'subBranchCode', s_descr :'subBranchName' };
   const locProps = { value: location, setValue: setLocation, label: t('tax.location'), placeholder: t('tax.location'), setError, length: 250, 
     onClick: onClickLocation, disabled: true, className: 'store_descr' };
@@ -244,7 +244,7 @@ export function Add(props){
       <Overlay loading={loading}>
         <div className='m_back'>
           <ModalTitle icon='MdSupervisorAccount' title={t(selected ? 'customer.edit' : 'customer.new')} isMD={true} />
-          <div style={{ overflowY: 'scroll', maxHeight: maxheight }}>
+          <div style={{ overflowY: 'scroll', maxHeight: maxheight }} id='list_scroll'>
             <form onSubmit={onClickSave}>
               <Input {...nameProps}  />
               <div id='im_unit_row_large'>

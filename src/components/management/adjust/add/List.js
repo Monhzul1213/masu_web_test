@@ -5,12 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 import { add, divide } from '../../../../helpers';
 import { DynamicBSIcon, Money, PaginationTable, TableResize } from '../../../all';
-import { ItemSelect } from './SelectItem';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { SelectableCell } from '../../../invt/inventory/add/EditableCell';
 import { EditableCell as EditableCellQty } from '../../order/add/EditableCell';
 import { EditableCell } from './EditableCell';
 import { Search } from '../../../../src1/components/management/transfer/add/Search';
+import { ItemSelect } from '../../../../src1/components/management/count/add/SelectItem';
 
 function Card(props){
   const { size, detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable, setSiteId } = props;
@@ -105,7 +105,7 @@ function Card(props){
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, check: false};
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId };
+  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, disabled : siteId?.value ? false : true  };
   const classPage = size?.width > 510 ? 'ii_page_row_large' : 'ii_page_row_small';
 
   return (

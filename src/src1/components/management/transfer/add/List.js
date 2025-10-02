@@ -5,12 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 import { add } from '../../../../../helpers';
 import { DynamicBSIcon, IconButton } from '../../../all/all_m';
-import { ItemSelect } from './SelectItem';
 import { SelectItem } from '../../../../../components/invt/inventory/add/SelectItem';
 import { EditableCell as EditableCellQty } from './EditableCell';
 import { TableResize } from '../../../../../components/all';
 import { Order } from '../order/Order';
 import { Search } from './Search';
+import { ItemSelect } from '../../count/add/SelectItem';
 
 function Card(props){
   const { size, detail, setDetail, search, setSearch, fromSiteId, toSiteId, setEdited, setDItems, editable, setToSiteId, setFromSiteId } = props;
@@ -20,6 +20,10 @@ function Card(props){
 
   useEffect(() => {
     let columns = [
+      {
+        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+        Cell: ({ row, onClickDelete }) => <div className='ac_delete_back'><DynamicBSIcon name='BsDashCircleFill' className='v2_ac_delete' onClick={() => onClickDelete(row)} /></div>
+      },
       {
         Header: t('inventory.title'), accessor: 'name', width: 230, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
@@ -38,12 +42,12 @@ function Card(props){
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>,
       },
     ];
-    if(editable)
-      columns.push({
-        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
-        Cell: ({ row, onClickDelete }) =>
-          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      });
+    // if(editable)
+    //   columns.push({
+    //     id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+    //     Cell: ({ row, onClickDelete }) =>
+    //       (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+    //   });
     setColumns(columns);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

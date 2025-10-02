@@ -1727,6 +1727,7 @@
   max-width: 500px;
 }
 
+/* ------------------------------------NewInput---------------------------------- */
 .card_input {
   border: 1px solid var(--input1-color);
   border-radius: var(--radius);
@@ -1744,7 +1745,7 @@
 
 .card_input:focus {
   outline: none;
-  border: 1px solid var(--success-color);
+  border: 1px solid var(--config-b-color);
 }
 
 .card_input:disabled {
@@ -1767,9 +1768,16 @@
 .ih_select .ant-select-selector {
   box-shadow: none !important;
 }
+.filter_select.ant-select-multiple .ant-select-selector {
+  padding: 0;
+}
+.filter_select.ant-select-multiple .ant-select-selection-item{
+  background-color: transparent;
+  border: none;
 
-.ih_select .ant-select-arrow, .filter_select .ant-select-arrow {
-  color: var(--input-color);
+}
+.filter_select .ant-select-arrow {
+  color: var(--config-color);
   font-size: 15px;
 }
 .filter_select_back {
@@ -1783,7 +1791,7 @@
 
 .filter_select.ant-select .ant-select-selector {
   box-shadow: none;
-  border: 1px solid var(--input1-color);
+  border: 1px solid var(--config-b-color);
   color: var(--text-color);
   font-size: 12px;
   background-color: var(--root-color);
@@ -1791,7 +1799,7 @@
 }
 
 .filter_select.ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  border-color: var(--config-h-color) !important;
+  border-color: var(--config-b-color) !important;
 }
 
 .filter_select.ant-select-outlined.ant-select-multiple .ant-select-selection-item {
@@ -1815,5 +1823,16 @@
 }
 
 .card_btn:hover {
-  background-color: var(--logo1-color);
+  background-color: var(--main-color);
+  cursor: pointer;
+}
+.v2_ac_delete {
+  color: var(--text4-color);
+  font-size: var(--title2-font);
+  text-align: center;
+  padding: 2px 0;
+}
+
+.v2_ac_delete:hover {
+  color: var(--danger-color);
 }

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { DynamicAIIcon, DynamicBSIcon, IconButton } from '../../../all/all_m';
 import { SearchInput } from '../../../../../components/invt/inventory/list/SearchInput';
-import { Inventory } from './Inventory';
+import { AddInventory } from '../../count/add/AddInventory';
 
 export function Search(props){
   const { handleEnter, size, data, setData, siteId, setSiteId, check} = props;
@@ -37,11 +37,11 @@ export function Search(props){
   const searchProps = { className: 'ih_search', name: 'AiOutlineSearch', onClick: onClickSearch };
   const inputProps = { showSearch, setShowSearch, handleEnter, search, setSearch: changeSearch, width: width1, className: 'po_search_input' };
   const addProps = { className: 'po_add_btn', text: t('count.invt_add'), icon: <DynamicBSIcon name='BsPlusLg' className='po_add_icon' />, onClick, disabled: !siteId?.value };
-  const modalProps = { visible, closeModal, data , setItem: setData, setVisible, item: data, siteId, setSiteId, check};
+  const modalProps = { visible, closeModal, data , setItems: setData, setVisible, items: data, siteId, setSiteId, check};
 
   return (
     <div className='po_search_back' id={id}>
-      {visible && <Inventory {...modalProps}/>}
+      {visible && <AddInventory {...modalProps}/>}
       <p className='ac_title'>{t('inventory.title')}</p>
       <div className='ac_row_back' style={style}>
         <IconButton {...addProps} />

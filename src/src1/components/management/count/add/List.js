@@ -21,10 +21,14 @@ function Card(props){
   useEffect(() => {
     let columns = [
       {
-        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 380, minWidth: 200,
+        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+        Cell: ({ row, onClickDelete }) => <div className='ac_delete_back'><DynamicBSIcon name='BsDashCircleFill' className='v2_ac_delete' onClick={() => onClickDelete(row)} /></div>
+      },
+      {
+        Header: t('inventory.title'), accessor: 'name', width: 250, minWidth: 200,
         Cell: ({ row }) => (<SelectItem item={row?.original} />), exLabel: t('inventory.title'), exLabel1: t('inventory.title')
       }, 
-      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 110, minWidth: 90, exLabel: t('inventory.barcode'), exLabel1: t('inventory.barcode')}, 
+      { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 100, minWidth: 90, exLabel: t('inventory.barcode'), exLabel1: t('inventory.barcode')}, 
       {
         Header: t('pos.t_status'), accessor: 'itemStatus', isBtn: true, width: 150, minWidth: 90, exLabel: t('pos.t_status'),
         Cell: props => <SelectableCell {...props} data={types} disabled={disabled || !editable }/>
@@ -70,12 +74,12 @@ function Card(props){
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>,
       },
     ];
-    if(editable)
-      columns.push({
-        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
-        Cell: ({ row, onClickDelete }) =>
-          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      });
+    // if(editable)
+    //   columns.push({
+    //     id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+    //     Cell: ({ row, onClickDelete }) =>
+    //       (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
+    //   });
     setColumns(columns);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -104,7 +108,7 @@ function Card(props){
 
   const onClickDelete = row => {
     if(row?.original?.countItemID !== 0) setDItems(old => [...old, row?.original]);
-    setDetail(detail?.filter(item => item?.invtId !== row?.original?.invtId));
+    setDetail(old => old?.filter(item => item?.invtId !== row?.original?.invtId));
     setSearch({ value: null });
   }
 
@@ -124,7 +128,7 @@ function Card(props){
   const { setGlobalFilter } = tableInstance;
   const searchProps = { handleEnter: setGlobalFilter, size, data: detail, setData: setDetail, siteId, setSiteId, status, columns};
   const maxHeight = 'calc(100vh - var(--header-height) - var(--page-padding) * 4 - 150px - var(--pg-height))';
-  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, siteId, setSiteId, status };
+  const selectProps = { search, setSearch, data: detail, setData: setDetail, newItem, status, disabled : status?.value !== 0 || siteId?.value ? false : true  };
 
   return (
     <div className='po_back_invt3'>

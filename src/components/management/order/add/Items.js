@@ -8,7 +8,7 @@ import { DynamicBSIcon, Money, TableResize } from '../../../all';
 import { SelectItem } from '../../../invt/inventory/add/SelectItem';
 import { Search } from './Search';
 import { EditableCell } from './EditableCell';
-import { ItemSelect } from '../../adjust/add/SelectItem';
+import { ItemSelect } from '../../../../src1/components/management/count/add/SelectItem';
 
 function Card(props){
   const { items, setItems, setDItems, size, setEdited, total, setTotal, search, setSearch, siteId, setTotal1, total1 } = props;
@@ -17,6 +17,10 @@ function Card(props){
 
   useEffect(() => {
     setColumns([
+      {
+        id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
+        Cell: ({ row, onClickDelete }) => <div className='ac_delete_back'><DynamicBSIcon name='BsDashCircleFill' className='v2_ac_delete' onClick={() => onClickDelete(row)} /></div>
+      },
       {
         Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 160, minWidth: 90,
         Cell: ({ row }) => (<SelectItem item={row?.original} />)
@@ -50,11 +54,7 @@ function Card(props){
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total')}</div>, accessor: 'totalCost', width: 130, minWidth: 120,
         Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 18}}><Money value={value} /></div>,
-      },
-      { id: 'delete', noSort: true, Header: '', width: 40, minWidth: 40, maxWidth: 40,
-        Cell: ({ row, onClickDelete }) =>
-          (<div className='ac_delete_back'><DynamicBSIcon name='BsTrashFill' className='ac_delete' onClick={() => onClickDelete(row)} /></div>)
-      },
+      }
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -63,7 +63,7 @@ function Card(props){
   const updateMyData = (rowIndex, columnId, value, e) => {
     e?.preventDefault();
     let total = 0;
-    setItems(old => old.map((row, index) => {
+    setItems(old => old.forEach((row, index) => {
       if(index === rowIndex){
         if(columnId === 'orderQty') {
           // let qty = columnId === 'qty' ? parseFloat(value ? value : 0) : old[rowIndex]?.qty;

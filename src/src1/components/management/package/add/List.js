@@ -3,9 +3,9 @@ import { withSize } from 'react-sizeme';
 import { useBlockLayout, useGlobalFilter, usePagination, useResizeColumns, useRowSelect, useSortBy, useTable } from 'react-table';
 import { useTranslation } from 'react-i18next';
 
-import { Money, TableResize } from '../../../../../components/all';
+import { DynamicBSIcon, Money, TableResize } from '../../../../../components/all';
 import { Search } from '../../../../../components/management/order/add/Search';
-import { ItemSelect } from './SelectItem';
+import { ItemSelect } from '../../count/add/SelectItem';
 
 function Card(props){
   const { size, detail, setDetail, search, setSearch, siteId, setEdited, setDItems, editable } = props;
@@ -15,7 +15,11 @@ function Card(props){
   useEffect(() => {
     let columns = [
       {
-        Header: t('inventory.title'), accessor: 'name', customStyle: { minWidth: 150 }, width: 200, minWidth: 90,
+        id: 'delete', noSort: true, Header: '',  width: 40 , minWidth: 40, maxWidth: 40,
+        Cell: ({ row, onClickDelete }) => <div className='ac_delete_back'><DynamicBSIcon name='BsDashCircleFill' className='v2_ac_delete' onClick={() => onClickDelete(row)} /></div>
+      },
+      {
+        Header: t('inventory.title'), accessor: 'name', width: 200, minWidth: 90,
       },
       { Header: t('inventory.barcode'), accessor: 'barCode', isText: true, width: 120, minWidth: 90 },
       {

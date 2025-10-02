@@ -254,9 +254,9 @@ function Card(props){
   const logoProps = { image, setImage, setImage64, setImageType, setEdited, setError, className: 'co_image' };
   const logo1Props = { image: image1, setImage: setImage1, setImage64: setImage164, setImageType: setImageType1, setEdited, setError, className: 'co_image' };
   const headerProps = { value: header, setValue: setHeader, label: t('document.header'),
-    placeholder: t('document.header'), setEdited, setError, length: 100, classBack: 'co_select_back', className: 'co_input' };
+    placeholder: t('document.header'), setEdited, setError, length: 60, classBack: 'co_select_back', className: 'co_input' };
   const footerProps = { value: footer, setValue: setFooter, label: t('document.footer'),
-    placeholder: t('document.footer'), setEdited, setError, length: 100, id: 'doc_input', classBack: 'co_select_back', className: 'co_input'};
+    placeholder: t('document.footer'), setEdited, setError, length: 60, id: 'doc_input', classBack: 'co_select_back', className: 'co_input'};
   const btnProps = { onClickCancel, onClickSave };
   const confirmProps = { open: open ? true : false, text: 'page.back_confirm', confirm };
   const printProps = { label: t('document.isPrint'), checked: isPrint, setChecked: setIsPrint, id: 'co_check1' };

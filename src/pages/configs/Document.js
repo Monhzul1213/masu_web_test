@@ -148,7 +148,7 @@ function Card(props){
   const headerProps = { value: header, setValue: setHeader, label: t('document.header'),
     placeholder: t('document.header'), setEdited, setError, length: 30 };
   const footerProps = { value: footer, setValue: setFooter, label: t('document.footer'),
-    placeholder: t('document.footer'), setEdited, setError, length: 30, id: 'doc_input'};
+    placeholder: t('document.footer'), setEdited, setError, length: 60, id: 'doc_input'};
   const btnProps = { onClickCancel, onClickSave };
   const confirmProps = { open: open ? true : false, text: 'page.back_confirm', confirm };
   const printProps = { label: t('document.isPrint'), checked: isPrint, setChecked: setIsPrint };
