@@ -31,12 +31,12 @@ export function List(props){
         Header: <div style={style}><Check checked={checked} onClick={onClickCheckAll} /></div>,
         Cell: ({ row }) => <div style={style}><Check checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} /></div>,
       },
-      { Header: t('supplier.name'), accessor: 'vendName', width: 350, minWidth: 40, },
+      { Header: t('supplier.name'), accessor: 'vendName', width: 300, minWidth: 40, },
       { Header: t('supplier.contact'), accessor: 'contact', width: 200, minWidth: 40,
         Cell: props => <div >{props.value}</div>},
-      { Header: t('page.phone'), accessor: 'phone' , width: 200, minWidth: 40,
+      { Header: t('page.phone'), accessor: 'phone' , width: 150, minWidth: 40,
         Cell: props => <div>{props.value}</div>},
-      { Header: t('page.email'), accessor: 'email', width: 300, minWidth: 40,
+      { Header: t('page.email'), accessor: 'email', width: 250, minWidth: 40,
         Cell: props => <div >{props.value}</div> },
     ]);
     return () => {};

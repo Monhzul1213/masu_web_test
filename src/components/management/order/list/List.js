@@ -16,15 +16,15 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('order.t_no'), accessor: 'poOrder.orderNo', width: 115, minWidth: 110 },
+      { Header: t('order.t_no'), accessor: 'poOrder.orderNo', width: 120, minWidth: 110 },
       {
         Header: t('order.date'), accessor: 'poOrder.orderDate', width: 150, minWidth: 140,
         Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD')}</div>
       },
-      { Header: t('order.vend'), accessor: 'poOrder.vendName', width: 150, minWidth: 100 },
+      { Header: t('order.vend'), accessor: 'poOrder.vendName', width: 200, minWidth: 100 },
       { Header: t('order.site'), accessor: 'poOrder.siteName', width: 150, minWidth: 80 },
       {
-        Header: t('order.status'), accessor: 'poOrder.statusName', width: 150, minWidth: 60,
+        Header: t('order.status'), accessor: 'poOrder.statusName', width: 170, minWidth: 60,
         Cell: ({ value, row }) => {
           let status = row?.original?.poOrder?.status;
           let color = status === 0 ? 'var(--danger-color)' : status === 1 ? 'var(--text-color)' : 'var(--text2-color)';
@@ -32,8 +32,8 @@ export function List(props){
         }
       },
       {
-        Header: t('order.t_received'), accessor: 'poOrder.percent', customStyle: { paddingTop: 0, paddingBottom: 0 }, width: 150, minWidth: 150,
-        Cell: props => <Progress order={props?.row?.original?.poOrder} width={130} />
+        Header: t('order.t_received'), accessor: 'poOrder.percent', customStyle: { paddingTop: 0, paddingBottom: 0 }, width: 170, minWidth: 150,
+        Cell: props => <Progress order={props?.row?.original?.poOrder} width={150} />
       },
       {
         Header: t('order.req'), accessor: 'poOrder.reqDate', width: 150, minWidth: 137,
@@ -45,11 +45,11 @@ export function List(props){
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total_order1')}</div>, accessor: 'poOrder.total',//orderAmount, orderPayment???
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>, width: 140, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>, width: 160, minWidth: 140,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('order.t_total_receipt')}</div>, accessor: 'poOrder.receivedTotalCost',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>, width: 140, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>, width: 160, minWidth: 140,
       },
     ]);
     return () => {};

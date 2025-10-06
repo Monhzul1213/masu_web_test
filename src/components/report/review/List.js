@@ -25,7 +25,7 @@ export function List(props){
     let columns = [
       {
         Header: t(isHour ? 'page.time' : 'page.date'), accessor: 'salesDate',
-        width: 100, minWidth: 75, maxWidth: 100,
+        width: 100, minWidth: 75, maxWidth: 400,
         exLabel: t(isHour ? 'page.time' : 'page.date'),
         Cell: ({ value }) => {
           return isHour ? (<span>{value}</span>) : (<span>{moment(value)?.format('yyyy.MM.DD')}</span>)
@@ -40,7 +40,7 @@ export function List(props){
       if(exists){
         columns.push({
           Header: <div style={{textAlign: 'right'}}>{item?.label}</div>, accessor: item?.value,
-          width: 120, minWidth: 90,
+          width: 130, minWidth: 90,
           exLabel: item?.label,
           Cell: props => (
             <div style={{textAlign: 'right', paddingRight: 15}}>

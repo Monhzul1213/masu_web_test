@@ -26,10 +26,10 @@ export function List(props){
           return (<div style={style}><CheckBtn checked={row?.original?.checked} onClick={e => onClickCheck(e, row)} disabled={disabled} /></div>)
         }
       },
-      { Header: t('page.name'), accessor: 'empName', width: 200, minWidth: 40},
+      { Header: t('page.name'), accessor: 'empName', width: 180, minWidth: 40},
       { Header: t('employee.mail'), accessor: 'email', width: 200, minWidth: 40, },
-      { Header: t('page.phone'), accessor: 'phone', width: 150, minWidth: 40 },
-      { Header: t('employee.role'), accessor: 'roleName', width: 150, minWidth: 40, },
+      { Header: t('page.phone'), accessor: 'phone', width: 120, minWidth: 40 },
+      { Header: t('employee.role'), accessor: 'roleName', width: 120, minWidth: 40, },
       { Header: '', accessor: 'status', noSort: true, isBtn: true, width: 150, minWidth: 40,
         Cell: ({ value, row, onClickLink }) => {
           let active = value === 0;
@@ -106,8 +106,8 @@ export function List(props){
   return (
     <div>
       {visible && <Subscription {...subProps} />}
-      <div className='table_scroll' style={{overflowX: 'scroll'}}>
-        <div id='paging' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
+      <div style={{overflowX: 'scroll'}}>
+        <div id='paging' className='table_scroll' style={{marginTop: 10, overflowY: 'scroll', maxHeight, minWidth: 720}}>
           <TableResize {...tableProps} />
         </div>
       </div>

@@ -16,23 +16,23 @@ export function List(props){
     setColumns([
       { Header: t('report.site'), accessor: 'siteName', exLabel: t('report.site'), width: 150, minWidth: 110,
         Footer:  <div style={{textAlign: 'left', paddingRight: 15}}>{t('report.total') + data?.length }</div> },
-      { Header: t('report.pos'), accessor: 'terminalName', exLabel: t('report.pos'),  width: 110, minWidth: 110 ,},
-      { Header: t('page.date'), accessor: 'currentDate', exLabel: t('page.date'), width: 120, minWidth: 110 ,
+      { Header: t('report.pos'), accessor: 'terminalName', exLabel: t('report.pos'),  width: 150, minWidth: 110 ,},
+      { Header: t('page.date'), accessor: 'currentDate', exLabel: t('page.date'), width: 150, minWidth: 110 ,
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)
       }
       },
-      { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'),  width: 120, minWidth: 110 ,},
-      { Header: t('report.beginDate'), accessor: 'openDate', exLabel: t('report.beginDate'),  width: 180, minWidth: 100 ,
+      { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'),  width: 150, minWidth: 110 ,},
+      { Header: t('report.beginDate'), accessor: 'openDate', exLabel: t('report.beginDate'),  width: 200, minWidth: 100 ,
       Cell: ({ value }) => {
         return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD HH:mm:ss') : ''}</div>)
       }},
-      { Header: t('report.closedDate'), accessor: 'closeDate', exLabel: t('report.closedDate'),  width: 180, minWidth: 100 ,
+      { Header: t('report.closedDate'), accessor: 'closeDate', exLabel: t('report.closedDate'),  width: 200, minWidth: 100 ,
       Cell: ({ value }) => {
         return (<div>{value !== null ? moment(value)?.format('yyyy.MM.DD HH:mm:ss') : ''}</div>)
       }},
       { Header: <div style={{textAlign: 'right'}}>{t('report.beginBalance')}</div>, accessor: 'beginBalance',
-      exLabel: t('report.beginBalance'), width: 120, minWidth: 110 ,
+      exLabel: t('report.beginBalance'), width: 150, minWidth: 110 ,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} /></div>,
         Footer: info => {
           const total = React.useMemo(() =>
@@ -41,7 +41,7 @@ export function List(props){
           return <><div style={{textAlign: 'right', paddingRight: 10}}>{<Money value={total} />} </div></>
         }},
       { Header: <div style={{textAlign: 'right'}}>{t('report.sales_amt')}</div>, accessor: 'cashAmt',
-        exLabel: t('report.sales_amt'), width: 120, minWidth: 110 ,
+        exLabel: t('report.sales_amt'), width: 150, minWidth: 110 ,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value}/></div>,
         Footer: info => {
           const total = React.useMemo(() =>

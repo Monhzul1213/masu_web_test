@@ -122,7 +122,7 @@ export function CardVariant(props){
   return (
     <div>
       {visible && <QR visible={visible} closeModal={closeModal} qrData={qrData}/>}
-      <div className='mo_container' style={{ paddingBottom: 0 }}>
+      <div className='mo_container' style={{ width: 600, paddingBottom: 0 }}>
         <div className='ih_header' id={id}>
                 <p className='do_title'>{t('orders.title')}</p>
                 <PlainSelect {...siteProps} />
@@ -136,7 +136,7 @@ export function CardVariant(props){
         <PaginationTable {...tableProps} />
         <ButtonRow {...btnProps} />
       </div>
-      <div  className='order_sub' style={{maxWidth: '100%'}}>
+      <div  className='order_sub' style={{maxWidth: 600}}>
         <DynamicAIIcon name='AiOutlineInfoCircle' className='order_info'  />
         <p className='z_item_sub_title'>{t('orders.error')}</p>
       </div>      

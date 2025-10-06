@@ -56,7 +56,7 @@ export function QrMenu() {
         {error && <Error1 error={error} />}
         <SizeMe>
           {({ size }) => (
-            <div className="i_list_cont" id="invt_list">
+            <div className="i_list_cont" id="dis_list">
               <Filter {...filterProps} size={size} />
               {!data?.length ? <Empty1 icon="MdQrCode" /> : <List {...listProps} size={size} />}
             </div>

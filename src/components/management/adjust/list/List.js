@@ -17,32 +17,32 @@ export function List(props){
     setColumns([
       { Header: t('adjust.t_no'), accessor: 'adjustNo', width: 150, minWidth: 80 },
       {
-        Header: t('adjust.t_date'), accessor: 'txnDate', width: 120, minWidth: 100,
+        Header: t('adjust.t_date'), accessor: 'txnDate', width: 150, minWidth: 100,
         Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD')}</div>
       },
       { Header: t('adjust.t_site'), accessor: 'siteName', width: 150, minWidth: 90 },
       {
-        Header: t('adjust.t_status'), accessor: 'statusName', width: 160, minWidth: 80,
+        Header: t('adjust.t_status'), accessor: 'statusName', width: 200, minWidth: 80,
         Cell: ({ value, row }) => {
           let status = row?.original?.status;
           let color = status !== 1 ? 'var(--text-color)' : 'var(--text2-color)';
           return <span style={{ color }}>{value}</span>
         }
       },
-      { Header: t('adjust.t_emp'), accessor: 'txnEmpNme', width: 150, minWidth: 100 },
+      { Header: t('adjust.t_emp'), accessor: 'txnEmpNme', width: 170, minWidth: 100 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_qty')}</div>, accessor: 'totalQty',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 120, minWidth: 100,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 150, minWidth: 100,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 140, minWidth: 140,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value}/></div>, width: 200, minWidth: 140,
       },
       {
-        Header: t('adjust.t_created'), accessor: 'createdDate', width: 140, minWidth: 100,
+        Header: t('adjust.t_created'), accessor: 'createdDate', width: 150, minWidth: 100,
         Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD HH:mm')}</div>
       },
-      { Header: t('adjust.t_descr'), accessor: 'descr', width: 195, minWidth: 100 },
+      { Header: t('adjust.t_descr'), accessor: 'descr', width: 200, minWidth: 100 },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

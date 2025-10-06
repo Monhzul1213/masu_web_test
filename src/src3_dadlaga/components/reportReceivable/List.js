@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { usePagination, useSortBy, useTable, useRowSelect } from 'react-table';
+import { usePagination, useSortBy, useTable, useRowSelect, useBlockLayout, useResizeColumns } from 'react-table';
 
-import { Money, FooterTable } from '../../../components/all';
+import { Money, TableRowResize } from '../../../components/all';
 import { Header } from '../../../src1/components/report/employee';
 import { Transaction } from '../../../src1/components/customer/customer/Transaction';
 
@@ -15,13 +15,13 @@ export function List(props) {
 
     useEffect(() => { 
         setColumns([
-            { Header: <div >{t('customer.title')}</div>, accessor: 'custName', exLabel: t('customer.title'),
+            { Header: <div >{t('customer.title')}</div>, accessor: 'custName', exLabel: t('customer.title'), width: 400,
                 Cell: ({ value, row, onClickLink }) => {
                     return  (<div className='table_link' onClick={() => onClickLink(row)}>{value}</div>);
                 }, Footer:  <div style={{textAlign: 'left', paddingRight: 15}}>{t('report.total') + data?.length }</div>
             },
             { Header: <div style={{textAlign: 'right'}}> {t('receive.amount_beg')} </div>, accessor: 'beginArAmount', exLabel: 'Эхний үлдэгдэл', 
-            Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/> </div>,
+            Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/> </div>, width: 300,
             Footer: info => {
                 const total = React.useMemo(() =>
                   info.rows.reduce((sum, row) => row.values.beginArAmount + sum, 0),
@@ -29,7 +29,7 @@ export function List(props) {
                 return <><div style={{textAlign: 'right', paddingRight: 10}}>{<Money value={total} />} </div></>
               } },
             { Header: <div style={{textAlign: 'right'}}> {t('receive.amount_receive_crea')} </div>, accessor: 'addAmount',exLabel: 'Авлага үүсгэсэн дүн',
-            Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>,
+            Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>, width: 300,
             Footer: info => {
                 const total = React.useMemo(() =>
                   info.rows.reduce((sum, row) => row.values.addAmount + sum, 0),
@@ -37,7 +37,7 @@ export function List(props) {
                 return <><div style={{textAlign: 'right', paddingRight: 10}}>{<Money value={total} />} </div></>
             }  },
             { Header: <div style={{textAlign: 'right'}}> {t('receive.amount_receive_clos')} </div>, accessor: 'closeAmount',exLabel: 'Авлага хаасан дүн',
-            Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>,
+            Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>, width: 250,
             Footer: info => {
                 const total = React.useMemo(() =>
                   info.rows.reduce((sum, row) => row.values.closeAmount + sum, 0),
@@ -45,7 +45,7 @@ export function List(props) {
                 return <><div style={{textAlign: 'right', paddingRight: 10}}>{<Money value={total} />} </div></>
             }  },
             { Header: <div style={{textAlign: 'right'}}> {t('receive.amount_final')} </div>, accessor: 'endArAmount',exLabel: 'Эцсийн үлдэгдэл',
-            Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>,
+            Cell: (props)=> <div style={{textAlign: 'right', paddingRight: '7px'}}> <Money value = {props?.value}/></div>, width: 250,
             Footer: info => {
                 const total = React.useMemo(() =>
                   info.rows.reduce((sum, row) => row.values.endArAmount + sum, 0),
@@ -65,27 +65,28 @@ export function List(props) {
     const closeModal = () => {
         setVisible(false);
     };
-
+    const defaultColumn = useMemo(() => ({ minWidth: 40, width: 150, maxWidth: 400 }), []);
     const tableInstance = useTable({
         columns,
         data,
+        defaultColumn,
         autoResetPage: false,
         autoResetSortBy: false,
         initialState: { pageIndex: 0, pageSize: 2500000, sortBy: [{ id: 'salesTime', desc: true }] },
         onClickLink
-    }, useSortBy, usePagination, useRowSelect );
+    }, useSortBy, usePagination, useRowSelect, useBlockLayout, useResizeColumns );
 
     const tableProps = { tableInstance, hasFooter: true };
     const exportExcelProps = {data, columns, excelName };
     let subProps = { visible, closeModal , selected};
 
     return (
-        <div className="rp_list" style={{maxWidth: 1000}}>
+        <div className="rp_list" >
             {visible && <Transaction {...subProps} />}
             <Header {...exportExcelProps}/>
             <div className="table_scroll" style={{ overflow: 'scroll' }}>
                 <div id="paging" style={{ marginTop: 10, minWidth: 720, maxHeight: 500 }}>
-                    <FooterTable {...tableProps} />
+                    <TableRowResize {...tableProps} />
                 </div>
             </div>
         </div>

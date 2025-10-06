@@ -25,16 +25,16 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: <div style={{textAlign: 'right'}}>{t('report.salesNo')}</div> , accessor: 'salesNo', exLabel: t('report.salesNo'),
-      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>, width: 100, minWidth: 110 , Footer: t('report.total') + data?.length},
-      { Header: t('page.date'), accessor: 'salesDate', exLabel: t('page.date'), width: 100, minWidth: 110 ,
+      Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props?.value}</div>, width: 130, minWidth: 110 , Footer: t('report.total') + data?.length},
+      { Header: t('page.date'), accessor: 'salesDate', exLabel: t('page.date'), width: 130, minWidth: 110 ,
       Cell: ({ value }) => {
         return (<div>{moment(value)?.format('yyyy.MM.DD')}</div>)}
       },
       { Header: t('report.siteName'), accessor: 'siteName', exLabel: t('report.siteName'), width: 150, minWidth: 80 , },
       { Header: t('report.pos'), accessor: 'terminalName', exLabel: t('report.pos'), width: 150, minWidth: 80 , },
-      { Header: t('report.type'), accessor: 'salesTypeName', exLabel: t('report.type'), width: 100, minWidth: 80 ,},
-      { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'), width: 100, minWidth: 80 , },
-      { Header: t('report.invtName'), accessor: 'invtName', exLabel: t('report.invtName'), width: 120, minWidth: 80 , },
+      { Header: t('report.type'), accessor: 'salesTypeName', exLabel: t('report.type'), width: 150, minWidth: 80 ,},
+      { Header: t('report.empName'), accessor: 'cashierName', exLabel: t('report.empName'), width: 150, minWidth: 80 , },
+      { Header: t('report.invtName'), accessor: 'invtName', exLabel: t('report.invtName'), width: 180, minWidth: 80 , },
       { Header:  <div style={{textAlign: 'right'}}>{t('report.price1')}</div>, accessor: 'price', width: 100, minWidth: 80, 
       exLabel: t('report.price1'),
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value}/></div> },
@@ -47,7 +47,7 @@ export function List(props){
           [info.rows]  )
         return <><div style={{textAlign: 'right', paddingRight: 15}}>{total}</div></>
         } },
-      { Header:  <div style={{textAlign: 'right'}}>{t('report.amount')}</div>, accessor: 'amount', width: 90, minWidth: 70 , 
+      { Header:  <div style={{textAlign: 'right'}}>{t('report.amount')}</div>, accessor: 'amount', width: 120, minWidth: 70 , 
       exLabel: t('report.amount'), 
       Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={props?.value} /></div>,
       Footer: info => {
@@ -56,7 +56,7 @@ export function List(props){
           [info.rows]  )
         return <><div style={{textAlign: 'right', paddingRight: 15}}><Money value={total}/></div></>
         } },
-      { Header: t('report.descr'), accessor: 'serviceDescr', exLabel: t('report.descr'), width: 100, minWidth: 70 ,},
+      { Header: t('report.descr'), accessor: 'serviceDescr', exLabel: t('report.descr'), width: 150, minWidth: 70 ,},
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

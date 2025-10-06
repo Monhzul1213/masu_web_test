@@ -15,35 +15,35 @@ export function List(props){
 
   useEffect(() => {
     setColumns([
-      { Header: t('package.t_no'), accessor: 'assemblyNo', width: 90, minWidth: 50 },
+      { Header: t('package.t_no'), accessor: 'assemblyNo', width: 120, minWidth: 50 },
       {
-        Header: t('adjust.t_date'), accessor: 'txnDate', width: 105, minWidth: 100,
+        Header: t('adjust.t_date'), accessor: 'txnDate', width: 120, minWidth: 100,
         Cell: ({ value }) => <div style={{}}>{moment(value).format('yyyy.MM.DD')}</div>
       },
-      {Header: t('adjust.t_type'), accessor: 'txnTypeName', width: 110, minWidth: 80},
-      { Header: t('adjust.t_site'), accessor: 'siteName', width: 140, minWidth: 90 },
+      {Header: t('adjust.t_type'), accessor: 'txnTypeName', width: 130, minWidth: 80},
+      { Header: t('adjust.t_site'), accessor: 'siteName', width: 150, minWidth: 90 },
       {
-        Header: t('adjust.t_status'), accessor: 'statusName', width: 150, minWidth: 80,
+        Header: t('adjust.t_status'), accessor: 'statusName', width: 180, minWidth: 80,
         Cell: ({ value, row }) => {
           let status = row?.original?.status;
           let color = status !== 1 ? 'var(--text-color)' : 'var(--text2-color)';
           return <span style={{ color }}>{value}</span>
         }
       },
-      { Header: t('inventory.title'), accessor: 'invtName', width: 120, minWidth: 100 },
+      { Header: t('inventory.title'), accessor: 'invtName', width: 150, minWidth: 100 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.t_qty')}</div>, accessor: 'qty',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 80, minWidth: 50,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}>{value}</div>, width: 120, minWidth: 50,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('inventory.cost')}</div>, accessor: 'cost',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>, width: 130, minWidth: 80,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>, width: 150, minWidth: 80,
       },
       {
         Header: <div style={{textAlign: 'right'}}>{t('adjust.t_total_cost')}</div>, accessor: 'totalCost',
-        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>, width: 130, minWidth: 80,
+        Cell: ({ value }) => <div style={{textAlign: 'right', paddingRight: 15}}><Money value={value} /></div>, width: 150, minWidth: 80,
       },
-      { Header: t('adjust.t_descr'), accessor: 'descr', width: 160, minWidth: 100 },
+      { Header: t('adjust.t_descr'), accessor: 'descr', width: 200, minWidth: 100 },
     ]);
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps

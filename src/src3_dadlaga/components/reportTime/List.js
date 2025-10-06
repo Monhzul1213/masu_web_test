@@ -70,7 +70,7 @@ export function List(props) {
     const exportExcelProps = {data, columns, excelName };
 
     return (
-        <div className="rp_list">
+        <div className="rp_list" style={{width: 1260}}>
             <Header {...exportExcelProps}/>
             <div className="table_scroll" style={{ overflowX: 'auto' }}>
                 <div id="padding" style={{ marginTop: 10, minWidth: 720, maxHeight: 500 }}>

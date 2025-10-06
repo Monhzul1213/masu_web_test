@@ -53,7 +53,7 @@ function Card(props){
     if(toGet) getData();
   }
 
-  // const width = size?.width >= 840 ? 840 : size?.width;
+  const width = size?.width >= 840 ? 840 : size?.width;
   const emptyProps = { icon: 'MdStorefront', type: 'shop', noDescr: true, onClickAdd };
   const modalProps = { visible, closeModal, selected: item, setData };
   const addProps = { type: 'shop', onClickAdd };
@@ -65,7 +65,7 @@ function Card(props){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         {!data?.length ? <div ><Empty {...emptyProps} /></div> :
-          <div className='mo_container' >
+          <div className='mo_container' style={{width}}>
             <ButtonRowAdd {...addProps} />
             <List {...listProps} />
           </div>

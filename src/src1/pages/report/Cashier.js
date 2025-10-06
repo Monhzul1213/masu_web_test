@@ -60,7 +60,7 @@ function Screen(props){
       <Overlay loading={loading}>
         {error && <Error1 error={error} />}
         <Filter {...filterProps} />
-        <div className='rp_list' id='dis_list1'>
+        <div className='rp_list' id='invt_list'>
           {data?.length ? <List {...cardProps} /> : <Empty1 {...emptyProps} />}
         </div>
       </Overlay>

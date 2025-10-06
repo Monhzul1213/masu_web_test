@@ -15,7 +15,7 @@ export function List(props){
   useEffect(() => {
     setColumns([
       { Header: t('shop.t_name'), accessor: 'name', width: 200, minWidth: 100 },
-      { Header: t('shop.t_addr'), accessor: 'address_text', width: 350, minWidth: 100 },
+      { Header: t('shop.t_addr'), accessor: 'address_text', width: 450, minWidth: 100 },
       {
         Header: <div style={{textAlign: 'right'}}>{t('shop.t_pqty')}</div>, accessor: 'posQty', width: 150, minWidth: 100,
         Cell: props => <div style={{textAlign: 'right', paddingRight: 15}}>{props.value}</div>

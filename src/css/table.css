@@ -214,7 +214,7 @@ tr.table_row_selected {
   border-bottom: none !important;
 }
 
-.table_row_resize {
+#table_row_res {
   align-items: center;
 }
 
